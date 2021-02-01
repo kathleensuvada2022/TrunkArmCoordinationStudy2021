@@ -1,0 +1,226 @@
+function structure = CreateSetTargetsComponents( structure, participantParameters )
+
+%% variables used throughout this function
+firstColumnFromLeft = 1; 
+
+textHeight = 1.923;
+
+pushButtonFromBottom = 1.4;
+pushButtonWidth = 14.8;
+pushButtonHeight = 2.54;
+
+radioButtonFromLeft = 1;
+radioButtonFromBottom = 14.5 : -2.7 : 1;
+radioButtonWidth = 35;
+radioButtonHeight = 1.769;
+
+editBoxWidth = 24;
+editBoxHeight = 2.15;
+
+buttonGroupFromBottom = 18;
+
+%% target positions button group and radio buttons
+% button group
+targetsButtonGroupFromLeft = 62;
+targetsButtonGroupWidth = 40;
+targetsButtonGroupHeight = 19.15;
+targetsButtonGroupPosition = [ targetsButtonGroupFromLeft, buttonGroupFromBottom,...
+    targetsButtonGroupWidth, targetsButtonGroupHeight ];
+structure.targetsButtonGroup = uibuttongroup('Parent', structure.figureHandle,...
+    'Units','characters',...
+    'Title','targets',...
+    'FontSize',12,...
+    'Position',targetsButtonGroupPosition);
+
+% elbow extension radio button
+elbowExtensionRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(1)...
+    radioButtonWidth radioButtonHeight ];
+structure.elbowExtensionRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, elbowExtensionRadioButtonPosition, 'Elbow Extension' );
+%set(structure.elbowExtensionRadioButton,'Enable','Off');    %temp - not implemented
+
+% reach radio button
+reachRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(2)...
+    radioButtonWidth radioButtonHeight ];
+structure.reachRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, reachRadioButtonPosition, 'Reach' );
+%set(structure.reachRadioButton,'Enable','Off');    %temp - not implemented
+
+% shoulder flexion radio button
+shoulderFlexionRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(3)...
+    radioButtonWidth radioButtonHeight ];
+structure.shoulderFlexionRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, shoulderFlexionRadioButtonPosition, 'Shoulder Flexion' );
+%set(structure.shoulderFlexionRadioButton,'Enable','Off');    %temp - not implemented
+
+% elbowFlexion radio button
+elbowFlexionRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(4)...
+    radioButtonWidth radioButtonHeight ];
+structure.elbowFlexionRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, elbowFlexionRadioButtonPosition, 'Elbow Flexion' );
+%set(structure.elbowFlexionRadioButton,'Enable','Off');    %temp - not implemented
+
+% retrieve radio button
+retrieveRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(5)...
+    radioButtonWidth radioButtonHeight ];
+structure.retrieveRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, retrieveRadioButtonPosition, 'Retrieve' );
+%set(structure.retrieveRadioButton,'Enable','Off');    %temp - not implemented
+
+% custom radio button
+customRadioButtonPosition = [ radioButtonFromLeft radioButtonFromBottom(6)...
+    radioButtonWidth radioButtonHeight ];
+structure.customRadioButton = CreateRadioButtonComponent(...
+    structure.targetsButtonGroup, customRadioButtonPosition, 'Custom' );
+
+set( structure.targetsButtonGroup, 'SelectedObject', structure.customRadioButton );
+setappdata( structure.figureHandle, 'target', structure.customRadioButton );
+
+%% text for custom target
+secondRowFromBottom = buttonGroupFromBottom - 4;
+thirdRowFromBottom = secondRowFromBottom - 4;
+fourthRowFromBottom = thirdRowFromBottom - 4;
+xyzTextWidth = 8;
+
+% X:
+textPosition = [ firstColumnFromLeft secondRowFromBottom xyzTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'X:');
+
+% Y:
+textPosition = [ firstColumnFromLeft thirdRowFromBottom xyzTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'Y:');
+
+% Z:
+textPosition = [ firstColumnFromLeft fourthRowFromBottom xyzTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'Z:');
+
+% Shoulder Flexion Angle:
+angleFromLeft = 40;
+angleTextWidth = 48;
+textPosition = [ angleFromLeft secondRowFromBottom angleTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'Shoulder Flexion Angle:');
+
+% Elbow Angle:
+textPosition = [ angleFromLeft thirdRowFromBottom angleTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'Elbow Angle:');
+
+% Shoulder Abduction Angle:
+textPosition = [ angleFromLeft fourthRowFromBottom angleTextWidth textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'Shoulder Abduction Angle:');
+
+
+%% edit boxes for custom target
+% x edit box
+firstColumnEditBoxFromLeft = firstColumnFromLeft + xyzTextWidth + 1;
+editBoxPosition = [ firstColumnEditBoxFromLeft secondRowFromBottom editBoxWidth editBoxHeight ];
+structure.xEditBox = CreateEditBoxComponent( structure.figureHandle,...
+    editBoxPosition, '');
+set(structure.xEditBox,'Enable','Off');    %temp - not implemented
+
+% y edit box
+editBoxPosition = [ firstColumnEditBoxFromLeft thirdRowFromBottom editBoxWidth editBoxHeight ];
+structure.yEditBox = CreateEditBoxComponent( structure.figureHandle,... 
+    editBoxPosition, '');
+set(structure.yEditBox,'Enable','Off');    %temp - not implemented
+
+% z edit box
+editBoxPosition = [ firstColumnEditBoxFromLeft fourthRowFromBottom editBoxWidth editBoxHeight ];
+structure.zEditBox = CreateEditBoxComponent( structure.figureHandle,... 
+    editBoxPosition, '');
+set(structure.zEditBox,'Enable','Off');    %temp - not implemented
+
+% shoulder flexion angle edit box
+secondColumnEditBoxFromLeft = angleFromLeft + angleTextWidth + 2;
+editBoxPosition = [ secondColumnEditBoxFromLeft secondRowFromBottom editBoxWidth editBoxHeight ];
+structure.shoulderFlexionAngleEditBox = CreateEditBoxComponent( structure.figureHandle,...
+    editBoxPosition, '70');
+
+% elbow angle edit box
+editBoxPosition = [ secondColumnEditBoxFromLeft thirdRowFromBottom editBoxWidth editBoxHeight ];
+structure.elbowAngleEditBox = CreateEditBoxComponent( structure.figureHandle, editBoxPosition, '10');
+
+% shoulder flexion angle edit box
+editBoxPosition = [ secondColumnEditBoxFromLeft fourthRowFromBottom editBoxWidth editBoxHeight ];
+structure.shoulderAbductionAngleEditBox = CreateEditBoxComponent( structure.figureHandle,...
+    editBoxPosition, '90');
+
+
+% create degrees sign for the angles
+unitFromLeft = secondColumnEditBoxFromLeft + editBoxWidth + 0.2;
+textPosition = [ unitFromLeft secondRowFromBottom+1 3 textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'o');
+
+textPosition = [ unitFromLeft thirdRowFromBottom+1 3 textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'o');
+
+textPosition = [ unitFromLeft fourthRowFromBottom+1 3 textHeight ];
+CreateTextComponent( structure.figureHandle, textPosition, 'o');
+
+
+%% axes
+axesFromBottom = buttonGroupFromBottom;
+axesWidth = 51.4;
+axesHeight = 18.85;
+structure.axesHandle = axes( 'Parent',structure.figureHandle, 'units','characters',...
+    'Position',[ firstColumnFromLeft, axesFromBottom, axesWidth, axesHeight ],...
+    'XTick',[],'YTick',[]);
+
+% plot sample arm
+upperArmX = [0 0.2394];
+upperArmY = upperArmX;
+lowerArmX = [0.2394 -0.0918];
+lowerArmY = [0.2394 0.5707];
+structure.armLineSeries = plot( structure.axesHandle,...
+    upperArmX, upperArmY,...
+    lowerArmX, lowerArmY);
+set(structure.armLineSeries,'LineWidth',3)
+set(structure.armLineSeries,'Color','black')
+hold on
+
+% plot sample target at origin
+radius = 0.02;
+numberOfPoints = 50;
+[origin_x, origin_y, z] = cylinder(radius, numberOfPoints);
+target_x = origin_x(1,:);% + lowerArmX(2);
+target_y = origin_y(1,:);% + lowerArmY(2) + 0.05;
+structure.targetLineSeries = plot( structure.axesHandle,...
+    target_x, target_y);
+set(structure.targetLineSeries,'LineWidth',5)
+set(structure.targetLineSeries,'Color','red')
+
+xlim([-0.8 0.8])
+ylim([-0.4 1.2])
+hold off
+
+%% toggle button to determine the height of the target sphere. Either the
+%% target will be on the table or above the table
+%{
+toggleButtonPosition = [ firstColumnEditBoxFromLeft, pushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+structure.liftToggleButton = uicontrol( 'Parent', structure.figureHandle,...
+    'Style', 'toggle',...
+    'Units','characters',...
+    'Position', toggleButtonPosition,...
+    'String','Lift',...
+    'HorizontalAlignment','center',...
+    'FontSize',13.9 );
+%}
+
+%% ok and cancel push buttons
+% ok push button
+okPushButtonFromLeft = 85;
+okPushButtonPosition = [ okPushButtonFromLeft, pushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+
+structure.okPushButton = CreatePushButtonComponent(...
+    structure.figureHandle, okPushButtonPosition, 'OK');
+
+% cancel push button
+cancelPushButtonFromLeft = okPushButtonFromLeft + pushButtonWidth + 1;
+cancelPushButtonPosition = [ cancelPushButtonFromLeft, pushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+structure.cancelPushButton = CreatePushButtonComponent(...
+    structure.figureHandle, cancelPushButtonPosition, 'Cancel');
+set( structure.cancelPushButton, 'Enable','off');
+
+end

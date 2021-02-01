@@ -1,0 +1,15 @@
+function timerObject = SetTimerProperties( timerObject, display, robot, mainWindow,...
+    experiment, timerFrequency, trialParameters, setTargets, emgChannels,...
+    nidaq, quanser, judp )
+
+set( timerObject, 'TimerFcn',{@TimerCallback,display, robot, mainWindow,...
+    experiment, timerFrequency, trialParameters, setTargets, emgChannels,...
+    nidaq, quanser, judp});
+set( timerObject, 'ErrorFcn',@(x,y)disp('error') );
+
+%timerObject.StopFcn = @vf.CloseDisplay;
+set( timerObject, 'Name','timer for arm visualization' );
+set( timerObject, 'ExecutionMode','fixedrate' );
+set( timerObject, 'Period',1/timerFrequency );  %50 hz currently
+
+end

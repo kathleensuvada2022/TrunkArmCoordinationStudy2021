@@ -1,0 +1,209 @@
+% class for haptic effect
+%{
+
+% function prototypes
+className = Haptic;
+className.Create() OR className.Create( position, size )     % Effect is created when class is created
+className.Enable()
+className.Disable()
+
+%}
+
+classdef Haptic < handle  %make robot a parent
+    properties
+        isHorizontalEffectCreated = 0;
+        isHorizontalEffectEnabled = 0;
+        horizontalEffectName = 'horizontal';
+        horizontalEffectPosition = [ 0.0, 0.0, -0.1 ];
+        horizontalEffectSize = [ 2, 2, 0.1 ];
+        
+        isVerticalEffectCreated = 0;
+        isVerticalEffectEnabled = 0;
+        verticalEffectName = 'verticalEffect';
+        verticalEffectPosition = [0, 0.4 0];
+        verticalEffectSize = [0.5,0.05,0.5];    
+        
+        planeAngle = 0;             % in degrees
+        blockStiffness = 20000;     % Block stiffness
+        deviceId = 0;
+        deviceIdListenerHandle;
+    end
+    
+    methods
+        function obj = Haptic( robot, obj )
+            
+            obj.deviceId = robot.deviceId;
+            obj.deviceIdListenerHandle = addlistener( robot, 'DeviceIdChange', @Haptic.UpdateDeviceId );
+
+        end
+        
+        function delete(obj)
+            delete(obj.deviceIdListenerHandle);
+            
+            % remove both haptic effects
+            if obj.isHorizontalEffectCreated == 1
+                obj.isHorizontalEffectCreated = obj.Remove(obj.horizontalEffectName, obj.isHorizontalEffectCreated);
+            end
+            if obj.isVerticalEffectCreated == 1
+                obj.isVerticalEffectCreated = obj.Remove(obj.verticalEffectName, obj.isHorizontalEffectCreated);
+            end
+            
+   
+        end
+        
+        function [isEffectCreated, obj] = Create( obj, effectName, isEffectCreated, position, size )
+            
+            if obj.deviceId > 0  
+                if isEffectCreated == 0
+                    
+                    
+                    [retVal, response] = haSendCommand( obj.deviceId, ['create block ' effectName]  );
+                    if (retVal == 0) 
+                        disp(response);
+                        isEffectCreated = 1;
+                    else
+                        disp (['--- ERROR: ' response]);       
+                        return;
+                    end
+
+                    [retVal, response] = haSendCommand( obj.deviceId,...
+                        ['set ' effectName ' stiffness ' num2str(obj.blockStiffness)] );
+                    if (retVal ~= 0) 
+                        disp (['--- ERROR: ' response]);       
+                    end
+
+                    [retVal, response] = haSendCommand( obj.deviceId,...
+                        ['set ' effectName ' size [' num2str(size(1)) ',' num2str(size(2)) ',' num2str(size(3)) ']'] );
+                    if (retVal ~= 0) 
+                        disp (['--- ERROR: ' response]);       
+                    end
+                    
+                    [retVal, response] = haSendCommand( obj.deviceId,...
+                        ['set ' effectName ' pos [' num2str(position(1)) ',' num2str(position(2)) ',' num2str(position(3)) ']'] );
+                    if (retVal ~= 0) 
+                        disp (['--- ERROR: ' response]);       
+                    end
+                    
+                else
+                    disp('--- ERROR: Haptic effect has already been created');
+                end
+            else
+                disp('--- ERROR: Device not connected');
+            end
+
+        end
+
+        
+        function obj = UpdateDeviceId(obj, robot)   % set deviceId in Haptic class equal to deviceId in Robot class
+            obj.deviceId = robot.deviceId;
+        end
+
+        
+        function [isEffectEnabled, obj] = Enable( obj, isEffectCreated, isEffectEnabled, effectName )
+            if isEffectCreated == 1
+                if isEffectEnabled == 0
+                    
+                    [retVal, response] = haSendCommand( obj.deviceId, ['set ' effectName ' enable'] );
+                    if (retVal == 0) 
+                        disp('Haptic effect enabled');    
+                        isEffectEnabled = 1;
+                    else
+                        disp (['--- ERROR: ' response]);       
+                    end
+                    
+                else
+                    disp('--- ERROR: Haptic effect is already enabled');
+                end
+            else
+                disp('--- ERROR: Haptic effect has not been created');
+            end
+        end
+        
+        
+        function [ isEffectEnabled, obj ] = Disable( obj, isEffectCreated, isEffectEnabled, effectName )
+            if isEffectCreated == 1
+                if isEffectEnabled == 1
+                    
+                    [retVal, response] = haSendCommand( obj.deviceId, ['set ' effectName ' disable'] );
+                    if (retVal == 0) 
+                        disp('Haptic effect disabled');
+                        isEffectEnabled = 0;
+                    else
+                        disp (['--- ERROR: ' response]);
+                    end
+                    
+                else
+                    disp('--- ERROR: Haptic effect is already disabled');
+                end
+                
+            else
+                disp('--- ERROR: Haptic effect has not been created');
+            end
+        end
+        
+        function [ isEffectCreated, obj ] = Remove( obj, effectName, isEffectCreated )
+            
+            if isEffectCreated == 1
+                [retVal, response] = haSendCommand( obj.deviceId, ['remove ' effectName] );
+                if (retVal == 0)
+                    disp(['Removed ' effectName]);
+                    isEffectCreated = 0;
+                else
+                    disp (response);
+                end
+            end
+            
+        end
+        
+        
+        function obj = SetPosition(obj,position,effectName)
+            [retVal, response] = haSendCommand( obj.deviceId, ['set ' effectName ' pos [' num2str(position(1)) ',' num2str(position(2)) ',' num2str(position(3)) ']'] );
+            if (retVal == 0) 
+                disp(['Changed position of ' effectName]);
+            else
+                disp (['--- ERROR: ' response]);
+            end
+       
+        end
+        
+        function obj = SetSize(obj,size,effectName)
+            [retVal, response] = haSendCommand( obj.deviceId, ['set ' effectName ' size [' num2str(size(1)) ',' num2str(size(2)) ',' num2str(size(3)) ']'] );
+            if (retVal == 0) 
+                disp(['Changed size of ' effectName]);
+            else
+                disp (['--- ERROR: ' response]);       
+            end
+   
+        end
+        
+        
+        function obj = SetPlaneAngle(obj,planeAngle,effectName,arm)
+            
+            obj.planeAngle = planeAngle;
+            
+            planeAngle = planeAngle *pi/180;
+            
+            % for the right arm the plane angle is negative
+            if strcmp(arm,'Right')
+                planeAngle = -planeAngle;
+            end
+            
+            % convert from euler angles to quaternion
+            w =cos(planeAngle/2);
+            x =sin(planeAngle/2);
+            y =0;
+            z =0;
+            
+            [retVal, response] = haSendCommand( obj.deviceId,...
+                ['set ' effectName ' att [' num2str(x) ',' num2str(y) ',' num2str(z) ',' num2str(w) ']'] );
+            if (retVal == 0) 
+                disp('Changed rotation of horizontal');
+            else
+                disp (['--- ERROR: ' response]);       
+            end
+   
+        end
+        
+    end
+end
+

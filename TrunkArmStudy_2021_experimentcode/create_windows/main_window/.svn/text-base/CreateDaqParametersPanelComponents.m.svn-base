@@ -1,0 +1,128 @@
+function panel = CreateDaqParametersPanelComponents( panel )
+%CREATEDAQPARAMETERSCOMPONENTS Summary of this function goes here
+%   Detailed explanation goes here
+
+panelHeight = panel.panelPosition(4);
+
+% checkbox to turn on DAQ
+daqSwitchCheckBoxFromLeft = 1;
+daqSwitchCheckBoxFromBottom = panelHeight - 4;
+daqSwitchCheckBoxWidth = 30;
+daqSwitchCheckBoxHeight = 2.231;
+daqSwitchCheckBoxPosition = [ daqSwitchCheckBoxFromLeft daqSwitchCheckBoxFromBottom daqSwitchCheckBoxWidth daqSwitchCheckBoxHeight ];
+panel.daqSwitchCheckBox = uicontrol('Parent', panel.handle,...
+    'Style', 'checkbox',...
+    'Units','characters',...
+    'Position', daqSwitchCheckBoxPosition,...
+    'String','DAQ Switch',...
+    'FontSize',12);
+set( panel.daqSwitchCheckBox, 'Enable','off' );
+set( panel.daqSwitchCheckBox, 'Value',1 );
+
+%% Insert static text labels
+textString = { 'DAQ Channels:', 'Sampling Rate:', 'Sampling Time:', 'DAQ Device:' };
+
+textFromLeft = daqSwitchCheckBoxFromLeft;    
+textHeight = 1.923;
+
+textTop = daqSwitchCheckBoxFromBottom - 2.5; 
+spaceBetweenText = 3; 
+textBottom = textTop - spaceBetweenText * (length(textString)-1);
+textFromBottom = textTop : -spaceBetweenText : textBottom;
+textWidth = 30;
+
+for textIndex = 1:length(textString)
+    textPosition = [ textFromLeft textFromBottom(textIndex) textWidth textHeight ];
+    CreateTextComponent( panel.handle, textPosition, textString(textIndex) );
+end
+
+%% first four edit boxes
+editBoxWidth = 10;
+editBoxHeight = 2.288;
+editBoxFromLeft = textWidth + 2;
+editBoxFromBottom = textFromBottom;
+
+% create daq channels edit box
+editBoxPosition = [ editBoxFromLeft editBoxFromBottom(1) editBoxWidth editBoxHeight ];
+panel.daqChannelsEditBox = CreateEditBoxComponent( panel.handle, editBoxPosition, '2' );
+%set( panel.daqChannelsEditBox, 'Enable', 'off' );
+
+% create sampling rate edit box
+editBoxPosition = [ editBoxFromLeft editBoxFromBottom(2) editBoxWidth editBoxHeight ];
+panel.samplingRateEditBox = CreateEditBoxComponent( panel.handle, editBoxPosition, '1000' );
+
+% create sampling time edit box
+editBoxPosition = [ editBoxFromLeft editBoxFromBottom(3) editBoxWidth editBoxHeight ];
+panel.samplingTimeEditBox = CreateEditBoxComponent( panel.handle, editBoxPosition, '7' );
+
+% create 
+popUpMenuString = {'NI-DAQ','Quanser'};
+popUpMenuFromLeft = editBoxFromLeft;
+popUpMenuFromBottom = textFromBottom(4) + 1;
+popUpMenuWidth = 20;
+popUpMenuHeight = 1.538;
+
+panel.daqDevicePopUpMenu = uicontrol('Parent', panel.handle,...
+    'Style', 'popupmenu',...
+    'Units','characters',...
+    'Position', [ popUpMenuFromLeft popUpMenuFromBottom popUpMenuWidth popUpMenuHeight ],...
+    'String',popUpMenuString,...
+    'HorizontalAlignment','left',...
+    'FontSize',13.9);
+set( panel.daqDevicePopUpMenu, 'Value',2 ); % default to quanser
+
+% units
+unitString = { 'Hz', 's' };
+
+unitFromLeft = editBoxFromLeft + editBoxWidth +2;
+unitFromBottom = textFromBottom(2:3);
+unitWidth = 5;
+
+for unitIndex = 1:length(unitString)
+    textPosition = [ unitFromLeft unitFromBottom(unitIndex) unitWidth textHeight ];
+    CreateTextComponent( panel.handle, textPosition, unitString(unitIndex) );
+end
+
+% create EMG maxes check box
+emgMaxesCheckBoxFromLeft = textFromLeft;
+emgMaxesCheckBoxFromBottom = textFromBottom(end) - 3;
+emgMaxesCheckBoxWidth = 30;
+emgMaxesCheckBoxHeight = 2.231;
+emgMaxesCheckBoxPosition = [ emgMaxesCheckBoxFromLeft emgMaxesCheckBoxFromBottom emgMaxesCheckBoxWidth emgMaxesCheckBoxHeight ];
+panel.emgMaxesCheckBox = uicontrol('Parent', panel.handle,...
+    'Style', 'checkbox',...
+    'Units','characters',...
+    'Position', emgMaxesCheckBoxPosition,...
+    'String','EMG Maxes',...
+    'FontSize',12);
+
+% create file name text
+filenameTextFromBottom = emgMaxesCheckBoxFromBottom - 2.5;
+textPosition = [ textFromLeft filenameTextFromBottom textWidth textHeight ];
+textString = 'Filename:';
+CreateTextComponent( panel.handle, textPosition, textString );
+
+% create file name edit box
+filenameEditBoxFromBottom = filenameTextFromBottom - textHeight - 0.5;
+filenameEditBoxWidth = 80;
+editBoxPosition = [ textFromLeft filenameEditBoxFromBottom filenameEditBoxWidth editBoxHeight ];
+panel.filenameEditBox = CreateEditBoxComponent( panel.handle, editBoxPosition, '' );
+set( panel.filenameEditBox, 'Enable', 'off' );
+
+% create initialize DAQ push button
+pushButtonFromLeft = unitFromLeft + 10;
+initializeDaqPushButtonFromBottom = editBoxFromBottom(1);
+pushButtonHeight = 5;
+pushButtonWidth = 28;
+pushButtonPosition = [ pushButtonFromLeft, initializeDaqPushButtonFromBottom, pushButtonWidth, pushButtonHeight ];
+panel.initializeDaqPushButton = CreatePushButtonComponent(...
+        panel.handle, pushButtonPosition, 'Initialize DAQ');
+
+% create record EMG maxes push button
+recordEmgMaxesPushButtonFromBottom = initializeDaqPushButtonFromBottom - pushButtonHeight - 1;
+pushButtonPosition = [ pushButtonFromLeft, recordEmgMaxesPushButtonFromBottom, pushButtonWidth, pushButtonHeight ];
+panel.recordEmgMaxesPushButton = CreatePushButtonComponent(...
+        panel.handle, pushButtonPosition, 'Record Maxes');
+
+end
+

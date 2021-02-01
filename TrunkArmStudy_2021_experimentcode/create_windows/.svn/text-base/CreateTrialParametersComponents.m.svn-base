@@ -1,0 +1,77 @@
+function structure = CreateTrialParametersComponents( structure )
+
+%% variables used throughout this function
+
+%% text labels
+textFromLeft = 1;
+textFromBottom = 29.8: -3.6 : 19;
+textWidth = 74;
+textHeight = 1.923;
+
+textString = {'Number of Trials:', 'Home Sphere Trigger Timer (seconds) [2]:',...
+    'Max Trial Duration (seconds) [5]:'};
+
+for i=1:length(textString)
+    textPosition = [ textFromLeft, textFromBottom(i), textWidth, textHeight ];
+    CreateTextComponent( structure.figureHandle, textPosition, textString(i) );
+end
+
+
+%% edit boxes
+editBoxFromLeft = textWidth + 7;
+editBoxFromBottom = textFromBottom;
+editBoxWidth = 10.6;
+editBoxHeight = 2.15;
+
+% number of trials edit box
+editBoxPosition = [ editBoxFromLeft, editBoxFromBottom(1), editBoxWidth, editBoxHeight ];
+numberOfTrialsString = '10';
+structure.numberOfTrialsEditBox = CreateEditBoxComponent( structure.figureHandle, editBoxPosition, numberOfTrialsString );
+setappdata( structure.figureHandle, 'numberOfTrials', numberOfTrialsString );
+
+% home sphere trigger time edit box
+editBoxPosition = [ editBoxFromLeft, editBoxFromBottom(2), editBoxWidth, editBoxHeight ];
+homeSphereTriggerTimeString = '2';
+structure.homeSphereTriggerTimeEditBox = CreateEditBoxComponent( structure.figureHandle, editBoxPosition, homeSphereTriggerTimeString );
+setappdata( structure.figureHandle, 'homeSphereTriggerTime', homeSphereTriggerTimeString );
+
+% max trial duration edit box
+editBoxPosition = [ editBoxFromLeft, editBoxFromBottom(3), editBoxWidth, editBoxHeight ];
+maxTrialDurationString = '5';
+structure.maxTrialDurationEditBox = CreateEditBoxComponent( structure.figureHandle, editBoxPosition, maxTrialDurationString );
+setappdata( structure.figureHandle, 'maxTrialDuration', maxTrialDurationString );
+
+%% buttons to set the height of the displayed objects, vertical effect
+%% location, inclined plane height
+pushButtonHeight = 2.54;
+pushButtonFromLeft = textFromLeft;
+pushButtonWidth = 60;
+
+% create button to set vertical effect location
+setVerticalEffectLocationPushButtonFromBottom = editBoxFromBottom(end) - 3.6;
+
+setVerticalEffectLocationPushButtonPosition = [ pushButtonFromLeft, setVerticalEffectLocationPushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+structure.setVerticalEffectLocationPushButton = CreatePushButtonComponent(...
+    structure.figureHandle, setVerticalEffectLocationPushButtonPosition, 'Set Vertical Effect Location');
+
+
+%% ok and cancel pushbuttons
+pushButtonFromBottom = 1.4;
+pushButtonWidth = 14.8;
+
+okPushButtonFromLeft = 58.4;
+okPushButtonPosition = [ okPushButtonFromLeft, pushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+structure.okPushButton = CreatePushButtonComponent(...
+    structure.figureHandle, okPushButtonPosition, 'OK');
+
+% cancel push button
+cancelPushButtonFromLeft = 75;
+cancelPushButtonPosition = [ cancelPushButtonFromLeft, pushButtonFromBottom,...
+    pushButtonWidth, pushButtonHeight ];
+structure.cancelPushButton = CreatePushButtonComponent(...
+    structure.figureHandle, cancelPushButtonPosition, 'Cancel');
+set( structure.cancelPushButton, 'Enable','off');
+
+end

@@ -1,0 +1,135 @@
+Log file D:\Kacey\TrunkArmStudy\setup\\log\ProcFactory_0B698A1C.log created on 2021-01-28 at 04:55:18 PM
+System Logging Level = 5
+Searching D:\Kacey\TrunkArmStudy\ProcPlugins\*.dll for processing plugins.
+Trying to load FilterBaselineDriftLib.dll...success.
+Loading builder...success. Builder is for FilterBaselineDrift
+Trying to load FilterButterworthLib.dll...success.
+Loading builder...success. Builder is for FilterButterworth
+Trying to load FilterExpDecayLib.dll...success.
+Loading builder...success. Builder is for FilterExpDecay
+Trying to load FilterInverseLinearLib.dll...success.
+Loading builder...success. Builder is for FilterInverseLinear
+Trying to load FilterMedianLib.dll...success.
+Loading builder...success. Builder is for FilterMedian
+Trying to load FilterRepairLib.dll...success.
+Loading builder...success. Builder is for FilterRepair
+Trying to load FilterTimeAveLib.dll...success.
+Loading builder...success. Builder is for FilterTimeAve
+Trying to load FilterTimeIntegralLib.dll...success.
+Loading builder...success. Builder is for FilterTimeIntegral
+Trying to load FilterTimeMaxLib.dll...success.
+Loading builder...success. Builder is for FilterTimeMax
+Trying to load FilterTimeStdevLib.dll...success.
+Loading builder...success. Builder is for FilterTimeStdev
+Trying to load ProcContactLib.dll...success.
+Loading builder...success. Builder is for ProcContact
+Trying to load ProcCoPLib.dll...success.
+Loading builder...success. Builder is for ProcCoP
+Trying to load ProcFrameAveLib.dll...success.
+Loading builder...success. Builder is for ProcFrameAve
+Trying to load ProcFrameMaxLib.dll...success.
+Loading builder...success. Builder is for ProcFrameMax
+Trying to load ProcFrameMinLib.dll...success.
+Loading builder...success. Builder is for ProcFrameMin
+Trying to load ProcFramePeakLocnLib.dll...success.
+Loading builder...success. Builder is for ProcFramePeakLocn
+Trying to load ProcFrameTotLib.dll...success.
+Loading builder...success. Builder is for ProcFrameTot
+Built factory for 17 dynamic plugins.
+Adding default builders...
+Total Processor Factory:
+FilterBaselineDrift FilterButterworth FilterExpDecay FilterInverseLinear FilterMedian FilterRepair FilterTimeAve FilterTimeIntegral FilterTimeMax FilterTimeStdev ProcCoP ProcContact ProcFrameAve ProcFrameMax ProcFrameMin ProcFramePeakLocn ProcFrameTot ProcNoScale ProcScale ProcScaleComp 
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512
+Creating processor from ProcNoScale  0B8A95AC 0 256 0 1 2 3 4 5 6 7 8 9 10 11 12 13 
+Name = ProcNoScale; Config = 0B8A95AC 0 256 0 1 2 3 4 5 6 7 8 9 10 11
+Getting builder...success.
+Building processor for ProcNoScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from ProcNoScale  0B8A95AC 0 256 256 257 258 259 260 261 262 263 
+Name = ProcNoScale; Config = 0B8A95AC 0 256 256 257 258 259 260 261 2
+Getting builder...success.
+Building processor for ProcNoScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from ProcScale  0B8A95AC 0 256 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Name = ProcScale; Config = 0B8A95AC 0 256 0 1 2 3 4 5 6 7 8 9 10 11
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from ProcScale  0B8A95AC 0 256 256 257 258 259 260 261 262 263 26
+Name = ProcScale; Config = 0B8A95AC 0 256 256 257 258 259 260 261 2
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512
+Creating processor from ProcScale  0B8AA35C 0 256 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Name = ProcScale; Config = 0B8AA35C 0 256 0 1 2 3 4 5 6 7 8 9 10 11
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from ProcScale  0B8AA35C 0 256 256 257 258 259 260 261 262 263 26
+Name = ProcScale; Config = 0B8AA35C 0 256 256 257 258 259 260 261 2
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512
+Creating processor from ProcScale  449EF5BC 0 256 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Name = ProcScale; Config = 449EF5BC 0 256 0 1 2 3 4 5 6 7 8 9 10 11
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from ProcScale  449EF5BC 0 256 256 257 258 259 260 261 262 263 26
+Name = ProcScale; Config = 449EF5BC 0 256 256 257 258 259 260 261 2
+Getting builder...success.
+Building processor for ProcScale...successfully built 256 nodes.
+After adding new ones, total processor list is 256
+Creating processor from FilterRepair	PN7931R1-STA-NorthwesternDual-ArrayG30-repair.t
+Name = FilterRepair; Config = PN7931R1-STA-NorthwesternDual-ArrayG30-r
+Getting builder...success.
+Building processor for FilterRepair...failure.
+Creating processor from FilterExpDecay 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1
+Name = FilterExpDecay; Config = 5 512 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Getting builder...success.
+Building processor for FilterExpDecay...successfully built 512 nodes.
+After adding new ones, total processor list is 512

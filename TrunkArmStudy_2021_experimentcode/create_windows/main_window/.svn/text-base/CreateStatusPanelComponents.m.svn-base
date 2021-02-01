@@ -1,0 +1,84 @@
+function panel = CreateStatusPanelComponents( panel, deviceId )
+
+%% first column - variables
+% string in each text component
+firstColumnString = { 'HapticMaster status:' 'State:' 'Scope:' 'Force:' 'Trials completed:' 'Arm:' 'Target:'...
+    'Inertia:' 'External force:' 'Experiment status:' 'File saved to:' 'Elevation plane:' };
+
+% initialize components
+firstColumn = zeros( 1, length(firstColumnString) );
+
+% determine position of each text component (in characters)
+firstColumnFromLeft = 1;
+spaceBetweenText = 3.6;
+panelHeight = panel.panelPosition(4);
+top = panelHeight - 4;
+bottom = top - spaceBetweenText*length(firstColumnString);
+firstColumnFromBottom = top : -spaceBetweenText : bottom;
+firstColumnWidth = [ 36.2, 10.2, 20, 20, 31.4, 8.4, 12.6, 11.8, 30, 33.2, 23.6, 27.8 ];     %28
+textHeight = 1.923;
+
+for i = 1:length(firstColumn)
+    textPosition = [ firstColumnFromLeft firstColumnFromBottom(i) firstColumnWidth(i) textHeight ];
+    firstColumn(i) = CreateTextComponent( panel.handle, textPosition, firstColumnString(i) );
+end
+
+%% second column of text components
+% string in each text component
+secondColumnString = { 'Disconnected' 'Off' 'Disconnected' '0.00' '00' 'Left' 'Elbow extension'...
+    '8' '0  0  0' 'Trial Complete' pwd '0' };
+if deviceId > 0
+    secondColumnString{1} = 'Connected';
+end
+
+% initialize components
+secondColumn = zeros( 1, length(firstColumnString) );
+
+% determine position of each text component (in characters)
+secondColumnFromLeft = max(firstColumnWidth)+1;
+secondColumnFromBottom = firstColumnFromBottom;
+secondColumnWidth = [ 26.8, 18.4, 26.8, 10.6, 4.6, 10, 32.4, 6.6, 30, 30.6, 50.4, 8 ];
+
+for i = 1:length(secondColumn)
+    textPosition = [ secondColumnFromLeft secondColumnFromBottom(i) secondColumnWidth(i) textHeight ];
+    panel.secondColumn(i) = CreateTextComponent( panel.handle, textPosition, secondColumnString(i) );
+end
+
+%% third column - units and total trials
+% units
+% values 4, 8, 12 need unit labels
+
+% string in each text component
+unitString = {'N','kg*m^2','degrees'};
+
+% initialize components
+unit = zeros(1,length(unitString));
+
+% determine position of each text component (in characters)
+unitFromLeft = [60 47 47];
+unitFromBottom = [ secondColumnFromBottom(4) secondColumnFromBottom(8) secondColumnFromBottom(12) ];
+unitWidth = [ 2.6, 12.8, 14.8 ];
+
+for i=1:length(unitString)
+    textPosition = [ unitFromLeft(i) unitFromBottom(i) unitWidth(i) textHeight ];
+    unit(i) = CreateTextComponent( panel.handle, textPosition, unitString(i) );
+end
+
+%total trials
+trialsFromBottom = secondColumnFromBottom(5);
+
+% the 'of' string in between current trial number and total trial number
+ofString='of';
+ofFromLeft = 43;
+ofWidth = 3.6;
+
+ofPosition = [ ofFromLeft trialsFromBottom ofWidth textHeight ];
+CreateTextComponent( panel.handle, ofPosition, ofString );
+
+% number of total trials
+totalTrialsString = '00';
+totalTrialsFromLeft = 48;
+totalTrialsWidth = 4.6;
+
+totalTrialsPosition = [ totalTrialsFromLeft trialsFromBottom totalTrialsWidth textHeight ];
+panel.totalTrials = CreateTextComponent( panel.handle, totalTrialsPosition, totalTrialsString );

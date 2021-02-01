@@ -1,0 +1,31 @@
+FileVersion	""
+G3AmpTuneSpecs	9 3 0 255 -7 3 -1 -1 20 20
+G3AuxMask	32768
+G3BulkInSize	512
+G3BulkInTransfer	1
+G3Cadj	0
+G3Cint	5
+G3Cref	8
+G3DeviceId	1275
+G3FailureTime	12000
+G3IntCyc	6
+G3InterfaceType	0
+G3IpAddress	""
+G3IsDecreasing	0
+G3MetaData	""
+G3MuxFloatMask	0
+G3OffsetTuneSpecs	9 5 0 255 410 3 -1 -1 125 -1
+G3OscAmp	65
+G3OscFreq	100
+G3ParamsFile	"T4500-Northwestern-ArrayG30-params.txt"
+G3PhaseTuneSpecs	9 2 0 255 2 3 -1 65 20 20
+G3Pid	259
+G3ReadFailMax	0
+G3RecoverAttempts	2
+G3ReorderingFile	""
+G3SendAttempts	3
+G3SendTimeout	800
+G3SetCyc	6
+G3TimeOutUsbRead	1000
+G3TimeOutUsbWrite	1000
+G3TimeResetInterval	15000

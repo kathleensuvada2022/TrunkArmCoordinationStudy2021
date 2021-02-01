@@ -1,0 +1,94 @@
+function panel = CreateProtocolPanelComponents( panel )
+
+%% create two static text components
+textString = { 'experimental variables', 'values to test' };
+
+panelWidth = panel.panelPosition(3);
+panelHeight = panel.panelPosition(4);
+panelEdge = panel.panelEdge(1);
+textFromLeft = [ 1, panelWidth/2 ];    
+textHeight = 3.615;
+textFromBottom = panelHeight - panelEdge*2 - textHeight;
+textWidth = [23 11];    
+
+for textIndex = 1:length(textString)
+    textPosition = [ textFromLeft(textIndex) textFromBottom textWidth(textIndex) textHeight ];
+    CreateTextComponent( panel.handle, textPosition, textString(textIndex) );
+end
+
+
+%% create listbox and edit text box components
+boxHeight = 12;
+boxFromBottom = textFromBottom - boxHeight;
+boxWidth = panelWidth/2 - 2;  
+
+% experimental variables listbox
+listboxString = {'% support','plane (degrees)','target (cm)'};
+
+% listbox position
+listboxFromLeft = textFromLeft(1); 
+listboxPosition = [ listboxFromLeft boxFromBottom boxWidth boxHeight ];
+
+panel.experimentalVariablesListbox = CreateListboxComponent( panel.handle,...
+    listboxPosition, listboxString );
+
+% edit text box underneath "values"
+panel.userData.percentSupportValuesString = {'0','12.5','25'};
+panel.userData.planeValuesString = {'0','15','30'};
+panel.userData.targetValuesString = {'EE','EF'};
+
+editBoxFromLeft = textFromLeft(2); 
+editBoxPosition = [ editBoxFromLeft boxFromBottom boxWidth boxHeight ];
+
+panel.valuesEditBox = uicontrol('Parent', panel.handle,...
+    'Max',2,...         % allow multi-line editing
+    'Style', 'edit',...
+    'Units','characters',...
+    'Position', editBoxPosition,...
+    'String',panel.userData.percentSupportValuesString,...
+    'FontSize',12,...
+    'HorizontalAlignment','left',...
+    'UserData',panel.userData);
+
+
+%% create push button components
+% standard push button height and distance from the bottom of the panel
+pushButtonHeight = 2.538;
+pushButtonFromBottom = boxFromBottom - pushButtonHeight;
+
+% Create "Add" push button
+addPushButtonFromLeft = listboxFromLeft; 
+addPushButtonWidth = 9.8;  
+addPushButtonPosition = [ addPushButtonFromLeft, pushButtonFromBottom,...
+    addPushButtonWidth, pushButtonHeight ];
+
+addPushButtonString = 'Add';
+
+panel.addPushButton = CreatePushButtonComponent(...
+    panel.handle, addPushButtonPosition, addPushButtonString);
+
+
+% Create "Remove" push button
+removePushButtonFromLeft = addPushButtonFromLeft + addPushButtonWidth; 
+removePushButtonWidth = 17.6;  
+removePushButtonPosition = [ removePushButtonFromLeft, pushButtonFromBottom,...
+    removePushButtonWidth, pushButtonHeight ];
+
+removePushButtonString = 'Remove';
+
+panel.removePushButton = CreatePushButtonComponent(...
+    panel.handle, removePushButtonPosition, removePushButtonString );
+
+
+% Create "Randomize" push button
+randomizePushButtonFromLeft = editBoxFromLeft;
+randomizePushButtonWidth = 22.6;
+randomizePushButtonPosition = [ randomizePushButtonFromLeft pushButtonFromBottom...
+    randomizePushButtonWidth pushButtonHeight ];
+
+randomizePushButtonString = 'Randomize';
+
+panel.randomizePushButton = CreatePushButtonComponent(...
+    panel.handle, randomizePushButtonPosition, randomizePushButtonString );
+
+end

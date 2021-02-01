@@ -1,0 +1,653 @@
+Log file D:\Kacey\TrunkArmStudy\setup\\log\ArrayG3_0BA667F0.log created on 2021-01-28 at 04:55:18 PM
+System Logging Level = 5
+111: created new ArrayG3 object
+Loading configuration from D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual-ArrayG30-hw.txt
+Using PN7931R1-STA-NorthwesternDual-ArrayG30-params.txt for parameters
+Opening parameters file D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual-ArrayG30-params.txt
+Read parameters for 512 elements
+0 auxiliary channels found
+Generating interlace configuration...done with readSize = 256
+After all that, elemCount_ = 512 and auxCount_ = 0
+532: configuring G3 electronics
+Creating a new USB device interface
+Successfully found device with ID 1116
+Successfully sent 1 bytes of message 0x63 at 0.55 (0 remain)
+Successfully sent 1 bytes of message 0x63 at 0.554 (0 remain)
+Stopping any existing scan
+stopArrayScan(): 70
+Enqueueing command with 0 extra bytes: 70 00 00 00 00 00  (Output FIFO size = 1) at 0.559
+Enqueueing command with 0 extra bytes: 68 00 00 00 00 00  (Output FIFO size = 2) at 0.562
+Enqueueing command with 0 extra bytes: 0b 00 00 00 00 00  (Output FIFO size = 3) at 0.564
+Setting system-wide parameters
+Enqueueing command with 0 extra bytes: 20 03 00 00 00 00  (Output FIFO size = 4) at 0.567
+Enqueueing command with 0 extra bytes: 22 02 00 00 00 00  (Output FIFO size = 5) at 0.57
+Enqueueing command with 0 extra bytes: 21 00 00 00 00 00  (Output FIFO size = 6) at 0.572
+Enqueueing command with 0 extra bytes: 10 50 00 00 00 00  (Output FIFO size = 7) at 0.575
+Setting Oscillator Frequency to 100
+Enqueueing command with 0 extra bytes: 11 64 00 00 00 00  (Output FIFO size = 8) at 0.578
+Enqueueing command with 0 extra bytes: 12 0b 00 00 00 00  (Output FIFO size = 9) at 0.581
+Enqueueing command with 0 extra bytes: 13 06 00 00 00 00  (Output FIFO size = 10) at 0.583
+Downloading channel parameters
+Enqueueing command with 58 extra bytes: 64 00 00 00 3a 06  (Output FIFO size = 11) at 0.586
+Enqueueing command with 58 extra bytes: 64 01 5c 00 3a 06  (Output FIFO size = 12) at 0.588
+Enqueueing command with 58 extra bytes: 64 02 b8 00 3a 06  (Output FIFO size = 13) at 0.591
+Enqueueing command with 58 extra bytes: 64 04 14 00 3a 06  (Output FIFO size = 14) at 0.593
+Enqueueing command with 58 extra bytes: 64 05 70 00 3a 06  (Output FIFO size = 15) at 0.596
+Enqueueing command with 58 extra bytes: 64 06 cc 00 3a 06  (Output FIFO size = 16) at 0.599
+Enqueueing command with 58 extra bytes: 64 08 28 00 3a 06  (Output FIFO size = 17) at 0.602
+Enqueueing command with 58 extra bytes: 64 09 84 00 3a 06  (Output FIFO size = 18) at 0.605
+Enqueueing command with 48 extra bytes: 64 0a e0 00 30 06  (Output FIFO size = 19) at 0.608
+Enqueueing command with 58 extra bytes: 64 00 01 00 3a 06  (Output FIFO size = 20) at 0.612
+Enqueueing command with 58 extra bytes: 64 01 5d 00 3a 06  (Output FIFO size = 21) at 0.615
+Enqueueing command with 58 extra bytes: 64 02 b9 00 3a 06  (Output FIFO size = 22) at 0.618
+Enqueueing command with 58 extra bytes: 64 04 15 00 3a 06  (Output FIFO size = 23) at 0.622
+Enqueueing command with 58 extra bytes: 64 05 71 00 3a 06  (Output FIFO size = 24) at 0.625
+Enqueueing command with 58 extra bytes: 64 06 cd 00 3a 06  (Output FIFO size = 25) at 0.627
+Enqueueing command with 58 extra bytes: 64 08 29 00 3a 06  (Output FIFO size = 26) at 0.63
+Enqueueing command with 58 extra bytes: 64 09 85 00 3a 06  (Output FIFO size = 27) at 0.633
+Enqueueing command with 48 extra bytes: 64 0a e1 00 30 06  (Output FIFO size = 28) at 0.638
+Enqueueing command with 58 extra bytes: 64 00 02 00 3a 06  (Output FIFO size = 29) at 0.641
+Enqueueing command with 58 extra bytes: 64 01 5e 00 3a 06  (Output FIFO size = 30) at 0.644
+Enqueueing command with 58 extra bytes: 64 02 ba 00 3a 06  (Output FIFO size = 31) at 0.647
+Enqueueing command with 58 extra bytes: 64 04 16 00 3a 06  (Output FIFO size = 32) at 0.65
+Enqueueing command with 58 extra bytes: 64 05 72 00 3a 06  (Output FIFO size = 33) at 0.652
+Enqueueing command with 58 extra bytes: 64 06 ce 00 3a 06  (Output FIFO size = 34) at 0.655
+Enqueueing command with 58 extra bytes: 64 08 2a 00 3a 06  (Output FIFO size = 35) at 0.659
+Enqueueing command with 58 extra bytes: 64 09 86 00 3a 06  (Output FIFO size = 36) at 0.661
+Enqueueing command with 48 extra bytes: 64 0a e2 00 30 06  (Output FIFO size = 37) at 0.664
+Enqueueing command with 58 extra bytes: 64 00 03 00 3a 06  (Output FIFO size = 38) at 0.667
+Enqueueing command with 58 extra bytes: 64 01 5f 00 3a 06  (Output FIFO size = 39) at 0.669
+Enqueueing command with 58 extra bytes: 64 02 bb 00 3a 06  (Output FIFO size = 40) at 0.671
+Enqueueing command with 58 extra bytes: 64 04 17 00 3a 06  (Output FIFO size = 41) at 0.674
+Enqueueing command with 58 extra bytes: 64 05 73 00 3a 06  (Output FIFO size = 42) at 0.676
+Enqueueing command with 58 extra bytes: 64 06 cf 00 3a 06  (Output FIFO size = 43) at 0.679
+Enqueueing command with 58 extra bytes: 64 08 2b 00 3a 06  (Output FIFO size = 44) at 0.682
+Enqueueing command with 58 extra bytes: 64 09 87 00 3a 06  (Output FIFO size = 45) at 0.685
+Enqueueing command with 48 extra bytes: 64 0a e3 00 30 06  (Output FIFO size = 46) at 0.687
+Enqueueing command with 58 extra bytes: 64 00 04 00 3a 06  (Output FIFO size = 47) at 0.691
+Enqueueing command with 58 extra bytes: 64 01 60 00 3a 06  (Output FIFO size = 48) at 0.694
+Enqueueing command with 58 extra bytes: 64 02 bc 00 3a 06  (Output FIFO size = 49) at 0.697
+Enqueueing command with 58 extra bytes: 64 04 18 00 3a 06  (Output FIFO size = 50) at 0.699
+Enqueueing command with 58 extra bytes: 64 05 74 00 3a 06  (Output FIFO size = 51) at 0.702
+Enqueueing command with 58 extra bytes: 64 06 d0 00 3a 06  (Output FIFO size = 52) at 0.705
+Enqueueing command with 58 extra bytes: 64 08 2c 00 3a 06  (Output FIFO size = 53) at 0.708
+Enqueueing command with 58 extra bytes: 64 09 88 00 3a 06  (Output FIFO size = 54) at 0.71
+Enqueueing command with 48 extra bytes: 64 0a e4 00 30 06  (Output FIFO size = 55) at 0.713
+Enqueueing command with 58 extra bytes: 64 00 05 00 3a 06  (Output FIFO size = 56) at 0.715
+Enqueueing command with 58 extra bytes: 64 01 61 00 3a 06  (Output FIFO size = 57) at 0.718
+Enqueueing command with 58 extra bytes: 64 02 bd 00 3a 06  (Output FIFO size = 58) at 0.72
+Enqueueing command with 58 extra bytes: 64 04 19 00 3a 06  (Output FIFO size = 59) at 0.724
+Enqueueing command with 58 extra bytes: 64 05 75 00 3a 06  (Output FIFO size = 60) at 0.726
+Enqueueing command with 58 extra bytes: 64 06 d1 00 3a 06  (Output FIFO size = 61) at 0.728
+Enqueueing command with 58 extra bytes: 64 08 2d 00 3a 06  (Output FIFO size = 62) at 0.731
+Enqueueing command with 58 extra bytes: 64 09 89 00 3a 06  (Output FIFO size = 63) at 0.733
+Enqueueing command with 48 extra bytes: 64 0a e5 00 30 06  (Output FIFO size = 64) at 0.736
+Starting scan
+Enqueueing command with 0 extra bytes: 67 02 00 00 80 00  (Output FIFO size = 65) at 0.74
+Starting array scan with 512 elems and 0 aux channels
+Enqueueing command with 0 extra bytes: 80 00 00 00 00 00  (Output FIFO size = 66) at 0.745
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x68 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Protocol version seen as 4
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Received ACK for 0x63 at 0.763; 66 remain
+Successfully sent 6 bytes of message 0x70 at 0.767 (66 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x70 consisting of 1 packets.
+Received ACK for 0x70 at 0.779; 65 remain
+Successfully sent 6 bytes of message 0x68 at 0.784 (65 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x68 consisting of 1 packets.
+Received ACK for 0x68 at 0.792; 64 remain
+Successfully sent 6 bytes of message 0xb at 0.796 (64 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x0b consisting of 1 packets.
+Received ACK for 0xb at 0.804; 63 remain
+Successfully sent 6 bytes of message 0x20 at 0.808 (63 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x20 consisting of 1 packets.
+Received ACK for 0x20 at 0.814; 62 remain
+Successfully sent 6 bytes of message 0x22 at 0.819 (62 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x22 consisting of 1 packets.
+Received ACK for 0x22 at 0.826; 61 remain
+Successfully sent 6 bytes of message 0x21 at 0.83 (61 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x21 consisting of 1 packets.
+Received ACK for 0x21 at 0.835; 60 remain
+Successfully sent 6 bytes of message 0x10 at 0.84 (60 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x10 consisting of 1 packets.
+Received ACK for 0x10 at 0.848; 59 remain
+Successfully sent 6 bytes of message 0x11 at 0.852 (59 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x11 consisting of 1 packets.
+Received ACK for 0x11 at 0.864; 58 remain
+Successfully sent 6 bytes of message 0x12 at 0.868 (58 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x12 consisting of 1 packets.
+Received ACK for 0x12 at 0.876; 57 remain
+Successfully sent 6 bytes of message 0x13 at 0.88 (57 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x13 consisting of 1 packets.
+Received ACK for 0x13 at 0.888; 56 remain
+Successfully sent 64 bytes of message 0x64 at 0.892 (56 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.899; 55 remain
+Successfully sent 64 bytes of message 0x64 at 0.903 (55 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.91; 54 remain
+Successfully sent 64 bytes of message 0x64 at 0.914 (54 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.921; 53 remain
+Successfully sent 64 bytes of message 0x64 at 0.925 (53 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.931; 52 remain
+Successfully sent 64 bytes of message 0x64 at 0.935 (52 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.942; 51 remain
+Successfully sent 64 bytes of message 0x64 at 0.946 (51 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.952; 50 remain
+Successfully sent 64 bytes of message 0x64 at 0.956 (50 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.967; 49 remain
+Successfully sent 64 bytes of message 0x64 at 0.972 (49 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.978; 48 remain
+Successfully sent 54 bytes of message 0x64 at 0.982 (48 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.988; 47 remain
+Successfully sent 64 bytes of message 0x64 at 0.992 (47 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 0.998; 46 remain
+Successfully sent 64 bytes of message 0x64 at 1.002 (46 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.009; 45 remain
+Successfully sent 64 bytes of message 0x64 at 1.012 (45 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.019; 44 remain
+Successfully sent 64 bytes of message 0x64 at 1.022 (44 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.028; 43 remain
+Successfully sent 64 bytes of message 0x64 at 1.031 (43 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.038; 42 remain
+Successfully sent 64 bytes of message 0x64 at 1.043 (42 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.049; 41 remain
+Successfully sent 64 bytes of message 0x64 at 1.053 (41 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.063; 40 remain
+Successfully sent 64 bytes of message 0x64 at 1.067 (40 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.073; 39 remain
+Successfully sent 54 bytes of message 0x64 at 1.077 (39 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.083; 38 remain
+Successfully sent 64 bytes of message 0x64 at 1.087 (38 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.093; 37 remain
+Successfully sent 64 bytes of message 0x64 at 1.096 (37 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.102; 36 remain
+Successfully sent 64 bytes of message 0x64 at 1.106 (36 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.112; 35 remain
+Successfully sent 64 bytes of message 0x64 at 1.116 (35 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.123; 34 remain
+Successfully sent 64 bytes of message 0x64 at 1.126 (34 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.132; 33 remain
+Successfully sent 64 bytes of message 0x64 at 1.136 (33 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.143; 32 remain
+Successfully sent 64 bytes of message 0x64 at 1.146 (32 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.153; 31 remain
+Successfully sent 64 bytes of message 0x64 at 1.157 (31 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.169; 30 remain
+Successfully sent 54 bytes of message 0x64 at 1.173 (30 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.18; 29 remain
+Successfully sent 64 bytes of message 0x64 at 1.183 (29 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.19; 28 remain
+Successfully sent 64 bytes of message 0x64 at 1.193 (28 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.199; 27 remain
+Successfully sent 64 bytes of message 0x64 at 1.203 (27 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.21; 26 remain
+Successfully sent 64 bytes of message 0x64 at 1.214 (26 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.219; 25 remain
+Successfully sent 64 bytes of message 0x64 at 1.223 (25 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.228; 24 remain
+Successfully sent 64 bytes of message 0x64 at 1.232 (24 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.239; 23 remain
+Successfully sent 64 bytes of message 0x64 at 1.244 (23 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.251; 22 remain
+Successfully sent 64 bytes of message 0x64 at 1.255 (22 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.266; 21 remain
+Successfully sent 54 bytes of message 0x64 at 1.269 (21 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.275; 20 remain
+Successfully sent 64 bytes of message 0x64 at 1.279 (20 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.286; 19 remain
+Successfully sent 64 bytes of message 0x64 at 1.29 (19 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.297; 18 remain
+Successfully sent 64 bytes of message 0x64 at 1.301 (18 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.308; 17 remain
+Successfully sent 64 bytes of message 0x64 at 1.311 (17 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.318; 16 remain
+Successfully sent 64 bytes of message 0x64 at 1.323 (16 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.329; 15 remain
+Successfully sent 64 bytes of message 0x64 at 1.333 (15 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.339; 14 remain
+Successfully sent 64 bytes of message 0x64 at 1.344 (14 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.351; 13 remain
+Successfully sent 64 bytes of message 0x64 at 1.355 (13 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.368; 12 remain
+Successfully sent 54 bytes of message 0x64 at 1.372 (12 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.379; 11 remain
+Successfully sent 64 bytes of message 0x64 at 1.383 (11 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.39; 10 remain
+Successfully sent 64 bytes of message 0x64 at 1.393 (10 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.4; 9 remain
+Successfully sent 64 bytes of message 0x64 at 1.404 (9 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.41; 8 remain
+Successfully sent 64 bytes of message 0x64 at 1.414 (8 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.421; 7 remain
+Successfully sent 64 bytes of message 0x64 at 1.426 (7 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.433; 6 remain
+Successfully sent 64 bytes of message 0x64 at 1.437 (6 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.445; 5 remain
+Successfully sent 64 bytes of message 0x64 at 1.45 (5 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x63 consisting of 1 packets.
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.463; 4 remain
+Successfully sent 64 bytes of message 0x64 at 1.466 (4 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.473; 3 remain
+Successfully sent 54 bytes of message 0x64 at 1.477 (3 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x64 consisting of 1 packets.
+Received ACK for 0x64 at 1.485; 2 remain
+Successfully sent 6 bytes of message 0x67 at 1.489 (2 remain)
+Reading USB...done reading 64 bytes.
+64 byte left to process in our input buffer
+Processing command packet
+Read command 0x67 consisting of 1 packets.
+Received ACK for 0x67 at 1.497; 1 remain
+Successfully sent 6 bytes of message 0x80 at 1.501 (1 remain)
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+Received ACK for 0x80 at 1.574; 0 remain
+Setting scanning flag to TRUE for T4500
+448 byte left to process in our input buffer
+Processing data packet
+384 byte left to process in our input buffer
+Processing data packet
+320 byte left to process in our input buffer
+Processing data packet
+256 byte left to process in our input buffer
+Processing data packet
+192 byte left to process in our input buffer
+Processing data packet
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing data packet
+Done reading new packets. Processing frame
+Resetting G3 timestamp: msHw_ = 247396, msGlobal = 1635, msStart_ = 0, msOffset_ = 0 (1635)
+Skipping the first frame
+448 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+384 byte left to process in our input buffer
+Processing data packet
+320 byte left to process in our input buffer
+Processing data packet
+256 byte left to process in our input buffer
+Processing data packet
+192 byte left to process in our input buffer
+Processing data packet
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing data packet
+448 byte left to process in our input buffer
+Processing data packet
+Done reading new packets. Processing frame
+1699: setting state to stRunning for Master
+384 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+320 byte left to process in our input buffer
+Processing data packet
+256 byte left to process in our input buffer
+Processing data packet
+192 byte left to process in our input buffer
+Processing data packet
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing data packet
+448 byte left to process in our input buffer
+Processing data packet
+384 byte left to process in our input buffer
+Processing data packet
+Done reading new packets. Processing frame
+320 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+256 byte left to process in our input buffer
+Processing data packet
+192 byte left to process in our input buffer
+Processing data packet
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing data packet
+448 byte left to process in our input buffer
+Processing data packet
+384 byte left to process in our input buffer
+Processing data packet
+320 byte left to process in our input buffer
+Processing data packet
+Done reading new packets. Processing frame
+256 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+192 byte left to process in our input buffer
+Processing data packet
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+Reading USB...done reading 512 bytes.
+512 byte left to process in our input buffer
+Processing data packet
+448 byte left to process in our input buffer
+Processing data packet
+384 byte left to process in our input buffer
+Processing data packet
+320 byte left to process in our input buffer
+Processing data packet
+256 byte left to process in our input buffer
+Processing data packet
+Done reading new packets. Processing frame
+192 byte left to process in our input buffer
+Processing command packet
+Read command 0x80 consisting of 9 packets.
+128 byte left to process in our input buffer
+Processing data packet
+64 byte left to process in our input buffer
+Processing data packet
+1918: changing state to stTerminating
+stopArrayScan(): 70
+Enqueueing command with 0 extra bytes: 70 00 00 00 00 00 Successfully sent 6 bytes of message 0x70 at 1.944 (0 remain)
+Enqueueing command with 0 extra bytes: 68 00 00 00 00 00 Successfully sent 6 bytes of message 0x68 at 2.071 (0 remain)
+Enqueueing command with 0 extra bytes: 62 00 00 00 00 00 Successfully sent 6 bytes of message 0x62 at 2.097 (0 remain)
+2248: changing state to stTerminating
+stopArrayScan(): 70
+Enqueueing command with 0 extra bytes: 70 00 00 00 00 00 Successfully sent 6 bytes of message 0x70 at 2.259 (0 remain)
+Enqueueing command with 0 extra bytes: 68 00 00 00 00 00 Successfully sent 6 bytes of message 0x68 at 2.372 (0 remain)
+Enqueueing command with 0 extra bytes: 62 00 00 00 00 00 Successfully sent 6 bytes of message 0x62 at 2.384 (0 remain)

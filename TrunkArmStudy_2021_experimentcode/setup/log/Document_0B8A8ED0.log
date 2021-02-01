@@ -1,0 +1,31 @@
+Log file D:\Kacey\TrunkArmStudy\setup\\log\Document_0B8A8ED0.log created on 2021-01-28 at 04:57:36 PM
+System Logging Level = 5
+Creating default base document 0B8A8ED0
+Creating new document 0B8A8ED0 from D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual.cfg
+Parameter::load returned -28
+Loading user settings from PN7931R1-STA-NorthwesternDual-set.txt...
+Starting hardware creation process for 1 devices
+CfgBufferSizes size = 1
+Creating a new LiveBuffer with 35294 frames...Using protection size of 20...success.
+Setting datalog interval of 0
+Creating hardware of type ArrayG3...success.
+Loading scales for Buffer 0 from PN7931R1-STA-NorthwesternDual-ArrayG30-cal.txt...success with D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual-ArrayG30-cal.txt
+Adding new buffer to buffergroup.
+Loading extraction lists from PN7931R1-STA-NorthwesternDual-ext.txt...error.
+Loading 2D vertices from PN7931R1-STA-NorthwesternDual-vertex.txt...success.
+Loading Display file from PN7931R1-STA-NorthwesternDual-disp.txt...success.
+Building Virtual Array from DisplayList...done.
+Building 2D Geometry...done.
+Loading 3D vertices from ...error.
+Using 2D vertex info for default 3D display
+Creating new selection object...done.
+Setting up calibrated ViewScale...done.
+Finding maximum raw output...using 4095
+Device is calibrated.
+Setting up calibrated units...done.
+Adding filters to incoming data buffers...
+done.
+Starting data acquisition...done.
+Finished creating new Capture Document
+Destroying Capture document 0B8A8ED0
+Stopping all running hardware...done.

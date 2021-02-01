@@ -1,0 +1,87 @@
+function structure = CreateEmgChannelsComponents( structure, daqChannelsEditBox )
+
+textString = {'BRD', 'BIC', 'TRILT', 'TRILH', 'ADL', 'IDL', 'PDL', 'PMJV', 'TTL'};
+
+totalChannels = length(textString);
+
+
+axisWidth = 70;
+axisHeight = 5.308;
+
+textFromLeft1 = 1;
+textWidth = 18;
+textHeight = 1.923;
+figureTop = 52;
+axisTop = figureTop - 1;
+textTop = axisTop + axisHeight/2;
+
+
+%% create names for the first 10 axis
+textBottom = textTop - ( axisHeight*ceil(totalChannels/2) );
+textFromBottom = textTop : -axisHeight : textBottom ;
+for textIndex = 1 : ceil(totalChannels/2)
+    textPosition = [ textFromLeft1, textFromBottom(textIndex), textWidth, textHeight ];
+    structure.labels(textIndex) = CreateTextComponent( structure.figureHandle, textPosition, textString(textIndex) );
+end
+
+% create y axis location vector to alternate the side of the axis the y axis is 
+% labeled for each graph - alternates "left" "right", for the amount of emg channels used
+yAxisLocation = cell(totalChannels,1);
+for i=1:totalChannels
+    if mod(i,2)==1     % odd
+        yAxisLocation{i} = 'Left';
+    else     % even
+        yAxisLocation{i} = 'Right';
+    end
+end
+
+%% create the first column of 10 axis
+axisFromLeft1 = textFromLeft1 + textWidth + 10;
+axisNumber = 1;
+firstColumnEmgAmount = ceil(totalChannels/2);
+axisBottom = axisTop - ( axisHeight * firstColumnEmgAmount );
+axisFromBottom = axisTop : -axisHeight : axisBottom;
+for axisIndex = 1 : firstColumnEmgAmount
+    axisPosition = [ axisFromLeft1 axisFromBottom(axisIndex) axisWidth axisHeight ];
+    structure.axis(axisNumber) = CreateAxesComponent( structure.figureHandle, axisPosition, yAxisLocation{axisNumber} );
+    axisNumber = axisNumber + 1;
+end
+% set the last component to have an tick marks and a name
+%XTick = '''XTick'',[0.0, 0.2, 0.4, 0.6, 0.8, 1.0], ' ;
+%XTickLabelMode = '''XTickLabelMode'',''auto'', ' ;
+%XTickMode = '''XTickMode'',''auto''' ;
+set(structure.axis(firstColumnEmgAmount),...
+    'XTick',[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],...
+    'XTickLabelMode','auto',...
+    'XTickMode','auto' );
+xlabel( structure.axis(firstColumnEmgAmount), 't (s)' );
+
+%% create names for the second 20 axis
+textBottom = textTop - axisHeight*(totalChannels - ceil(totalChannels/2));
+textFromBottom = textTop : -axisHeight : textBottom;
+textFromLeft2 = axisFromLeft1 + axisWidth + 25;
+textNumber = firstColumnEmgAmount + 1;
+for textIndex = 1 : totalChannels - ceil(totalChannels/2)
+    textPosition = [ textFromLeft2, textFromBottom(textIndex), textWidth, textHeight ];
+    structure.labels(textNumber) = CreateTextComponent( structure.figureHandle, textPosition, textString(textNumber) );
+    textNumber = textNumber + 1;
+end
+
+%% create the second column of 10 axis
+axisFromLeft2 = textFromLeft2 + textWidth + 10;
+secondColumnEmgAmount = totalChannels - ceil(totalChannels/2);
+axisBottom = axisTop - ( axisHeight * secondColumnEmgAmount );
+axisFromBottom = axisTop : -axisHeight : axisBottom;
+for axisIndex = 1 : secondColumnEmgAmount
+    axisPosition = [ axisFromLeft2 axisFromBottom(axisIndex) axisWidth axisHeight ];
+    structure.axis(axisNumber) = CreateAxesComponent( structure.figureHandle, axisPosition, yAxisLocation{axisNumber} );
+    axisNumber = axisNumber + 1;
+end
+% set the last component to have an labeled tick marks
+set(structure.axis(totalChannels),...
+    'XTick',[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],...
+    'XTickLabelMode','auto',...
+    'XTickMode','auto' );
+xlabel( structure.axis(totalChannels), 't (s)' );
+
+end

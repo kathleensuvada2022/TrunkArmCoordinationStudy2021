@@ -1,0 +1,28 @@
+Log file D:\Kacey\TrunkArmStudy\setup\\log\HwManager_0B8A8F78.log created on 2021-01-28 at 04:55:18 PM
+System Logging Level = 5
+Creating Hardware Manager 0B8A8F78...
+Using Plugin folder of D:\Kacey\TrunkArmStudy\HwPlugins\
+Building factory using searchPath D:\Kacey\TrunkArmStudy\HwPlugins\Hw*Lib.dll
+Loading HwArrayG2Lib.dll...success!
+Loading HWArrayG3Lib.dll...success!
+Loading HwD600Lib.dll...success!
+Loading HWEmulatorLib.dll...success!
+Loading HWLoadstarLib.dll...success!
+Loading HwMensorLib.dll...success!
+Loading HwNidaqLib.dll...success!
+Loading HwOmegaTempLib.dll...success!
+Loading HwReferenceLib.dll...success!
+Loading HWTileLib.dll...success!
+Built factory for 10 plugins:
+ArrayG2 ArrayG3 D600 Emulator Loadstar Mensor Nidaq OmegaTemp Reference Tile 
+
+Attaching device type ArrayG3 from file D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual-ArrayG30-hw.txt
+109: Constructor found in factory.
+124: Device created.
+Resizing buffer to 35294 frames, recordsize = 512
+529: Starting acquisition threads...
+530: Device 0: Success. Done
+1831: Stopping acquisition thread:Device 0: is alive. Terminating... done.
+Removing back inserter
+Destroying Hardware Manager 0B8A8F78
+Factory is purged

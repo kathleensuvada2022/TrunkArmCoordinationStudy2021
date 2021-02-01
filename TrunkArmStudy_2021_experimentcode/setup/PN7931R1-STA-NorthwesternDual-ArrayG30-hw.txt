@@ -1,0 +1,31 @@
+FileVersion	""
+G3AmpTuneSpecs	9 3 60 255 -24 3 -1 -1 30 20
+G3AuxMask	32768
+G3BulkInSize	512
+G3BulkInTransfer	1
+G3Cadj	0
+G3Cint	2
+G3Cref	3
+G3DeviceId	1116
+G3FailureTime	12000
+G3IntCyc	12
+G3InterfaceType	0
+G3IpAddress	""
+G3IsDecreasing	0
+G3MetaData	""
+G3MuxFloatMask	0
+G3OffsetTuneSpecs	9 5 0 255 410 3 -1 -1 80 -1
+G3OscAmp	80
+G3OscFreq	100
+G3ParamsFile	"PN7931R1-STA-NorthwesternDual-ArrayG30-params.txt"
+G3PhaseTuneSpecs	9 2 0 100 0 3 -1 85 30 20
+G3Pid	259
+G3ReadFailMax	0
+G3RecoverAttempts	2
+G3ReorderingFile	""
+G3SendAttempts	3
+G3SendTimeout	800
+G3SetCyc	7
+G3TimeOutUsbRead	1000
+G3TimeOutUsbWrite	1000
+G3TimeResetInterval	15000

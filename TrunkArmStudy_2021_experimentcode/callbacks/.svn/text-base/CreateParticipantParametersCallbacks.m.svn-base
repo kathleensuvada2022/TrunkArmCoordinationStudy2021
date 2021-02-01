@@ -1,0 +1,257 @@
+function participantParameters = CreateParticipantParametersCallbacks(...
+    initializeRobot, mainWindow, robot, display, participantParameters )
+
+set(participantParameters.loadFromFilePushButton,...
+    'Callback',{@loadFromFilePushButton_Callback,mainWindow,participantParameters,initializeRobot});
+
+set(participantParameters.participantIdEditBox,...
+    'Callback',{@participantIdEditBox_Callback,mainWindow});
+set(participantParameters.ageEditBox,...
+    'Callback',{@ageEditBox_Callback,mainWindow});
+set(participantParameters.genderEditBox,...
+    'Callback',{@genderEditBox_Callback,participantParameters});
+set(participantParameters.act3dVersionEditBox,...
+    'Callback',{@act3dVersionEditBox_Callback,mainWindow});
+set(participantParameters.upperArmLengthEditBox,...
+    'Callback',{@upperArmLengthEditBox_Callback,mainWindow});
+set(participantParameters.lowerArmLengthEditBox,...
+    'Callback',{@lowerArmLengthEditBox_Callback,mainWindow});
+set(participantParameters.elbowToEndEffectorEditBox,...
+    'Callback',{@elbowToEndEffectorEditBox_Callback,mainWindow});
+set(participantParameters.handLengthEditBox,...
+    'Callback',{@handLengthEditBox_Callback,mainWindow});
+set(participantParameters.elbowFlexionEditBox,...
+    'Callback',{@elbowFlexionEditBox_Callback,mainWindow});
+set(participantParameters.shoulderFlexionEditBox,...
+    'Callback',{@shoulderFlexionEditBox_Callback,mainWindow});
+set(participantParameters.abductionMaxTorqueEditBox,...
+    'Callback',{@abductionMaxTorqueEditBox_Callback,mainWindow,participantParameters,display});
+set(participantParameters.abductionMaxForceEditBox,...
+    'Callback',{@abductionMaxForceEditBox_Callback,mainWindow});
+set(participantParameters.limbWeightEditBox,...
+    'Callback',{@limbWeightEditBox_Callback,mainWindow});
+
+set(participantParameters.notesEditBox,...
+    'Callback',{@notesEditBox_Callback,mainWindow});
+
+set(participantParameters.saveToFilePushButton,...
+    'Callback',{@saveToFilePushButton_Callback,mainWindow,participantParameters, initializeRobot});
+set(participantParameters.savePushButton,...
+    'Callback',{@savePushButton_Callback,mainWindow, participantParameters, display, robot});
+set(participantParameters.cancelPushButton,...
+    'Callback',{@cancelPushButton_Callback,mainWindow, participantParameters, display});
+
+set( participantParameters.figureHandle, 'CloseRequestFcn', @(x,y)disp('Please click Save or Cancel') );
+
+end
+
+function loadFromFilePushButton_Callback(hObject, eventdata, mainWindow, participantParameters, initializeRobot )
+% load data
+[filename, pathname] = uigetfile('*.mat', 'Pick an M-file');
+filepath = [pathname filename];
+data = importdata(filepath);
+
+% write data for each variable into the corresponding edit box
+set( participantParameters.participantIdEditBox, 'String', data{1,2} );
+set( participantParameters.ageEditBox, 'String',data{2,2} );
+set( participantParameters.genderEditBox, 'String',data{3,2} );
+set( participantParameters.act3dVersionEditBox, 'String',data{4,2} );
+set( participantParameters.upperArmLengthEditBox, 'String',data{5,2} );
+set( participantParameters.lowerArmLengthEditBox, 'String',data{6,2} );
+set( participantParameters.elbowToEndEffectorEditBox, 'String',data{7,2} );
+set( participantParameters.handLengthEditBox, 'String',data{8,2} );
+set( participantParameters.elbowFlexionEditBox, 'String',data{9,2} );
+set( participantParameters.shoulderFlexionEditBox, 'String',data{10,2} );
+set( participantParameters.abductionMaxTorqueEditBox, 'String',data{11,2} );
+set( participantParameters.abductionMaxForceEditBox, 'String',data{12,2} );
+set( participantParameters.notesEditBox, 'String', data{13,2} );
+if strcmp( data{14,2}, 'Right' )
+    set( initializeRobot.armButtonGroup, 'SelectedObject', initializeRobot.rightRadioButton);
+else
+    set( initializeRobot.armButtonGroup, 'SelectedObject', initializeRobot.leftRadioButton);
+end
+end
+
+
+% do we need callbacks for the edit boxes?
+function participantIdEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function ageEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function genderEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function act3dVersionEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function upperArmLengthEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function lowerArmLengthEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function elbowToEndEffectorEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function handLengthEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function elbowFlexionEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function shoulderFlexionEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+
+function abductionMaxTorqueEditBox_Callback(hObject, eventdata, mainWindow, participantParameters, display )
+torque = str2double( get( hObject, 'String') );
+
+force = round( torque / display.shoulderToEndEffector );
+
+% set the abduction max force value based on this value
+set( participantParameters.abductionMaxForceEditBox, 'String', num2str(force,'%3.2f') );
+
+end
+
+
+function abductionMaxForceEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function limbWeightEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+function notesEditBox_Callback(hObject, eventdata, mainWindow )
+end
+
+
+function saveToFilePushButton_Callback(hObject, eventdata, mainWindow, participantParameters, initializeRobot )
+% get all data in edit boxes
+participantId = get(participantParameters.participantIdEditBox,'String' );
+age = get( participantParameters.ageEditBox, 'String' );
+gender = get( participantParameters.genderEditBox,'String' );
+act3dVersion = get( participantParameters.act3dVersionEditBox, 'String' );
+upperArmLength = get( participantParameters.upperArmLengthEditBox, 'String' );
+lowerArmLength = get( participantParameters.lowerArmLengthEditBox, 'String' );
+elbowToEndEffector = get( participantParameters.elbowToEndEffectorEditBox, 'String' );
+handLength = get( participantParameters.handLengthEditBox, 'String' );
+elbowFlexion = get( participantParameters.elbowFlexionEditBox, 'String' );
+shoulderFlexion = get( participantParameters.shoulderFlexionEditBox, 'String' );
+abductionMaxTorque = get( participantParameters.abductionMaxTorqueEditBox,'String' );
+abductionMaxForce = get( participantParameters.abductionMaxForceEditBox,'String' );
+notes = get( participantParameters.notesEditBox, 'String' );
+armObject = get( initializeRobot.armButtonGroup, 'SelectedObject' );
+arm = get( armObject, 'String' );
+
+% save all data in the edit boxes to a file
+filename = ['participantID_' participantId '.mat'];
+folder = get(mainWindow.statusPanel.secondColumn(11), 'String' );
+data = { 'participantId',participantId; 'age',age; 'gender',gender;...
+    'act3dVersion',act3dVersion; 'upperArmLength',upperArmLength;
+    'lowerArmLength',lowerArmLength; 'elbowToEndEffector',elbowToEndEffector;...
+    'handLength',handLength; 'elbowFlexion',elbowFlexion;...
+    'shoulderFlexion',shoulderFlexion; 'abductionMaxTorque',abductionMaxTorque;...
+    'abductionMaxForce',abductionMaxForce; 'notes',notes; 'arm',arm };
+    
+filepath = [char(folder) '\' filename];
+save(filepath,'data');
+end
+
+function savePushButton_Callback(hObject, eventdata, mainWindow, participantParameters, display, robot )
+
+% save all data in the edit boxes as data for the program
+participantId = get(participantParameters.participantIdEditBox,'String' );
+setappdata( participantParameters.figureHandle, 'participantId', participantId  );
+
+age = get( participantParameters.ageEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'age', age  );
+
+gender = get( participantParameters.genderEditBox,'String' );
+setappdata( participantParameters.figureHandle, 'gender', gender  );
+
+act3dVersion = get( participantParameters.act3dVersionEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'act3dVersion', act3dVersion  );
+
+upperArmLength = get( participantParameters.upperArmLengthEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'upperArmLength', upperArmLength  );
+display.upperArmLength = str2double( upperArmLength ) / 100;
+
+lowerArmLength = get( participantParameters.lowerArmLengthEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'lowerArmLength', lowerArmLength  );
+display.lowerArmLength = str2double(lowerArmLength ) / 100;
+
+elbowToEndEffector = get( participantParameters.elbowToEndEffectorEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'elbowToEndEffector', elbowToEndEffector  );
+display.elbowToEndEffector = str2double( elbowToEndEffector ) / 100;
+
+handLength = get( participantParameters.handLengthEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'handLength', handLength  );
+display.handLength = str2double( handLength ) / 100;
+
+elbowFlexion = get( participantParameters.elbowFlexionEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'elbowFlexion', elbowFlexion  );
+
+shoulderFlexion = get( participantParameters.shoulderFlexionEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'shoulderFlexion', shoulderFlexion  );
+
+abductionMaxTorque = get( participantParameters.abductionMaxTorqueEditBox,'String' );
+setappdata( participantParameters.figureHandle, 'abductionMaxTorque', abductionMaxTorque  );
+
+abductionMaxForce = get( participantParameters.abductionMaxForceEditBox,'String' );
+setappdata( participantParameters.figureHandle, 'abductionMaxTorque', abductionMaxForce  );
+
+notes = get( participantParameters.notesEditBox, 'String' );
+setappdata( participantParameters.figureHandle, 'notes', notes  );
+
+% make this window invisible
+set( participantParameters.figureHandle, 'Visible','Off', 'WindowStyle','normal' );
+
+end
+
+function cancelPushButton_Callback(hObject, eventdata, mainWindow, participantParameters, display )
+
+% revert values in edit text boxes to previous values
+participantId = getappdata( participantParameters.figureHandle, 'participantId' );
+set( participantParameters.participantIdEditBox, 'String', participantId );
+
+age = getappdata( participantParameters.figureHandle, 'age' );
+set( participantParameters.ageEditBox, 'String',age );
+
+gender = getappdata( participantParameters.figureHandle, 'gender' );
+set( participantParameters.genderEditBox, 'String',gender );
+
+act3dVersion = getappdata( participantParameters.figureHandle, 'act3dVersion' );
+set( participantParameters.act3dVersionEditBox, 'String',act3dVersion );
+
+upperArmLength = getappdata( participantParameters.figureHandle, 'upperArmLength' );
+set( participantParameters.upperArmLengthEditBox, 'String',upperArmLength );
+
+lowerArmLength = getappdata( participantParameters.figureHandle, 'lowerArmLength' );
+set( participantParameters.lowerArmLengthEditBox, 'String',lowerArmLength );
+
+elbowToEndEffector = getappdata( participantParameters.figureHandle, 'elbowToEndEffector' );
+set( participantParameters.elbowToEndEffectorEditBox, 'String',elbowToEndEffector );
+
+handLength = getappdata( participantParameters.figureHandle, 'handLength' );
+set( participantParameters.handLengthEditBox, 'String',handLength );
+
+elbowFlexion = getappdata( participantParameters.figureHandle, 'elbowFlexion' );
+set( participantParameters.elbowFlexionEditBox, 'String',elbowFlexion );
+
+shoulderFlexion = getappdata( participantParameters.figureHandle, 'shoulderFlexion' );
+set( participantParameters.shoulderFlexionEditBox, 'String',shoulderFlexion );
+
+abductionMaxTorque = getappdata( participantParameters.figureHandle, 'abductionMaxTorque' );
+set( participantParameters.abductionMaxTorqueEditBox, 'String',abductionMaxTorque );
+
+abductionMaxForce = getappdata( participantParameters.figureHandle, 'abductionMaxForce' );
+set( participantParameters.abductionMaxForceEditBox, 'String',abductionMaxForce );
+
+notes = getappdata( participantParameters.figureHandle, 'notes' );
+set( participantParameters.notesEditBox, 'String', notes );
+
+% make this window invisible
+set( participantParameters.figureHandle, 'Visible','Off', 'WindowStyle','normal' );
+
+end

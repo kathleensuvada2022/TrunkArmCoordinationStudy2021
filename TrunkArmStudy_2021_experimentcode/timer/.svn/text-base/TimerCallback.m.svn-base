@@ -1,0 +1,135 @@
+function TimerCallback( obj, event, display, robot, mainWindow, experiment,...
+    timerFrequency, trialParameters, setTargets, emgChannels, nidaq, quanser, judp )
+
+% get new end effector position
+arm = get( mainWindow.statusPanel.secondColumn(6), 'String' );
+robot.SetForceGetInfo(arm);
+
+% update status panel
+set( mainWindow.statusPanel.secondColumn(2), 'String', robot.currentState );
+set( mainWindow.statusPanel.secondColumn(8), 'String', num2str(robot.inertia) );
+set( mainWindow.statusPanel.secondColumn(4), 'String', num2str(robot.endEffectorForce(3)) );
+
+% compute new finger tip location
+display.ComputeArmAngles( robot.endEffectorPosition, robot.endEffectorRotation, arm );
+
+%ComputeArmAngles( robot.endEffectorPosition, robot.endEffectorRotation, arm );
+display.ComputeFingerTipPosition(robot.endEffectorPosition,robot.endEffectorRotation, arm );
+
+% temp
+%{
+[ x, y, z ] = display.ComputeSphere( display.radius, display.fingerTipPosition );
+set(display.actualFingerTipPositionHandle, 'XData',x, 'YData',y, 'ZData',z);
+[ x, y, z ] = display.ComputeSphere( display.radius, robot.endEffectorPosition );
+set(display.endEffectorHandle, 'XData',x, 'YData',y, 'ZData',z);
+%}
+
+%% start of experiment when participant needs to move hand to home sphere
+% if hand is in sphere for certain amount of time, turn target sphere on s
+% and home sphere off
+modeString = get(mainWindow.trialConditionsPanel.modePopUpMenu,'String');
+modeValue = get(mainWindow.trialConditionsPanel.modePopUpMenu,'Value');
+newMode = modeString{modeValue};
+
+%homeVisible = get( display.homeSphereHandle, 'Visible' );
+% if display.home.visible == 1
+if experiment.isPreTrial == 1
+    
+    % are finger tips in home sphere?
+    % sphere equation is: (x-a)^2 + (y-b)^2 + (z-c)^2 = r^2
+    if (display.fingerTipPosition(1) - display.home.position(1))^2 +...
+            (display.fingerTipPosition(2) - display.home.position(2))^2 +...
+            (display.fingerTipPosition(3) - display.home.position(3))^2 ...
+            < (display.radius)^2
+        
+        display.home.iterationsInside = display.home.iterationsInside + 1;
+        homeSphereTriggerTime = str2double( get( trialParameters.homeSphereTriggerTimeEditBox, 'String' ) );
+        if display.home.iterationsInside >  timerFrequency*homeSphereTriggerTime      % 2 seconds
+            
+            % make the home sphere invisible
+            %set( display.homeSphereHandle, 'Visible', 'off' );  % turn home sphere off
+            judp.Write('home visible off');
+            experiment.isPreTrial = 0;
+            
+            if strcmp(newMode,'Target')
+                % make the target sphere visible
+                %set( display.targetSphereHandle, 'Visible', 'on' );   % turn target sphere off
+                judp.Write('target visible on');
+                
+            end
+            
+            %set( display.fingerTipPositionTraceHandle, 'Visible','on' );
+            % begin displaying the trace of the tip of the middle finger
+            % send 'trace visible on'
+            
+            experiment.isRecordingData = 1;
+            display.home.iterationsInside = 0;
+            experiment.periodId = tic;
+        end
+        
+    else
+        %display.home.iterationsInside = display.home.iterationsInside - 1;
+        %display.home.iterationsInside = 0;
+    end
+end
+
+
+%% during trial when recording data
+if experiment.isRecordingData == 1
+    
+    % check to see if the person has their hand near the table when the
+    % target is set to lift
+    if display.fingerTipPosition(3)+0.01 < display.planeTop
+        if experiment.isArmCloseToTable == 0
+            armWasAboveTable = 1;
+        else
+            armWasAboveTable = 0;
+        end
+        experiment.isArmCloseToTable = 1;
+  
+    else
+        if experiment.isArmCloseToTable == 1
+            armWasBelowTable = 1;
+        else
+            armWasBelowTable = 0;
+        end
+        experiment.isArmCloseToTable = 0;
+    end
+    
+    isLiftSelected = get( mainWindow.trialConditionsPanel.liftToggleButton, 'Value' );
+    if isLiftSelected  
+        if experiment.isArmCloseToTable  &&  armWasAboveTable == 1
+            % turn the table red
+			judp.Write('table color red');
+        end
+        if experiment.isArmCloseToTable == 0  &&  armWasBelowTable == 1
+        else
+            % turn the table back to light blue
+            judp.Write('table color blue');
+        end
+        if experiment.tableZ >= display.fingerTipPosition(3)
+            experiment.isArmOnTable = 1;
+        else
+            experiment.isArmOnTable = 0;
+        end
+    end
+    
+    % record data
+    experiment.currentPeriod = toc(experiment.periodId);
+    experiment.periodId = tic;
+    experiment.currentIteration = experiment.currentIteration + 1;
+    experiment.RecordData(robot,display);
+    
+    % end experiment after a designated time has elapsed
+    experiment.currentTrialTime = experiment.currentTrialTime + experiment.currentPeriod;
+    maxTrialDuration = str2double( get(trialParameters.maxTrialDurationEditBox,'String') );
+    if ( experiment.currentTrialTime >= maxTrialDuration )
+        experiment.Terminate( mainWindow, display, trialParameters, emgChannels,...
+            mainWindow.daqParametersPanel.emgMaxesCheckBox, setTargets, nidaq, quanser, judp );
+    end
+end
+
+
+display.RefreshDisplay(experiment, judp, arm );
+
+end
