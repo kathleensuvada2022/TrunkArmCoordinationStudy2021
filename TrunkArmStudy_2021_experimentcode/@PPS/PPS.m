@@ -193,6 +193,7 @@ classdef PPS < handle
         function obj = StartPPS(obj)
             % start data acquisition
             calllib('PPSDaqAPI','ppsInitialize',obj.cfgFile,0); 
+      
             calllib('PPSDaqAPI','ppsStart');
             
         end

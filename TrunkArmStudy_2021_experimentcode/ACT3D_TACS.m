@@ -136,7 +136,7 @@ myhandles.exp.max_sabd=[];
 myhandles.exp.isrunning=0;
 myhandles.exp.fname='trial';
 myhandles.exp.itrial=1;
-myhandles.exp.sTime=5;
+myhandles.exp.sTime=5; % The time in seconds of the trial
 myhandles.exp.sRate=50; % Sampling rate for experiment data collection (act3d,Metria) and real time feedback
 % myhandles.exp.dir=pwd;
 
@@ -1124,23 +1124,30 @@ function EXP_displayData(data)
     
     % Display PPS center of pressure
     if myhandles.pps.on
-        ppsdata=data.pps{2};
-        TotalPressure1 = sum(ppsdata(:,1:256),2);
+        ppsdata=data.pps{2}(20:end,:); % saving the large matrix of pressure data from both PPS mats 2.1.21
+        TotalPressure1 = sum(ppsdata(:,1:256),2); 
         TotalPressure2 = sum(ppsdata(:,257:end),2);
+
+     
         nframes=size(ppsdata,1);
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1];
         CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2];
         set(myhandles.pps.hline(1),'Xdata',CoP1(:,1),'Ydata',CoP1(:,2))
         set(myhandles.pps.hline(2),'Xdata',CoP2(:,1),'Ydata',CoP2(:,2))
+        set(myhandles.pps.hline(1),'Xdata',CoP1(:,1),'Ydata',CoP1(:,2))
+        set(myhandles.pps.hline(2),'Xdata',CoP2(:,1),'Ydata',CoP2(:,2))
+        
+
+%         size(ppsdata)
 %         figure(5)
 %         subplot(221),plot(CoP1(:,1),CoP1(:,2))
 %         subplot(222),plot(CoP2(:,1),CoP2(:,2))
 %         subplot(223),plot(-actdata(:,2),-actdata(:,3))
-        
+%         
     end
 
-%     drawnow
+    drawnow
     
 
 end
