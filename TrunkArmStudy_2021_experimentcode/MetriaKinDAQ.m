@@ -184,7 +184,20 @@ if ~isempty(probeidx)
        return
    else
     
-        dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:7),probeidx(1)+(0:7)]);
+        dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:7),probeidx(1)+(0:7)]); % This is just the marker on the probe and the marker on the RB in the GCS-> want Pointer tip in LCS
+        TRB_G = metdata(markeridx(1)+(0:7)); % T of the RB in GCS
+        % But we need the inverse to get tip of pointer in LCS 
+        
+        TG_RB = TRB_G'; % the GCS to RB frame
+        TDP_G = metdata(probeidx(1)+(0:7)); %Tip of pointer to GCS
+        TDP_RB = TG_RB* TDP_G; %transform for pointer tool tip to RB frame
+        
+        XP = [-001.323 071.946 004.697]';
+       
+        X_RB = TDP_RB *XP;
+       
+        dig.bl{dig.currentSEG}(dig.currentBL,:) = X_RB;
+        
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
 %         
 %        disp(dig.bl{dig.currentSEG}(dig.currentBL,:))

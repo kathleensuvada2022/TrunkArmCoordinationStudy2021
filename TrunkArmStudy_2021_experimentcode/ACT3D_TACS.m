@@ -435,7 +435,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Menu Callback Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-                                                                            % KCS 9.15.20 Purpose of the menu callbacks? 
+                                                                       
 % Power off the device (ACT3D menu option)
 % AMA - ERROR TOO MANY INPUT ARGUMENTS
 function ACT3D_poweroff_Callback(hObject,event,temp,TEMP)
@@ -463,11 +463,11 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Timer Callback Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Timer callback function - timer object created at startup                 % KCS 8.17.20 Purpose of Timer Callbacks? Constant updating
+% Timer callback function - timer object created at startup            
 % Displays user feedback in "real" time.
 % function ACT3D_Timer_Callback(hObject,event)
 %     % arm = get( mainWindow.statusPanel.secondColumn(6), 'String' );
-% %     databuffer=getappdata(act3dTACS,'databuffer');                          % KCS 8.17.20 Data Buffer? What do 
+% %     databuffer=getappdata(act3dTACS,'databuffer');                       
 %     % Read current data from ACT3D
 %     myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
 %     % update status panel CHANGED TO ONLY ALERT USER IF STATUS IS DIFFERENT FROM
@@ -1132,7 +1132,9 @@ function EXP_displayData(data)
     
     % Display PPS center of pressure
     if myhandles.pps.on
-        ppsdata=data.pps{2}(20:end,:); % saving the large matrix of pressure data from both PPS mats 2.1.21
+%         ppsdata=data.pps{2}(:,:); commented out because now only READING
+%         data after the PPS initialization 2.3.21
+        ppsdata=data.pps{2}(:,:);
         TotalPressure1 = sum(ppsdata(:,1:256),2); 
         TotalPressure2 = sum(ppsdata(:,257:end),2);
 
