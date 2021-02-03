@@ -895,12 +895,12 @@ if myhandles.exp.isrunning
     % or NIDAQ timer
     counter=counter+1;
     if myhandles.daq.on
-       time=double(source.ScansAcquired)/myhandles.daq.sRate; % asks how many scans acquired 
+       time=double(source.ScansAcquired)/myhandles.daq.sRate;
 %          if counter<5, disp([counter t myhandles.daq.sRate;]); end
        if time == 0.2, play(myhandles.beep, 1000); end
     else
         if myhandles.exp.timer.TasksExecuted == 0.2*myhandles.exp.sRate, play(myhandles.beep, 1000); end
-        time=myhandles.exp.timer.InstantPeriod; 
+        time=myhandles.exp.timer.InstantPeriod; % what is instant period? 2.2
     end
     % Collect ACT-3D data
     actdata=getappdata(act3dTACS,'actdatabuffer');

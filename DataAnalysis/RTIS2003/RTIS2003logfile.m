@@ -22,9 +22,9 @@ save('RTIS2003_setup','setup');
        % digitization --> use from rtis 2003 and use test data from 1.28.21
                
  % P in LCS spit out in this order                
-setup.bl.trial = {[],[7,9],[],[1,2,3,6]};
-setup.bl.pointerid = {[],[237,237,237],[],[235,235,235,237]};
-setup.bl.markerid = [80 19 73 87]; 
+setup.bl.trial = {'trunk','scap','humfore','MCP3'}; % later won't need this hopefully because will just be one BL file
+setup.bl.pointerid = 237;
+setup.bl.markerid = [80 19 87 73];
 
 save('RTIS2003_setup','setup');
 

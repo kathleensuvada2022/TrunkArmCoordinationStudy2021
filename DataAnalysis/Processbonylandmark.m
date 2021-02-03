@@ -1,6 +1,8 @@
 
 %% ANALYSIS FILE FOR BL 
 
+ % For RTIS 2001
+
 % Metria Trial 			Bony Landmark       Marker on Body             Pointer Toool
 % 1                   	third metacarpal    (Forearm)87/4                  235
 % 2                     ulnar styloid       (Forearm)87                    235
@@ -18,10 +20,12 @@
 %% This part for finding Ps in the local Coordinate Frame
 %choose the bony landmark file we are using
 
-% load('RTIS2001_setup');
-filename = '2001tf_reg_000000'; 
-filepath =  '/Users/kcs762/Desktop/Strokedata/RTIS2001/bonylandmark/'; 
-partid='RTIS2001';
+% % load('RTIS2001_setup');
+
+filename = 'BL_';
+%This is the file from registration not during the trial
+
+ filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
 
 load([partid '/' partid '_setup'])
 
@@ -38,73 +42,110 @@ for i = [2,4]
     
     for j = 1:mBLfiles
         %choose the index of the pointer tool marker id
-        pointertoolmarker = setup.bl.pointerid{i}(j); 
-    
-        % Building the filename 
-        mBLfilenum = setup.bl.trial{i}(j);
+%         pointertoolmarker = setup.bl.pointerid{i}(j); 
+          pointertoolmarker = setup.bl.pointerid;
+%         mBLfilenum = setup.bl.trial{i}(j);
+        mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm etc
         
-        if mBLfilenum< 10
-        %       000000                  % number that goes after 0s
-        mfname=[filename '0' num2str(mBLfilenum) '.hts']; 
-        else
-        mfname=[filename num2str(mBLfilenum) '.hts'];
-        end
+        mfname =[filename mBLfilenum '.mat']; 
+        
+        %2.2.21 no longer need 
+%         if mBLfilenum< 10
+%         %       000000                  % number that goes after 0s
+%         mfname=[filename '0' num2str(mBLfilenum) '.hts']; 
+%         else
+%         mfname=[filename num2str(mBLfilenum) '.hts'];
+%         end
         
         %Loading in marker data from rigid body
 
-        % Matrix size = [Nimages x (2 + Nmarkers*14)]
-        % [FrameTime,Marker,ST,HT(1,1:4),HT(2,1:4),HT(3,1:4)]
-        markerdata = dlmread([filepath mfname],',',18,1);
-        %x=dlmread([filepath filename],',',18,1);
+   
+        markerdata_cell = load(mfname);
+       
+        markerdata = markerdata_cell.bl(i);
+        
+        markerdata = cell2mat(markerdata); 
+       
         markerdata(markerdata==0)=NaN; % Replace zeros with NaN
-        markerdata(:,end)=[]; % Remove last column
 
-        [nimag,nmark]=size(markerdata); 
-        nmark=(nmark-1)/14;
+        [nmark]=size(markerdata,2); 
+        nimag =1 ;
+        nmark=(nmark)/8;
 
         % Build the time vector
-        t=markerdata(:,1)-markerdata(1,1);
+%         t=markerdata(:,1)-markerdata(1,1);
 
         % row and column of marker 
-        [im,jm] = find(markerdata==rigidbodymarker);
-
-        %Grabbing the HT for the marker
-        HT_marker = markerdata(:,jm+2:jm+13);
-
-        %Average across time
-
-        HT_marker = nanmean(HT_marker);
-
-        %reshape 3X4 add 0001
-
-        HT_marker = reshape(HT_marker,4,3)';
-
-        HT_marker = inv([HT_marker;0 0 0 1]);
-    
-        %row and column of bonylandmark 
-        [ibl,jbl] = find(markerdata==pointertoolmarker);
-
-
-        % Grabbing the pointer tool X HT(1,4), HT(2,4) HT(3,4)
-    
-        HT_bonylandmark = markerdata(:,jbl+2:jbl+13);
-
-        HT_bonylandmark = nanmean(HT_bonylandmark);
-
-        HT_bonylandmark = reshape(HT_bonylandmark,4,3)';
-
+%         [im,jm] = find(markerdata==rigidbodymarker);
         
-        %grabbing the last column that is the point P of the pointer tool
+%% Transforming the Quaternion organization to the HT - 1.28.21
 
-        P = HT_bonylandmark(:,4);
-   
+quat = markerdata(:,5:8);
+
+
+quat= circshift(quat,1); % added to compensate for quaternion shifted by 1
+
+% XYZ point 
+ P = markerdata(:,2:4)';
+
+% % Each quaternion represents a 3D rotation and is of the form 
+% % q = [w(SCALAR REAL) qx qy qz]
+% 
+% Now have HT matrix like is outout from MOCAP - outputs HT for each BL for
+% a given RGB
+HT_marker = quat2tform(quat); HT_marker(1:3,4,:) = P;
+%%
+
+% 2.2.21 no longer need this 
+%         %Grabbing the HT for the marker
+%         HT_marker = markerdata(:,jm+2:jm+13);
+% 
+%         %Average across time
+% 
+%         HT_marker = nanmean(HT_marker);
+% 
+%         %reshape 3X4 add 0001
+% 
+%         HT_marker = reshape(HT_marker,4,3)';
+% 
+%         HT_marker = inv([HT_marker;0 0 0 1]);
+%     
+       
+%row and column of bonylandmark 
+%         [ibl,jbl] = find(markerdata==pointertoolmarker);
+
+
+
+%         % Grabbing the pointer tool X HT(1,4), HT(2,4) HT(3,4)
+%     
+%         HT_bonylandmark = markerdata(:,jbl+2:jbl+13);
+% 
+%         HT_bonylandmark = nanmean(HT_bonylandmark);
+% 
+%         HT_bonylandmark = reshape(HT_bonylandmark,4,3)';
+
+% getting the HT of RGB marker in global HT but need inverse (transpose)[
+% Step 2 on sheet
+
+        HT_lcs_inT2 = HT_marker';
+
+        %grabbing the last column that is the point P of the pointer tool -
+        %think this was wrong.. need to use tPu the tip in Pointer tool
+        %marker frame. 
+
+%         P = HT_bonylandmark(:,4);
+%   
+% ID:237, Size:20, Thickness:000.647, tPu:[-001.323 +071.946 -004.697]
+
+          P = [-001.323 071.946 004.697]';
+
         % point needs to be 4X1
 
         P = [P; 1];
 
         %Multiplying to get P of the bony landmark in the frame of the metria
         %marker 
-        P_LCS{i}(:,j) = HT_marker * P;
+        P_LCS{i}(:,j) = HT_marker .* P;
        
 
     end
