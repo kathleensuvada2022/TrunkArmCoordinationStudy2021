@@ -1,5 +1,8 @@
 function BL = MetriaKinDAQ(varargin)
 
+% UPDATED BY KCS 2.4.2021 -> edited so that new longest pointer tool is the
+% probe
+
 % marker ID is a vector for all markers used (enter as 5 including the
 % probe)
 addpath Metria
@@ -19,7 +22,8 @@ myhandles.timer.TimerFcn=@MET_Timer_Callback;
 myhandles.met.nmarker=4; % Don't include probe here
 myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
 myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
-myhandles.met.markerid=[80 19 87 73 237];
+myhandles.met.markerid=[80 19 87 73 009];
+%237];% added two new pointer tool IDS 2.4.2021
 myhandles.met.cameraSerials =  [24 25];% 12.4.2020 added for new Metria code via Hendrik
 
 if ~isempty(varargin)
@@ -175,7 +179,8 @@ end
  [metdata] = metriaComm_collectPoint2(myhandles.met.socket,myhandles.met.markerid,myhandles.met.cameraSerials);% Include probe
 
  % metdata=[metdata1(4:end) metdata2(4:end)];
-probeidx=find(metdata==237);
+probeidx=find(metdata==009);
+%|metdata==9|metdata==11 ); %not sure if this is right syntax??  
 if ~isempty(probeidx)
    markeridx=find(metdata==myhandles.met.markerid(dig.currentSEG));
    if isempty(markeridx)
@@ -185,18 +190,36 @@ if ~isempty(probeidx)
    else
     
         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:7),probeidx(1)+(0:7)]); % This is just the marker on the probe and the marker on the RB in the GCS-> want Pointer tip in LCS
-        TRB_G = metdata(markeridx(1)+(0:7)); % T of the RB in GCS
+        size(  dig.bl{dig.currentSEG}(dig.currentBL,:)) 
+        %1X16
+        
+        TRB_G = metdata(markeridx(1)+(0:7));% T of the RB in GCS
+        
+        size(TRB_G)
+        % 1X8
         % But we need the inverse to get tip of pointer in LCS 
         
         TG_RB = TRB_G'; % the GCS to RB frame
-        TDP_G = metdata(probeidx(1)+(0:7)); %Tip of pointer to GCS
-        TDP_RB = TG_RB* TDP_G; %transform for pointer tool tip to RB frame
         
+        size(TG_RB)
+        %8X1
+        
+        TDP_G = metdata(probeidx(1)+(0:7)); %Tip of pointer to GCS
+        size(TDP_G)
+        %1X8
+        
+        TDP_RB = TG_RB* TDP_G; %transform for pointer tool tip to RB frame
+        size(TDP_RB)
+        
+        %8x8
         XP = [-001.323 071.946 004.697]';
-       
-        X_RB = TDP_RB *XP;
+        size(XP)
+       %3X1
+        X_RB = TDP_RB*XP;
+        size(X_RB)
        
         dig.bl{dig.currentSEG}(dig.currentBL,:) = X_RB;
+        
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
 %         
