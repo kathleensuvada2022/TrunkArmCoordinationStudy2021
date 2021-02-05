@@ -242,19 +242,19 @@ HT_probe = quat2tform(quat_pointer) ; HT_probe(1:3,4,:) = P_pointer;
         %4X4 * 4X4 = 4X1
         TDP_RB = TG_RB* HT_probe; %transform for pointer tool tip to RB frame
         size(TDP_RB)
-        %4X4
+        %4X
         
        
-        XP = [-001.323 071.946 004.697 1]'; % offset of the tip of the pointer tool from the marker of the pointer tool
+        XP = [-001.323 071.946 004.697 1]';
         size(XP)
        %4X1
        
        
        % 4X4 * 4x1 NEED THIS
-        X_RB = TDP_RB*XP; % This should be location of tip of pointer in LCS (RB CS) 
+        X_RB = TDP_RB*XP;
         
         size(X_RB)
-       % 4X1 
+       % 4X4 
        
         dig.bl{dig.currentSEG}(dig.currentBL,:) = X_RB;
         
