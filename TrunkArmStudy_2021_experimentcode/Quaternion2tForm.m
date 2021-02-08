@@ -3,6 +3,9 @@
 % Created for Matlab 2014b since Quaternion conversion to Homogeneous
 % Transform doesn't exist in 2014
 
+
+% check which functions can be removed 
+
 function H = Quaternion2tForm(q)
 
 %% From quat2rotm
@@ -63,12 +66,6 @@ else
 end
 
 end
-
-
- 
- 
- 
- 
 
 % Normalize and transpose the quaternions
 q = robotics.internal.normalizeRows(q).';
