@@ -194,19 +194,21 @@ if ~isempty(probeidx)
         %1X16
         
 %% Need to convert from quaternion to HT matrix 
+% size(metdata)
+% size(metdata(markeridx(1)+(4:7)))
+quat_RB =metdata(markeridx(1)+(4:7));
+size(quat_RB) 
+quat_pointer = metdata(probeidx(1)+(4:7));
 
-quat_RB =metdata(markeridx(1)+(4:end));
-quat_pointer = metdata(probeidx(1)+(4:end));
+% quat_RB = rand(1,4); % testing need to just grab quaternion not XYZ 
+% quat_pointer = rand(1,4); % testing need to just grab quaternion not XYZ 
 
-quat_RB = rand(1,4); % testing need to just grab quaternion not XYZ 
-quat_pointer = rand(1,4); % testing need to just grab quaternion not XYZ 
-
-quat_RB= circshift(quat_RB,1); % added to compensate for quaternion shifted by 1
-quat_pointer = circshift(quat_pointer,1);
+quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
+quat_pointer = circshift(quat_pointer,1,2);
 
 % XYZ point 
-P_RB = rand(1,3)'; % for testing comment out 
-P_pointer = rand(1,3)' % testing comment out
+% P_RB = rand(1,3)'; % for testing comment out 
+% P_pointer = rand(1,3)' % testing comment out
 P_RB = metdata(:,markeridx(1)+(1:3))';
 P_pointer = metdata(:,probeidx(1)+(1:3))';
 
@@ -218,7 +220,8 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 %  HT_UDP
 % 
 % Now have HT matrix like is outout from MOCAP
-HT_marker = quat2tform(quat_RB); HT_marker(1:3,4,:) = P_RB;
+HT_marker = quat2tform(quat_RB);
+HT_marker(1:3,4,:) = P_RB;
 HT_probe = quat2tform(quat_pointer) ; HT_probe(1:3,4,:) = P_pointer;
         
         
