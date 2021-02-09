@@ -220,9 +220,15 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 %  HT_UDP
 % 
 % Now have HT matrix like is outout from MOCAP
-HT_marker = quat2tform(quat_RB);
+%KCS 2.9.21 need to convert to HT from Quaternion without quat2tform for
+%MATLAB 2014
+% HT_marker = quat2tform(quat_RB);
+HT_marker = Quaternion2tForm(quat_RB);
 HT_marker(1:3,4,:) = P_RB;
-HT_probe = quat2tform(quat_pointer) ; HT_probe(1:3,4,:) = P_pointer;
+
+% HT_probe = quat2tform(quat_pointer) ; 
+HT_probe = Quaternion2tForm(quat_pointer);
+HT_probe(1:3,4,:) = P_pointer;
         
         
         %% Transforming to get tip of pointer in LCS
