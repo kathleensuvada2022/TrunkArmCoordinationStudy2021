@@ -747,6 +747,7 @@ function DAQ_RT_Callback(hObject,event)
         % If timer is running, stop
         if strcmp(myhandles.exp.timer.Running,'on'), stop(myhandles.exp.timer); end
         % Change DAQ object to continuous time acquisition
+        lh = addlistener(myhandles.daq.ni, 'DataAvailable', @DAQ_RTtimerFunction);
         myhandles.daq.ni.IsContinuous = true;
         myhandles.daq.ni.NotifyWhenDataAvailableExceeds = myhandles.daq.sRate/myhandles.exp.sRate;
         for i=1:myhandles.daq.nChan
@@ -756,6 +757,7 @@ function DAQ_RT_Callback(hObject,event)
         startBackground(myhandles.daq.ni);
     else
         stop(myhandles.daq.ni);
+        lh = addlistener(myhandles.daq.ni, 'DataAvailable', @EXP_localTimerAction);
         myhandles.daq.ni.IsContinuous = false;
         myhandles.daq.ni.NotifyWhenDataAvailableExceeds = myhandles.daq.sRate/myhandles.exp.sRate;
         start(myhandles.exp.timer)
@@ -940,18 +942,18 @@ end
 function EXP_localDisplayData(data)
 % data={actdata,daqdata,metdata}
 % Only show EMG in real time if not running a trial
-if myhandles.daq.rt && ~myhandles.exp.isrunning
-    daqdata=data{2};
-    blocksize=size(daqdata,1);
-    daqdatabuffer=getappdata(myhandles.daq.fig,'databuffer');
-    daqdatabuffer=[daqdatabuffer(blocksize+1:end,:);daqdata];
-    setappdata(myhandles.daq.fig,'databuffer',daqdatabuffer)
-    for i=1:size(daqdatabuffer,2)
-        set(myhandles.daq.Line(i,1),'XData',myhandles.daq.timebuffer,'YData',daqdatabuffer(:,i));
-        set(myhandles.daq.Label(i),'String',num2str([max(daqdatabuffer(:,i)) min(daqdatabuffer(:,i))],'%.3f  %.3f'));
-    end
-    drawnow % Is this needed and the drawnow at the end of the function needed? TEST
-end
+% if myhandles.daq.rt && ~myhandles.exp.isrunning
+%     daqdata=data{2};
+%     blocksize=size(daqdata,1);
+%     daqdatabuffer=getappdata(myhandles.daq.fig,'databuffer');
+%     daqdatabuffer=[daqdatabuffer(blocksize+1:end,:);daqdata];
+%     setappdata(myhandles.daq.fig,'databuffer',daqdatabuffer)
+%     for i=1:size(daqdatabuffer,2)
+%         set(myhandles.daq.Line(i,1),'XData',myhandles.daq.timebuffer,'YData',daqdatabuffer(:,i));
+%         set(myhandles.daq.Label(i),'String',num2str([max(daqdatabuffer(:,i)) min(daqdatabuffer(:,i))],'%.3f  %.3f'));
+%     end
+%     drawnow % Is this needed and the drawnow at the end of the function needed? TEST
+% end
 
 % Update Signal Monitor display
 % data{1}(1:3)=hpos
@@ -1961,6 +1963,36 @@ else
 end
 
 end
+
+
+
+
+    % AMA - function to display data in real time and play beep at 200 ms
+    % 2.10.21
+  function DAQ_RTtimerFunction(source, event)
+
+%         blocksize=size(event.Data,1);
+%         databuffer=getappdata(emgDAQ.Fig,'databuffer');
+%         databuffer=[event.Data;databuffer(1:end-blocksize,:)];
+%         setappdata(act3dTACS.Fig,'databuffer',databuffer)
+%         for i=1:myhandles.nChan
+%             set(myhandles.Line(i,1),'XData',myhandles.timebuffer,'YData',databuffer(:,i));
+%             set(myhandles.Label(i),'String',num2str([max(databuffer(:,i)) min(databuffer(:,i))],'%.3f  %.3f'));
+%         end
+%         drawnow
+       
+    blocksize=size(event.Data,1);
+    daqdatabuffer=getappdata(myhandles.daq.fig,'databuffer');
+    daqdatabuffer=[daqdatabuffer(blocksize+1:end,:);event.Data];
+    setappdata(myhandles.daq.fig,'databuffer',daqdatabuffer)
+    for i=1:size(daqdatabuffer,2)
+        set(myhandles.daq.Line(i,1),'XData',myhandles.daq.timebuffer,'YData',daqdatabuffer(:,i));
+        set(myhandles.daq.Label(i),'String',num2str([max(daqdatabuffer(:,i)) min(daqdatabuffer(:,i))],'%.3f  %.3f'));
+    end
+  
+  end
+
+
 end
 
 

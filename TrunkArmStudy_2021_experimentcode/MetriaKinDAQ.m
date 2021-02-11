@@ -22,10 +22,15 @@ myhandles.timer.TimerFcn=@MET_Timer_Callback;
 myhandles.met.nmarker=4; % Don't include probe here
 myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
 myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
-myhandles.met.markerid=[80 19 87 73 009];
+myhandles.met.markerid=[80 19 87 73 9 11 237];
 %237];% added two new pointer tool IDS 2.4.2021
 myhandles.met.cameraSerials =  [24 25];% 12.4.2020 added for new Metria code via Hendrik
-
+myhandles.met.ptip=struct('ID009',[-001.323 071.946 004.697 1],'ID237',[000.141 126.202 -006.491],'ID011',[000.141 126.202 -006.491]);
+pointertool='ID009';
+myhandles.probeid = 9;
+% getfield(myhandles.met.ptip,pointertool)
+myhandles.met.pid=['ID00' num2str(myhandles.met.markerid(end))];
+    
 if ~isempty(varargin)
     if length(varargin)<2
         myhandles.exp.partID=varargin{1};
@@ -179,7 +184,11 @@ end
  [metdata] = metriaComm_collectPoint2(myhandles.met.socket,myhandles.met.markerid,myhandles.met.cameraSerials);% Include probe
 
  % metdata=[metdata1(4:end) metdata2(4:end)];
-probeidx=find(metdata==009);
+
+ probeidx=find(metdata==myhandles.probeid);
+
+% end
+
 %|metdata==9|metdata==11 ); %not sure if this is right syntax??  
 if ~isempty(probeidx)
    markeridx=find(metdata==myhandles.met.markerid(dig.currentSEG));
@@ -254,7 +263,7 @@ HT_probe(1:3,4,:) = P_pointer;
         %4X4
         
        
-        XP = [-001.323 071.946 004.697 1]'; % offset of the tip of the pointer tool from the marker of the pointer tool
+        XP = (getfield(myhandles.met.ptip,pointertool))'; % offset of the tip of the pointer tool from the marker of the pointer tool
         size(XP)
        %4X1
        

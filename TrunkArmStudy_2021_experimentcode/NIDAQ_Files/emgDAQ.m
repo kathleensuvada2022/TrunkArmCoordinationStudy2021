@@ -18,7 +18,7 @@ emgDAQ.Fig.DeleteFcn =  @closeMainGUI;
 % and therefore there is no need to use guidata to save myhandles for
 % access across functions.
 myhandles = guihandles(emgDAQ.Fig);
-myhandles.daqDevice = 'Dev2';
+myhandles.daqDevice = 'Dev1';
 myhandles.loadFile = 0;  % What is this?
 myhandles.loadFilePrev = 0; % What is this?
 myhandles.nChan = 16; % default # of channels to record
