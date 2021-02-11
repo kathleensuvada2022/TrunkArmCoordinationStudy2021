@@ -235,6 +235,10 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 HT_marker = Quaternion2tForm(quat_RB);
 HT_marker(1:3,4,:) = P_RB;
 
+HT_marker;%CONFIRMED JIVES WITH MOCAP!!!! 2.11.21
+
+
+
 % HT_probe = quat2tform(quat_pointer) ; 
 HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
@@ -277,7 +281,7 @@ HT_probe(1:3,4,:) = P_pointer;
        size(dig.bl{dig.currentSEG}(dig.currentBL,:))
        % size = 1X16
        
-       
+       BL = X_RB;
        size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))])
         dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];
         

@@ -750,6 +750,7 @@ function DAQ_RT_Callback(hObject,event)
         lh = addlistener(myhandles.daq.ni, 'DataAvailable', @DAQ_RTtimerFunction);
         myhandles.daq.ni.IsContinuous = true;
         myhandles.daq.ni.NotifyWhenDataAvailableExceeds = myhandles.daq.sRate/myhandles.exp.sRate;
+          setappdata(myhandles.daq.fig,'databuffer',zeros(length(myhandles.daq.timebuffer),myhandles.daq.nChan)); %2.11.21
         for i=1:myhandles.daq.nChan
             set(myhandles.daq.Line(i,1),'XData',[],'YData',[]);
             set(myhandles.daq.Line(i,2),'XData',[],'YData',[]);
