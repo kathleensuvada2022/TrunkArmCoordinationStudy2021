@@ -263,7 +263,7 @@ HT_probe(1:3,4,:) = P_pointer;
         %4X4
         
        
-        XP = (getfield(myhandles.met.ptip,pointertool))'; % offset of the tip of the pointer tool from the marker of the pointer tool
+        XP = (getfield(myhandles.met.ptip,pointertool))'; % offset of the tip of the pointer tool from the marker of the pointer tool % this is at top of code. can change based on which pointer
         size(XP)
        %4X1
        
@@ -274,7 +274,12 @@ HT_probe(1:3,4,:) = P_pointer;
         size(X_RB)
        % 4X1 
        
-        dig.bl{dig.currentSEG}(dig.currentBL,:) = X_RB;
+       size(dig.bl{dig.currentSEG}(dig.currentBL,:))
+       % size = 1X16
+       
+       
+       size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))])
+        dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];
         
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
@@ -330,6 +335,9 @@ if exist(fullfile(myhandles.exp.dir,[dig.fname '.mat']),'file')==2
     end
 end
 save(fullfile(myhandles.exp.dir,dig.fname),'-struct','dig','bl')
+
+% save(fullfile('C:\Users\Dewald Lab\Documents\GitHub\TrunkArmCoordinationStudy2021\TrunkArmStudy_2021_experimentcode\DIGBL2_11_21',dig.fname),'-struct','dig','bl')
+
 guidata(hObject,dig)     
 
 end
