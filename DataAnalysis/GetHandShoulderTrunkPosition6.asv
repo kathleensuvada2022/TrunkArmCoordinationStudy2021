@@ -97,8 +97,9 @@ HT_trunk = quat2tform(t_quat);  HT_trunk(1:3,4,:) = P_trunk;
 %% Compute the BL in the global CS using P_LCS 
 
 %2.12.21 
-% Should have this for next data set directly from Metria. METKINDAQ will
-% now give data in LCS
+% Should have this for next data set directly from Metria. METKINDAQ spits
+% out data in LCS
+
 
 
 for i=1:nimag % loop through time points

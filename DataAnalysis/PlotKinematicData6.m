@@ -202,4 +202,11 @@ text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
 print('-f3','-djpeg',[partid '_RT'])
 disp(maxreach)
 
+
+
+% what passing into this function? data.pps{2}?
+%Calling COP Function
+[CoP1,CoP2]=  ComputeCOP(ppsdata)
+
+
 end   
