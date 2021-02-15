@@ -25,7 +25,7 @@ myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'}
 myhandles.met.markerid=[80 19 87 73 9 11 237];
 %237];% added two new pointer tool IDS 2.4.2021
 myhandles.met.cameraSerials =  [24 25];% 12.4.2020 added for new Metria code via Hendrik
-myhandles.met.ptip=struct('ID009',[-001.323 071.946 004.697 1],'ID237',[000.141 126.202 -006.491],'ID011',[000.141 126.202 -006.491]);
+myhandles.met.ptip=struct('ID009',[.584 172.168 -6.889 1],'ID237',[000.141 126.202 -006.491],'ID011',[000.141 126.202 -006.491]);
 pointertool='ID009';
 myhandles.probeid = 9;
 % getfield(myhandles.met.ptip,pointertool)
@@ -242,47 +242,54 @@ HT_marker;%CONFIRMED JIVES WITH MOCAP!!!! 2.11.21
 % HT_probe = quat2tform(quat_pointer) ; 
 HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
-        
+% confirmed makes sense with MOCAP 2.15.21        
         
         %% Transforming to get tip of pointer in LCS
         
         TRB_G = HT_marker;
-        size(TRB_G)
+        size(TRB_G);
         % 4x4 
         % But we need the inverse to get tip of pointer in LCS 
         
         TG_RB = TRB_G'; % the GCS to RB frame
         
-        size(TG_RB) % NEED THIS!!!! 
+        size(TG_RB); % NEED THIS!!!! 
         %4x4
         
-        TDP_G = HT_probe(:,3); %Tip of pointer to GCS
-        size(TDP_G)
+      
+        TDP_G = HT_probe(:,4) %Tip of pointer in GCS % grabbing XYZ from HT
+        
+        %confirmed 2.15.21 TDP_G is the tip of pointer in global CS GIVES
+        %CORRECT XYZ
+        size(TDP_G);
         %4X1
         
+        TDP_G
+    
         
-        %4X4 * 4X4 = 4X1
+        %4X4 * 4X4 = 4X4
+       
         TDP_RB = TG_RB* HT_probe; %transform for pointer tool tip to RB frame
-        size(TDP_RB)
+        size(TDP_RB);
         %4X4
         
        
-        XP = (getfield(myhandles.met.ptip,pointertool))'; % offset of the tip of the pointer tool from the marker of the pointer tool % this is at top of code. can change based on which pointer
-        size(XP)
+        XP = (getfield(myhandles.met.ptip,pointertool))';% offset of the tip of the pointer tool from the marker of the pointer tool % this is at top of code. can change based on which pointer
+        size(XP);
        %4X1
        
        
        % 4X4 * 4x1 NEED THIS
         X_RB = TDP_RB*XP; % This should be location of tip of pointer in LCS (RB CS) 
         
-        size(X_RB)
+        X_RB
        % 4X1 
        
-       size(dig.bl{dig.currentSEG}(dig.currentBL,:))
+       size(dig.bl{dig.currentSEG}(dig.currentBL,:));
        % size = 1X16
        
-       BL = X_RB;
-       size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))])
+      
+       size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))]);
         dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];
         
         
