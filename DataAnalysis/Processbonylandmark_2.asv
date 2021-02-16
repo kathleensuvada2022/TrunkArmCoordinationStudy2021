@@ -13,9 +13,9 @@
 filename = 'BL_';
 %This is the file from registration not during the trial
 
-  filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/trials';
+%  filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/trials';
 
-load([filepath '/' partid '_setup'])
+load([partid '/' partid '_setup'])
 
 
 %for testing load from 1.28.21 on github
@@ -26,20 +26,30 @@ P_LCS = {};
 for i = 1:4 
     %cycling through the rigid body markers
     rigidbodymarker = setup.bl.markerid(i);
-%  %           COMMENTED OUT KCS   mBLfiles = length(setup.bl.trial{i}); % THIS IS WRONG getting the length of the string !!!! CHANGE to get number of bony landmarks 
+    mBLfiles = length(setup.bl.trial{i});
     P_LCS{i} = zeros(4,7);
     
-     
-    mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm etc
+    for j = 1:mBLfiles
+        %choose the index of the pointer tool marker id
+%         pointertoolmarker = setup.bl.pointerid{i}(j); 
+          pointertoolmarker = setup.bl.pointerid;
+%         mBLfilenum = setup.bl.trial{i}(j);
+        mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm etc
         
-    mfname =[filename mBLfilenum '.mat']; 
-    
-    
-    %KCS ADDED HERE 2/16/21
-    
-        blfilepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
+        mfname =[filename mBLfilenum '.mat']; 
+        
+        %2.2.21 no longer need 
+%         if mBLfilenum< 10
+%         %       000000                  % number that goes after 0s
+%         mfname=[filename '0' num2str(mBLfilenum) '.hts']; 
+%         else
+%         mfname=[filename num2str(mBLfilenum) '.hts'];
+%         end
+        
+        %Loading in marker data from rigid body
 
-        markerdata_cell = load([blfilepath '/' mfname]);
+   
+        markerdata_cell = load(mfname);
        
         markerdata = markerdata_cell.bl(i);
         
@@ -50,45 +60,6 @@ for i = 1:4
         [nmark]=size(markerdata,2); 
         nimag =1 ;
         nmark=(nmark)/8;
- 
-    mBLfiles = size(markerdata,1); %  to get number of bony landmarks for given RGB 
-    
-    
-    for j = 1:mBLfiles
-        %choose the index of the pointer tool marker id
-%         pointertoolmarker = setup.bl.pointerid{i}(j); 
-          pointertoolmarker = setup.bl.pointerid;
-%         mBLfilenum = setup.bl.trial{i}(j);
-%         
-%     %           COMMENTED OUT KCS      mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm
-
-%     
-%         
-%       %           COMMENTED OUT KCS   mfname =[filename mBLfilenum '.mat']; 
-%         
-        %2.2.21 no longer need 
-%         if mBLfilenum< 10
-%         %       000000                  % number that goes after 0s
-%         mfname=[filename '0' num2str(mBLfilenum) '.hts']; 
-%         else
-%         mfname=[filename num2str(mBLfilenum) '.hts'];
-%         end
-        
-        %Loading in marker data from rigid body KACEY COMMENTED lines 61-74
-% 
-%         blfilepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
-% 
-%         markerdata_cell = load([blfilepath '/' mfname]);
-%        
-%         markerdata = markerdata_cell.bl(i);
-%         
-%         markerdata = cell2mat(markerdata); 
-%        
-%         markerdata(markerdata==0)=NaN; % Replace zeros with NaN
-% 
-%         [nmark]=size(markerdata,2); 
-%         nimag =1 ;
-%         nmark=(nmark)/8;
 
         % Build the time vector
 %         t=markerdata(:,1)-markerdata(1,1);
@@ -155,7 +126,7 @@ HT_marker = quat2tform(quat); HT_marker(1:3,4,:) = P;
 %   
 % ID:237, Size:20, Thickness:000.647, tPu:[-001.323 +071.946 -004.697]
 
-          P = [-001.323 071.946 004.697]'; % units of this in MM
+          P = [-001.323 071.946 004.697]'; % check the units of this? they come out in mm
 
         % point needs to be 4X1
 
@@ -163,7 +134,7 @@ HT_marker = quat2tform(quat); HT_marker(1:3,4,:) = P;
 
         %Multiplying to get P of the bony landmark in the frame of the metria
         %marker 
-        P_LCS{i}(:,j) = HT_marker * P; % ERROR "index in position 1 exceeds array bounds"
+        P_LCS{i}(:,j) = HT_marker * P;
        
 
     end
