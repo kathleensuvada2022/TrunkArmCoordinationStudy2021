@@ -10,13 +10,14 @@
 
 % % load('RTIS2001_setup');
 
-filename = 'BL_';
+filename = 'BL.mat'
 %This is the file from registration not during the trial
 
-  filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/trials';
+filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
 
 load([filepath '/' partid '_setup'])
 
+load(filename) %loads in BL for all the RGBs ( for RTIS2003 created new merged structure since had saving issues)
 
 %for testing load from 1.28.21 on github
 
@@ -30,21 +31,19 @@ for i = 1:4
     P_LCS{i} = zeros(4,7);
     
      
-    mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm etc
-        
-    mfname =[filename mBLfilenum '.mat']; 
-    
+%     mBLfilenum = setup.bl.trial{i}; % which rigid body _trunk/arm etc
+%        mBLfilenum=    
+%     mfname =[filename mBLfilenum '.mat']; 
+%     
     
     %KCS ADDED HERE 2/16/21
     
         blfilepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
 
-        markerdata_cell = load([blfilepath '/' mfname]);
+        markerdata_cell = load([blfilepath '/' filename]);
        
-        markerdata = markerdata_cell.bl(i);
+        markerdata = markerdata_cell.BL{1,i};
         
-        markerdata = cell2mat(markerdata); 
-       
         markerdata(markerdata==0)=NaN; % Replace zeros with NaN
 
         [nmark]=size(markerdata,2); 

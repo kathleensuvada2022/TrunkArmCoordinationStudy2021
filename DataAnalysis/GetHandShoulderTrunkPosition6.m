@@ -34,10 +34,8 @@ nmark=(nmark)/8; %
 
 
 %%
-% load(['/Users/kcs762/Desktop/Strokedata/RTIS2001/RTIS2001_setup'])
-% RTIS2001/metria/trunkrestrained/RTIS2001_setup
-% disp([filepath partid '_setup'])
-load([partid '/' partid '_setup'])
+
+load([partid '_setup'])
 
 
 % Build the time vector
@@ -100,18 +98,25 @@ HT_trunk = quat2tform(t_quat);  HT_trunk(1:3,4,:) = P_trunk;
 % Should have this for next data set directly from Metria. METKINDAQ will
 % now give data in LCS
 
+% HOW BL is organized {'Trunk';'Scapula';'Humerus';'Forearm'};
+% {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker 
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
     Tftom= HT_fore;
-    BLg=(Tftom) *setup.bl.lcs{4}(:,1);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and 
-    xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+    BLg=(Tftom).*setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and -> Changed to column 4 2/16/21 -> check this
+    xhand(i,:)=BLg(1:3,1)'; % X Y Z of the hand in global cs based off forearm
     % for the acromion using the shoulder marker 
-    Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
-    Tstom = [Tstom;0 0 0 1]; 
-    BLg2=(Tstom) *setup.bl.lcs{2}(:,1);  %grabbing the XYZ point of the anterior acromion in the LCS
-    xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
+%     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
+%     Tstom = [Tstom;0 0 0 1];
+    Tstom = HT_shldr; 
+    BLg2=(Tstom).*setup.bl.lcs{2}(:,1);  %grabbing the XYZ point of the anterior acromion in the LCS
+%     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
+  xshldr=BLg2(:,4,:); % X Y Z of BL in the global frame and rows are time 
+  xshldr = permute(xshldr,[1 3 2]);
+  xshldr = xshldr'; %gives 250 rows and 4 columns where each row is time and each column is X,Y,Z and then 1  worked on 2.16.21
+
 end
 
 
