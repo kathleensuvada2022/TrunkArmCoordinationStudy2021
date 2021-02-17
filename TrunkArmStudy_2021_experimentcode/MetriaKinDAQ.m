@@ -1,4 +1,5 @@
-function BL = MetriaKinDAQ(varargin)
+%%
+ function BL = MetriaKinDAQ(varargin)
 
 % UPDATED BY KCS 2.4.2021 -> edited so that new longest pointer tool is the
 % probe
@@ -251,6 +252,10 @@ HT_probe(1:3,4,:) = P_pointer;
         % 4x4 
         % But we need the inverse to get tip of pointer in LCS 
         
+        HT_marker;
+        
+%         HT_marker  gives HT of marker in GCS;
+        
         TG_RB = TRB_G'; % the GCS to RB frame
         
         size(TG_RB); % NEED THIS!!!! 
@@ -264,7 +269,8 @@ HT_probe(1:3,4,:) = P_pointer;
         size(TDP_G);
         %4X1
         
-        TDP_G
+        HT_probe
+%         TDP_G
     
         
         %4X4 * 4X4 = 4X4
@@ -282,7 +288,7 @@ HT_probe(1:3,4,:) = P_pointer;
        % 4X4 * 4x1 NEED THIS
         X_RB = TDP_RB*XP; % This should be location of tip of pointer in LCS (RB CS) 
         
-        X_RB
+%         X_RB
        % 4X1 
        
        size(dig.bl{dig.currentSEG}(dig.currentBL,:));
@@ -290,7 +296,8 @@ HT_probe(1:3,4,:) = P_pointer;
        
       
        size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))]);
-        dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];
+       
+        dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];%gives BL in LCS and then marker in GCS
         
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
