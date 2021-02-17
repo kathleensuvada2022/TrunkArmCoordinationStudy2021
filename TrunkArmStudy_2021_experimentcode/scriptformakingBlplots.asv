@@ -51,10 +51,11 @@
 %                    0                   0                   0   1.000000000000000
 
 plot(11.99,-4.85,'x')
-quiver(11.99,-4.85,-.06,-.9)
+quiver(11.99,-4.85,-.06,-.01)
 hold on
 quiver(11.99,-4.85,-.09,-.06)
 quiver(11.99,-4.85,.17,-.015)
+
 
 plot(23.9,-4.7,'x') 
 quiver(23.9,-4.7,-.9,.01)
@@ -79,5 +80,5 @@ quiver(12.4,2.5,-.97,-.05)
 quiver(12.4,2.5,-.05,-.1)
 quiver(12.4,2.5,.216,-.01)
 
- axis([0 25 -15 10])
-title('Marker and Respective Points in GCS')
+ axis([0 25 -15 20])
+title('plot of marker location and respective point')
