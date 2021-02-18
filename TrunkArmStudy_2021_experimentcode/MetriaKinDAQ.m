@@ -262,14 +262,13 @@ HT_probe(1:3,4,:) = P_pointer;
         %4x4
         
       
-        TDP_G = HT_probe(:,4) %Tip of pointer in GCS % grabbing XYZ from HT
+        TDP_G = HT_probe(:,4); %Tip of pointer in GCS % grabbing XYZ from HT
         
-        %confirmed 2.15.21 TDP_G is the tip of pointer in global CS GIVES
-        %CORRECT XYZ
+    
         size(TDP_G);
         %4X1
         
-        HT_probe
+        HT_probe; % This does NOT include the tip-- this is just the marker for the tool
 %         TDP_G
     
         
