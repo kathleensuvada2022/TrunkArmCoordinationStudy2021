@@ -55,8 +55,27 @@
 
 %plot(11.99,-4.85,'x')
 quiver(11.99,-4.85,-.0655,-.9978)
- quiver(11.99,-4.85,.9820,-.0638)
- quiver(11.99,-4.85,.1770,-.0151)
+quiver(11.99,-4.85,.9820,-.0638)
+quiver(11.99,-4.85,.1770,-.0151)
+ 
+ 
+ % takes the 1st row of col 4 and duplicates does same for 2nd row col 4 
+
+% transpose allows directly input into matlab as row not col
+
+% Quiver(Xpnt Xpnt,Ypnt Ypnt,Xmag1, Xmag2,Ymag1 Ymag2)
+quiver(HT([1 1],4)',HT([2 2],4)',HT(1,1:2),HT(2,1:2))
+
+
+
+text(HT(1,4)+HT(1,1:2),HT(2,4)+HT(2,1:2),{'x','y'})
+
+quiver3(HT([1 1 1],4)',HT([2 2 2],4)',HT([3 3 3],4)',HT(1,1:3),HT(2,1:3),HT(3,1:3))
+text(HT(1,4)+HT(1,1:3),HT(2,4)+HT(2,1:3),HT(3,4)+HT(3,1:3),{'x','y','z'})
+
+
+ 
+ 
 % 
 % plot(23.9,-4.7,'x') 
 % quiver(23.9,-4.7,-.9,.01)

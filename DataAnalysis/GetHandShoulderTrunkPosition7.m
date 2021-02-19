@@ -1,4 +1,4 @@
- function [xhand,xshldr,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition6(filepath,filename,partid)
+ function [xhand,xshldr,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(filepath,filename,partid)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. The hand position is computed based on the forearm marker because
 % the hand marker was not visible in all trials.
@@ -8,6 +8,9 @@
 %      filename='/trial22.mat';
 %      partid='RTIS2003';
 
+
+% This is only for data where each row doesn't have the marker data in the
+% same place. Won't have to worry about this later.
 
 %% Load marker data
 
@@ -50,15 +53,22 @@ t = (1:length(x))';
 %  tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx+(5:4:15)); if ~isempty(tidx), xtrunk=x(:,tidx+(5:4:15)); else xtrunk=zeros(size(xhand));end
 %  
 
-% 1.19.21
-%Need to account for fact that each marker ID is in a different column for
-% every row? need to include i and this in for loop? too complicated since
-% this now different?
+%2.17.21 need to find row and column that each marke ID is present and corresponding data
 
-fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7)); %extracting the forearm marker data index 
+[fridx,fcidx]=find(x==setup.markerid(4)); %forearm columns and rows where forearm marker ID is present 
+xfore=x(fridx,fcidx:(fidx+7)); % Check this and see if it makes sense??? and do for aidx,sidx,tidx
+
+
+    
+% fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7)); %extracting the forearm marker data index 
 aidx=find(x(1,:)==setup.markerid(3)); xarm=x(:,aidx:(aidx+7)); %extracting humerus marker
 sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx:(sidx+ 7));% extracting shoulder marker
 tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx:(tidx+7)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+
+
+
+
+
 
 %% Transforming the Quaternion organization to the HT - 1.28.21
 
@@ -93,7 +103,7 @@ HT_trunk = quat2tform(t_quat);  HT_trunk(1:3,4,:) = P_trunk;
 
 
 %% Compute the BL in the global CS using P_LCS 
-
+% khdd
 %2.12.21 
 % Should have this for next data set directly from Metria. METKINDAQ will
 % now give data in LCS

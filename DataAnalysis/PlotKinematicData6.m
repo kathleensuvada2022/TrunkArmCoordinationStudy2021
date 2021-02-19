@@ -117,7 +117,7 @@ disp(mfname) % displays trial
 % 
 % 
 
-[xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition6(mfilepath,mfname,partid);
+[xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
     
 maxreachtime
 end
