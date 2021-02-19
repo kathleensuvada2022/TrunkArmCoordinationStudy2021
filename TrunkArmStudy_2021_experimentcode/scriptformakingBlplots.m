@@ -192,8 +192,8 @@ quat_RB =metdata(markeridx(1)+(4:7));
 size(quat_RB) ;
 quat_pointer = metdata(probeidx(1)+(4:7));
 
-quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
-quat_pointer = circshift(quat_pointer,1,2);
+% quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
+% quat_pointer = circshift(quat_pointer,1,2);
 
 % XYZ point 
 % P_RB = rand(1,3)'; % for testing comment out 
@@ -215,14 +215,14 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 HT_marker = Quaternion2tForm(quat_RB);
 HT_marker(1:3,4,:) = P_RB;
 
-HT_marker %CONFIRMED JIVES WITH MOCAP!!!! 2.11.21
+HT_marker
 
 
 % HT_probe = quat2tform(quat_pointer) ; 
 HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
 HT_probe
-% confirmed with MOCAP 2.15.21        
+   
         
 
 
