@@ -252,7 +252,7 @@ HT_probe(1:3,4,:) = P_pointer;
         % 4x4 
         % But we need the inverse to get tip of pointer in LCS 
         
-        HT_marker;
+        HT_marker
         
 %         HT_marker  gives HT of marker in GCS;
         
@@ -268,7 +268,7 @@ HT_probe(1:3,4,:) = P_pointer;
         size(TDP_G);
         %4X1
         
-        HT_probe; % This does NOT include the tip-- this is just the marker for the tool
+        HT_probe % This does NOT include the tip-- this is just the marker for the tool
 %         TDP_G
     
         
@@ -296,8 +296,9 @@ HT_probe(1:3,4,:) = P_pointer;
       
        size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))]);
        
-        dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];%gives BL in LCS and then marker in GCS
+         dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];%gives BL in LCS and then marker in GCS
         
+
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
 %         

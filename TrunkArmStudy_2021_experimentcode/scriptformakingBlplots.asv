@@ -111,15 +111,10 @@ title('3D location of marker in GCS')
 plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x')
 hold on
 plot(HT_probe1(1,4)/10,HT_probe1(2,4)/10,'x')
-plot(HT_probe2(1,4)/10,HT_probe2(2,4)/10,'x')
-plot(HT_probe3(1,4)/10,HT_probe3(2,4)/10,'x')
-plot(HT_probe4(1,4)/10,HT_probe4(2,4)/10,'x')
-xlim([-2 25])
+plot(
+xlim([0 25])
 ylim([-15 15])
 title('Marker and Respective Points in GCS')
-xlabel('X position in cm')
-ylabel('Y position in cm')
+xlabel('cm')
+ylabel('cm')
 %% 
-
-
-
