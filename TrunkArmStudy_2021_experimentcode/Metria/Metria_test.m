@@ -14,7 +14,8 @@ socket = metriaComm_openSocket(port);
 % markerIDs = [019 073 080 087 009];
 markerIDs = [073 9];
 
-cameraSerials = [24 25];
+% cameraSerials = [24 25];
+cameraSerials = 24;
 
 % For testing timing differences
 % metdata = cell(1,10*10);

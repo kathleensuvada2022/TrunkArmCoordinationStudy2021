@@ -2,6 +2,9 @@ function [markerIDs, images] = ParseHTS_nmhRev(filename)
 % [markerIDs, images] = ParseHTS_nmhRev('RTIS2001\metria\trunkfree\2001tf_final_00000001.hts');
   images = [];
   markerIDs = [];
+  
+  
+  
   lines = load(filename);
   nLines = size(lines, 1);
   nMarkersPerLine = (size(lines, 2) - 2)/14;

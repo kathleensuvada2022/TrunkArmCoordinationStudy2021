@@ -192,12 +192,10 @@ quat_RB =metdata(markeridx(1)+(4:7));
 size(quat_RB) ;
 quat_pointer = metdata(probeidx(1)+(4:7));
 
-% quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
-% quat_pointer = circshift(quat_pointer,1,2);
+ quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
+ quat_pointer = circshift(quat_pointer,1,2);
 
 % XYZ point 
-% P_RB = rand(1,3)'; % for testing comment out 
-% P_pointer = rand(1,3)' % testing comment out
 P_RB = metdata(:,markeridx(1)+(1:3))';
 P_pointer = metdata(:,probeidx(1)+(1:3))';
 
@@ -226,8 +224,6 @@ HT_probe
         
 
 
-
-
  %HT marker in GCS
   TRB_G = HT_marker;
         
@@ -242,7 +238,7 @@ HT_probe
   Ptip_G =HT_probe*XP;
        
   %GCS to RB frame
-   TG_RB = TRB_G';
+   TG_RB = inv(TRB_G);
         
    %Tip of pointer tool in LCS - DOES NOT MAKE SENSE
     Ptip_RB = TG_RB*Ptip_G
