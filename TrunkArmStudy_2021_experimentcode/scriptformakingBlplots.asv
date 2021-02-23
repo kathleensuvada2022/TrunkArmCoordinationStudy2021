@@ -242,22 +242,15 @@ HT_probe
   %GCS to RB frame
    TG_RB = inv(TRB_G);
         
-   %Tip of pointer tool in LCS - WORKS!
+   %Tip of pointer tool in LCS - DOES NOT MAKE SENSE
     Ptip_RB = TG_RB*Ptip_G;
         
-   %Getting RB marker in it's own CS IE LCS -- should be about 0001
-   %WORKS!!!! 
+   %Getting RB marker in it's own CS IE LCS
     PRB_RB = TG_RB*TRB_G(:,4);
        
 
-    
-    % Plots 
-    
-    
-    
-    % DATA FILES WITH POINTS 
 
-% metdata1markeratorigin --> THIS ONE WORKS!!!! 
+
 
 
 
