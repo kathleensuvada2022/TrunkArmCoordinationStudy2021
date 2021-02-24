@@ -117,9 +117,9 @@ disp(mfname) % displays trial
 % 
 % 
 
-[xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
+% [xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
     
-maxreachtime
+% maxreachtime
 end
 %     figure(1)
 %     if i==1
@@ -140,7 +140,7 @@ end
     
     % Plot EMGs
     load([afilepath afname])
-    emg=abs(detrend(data(:,1:15)))./maxEMG(ones(length(data(:,1:15)),1),:); % Detrend and rectify EMG
+    emg=abs(detrend(data(:,1:16)))./maxEMG(ones(length(data(:,1:16)),1),:); % Detrend and rectify EMG
 
     % Computing the start of the reach
     [dist,vel,time,rdist,t]= ComputeReachStart4(afilepath,afname2);
@@ -182,31 +182,31 @@ end
 % 
 % 
 
-figure(1)
-%legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-axis 'equal'
-% axis([-0.3 0.2 -1.05 -0.15])
-xlabel('x(m)'),ylabel('y(m)')
-title(mfilepath)
-
-
-title('Reaching with trunk unrestrained - 5% Max SABD')
-title('Reaching with trunk unrestrained - table')
- title('Reaching with trunk restrained - table')
-
-text(-0.28,-0.25,['SH TR DISP= ', num2str((shtrdisp))])
-text(-0.28,-0.35,['MAX REACH = ', num2str(max(maxreach))])
-text(-.28,-.45,['MFNAME = ', num2str((mfname))])
-
-text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
-print('-f3','-djpeg',[partid '_RT'])
-disp(maxreach)
+% figure(1)
+% %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
+% axis 'equal'
+% % axis([-0.3 0.2 -1.05 -0.15])
+% xlabel('x(m)'),ylabel('y(m)')
+% title(mfilepath)
+% 
+% 
+% title('Reaching with trunk unrestrained - 5% Max SABD')
+% title('Reaching with trunk unrestrained - table')
+%  title('Reaching with trunk restrained - table')
+% 
+% text(-0.28,-0.25,['SH TR DISP= ', num2str((shtrdisp))])
+% text(-0.28,-0.35,['MAX REACH = ', num2str(max(maxreach))])
+% text(-.28,-.45,['MFNAME = ', num2str((mfname))])
+% 
+% text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
+% print('-f3','-djpeg',[partid '_RT'])
+% disp(maxreach)
 
 
 
 % what passing into this function? data.pps{2}?
 %Calling COP Function
-[CoP1,CoP2]=  ComputeCOP(ppsdata)
+% [CoP1,CoP2]=  ComputeCOP(ppsdata)
 
 
 end   
