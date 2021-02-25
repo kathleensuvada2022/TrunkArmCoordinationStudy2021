@@ -258,8 +258,10 @@ HT_probe
     % POINTER TIP AT GCS ORIGIN  metdata1pointertipatGCSorigin.mat
     
     
+  %% % Plots - Tip of pointer and RGB
   
-    % Plots - Tip of pointer and RGB
+  %CONFIRMED MAKE SENSE 2.24.21
+    
     
     % IN GLOBAL CS
     figure
@@ -294,19 +296,74 @@ HT_probe
     xlabel('X position in cm')
     ylabel('Y position in cm')
 
+   %%  TIP OF POINTER AT BL1  - metdata1pointertipatBL1
+     % IN GLOBAL CS - confirmed works
     
-    
-    % Pointer tool marker at GCS  origin -- metdata1markeratorigin
-    figure
+     figure
+ 
     plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
-    plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker in GCS
+     hold on
+     text((Ptip_G(1,1)/10)-2.5,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL1'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-10 10])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
 
-    xlim([-7 15])
-    ylim([-18 10])
-    title('GCS ')
+    % LCS - think okay something off with x unit vector KCS ASK AMA ABOUT X
+    % UNIT VECTOR!!!!!!!! *************
+
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer'})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   KCS 2.24.21 something is up with the X unit vector?
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-5 5])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+    %% TIP OF POINTER AT BL2- metdata1pointertipatBL2
+       
+    % IN GLOBAL CS  - WORKS!! 
+    
+     figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)-2.5,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL2'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-15 10])
+    title('Global CS')
     xlabel('X position in cm')
     ylabel('Y position in cm')
     
-
-
     
+    % LCS --  something wrong with length of x unit vector 
+    % *************
+
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer- BL2 '})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   KCS 2.24.21 something is up with the X unit vector?
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-5 10])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+ %%   TIP OF POINTER AT BL3 
