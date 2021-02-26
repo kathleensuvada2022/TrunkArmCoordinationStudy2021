@@ -254,10 +254,14 @@ HT_probe
     TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS
 
     
-        
     
-  %% POINTER TIP AT GCS ORIGIN  metdata1pointertipatGCSorigin.mat
+    % POINTER TIP AT GCS ORIGIN  metdata1pointertipatGCSorigin.mat
+    
+    
+  %% % Plots - Tip of pointer and RGB
   
+  %CONFIRMED MAKE SENSE 2.24.21
+    
     
     % IN GLOBAL CS
     figure
@@ -293,7 +297,8 @@ HT_probe
     ylabel('Y position in cm')
 
    %%  TIP OF POINTER AT BL1  - metdata1pointertipatBL1
- 
+     % IN GLOBAL CS - confirmed works
+    
      figure
  
     plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
@@ -309,7 +314,9 @@ HT_probe
     xlabel('X position in cm')
     ylabel('Y position in cm')
 
-    % LCS 
+    % LCS - think okay something off with x unit vector KCS ASK AMA ABOUT X
+    % UNIT VECTOR!!!!!!!! *************
+
     figure
     plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
     text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer'})
@@ -325,7 +332,7 @@ HT_probe
 
     %% TIP OF POINTER AT BL2- metdata1pointertipatBL2
        
-    % IN GLOBAL CS  
+    % IN GLOBAL CS  - WORKS!! 
     
      figure
  
@@ -343,7 +350,8 @@ HT_probe
     ylabel('Y position in cm')
     
     
-    % LCS 
+    % LCS --  something wrong with length of x unit vector 
+    % *************
 
     figure
     plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
@@ -379,7 +387,7 @@ HT_probe
     
     
     % LCS --  
-
+    % *************
 
     figure
     plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
@@ -387,7 +395,6 @@ HT_probe
     hold on
     text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
     quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   X COODINATE LOOKS LONGER? WHY
-    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
      xlim([-5 10])
      ylim([-15 15])
     title('LCS of marker')
@@ -414,14 +421,15 @@ HT_probe
     
     
     % LCS --  
-   
+    % *************
+
     figure
     plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
     text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer- BL2 '})
     hold on
     text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
     quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2))
-    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})% Location RGB marker:   X COODINATE LOOKS LONGER? WHY
      xlim([-10 10])
      ylim([-15 15])
     title('LCS of marker')
