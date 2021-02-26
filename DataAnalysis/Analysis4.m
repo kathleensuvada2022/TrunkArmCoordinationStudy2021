@@ -175,12 +175,57 @@ emgval = PlotKinematicData6(partid,'2001tf_final_000000','Target_',4)
 
 
 
-% RTIS 2003
+% RTIS 2003 - EMG data all seems noise 2.25.21
 
 partid = 'RTIS2003';
 
 %RT
 emgval = PlotKinematicData6(partid,'trial','trial',1);
+
+%R25
+emgval = PlotKinematicData6(partid,'trial','trial',2);
+
+
+%R50
+emgval = PlotKinematicData6(partid,'trial','trial',3);
+
+%uT
+emgval = PlotKinematicData6(partid,'trial','trial',4);
+
+%U25
+emgval = PlotKinematicData6(partid,'trial','trial',5);
+
+%U50
+emgval = PlotKinematicData6(partid,'trial','trial',6);
+
+
+
+
+
+
+% {TRtable,  TR25,  TR50,  TUtable, TU25, TU50}
+%RTIS 2005
+partid = 'RTIS2005';
+
+%RT
+emgval = PlotKinematicData6(partid,'trial','trial',1);
+
+%R25
+emgval = PlotKinematicData6(partid,'trial','trial',2);
+
+
+%R50
+emgval = PlotKinematicData6(partid,'trial','trial',3);
+
+%UT
+emgval = PlotKinematicData6(partid,'trial','trial',4);
+
+%U25
+emgval = PlotKinematicData6(partid,'trial','trial',5);
+
+
+%U50
+emgval = PlotKinematicData6(partid,'trial','trial',6);
 
 
 

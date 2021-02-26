@@ -26,7 +26,7 @@ else
     [maxEMG]=GetMaxMusAct2([partid '/maxes'],'MAXES','savedsetupKacey','Control',0);
 end
 
-expcondname={'RT','RL','UT','UL'};
+expcondname={'RT','R25','R50','UT','U25','U50'};
 
 load([partid '/' partid '_setup'])
 
@@ -120,7 +120,7 @@ disp(mfname) % displays trial
 % [xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
     
 % maxreachtime
-end
+% end
 %     figure(1)
 %     if i==1
 %         p1=plot([xhand(:,1) xshoulder(:,1) xtrunk(:,1)],-[xhand(:,3) xshoulder(:,3) xtrunk(:,3)],'LineWidth',2);
@@ -140,10 +140,12 @@ end
     
     % Plot EMGs
     load([afilepath afname])
-    emg=abs(detrend(data(:,1:16)))./maxEMG(ones(length(data(:,1:16)),1),:); % Detrend and rectify EMG
+    emg=abs(detrend(data.daq{1,2}(:,1:16)))./maxEMG(ones(length(data.daq{1,2}(:,1:16)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
+   
+    
     % Computing the start of the reach
-    [dist,vel,time,rdist,t]= ComputeReachStart4(afilepath,afname2);
+    [dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
     
 %     switch partid
 %         case 'RTIS2001'
@@ -157,7 +159,8 @@ end
 %     ibefore = int32(ibefore);
 %     ivelmax = timevelmax/.001;
     
-    emgval(i,:,:) = emg(index,1:15);
+%      emgval(i,:,:) = emg(index,1:16); % CHANGE to 16 from 15  COMMENTED
+%     OUT DON't think need for EMGS? comment back in but was erroring
      % emgstart(i,:)= emg(ivelmax,1:15);
     
     
@@ -166,17 +169,21 @@ end
 %     emgmaxvel = emg(ivelmax,1:15)
     
     figure(3)
-    emg=emg(1001:4000,:);
+    emg=emg(1001:end,:);
     t=t-1;
     time=time-1;
 %     dist=dist(
-    ax=PlotEMGs4(emg,dist,vel,time,t,[partid '_EMG_IEEE_' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
+    ax=PlotEMGs4(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
 %     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
     pause
 % end
 
+end
+
+
+% moved this end so that can click through the EMG plots 
 
 
 % 
