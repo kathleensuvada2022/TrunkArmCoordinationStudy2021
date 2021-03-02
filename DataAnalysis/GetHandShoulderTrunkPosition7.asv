@@ -52,11 +52,6 @@ t = (1:length(x))';
 %  sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx+(5:4:15));% extracting shoulder marker
 %  tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx+(5:4:15)); if ~isempty(tidx), xtrunk=x(:,tidx+(5:4:15)); else xtrunk=zeros(size(xhand));end
 %  
-%%
-
-% KACEY trouble shooting why find won't just pick when x ==73.... but
-% picking other values as well... like 19 and 83
-
 
 %2.17.21 need to find row and column that each marke ID is present and corresponding data
 
@@ -80,7 +75,7 @@ c = rc(:,2);
 test73 = x(r,c);
 
 
-%%
+
 % fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7)); %extracting the forearm marker data index 
 aidx=find(x(1,:)==setup.markerid(3)); xarm=x(:,aidx:(aidx+7)); %extracting humerus marker
 sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx:(sidx+ 7));% extracting shoulder marker
