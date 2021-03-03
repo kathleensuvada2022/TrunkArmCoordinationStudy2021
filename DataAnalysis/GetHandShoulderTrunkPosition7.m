@@ -28,8 +28,8 @@
 % X FROM UDP 
 % MARKERID X,Y,Z,Qr,Qx,Qy,Qz 
 % For UDP dated 1.28.21
-data=load([filepath filename]);
-x = data.data.met;
+load([filepath filename]);
+x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
@@ -54,38 +54,50 @@ t = (1:length(x))';
 %  
 %%
 
-% KACEY trouble shooting why find won't just pick when x ==73.... but
-% picking other values as well... like 19 and 83
+%NOTE FOR 2020 DATA STRUCTURE
+% For RTIS 2003 and RTIS2005 run Consolidate Metria first to eliminate data
+% from both Cameras 
+newdata=ConsolidateMETData(x) %passing in the data into consolidate metria
 
+x= newdata;
+x = x(:,4:end);
 
-%2.17.21 need to find row and column that each marke ID is present and corresponding data
+%now data structure has each marker ID and corresponding data once
 
-[fridx,fcidx]=find(x==setup.markerid(4)); %forearm columns and rows where forearm marker ID is present 
-xfore=x(fridx,fcidx:(fidx+7)); % Check this and see if it makes sense??? and do for aidx,sidx,tidx
-
-
-[row, col]  = ismembertol(x,73,1e-12);
-ans = x(row,col);
-
-% using FIND function to sort along rows 
-
-
-[row, col] = find(x(i,:)==73);
-
-
-
-rc = sortrows([row(:), col(:)]);
-r = rc(:,1);
-c = rc(:,2);
-test73 = x(r,c);
-
-
-%%
-% fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7)); %extracting the forearm marker data index 
+%forearm columns and rows where forearm marker ID is present 
+fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7));
 aidx=find(x(1,:)==setup.markerid(3)); xarm=x(:,aidx:(aidx+7)); %extracting humerus marker
 sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx:(sidx+ 7));% extracting shoulder marker
 tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx:(tidx+7)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
+
+
+%Lines below KCS trying to create workaround for data being grabbed that's
+%not correct... leaving incase but don't need
+% %giving the columns that = 73 for each row
+% col = zeros(length(x),2);
+% for i = 1:length(x)
+%     col(i,:)= find(x(i,:)==73);
+% end 
+% 
+% 
+% test_data_73=zeros(250,16);
+% %checking to make sure x(r,c) =73
+% for i = 1:250 % for all the rows
+%     for j= 1:2 % for all the columns
+% test_data_73(i,j+(0:7))= x(i,col(i,j)+(0:7)); 
+%     end 
+% end
+% 
+% xfore=x(test_data(:),fcidx:(fidx+7)); %  and do for aidx,sidx,tidx
+% 
+% 
+% [row, col] = find(x(i,:)==73);
+% 
+% rc = sortrows([row(:), col(:)]);
+% r = rc(:,1);
+% c = rc(:,2);
+% test73 = x(r,c);
 
 
 
