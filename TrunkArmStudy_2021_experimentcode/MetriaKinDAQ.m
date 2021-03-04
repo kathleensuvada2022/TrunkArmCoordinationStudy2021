@@ -275,9 +275,9 @@ if ~isempty(probeidx)
 %%
 % FROM BL CODE
 
-quat_RB =metdata(markeridx(1)+(4:7));
-size(quat_RB) ;
-quat_pointer = metdata(probeidx(1)+(4:7));
+%return these two incase issues- can always run on separate BL script offline to get in LCs
+quat_RB =metdata(markeridx(1)+(4:7)); 
+quat_pointer = metdata(probeidx(1)+(4:7)); 
 
  quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
  quat_pointer = circshift(quat_pointer,1,2);
@@ -339,7 +339,7 @@ HT_probe
        
     TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS
 
-     dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' Ptip_RB' PRB_RB' PRB_RB']; %Gives XYZ of pointer tool twice, then the marker in LCS twice (this should always be about 001
+     dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
 
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
