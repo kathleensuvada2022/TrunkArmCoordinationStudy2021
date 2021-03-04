@@ -28,8 +28,8 @@
 % X FROM UDP 
 % MARKERID X,Y,Z,Qr,Qx,Qy,Qz 
 % For UDP dated 1.28.21
-data=load([filepath filename]);
-x = data.data.met;
+load([filepath filename]);
+x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
@@ -52,20 +52,54 @@ t = (1:length(x))';
 %  sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx+(5:4:15));% extracting shoulder marker
 %  tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx+(5:4:15)); if ~isempty(tidx), xtrunk=x(:,tidx+(5:4:15)); else xtrunk=zeros(size(xhand));end
 %  
+%%
 
-%2.17.21 need to find row and column that each marke ID is present and corresponding data
+%NOTE FOR 2020 DATA STRUCTURE
+% For RTIS 2003 and RTIS2005 run Consolidate Metria first to eliminate data
+% from both Cameras 
 
-[fridx,fcidx]=find(x==setup.markerid(4)); %forearm columns and rows where forearm marker ID is present 
-xfore=x(fridx,fcidx:(fidx+7)); % Check this and see if it makes sense??? and do for aidx,sidx,tidx
+newdata=ConsolidateMETData(x) %passing in the data into consolidate metria
+
+x= newdata;
+x = x(:,4:end);
 
 
-    
-% fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7)); %extracting the forearm marker data index 
+%now data structure has each marker ID and corresponding data once
+
+%forearm columns and rows where forearm marker ID is present 
+fidx=find(x(1,:)==setup.markerid(4)); xfore=x(:,fidx:(fidx+7));
 aidx=find(x(1,:)==setup.markerid(3)); xarm=x(:,aidx:(aidx+7)); %extracting humerus marker
 sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx:(sidx+ 7));% extracting shoulder marker
 tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx:(tidx+7)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
 
+
+%Lines below KCS trying to create workaround for data being grabbed that's
+%not correct... leaving incase but don't need
+% %giving the columns that = 73 for each row
+% col = zeros(length(x),2);
+% for i = 1:length(x)
+%     col(i,:)= find(x(i,:)==73);
+% end 
+% 
+% 
+% test_data_73=zeros(250,16);
+% %checking to make sure x(r,c) =73
+% for i = 1:250 % for all the rows
+%     for j= 1:2 % for all the columns
+% test_data_73(i,j+(0:7))= x(i,col(i,j)+(0:7)); 
+%     end 
+% end
+% 
+% xfore=x(test_data(:),fcidx:(fidx+7)); %  and do for aidx,sidx,tidx
+% 
+% 
+% [row, col] = find(x(i,:)==73);
+% 
+% rc = sortrows([row(:), col(:)]);
+% r = rc(:,1);
+% c = rc(:,2);
+% test73 = x(r,c);
 
 
 
@@ -103,7 +137,7 @@ HT_trunk = quat2tform(t_quat);  HT_trunk(1:3,4,:) = P_trunk;
 
 
 %% Compute the BL in the global CS using P_LCS 
-% khdd
+% 
 %2.12.21 
 % Should have this for next data set directly from Metria. METKINDAQ will
 % now give data in LCS
@@ -114,21 +148,29 @@ HT_trunk = quat2tform(t_quat);  HT_trunk(1:3,4,:) = P_trunk;
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker 
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
-    Tftom= HT_fore;
+    Tftom= HT_fore(:,:,i);
     BLg=(Tftom).*setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and -> Changed to column 4 2/16/21 -> check this
     xhand(i,:)=BLg(1:3,1)'; % X Y Z of the hand in global cs based off forearm
-    % for the acromion using the shoulder marker 
-%     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
+   
+    % for the  acromion using the shoulder marker 
+%      Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
 %     Tstom = [Tstom;0 0 0 1];
-    Tstom = HT_shldr; 
-    BLg2=(Tstom).*setup.bl.lcs{2}(:,1);  %grabbing the XYZ point of the anterior acromion in the LCS
-%     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
-  xshldr=BLg2(:,4,:); % X Y Z of BL in the global frame and rows are time 
-  xshldr = permute(xshldr,[1 3 2]); %added KCS
-  xshldr = xshldr';%gives 250 rows and 4 columns where each row is time and each column is X,Y,Z and then 1  worked on 2.16.21
-  xshldr(:,4) = []; % removed the 1s from each row
+%     Tstom = HT_shldr; 
+%     BLg2=(Tstom).*setup.bl.lcs{2}(:,2);  %grabbing the XYZ point of the anterior acromionin LCS 
+% %     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
+%   xshldr=BLg2(:,4,:); % X Y Z of BL in the global frame and rows are time 
+%   xshldr = permute(xshldr,[1 3 2]); %added KCS
+%   xshldr = xshldr';%gives 250 rows and 4 columns where each row is time and each column is X,Y,Z and then 1  worked on 2.16.21
+%   xshldr(:,4) = []; % removed the 1s from each row
 
 end
+
+%%
+figure
+plot(xhand(:,1),-xhand(:,2),'x')
+title('test plot 3rd mcp trajectory')
+xlabel('x')
+ylabel('y')
 
 
 %% Compute reaching distance (between shoulder and hand from hand marker)

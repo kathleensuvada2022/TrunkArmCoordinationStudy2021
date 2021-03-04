@@ -45,7 +45,10 @@ end
  %% EMG Plot
 
   
- emgchan = {'LES','RES','LEO','REO','LIO','RIO'}; %
+ emgchan = {'LES','RES','LEO','REO','LIO','RIO'};
+
+
+
  emg = emg(1:1000,:);
 
  sampRate=1000;
@@ -60,11 +63,16 @@ meanEMG=movmean(emg,ds);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL, ADEL
 % 
-idx1=[1 3 5] % how occupying the figure of the emg plots
+ idx1=[1 3 5] % how occupying the figure of the emg plots 
+
+
+
 % idx1=[1:2:7]; idx2=[2:2:8]; % how occupying the figure of the emg plots
 %Right erector spinae (RES), left external oblique (LEO) and right external oblique (REO) having UT and RT
 % idx1=[1 2 3 4 5 6]; idx2=[7:]; % how occupying the figure of the emg plots
-  idx2=[2 4 6]; % how occupying the figure of the emg plots
+idx2=[2 4 6]; % how occupying the figure of the emg plots
+  
+
 nEMG=length(idx1); % 8 rows of the column on the left for plot
 
 %   memg=max([max(emg(:,idx1));[max(emg(:,idx2)) 0]]); 

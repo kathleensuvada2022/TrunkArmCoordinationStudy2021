@@ -180,7 +180,7 @@ XP= [ 0.005840000000000;1.721680000000000;-0.068890000000000;1]*10^2;
 
 %% TESTING QUAT,BL HTs
 
-load('MetriaData')
+% load('MetriaData')
 
 metdata = metdata1;
 
@@ -219,13 +219,15 @@ HT_marker
 % HT_probe = quat2tform(quat_pointer) ; 
 HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
-HT_probe
+
+% This will give the location of the pointer tool MARKER not the tip... 
+HT_probe 
    
         
 
 
  %HT marker in GCS
-  TRB_G = HT_marker;
+  TRB_G = HT_marker; % This should give the location of the marker on the sheet of paper not the pointer tool
         
   % offset of the tip of the pointer tool from the marker in that
   % markers cs
@@ -234,21 +236,196 @@ HT_probe
  
   XP = ID9;
 
-  %Getting tip of pointer tool in GCS -CORRECT!!!!
+  %Getting tip of pointer tool in GCS
   Ptip_G =HT_probe*XP;
        
   %GCS to RB frame
    TG_RB = inv(TRB_G);
         
-   %Tip of pointer tool in LCS - DOES NOT MAKE SENSE
-    Ptip_RB = TG_RB*Ptip_G
+   %Tip of pointer tool in LCS 
+    Ptip_RB = TG_RB*Ptip_G;
+    
+ 
         
-   %Getting RB marker in it's own CS IE LCS
-    PRB_RB = TG_RB*TRB_G(:,4);
+   %Getting RB marker in it's own CS IE LCS -- should be about 0001
+
+    PRB_RB = TG_RB*TRB_G(:,4); % Point of RGB in it's own CS
        
+    TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS
+
+    
+        
+    
+  %% POINTER TIP AT GCS ORIGIN  metdata1pointertipatGCSorigin.mat
+  
+    
+    % IN GLOBAL CS
+    figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)+.1,Ptip_G(2,1)/10,{'Pointer Tool Tip'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.1,{'RGB Marker'})
+%     xlim([-5 25])
+%     ylim([-5 5])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+    
+    
+    % IN LOCAL CS OF THE RB MARKER
+
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer'})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location and unit vectors for RGB marker
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+    xlim([-10 10])
+    ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+   %%  TIP OF POINTER AT BL1  - metdata1pointertipatBL1
+ 
+     figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)-2.5,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL1'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-10 10])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+    % LCS 
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer'})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   KCS 2.24.21 something is up with the X unit vector?
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-5 5])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+    %% TIP OF POINTER AT BL2- metdata1pointertipatBL2
+       
+    % IN GLOBAL CS  
+    
+     figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)-2.5,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL2'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-15 10])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+    
+    
+    % LCS 
+
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer- BL2 '})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   KCS 2.24.21 something is up with the X unit vector?
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-5 10])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+
+ %%   TIP OF POINTER AT BL3 -metdata1pointertipatBL3
+ 
+ %GCS
+ 
+      figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)+.3,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL2'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-15 10])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+    
+    
+    % LCS --  
 
 
-
-
-
-
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer- BL2 '})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2)) % Location RGB marker:   X COODINATE LOOKS LONGER? WHY
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-5 10])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+ 
+ 
+ 
+ %% TIP OF BL4  metdata1pointertipatBL4
+       figure
+ 
+    plot(Ptip_G(1,1)/10,Ptip_G(2,1)/10,'x') %pointer tool tip in GCS
+     hold on
+     text((Ptip_G(1,1)/10)+.3,Ptip_G(2,1)/10+.8,{'Pointer Tool Tip - BL2'});
+%     plot(HT_marker(1,4)/10,HT_marker(2,4)/10,'x') % RGB marker location in GCS
+    quiver(HT_marker([1 1],4)'/10,HT_marker([2 2],4)'/10,HT_marker(1,1:2),HT_marker(2,1:2)) % Location and unit vectors for RGB marker
+    text(HT_marker(1,4)/10+HT_marker(1,1:2),HT_marker(2,4)/10+HT_marker(2,1:2),{'x','y'})
+    text(HT_marker(1,4)/10,(HT_marker(2,4)/10)+.7,{'RGB Marker'})
+    xlim([-1 25])
+     ylim([-15 10])
+    title('Global CS')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+    
+    
+    % LCS --  
+   
+    figure
+    plot(Ptip_RB(1,1)/10,Ptip_RB(2,1)/10,'x') % Tip of pointer in LCS of RGB 
+    text(Ptip_RB(1,1)/10,(Ptip_RB(2,1)/10)+1,{'Tip of Pointer- BL2 '})
+    hold on
+    text(PRB_RB(1,1)/10,PRB_RB(2,1)/10+1.5,{'RGB Marker'}) % RGB IN OWN CS SHOULD BE ABOUT 0001
+    quiver(TRB_RB([1 1],4)'/10,TRB_RB([2 2],4)'/10,TRB_RB(1,1:2),TRB_RB(2,1:2))
+    text(TRB_RB(1,4)/10+TRB_RB(1,1:2),TRB_RB(2,4)/10+TRB_RB(2,1:2),{'x','y'})
+     xlim([-10 10])
+     ylim([-15 15])
+    title('LCS of marker')
+    xlabel('X position in cm')
+    ylabel('Y position in cm')
+ 
+ 

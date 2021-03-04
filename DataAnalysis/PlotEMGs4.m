@@ -3,12 +3,12 @@ function vdax=PlotEMGs4(emg,dist,vel,t0,t,fname)
 % GetMaxMusAct2(flpath,sename,setfname,partid,plotflag)
 
 clf
-
-if nargin >1 
+% 
+ if nargin >1 
     
 % totaltime = (length(dist)-1)/50; % sampling f of act 3d is 50 hz 
 % t = (0:.02:totaltime);
- %% Plot for distance and velocity
+%      % Plot for distance and velocity
 lax1 = axes('position',[0.07,0.8,0.84,0.15]);
 set(lax1,'FontSize',12);
 %set(lax1,'color','none','xgrid','off','ygrid','off','box','off','TickLabelInterpreter','none','XTick',[],'XTickLabel',[])
@@ -43,8 +43,10 @@ end
  %% EMG Plot
 
   
- emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'}; %
+  emgchan ={'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};
 
+
+ 
  sampRate=1024;
 %  nEMG=size(emg,2);
 temg=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
@@ -56,8 +58,15 @@ meanEMG=movmean(emg,ds);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL, ADEL
 % 
-idx1=[1:2:8]; idx2=[2:2:8]; % how occupying the figure of the emg plots
-% idx1=[1:2:8 9:12]; idx2=[2:2:8 13:15]; % how occupying the figure of the emg plots
+% idx1=[1:2:8]; idx2=[2:2:8]; % how occupying the figure of the emg plots
+% 2.26
+
+
+%  idx1=[1:2:8]; idx2=[2:2:8]; % gives ES RA Eo IO
+  idx1 = [1 5:2:8]; idx2=[2 6:2:8]; %Omits RRA . - ES,EO,IO
+% 
+
+%  idx1=[1:2:8 9:12]; idx2=[2:2:8 13:15]; % how occupying the figure of the emg plots
 % idx1=[1:2:7]; idx2=[2:2:8]; % how occupying the figure of the emg plots
 %Right erector spinae (RES), left external oblique (LEO) and right external oblique (REO) having UT and RT
 % idx1=[1 2 3 4 5 6]; idx2=[7:]; % how occupying the figure of the emg plots

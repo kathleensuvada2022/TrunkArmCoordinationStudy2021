@@ -14,7 +14,7 @@
 
 function [dist,vel,time,rdist,t]=ComputeReachStart5(flpath,filename)
 
-load([flpath '/' filename]);
+load([flpath filename]);
 
 actdata = data.act;
 
@@ -129,28 +129,33 @@ time = t(idx); % t0 in other function
 % timebefore = timestart-.05; %time 50 ms prior to start of reach
 % ibefore = ceil(timebefore*50); 
 
-% computing emg activation 
-figure(1)
-title(' ACT 3D Plot Reach ') 
-xlabel('X Position Meters')
-ylabel('Y Position Meters')
-plot(-Xpos,-Ypos,Xo,Yo,'r',-Xpos(idx(1:4)),-Ypos(idx(1:4)),'o')
-text(-Xpos(idx(1:4))',-Ypos(idx(1:4)),{'1-Start','2-MaxV','3-MaxR','4-EndM'})
-% hold off
 
-figure(2)
 
-plot(t,dist,t(idx(1:4)),dist(idx(1:4)),'o')
-text(t(idx(1:4)),dist(idx(1:4)),{'1','2','3','4'})
-ylabel('Distance') 
-yyaxis right 
-plot(t,vel,t(idx(1:4)),vel(idx(1:4)),'o')
-text(t(idx(1:4)),vel(idx(1:4)),{'1','2','3','4'})
-ylabel('Velocity') 
-xlabel('time')
-% legend('Distance','Velocity','Start Reach','Max Velocity','50 ms Before Reach')
-% title('3D Distance and Velocity During Reach')
-
+% Shows trace above with trajectory for reach 
+% figure(1)
+% title(' ACT 3D Plot Reach ') 
+% xlabel('X Position Meters')
+% ylabel('Y Position Meters')
+% plot(-Xpos,-Ypos,Xo,Yo,'r',-Xpos(idx(1:4)),-Ypos(idx(1:4)),'o')
+% text(-Xpos(idx(1:4))',-Ypos(idx(1:4)),{'1-Start','2-MaxV','3-MaxR','4-EndM'})
+% % hold off
 % 
+
+
+% using this plot to confirm maxes
+% figure(2)
+% 
+% plot(t,dist,t(idx(1:4)),dist(idx(1:4)),'o')
+% text(t(idx(1:4)),dist(idx(1:4)),{'1','2','3','4'})
+% ylabel('Distance') 
+% yyaxis right 
+% plot(t,vel,t(idx(1:4)),vel(idx(1:4)),'o')
+% text(t(idx(1:4)),vel(idx(1:4)),{'1','2','3','4'})
+% ylabel('Velocity') 
+% xlabel('time')
+% % legend('Distance','Velocity','Start Reach','Max Velocity','50 ms Before Reach')
+% % title('3D Distance and Velocity During Reach')
+% 
+% % 
 
 end 
