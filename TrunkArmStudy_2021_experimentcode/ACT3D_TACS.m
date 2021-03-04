@@ -596,6 +596,9 @@ function ACT3D_tablebg_Callback(~,event)
             if myhandles.robot.endEffectorPosition(3) < myhandles.haptic.horizontalPosition(3)
                 uiwait(warndlg('Please raise the ACT3D above the haptic table','ACT3D-TACS',myhandles.txt_struct));
             end
+             myhandles.haptic.horizontalPosition(3) = -0.12; %was-.24
+                % set position of horizontal haptic effect in robot
+                myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
             myhandles.haptic.isHorizontalEnabled = myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
         case 'off'
             % turn off horizontal effect AMA THIS GIVES AN ERROR
@@ -675,7 +678,7 @@ function ACT3D_loadbg_Callback(~,event)
             if myhandles.haptic.isHorizontalEnabled
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved down 4 cm','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.26; %was-.24
+                myhandles.haptic.horizontalPosition(3) = -0.28; %was-.24
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
@@ -688,7 +691,7 @@ function ACT3D_loadbg_Callback(~,event)
                 % Fix ACT3D before removing table
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved to default position, move ACT-3D above table','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.15;   % was -.2
+                myhandles.haptic.horizontalPosition(3) = -0.1;   % was -.2
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
