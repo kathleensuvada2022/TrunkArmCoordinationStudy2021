@@ -675,7 +675,7 @@ function ACT3D_loadbg_Callback(~,event)
             if myhandles.haptic.isHorizontalEnabled
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved down 4 cm','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.24;
+                myhandles.haptic.horizontalPosition(3) = -0.26; %was-.24
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
@@ -688,7 +688,7 @@ function ACT3D_loadbg_Callback(~,event)
                 % Fix ACT3D before removing table
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved to default position, move ACT-3D above table','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.2;
+                myhandles.haptic.horizontalPosition(3) = -0.15;   % was -.2
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
