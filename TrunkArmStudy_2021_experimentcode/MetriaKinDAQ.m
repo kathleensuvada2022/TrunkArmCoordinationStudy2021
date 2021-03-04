@@ -202,23 +202,87 @@ if ~isempty(probeidx)
         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:7),probeidx(1)+(0:7)]); % This is just the marker on the probe and the marker on the RB in the GCS-> want Pointer tip in LCS
         size(  dig.bl{dig.currentSEG}(dig.currentBL,:)) ;
         %1X16
-        
-%% Need to convert from quaternion to HT matrix 
-% size(metdata)
-% size(metdata(markeridx(1)+(4:7)))
+%% OLD WAY OF DOING MATRIX TRANSFORMATIONS  
+% %% Need to convert from quaternion to HT matrix 
+% % size(metdata)
+% % size(metdata(markeridx(1)+(4:7)))
+% quat_RB =metdata(markeridx(1)+(4:7));
+% size(quat_RB) ;
+% quat_pointer = metdata(probeidx(1)+(4:7));
+% 
+% % quat_RB = rand(1,4); % testing need to just grab quaternion not XYZ 
+% % quat_pointer = rand(1,4); % testing need to just grab quaternion not XYZ 
+% 
+% quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
+% quat_pointer = circshift(quat_pointer,1,2);
+% 
+% % XYZ point 
+% % P_RB = rand(1,3)'; % for testing comment out 
+% % P_pointer = rand(1,3)' % testing comment out
+% P_RB = metdata(:,markeridx(1)+(1:3))';
+% P_pointer = metdata(:,probeidx(1)+(1:3))';
+% 
+% % % Each quaternion represents a 3D rotation and is of the form 
+% % % q = [w(SCALAR REAL) qx qy qz]
+% % 
+% %  HT_UDP = quat2tform(Quat_UDP);
+% %  HT_UDP(1:3,4) = P;
+% %  HT_UDP
+% % 
+% % Now have HT matrix like is outout from MOCAP
+% %KCS 2.9.21 need to convert to HT from Quaternion without quat2tform for
+% %MATLAB 2014
+% % HT_marker = quat2tform(quat_RB);
+% HT_marker = Quaternion2tForm(quat_RB);
+% HT_marker(1:3,4,:) = P_RB;
+% 
+% HT_marker %CONFIRMED JIVES WITH MOCAP!!!! 2.11.21
+% 
+% 
+% % HT_probe = quat2tform(quat_pointer) ; 
+% HT_probe = Quaternion2tForm(quat_pointer);
+% HT_probe(1:3,4,:) = P_pointer;
+% HT_probe
+% % confirmed with MOCAP 2.15.21        
+%         
+% %      Transforming to get tip of pointer in LCS
+%         
+%         %HT marker in GCS
+%         TRB_G = HT_marker;
+%         
+%         % offset of the tip of the pointer tool from the marker in that
+%         % markers cs
+%         XP = (getfield(myhandles.met.ptip,pointertool))'
+% 
+%         %Getting tip of pointer tool in GCS -CORRECT
+%         Ptip_G =HT_probe*XP
+%        
+%        %GCS to RB frame
+%         TG_RB = TRB_G';
+%         
+%        %Tip of pointer tool in LCS - DOES NOT MAKE SENSE
+%         Ptip_RB = TG_RB*Ptip_G
+%         
+%        %Getting RB marker in it's own CS IE LCS
+%         PRB_RB = TG_RB*HT_probe(:,4);
+%        
+%     
+% %        size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))]); 1x16
+%        
+       
+%      dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];%gives BL in LCS and then marker in GCS
+           
+%%
+% FROM BL CODE
+
 quat_RB =metdata(markeridx(1)+(4:7));
 size(quat_RB) ;
 quat_pointer = metdata(probeidx(1)+(4:7));
 
-% quat_RB = rand(1,4); % testing need to just grab quaternion not XYZ 
-% quat_pointer = rand(1,4); % testing need to just grab quaternion not XYZ 
-
-quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
-quat_pointer = circshift(quat_pointer,1,2);
+ quat_RB= circshift(quat_RB,1,2); % added to compensate for quaternion shifted by 1 -- needed to update for 2014 matlab
+ quat_pointer = circshift(quat_pointer,1,2);
 
 % XYZ point 
-% P_RB = rand(1,3)'; % for testing comment out 
-% P_pointer = rand(1,3)' % testing comment out
 P_RB = metdata(:,markeridx(1)+(1:3))';
 P_pointer = metdata(:,probeidx(1)+(1:3))';
 
@@ -236,44 +300,46 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 HT_marker = Quaternion2tForm(quat_RB);
 HT_marker(1:3,4,:) = P_RB;
 
-HT_marker %CONFIRMED JIVES WITH MOCAP!!!! 2.11.21
+HT_marker;
 
 
 % HT_probe = quat2tform(quat_pointer) ; 
 HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
-HT_probe
-% confirmed with MOCAP 2.15.21        
-        
-        %% Transforming to get tip of pointer in LCS
-        
-        %HT marker in GCS
-        TRB_G = HT_marker;
-        
-        % offset of the tip of the pointer tool from the marker in that
-        % markers cs
-        XP = (getfield(myhandles.met.ptip,pointertool))'
 
-        %Getting tip of pointer tool in GCS -CORRECT
-        Ptip_G =HT_probe*XP
-       
-       %GCS to RB frame
-        TG_RB = TRB_G';
+% This will give the location of the pointer tool MARKER not the tip... 
+HT_probe 
+   
         
-       %Tip of pointer tool in LCS - DOES NOT MAKE SENSE
-        Ptip_RB = TG_RB*Ptip_G
+
+ %HT marker in GCS
+  TRB_G = HT_marker; % This should give the location of the marker on the sheet of paper not the pointer tool
         
-       %Getting RB marker in it's own CS IE LCS
-        PRB_RB = TG_RB*HT_probe(:,4);
+  % offset of the tip of the pointer tool from the marker in that
+  % markers cs
+  
+  load('Marker9Offset.mat');
+ 
+  XP = ID9;
+
+  %Getting tip of pointer tool in GCS
+  Ptip_G =HT_probe*XP;
        
+  %GCS to RB frame
+   TG_RB = inv(TRB_G);
+        
+   %Tip of pointer tool in LCS 
+    Ptip_RB = TG_RB*Ptip_G;
     
-%        size([ X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))]); 1x16
-       
-       
-%      dig.bl{dig.currentSEG}(dig.currentBL,:) = [X_RB' quat_RB  metdata(:,markeridx(1)+(0:7))];%gives BL in LCS and then marker in GCS
-           
+ 
+        
+   %Getting RB marker in it's own CS IE LCS -- should be about 0001
 
-       dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_RB PRB_RB' PRB_RB']; %Gives XYZ of pointer tool corresponding quaternion, then the marker in LCS
+    PRB_RB = TG_RB*TRB_G(:,4); % Point of RGB in it's own CS
+       
+    TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS
+
+     dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' Ptip_RB' PRB_RB' PRB_RB']; %Gives XYZ of pointer tool twice, then the marker in LCS twice (this should always be about 001
 
         
 %         dig.bl{dig.currentSEG}(dig.currentBL,:)=metdata([markeridx(1)+(0:6),probeidx(1)+(0:6)]);
