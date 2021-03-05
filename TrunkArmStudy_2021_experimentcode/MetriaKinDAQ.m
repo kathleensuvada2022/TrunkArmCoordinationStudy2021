@@ -318,9 +318,11 @@ HT_probe
   % offset of the tip of the pointer tool from the marker in that
   % markers cs
   
-  load('Marker9Offset.mat');
+%   load('Marker9Offset.mat'); Not sure why wouldn't load before
  
-  XP = ID9;
+%   XP = ID9;
+
+XP = [0.584000000000000;172.168000000000;-6.88900000000000;1];
 
   %Getting tip of pointer tool in GCS
   Ptip_G =HT_probe*XP;
