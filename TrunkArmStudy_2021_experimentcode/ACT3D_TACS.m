@@ -16,7 +16,7 @@ function ACT3D_TACS(varargin)
 % * Add graphical feedback of trunk home and current position (sphere and
 % cube)
 
-% AMA 11/17/20
+% AMA 11/17/22
 % * Fix Metria data to add trunk home position
 % * Compiler instruction mex -lws2_32 metriaComm_openSocket.cpp
 % * Add graphical feedback of trunk home and current position (sphere and cube)
@@ -1026,20 +1026,16 @@ if myhandles.met.on, setappdata(act3dTACS,'metdatabuffer',zeros(myhandles.exp.sT
 set(myhandles.exp.hLine(3),'Visible','off');
 
 %Start DAQ, PPS and METRIA depending on which is enabled
-if myhandles.pps.on, myhandles.pps.mats.StartPPS; end
-
 myhandles.exp.isrunning=1;
 counter=0;
 % Note that the NIDAQ object has to exist to do the data acquisition. In a
 % future version make it optional and allow data acquisition with the timer
 
 % put a pause for 2.5 seconds 
-pause(2.5);
+% pause(2.5);commented out 3.5.21
 
 % Reads PPS data because will clear the buffer 1.3.2021 
-myhandles.pps.mats.ReadData;
-
-
+if myhandles.pps.on, myhandles.pps.mats.ReadData;  end
 if myhandles.daq.on % Where data aquisition is happening
 % startForeground blocks program flow, so the following code won't be
 % executed until data acquisition is done
@@ -1140,7 +1136,7 @@ function EXP_displayData(data)
     if myhandles.pps.on
 %         ppsdata=data.pps{2}(:,:); commented out because now only READING
 %         data after the PPS initialization 2.3.21
-        ppsdata=data.pps{2}(:,:);
+          ppsdata=data.pps{2}(20:end,:); 
         TotalPressure1 = sum(ppsdata(:,1:256),2); 
         TotalPressure2 = sum(ppsdata(:,257:end),2);
 
@@ -1651,7 +1647,7 @@ end
 delete(hObject)
 end
 
-%KCS 10.21.20 - adding PPS callback function
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PPS Panel Callback Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1674,6 +1670,8 @@ if myhandles.pps.on  % initialization
     myhandles.pps.mats.Initialize(dir);
     set(myhandles.ui.pps_ax1,'Visible','on'); set(myhandles.ui.pps_tle1,'Visible','on')
     set(myhandles.ui.pps_ax2,'Visible','on'); set(myhandles.ui.pps_tle2,'Visible','on')
+
+    myhandles.pps.mats.StartPPS;
     
     start(myhandles.exp.timer)
 else

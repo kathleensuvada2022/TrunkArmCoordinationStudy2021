@@ -2,17 +2,20 @@
 
 % obj = PPS(name,datafpath)
 dir=pwd;
-ppsmat = PPS('TactArray_Hand',dir);
+ppsmat = PPS('TactArray_Trunk',dir);
 
 % Initialize
 ppsmat.Initialize(dir);
 
 % Start data collection
-ppsmat.StartPPS;
+ppsmat.StartPPS; 
+% pause(1)
+[~,ppst,ppsdata]=ppsmat.ReadData;
+pause(5);
 
 [~,ppst,ppsdata]=ppsmat.ReadData;
 
-pause(5);
+
 
 ppsmat.StopPPS;
 

@@ -202,17 +202,19 @@ classdef PPS < handle
 %             disp('In ReadData')
             nReady = calllib('PPSDaqAPI', 'ppsFramesReady');
 %             disp(nReady) 
-            if  nReady <= 0 
-                calllib('PPSDaqAPI','ppsStop');
-                warndlg('\fontsize{12}PPS Time out: no data available','ACT3D-TACS',obj.CreateStruct);  %TODO: Error when running with Nayo's Hand PPS happens here in PPS.m and on line 1055 in ACT3D_TACS.m
-                obj=[];t=[];data=[];
+%             if  nReady <= 0 
+%                 calllib('PPSDaqAPI','ppsStop');
+%                 warndlg('\fontsize{12}PPS Time out: no data available','ACT3D-TACS',obj.CreateStruct);  %TODO: Error when running with Nayo's Hand PPS happens here in PPS.m and on line 1055 in ACT3D_TACS.m
 %               disp('Time out: no data available');
-            else
+            if nReady>0
                 obj.time = libpointer('ulongPtr', zeros(nReady, 1));
                 obj.data = libpointer('singlePtr', zeros(obj.FrameSize, nReady));
                 [~, t, data] = calllib('PPSDaqAPI', 'ppsGetData', nReady, obj.time, obj.data);
                 data=double(data)';
                 t=double(t);
+            else
+               obj=[];t=[];data=[];
+
             end
 %             elseif nReady < obj.BufferSize && nReady > 0
 % %                 str = sprintf('Trying to read %d frames', nReady);
