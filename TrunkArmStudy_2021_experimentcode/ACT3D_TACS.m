@@ -1322,11 +1322,11 @@ ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out next two lines 
-% set(myhandles.ui.act3d_state,'String','FIXED');
-% ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% myhandles.act3d.state='FIXED';
-% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% myhandles.ui.act3d_state.String=myhandles.act3d.state;
+set(myhandles.ui.act3d_state,'String','FIXED');
+ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+myhandles.act3d.state='FIXED';
+myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+myhandles.ui.act3d_state.String=myhandles.act3d.state;
 
 % Read endpoint effector position
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
