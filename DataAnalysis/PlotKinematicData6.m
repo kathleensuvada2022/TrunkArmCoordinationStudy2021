@@ -69,7 +69,7 @@ mfilepath = afilepath2;
 maxreach=zeros(ntrials,1);
 emgstart = zeros(ntrials,16); % changed to 16 because 16 EMGS
 
-figure(1),clf
+% figure(1),clf
 
 emgval = zeros(ntrials,6,16); % changed to 16 because now 16 emgs -> 4 is conditions? Now 6
 rdist = zeros(ntrials,1);
@@ -117,9 +117,11 @@ disp(mfname) % displays trial
 % 
 % 
 
- [xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
-    
- maxreachtime
+ [x3mcp,xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
+   
+ maxreach/10  % reaching distance in CM
+ trdisp/10   % trunk displacement in CM
+ maxreachtime;
 %  end
 %     figure(1)
 %     if i==1
@@ -177,36 +179,46 @@ disp(mfname) % displays trial
 %     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
-    pause
- end
 
-
-
-figure(1)
+    
+    figure
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
+plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
 axis 'equal'
 % axis([-0.3 0.2 -1.05 -0.15])
 xlabel('x(m)'),ylabel('y(m)')
-title(mfilepath)
+title(mfname)
 
+% 
+% title('Reaching with trunk unrestrained - 5% Max SABD')
+% title('Reaching with trunk unrestrained - table')
+%  title('Reaching with trunk restrained - table')
 
-title('Reaching with trunk unrestrained - 5% Max SABD')
-title('Reaching with trunk unrestrained - table')
- title('Reaching with trunk restrained - table')
+% text(-0.1,-0.25,['TR DISP= ', num2str((trdisp/10))])
+text(-0.28,-0.55,['MAX REACH = ', num2str((maxreach/10))])
+% text(-.28,-.45,['MFNAME = ', num2str((mfname))])
 
-text(-0.28,-0.25,['SH TR DISP= ', num2str((shtrdisp))])
-text(-0.28,-0.35,['MAX REACH = ', num2str(max(maxreach))])
-text(-.28,-.45,['MFNAME = ', num2str((mfname))])
-
-text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
-print('-f3','-djpeg',[partid '_RT'])
-disp(maxreach)
+% text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
+% print('-f3','-djpeg',[partid '_RT'])
+disp(maxreach/10)
 
 
 
 % what passing into this function? data.pps{2}?
 %Calling COP Function
-% [CoP1,CoP2]=  ComputeCOP(ppsdata)
+
+ppsdata =data.pps;
+[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata);
+
+stdMat1
+stdMat2
+     pause   %pausing between each trial
+    
+ end
+
+
+
+
 
 
 end   

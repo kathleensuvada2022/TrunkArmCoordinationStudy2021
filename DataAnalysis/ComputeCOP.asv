@@ -4,7 +4,7 @@
 
 %Where subtract the baseline??? Need to add this in as well !!!!!!!!
 
-function [CoP1,CoP2,stdMat1,stdMat2]=  ComputeCOP(ppsdata)
+function [CoP1,CoP2,stdMat1,stdmat1]=  ComputeCOP(ppsdata)
 
 
         ppsdata= ppsdata{1,2};
@@ -18,8 +18,7 @@ function [CoP1,CoP2,stdMat1,stdMat2]=  ComputeCOP(ppsdata)
         CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2];
         
         stdMat1 = std(CoP1); %gives standard deviation of x and y COP 
-        stdMat2 = std(CoP2); %gives standard deviation of x and y COP 
-
+        
         
         figure
         plot(CoP1(:,1),CoP1(:,2),'o')

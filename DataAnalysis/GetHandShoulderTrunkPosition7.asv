@@ -68,7 +68,7 @@ x = x(:,4:end);
 
 %forearm columns and rows where forearm marker ID is present 
     
-% HELP HERE WITH ANA MARIA 
+
 fidx=find(x(1,:)==setup.markerid(4));  
 if isempty(x(1,fidx)) % to compensate for the fact that some rows may be empty 
     for i =1:length(x) 
