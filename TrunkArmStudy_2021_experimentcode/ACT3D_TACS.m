@@ -596,9 +596,9 @@ function ACT3D_tablebg_Callback(~,event)
             if myhandles.robot.endEffectorPosition(3) < myhandles.haptic.horizontalPosition(3)
                 uiwait(warndlg('Please raise the ACT3D above the haptic table','ACT3D-TACS',myhandles.txt_struct));
             end
-             myhandles.haptic.horizontalPosition(3) = -0.12; %was-.24
+%              myhandles.haptic.horizontalPosition(3) = -0.12; %was-.24
                 % set position of horizontal haptic effect in robot
-                myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
+%                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
             myhandles.haptic.isHorizontalEnabled = myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
         case 'off'
             % turn off horizontal effect AMA THIS GIVES AN ERROR
@@ -676,11 +676,11 @@ function ACT3D_loadbg_Callback(~,event)
         case 'on'
             % If haptic table enabled, disable, move down 6 cm and enable
             if myhandles.haptic.isHorizontalEnabled
-                uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved down 4 cm','ACT3D-TACS',myhandles.txt_struct));
+                uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved down 2 cm','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.28; %was-.24
+                 myhandles.haptic.horizontalPosition(3) = -0.20; %was-.24
                 % set position of horizontal haptic effect in robot
-                myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
+               myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
             end
             pause(1)
@@ -691,7 +691,7 @@ function ACT3D_loadbg_Callback(~,event)
                 % Fix ACT3D before removing table
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved to default position, move ACT-3D above table','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.1;   % was -.2
+                myhandles.haptic.horizontalPosition(3) = -0.15;   % was -.2
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
@@ -877,6 +877,7 @@ function EXP_localTimerAction(source, event)
 % end
 % Read current data from ACT3D
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
+% hpos=gethandpos(hpos',myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
 hpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
 data={[hpos',myhandles.robot.endEffectorRotation(1),myhandles.robot.endEffectorForce(3)]};
 % NI DAQ data only needed if RT checkbox is on
@@ -1261,22 +1262,22 @@ if myhandles.ui.act3d_tablebg.SelectedObject==myhandles.ui.act3d_tableoff
     return
 end
 
-% If device is in FIXED state, switch to NORMAL
-if strcmp(myhandles.robot.currentState,'fixed')
-    uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
-    set(myhandles.ui.act3d_state,'String','NORMAL');
-    ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-%     myhandles.act3d.state='NORMAL';
-%     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-%     myhandles.ui.act3d_state.String=myhandles.act3d.state;
-end
+% If device is in FIXED state, switch to NORMAL -commented out lines 1266-1273 3.8.21
+% if strcmp(myhandles.robot.currentState,'fixed')
+%     uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
+%     set(myhandles.ui.act3d_state,'String','NORMAL');
+%     ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+% %     myhandles.act3d.state='NORMAL';
+% %     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+% %     myhandles.ui.act3d_state.String=myhandles.act3d.state;
+% end
 
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of sternum with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
-% switch the robot to FIXED state to keep the participant's arm still
-set(myhandles.ui.act3d_state,'String','FIXED');
-ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+% switch the robot to FIXED state to keep the participant's arm still commented out lines 1279 and 1280 3.8.21
+% set(myhandles.ui.act3d_state,'String','FIXED');
+% ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 % myhandles.act3d.state='FIXED';
 % myhandles.robot.SwitchState(lower(myhandles.act3d.state));
 % myhandles.ui.act3d_state.String=myhandles.act3d.state;
@@ -1320,12 +1321,12 @@ ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
-% switch the robot to FIXED state to keep the participant's arm still
+% switch the robot to FIXED state to keep the participant's arm still commented out next two lines 
 set(myhandles.ui.act3d_state,'String','FIXED');
 ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% myhandles.act3d.state='FIXED';
-% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% myhandles.ui.act3d_state.String=myhandles.act3d.state;
+myhandles.act3d.state='FIXED';
+myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+myhandles.ui.act3d_state.String=myhandles.act3d.state;
 
 % Read endpoint effector position
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);

@@ -16,7 +16,7 @@ classdef Haptic < handle  %make robot a parent
         isHorizontalCreated = 0;
         isHorizontalEnabled = 0;
         horizontalName = 'horizontalEffect';
-        horizontalPosition = [ 0.0, 0.0, -0.1 ];
+        horizontalPosition = [ 0.0, 0.0, -0.15];
         horizontalSize = [ 2, 2, 0.1 ];
         
         isVerticalCreated = 0;
