@@ -69,23 +69,34 @@ x = x(:,4:end);
 %forearm columns and rows where forearm marker ID is present 
     
 % HELP HERE WITH ANA MARIA 
-fidx=find(x(1,:)==setup.markerid(4));  
-if isempty(x(1,fidx)) % to compensate for the fact that some rows may be empty 
-    for i =1:length(x) 
-        fidx=fidx+1;
-    end
-end
+[ridx,cidx]=find(x==setup.markerid(4));  
+fidx =cidx(1);
+% if isempty(x(1,fidx)) % to compensate for the fact that some rows may be empty 
+%     for i =1:length(x) 
+%         fidx=fidx+1;
+%     end
+% end
 xfore=x(:,fidx:(fidx+7));
 
-aidx=find(x(1,:)==setup.markerid(3));
-if isempty(x(1,aidx)) % to compensate for the fact that some rows may be empty 
-    for i =1:length(x) 
-        aidx=aidx+i;
-    end
-end
+[ridx,cidx]=find(x==setup.markerid(3));
+aidx =cidx(1);
+
+% if isempty(x(1,aidx)) % to compensate for the fact that some rows may be empty 
+%     for i =1:length(x) 
+%         aidx=aidx+i;
+%     end
+% end
 xarm=x(:,aidx:(aidx+7)); %extracting humerus marker
-sidx=find(x(1,:)==setup.markerid(2)); xshldr=x(:,sidx:(sidx+ 7));% extracting shoulder marker
-tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx:(tidx+7)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+
+[ridx,cidx]=find(x==setup.markerid(2));
+sidx=cidx(1);
+
+xshldr=x(:,sidx:(sidx+ 7)); % extracting shoulder marker
+
+[ridx,cidx]=find(x==setup.markerid(1)); 
+tidx=cidx(1);
+
+xtrunk=x(:,tidx:(tidx+7)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
 
 %Lines below KCS trying to create workaround for data being grabbed that's
