@@ -175,7 +175,7 @@ disp(mfname) % displays trial
     t=t-1;
     time=time-1;
 %     dist=dist(
-    ax=PlotEMGs4(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
+    ax=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
 %     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])

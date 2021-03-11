@@ -11,12 +11,12 @@ if nargin >1
 dist = dist(1:50,:);
 vel = vel(1:50,:);
 t = t(1:50); 
-lax1 = axes('position',[0.07,0.8,0.88,0.15]);
+lax1 = axes('position',[0.05,0.8,0.88,0.15]);
 set(lax1,'FontSize',12);
 %set(lax1,'color','none','xgrid','off','ygrid','off','box','off','TickLabelInterpreter','none','XTick',[],'XTickLabel',[])
 % set(lax1,'YTick',fliplr(-yspacing),'YTickLabel',fliplr(emgchan(idx1)),...
  %   'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
-%line(lax1,t,emg(:,idx1)-yspacing(ones(length(t),1),:))
+% line(lax1,t,emg(:,idx1)-yspacing(ones(length(t),1),:))
 vdax=lax1;    
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
@@ -29,7 +29,7 @@ set(lax1,'ColorOrder',co(end-1:-1:1,:))
 %line(lax1,'Color','r','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  
 line(lax1,'Color','b','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  %REACH START
 line(lax1,'Color','m','Xdata',[t0(2) t0(2)],'Ydata',lax1.YLim,'LineWidth',1); %MAX VEL
-%line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1);
+line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1); % Max distance
 %line(lax1,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax1.YLim,'LineWidth',1);
 % legend(g,'Time Start','LineWidth',1);
 yyaxis right 
