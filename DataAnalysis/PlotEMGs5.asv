@@ -1,4 +1,4 @@
-function emgs_maxvel=PlotEMGs5(emg,dist,vel,t0,t,fname)
+function vdax=PlotEMGs5(emg,dist,vel,t0,t,fname)
 % AMA 5/1/20 - Modified for KCS NRSA
 % GetMaxMusAct2(flpath,sename,setfname,partid,plotflag)
 
@@ -85,9 +85,8 @@ yspacing=cumsum(memg*1.05);
 
 t0_emgs = abs(t0-.15);  % converting the times for emg data 
 
-t0_emgs_idx =round(t0_emgs*1000); %emg indices where certain max vel etc occur
+t0_emgs_idx =t0_emgs*1000; %emg indices where certain max vel etc occur
 
-maxdist_idx = t0_emgs_idx(3); %index where the max distance occurs for EMGS -- use to cut the EMGS
 
 
 % MAKE MORE CHANGES TO CROP EMG DATA USE LINE 98 WORKS -- replace 430 with
@@ -96,18 +95,18 @@ lax1 = axes('position',[0.07,0.05,0.4,0.7]);
 set(lax1,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax1,'YTick',fliplr(-yspacing(1:length(idx1))),'YTickLabel',fliplr(emgchan(idx1)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[])
-line(lax1,temg(1:maxdist_idx),emg(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+line(lax1,temg(1:430),emg(1:430,idx1)-yspacing(ones(length(temg(1:430)),1),1:length(idx1)),'LineWidth',2)
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
-line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+line(lax1,temg(1:430),meanEMG(1:430,idx1)-yspacing(ones(length(temg(1:430)),1),1:length(idx1)),'LineWidth',2)
 % 
 lax2 = axes('position',[0.55,0.05,.4,0.7]);
  set(lax2,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax2,'YTick',fliplr(-yspacing(1:length(idx2))),'YTickLabel',fliplr(emgchan(idx2)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[],'FontSize',14);
-line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+line(lax2,temg(1:430),emg(1:430,idx2)-yspacing(ones(length(temg(1:430)),1),1:length(idx2)),'LineWidth',2)
 set(lax2,'ColorOrder',co(end-1:-1:1,:))
-line(lax2,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+line(lax2,temg(1:430),meanEMG(1:430,idx2)-yspacing(ones(length(temg(1:430)),1),1:length(idx2)),'LineWidth',2)
 
 
 
@@ -120,14 +119,13 @@ line(lax2,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx2)-yspacing(ones(length(t
 %      % line(lax2,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax2.YLim,'LineWidth',1);
 %      % line(lax2,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax2.YLim,'LineWidth',1);
 %  end
-set(lax1,'XLim',[0 .5])
+set(lax1,'XLim',[0 5])
 set(lax2,'XLim',[0 .5])
 set(lax1,'YLim',[-yspacing(end) 0]) %memg(idx2(1))])
 set(lax2,'YLim',[-yspacing(end) 0]) %memg(idx2(1))])
- xlabel('Time (s)') 
 
- emgs_maxvel = emg(t0_emgs_idx(2),:)
- 
+% xlabel('Time (s)') 
+
 % Change the file name 'emgUT'
 % save(fname,'temg','emg','meanEMG','memg','emgchan','co','t0','t','dist','vel')
 

@@ -1,4 +1,4 @@
-function emgval =PlotKinematicData6(partid,metriafname,act3dfname,expcond)
+function avg_emg_maxvel= PlotKinematicData6(partid,metriafname,act3dfname,expcond)
 
 % partid,'2001tf_final_000000','Target_',3
 % partid = 'RTIS2001';
@@ -171,15 +171,18 @@ disp(mfname) % displays trial
 %     emgmaxvel = emg(ivelmax,1:15)
     
     figure(3)
-    emg=emg(1001:end,:);
-    t=t-1;
-    time=time-1;
+%     Lines 175-178?? Why here?? 
+%     emg=emg(1001:end,:);
+%     t=t-1;
+%     time=time-1;
 %     dist=dist(
-    ax=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
+emgsmaxvel_vals = zeros(ntrials,16);
+   emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
 %     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
 
+emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
     
     figure
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
@@ -206,19 +209,20 @@ disp(maxreach/10)
 
 % what passing into this function? data.pps{2}?
 %Calling COP Function
+% 
+% ppsdata =data.pps;
+% [CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata);
+% 
+% stdMat1
+% stdMat2
+%      pause   %pausing between each trial
+%     
+%  end
+% 
 
-ppsdata =data.pps;
-[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata);
 
-stdMat1
-stdMat2
-     pause   %pausing between each trial
-    
- end
-
-
-
-
+end
+avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
 
 
 end   

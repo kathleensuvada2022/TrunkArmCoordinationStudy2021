@@ -180,23 +180,23 @@ emgval = PlotKinematicData6(partid,'2001tf_final_000000','Target_',4)
 partid = 'RTIS2003';
 
 %RT
-emgval = PlotKinematicData6(partid,'trial','trial',1);
+ avg_emg_maxvel=PlotKinematicData6(partid,'trial','trial',1);
 
 %R25
-emgval = PlotKinematicData6(partid,'trial','trial',2);
+avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',2);
 
 
 %R50
-emgval = PlotKinematicData6(partid,'trial','trial',3);
+avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',3);
 
 %uT
-emgval = PlotKinematicData6(partid,'trial','trial',4);
+avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',4);
 
 %U25
-emgval = PlotKinematicData6(partid,'trial','trial',5);
+avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',5);
 
 %U50
-emgval = PlotKinematicData6(partid,'trial','trial',6);
+avg_emg_maxvel= PlotKinematicData6(partid,'trial','trial',6);
 
 
 
