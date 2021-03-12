@@ -12,6 +12,10 @@
 % or the point when velocity goes back to zero as the point where the max
 % reach happened.
 
+
+% "t" is the actual time vector for the act3d in seconds "time" is the time
+% in seconds for 1) reach start 2) max velocity 3) max reach 4) end of
+% movement 
 function [dist,vel,time,rdist,t]=ComputeReachStart5(flpath,filename)
 
 load([flpath filename]);
@@ -28,8 +32,8 @@ actdata = data.act;
 % Column 15-17 robot.endEffectorTorque;
 
 
- t= actdata(:,1)/50; %actual time
- % 
+ t= actdata(:,1); %actual time stops at 5 seconds for length of trial
+ % don't need to divide by 50 why dividing by 0????
 
 % idx = zeros(1,4);
 % Xpos = cell2mat(trialData(3,2:end));
@@ -74,13 +78,13 @@ Zov = 0;
 dist = sqrt((Xpos-Xo).^2 +(Ypos-Yo).^2 + (Zpos-Zo).^2);
 vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
-idx=zeros(1,4);
+idx=zeros(1,4); % creating variable with the indices of vel and distance 
 idx(1) = find(vel>.07,1); % start reaching 
 
 % idx(1) = i(1); 
 [vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
 % [~,idx(2)] = max(vel); %max vel
-idx(2)=vlocs(1);
+idx(2)=vlocs(1); %finding the first peak as the max vel
 [dpks,dlocs] = findpeaks(dist(idx(1):end)); dlocs=dlocs+idx(1)-1;
 % [~,idx(3)] = max(dist(idx(2)+1:end)); % idx3 max reach
 idx(3)=dlocs(1);
@@ -105,7 +109,10 @@ idx(4)=idx(3)+3; % Mark end of movement 0.5s after max reach
 % rdist = dist(idx(4));
 % disp(idx)
  
-time = t(idx); % t0 in other function 
+time = t(idx); % t0 in other function - actual time in seconds version of idx
+
+
+
 % time = t_idx/50;
 
 % for i = 1:length(dist)

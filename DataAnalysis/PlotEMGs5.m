@@ -23,19 +23,21 @@ set(lax1,'ColorOrder',co(end-1:-1:1,:))
 % added in 2.27.20 for vertical line in EMG plots
 %set(lax1,'XLim',[.5 5])
 
-%t0 time start t0(2) max vel 
+%t0 time start t0(2) max vel t0(4) max distance
 
 
 %line(lax1,'Color','r','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  
 line(lax1,'Color','b','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  %REACH START
 line(lax1,'Color','m','Xdata',[t0(2) t0(2)],'Ydata',lax1.YLim,'LineWidth',1); %MAX VEL
-line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1); % Max distance
+% line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1); % Max distance  % CUT OFF PLOT AT MAX DISTANCE
 %line(lax1,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax1.YLim,'LineWidth',1);
 % legend(g,'Time Start','LineWidth',1);
 yyaxis right 
-line(lax1,t,dist,'LineWidth',2,'Color','b'); % add in distance variablea
+line(lax1,t,dist,'LineWidth',2,'Color','b');
+line(lax1,t,dist,'LineWidth',2,'Color','b');% add in distance variablea
 ylabel('Distance (m)')
 yyaxis left
+% line(lax1,t,vel,'LineWidth',2)
 line(lax1,t,vel,'LineWidth',2)
 ylabel('Velocity (m/s)')
 legend('Max Velocity','Max Distance','Velocity','Distance','FontSize',14)
@@ -54,7 +56,7 @@ end
  sampRate=1000;
 %  nEMG=size(emg,2);
 temg=(0:size(emg,1)-1)/sampRate;% Assuming sampling rate is 1000 Hz
-
+temg=temg';
 avgwindow=.25; ds=sampRate*avgwindow;
 % emg=abs(detrend(emg));
 meanEMG=movmean(emg,ds);
@@ -78,16 +80,22 @@ nEMG=length(idx1); % 8 rows of the column on the left for plot
 %   memg=max([max(emg(:,idx1));[max(emg(:,idx2)) 0]]); 
 %11.28.20 
 
- memg = max([max(emg(:,idx1));max(emg(:,idx2))]); % replaced with this
-
-
+memg = max([max(emg(:,idx1));max(emg(:,idx2))]); % replaced with this for spacing 
 yspacing=cumsum(memg*1.05); 
 
+
+t0_emgs = abs(t0-.15);  % converting the times for emg data 
+
+t0_emgs_idx =t0_emgs*1000; %emg indices where certain max vel etc occur
+
+
+
+% MAKE MORE CHANGES TO CROP EMG DATA USE LINE 98 WORKS 
 lax1 = axes('position',[0.07,0.05,0.4,0.7]);
 set(lax1,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax1,'YTick',fliplr(-yspacing(1:length(idx1))),'YTickLabel',fliplr(emgchan(idx1)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[])
-line(lax1,temg,emg(:,idx1)-yspacing(ones(length(temg),1),1:length(idx1)))
+line(lax1,temg(1:430),emg(1:430,idx1)-yspacing(ones(length(temg(1:430)),1),1:length(idx1)),'LineWidth',2)
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
 line(lax1,temg,meanEMG(:,idx1)-yspacing(ones(length(temg),1),1:length(idx1)),'LineWidth',2)
@@ -100,10 +108,9 @@ line(lax2,temg,emg(:,idx2)-yspacing(ones(length(temg),1),1:length(idx2)))
 set(lax2,'ColorOrder',co(end-1:-1:1,:))
 line(lax2,temg,meanEMG(:,idx2)-yspacing(ones(length(temg),1),1:length(idx2)),'LineWidth',2)
 
-t0_emgs = t0-.15;  % converting the times to indices for emg data 
 
 
- if nargin >1 
+%  if nargin >1 
        line(lax1,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax1.YLim,'LineWidth',1); % start reach
        line(lax1,'Color','m','Xdata',[t0_emgs(2) t0_emgs(2)],'Ydata',lax1.YLim,'LineWidth',1); % max vel
       line(lax2,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax2.YLim,'LineWidth',1);
@@ -111,7 +118,7 @@ t0_emgs = t0-.15;  % converting the times to indices for emg data
 %       %line(lax2,'Color','r','Xdata',[t0(1) t0(1)],'Ydata',lax2.YLim,'LineWidth',1);
 %      % line(lax2,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax2.YLim,'LineWidth',1);
 %      % line(lax2,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax2.YLim,'LineWidth',1);
- end
+%  end
 set(lax1,'XLim',[0 1])
 set(lax2,'XLim',[0 1])
 set(lax1,'YLim',[-yspacing(end) 0]) %memg(idx2(1))])
