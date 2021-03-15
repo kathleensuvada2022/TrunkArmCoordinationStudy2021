@@ -15,7 +15,7 @@ targetDAQ.Fig = figure('Name','Target DAQ','Visible','off');
 
 % myhandles = guihandles(f);
 myhandles = guihandles(targetDAQ.Fig);
-myhandles.daqDevice = 'Dev2';
+myhandles.daqDevice = 'Dev1';
 myhandles.loadFile = 0;
 myhandles.loadFilePrev = 0;
 myhandles.abdAngle = 0;
