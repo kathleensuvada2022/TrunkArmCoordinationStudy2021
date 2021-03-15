@@ -1826,7 +1826,7 @@ function p=gethandpos(x,th,exp)
 % p - hand position column vector
 
 if strcmp(exp.arm,'right')
-    p=x(:)+rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
     p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
