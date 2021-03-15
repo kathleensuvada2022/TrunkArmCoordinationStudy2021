@@ -1334,7 +1334,7 @@ myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.r
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
-myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.05;0];
+myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.15;0];
 myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
