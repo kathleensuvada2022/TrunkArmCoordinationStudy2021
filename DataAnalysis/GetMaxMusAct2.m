@@ -12,8 +12,8 @@ function maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
 %    [maxEMG]=GetMaxMusAct('/Users/kcs762/Documents/MATLAB/Data/AIM1/MaxEMGS/owen061819maxemgs/Left','max','savedsetupKacey',1)
 
 % flpath = '/Users/kcs762/Desktop/StrokeSubjectsData/RTIS2001/DATA/MAXES'
-% basename = 'maxes'
-% setfname = 'savedsetupKacey'
+%  basename = 'maxes'
+%  setfname = 'savedsetupKacey'
 % 
 % enter the command below in the command line
 %KCS 7.2019

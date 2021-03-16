@@ -1,4 +1,4 @@
-function avg_emg_maxvel= PlotKinematicData6(partid,metriafname,act3dfname,expcond)
+function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,act3dfname,expcond)
 
 % partid,'2001tf_final_000000','Target_',3
 % partid = 'RTIS2001';
@@ -74,6 +74,12 @@ emgstart = zeros(ntrials,16); % changed to 16 because 16 EMGS
 emgval = zeros(ntrials,6,16); % changed to 16 because now 16 emgs -> 4 is conditions? Now 6
 rdist = zeros(ntrials,1);
 
+
+ 
+%initializing all the variables we are saving EMG data/and Max reach 
+maxreach_current_trial =zeros(ntrials,1);
+maxTrunk_current_trial=zeros(ntrials,1);
+emgsmaxvel_vals = zeros(ntrials,16);
 for i=1:length(mtrials)
    
     
@@ -115,12 +121,12 @@ disp(mfname) % displays trial
 %         [xhand,xshoulder,xtrunk,maxreach(i)]=GetHandShoulderPosition(mfilepath,mfname,partid);
 %     else
 % 
-% 
-
+%
  [x3mcp,xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
    
- maxreach/10  % reaching distance in CM
- trdisp/10   % trunk displacement in CM
+ maxreach_seconds = maxreachtime;
+ maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
+%  maxTrunk_current_trial(i) = trdisp/10   % trunk displacement in CM
  maxreachtime;
 %  end
 %     figure(1)
@@ -176,11 +182,11 @@ disp(mfname) % displays trial
 %     t=t-1;
 %     time=time-1;
 %     dist=dist(
-emgsmaxvel_vals = zeros(ntrials,16);
+
    emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
 %     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-    print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
+%     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
 
 emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
     
@@ -207,22 +213,19 @@ disp(maxreach/10)
 
 
 
-% what passing into this function? data.pps{2}?
 %Calling COP Function
 % 
-% ppsdata =data.pps;
-% [CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata);
-% 
-% stdMat1
-% stdMat2
-%      pause   %pausing between each trial
-%     
-%  end
-% 
+ppsdata =data.pps;
+[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
+
+stdMat1
+stdMat2
+     pause   %pausing between each trial
+    
 
 
 end
 avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
-
+avgmaxreach =mean(maxreach_current_trial);
 
 end   
