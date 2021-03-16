@@ -2,6 +2,8 @@
 % RTIS1002
 % Marker IDs: 
 
+load('rtsi1002_Setup.mat')
+
 % markerid=[Trunk Shoulder Arm Forearm ]
 setup.markerid=[80 19 87 73];
 
