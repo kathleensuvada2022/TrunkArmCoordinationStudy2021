@@ -38,7 +38,7 @@ nmark=(nmark)/8; %
 
 %%
 
-load([partid '_setup'])
+load([filepath '/' partid '_setup'])
 
 
 % Build the time vector
@@ -70,8 +70,7 @@ t = (1:length(x))';
 %now data structure has each marker ID and corresponding data once
 
 %forearm columns and rows where forearm marker ID is present 
-    
-% HELP HERE WITH ANA MARIA 
+     
 [ridx,cidx]=find(x==setup.markerid(4));  
 fidx =cidx(1);
 % if isempty(x(1,fidx)) % to compensate for the fact that some rows may be empty 
@@ -204,7 +203,7 @@ end
 
 %%
 figure
-plot(x3mcp(:,1),-x3mcp(:,2),'x')
+plot(x3mcp(:,1),x3mcp(:,2),'x')
 title('test plot 3rd mcp trajectory')
 xlabel('x')
 ylabel('y')

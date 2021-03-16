@@ -17,7 +17,9 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
 
-if exist([partid '/maxes/maxEMG.mat'])==2, 
+datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
+
+if exist([datafilepath partid '/maxes/maxEMG.mat'])==2, 
     load([partid '/maxes/maxEMG']);
     %disp(maxEMG)
 else
@@ -49,7 +51,7 @@ load([partid '/' partid '_setup'])
 % afilepath =[partid '/act3d/']; % this is for the ACT 3D find reach start
 
 % all the same file path now
-afilepath = [partid '/Data/Trials'];
+afilepath = [datafilepath '/' partid '/Trials'];
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 
@@ -71,7 +73,7 @@ emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
 
 % figure(1),clf
 
-emgval = zeros(ntrials,6,15); % changed to 16 because now 16 emgs -> 4 is conditions? Now 6
+emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
 
 
@@ -79,7 +81,7 @@ rdist = zeros(ntrials,1);
 %initializing all the variables we are saving EMG data/and Max reach 
 maxreach_current_trial =zeros(ntrials,1);
 maxTrunk_current_trial=zeros(ntrials,1);
-emgsmaxvel_vals = zeros(ntrials,16);
+emgsmaxvel_vals = zeros(ntrials,15);
 for i=1:length(mtrials)
    
     
@@ -148,7 +150,7 @@ disp(mfname) % displays trial
     
     % Plot EMGs
     load([afilepath afname])
-    emg=abs(detrend(data.daq{1,2}(:,1:16)))./maxEMG(ones(length(data.daq{1,2}(:,1:16)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
+    emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
    
     
