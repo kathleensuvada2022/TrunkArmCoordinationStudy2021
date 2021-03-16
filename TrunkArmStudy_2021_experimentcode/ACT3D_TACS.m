@@ -1334,7 +1334,7 @@ myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.r
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
-myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.05;0];
+myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.15;0];
 myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
@@ -1826,7 +1826,7 @@ function p=gethandpos(x,th,exp)
 % p - hand position column vector
 
 if strcmp(exp.arm,'right')
-    p=x(:)+rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
     p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
