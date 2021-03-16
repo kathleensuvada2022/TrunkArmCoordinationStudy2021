@@ -55,13 +55,16 @@ t = (1:length(x))';
 %%
 
 %NOTE FOR 2020 DATA STRUCTURE
-% For RTIS 2003 and RTIS2005 run Consolidate Metria first to eliminate data
+% For RTIS 2003 run Consolidate Metria first to eliminate data
 % from both Cameras 
 
-newdata=ConsolidateMETData(x); %passing in the data into consolidate metria
+% update 2021 data- don't need
 
-x= newdata;
-x = x(:,4:end);
+%newdata=ConsolidateMETData(x); %passing in the data into consolidate
+%metrria
+
+% x= newdata;
+% x = x(:,4:end);
 
 
 %now data structure has each marker ID and corresponding data once

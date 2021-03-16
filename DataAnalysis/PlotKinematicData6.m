@@ -67,11 +67,11 @@ mfilepath = afilepath2;
 % xtrunk=zeros(1000,ntrials*3);
 
 maxreach=zeros(ntrials,1);
-emgstart = zeros(ntrials,16); % changed to 16 because 16 EMGS
+emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
 
 % figure(1),clf
 
-emgval = zeros(ntrials,6,16); % changed to 16 because now 16 emgs -> 4 is conditions? Now 6
+emgval = zeros(ntrials,6,15); % changed to 16 because now 16 emgs -> 4 is conditions? Now 6
 rdist = zeros(ntrials,1);
 
 
