@@ -16,7 +16,7 @@ function ACT3D_TACS(varargin)
 % * Add graphical feedback of trunk home and current position (sphere and
 % cube)
 
-% AMA 11/17/22
+% AMA 11/17/20
 % * Fix Metria data to add trunk home position
 % * Compiler instruction mex -lws2_32 metriaComm_openSocket.cpp
 % * Add graphical feedback of trunk home and current position (sphere and cube)
@@ -1340,12 +1340,14 @@ myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
 myhandles.exp.shpos=myhandles.exp.shpos-myhandles.exp.origin;
 
+EXP_saveSetup_Callback(hObject,[])
+
 % disp([myhandles.exp.origin myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar myhandles.exp.shpos])
 
 set(myhandles.ui.mon_spos,'String',num2str(myhandles.exp.shpos'*100,'%7.2f')); 
 set(myhandles.ui.mon_awgt,'String',mat2str(myhandles.exp.arm_weight)); % Vertical endpoint force
 
-if strcmp(myhandles.exp.arm,'right'),
+if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[-myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
@@ -1392,6 +1394,8 @@ while toc<5
     set(myhandles.ui.mon_eforce,'String',num2str(zforce(i),4)); % Vertical endpoint force
 end
 myhandles.exp.max_sabd=max(zforce);
+EXP_saveSetup_Callback(hObject,[])
+
 % Change this to display in a field created for max SABD force
 set(myhandles.ui.mon_sabd,'String',num2str(myhandles.exp.max_sabd,4)); % Vertical endpoint force
 
@@ -1760,7 +1764,7 @@ if isfield(myhandles.exp,'partID')
         'armLength',myhandles.exp.armLength,'e2hLength',myhandles.exp.e2hLength,...
         'ee2eLength',myhandles.exp.ee2eLength,'abdAngle',myhandles.exp.abdAngle,'shfAngle',myhandles.exp.shfAngle,...
         'elfAngle',myhandles.exp.elfAngle,'hometar',myhandles.exp.hometar,'shpos',myhandles.exp.shpos,...
-        'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
+        'midpos',myhandles.exp.midpos,'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
     if myhandles.daq.on
         setup.daq=struct('nChan',myhandles.daq.nChan,'Channels',myhandles.daq.Channels,'ChannelNames',{myhandles.daq.ChannelNames},...
             'sRate',myhandles.daq.sRate);
@@ -1829,7 +1833,7 @@ if strcmp(exp.arm,'right')
     p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
-    p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 end
 p=p-exp.origin; % Correct for the origin once it's set
