@@ -30,7 +30,7 @@ end
 
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
-load([partid '/' partid '_setup'])
+load([datafilepath '/' partid '/' 'Trials' '/' partid '_setup'])
 
 
 % switch expcond - uncomment when running participants with MOCAP changed
@@ -192,13 +192,43 @@ disp(mfname) % displays trial
 
 emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
     
-    figure
-%legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
+
+%% Plots for 3rd MCP from end effector 
+Pmcp=gethandpos(data.act(:,5:7),unwrap(data.act(:,8)),setup.exp);
+
+figure
+if strcmp(setup.exp.arm,'right')
+plot(data.act(:,2),-data.act(:,3),'c.',data.act(1,2),-data.act(1,3),'r+',...
+    data.act(:,5),-data.act(:,6),'.',Pmcp(:,1),-Pmcp(:,2),'r.',...
+    setup.exp.shpos(1),-setup.exp.shpos(2),'r^',setup.exp.hometar(1),-setup.exp.hometar(2),'ro')
+else
+plot(data.act(:,2),data.act(:,3),'c.',data.act(1,2),data.act(1,3),'r+',...
+    data.act(:,5),data.act(:,6),'.',Pmcp(:,1),Pmcp(:,2),'r.');
+%     setup.exp.shpos(1),setup.exp.shpos(2),'r^',setup.exp.hometar(1),setup.exp.hometar(2),'ro')
+end
 axis 'equal'
-% axis([-0.3 0.2 -1.05 -0.15])
-xlabel('x(m)'),ylabel('y(m)')
-title(mfname)
+% legend('MCP3','Start','End effector','MCP3 Computed','Shoulder','Home')
+legend('MCP3','Start','End effector','MCP3 Computed')
+
+return
+
+
+figure
+plot(Pmcp(:,1),-Pmcp(:,2),'r.')
+axis 'equal'
+legend('End effector','MCP3 Computed')
+
+
+
+%% 
+
+%     figure
+% %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
+% plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
+% axis 'equal'
+% % axis([-0.3 0.2 -1.05 -0.15])
+% xlabel('x(m)'),ylabel('y(m)')
+% title(mfname)
 
 % 
 % title('Reaching with trunk unrestrained - 5% Max SABD')
