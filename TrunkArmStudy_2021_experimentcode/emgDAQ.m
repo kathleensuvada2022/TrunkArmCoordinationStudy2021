@@ -235,7 +235,7 @@ emgDAQ.Fig.Visible = 'on';
                 setnames=fieldnames(setup);
                 for i=1:length(setnames)   % Don't do the same for the filter settings
 %                     if ~strcmp(setnames{i},'filters')
-                    eval(['subsetnames=fieldnames(setup.' setnames{i} ');'])
+                    subsetnames=fieldnames(setup.setnames{i});
                     for j=1:length(subsetnames)
                         eval(['myhandles.' subsetnames{j} '=setup.' setnames{i} '.' subsetnames{j} ';'])
                     end
