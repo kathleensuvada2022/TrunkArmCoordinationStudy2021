@@ -29,7 +29,7 @@ set(lax1,'ColorOrder',co(end-1:-1:1,:))
 %line(lax1,'Color','r','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  
 line(lax1,'Color','b','Xdata',[t0(1) t0(1)],'Ydata',lax1.YLim,'LineWidth',1);  %REACH START
 line(lax1,'Color','m','Xdata',[t0(2) t0(2)],'Ydata',lax1.YLim,'LineWidth',1); %MAX VEL
-% line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1); % Max distance  % CUT OFF PLOT AT MAX DISTANCE
+ line(lax1,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax1.YLim,'LineWidth',1); % Max distance  % CUT OFF PLOT AT MAX DISTANCE
 %line(lax1,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax1.YLim,'LineWidth',1);
 % legend(g,'Time Start','LineWidth',1);
 yyaxis right 
@@ -40,13 +40,13 @@ yyaxis left
 % line(lax1,t,vel,'LineWidth',2)
 line(lax1,t,vel,'LineWidth',2)
 ylabel('Velocity (m/s)')
-legend('Reach Start',' Max Velocity','Velocity','Distance','FontSize',14)
+legend('Reach Start',' Max Velocity','Max Distance','Velocity','Distance','FontSize',14)
 % end
  
  %% EMG Plot
 
   
- emgchan = {'LES','RES','LEO','REO','LIO','RIO'};
+ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO'};
 
 
 
@@ -64,14 +64,14 @@ meanEMG=movmean(emg,ds);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL, ADEL
 % 
- idx1=[1 3 5]; % how occupying the figure of the emg plots 
+idx1=[1:2:8]; idx2=[2:2:8];
 
 
 
 % idx1=[1:2:7]; idx2=[2:2:8]; % how occupying the figure of the emg plots
 %Right erector spinae (RES), left external oblique (LEO) and right external oblique (REO) having UT and RT
 % idx1=[1 2 3 4 5 6]; idx2=[7:]; % how occupying the figure of the emg plots
-idx2=[2 4 6]; % how occupying the figure of the emg plots
+% idx2=[2 4 6]; % how occupying the figure of the emg plots
   
 
 nEMG=length(idx1); % 8 rows of the column on the left for plot

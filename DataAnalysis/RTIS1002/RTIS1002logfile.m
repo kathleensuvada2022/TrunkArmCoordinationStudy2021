@@ -1,8 +1,8 @@
 % Participant log file
-% RTIS1002
+% RTIS1003
 % Marker IDs: 
 
-load('rtsi1002_Setup.mat')
+% load('rtsi1002_Setup.mat')
 
 % markerid=[Trunk Shoulder Arm Forearm ]
 setup.markerid=[80 19 87 73];
@@ -11,9 +11,9 @@ setup.markerid=[80 19 87 73];
 
 % {TRtable,  TR25,  TR50,  TUtable, TU25, TU50}
 
-setup.trial={[1 2 3 4 5 6 7],[12 13 14 15],[8 9 10 11],[25 26 28 29 30 35],[16 17 18 19 20 45 46 47 ],[21 22 23 24 36 37]}; 
+setup.trial={[1 2 3 4 5],[12 13 14 15 16],[6 7 8 9 10 11],[17 18 19 20 21 22],[30 31 32 33 34 35 36],[29 23 24 25 26 27 28]}; 
 
-% save('RTIS1002_setup','setup');
+
 
 %% For Bony Landmark Analysis
 % in same order as the marker in same order as above trunk shoulder forearm ** only shoulder and forearm 
@@ -51,4 +51,4 @@ setup.bl.lcs{1,4} = setup.bl.lcs{1,4}';
 setup.bl.lcs{1,4} = [setup.bl.lcs{1,4};1 1 1 1];
 
 
-save('RTIS1002_setup','setup');
+save('RTIS1003_setup','setup');
