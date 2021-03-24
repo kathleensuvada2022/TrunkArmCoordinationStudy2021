@@ -78,7 +78,7 @@ classdef PPS < handle
 %             % disp('PPS system Initialized');          
             obj.FrameSize = calllib('PPSDaqAPI','ppsGetRecordSize');
 %             disp('Line 62')
-            msgbox(['\fontsize{12}Recording is %d elements',num2str(obj.FrameSize)],'ACT3D-TACS',obj.CreateStruct)
+%             msgbox(['\fontsize{12}Recording is %d elements',num2str(obj.FrameSize)],'ACT3D-TACS',obj.CreateStruct)
 
 %             str = sprintf('Recording is %d elements', obj.FrameSize);
 %             disp(str);
@@ -110,7 +110,7 @@ classdef PPS < handle
             msgbox('\fontsize{12}PPS System Initializing','ACT3D-TACS',obj.CreateStruct)
 %             disp('PPS system Initialized');
             
-            calllib('PPSDaqAPI','ppsSetBaseline')
+%             calllib('PPSDaqAPI','ppsSetBaseline')
             calllib('PPSDaqAPI','ppsStart');
             tic
             while toc<=1, end
