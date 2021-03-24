@@ -44,6 +44,7 @@ Humerus_points = Bl_humerus(:,1:3); %Rows are each BL and column is XYZ
 Humerus_marker = Bl_humerus(1,9:11);%only grabbing first row since all same (0,0,0)
 %% FOREARM -{'RS';'US';'OL';'MCP3'}};
 
+figure
 for i =  1:length(Forearm_points)
 plot3(Forearm_points(i,1),Forearm_points(i,2),Forearm_points(i,3),'*');
 hold on
@@ -67,11 +68,12 @@ xlabel('X Position in cm','FontSize', 14)
 ylabel('Y Position in cm','FontSize', 14)
 zlabel('Z Position in cm','FontSize', 14)
 title('3D position of BLS for Forearm','FontSize', 16)
-pause
+% pause
 end
 
 %% Trunk- {'SC';'IJ';'PX';'C7';'T8'}
 
+figure
 for i =  1:length(Trunk_points)
 plot3(Trunk_points(i,1),Trunk_points(i,2),Trunk_points(i,3),'*');
 hold on
@@ -96,11 +98,11 @@ xlabel('X Position in cm','FontSize', 14)
 ylabel('Y Position in cm','FontSize', 14)
 zlabel('Z Position in cm','FontSize', 14)
 title('3D position of BLS for Trunk','FontSize', 16)
-pause
+% pause
 end
 
 %% Scapula- {'AC';'AA';'TS';'AI';'PC'}
-
+figure
 for i =  1:length(Shoulder_points)
 plot3(Shoulder_points(i,1),Shoulder_points(i,2),Shoulder_points(i,3),'*');
 hold on
@@ -125,10 +127,33 @@ xlabel('X Position in cm','FontSize', 14)
 ylabel('Y Position in cm','FontSize', 14)
 zlabel('Z Position in cm','FontSize', 14)
 title('3D position of BLS for Shoulder','FontSize', 16)
-pause
+% pause
+end
+
+%%  Humerus {'EM';'EL';'GH'}
+figure
+for i =  1:length(Humerus_points)
+plot3(Humerus_points(i,1),Humerus_points(i,2),Humerus_points(i,3),'*');
+hold on
+if i==1
+text(Humerus_points(i,1),Humerus_points(i,2),Humerus_points(i,3),'Medial Epicondyle');
+end
+if i==2
+text(Humerus_points(i,1),Humerus_points(i,2),Humerus_points(i,3),'Lateral Epicondyle');
+end
+if i==3
+text(Humerus_points(i,1),Humerus_points(i,2),Humerus_points(i,3),'Glenohumeral');
+end
+
+plot3(Humerus_marker(1),Humerus_marker(2),Humerus_marker(3),'*');
+text(Humerus_marker(1),Humerus_marker(2),Humerus_marker(3),'Humerus Marker','FontSize', 12);
+xlabel('X Position in cm','FontSize', 14)
+ylabel('Y Position in cm','FontSize', 14)
+zlabel('Z Position in cm','FontSize', 14)
+title('3D position of BLS for Humerus','FontSize', 16)
+% pause
 end
 
 
-%%
 end
 
