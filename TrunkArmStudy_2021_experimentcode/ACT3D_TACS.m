@@ -132,7 +132,7 @@ myhandles.exp.arm = 'right';
 myhandles.exp.hometar=[];
 myhandles.exp.shpos=[];
 myhandles.exp.arm_weight=[];
-myhandles.exp.max_sabd=[];
+myhandles.exp.max_sabd=40;
 myhandles.exp.isrunning=0;
 myhandles.exp.fname='trial';
 myhandles.exp.itrial=1;
@@ -1263,21 +1263,21 @@ if myhandles.ui.act3d_tablebg.SelectedObject==myhandles.ui.act3d_tableoff
 end
 
 % If device is in FIXED state, switch to NORMAL -commented out lines 1266-1273 3.8.21
-% if strcmp(myhandles.robot.currentState,'fixed')
-%     uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
-%     set(myhandles.ui.act3d_state,'String','NORMAL');
-%     ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% %     myhandles.act3d.state='NORMAL';
-% %     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% %     myhandles.ui.act3d_state.String=myhandles.act3d.state;
-% end
+if strcmp(myhandles.robot.currentState,'fixed')
+    uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
+    set(myhandles.ui.act3d_state,'String','NORMAL');
+    ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+%     myhandles.act3d.state='NORMAL';
+%     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+%     myhandles.ui.act3d_state.String=myhandles.act3d.state;
+end
 
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of sternum with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out lines 1279 and 1280 3.8.21
-% set(myhandles.ui.act3d_state,'String','FIXED');
-% ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+set(myhandles.ui.act3d_state,'String','FIXED');
+ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 % myhandles.act3d.state='FIXED';
 % myhandles.robot.SwitchState(lower(myhandles.act3d.state));
 % myhandles.ui.act3d_state.String=myhandles.act3d.state;
@@ -1314,9 +1314,9 @@ myhandles.exp.midpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.ro
 uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
 set(myhandles.ui.act3d_state,'String','NORMAL');
 ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% myhandles.act3d.state='NORMAL';
-% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% myhandles.ui.act3d_state.String=myhandles.act3d.state;
+myhandles.act3d.state='NORMAL';
+myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+myhandles.ui.act3d_state.String=myhandles.act3d.state;
 
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
@@ -1334,7 +1334,7 @@ myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.r
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
-myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.15;0];
+myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
 myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
@@ -1347,20 +1347,21 @@ EXP_saveSetup_Callback(hObject,[])
 set(myhandles.ui.mon_spos,'String',num2str(myhandles.exp.shpos'*100,'%7.2f')); 
 set(myhandles.ui.mon_awgt,'String',mat2str(myhandles.exp.arm_weight)); % Vertical endpoint force
 
+larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
 if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[-myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    ylimit=myhandles.exp.shpos(2)-larm-myhandles.exp.origin(2);
+    set(myhandles.exp.hLine(5),'Ydata',-ylimit*[1 1]); % reach target line
 else
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    ylimit=myhandles.exp.shpos(2)+larm-myhandles.exp.origin(2);
+    set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 end
-larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
-disp([larm myhandles.exp.origin(:)'])
-disp(larm-myhandles.exp.origin(2)*[1 1])
-set(myhandles.exp.hLine(5),'Ydata',(larm-myhandles.exp.origin(2))*[1 1]); % home target
-set(myhandles.exp.hAxis,'ylim',[-0.05 larm+myhandles.exp.origin(2)+0.05]);
+set(myhandles.exp.hAxis,'ylim',[-0.05 ylimit+0.05]);
 % Update trunk home position if Metria on
 if myhandles.met.on
     set(myhandles.met.hLine,'Position',[myhandles.exp.trunkhome(1:2)'-[50 50] 100 100]); % trunk home target
@@ -1386,16 +1387,36 @@ if strcmp(myhandles.act3d.state,'NORMAL')
     set(myhandles.ui.act3d_state,'String','FIXED');
     ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 end
-zforce=zeros(2000,1);
-i=0;
+% Open figure window for max force feedback
+[hFig,hAxis,hArea,hLine] = createMVFAxis;
+uiwait(msgbox('\fontsize{12}Start maximum shoulder abduction force measurement','ACT3D-TACS',myhandles.txt_struct));
 tic
 while toc<5
-    i=i+1;
     myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
-    zforce(i)=myhandles.robot.endEffectorForce(3);
-    set(myhandles.ui.mon_eforce,'String',num2str(zforce(i),4)); % Vertical endpoint force
+    zforce=myhandles.robot.endEffectorForce(3);
+    set(myhandles.ui.mon_eforce,'String',num2str(zforce,4)); % Vertical endpoint force
+    maxforce=myhandles.exp.max_sabd;
+    % If force/torque exceeds plot limits, increase by 5 N
+    ylimit=get(hAxis,'YLim');
+    if zforce > ylimit(2)
+        set(hAxis,'YLim',ylimit+[0 5]);
+    end
+    %
+    if zforce > maxforce
+        maxforce=zforce;
+        set(hLine,'YData',maxforce([1 1]));
+    end
+    if zforce > 0.9*maxforce
+        set(hLine,'Color','g');
+    else
+        %app.hbm.hLine.Color='b';
+        %Trying to use hex values for a brighter shade of blue
+        set(hLine,'Color','#2FA7FF');
+    end
+    set(hArea,'YData',zforce([1 1]));
+    myhandles.exp.max_sabd=maxforce;  
 end
-myhandles.exp.max_sabd=max(zforce);
+% myhandles.exp.max_sabd=max(zforce);
 EXP_saveSetup_Callback(hObject,[])
 
 % Change this to display in a field created for max SABD force
@@ -1766,7 +1787,7 @@ if isfield(myhandles.exp,'partID')
         'armLength',myhandles.exp.armLength,'e2hLength',myhandles.exp.e2hLength,...
         'ee2eLength',myhandles.exp.ee2eLength,'abdAngle',myhandles.exp.abdAngle,'shfAngle',myhandles.exp.shfAngle,...
         'elfAngle',myhandles.exp.elfAngle,'hometar',myhandles.exp.hometar,'shpos',myhandles.exp.shpos,...
-        'midpos',myhandles.exp.midpos,'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
+        'midpos',myhandles.exp.midpos,'origin',myhandles.exp.origin,'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
     if myhandles.daq.on
         setup.daq=struct('nChan',myhandles.daq.nChan,'Channels',myhandles.daq.Channels,'ChannelNames',{myhandles.daq.ChannelNames},...
             'sRate',myhandles.daq.sRate);
@@ -2000,6 +2021,28 @@ end
     end
   
   end
+
+% Function to create feedback display for maximum shoulder abduction force
+% measurement
+function [hFig,hAxis,hArea,hLine] = createMVFAxis
+    scrpos = get(groot,'MonitorPositions');
+    if size(scrpos,1)==1
+        figpos=[700,40,650,800];
+        hFig = uifigure('Visible','off','Position',figpos,'Color','k','Name','Shoulder Abduction Strength');
+    else
+        figpos=scrpos(2,:);
+        hFig = uifigure('Visible','off','Position',figpos,'Color','k','Name','Shoulder Abduction Strength');
+    end
+
+    % Create UIAxes
+    hAxis = uiaxes(hFig,'Position',[figpos(3)/2-150,1,300,figpos(4)],'Color','k','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
+    hAxis.YLim=[0 100];
+    % Create the area and line objects
+    hArea = area(hAxis,[0 0],'FaceColor','r','EdgeColor','none');
+
+    %Use a brighter shade of blue, hexadecimal value-'#2FA7FF'
+    hLine = line(hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[0 0],'Color','#2FA7FF','LineWidth',5);
+end
 
 
 end
