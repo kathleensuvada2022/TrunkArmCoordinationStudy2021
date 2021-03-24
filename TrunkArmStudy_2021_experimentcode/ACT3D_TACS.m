@@ -381,11 +381,11 @@ hLine(1)=line([-0.04 0.04],[0 0],'LineWidth',4, 'Color','w'); % Cross mark - hor
 hLine(2)=line([0 0],[-0.04 0.04],'LineWidth',4, 'Color','w'); % Cross mark - vertical       
 hLine(3)=line([0 0],[0 0],'LineWidth',4, 'Color','b','Visible','off'); % endpoint trace
 hLine(4)=rectangle('Position',[-0.05 -0.05 0.1 0.1],'Curvature',[1 1],'EdgeColor','g','LineWidth',3,'Visible','on'); % home target
-line([0 0],[-0.12 0.7*larm],'LineStyle','--','LineWidth',3, 'Color','w'); % Midline  
+line([0 0],[-0.12 0.5*larm],'LineStyle','--','LineWidth',3, 'Color','w'); % Midline  
 hLine(5)=line([-0.4 0.4],[0.7 0.7]*larm,'LineWidth',6,'Color','r'); % Target line
 
 hLabel = uicontrol(hFig,'Style','text','BackgroundColor','k','ForegroundColor','w','HorizontalAlignment','center','Units','normalized','FontSize',30,'Position',[0.3 0.85 0.4 0.09]);
-hLabel.String='REACH HERE!';                                                 %KCS 8.18.20 ADDED REACH HERE.. when does this show up? 
+hLabel.String='REACH HERE!';                                            %KCS 8.18.20 ADDED REACH HERE.. when does this show up? 
 
 end
 
@@ -1357,8 +1357,10 @@ else
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
 end
 larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
-set(myhandles.exp.hLine(5),'Xdata',[-0.4 0.4],'Ydata',1.1*(larm-myhandles.exp.origin(2))*[1 1]); % home target
-
+disp([larm myhandles.exp.origin(:)'])
+disp(larm-myhandles.exp.origin(2)*[1 1])
+set(myhandles.exp.hLine(5),'Ydata',(larm-myhandles.exp.origin(2))*[1 1]); % home target
+set(myhandles.exp.hAxis,'ylim',[-0.05 larm+myhandles.exp.origin(2)+0.05]);
 % Update trunk home position if Metria on
 if myhandles.met.on
     set(myhandles.met.hLine,'Position',[myhandles.exp.trunkhome(1:2)'-[50 50] 100 100]); % trunk home target
