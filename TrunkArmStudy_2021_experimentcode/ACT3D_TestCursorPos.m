@@ -11,11 +11,13 @@
 % myhandles.exp.origin(1)=myhandles.exp.midpos(1);
 % myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.05;0];
 
-load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1002\AMA3521\Trials\rtsi1002_Setup')
+% load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1002\AMA3521\Trials\rtsi1002_Setup')
+load('/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data/RTIS1002/AMA3521/Trials/rtsi1002_Setup') %for Kacey's Comp
+load('/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data/RTIS1002/AMA3521/Trials/trials3')%For Kacey Comp
 % load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1002\AMA3521\Trials\trials3')
-setup.exp.arm='left';
+% setup.exp.arm='left';
 % load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1003\Right\RTIS1001_setup')
-load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1003\Right\trials1')
+% load('D:\usr\Ana Maria Acosta\Box Sync\KACEY\Data\RTIS1003\Right\trials1')
 
 figure(1)
 subplot(311),plot(data.act(:,1),data.act(:,2:4))

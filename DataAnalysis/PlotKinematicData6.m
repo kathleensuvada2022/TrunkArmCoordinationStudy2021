@@ -16,21 +16,21 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 % UT - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[2 5 7 9 10])
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
-
-datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
+datafilepath ='/Users/kcs762/Box/KACEY/Data/';
+% datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 
 if exist([datafilepath partid '/maxes/maxEMG.mat'])==2, 
-    load([partid '/maxes/maxEMG']);
+    load([datafilepath partid '/maxes/maxEMG.mat']);
     %disp(maxEMG)
 else
     disp('Computing Maximum Muscle EMGs. Make sure you check them')
 %     maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
-    [maxEMG]=GetMaxMusAct2([partid '/maxes'],'MAXES','savedsetupKacey','Control',0);
+    [maxEMG]=GetMaxMusAct2([partid '/maxes'],'maxes','savedsetupKacey','Control',0);
 end
 
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
-load([partid '/' partid '_setup'])
+load([datafilepath '/' partid '/' 'Trials' '/' partid '_setup'])
 
 
 % switch expcond - uncomment when running participants with MOCAP changed
@@ -71,7 +71,7 @@ mfilepath = afilepath2;
 maxreach=zeros(ntrials,1);
 emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
 
-% figure(1),clf
+
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
@@ -82,7 +82,9 @@ rdist = zeros(ntrials,1);
 maxreach_current_trial =zeros(ntrials,1);
 maxTrunk_current_trial=zeros(ntrials,1);
 emgsmaxvel_vals = zeros(ntrials,15);
+%%
 for i=1:length(mtrials)
+    
    
     
 % UNCOMMENT IF USING MOCAP DATA RTIS2001 and RTIS 2002   
@@ -149,7 +151,7 @@ disp(mfname) % displays trial
  
     
     % Plot EMGs
-    load([afilepath afname])
+     load([afilepath afname])
     emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
    
@@ -178,7 +180,7 @@ disp(mfname) % displays trial
 %   emgbefore = emg(ibefore,1:15)
 %     emgmaxvel = emg(ivelmax,1:15)
     
-    figure(3)
+    figure(2)
 %     Lines 175-178?? Why here?? 
 %     emg=emg(1001:end,:);
 %     t=t-1;
@@ -192,13 +194,17 @@ disp(mfname) % displays trial
 
 emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
     
-    figure
-%legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
-axis 'equal'
-% axis([-0.3 0.2 -1.05 -0.15])
-xlabel('x(m)'),ylabel('y(m)')
-title(mfname)
+
+
+%% 
+
+%     figure
+% %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
+% plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
+% axis 'equal'
+% % axis([-0.3 0.2 -1.05 -0.15])
+% xlabel('x(m)'),ylabel('y(m)')
+% title(mfname)
 
 % 
 % title('Reaching with trunk unrestrained - 5% Max SABD')
@@ -206,7 +212,7 @@ title(mfname)
 %  title('Reaching with trunk restrained - table')
 
 % text(-0.1,-0.25,['TR DISP= ', num2str((trdisp/10))])
-text(-0.28,-0.55,['MAX REACH = ', num2str((maxreach/10))])
+% text(-0.28,-0.55,['MAX REACH = ', num2str((maxreach/10))])
 % text(-.28,-.45,['MFNAME = ', num2str((mfname))])
 
 % text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
@@ -215,18 +221,19 @@ disp(maxreach/10)
 
 
 
-%Calling COP Function
+% % Calling COP Function
 % 
-ppsdata =data.pps;
-[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
-
-stdMat1
-stdMat2
+% ppsdata =data.pps;
+% [CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
+% 
+% stdMat1
+% stdMat2
      pause   %pausing between each trial
     
 
 
 end
+%%
 avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
 avgmaxreach =mean(maxreach_current_trial);
 

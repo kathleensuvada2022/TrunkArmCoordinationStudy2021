@@ -1,4 +1,13 @@
 
+%% Shows what we are saving from MetriaKinDAQ
+
+%     dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; 
+%Gives XYZ of pointer tool tip in LCS ,quaterion of pointer marker in GCS, then the RGB marker in LCS (this should always be about 001), then quaternion for RGB marker in GCS
+
+
+% myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
+% myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
+
 %% ANALYSIS FILE FOR BL 
 % Use this for participants from Fall/winter 2020--> using pointer tool 237
 

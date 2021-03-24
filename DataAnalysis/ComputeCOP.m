@@ -14,6 +14,8 @@ ppsdata= ppsdata{1,2};
         Pressuremat1 = ppsdata(:,1:256);
         Pressuremat2 = ppsdata(:,257:end);
        
+        
+%         plot(Pressuremat1)
        
         nframes=size(ppsdata,1);
         
@@ -38,9 +40,9 @@ ppsdata= ppsdata{1,2};
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])');
         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
   end
-%         
+        
 %         %plotting frames with for loop can click through all frames
-%         for i = 1:nframes
+%         for i = 1:50
 %         subplot(2,1,1)   
 %         imagesc(Pressuremat1_frame(:,:,i))
 %         set(gca,'YDir','normal') 
@@ -85,8 +87,8 @@ ppsdata= ppsdata{1,2};
 %imagesc(___,clims) specifies the data values that map to the first and last elements of the colormap. Specify clims as a two-element vector of the form [cmin cmax],
 
 
-        ppsmaxreachindx = maxreach_seconds*13.5;  %scan rate of pressure mats is 13.5 HZ
-        for i=1:ppsmaxreachindx
+%         ppsmaxreachindx = maxreach_seconds*39.5;  %scan rate of pressure mats is 13.5 HZ
+        for i=1:nframes
             
           
             element_idx = round([CoP1(i,1) CoP1(i,2)]); % don't think need .5 since used above to calculate it?
@@ -94,7 +96,7 @@ ppsdata= ppsdata{1,2};
            
             imagesc(Pressuremat1_frame(:,:,i),[-13 25])
            
-            colormap(turbo)
+            colormap(hot)
 %              colormap(turbo)
              colorbar
             frame = getframe(gcf);
