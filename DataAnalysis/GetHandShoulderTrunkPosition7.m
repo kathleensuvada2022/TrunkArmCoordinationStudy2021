@@ -222,14 +222,17 @@ maxreachtime = mridx/89;  % added to display the time that metria data is at the
 maxreachidx = mridx;
 % %  %%
 % p1=plot([xhand(:,1) xshldr(:,1) xtrunk(:,1)],-[xhand(:,3) xshldr(:,3) xtrunk(:,3)],'LineWidth',2);
-plot(P_fore(2,1:41),P_fore(3,1:41),'LineWidth',2);
+
+plot(x3mcp(:,1),x3mcp(:,2),'LineWidth',2); % adding in 3rd MCP
 hold on
+plot(P_fore(2,1:41),P_fore(3,1:41),'LineWidth',2);
+
 plot(P_trunk(2,:),P_trunk(3,:),'LineWidth',2)
 plot(P_shldr(2,:),P_shldr(3,:),'LineWidth',2)
 % % p2=plot(gca,nanmean([xhand(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xshldr(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g');
 % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
 % % phandles=[p1' p2 p3];
- %axis 'equal'
+ axis 'equal'
  legend('Forearm','Trunk','Shoulder')
 % % legend(phandles,'Hand','Shoulder','Trunk','Home','Max Reach');
  title('Reaching Plot')

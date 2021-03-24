@@ -16,11 +16,11 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 % UT - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[2 5 7 9 10])
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
-datafilepath ='/Users/kcs762/Box/KACEY/Data';
+datafilepath ='/Users/kcs762/Box/KACEY/Data/';
 % datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 
 if exist([datafilepath partid '/maxes/maxEMG.mat'])==2, 
-    load([partid '/maxes/maxEMG']);
+    load([datafilepath partid '/maxes/maxEMG.mat']);
     %disp(maxEMG)
 else
     disp('Computing Maximum Muscle EMGs. Make sure you check them')
@@ -71,7 +71,7 @@ mfilepath = afilepath2;
 maxreach=zeros(ntrials,1);
 emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
 
-% figure(1),clf
+
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
