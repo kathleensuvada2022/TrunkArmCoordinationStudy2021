@@ -56,8 +56,11 @@ legend('Reach Start',' Max Velocity','Max Distance','Velocity','Distance','FontS
 %  nEMG=size(emg,2);
 temg=(0:size(emg,1)-1)/sampRate;% Assuming sampling rate is 1000 Hz
 temg=temg';
-avgwindow=.25; ds=sampRate*avgwindow;
+% avgwindow=.25; ds=sampRate*avgwindow;
+
+avgwindow=.05; ds=sampRate*avgwindow; % KCS changed 3/25/21
 % emg=abs(detrend(emg));
+
 meanEMG=movmean(emg,ds);
 
 
@@ -96,10 +99,18 @@ lax1 = axes('position',[0.07,0.05,0.4,0.7]);
 set(lax1,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax1,'YTick',fliplr(-yspacing(1:length(idx1))),'YTickLabel',fliplr(emgchan(idx1)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[])
-line(lax1,temg(1:maxdist_idx),emg(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+
+%cuts off EMGS AT MAX DIst
+ line(lax1,temg(1:maxdist_idx),emg(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+
+%plots whole trial
+% line(lax1,temg(1:end),emg(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
+
+
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
-line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+ line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+% line(lax1,temg(1:end),meanEMG(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
 % 
 lax2 = axes('position',[0.55,0.05,.4,0.7]);
  set(lax2,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
