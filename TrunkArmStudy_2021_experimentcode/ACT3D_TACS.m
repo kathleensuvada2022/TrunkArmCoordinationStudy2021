@@ -2028,20 +2028,20 @@ function [hFig,hAxis,hArea,hLine] = createMVFAxis
     scrpos = get(groot,'MonitorPositions');
     if size(scrpos,1)==1
         figpos=[700,40,650,800];
-        hFig = uifigure('Visible','off','Position',figpos,'Color','k','Name','Shoulder Abduction Strength');
+        hFig = figure('Visible','off','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
     else
         figpos=scrpos(2,:);
-        hFig = uifigure('Visible','off','Position',figpos,'Color','k','Name','Shoulder Abduction Strength');
+        hFig = figure('Visible','off','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
     end
 
-    % Create UIAxes
-    hAxis = uiaxes(hFig,'Position',[figpos(3)/2-150,1,300,figpos(4)],'Color','k','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
-    hAxis.YLim=[0 100];
-    % Create the area and line objects
-    hArea = area(hAxis,[0 0],'FaceColor','r','EdgeColor','none');
 
-    %Use a brighter shade of blue, hexadecimal value-'#2FA7FF'
-    hLine = line(hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[0 0],'Color','#2FA7FF','LineWidth',5);
+    % Create UIAxes
+    hAxis = axes('Parent',hFig,'Position',[0.3 0 0.4 1],'Color','k','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
+    set(hAxis,'YLim',[0 100]);
+    % Create the area and line objects
+    hArea = area('Parent',hAxis,[0 0],'FaceColor','r','EdgeColor','none');
+
+    hLine = line('Parent',hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[0 0],'Color','g','LineWidth',5);
 end
 
 
