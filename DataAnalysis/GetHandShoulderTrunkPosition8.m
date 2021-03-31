@@ -135,7 +135,7 @@ shtrdisp =0
 % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 hold on
 p2=plot(gca,nanmean([xhand(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',2); hold on % added to add act 3d data
+p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
 % p2=plot(gca,-nanmean([xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xshldr(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
 
 % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
