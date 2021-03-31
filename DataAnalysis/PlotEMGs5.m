@@ -109,14 +109,16 @@ set(lax1,'YTick',fliplr(-yspacing(1:length(idx1))),'YTickLabel',fliplr(emgchan(i
 
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
+%  line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
  line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
-% line(lax1,temg(1:end),meanEMG(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
 % 
 lax2 = axes('position',[0.55,0.05,.4,0.7]);
  set(lax2,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax2,'YTick',fliplr(-yspacing(1:length(idx2))),'YTickLabel',fliplr(emgchan(idx2)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[],'FontSize',14);
+% line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
 line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+
 set(lax2,'ColorOrder',co(end-1:-1:1,:))
 line(lax2,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
 

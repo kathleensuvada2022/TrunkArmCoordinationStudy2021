@@ -2,22 +2,23 @@
 %load in BL in LCS
 %load in setup 
 
-function  PlotGCS(data,bl,setup)
+function  PlotGCS(datafile,bl,setup)
 %%  Loading in data for one frame for one trial 
 
-metdata=data.met; %whole data matrix all frames
+%load(datafile)
+metdata=datafile.data.met; %whole data matrix all frames
 
 %saving for one frame - all marker data present 
 
-endtrial =15;
+endtrial =200;
 x= metdata(1:endtrial,:);
 %% Loading in the data from the BL file (P_RB) 
 
 %extracting the BLS from each rigid body 
-Bl_forearm =bl{1,4};
-Bl_trunk = bl{1,1};
-Bl_shoulder = bl{1,2};
-Bl_humerus = bl{1,3};
+Bl_forearm =bl.bl{1,4};
+Bl_trunk = bl.bl{1,1};
+Bl_shoulder = bl.bl{1,2};
+Bl_humerus = bl.bl{1,3};
 
 % Forearm
 %BLs for forearm in LCS of the RGB marker
@@ -114,20 +115,33 @@ end
 %just grabbing xyz
 P_global =P_global(1:3,:,:);
 
-%grabbing xyz point in global cs of forearm marker for all frames
+%grabbing xyz point in global cs of forearm,trunk and shoulder marker for all frames
 Forarmmarker_global = HT_fore(1:3,4,:);
+Trunkmarker_global =HT_trunk(1:3,4,:);
+Shouldermarker_global = HT_shldr(1:3,4,:);
 for i=1:endtrial
-plot3(P_global(1,1,i),P_global(2,1,i),P_global(3,1,i),'o')
-text(P_global(1,1,1),P_global(2,1,1),P_global(3,1,1),'3rd MCP','FontSize',13)
+plot3(P_global(1,1,i),P_global(2,1,i),P_global(3,1,i),'-o','Color','b','MarkerSize',10,'MarkerFaceColor','#D9FFFF')
+%text(P_global(1,1,1),P_global(2,1,1),P_global(3,1,1),'3rd MCP','FontSize',13)
 hold on
-plot3(Forarmmarker_global(1,1,i),Forarmmarker_global(2,1,i),Forarmmarker_global(3,1,i),'*')
-text(Forarmmarker_global(1,1,1),Forarmmarker_global(2,1,1),Forarmmarker_global(3,1,1),'Forearm Marker','FontSize',13')
-xlabel('X position in mm','FontSize', 14)
-ylabel('Y position in mm','FontSize', 14)
-title('Forearm Marker and 3rd MCP in Global CS')
+ plot3(Forarmmarker_global(1,1,i),Forarmmarker_global(2,1,i),Forarmmarker_global(3,1,i),'-o')
+%text(Forarmmarker_global(1,1,1),Forarmmarker_global(2,1,1),Forarmmarker_global(3,1,1),'Forearm Marker','FontSize',13')
+%plot3(Trunkmarker_global(1,1,i),Trunkmarker_global(2,1,i),Trunkmarker_global(3,1,i),'*')
+%text(Trunkmarker_global(1,1,1),Trunkmarker_global(2,1,1),Trunkmarker_global(3,1,1),'Trunk Marker','FontSize',13')
+%plot3(Shouldermarker_global(1,1,i),Shouldermarker_global(2,1,i),Shouldermarker_global(3,1,i),'*')
+%text(Shouldermarker_global(1,1,20),Shouldermarker_global(2,1,20),Shouldermarker_global(3,1,1),'Shoulder Marker','FontSize',13')
+set(gca,'XColor', 'none','YColor','none','ZColor','none')
+% xlabel('X position in mm','FontSize', 14)
+ylabel('X position in mm','FontSize', 14)
+zlabel('Y position in mm','FontSize', 14)
+title('Trunk, Shoulder, and 3rd MCP Trajectory in Global CS -Control','FontSize', 16)
 end
 
-
+% 
+% 
+% t = 0:pi/20:10*pi;
+% xt = sin(t);
+% yt = cos(t);
+% plot3(xt,yt,t,'-o','Color','b','MarkerSize',10,'MarkerFaceColor','#D9FFFF')
 %%
 
 end
