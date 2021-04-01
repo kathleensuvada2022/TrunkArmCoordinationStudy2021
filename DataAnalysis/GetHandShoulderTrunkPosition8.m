@@ -29,15 +29,19 @@ x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
 nmark=(nmark)/8; 
 
+
+
 %  Load in the act3d data to compare with metria
 xact =data.act; 
 xee = xact(:,5);
 yee = xact(:,6);
 zee = xact(:,7);
 
-xhnd = xact(:,2);
+xhnd = xact(:,2); % is this supposed to be the 3rd MCP computed from ACT
 yhnd = xact(:,3);
 zhnd = xact(:,4);
+
+th =xact(:,8); % for rotation to compute 3rd MCP
 
 % ACT-3D data saved
 % Column 1 period in s
@@ -47,6 +51,9 @@ zhnd = xact(:,4);
 % Column 9-11 robot.endEffectorVelocity;
 % Column 12-14 robot.endEffectorForce;
 % Column 15-17 robot.endEffectorTorque;
+
+
+
 
 
 %% CHANGE THIS !!!! 4.20.20
@@ -88,6 +95,24 @@ xshldr=x(:,sidx:(sidx+ 2)); % extracting shoulder marker
 [ridx,cidx]=find(x==setup.markerid(1)); 
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+2)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+%%
+% compute the hand position (3rd MCP) from the end effector
+% position - From ACT3DTACS
+
+
+% x - ACT3D end effector position  endEffectorPosition = [X, Y, Z] (replace with forearm data from metria);
+% th - ACT3D end effector rotation
+% exp - structure with experiment variables
+% p - hand position column vector
+% 
+% if strcmp(setup.exp.arm,'right')
+%     p=xfore(:,1:3)+rotz(th+pi/2)*[(setup.exp.e2hLength-setup.exp.ee2eLength)/100 0 0]';
+% %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
+% else
+%     p=xfore(:,1:3)+rotz(th-pi/2)*[(setup.exp.e2hLength-setup.exp.ee2eLength)/100 0 0]';
+% %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+% end
+% 
 
 
 
@@ -114,7 +139,7 @@ end
 % [maxreach,mridx]=max(rdist);
 maxreach=0;
 maxreachtime = 0;
-shtrdisp =0 
+shtrdisp =0;
 % disp(maxreach)
 % maxreachtime = mridx/89;  % added to display the time that metria data is at the max reach in second 4.30.20
 % 
