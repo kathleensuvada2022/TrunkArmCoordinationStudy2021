@@ -118,15 +118,22 @@ afname = mfname;
 afname2 = mfname;
       
 disp(mfname) % displays trial 
-
-    
+% 
+% % Kacey added to call new function to plot in GCS
+% bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
+% datafile =load([mfilepath '/' mfname]);
+% PlotGCS(datafile,bl,setup)
+%     
 %     figure(2),clf
 %     if strcmp(partid,'RTIS2001') && (mtrials(i)==8)
 %         [xhand,xshoulder,xtrunk,maxreach(i)]=GetHandShoulderPosition(mfilepath,mfname,partid);
 %     else
 % 
 %
- [x3mcp,xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition7(mfilepath,mfname,partid);
+pause
+
+
+ [xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid);
    
  maxreach_seconds = maxreachtime;
  maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
