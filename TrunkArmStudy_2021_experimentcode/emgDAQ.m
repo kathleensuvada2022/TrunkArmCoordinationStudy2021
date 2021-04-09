@@ -468,19 +468,16 @@ emgDAQ.Fig.Visible = 'on';
 
     % AMA - function to display data in real time and play beep at 200 ms 
     function localTimerAction(source, event)
-        if myhandles.RTdaq
-            localDisplayEMGData(myhandles.timebuffer,event.Data,myhandles.nChan)
-        elseif myhandles.maxflag
-            localDisplayJR3Data(myhandles.timebuffer,event.Data,myhandles.nChan)
-        else
+        if ~myhandles.RTdaq
             source.ScansAcquired == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
-
+        else
+            localDisplayData(myhandles.timebuffer,event.Data,myhandles.nChan)
         end
     end
 
 % Function to display data in real time - should probably be merged into
 % localTimerAction.
-    function localDisplayEMGData(t,data,nChan)
+    function localDisplayData(t,data,nChan)
         blocksize=size(data,1);
         databuffer=getappdata(emgDAQ.Fig,'databuffer');
         databuffer=[data;databuffer(1:end-blocksize,:)];

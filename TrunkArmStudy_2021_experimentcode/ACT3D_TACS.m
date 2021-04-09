@@ -1909,7 +1909,7 @@ p = x(:) + p;
 % 	ShoulderZ = tHmPos.m_dCoords[2] + dArmRestOffsetZ;// + (0.5*dShoulderRadius);
 % if strcmp(arm,'Right')
 
-% AMA - Why isn't the elbow angle used to compute shoulder position???
+% AMA - Why isn't the elbow angle used to compute shoulder position??? 
 % From Stuart's code
             % rotate shoulder abduction angle to 0 degrees in the plane
             % that the subject is reaching

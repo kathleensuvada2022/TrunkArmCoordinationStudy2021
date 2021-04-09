@@ -1,9 +1,11 @@
-function emgDAQ()
+function emgDAQR2020()
 % emgDAQ Program to record EMGs while providing real time feedback of the
 % signals. Based on TargetDAQ_Upgraded.
 % Ana Maria Acosta 7/1/19 - Major modifications to TargetDAQ_Upgraded to
 % simplify visualization,streamline acquisition and simplify code. This
 % version only records EMGs.
+% AMA 4/8/21 Updated code to include real time feedback of shoulder
+% abduction force measured with the JR3.
 
 %% GUI VISUALIZATION CODE
 % Start by closing open figures and creating the main figure window for the GUI
@@ -23,6 +25,7 @@ myhandles.loadFile = 0;  % What is this?
 myhandles.loadFilePrev = 0; % What is this?
 myhandles.nChan = 15; % default # of channels to record
 myhandles.sRate = 1000; % default sampling rate
+myhandles.tRate = 100; % timer rate
 myhandles.sTime = 5; % default sampling length
 myhandles.timebuffer=(0:myhandles.sRate*2-1)'/myhandles.sRate;
 % Create data buffer in app for real time data display
@@ -36,6 +39,9 @@ myhandles.maxChannels = 24;
 
 myhandles.itrial = 1;
 myhandles.filename = 'trial';
+
+myhandles.max_sabdf=40;
+myhandles.MVFdaq=0;
 
 % Initialize beep played at the beginning of each trial (queue for
 % participant)
@@ -72,11 +78,19 @@ myhandles.pbAcquire = uicontrol(emgDAQ.Fig,'Style','pushbutton','Callback',@pbAc
 myhandles.RTcheckbox = uicontrol(emgDAQ.Fig,'Style','checkbox','String','Realtime DAQ','Units','Normalized','Enable','Off','Interruptible','on','Callback',@RT_Callback,'Position',[0.775 0.53 0.125 0.05],'FontSize',10);
 myhandles.RTdaq = 0;
 
+%% SABD MVF PANEL
+mvfPanel = uipanel('HighlightColor','[0.5 0 0.9]','Position',[0.775 0.35 0.2 0.15]);
+myhandles.pbZeroJR3 = uicontrol(mvfPanel,'Style','pushbutton','Callback',@pbZeroJR3_Callback,'String','ZERO JR3','FontWeight','Bold','FontSize',10,'Units','normalized','Enable','Off','Position',[0.05 0.4 0.4 0.5]);
+myhandles.pbMVFdaq = uicontrol(mvfPanel,'Style','pushbutton','Callback',@pbMVFdaq_Callback,'String','SABD MAX','FontWeight','Bold','FontSize',10,'Units','normalized','Enable','Off','Position',[0.55 0.4 0.4 0.5]);
+% SABD MVF
+uicontrol(mvfPanel,'Style','text','String','Max SABD Force (N)','HorizontalAlignment','left','Units','normalized','Position',[0.05,0.01,.5,.2],'FontSize',10);
+myhandles.MVF_Display = uicontrol(mvfPanel,'Style','text','String','N/A','HorizontalAlignment','left','Units','normalized','Position',[.6 .01 .3 0.2],'FontSize',10);
+
 %% TRIAL NUMBER PANEL
 % This panel will iterate the trial number every time that you press acquire
-numtrPanel = uipanel('HighlightColor','[0.5 0 0.9]','Position',[0.775 0.2 0.2 0.3]);
+numtrPanel = uipanel('HighlightColor','[0.5 0 0.9]','Position',[0.775 0.05 0.2 0.25]);
 tNumTr = uicontrol(numtrPanel,'Style','text','String','Trial Number','HorizontalAlignment','Left','Units','normalized','Position',[0.05,0.68,0.5,0.2],'FontSize',10);
-myhandles.TrialNumber = uicontrol(numtrPanel,'Style','edit','HorizontalAlignment','Center','Callback',@TrialNumber_Callback,'String',num2str(myhandles.itrial),'Units','normalized','Position',[0.55 0.8 0.4 0.1],'FontSize',10);
+myhandles.TrialNumber = uicontrol(numtrPanel,'Style','edit','HorizontalAlignment','Center','Callback',@TrialNumber_Callback,'String',num2str(myhandles.itrial),'Units','normalized','Position',[0.55 0.8 0.4 0.15],'FontSize',10);
 myhandles.currdir = uicontrol(numtrPanel,'Style','text','String',sprintf('Data will be saved in \n%s',pwd),'HorizontalAlignment','Left','Units','normalized','Position',[0.05,0.001,0.9,0.6],'FontSize',10);
 
 %% Plots panel
@@ -130,17 +144,18 @@ emgDAQ.Fig.Visible = 'on';
         % Change DAQ object to continuous time acquisition
         if myhandles.RTdaq
             % Change DAQ object to continuous time acquisition
-            myhandles.s.IsContinuous = true;
-            myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
+%             myhandles.s.IsContinuous = true;
+%             myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
             for i=1:myhandles.nChan
                 set(myhandles.Line(i,1),'XData',[],'YData',[]);
                 set(myhandles.Line(i,2),'XData',[],'YData',[]);
             end
-            startBackground(myhandles.s);
+%             startBackground(myhandles.s);
+            start(myhandles.s,"Continuous");
         else
             stop(myhandles.s);
-            myhandles.s.IsContinuous = false;
-            myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
+%             myhandles.s.IsContinuous = false;
+%             myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
         end
     end
 
@@ -356,14 +371,18 @@ emgDAQ.Fig.Visible = 'on';
         % Create regular DAQ object
         myhandles.s = daq('ni');
         % Add analog input channels specified in myhandles.Channels
-        myhandles.s.addinput(myhandles.s,myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
-        % Set DAQ object sampling rate and time R2020 sampling length is specified in the start and read commands
+        addinput(myhandles.s,myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
+        % Set DAQ object sampling rate and time (R2020 sampling length is
+        % specified in the start and read commands)
         myhandles.s.Rate = myhandles.sRate;
 %         myhandles.s.DurationInSeconds = myhandles.sTime;
-        % Add listener object 
+        % Add listener object (R2020 no need for listener, use start to
+        % start background daq)
 %         lh = addlistener(myhandles.s, 'DataAvailable', @localTimerAction);
         myhandles.s.ScansAvailableFcn = @localTimerAction;
+        myhandles.s.ScansAvailableFcnCount = myhandles.tRate;
         myhandles.pbAcquire.Enable = 'On';
+        myhandles.pbZeroJR3.Enable = 'On';
         myhandles.RTcheckbox.Enable = 'On';
     end
 
@@ -381,7 +400,11 @@ emgDAQ.Fig.Visible = 'on';
 %             myhandles.RTdaq = 0;
 %          end
         myhandles.RTcheckbox.Enable = 'off'; % disable realtime checkbox
-        
+        if length(myhandles.s.Channels)>myhandles.nChan
+            jr3chan=myhandles.Channels(end)+(1:6);
+            removechannel(myhandles.s,myhandles.nChan+(1:6));
+            myhandles.pbMVFdaq.Enable='off';
+        end
 %         [data,t]=startForeground(myhandles.s);
         [data,t]=start(myhandles.s,"Duration",myhandles.sTime,"OutputFormat","Matrix");
         displayData(myhandles.nChan, t, data, myhandles.sRate, [myhandles.datadir,'\',myhandles.filename,num2str(myhandles.itrial),'.mat']); % AMA 7/2/19
@@ -391,6 +414,49 @@ emgDAQ.Fig.Visible = 'on';
         myhandles.RTcheckbox.Enable = 'on';
     end
 
+% AMA 4/7/21 EDIT THIS FUNCTION TO DISPLAY SABD TORQUE IN REAL TIME AND
+% CREATE ZERO JR3 FUNCTION TO GO WITH ZERO JR3 BUTTON
+% JR3 Signals - Ch15 to Ch20
+    function pbMVFdaq_Callback(source,event)
+        source.Enable = 'off';
+        myhandles.MVFdaq=1;
+        % Open figure window for max force feedback
+        [hFig,hAxis,hArea,hLine] = createMVFAxis(myhandles.max_sabd);
+
+        if myhandles.RTdaq
+            stop(myhandles.s);
+            myhandles.RTcheckbox.Value = 0;
+%             myhandles.s.IsContinuous = false;
+%             myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
+%             myhandles.RTdaq = 0;
+        end
+        myhandles.RTcheckbox.Enable = 'off'; % disable realtime checkbox
+        jr3chan=myhandles.Channels(end)+(1:6);
+        addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
+        start(myhandles.s,"Duration",5)
+        while myhandles.s.Running, end
+        myhandles.MVF_Display.Text=num2str(myhandles.max_sabdf,'%7.2f');
+        source.Enable = 'on';
+        myhandles.MVFdaq=0;
+        myhandles.RTcheckbox.Enable = 'on'; % enable realtime checkbox
+    end
+
+    function pbZeroJR3_Callback(source,event)
+        if myhandles.RTdaq
+            stop(myhandles.s);
+            myhandles.RTcheckbox.Value=0;
+        end
+        if isfield(myhandles,'mvf')
+            close(myhandles.mvf.hFig)
+            rmfield(myhandles,'mvf')
+        end
+        jr3chan=myhandles.Channels(end)+(1:6);
+        addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
+        data = read(myhandles.s, seconds(1),"OutputFormat","Matrix");
+        myhandles.FMzero = mean(data(:,myhandles.nChan+(0:5)));
+        [myhandles.mvf.hFig,myhandles.mvf.hAxis,myhandles.mvf.hArea,myhandles.mvf.hLine] = createMVFAxis(myhandles.max_sabdf);
+        myhandles.pbMVFdaq.Enable='On';
+    end
 % Function to plot data at the end of the data acquisition
     function displayData(nChan, t, data, sRate, filename)
     % Assumes all the data is EMG. If adding forces and torques, need to
@@ -407,7 +473,7 @@ emgDAQ.Fig.Visible = 'on';
         end
         drawnow
          % AMA - only save the time and data matrices. All the other
-         % parameters should be saved in a setup file
+         % parameters should be saved in the setup file
         save(filename,'t','data');
     end
 
@@ -434,11 +500,85 @@ emgDAQ.Fig.Visible = 'on';
                 set(myhandles.Label(i),'String',num2str([max(databuffer(:,i)) min(databuffer(:,i))],'%.3f  %.3f'));
             end
         else
-            
+            force=JR3toSAbdF(mean(data(:,myhandles.nChan+(0:5))),myhandles.JR3mat)-myhandles.FMzero(1);
+            maxforce=myhandles.max_sabdf;
+            % If force exceeds plot limits, increase by 5 N
+            ylimit=get(myhandles.mvf.hAxis,'YLim');
+            if force > ylimit(2)
+                set(myhandles.mvf.hAxis,'YLim',ylimit+[0 5]);
+            end
+            %
+            if force > maxforce
+                maxforce=force;
+                set(myhandles.mvf.hLine,'YData',maxforce([1 1]));
+            end
+            if force > 0.9*maxforce
+                set(myhandles.mvf.hLine,'Color','g');
+            else
+                set(myhandles.mvf.hLine,'Color','c');
+            end
+            set(myhandles.mvf.hArea,'YData',zforce([1 1]));
+            myhandles.max_sabd=maxforce;
         end
         drawnow
     end
 
+% Function to create feedback display for maximum shoulder abduction force
+% measurement
+    function [hFig,hAxis,hArea,hLine] = createMVFAxis(sabdf0)
+        scrpos = get(groot,'MonitorPositions');
+        if size(scrpos,1)==1
+            figpos=[700,40,650,800];
+            hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+        else
+            figpos=scrpos(2,:);
+            hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+        end
+        
+        % Create UIAxes
+        hAxis = axes('Parent',hFig,'Position',[0.3 0 0.4 1],'Color','k','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
+        set(hAxis,'YLim',[0 100]);
+        % Create the area and line objects
+        hArea = area('Parent',hAxis,[0 0],'FaceColor','r','EdgeColor','none');
+        
+        hLine = line('Parent',hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[sabdf0 sabdf0],'Color','g','LineWidth',5);
+    end
+
+    function FMx=JR3toSAbdF(FMraw,JR3mat)
+        % Function to transform the y-force from the JR3 coordinate system in volts to the
+        % shoulder coordinate system in N
+        % JR3 coordinates: x - down, y - along forearm toward hand, z - away from forearm
+        %
+        % Inputs:
+        %   FMjr: [nsamp x 6] matrix with the raw forces and torques
+        %   arm: 'right' or 'left'
+        %   JR3mat: JR3 calibration matrix
+
+        % Decouple FM
+        [frows,fcol]=size(FMraw);
+        if (frows>fcol) FMraw=FMraw'; end
+
+        FMjr=(JR3mat*FMraw)';
+
+        % Convert to N and Nm if using old JR3
+        if JR3mat(4,4) > JR3mat(1,1)
+            FMjr(:,1:3)=FMjr(:,1:3)*9.81/2.2;
+            FMjr(:,4:6)=FMjr(:,4:6)*9.81/2.2*2.54/100;
+        end
+
+        % Convert to right hand coordinate system
+        FMjr(:,[3 6])=-FMjr(:,[3 6]);
+
+        % Rotated JR3 - AMA Is this necessary? Check!
+        FMjr(:,[1,2,4,5])=-FMjr(:,[1,2,4,5]); 
+
+        % Flip coordinate system to right arm if necessary
+%         if strcmp(arm,'left')
+%             FMjr(:,[2 4 6])=-FMjr(:,[2 4 6]);
+%         end
+        FMx=FMjr(:,1);
+    end
+    
     function aKeyPress_Callback(source,event)
         switch event.Key
             case 'a'
@@ -449,751 +589,7 @@ emgDAQ.Fig.Visible = 'on';
 % Function to cleanup once GUI is closed
     function closeMainGUI(source,event)
         disp('Goodbye :)');
-        fclose('all');
+        close('all');
     end
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% OTHER FUNCTIONS FROM TARGETDAQ_UPDATE THAT MAY BE USEFUL
-% Option to set plot/channel names is disabled in this version. This
-% function would need to be revised
-%     function chGUI(updatedNumChan)
-%         %This GUI stems off of the main GUI and allows you to create a list
-%         %of which channels you'd like to read from
-%         myhandles.placeHolder = myhandles.Channels;
-%         
-%         channelList = myhandles.Channels;
-%         channelNameList = myhandles.NameChannels;
-%         
-%         numChan = updatedNumChan;
-%         myhandles.nChan = numChan;
-%         totPossibleChan = myhandles.maxChannels;
-%         armChoice = myhandles.armChoice;
-%         armSwitch = myhandles.armSwitched;
-%         
-%         if armSwitch == 1
-%             if strcmp(armChoice,'left')
-%                 channels = myhandles.lChannels;
-%                 chanNames = myhandles.lNameChannels;
-%             else
-%                 channels = myhandles.rChannels;
-%                 chanNames = myhandles.rNameChannels;
-%             end
-%             
-%             channelList = [];
-%             channelNameList = {};
-%         else
-%             if numChan == 6
-%                 if strcmp(armChoice,'left')
-%                     channels = myhandles.lChannels;
-%                     chanNames = myhandles.lNameChannels;
-%                 else
-%                     channels = myhandles.rChannels;
-%                     chanNames = myhandles.rNameChannels;
-%                 end
-%                 
-%                 chanArray = channels;
-%                 chanList = sort(channels);
-%                 
-%                 myhandles.chanTypeList = cell(1,myhandles.nChan);
-%                 
-%                 for i = 1:numChan
-%                     chanVal = chanList(i);
-%                     if find(chanVal==chanArray)
-%                         ind = find(chanVal==chanArray);
-%                         myhandles.chanTypeList{i} = num2str(ind);
-%                     else
-%                         myhandles.chanTypeList{i} = num2str(8);
-%                     end
-%                 end
-%                 
-%                 myhandles.noStrChanTypeList = str2double(myhandles.chanTypeList);
-%             else
-%                 channels = [];
-%                 chanNames = {};
-%                 % || myhandles.oldNChan == 6
-%                 if myhandles.loadFile == 1 || myhandles.initChSelect == 1
-%                     channels = [];
-%                     chanNames = [];
-%                 else
-%                     if myhandles.initChSelect == 0
-%                         if strcmp(armChoice,'left')
-%                             channels = myhandles.lChannels;
-%                             chanNames = myhandles.lNameChannels;
-%                         else
-%                             channels = myhandles.rChannels;
-%                             chanNames = myhandles.rNameChannels;
-%                         end
-%                         myhandles.Channels = channels;
-%                     else
-%                         channels = [];
-%                         chanNames = [];
-%                     end
-%                 end
-%             end
-%         end
-%         
-%         
-%         totChannels = channels;
-%         totChanNames = chanNames;
-%         
-%         if numChan > 6
-%             f1 = figure('Name','Channel Selection Menu','NumberTitle', 'off');
-%             f1.Position = [100, 100, 600, 200];
-%             f1.MenuBar = 'none';
-%             %             f1.Name = 'Channel Selection Menu';
-%             f1.DeleteFcn = @closeChGUI;
-%             
-% %             hLine(4)=line('Parent',targetGUI.Axes1,'Xdata',xt(:,1),'Ydata',xt(:,2),'Color','r','LineWidth',2);
-% 
-%             chNumber = 0;
-%             maxChan = myhandles.maxChannels;
-%             
-%             for i = 1:4
-%                 for j = 1:7
-%                     if chNumber < maxChan
-%                         chButton(chNumber+1) = uicontrol(f1,'Style','checkbox','String',['Channel',' ',num2str(chNumber)],'Units','Normalized','Callback',@cSelect,'Position',[0.0125+(0.137*(j-1)),0.8675-(0.175*(i-1)), 0.125 0.15],'UserData',num2str(chNumber));
-%                         if find(chNumber==totChannels)
-%                             chButton(chNumber+1).Value = 1;
-%                         end
-%                         chNumber = chNumber + 1;
-%                     end
-%                 end
-%             end
-% 
-%             myhandles.pbChSelect = uicontrol(f1,'Style','pushbutton','Callback',@pbChSelect_Callback,'String','Initialize Channels','Units','normalized','Position',[0.25 0.05 0.5 0.2]);            
-% 
-%             for i = 1:totPossibleChan
-%                 button = chButton(i);
-%                 name = button.String;
-%                 for j = 1:length(channelNameList)
-%                     if strcmp(channelNameList(j),name)
-%                         button.Value = 1;
-%                     end
-%                 end
-%             end       
-%             
-%             addChan = channelList;
-%             totChannels = [channels,addChan];
-%             totChanNames = [chanNames,channelNameList];
-%         end
-%         
-%         myhandles.Channels = totChannels;
-%         myhandles.NameChannels = totChanNames;
-% %         myhandles.armSwitched = 0;
-%     end
-
-% Timer is disabled in this version
-% %Timer Value
-%     function TimerVal_Callback(source,event)
-%         %         myhandles.kinematicsDAQ
-%         timeDelay = str2num(source.String);
-%         source.UserData = timeDelay;
-%         myhandles.Timer = timeDelay;
-%     end
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% FUNCTIONS FROM TARGETDAQ_UPDATE THAT MAY BE USEFUL IF INTRODUCING JR3 DAQ AND TARGET DISPLAY
-
-% %Callbacks for Experimental Setup Panel if you are recording from
-% loadcell. Need to be revised
-% %Abduction Angle
-%     function abdAngle_Callback(source,event)
-%         abdAngleNum = str2num(source.String);
-%         source.UserData = abdAngleNum;
-%         myhandles.abdAngle = abdAngleNum;
-%     end
-% 
-% %Elbow Flexion Angle
-%     function EFAngle_Callback(source,event)
-%         EFAngleNum = str2num(source.String);
-%         source.UserData = EFAngleNum;
-%         myhandles.efAngle = EFAngleNum;
-%     end
-% 
-% %Arm Length
-%     function ArmLength_Callback(source,event)
-%         ALengthNum = str2num(source.String);
-%         source.UserData = ALengthNum;
-%         myhandles.aLength = ALengthNum;
-%     end
-% 
-% %Forearm length
-%     function FArmLength_Callback(source,event)
-%         FALengthNum = str2num(source.String);
-%         source.UserData = FALengthNum;
-%         myhandles.faLength = FALengthNum;
-%     end
-% 
-% %Z-offset
-%     function ZOffset_Callback(source,event)
-%         zOffNum = str2num(source.String);
-%         source.UserData = zOffNum;
-%         myhandles.zOffset = zOffNum;
-%     end
-%Right or Left Arm
-%     function rbExpCallback(rbg,event)
-%         sbnew = event.NewValue.String;
-%         sbold = event.OldValue.String;
-%         %         if ~strcmp(sbnew,sbold) && (initChan == 1)
-%         if ~strcmp(sbnew,sbold)
-%             myhandles.armSwitched = 1;
-%             myhandles.pbAcquireVal = 0;
-%         end
-%         ArmBG = rbg.SelectedObject.String;
-%         rbg.UserData = ArmBG;
-%         myhandles.armChoice = ArmBG;
-%     end
-
-% Target not included in this version
-% Functions to create the GUI where you can set the target options. These
-% functions need to be revised
-%     function tarOpt_Callback(source,event)
-%         f2 = figure(3);
-%         
-%         f2.Position = [100,100,500,400];
-%         f2.MenuBar = 'none';
-%         f2.Name = 'Target Options Menu';
-%         
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Cursor Options','FontWeight','Bold','HorizontalAlignment','Center','Units','normalized','Position',[.0875,.775,.2,.15]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Cursor Size (Nm)','HorizontalAlignment','Left','Units','normalized','Position',[.025,.675,.2,.15]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Pie Width (Nm)','HorizontalAlignment','Left','Units','normalized','Position',[.025,.6,.2,.15]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Dial Zero (Deg)','HorizontalAlignment','Left','Units','normalized','Position',[.025,.525,.2,.15]);
-%         etTar1 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Cursor_size_Callback,'HorizontalAlignment','Left','String',myhandles.Cursor_s,'Units','normalized','Position',[.2375,.7875,.10,.0375]);
-%         etTar2 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Pie_size_Callback,'HorizontalAlignment','Left','String',myhandles.Pie_size,'Units','normalized','Position',[.2375,.7125,.10,0.0375]);
-%         etTar3 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@theta_zero_Callback,'HorizontalAlignment','Left','String',myhandles.th_zero,'Units','normalized','Position',[.2375,.6375,.10,0.0375]);
-%         
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Target Options (Nm)','FontWeight','Bold','HorizontalAlignment','Center','Units','normalized','Position',[.0325,.475,.3,.1]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Size','HorizontalAlignment','Left','Units','normalized','Position',[.025,.425,.15,.05]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Horizontal','HorizontalAlignment','Left','Units','normalized','Position',[.025,.35,.15,.05]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Vertical','HorizontalAlignment','Left','Units','normalized','Position',[.025,.275,.15,.05]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Rotation','HorizontalAlignment','Left','Units','normalized','Position',[.025,.20,.15,.05]);
-%         tTar = uicontrol(f2,'Style','text','FontSize',9,'String','Zoom','HorizontalAlignment','Left','Units','normalized','Position',[.025,.125,.15,.05]);
-%         
-%         etTar4 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Target_size_Callback,'HorizontalAlignment','Left','String',myhandles.Target_s,'Units','normalized','Position',[.2375,.4375,.10,.0375]);
-%         etTar5 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Target_x_Callback,'HorizontalAlignment','Left','String',num2str(myhandles.Target_x),'Units','normalized','Position',[.2375,.3625,.10,0.0375]);
-%         etTar6 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Target_y_Callback,'HorizontalAlignment','Left','String',num2str(myhandles.Target_y),'Units','normalized','Position',[.2375,.2875,.10,0.0375]);
-%         etTar7 = uicontrol(f2,'Style','edit','FontSize',9,'Callback',@Target_theta_Callback,'HorizontalAlignment','Left','String',myhandles.Target_t,'Units','normalized','Position',[.2375,.2125,.10,0.0375]);
-%         myhandles.etTar8 = uicontrol(f2,'Style','edit','FontSize',9,'Enable','off','Callback',@Target_zoom_Callback,'HorizontalAlignment','Left','String',myhandles.Target_z,'Units','normalized','Position',[.2375,.1375,.10,0.0375]);
-%         
-%         tarZoom = uicontrol(f2,'Style','checkbox','String','Zoom Feature','Callback',@zoomEnableCB,'Units','normalized','Position',[0.5 0.06125 0.25 0.05]);
-%         [x,map] = imread('Target.JPG');
-%         tarFigButton = uicontrol(f2,'Style','pushbutton','Units','normalized','Position',[0.4,0.25,0.55,0.55],'cdata',x,'Callback',@tarPBCB);
-%         
-%         ok_button = uicontrol(f2,'Style','pushbutton','Callback',@pbOkTarMenu_Callback,'String','OK','Units','normalized','Position',[0.825 0.1 0.15 0.05]);
-%         cancel_button = uicontrol(f2,'Style','pushbutton','Callback',@pbCancelTarMenu_Callback,'String','Cancel','Units','normalized','Position',[0.825 0.0375 0.15 0.05]);
-%         
-%     end
-% 
-%     function zoomEnableCB(source,event)
-%         val = source.Value;
-%         button = myhandles.etTar8;
-%         
-%         if val == 1
-%             button.Enable = 'on';
-%             myhandles.zoomOpt = 1;
-%         else
-%             button.Enable = 'off';
-%             myhandles.zoomOpt = 0;
-%         end
-%     end
-% 
-%     function tarPBCB(source,event)
-%         f3 = figure(4);
-%         f3.Position = [75,75,350,300];
-%         f3.MenuBar = 'none';
-%         f3.Name = 'More Target Options Menu';
-%         
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'String','Horizontal','FontWeight','Bold','HorizontalAlignment','Left','Units','normalized','Position',[.1,.575,.25,.15]);
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'String','Vertical','FontWeight','Bold','HorizontalAlignment','Left','Units','normalized','Position',[.1,.45,.25,.15]);
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'String','Dial','FontWeight','Bold','HorizontalAlignment','Left','Units','normalized','Position',[.1,.325,.25,.15]);
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'String','Zoom','FontWeight','Bold','HorizontalAlignment','Left','Units','normalized','Position',[.1,.2,.25,.15]);
-%         
-%         tPopUp1 = uicontrol(f3,'Style','popupmenu','String',{'SF/SE','SAB/SAD','SER/SIR','EF/EE','load_cell'},'Value',4,'Callback',@xtorque_Callback,'Units','normalized','Position',[0.4,0.575,0.25,0.15]);
-%         tPopUp2 = uicontrol(f3,'Style','popupmenu','String',{'SF/SE','SAB/SAD','SER/SIR','EF/EE','load_cell'},'Value',1,'Callback',@ytorque_Callback,'Units','normalized','Position',[0.4,0.45,0.25,0.15]);
-%         tPopUp3 = uicontrol(f3,'Style','popupmenu','String',{'SF/SE','SAB/SAD','SER/SIR','EF/EE','load_cell'},'Value',2,'Callback',@thtorque_Callback,'Units','normalized','Position',[0.4,0.325,0.25,0.15]);
-%         tPopUp4 = uicontrol(f3,'Style','popupmenu','String',{'SF/SE','SAB/SAD','SER/SIR','EF/EE','load_cell'},'Value',3,'Callback',@ztorque_Callback,'Units','normalized','Position',[0.4,0.20,0.25,0.15]);
-%         
-%         tOK = uicontrol(f3,'Style','pushbutton','String','OK','FontSize',11,'Callback',@moreTarOK,'Units','normalized','Position',[0.225,0.075,0.2,0.125]);
-%         tCancel = uicontrol(f3,'Style','pushbutton','String','Cancel','FontSize',11,'Callback',@moreTarCancel,'Units','normalized','Position',[0.525,0.075,0.2,0.125]);
-%         
-%         tCheck1 = uicontrol(f3,'Style','checkbox','Units','normalized','Value',0,'Callback',@xlock_Callback,'Position',[.75,.6125,.25,.15]);
-%         tCheck2 = uicontrol(f3,'Style','checkbox','Units','normalized','Value',0,'Callback',@ylock_Callback,'Position',[.75,.4875,.25,.15]);
-%         tCheck3 = uicontrol(f3,'Style','checkbox','Units','normalized','Value',0,'Callback',@thlock_Callback,'Position',[.75,.3625,.25,.15]);
-%         tCheck4 = uicontrol(f3,'Style','checkbox','Units','normalized','Value',0,'Callback',@zlock_Callback,'Position',[.75,.2425,.25,.15]);
-%         
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'FontWeight','Bold','String','DOF','Units','normalized','Position',[.45,0.75,.15,.1]);
-%         tTar = uicontrol(f3,'Style','text','FontSize',12,'FontWeight','Bold','String','Lock','Units','normalized','Position',[.7,0.75,.15,.1]);
-%         
-%         if myhandles.moreTarOK == 1
-%             tPopUp1.Value = myhandles.torquemask(1);
-%             tPopUp2.Value = myhandles.torquemask(2);
-%             tPopUp3.Value = myhandles.torquemask(3);
-%             tPopUp4.Value = myhandles.torquemask(4);
-%             
-%             tCheck1.Value = myhandles.lockmask(1);
-%             tCheck2.Value = myhandles.lockmask(2);
-%             tCheck3.Value = myhandles.lockmask(3);
-%             tCheck4.Value = myhandles.lockmask(4);
-%             
-%         else
-%             if myhandles.moreTarCancel == 1
-%                 tPopUp1.Value = myhandles.prevtorquemask(1);
-%                 tPopUp2.Value = myhandles.prevtorquemask(2);
-%                 tPopUp3.Value = myhandles.prevtorquemask(3);
-%                 tPopUp4.Value = myhandles.prevtorquemask(4);
-%                 
-%                 tCheck1.Value = myhandles.prevlockmask(1);
-%                 tCheck2.Value = myhandles.prevlockmask(2);
-%                 tCheck3.Value = myhandles.prevlockmask(3);
-%                 tCheck4.Value = myhandles.prevlockmask(4);
-%             else
-%                 tPopUp1.Value = 4;
-%                 tPopUp2.Value = 1;
-%                 tPopUp3.Value = 2;
-%                 tPopUp4.Value = 3;
-%                 
-%                 tCheck1.Value = 0;
-%                 tCheck2.Value = 0;
-%                 tCheck3.Value = 0;
-%                 tCheck4.Value = 0;
-%             end
-%             
-%         end
-%     end
-% 
-%     function moreTarOK(source,event)
-%         setValues = [4,1,2,3];
-%         for i = 1:length(myhandles.torquemask)
-%             if myhandles.torquemask(i) == 0
-%                 myhandles.torquemask(i) = setValues(i);
-%             end
-%         end
-%         myhandles.prevtorquemask = myhandles.torquemask;
-%         myhandles.prevlockmask = myhandles.lockmask;
-%         
-%         myhandles.moreTarOK = 1;
-%         myhandles.moreTarCancel = 0;
-%         close(gcf);
-%     end
-% 
-%     function moreTarCancel(source,event)
-%         myhandles.torquemask = myhandles.prevtorquemask;
-%         myhandles.lockmask = myhandles.prevlockmask;
-%         myhandles.moreTarOK = 0;
-%         myhandles.moreTarCancel = 1;
-%         close(gcf);
-%     end
-% 
-%     function Cursor_size_Callback(source,event)
-%         cursSize = str2num(source.String);
-%         source.UserData = cursSize;
-%         myhandles.Cursor_s = cursSize;
-%     end
-% 
-%     function Pie_size_Callback(source,event)
-%         pieWidth = str2num(source.String);
-%         source.UserData = pieWidth;
-%         myhandles.Pie_size = pieWidth;
-%     end
-% 
-%     function theta_zero_Callback(source,event)
-%         dialZero = str2num(source.String);
-%         source.UserData = dialZero;
-%         myhandles.th_zero = dialZero;
-%     end
-% 
-%     function Target_size_Callback(source,event)
-%         tarSize = str2num(source.String);
-%         source.UserData = tarSize;
-%         myhandles.Target_s = tarSize;
-%     end
-% 
-%     function Target_x_Callback(source,event)
-%         tarHorizon = str2num(source.String);
-%         source.UserData = tarHorizon;
-%         myhandles.Target_x = tarHorizon;
-%     end
-% 
-%     function Target_y_Callback(source,event)
-%         tarVert = str2num(source.String);
-%         source.UserData = tarVert;
-%         myhandles.Target_y = tarVert;
-%     end
-% 
-%     function Target_theta_Callback(source,event)
-%         tarRot = str2num(source.String);
-%         source.UserData = tarRot;
-%         myhandles.Target_t = tarRot;
-%     end
-% 
-%     function Target_zoom_Callback(source,event)
-%         tarZoom = str2num(source.String);
-%         source.UserData = tarZoom;
-%         myhandles.Target_z = tarZoom;
-%     end
-% 
-%     function xlock_Callback(source,event)
-%         myhandles.lockmask(1) = source.Value;
-%         source.UserData = myhandles.lockmask;
-%     end
-% 
-%     function ylock_Callback(source,event)
-%         myhandles.lockmask(2) = source.Value;
-%         source.UserData = myhandles.lockmask(2);
-%     end
-% 
-%     function thlock_Callback(source,event)
-%         myhandles.lockmask(3) = source.Value;
-%         source.UserData = myhandles.lockmask(3);
-%     end
-% 
-%     function zlock_Callback(source,event)
-%         myhandles.lockmask(4) = source.Value;
-%         source.UserData = myhandles.lockmask(4);
-%     end
-% 
-%     function xtorque_Callback(source,event)
-%         myhandles.torquemask(1) = source.Value;
-%         source.UserData = myhandles.torquemask(1);
-%     end
-% 
-%     function ytorque_Callback(source,event)
-%         myhandles.torquemask(2) = source.Value;
-%         source.UserData = myhandles.torquemask(2);
-%     end
-% 
-%     function thtorque_Callback(source,event)
-%         myhandles.torquemask(3) = source.Value;
-%         source.UserData = myhandles.torquemask(3);
-%     end
-% 
-%     function ztorque_Callback(source,event)
-%         myhandles.torquemask(4) = source.Value;
-%         source.UserData = myhandles.torquemask(4);
-%     end
-% 
-%     function pbOkTarMenu_Callback(source,event)
-%         myhandles.TarOK = 1;
-%         myhandles.TarCancel = 0;
-%         tempArray = [myhandles.Target_x, myhandles.Target_y];
-%         if length(tempArray) < 2 || length(tempArray) > 2
-%             errordlg('The horizontal and vertical targets should have one element each (e.g. [30 45])');
-%         else
-%             myhandles.prevTarValues = [myhandles.Cursor_s, myhandles.Pie_size, myhandles.th_zero, myhandles.Target_s, myhandles.Target_x, myhandles.Target_y, myhandles.Target_t, myhandles.Target_z];
-%             close(gcf);
-%         end
-%     end
-% 
-%     function pbCancelTarMenu_Callback(source,event)
-%         myhandles.TarCancel = 1;
-%         myhandles.TarOK = 0;
-%         myhandles.Cursor_size = myhandles.prevTarValues(1);
-%         myhandles.Pie_size = myhandles.prevTarValues(2);
-%         myhandles.th_zero = myhandles.prevTarValues(3);
-%         myhandles.Target_s = myhandles.prevTarValues(4);
-%         myhandles.Target_x = myhandles.prevTarValues(5);
-%         myhandles.Target_y = myhandles.prevTarValues(6);
-%         myhandles.Target_t = myhandles.prevTarValues(7);
-%         myhandles.Target_z = myhandles.prevTarValues(8);
-%         close(gcf);
-%     end
-
-% AMA- This may be needed for displaying a target in real time
-%     function Display_Target_Callback(source,event)
-%         if strcmp(source.Checked,'off')
-%             source.Checked = 'on';
-%             %             TargetOptions_menu.Enable = 'On';
-%             myhandles.targetGUI = createDataCaptureUI();
-%             RTTargetcheckbox.Enable = 'on';
-%             RTForceCB.Enable = 'off';
-%             triggerCB.Enable = 'On';
-%             if isvalid(s3)
-%                 delete(s3);
-%             end
-%             
-%             s3 = daq.createSession('ni');
-%             DAQInit(s3,1);
-%         else
-%             source.Checked = 'off';
-%             %             TargetOptions_menu.Enable = 'Off';
-%             try
-%                 close('Target GUI');
-%             end
-%             RTTargetcheckbox.Enable = 'off';
-%             RTForceCB.Enable = 'on';
-%         end
-%     end
-
-% AMA - Real time target is disabled in this version. Code is from if TargetDAQ
-% and needs to be modified.
-%     function RTTarget_Callback(source,event)
-% %         disp('entered RT target');
-%         if source.Value == 1
-%             %             disp('source is 1');
-%             %First release s as a session
-%             release(s);
-%             s3.IsContinuous = true;
-%             % Specify triggered capture timespan, in seconds- test if we
-%             % use 0.45 instead...
-%             capture.TimeSpan = myhandles.sTime;            
-%             % Specify continuous data plot timespan, in seconds
-%             capture.plotTimeSpan = 0.5;
-%             % Determine the timespan corresponding to the block of samples supplied
-%             % to the DataAvailable event callback function.
-%             callbackTimeSpan = double(s3.NotifyWhenDataAvailableExceeds)/s3.Rate;
-%             % Determine required buffer timespan, seconds
-%             capture.bufferTimeSpan = max([capture.plotTimeSpan, capture.TimeSpan * 3, callbackTimeSpan * 3]);
-%             % Determine data buffer size
-%             capture.bufferSize =  round(capture.bufferTimeSpan * s3.Rate);
-%             lh = addlistener(s3, 'DataAvailable', @(src,event)collectRT(src,event,capture,0,myhandles.targetGUI));
-%             myhandles.timeMat = [];
-%             myhandles.collectedData = [];
-%             startBackground(s3);
-%         else
-%             %Release s3 as a session
-% %             disp('entered callback killing s3');
-%             if s3.IsRunning
-%                 stop(s3);
-%             end
-%             release(s3);
-%         end
-%     end
-
-% Function to create a circle graph, used in realtime target display
-%     function x = Circle(r,x0,th)
-%         if nargin < 3
-%             th = (0:359)';
-%         end
-%         
-%         th = th(:)*pi/180;
-%         x(:,1) = r*cos(th)+x0(1);
-%         x(:,2) = r*sin(th)+x0(2);
-%     end
-
-% Function to plot realtime target data. Needs to be revised
-%     function dataCapture(src, event, c, targetGUI)
-%         %         persistent dataBuffer
-%         
-%         %         If dataCapture is running for the first time, initialize persistent vars
-%         %         if event.TimeStamps(1)==0
-%         %             dataBuffer = [];          % data buffer
-%         %         end
-%         
-%         %         Store continuous acquistion data in persistent FIFO buffer dataBuffer
-%         %         latestData = [event.TimeStamps, event.Data];
-%         %         latestData = event.Data;
-%         %         dataBuffer = [dataBuffer; latestData];
-%         %         numSamplesToDiscard = size(dataBuffer,1) - c.bufferSize;
-%         %         if (numSamplesToDiscard > 0)
-%         %             dataBuffer(1:numSamplesToDiscard, :) = [];
-%         %         end
-%         data = event.Data;
-%         newData = ones(size(data(:,1:6)));
-%         chanTypes = myhandles.noStrChanTypeList;
-%         
-%         for i = 1:6
-%             if find(chanTypes == i)
-%                 ind = find(chanTypes == i);
-%                 newData(:,i) = data(:,ind);
-%             end
-%         end
-%         
-%         meanLC = myhandles.meanLC;
-%         
-%         if find(chanTypes == 7)
-%             forceInd = find(chanTypes==7);
-%             forceData = data(:,forceInd);
-%             convForceData = forceConversion(forceData-meanLC);
-%         else
-%             convForceData = 0*ones(size(data,1),1);
-%         end
-%         
-%         [m,n]=size(newData(:,1:6));
-%         FMhandbase = newData(:,1:6) - (diag(myhandles.FMoffset)*ones(n,m))';
-%         FMhand = JR3toFM(FMhandbase(:,1:6),myhandles);
-%         
-%         convForceData_Base = convForceData;
-%         
-%         newData = [FMhand,convForceData_Base];
-%         
-%         M=mean(newData(:,myhandles.torquemask+3)).*(~myhandles.lockmask);
-%         
-%         if strcmp(myhandles.armChoice,'right'), M(1)=-M(1); end
-%         
-%         % Update live data plot
-%         myhandles.timeMat = [myhandles.timeMat,event.TimeStamps'];
-%         myhandles.collectedData = [myhandles.collectedData,event.Data'];
-%         
-%         if ~myhandles.zoomOpt
-%             xd=Circle(myhandles.Cursor_s,M(1:2),myhandles.Nmtodeg*M(3)+myhandles.th_zero);xd=[M(1:2);xd];
-%             set(targetGUI.lh(1),'Xdata',myhandles.x(:,1)+M(1),'Ydata',myhandles.x(:,2)+M(2),'Color','g')
-%             set(targetGUI.lh(2),'Xdata',myhandles.xp(:,1)+M(1),'Ydata',myhandles.xp(:,2)+M(2))
-%             set(targetGUI.lh(3),'Xdata',xd(:,1),'Ydata',xd(:,2))
-%         else
-%             x=Circle(myhandles.Cursor_s + M(4),M(1:2));
-%             xp=Circle(myhandles.Cursor_s + M(4),[0 0],[myhandles.Pie_center+myhandles.Nmtodeg*[-myhandles.Pie_size myhandles.Pie_size]/2 myhandles.th_zero]);
-%             xp=[0 0;xp(1,:);0 0;xp(2,:)];
-%             xd=Circle(myhandles.Cursor_s + M(4),M(1:2),myhandles.Nmtodeg*M(3)+myhandles.th_zero);xd=[M(1:2);xd];
-%             set(targetGUI.lh(1),'Xdata',x(:,1),'Ydata',x(:,2),'Color','g')
-%             set(targetGUI.lh(2),'Xdata',xp(:,1)+M(1),'Ydata',xp(:,2)+M(2))
-%             set(targetGUI.lh(3),'Xdata',xd(:,1),'Ydata',xd(:,2))
-%             set(targetGUI.lh(6),'Xdata',myhandles.xz(:,1)+M(1),'Ydata',myhandles.xz(:,2)+M(2));
-%         end
-%         drawnow;
-%     end
-
-% Function to create the realtime target display GUI. Needs to be revised.
-%     function targetGUI = createDataCaptureUI()
-%         %CREATEDATACAPTUREUI Create a graphical user interface for data capture.
-%         % Create a figure and configure a callback function (executes on window close)
-%         targetGUI.Fig = figure('Name','Target GUI', ...
-%             'NumberTitle', 'off','Resize', 'on','Position', [100 100 650 650]);
-%         
-%         set(targetGUI.Fig, 'DeleteFcn', @closeTargetGUI);
-%         
-%         % Make sure the real-time data comes to the front
-%         uistack(targetGUI.Fig,'top');
-%         
-%         targetGUI.Axes1 = axes;
-%         targetGUI.lh = plot(nan);
-%         
-%         title('Target Display');
-%         
-%         if ~isempty(targetGUI.lh)
-%             delete(targetGUI.lh)
-%             targetGUI.lh=[];
-%         end
-%         
-%         myhandles.x=Circle(myhandles.Cursor_s,[0 0]);
-%         myhandles.Pie_center=90;
-%         
-%         % Pie and dial on cursor - these objects change with time
-%         if myhandles.Target_t == 0
-%             myhandles.th_zero=90;
-%             myhandles.Nmtodeg=180/(5*myhandles.Pie_size);
-%         else
-%             % If the dial zero is at 90 degrees, set the pie width to 60 degrees.
-%             if myhandles.th_zero==90
-%                 myhandles.Nmtodeg=60/(myhandles.Pie_size);
-%             else
-%                 myhandles.Nmtodeg=abs(myhandles.Pie_center-myhandles.th_zero)/abs(myhandles.Target_t);
-%             end
-%         end
-%         
-%         xp=Circle(myhandles.Cursor_s,[0 0],[myhandles.Pie_center+myhandles.Nmtodeg*[-myhandles.Pie_size myhandles.Pie_size]/2 myhandles.th_zero]);
-%         myhandles.xp=[0 0;xp(1,:);0 0;xp(2,:)];
-%         xd=[0 0;xp(3,:)];
-%         
-%         % Plot cursor
-%         hLine(1)=line('Parent',targetGUI.Axes1,'Xdata',myhandles.x(:,1),'Ydata',myhandles.x(:,2),'Color','g','LineWidth',2);
-%         hLine(2)=line('Parent',targetGUI.Axes1,'Xdata',myhandles.xp(:,1),'Ydata',myhandles.xp(:,2),'Color','y','LineWidth',3);
-%         hLine(3)=line('Parent',targetGUI.Axes1,'Xdata',xd(:,1),'Ydata',xd(:,2),'Color','r','LineWidth',3);
-%         
-%         if strcmp(myhandles.armChoice,'right')
-%             xt=Circle(myhandles.Target_s,[-myhandles.Target_x myhandles.Target_y]);
-%         else
-%             xt=Circle(myhandles.Target_s,[myhandles.Target_x myhandles.Target_y]);
-%         end
-%         
-%         % Cone from cursor to target - this object is fixed
-%         if ((myhandles.Target_y)==0 && (myhandles.Target_x==0))
-%             xc=zeros(4,2);
-%         else
-%             d=norm([myhandles.Target_x myhandles.Target_y]);
-%             if strcmp(myhandles.armChoice,'right')
-%                 thc=(atan2(myhandles.Target_y,-myhandles.Target_x)+[asin(myhandles.Target_s/d) -asin(myhandles.Target_s/d)])*180/pi;
-%             else
-%                 thc=(atan2(myhandles.Target_y,myhandles.Target_x)+[asin(myhandles.Target_s/d) -asin(myhandles.Target_s/d)])*180/pi;
-%             end
-%             xc=Circle(d,[0 0],thc);xc=[0 0;xc(1,:);0 0;xc(2,:)];
-%         end
-%         
-%         hLine(4)=line('Parent',targetGUI.Axes1,'Xdata',xt(:,1),'Ydata',xt(:,2),'Color','r','LineWidth',2);
-%         hLine(5)=line('Parent',targetGUI.Axes1,'Xdata',xc(:,1),'Ydata',xc(:,2),'Color','m','LineWidth',2);
-%         
-%         if myhandles.zoomOpt
-%             % Zoom target - this object changes with time
-%             myhandles.xz=[Circle(1.1*myhandles.Target_z,[0 0]); Circle(0.9*myhandles.Target_z,[0 0])];
-%             hLine(6)=line('Parent',targetGUI.axes1,'Xdata',myhandles.xz(:,1),'Ydata',myhandles.xz(:,2),'Color','w');
-%         end
-%         lim=round(max(abs([myhandles.Target_x myhandles.Target_y]))+1.1*myhandles.Target_s);
-%         targetGUI.Axes1.XLim = [-lim lim];
-%         targetGUI.Axes1.YLim = [-lim lim];
-%         set(targetGUI.Fig,'color','k');
-%         set(gca,'Color','k');
-%         targetGUI.lh = hLine;
-%     end
-
-% Function used with GUI to change channel names
-%     function closeChGUI(source,event)
-%         button = myhandles.pbChSelect;
-%         val = button.Value;
-%         if val ~= 1
-%             myhandles.Channels = myhandles.placeHolder;
-%             if myhandles.oldNChan ~= myhandles.nChan
-%                 myhandles.nChan = myhandles.oldNChan;
-%                 nChan_Edit.String = myhandles.nChan;
-%             end
-%         end
-%         
-%         try
-%             g = findobj('-depth',1,'type','figure','Name','Channel Selection Menu');
-%             delete(g)
-%         end
-%     end
-
-%     function closeTargetGUI(source,event)
-%         try
-%             if isvalid(s)
-%                 if s.IsRunning
-%                     stop(s);
-%                 end
-%             end
-%             
-%             if isvalid(s3)
-%                 if s3.IsRunning
-%                     stop(s3);
-%                 end
-%                 delete(s3);
-%             end
-%             
-%         catch
-%             warning('The GUI was shut down this first time line 2732');
-%             %             delete(dataListener);
-%             %             delete(errorListener);
-%         end
-%         
-%         try
-%             DisplayTarget_menu.Checked ='off';
-%             if RTTargetcheckbox.Value == 1
-%                 RTTargetcheckbox.Value = 0;
-%             end
-%             RTTargetcheckbox.Enable = 'off';
-%             RTForceCB.Enable = 'on';
-%             
-%             g = findobj('-depth',1,'type','figure','Name','Target GUI');
-%             delete(g)
-%             %             TargetOptions_menu.Enable = 'Off';
-%         catch
-%             warning('The GUI was shut down for the second time line 2732');
-%         end
-%         if s.IsRunning
-%             %             disp('in the cancel and still running');
-%             stop(s);
-%         end
-%         disp('Target off o_O');
-%     end
-
-%     function FMshe=JR3toFM(FM,handles)
-%         abdAngle=handles.abdAngle*pi/180;  % degrees to rad
-%         efAngle=pi-handles.efAngle*pi/180;  % degrees to rad
-%         aLength=handles.aLength/1000;    % mm to m
-%         faLength=handles.faLength/1000;  % mm to m
-%         zOffset=handles.zOffset/1000;    % mm to m
-%         
-%         % Translate moments to the shoulder and elbow
-%         [FMsh,FMe]=JR3toSHandE(FM,abdAngle,efAngle,aLength,faLength,zOffset,handles.armChoice,handles.sensMat);
-%         %FMshe=[FMsh FMe(:,4:5)];%LCM modified 4/29 to include pronation/supination in feedack
-%         FMshe=[FMsh FMe(:,4)];
-%     end
 end
