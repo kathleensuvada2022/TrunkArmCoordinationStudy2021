@@ -151,7 +151,7 @@ emgDAQ.Fig.Visible = 'on';
                 set(myhandles.Line(i,2),'XData',[],'YData',[]);
             end
 %             startBackground(myhandles.s);
-            start(myhandles.s,"Continuous");
+            start(myhandles.s,'Continuous');
         else
             stop(myhandles.s);
 %             myhandles.s.IsContinuous = false;
@@ -406,7 +406,7 @@ emgDAQ.Fig.Visible = 'on';
             myhandles.pbMVFdaq.Enable='off';
         end
 %         [data,t]=startForeground(myhandles.s);
-        [data,t]=start(myhandles.s,"Duration",myhandles.sTime,"OutputFormat","Matrix");
+        [data,t]=start(myhandles.s,'Duration',myhandles.sTime,'OutputFormat','Matrix');
         displayData(myhandles.nChan, t, data, myhandles.sRate, [myhandles.datadir,'\',myhandles.filename,num2str(myhandles.itrial),'.mat']); % AMA 7/2/19
         myhandles.itrial = myhandles.itrial+1;
         myhandles.TrialNumber.String = num2str(myhandles.itrial);
@@ -433,7 +433,7 @@ emgDAQ.Fig.Visible = 'on';
         myhandles.RTcheckbox.Enable = 'off'; % disable realtime checkbox
         jr3chan=myhandles.Channels(end)+(1:6);
         addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
-        start(myhandles.s,"Duration",5)
+        start(myhandles.s,'Duration',5)
         while myhandles.s.Running, end
         myhandles.MVF_Display.Text=num2str(myhandles.max_sabdf,'%7.2f');
         source.Enable = 'on';
@@ -452,7 +452,7 @@ emgDAQ.Fig.Visible = 'on';
         end
         jr3chan=myhandles.Channels(end)+(1:6);
         addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
-        data = read(myhandles.s, seconds(1),"OutputFormat","Matrix");
+        data = read(myhandles.s, seconds(1),'OutputFormat','Matrix');
         myhandles.FMzero = mean(data(:,myhandles.nChan+(0:5)));
         [myhandles.mvf.hFig,myhandles.mvf.hAxis,myhandles.mvf.hArea,myhandles.mvf.hLine] = createMVFAxis(myhandles.max_sabdf);
         myhandles.pbMVFdaq.Enable='On';
@@ -480,7 +480,7 @@ emgDAQ.Fig.Visible = 'on';
     % AMA - function to display data in real time and play beep at 200 ms 
     function localTimerAction(obj, event)
         if myhandles.RTdaq || myhandles.MVFdaq
-            data = read(obj,obj.ScansAvailableFcnCount,"OutputFormat","Matrix");
+            data = read(obj,obj.ScansAvailableFcnCount,'OutputFormat','Matrix');
             localDisplayData(myhandles.timebuffer,data,myhandles.nChan)
         else
             if obj.NumScansAvailable == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
