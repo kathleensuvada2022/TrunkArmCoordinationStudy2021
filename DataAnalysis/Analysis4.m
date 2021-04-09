@@ -180,7 +180,7 @@ emgval = PlotKinematicData6(partid,'2001tf_final_000000','Target_',4)
 partid = 'RTIS2003';
 
 %RT
- avg_emg_maxvel=PlotKinematicData6(partid,'trial','trial',1);
+ [avg_emg_maxvel avgmaxreach]=PlotKinematicData6(partid,'trial','trial',1);
 
 %R25
 avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',2);
@@ -201,32 +201,58 @@ avg_emg_maxvel= PlotKinematicData6(partid,'trial','trial',6);
 
 
 
-
+%%Controls%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % {TRtable,  TR25,  TR50,  TUtable, TU25, TU50}
-%RTIS 2005
-partid = 'RTIS2005';
+%RTIS 1002
+partid = 'RTIS1002';
 
 %RT
-emgval = PlotKinematicData6(partid,'trial','trial',1);
+[avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,'trials','trials',1);
 
 %R25
-emgval = PlotKinematicData6(partid,'trial','trial',2);
+emgval = PlotKinematicData6(partid,'trials','trials',2);
 
 
 %R50
-emgval = PlotKinematicData6(partid,'trial','trial',3);
+emgval = PlotKinematicData6(partid,'trials','trials',3);
 
 %UT
-emgval = PlotKinematicData6(partid,'trial','trial',4);
+emgval = PlotKinematicData6(partid,'trials','trials',4);
 
 %U25
-emgval = PlotKinematicData6(partid,'trial','trial',5);
+emgval = PlotKinematicData6(partid,'trials','trials',5);
 
 
 %U50
-emgval = PlotKinematicData6(partid,'trial','trial',6);
+emgval = PlotKinematicData6(partid,'trials','trials',6);
 
+
+
+
+% {TRtable,  TR25,  TR50,  TUtable, TU25, TU50}
+%RTIS 1003
+partid = 'RTIS1003';
+
+%RT
+[avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,'trials','trials',1);
+
+%R25
+emgval = PlotKinematicData6(partid,'trials','trials',2);
+
+
+%R50
+emgval = PlotKinematicData6(partid,'trials','trials',3);
+
+%UT
+emgval = PlotKinematicData6(partid,'trials','trials',4);
+
+%U25
+emgval = PlotKinematicData6(partid,'trials','trials',5);
+
+
+%U50
+emgval = PlotKinematicData6(partid,'trials','trials',6);
 
 
  

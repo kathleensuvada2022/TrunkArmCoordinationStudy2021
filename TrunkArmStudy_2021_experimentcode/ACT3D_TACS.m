@@ -16,7 +16,7 @@ function ACT3D_TACS(varargin)
 % * Add graphical feedback of trunk home and current position (sphere and
 % cube)
 
-% AMA 11/17/22
+% AMA 11/17/20
 % * Fix Metria data to add trunk home position
 % * Compiler instruction mex -lws2_32 metriaComm_openSocket.cpp
 % * Add graphical feedback of trunk home and current position (sphere and cube)
@@ -132,7 +132,7 @@ myhandles.exp.arm = 'right';
 myhandles.exp.hometar=[];
 myhandles.exp.shpos=[];
 myhandles.exp.arm_weight=[];
-myhandles.exp.max_sabd=[];
+myhandles.exp.max_sabd=40;
 myhandles.exp.isrunning=0;
 myhandles.exp.fname='trial';
 myhandles.exp.itrial=1;
@@ -381,11 +381,11 @@ hLine(1)=line([-0.04 0.04],[0 0],'LineWidth',4, 'Color','w'); % Cross mark - hor
 hLine(2)=line([0 0],[-0.04 0.04],'LineWidth',4, 'Color','w'); % Cross mark - vertical       
 hLine(3)=line([0 0],[0 0],'LineWidth',4, 'Color','b','Visible','off'); % endpoint trace
 hLine(4)=rectangle('Position',[-0.05 -0.05 0.1 0.1],'Curvature',[1 1],'EdgeColor','g','LineWidth',3,'Visible','on'); % home target
-line([0 0],[-0.12 0.7*larm],'LineStyle','--','LineWidth',3, 'Color','w'); % Midline  
 hLine(5)=line([-0.4 0.4],[0.7 0.7]*larm,'LineWidth',6,'Color','r'); % Target line
+hLine(6)=line([0 0],[-0.12 0.5*larm],'LineStyle','--','LineWidth',3, 'Color','w'); % Midline  
 
 hLabel = uicontrol(hFig,'Style','text','BackgroundColor','k','ForegroundColor','w','HorizontalAlignment','center','Units','normalized','FontSize',30,'Position',[0.3 0.85 0.4 0.09]);
-hLabel.String='REACH HERE!';                                                 %KCS 8.18.20 ADDED REACH HERE.. when does this show up? 
+hLabel.String='REACH HERE!';                                            %KCS 8.18.20 ADDED REACH HERE.. when does this show up? 
 
 end
 
@@ -596,10 +596,10 @@ function ACT3D_tablebg_Callback(~,event)
             if myhandles.robot.endEffectorPosition(3) < myhandles.haptic.horizontalPosition(3)
                 uiwait(warndlg('Please raise the ACT3D above the haptic table','ACT3D-TACS',myhandles.txt_struct));
             end
-%              myhandles.haptic.horizontalPosition(3) = -0.12; %was-.24
+             myhandles.haptic.horizontalPosition(3) = -0.15; 
                 % set position of horizontal haptic effect in robot
 %                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
-            myhandles.haptic.isHorizontalEnabled = myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
+%             myhandles.haptic.isHorizontalEnabled = myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
         case 'off'
             % turn off horizontal effect AMA THIS GIVES AN ERROR
             myhandles.haptic.isHorizontalEnabled = myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName );
@@ -637,7 +637,7 @@ function ACT3D_load_Callback(hObject,event)
             myhandles.exp.endforce=force;
             
     end
-    set(myhandles.ui.mon_awgt,'String',mat2str([myhandles.exp.arm_weight myhandles.exp.endforce])); % Vertical endpoint force
+    set(myhandles.ui.mon_awgt,'String',num2str([myhandles.exp.arm_weight myhandles.exp.endforce],'%7.2f')); % Vertical endpoint force
 end
 
 % Set the load type = {'abs','max','wgh'} corresponding to (Absolute in N, 
@@ -691,7 +691,7 @@ function ACT3D_loadbg_Callback(~,event)
                 % Fix ACT3D before removing table
                 uiwait(warndlg('\fontsize{12}Warning: Haptic table will be moved to default position, move ACT-3D above table','ACT3D-TACS',myhandles.txt_struct));
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
-                myhandles.haptic.horizontalPosition(3) = -0.15;   % was -.2
+                myhandles.haptic.horizontalPosition(3) = -0.2;   % was -.15 (higher up)
                 % set position of horizontal haptic effect in robot
                 myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
@@ -758,12 +758,14 @@ function DAQ_RT_Callback(hObject,event)
             set(myhandles.daq.Line(i,1),'XData',[],'YData',[]);
             set(myhandles.daq.Line(i,2),'XData',[],'YData',[]);
         end
+        set(myhandles.ui.exp_go,'Enable','off')
         startBackground(myhandles.daq.ni);
     else
         stop(myhandles.daq.ni);
         lh = addlistener(myhandles.daq.ni, 'DataAvailable', @EXP_localTimerAction);
         myhandles.daq.ni.IsContinuous = false;
         myhandles.daq.ni.NotifyWhenDataAvailableExceeds = myhandles.daq.sRate/myhandles.exp.sRate;
+        set(myhandles.ui.exp_go,'Enable','on')
         start(myhandles.exp.timer)
     end
 end
@@ -1263,21 +1265,21 @@ if myhandles.ui.act3d_tablebg.SelectedObject==myhandles.ui.act3d_tableoff
 end
 
 % If device is in FIXED state, switch to NORMAL -commented out lines 1266-1273 3.8.21
-% if strcmp(myhandles.robot.currentState,'fixed')
-%     uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
-%     set(myhandles.ui.act3d_state,'String','NORMAL');
-%     ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% %     myhandles.act3d.state='NORMAL';
-% %     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% %     myhandles.ui.act3d_state.String=myhandles.act3d.state;
-% end
+if strcmp(myhandles.robot.currentState,'fixed')
+    uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
+    set(myhandles.ui.act3d_state,'String','NORMAL');
+    ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+%     myhandles.act3d.state='NORMAL';
+%     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+%     myhandles.ui.act3d_state.String=myhandles.act3d.state;
+end
 
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of sternum with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out lines 1279 and 1280 3.8.21
-% set(myhandles.ui.act3d_state,'String','FIXED');
-% ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+set(myhandles.ui.act3d_state,'String','FIXED');
+ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 % myhandles.act3d.state='FIXED';
 % myhandles.robot.SwitchState(lower(myhandles.act3d.state));
 % myhandles.ui.act3d_state.String=myhandles.act3d.state;
@@ -1314,12 +1316,12 @@ myhandles.exp.midpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.ro
 uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
 set(myhandles.ui.act3d_state,'String','NORMAL');
 ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-% myhandles.act3d.state='NORMAL';
-% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-% myhandles.ui.act3d_state.String=myhandles.act3d.state;
+myhandles.act3d.state='NORMAL';
+myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+myhandles.ui.act3d_state.String=myhandles.act3d.state;
 
 % Prompt user to align tip of middle finger with participant's midline
-uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
+uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees. Make sure participant is relaxed to weigh arm','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out next two lines 
 set(myhandles.ui.act3d_state,'String','FIXED');
@@ -1332,31 +1334,44 @@ myhandles.ui.act3d_state.String=myhandles.act3d.state;
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
 myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp);
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
+disp(myhandles.exp.shpos)
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
-myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3)-[0.15;0];
+myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
 myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
 myhandles.exp.shpos=myhandles.exp.shpos-myhandles.exp.origin;
 
+EXP_saveSetup_Callback(hObject,[])
+
 % disp([myhandles.exp.origin myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar myhandles.exp.shpos])
 
 set(myhandles.ui.mon_spos,'String',num2str(myhandles.exp.shpos'*100,'%7.2f')); 
-set(myhandles.ui.mon_awgt,'String',mat2str(myhandles.exp.arm_weight)); % Vertical endpoint force
+set(myhandles.ui.mon_awgt,'String',num2str(myhandles.exp.arm_weight,'%7.2f')); % Vertical endpoint force
 
-if strcmp(myhandles.exp.arm,'right'),
+larm=1.1*(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
+
+if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[-myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    ylimit=myhandles.exp.shpos(2)-larm;
+    set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
+    set(myhandles.exp.hLine(6),'Ydata',[-0.12 -1.1*ylimit]); % Midline  
+
 else
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    ylimit=myhandles.exp.shpos(2)+larm;
+    set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
+    set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline  
 end
-larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
-set(myhandles.exp.hLine(5),'Xdata',[-0.4 0.4],'Ydata',1.1*(larm-myhandles.exp.origin(2))*[1 1]); % home target
+disp([myhandles.exp.origin' larm ylimit])
 
+set(myhandles.exp.hAxis,'ylim',[-0.05 abs(ylimit)+0.02]);
+set(myhandles.exp.hAxis,'xlim',[-0.2 0.2]);
 % Update trunk home position if Metria on
 if myhandles.met.on
     set(myhandles.met.hLine,'Position',[myhandles.exp.trunkhome(1:2)'-[50 50] 100 100]); % trunk home target
@@ -1382,18 +1397,46 @@ if strcmp(myhandles.act3d.state,'NORMAL')
     set(myhandles.ui.act3d_state,'String','FIXED');
     ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
 end
-zforce=zeros(2000,1);
-i=0;
+% Open figure window for max force feedback
+[hFig,hAxis,hArea,hLine] = createMVFAxis(myhandles.exp.max_sabd);
+% uiwait(msgbox('\fontsize{12}Start maximum shoulder abduction force measurement','ACT3D-TACS',myhandles.txt_struct));
+% myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
+% zforcebase=myhandles.robot.endEffectorForce(3);
+pause(1)
 tic
 while toc<5
-    i=i+1;
     myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
-    zforce(i)=myhandles.robot.endEffectorForce(3);
-    set(myhandles.ui.mon_eforce,'String',num2str(zforce(i),4)); % Vertical endpoint force
+    zforce=myhandles.robot.endEffectorForce(3);
+    set(myhandles.ui.mon_eforce,'String',num2str(zforce,4)); % Vertical endpoint force
+    maxforce=myhandles.exp.max_sabd;
+    % If force/torque exceeds plot limits, increase by 5 N
+    ylimit=get(hAxis,'YLim');
+    if zforce > ylimit(2)
+        set(hAxis,'YLim',ylimit+[0 5]);
+    end
+    %
+    if zforce > maxforce
+        maxforce=zforce;
+        set(hLine,'YData',maxforce([1 1]));
+    end
+    if zforce > 0.9*maxforce
+        set(hLine,'Color','g');
+    else
+        set(hLine,'Color','c');
+    end
+    set(hArea,'YData',zforce([1 1]));
+    myhandles.exp.max_sabd=maxforce;  
+    drawnow
 end
-myhandles.exp.max_sabd=max(zforce);
+% Correct for the weight of the arm which is saved as a negative number
+myhandles.exp.max_sabd=myhandles.exp.max_sabd+myhandles.exp.arm_weight;
+% myhandles.exp.max_sabd=max(zforce);
+EXP_saveSetup_Callback(hObject,[])
+
 % Change this to display in a field created for max SABD force
 set(myhandles.ui.mon_sabd,'String',num2str(myhandles.exp.max_sabd,4)); % Vertical endpoint force
+
+close(hFig)
 
 % Restart the timer for ACT3D real time display
 start(myhandles.exp.timer)
@@ -1760,7 +1803,7 @@ if isfield(myhandles.exp,'partID')
         'armLength',myhandles.exp.armLength,'e2hLength',myhandles.exp.e2hLength,...
         'ee2eLength',myhandles.exp.ee2eLength,'abdAngle',myhandles.exp.abdAngle,'shfAngle',myhandles.exp.shfAngle,...
         'elfAngle',myhandles.exp.elfAngle,'hometar',myhandles.exp.hometar,'shpos',myhandles.exp.shpos,...
-        'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
+        'midpos',myhandles.exp.midpos,'origin',myhandles.exp.origin,'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
     if myhandles.daq.on
         setup.daq=struct('nChan',myhandles.daq.nChan,'Channels',myhandles.daq.Channels,'ChannelNames',{myhandles.daq.ChannelNames},...
             'sRate',myhandles.daq.sRate);
@@ -1829,7 +1872,7 @@ if strcmp(exp.arm,'right')
     p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
-    p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 end
 p=p-exp.origin; % Correct for the origin once it's set
@@ -1866,7 +1909,7 @@ p = x(:) + p;
 % 	ShoulderZ = tHmPos.m_dCoords[2] + dArmRestOffsetZ;// + (0.5*dShoulderRadius);
 % if strcmp(arm,'Right')
 
-% AMA - Why isn't the elbow angle used to compute shoulder position???
+% AMA - Why isn't the elbow angle used to compute shoulder position??? 
 % From Stuart's code
             % rotate shoulder abduction angle to 0 degrees in the plane
             % that the subject is reaching
@@ -1994,6 +2037,28 @@ end
     end
   
   end
+
+% Function to create feedback display for maximum shoulder abduction force
+% measurement
+function [hFig,hAxis,hArea,hLine] = createMVFAxis(sabdf0)
+    scrpos = get(groot,'MonitorPositions');
+    if size(scrpos,1)==1
+        figpos=[700,40,650,800];
+        hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+    else
+        figpos=scrpos(2,:);
+        hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+    end
+
+
+    % Create UIAxes
+    hAxis = axes('Parent',hFig,'Position',[0.3 0 0.4 1],'Color','none','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
+    set(hAxis,'YLim',[0 100]);
+    % Create the area and line objects
+    hArea = area('Parent',hAxis,[0 0],'FaceColor','r','EdgeColor','none');
+
+    hLine = line('Parent',hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[sabdf0 sabdf0],'Color','g','LineWidth',5);
+end
 
 
 end

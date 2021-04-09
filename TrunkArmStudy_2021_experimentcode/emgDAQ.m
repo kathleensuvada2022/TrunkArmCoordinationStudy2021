@@ -74,10 +74,15 @@ myhandles.RTdaq = 0;
 
 %% TRIAL NUMBER PANEL
 % This panel will iterate the trial number every time that you press acquire
-numtrPanel = uipanel('HighlightColor','[0.5 0 0.9]','Position',[0.775 0.2 0.2 0.3]);
+numtrPanel = uipanel('HighlightColor','[0.5 0 0.9]','Position',[0.775 0.15 0.2 0.25]);
 tNumTr = uicontrol(numtrPanel,'Style','text','String','Trial Number','HorizontalAlignment','Left','Units','normalized','Position',[0.05,0.68,0.5,0.2],'FontSize',10);
 myhandles.TrialNumber = uicontrol(numtrPanel,'Style','edit','HorizontalAlignment','Center','Callback',@TrialNumber_Callback,'String',num2str(myhandles.itrial),'Units','normalized','Position',[0.55 0.8 0.4 0.1],'FontSize',10);
 myhandles.currdir = uicontrol(numtrPanel,'Style','text','String',sprintf('Data will be saved in \n%s',pwd),'HorizontalAlignment','Left','Units','normalized','Position',[0.05,0.001,0.9,0.6],'FontSize',10);
+
+%% Max SABD Button
+myhandles.pbZeroJR3 = uicontrol(emgDAQ.Fig,'Style','pushbutton','Callback',@pbZeroJR3_Callback,'String','ZERO JR3','FontWeight','Bold','FontSize',10,'Units','normalized','Enable','Off','Position',[0.78 0.45 0.09 0.075]);
+myhandles.pbSabdmax = uicontrol(emgDAQ.Fig,'Style','pushbutton','Callback',@pbSabdmax_Callback,'String','SABD MAX','FontWeight','Bold','FontSize',10,'Units','normalized','Enable','Off','Position',[0.88 0.45 0.09 0.075]);
+
 
 %% Plots panel
 % Create axes objects for data plots by calling CreateAxes (based on awesomePlots in TargetDAQ_Updated)
@@ -123,8 +128,8 @@ emgDAQ.Fig.Visible = 'on';
         end
     end
 
-% Realtime DAQ checkbox callback. Set daq to continuous acquisition, reset the line objects
-% and start the background acquisition.
+    % Realtime DAQ checkbox callback. Set daq to continuous acquisition, reset the line objects
+    % and start the background acquisition.
     function RT_Callback(source,event)
         myhandles.RTdaq = source.Value;
         % Change DAQ object to continuous time acquisition
@@ -235,7 +240,7 @@ emgDAQ.Fig.Visible = 'on';
                 setnames=fieldnames(setup);
                 for i=1:length(setnames)   % Don't do the same for the filter settings
 %                     if ~strcmp(setnames{i},'filters')
-                    eval(['subsetnames=fieldnames(setup.' setnames{i} ');'])
+                    subsetnames=fieldnames(setup.setnames{i});
                     for j=1:length(subsetnames)
                         eval(['myhandles.' subsetnames{j} '=setup.' setnames{i} '.' subsetnames{j} ';'])
                     end
@@ -354,7 +359,7 @@ emgDAQ.Fig.Visible = 'on';
         % Delete DAQ objects if they already exist to avoid errors
         if isfield(myhandles,'s'), delete(myhandles.s); myhandles=rmfield(myhandles, 's'); end
         % Create regular DAQ object
-        myhandles.s = daq.createSession('ni');
+        myhandles.s = daq('ni');
         % Add analog input channels specified in myhandles.Channels
         myhandles.s.addAnalogInputChannel(myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
         % Set DAQ object sampling rate and time
@@ -389,6 +394,58 @@ emgDAQ.Fig.Visible = 'on';
         myhandles.RTcheckbox.Enable = 'on';
     end
 
+% AMA 4/7/21 EDIT THIS FUNCTION TO DISPLAY SABD TORQUE IN REAL TIME AND
+% CREATE ZERO JR3 FUNCTION TO GO WITH ZERO JR3 BUTTON
+% JR3 Signals - Ch15 to Ch20
+    function pbSabdmax_Callback(source,event)
+        source.Enable = 'off';
+        % Open figure window for max force feedback
+        [hFig,hAxis,hArea,hLine] = createMVFAxis(myhandles.max_sabd);
+
+        if myhandles.RTdaq
+            stop(myhandles.s);
+%             myhandles.s.IsContinuous = false;
+%             myhandles.s.NotifyWhenDataAvailableExceeds = 0.1*myhandles.sRate;
+%             myhandles.RTcheckbox.Value = 0;
+%             myhandles.RTdaq = 0;
+        end
+        myhandles.RTcheckbox.Enable = 'off'; % disable realtime checkbox
+        myhandles.maxflag = 1;
+        myhandles.s.addAnalogInputChannel(myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
+        
+        
+
+        
+        zforcebase=myhandles.robot.endEffectorForce(3);
+        pause(1)
+        tic
+        while toc<5
+            myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
+            zforce=myhandles.robot.endEffectorForce(3);
+            set(myhandles.ui.mon_eforce,'String',num2str(zforce,4)); % Vertical endpoint force
+            maxforce=myhandles.exp.max_sabd;
+            % If force/torque exceeds plot limits, increase by 5 N
+            ylimit=get(hAxis,'YLim');
+            if zforce > ylimit(2)
+                set(hAxis,'YLim',ylimit+[0 5]);
+            end
+            %
+            if zforce > maxforce
+                maxforce=zforce;
+                set(hLine,'YData',maxforce([1 1]));
+            end
+            if zforce > 0.9*maxforce
+                set(hLine,'Color','g');
+            else
+                set(hLine,'Color','c');
+            end
+            set(hArea,'YData',zforce([1 1]));
+            myhandles.exp.max_sabd=maxforce;
+            drawnow
+        end
+        myhandles.exp.max_sabd=myhandles.exp.max_sabd-zforcebase;
+    end
+
 % Function to plot data at the end of the data acquisition
     function displayData(nChan, t, data, sRate, filename)
     % Assumes all the data is EMG. If adding forces and torques, need to
@@ -412,7 +469,7 @@ emgDAQ.Fig.Visible = 'on';
     % AMA - function to display data in real time and play beep at 200 ms 
     function localTimerAction(source, event)
         if ~myhandles.RTdaq
-            if source.ScansAcquired == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
+            source.ScansAcquired == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
         else
             localDisplayData(myhandles.timebuffer,event.Data,myhandles.nChan)
         end
@@ -431,6 +488,28 @@ emgDAQ.Fig.Visible = 'on';
         end
         drawnow
     end
+
+% Function to create feedback display for maximum shoulder abduction force
+% measurement
+function [hFig,hAxis,hArea,hLine] = createMVFAxis(sabdf0)
+    scrpos = get(groot,'MonitorPositions');
+    if size(scrpos,1)==1
+        figpos=[700,40,650,800];
+        hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+    else
+        figpos=scrpos(2,:);
+        hFig = figure('Visible','on','Position',figpos,'Color','k','Name','ACT3D-TACS SHOULDER ABDUCTION STRENGTH');
+    end
+
+
+    % Create UIAxes
+    hAxis = axes('Parent',hFig,'Position',[0.3 0 0.4 1],'Color','none','XColor','none','XTick',[],'XTickLabel',[],'YColor','none','YTick',[],'YTickLabel',[]);
+    set(hAxis,'YLim',[0 100]);
+    % Create the area and line objects
+    hArea = area('Parent',hAxis,[0 0],'FaceColor','r','EdgeColor','none');
+
+    hLine = line('Parent',hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[sabdf0 sabdf0],'Color','g','LineWidth',5);
+end
 
     function aKeyPress_Callback(source,event)
         switch event.Key
@@ -1177,16 +1256,16 @@ emgDAQ.Fig.Visible = 'on';
 %         disp('Target off o_O');
 %     end
 
-%     function FMshe=JR3toFM(FM,handles)
-%         abdAngle=handles.abdAngle*pi/180;  % degrees to rad
-%         efAngle=pi-handles.efAngle*pi/180;  % degrees to rad
-%         aLength=handles.aLength/1000;    % mm to m
-%         faLength=handles.faLength/1000;  % mm to m
-%         zOffset=handles.zOffset/1000;    % mm to m
-%         
-%         % Translate moments to the shoulder and elbow
-%         [FMsh,FMe]=JR3toSHandE(FM,abdAngle,efAngle,aLength,faLength,zOffset,handles.armChoice,handles.sensMat);
-%         %FMshe=[FMsh FMe(:,4:5)];%LCM modified 4/29 to include pronation/supination in feedack
-%         FMshe=[FMsh FMe(:,4)];
-%     end
+    function FMshe=JR3toFM(FM,handles)
+        abdAngle=handles.abdAngle*pi/180;  % degrees to rad
+        efAngle=pi-handles.efAngle*pi/180;  % degrees to rad
+        aLength=handles.aLength/1000;    % mm to m
+        faLength=handles.faLength/1000;  % mm to m
+        zOffset=handles.zOffset/1000;    % mm to m
+        
+        % Translate moments to the shoulder and elbow
+        [FMsh,FMe]=JR3toSHandE(FM,abdAngle,efAngle,aLength,faLength,zOffset,handles.armChoice,handles.sensMat);
+        %FMshe=[FMsh FMe(:,4:5)];%LCM modified 4/29 to include pronation/supination in feedack
+        FMshe=[FMsh FMe(:,4)];
+    end
 end

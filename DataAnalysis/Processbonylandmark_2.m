@@ -1,4 +1,13 @@
 
+%% Shows what we are saving from MetriaKinDAQ
+
+%     dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; 
+%Gives XYZ of pointer tool tip in LCS ,quaterion of pointer marker in GCS, then the RGB marker in LCS (this should always be about 001), then quaternion for RGB marker in GCS
+
+
+% myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
+% myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
+
 %% ANALYSIS FILE FOR BL 
 % Use this for participants from Fall/winter 2020--> using pointer tool 237
 
@@ -10,16 +19,16 @@
 
 % % load('RTIS2001_setup');
 
-filename = 'BL.mat'
+partid='RTIS1002';
+filename = 'BL.mat';
 %This is the file from registration not during the trial
 
-filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
+filepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS1002';
 
 load([filepath '/' partid '_setup'])
 
 load(filename) %loads in BL for all the RGBs ( for RTIS2003 created new merged structure since had saving issues)
 
-%for testing load from 1.28.21 on github
 
 %Creating empty cell array to occupy space 
 P_LCS = {};
@@ -38,7 +47,7 @@ for i = 1:4
     
     %KCS ADDED HERE 2/16/21
     
-        blfilepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS2003/Data/Trials';
+        blfilepath = '/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RTIS1002/BLs';
 
         markerdata_cell = load([blfilepath '/' filename]);
        
@@ -154,7 +163,7 @@ HT_marker = quat2tform(quat); HT_marker(1:3,4,:) = P;
 %   
 % ID:237, Size:20, Thickness:000.647, tPu:[-001.323 +071.946 -004.697]
 
-          P = [-001.323 071.946 004.697]'; % units of this in MM
+          P = [.584 172.168 -6.889 1]'; % units of this in MM  For marker ID 9
 
         % point needs to be 4X1
 

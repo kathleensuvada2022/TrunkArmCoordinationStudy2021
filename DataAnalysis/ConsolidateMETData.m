@@ -12,9 +12,9 @@ function newdata=ConsolidateMETData(data)
 markerid=[80 19 87 73];
 
 newdata=zeros(length(data),35);
-newdata(:,1:3)=data(:,1:3);
+newdata(:,1:3)=data(:,1:3);  
 time=zeros(length(data),2);
-t0=data(1,[3 38]);
+t0=data(1,[3 38]); 
 for i=1:length(data)
     for j=1:length(markerid)
         idx=find(data(i,:)==markerid(j),1);

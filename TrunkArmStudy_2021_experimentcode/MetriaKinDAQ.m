@@ -26,7 +26,7 @@ myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'}
 myhandles.met.markerid=[80 19 87 73 9 11 237];
 %237];% added two new pointer tool IDS 2.4.2021
 myhandles.met.cameraSerials =  [24 25];% 12.4.2020 added for new Metria code via Hendrik
-myhandles.met.ptip=struct('ID009',[.584 172.168 -6.889 1],'ID237',[000.141 126.202 -006.491],'ID011',[000.141 126.202 -006.491]);
+myhandles.met.ptip=struct('ID009',[.584 172.168 -6.889 1],'ID237',[-001.323 +071.946 -004.697],'ID011',[000.141 126.202 -006.491]);
 pointertool='ID009';
 myhandles.probeid = 9;
 % getfield(myhandles.met.ptip,pointertool)
@@ -38,7 +38,9 @@ if ~isempty(varargin)
     else
         myhandles.exp.partID=varargin{1};
         myhandles.exp.arm=lower(varargin{2});
-        myhandles.exp.dir=fullfile('D:','Kacey','data',varargin{1},varargin{2});
+        myhandles.exp.dir=fullfile('C:\Users\Kacey Suvada\OneDrive - Northwestern University\TACS\Data',varargin{1},varargin{2});
+     
+%        myhandles.exp.dir=fullfile('C:\Users\Kacey Suvada\OneDrive - Northwestern University\TACS\Data',varargin{1},varargin{2});
     end
 end
 
