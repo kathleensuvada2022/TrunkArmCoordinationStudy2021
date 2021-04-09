@@ -64,17 +64,29 @@ ppsdata= ppsdata{1,2};
         stdMat2 = std(CoP2); %gives standard deviation of x and y COP 
 %%
 
+% Just using IMAGESC will plot through all the frames pressure data
+I = zeros(64,64,nframes);
+for i = 1:nframes
+I(:,:,i) = imresize(Pressuremat1_frame(:,:,i),4); %use to alter resolution: bigger number smaller pixels
+end
 
-
+for i =1:nframes
         clf
 %         %saving as a video and playing
-         imagesc(Pressuremat1_frame(:,:,i))
+    %     imagesc(Pressuremat1_frame(:,:,i))
+          imagesc(I(:,:,i))
          title('Pressure Mat Pressure Values with COP')
          xlabel('X position')
          ylabel('Y position')
+         colorbar
 %         hold on
 %         plot(CoP1(i,1),CoP1(i,2),'*')
-    
+         pause(.1)
+         
+end 
+
+
+%% 
         axis tight manual
         set(gca,'nextplot','replacechildren');
         set(gca,'YDir','normal') 
