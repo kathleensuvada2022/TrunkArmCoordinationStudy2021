@@ -469,7 +469,7 @@ emgDAQ.Fig.Visible = 'on';
     % AMA - function to display data in real time and play beep at 200 ms 
     function localTimerAction(source, event)
         if ~myhandles.RTdaq
-            source.ScansAcquired == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
+            source.ScansAcquired == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); 
         else
             localDisplayData(myhandles.timebuffer,event.Data,myhandles.nChan)
         end

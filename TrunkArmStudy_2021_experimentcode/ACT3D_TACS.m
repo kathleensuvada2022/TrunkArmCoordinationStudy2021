@@ -622,8 +622,8 @@ function ACT3D_load_Callback(hObject,event)
             end
             % 0% is no abduction effort so ACT3D must generate force equal to limb weight
             % 10% means participant needs to generate 10% of max SABD force
-            % abductionForceProvided(3) = limbWeight - (percentAbductionMaxValue/100) * abductionMax;
-            myhandles.exp.endforce=-force*myhandles.exp.max_sabd/100 - myhandles.exp.arm_weight;
+            % abductionForceProvided(3) = limbWeight + (percentAbductionMaxValue/100) * abductionMax;
+            myhandles.exp.endforce=-(force*myhandles.exp.max_sabd/100 + myhandles.exp.arm_weight);
         case 'wgh'
             if force>100 
                 uiwait(warndlg('Warning: % Load is greater than 100% Arm Weight','ACT3D-TACS',myhandles.txt_struct));
@@ -637,6 +637,7 @@ function ACT3D_load_Callback(hObject,event)
             myhandles.exp.endforce=force;
             
     end
+%     disp([myhandles.exp.arm_weight myhandles.exp.endforce])
     set(myhandles.ui.mon_awgt,'String',num2str([myhandles.exp.arm_weight myhandles.exp.endforce],'%7.2f')); % Vertical endpoint force
 end
 
@@ -1817,7 +1818,7 @@ if isfield(myhandles.exp,'partID')
         msgbox('\fontsize{12}Setup file was not saved','ACT3D-TACS',myhandles.txt_struct)
     end
 else
-    msgbox('\fontsize{12}Please fill the participant information form first','Save Setup','ACT3D-TACS',myhandles.txt_struct);
+    msgbox('\fontsize{12}Please fill the participant information form first','ACT3D-TACS',myhandles.txt_struct);
 end
 end
 
