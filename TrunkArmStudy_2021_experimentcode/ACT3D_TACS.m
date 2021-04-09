@@ -637,7 +637,7 @@ function ACT3D_load_Callback(hObject,event)
             myhandles.exp.endforce=force;
             
     end
-    set(myhandles.ui.mon_awgt,'String',mat2str([myhandles.exp.arm_weight myhandles.exp.endforce],'%7.2f')); % Vertical endpoint force
+    set(myhandles.ui.mon_awgt,'String',num2str([myhandles.exp.arm_weight myhandles.exp.endforce],'%7.2f')); % Vertical endpoint force
 end
 
 % Set the load type = {'abs','max','wgh'} corresponding to (Absolute in N, 
@@ -1334,6 +1334,7 @@ myhandles.ui.act3d_state.String=myhandles.act3d.state;
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
 myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp);
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
+disp(myhandles.exp.shpos)
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
 myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
@@ -1347,26 +1348,30 @@ EXP_saveSetup_Callback(hObject,[])
 % disp([myhandles.exp.origin myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar myhandles.exp.shpos])
 
 set(myhandles.ui.mon_spos,'String',num2str(myhandles.exp.shpos'*100,'%7.2f')); 
-set(myhandles.ui.mon_awgt,'String',mat2str(myhandles.exp.arm_weight,'%7.2f')); % Vertical endpoint force
+set(myhandles.ui.mon_awgt,'String',num2str(myhandles.exp.arm_weight,'%7.2f')); % Vertical endpoint force
 
-larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
+larm=1.1*(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
+
 if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[-myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
-    ylimit=myhandles.exp.shpos(2)-larm-myhandles.exp.origin(2);
-    set(myhandles.exp.hLine(5),'Ydata',-ylimit*[1 1]); % reach target line
-    set(myhandles.exp.hLine(6),'Ydata',[-0.12 -ylimit]); % Midline  
+    ylimit=myhandles.exp.shpos(2)-larm;
+    set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
+    set(myhandles.exp.hLine(6),'Ydata',[-0.12 -1.1*ylimit]); % Midline  
 
 else
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
-    ylimit=myhandles.exp.shpos(2)+larm-myhandles.exp.origin(2);
+    ylimit=myhandles.exp.shpos(2)+larm;
     set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
-    set(myhandles.exp.hLine(6),'Ydata',[-0.12 ylimit]); % Midline  
+    set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline  
 end
+disp([myhandles.exp.origin' larm ylimit])
+
 set(myhandles.exp.hAxis,'ylim',[-0.05 abs(ylimit)+0.02]);
+set(myhandles.exp.hAxis,'xlim',[-0.2 0.2]);
 % Update trunk home position if Metria on
 if myhandles.met.on
     set(myhandles.met.hLine,'Position',[myhandles.exp.trunkhome(1:2)'-[50 50] 100 100]); % trunk home target

@@ -38,7 +38,9 @@ if ~isempty(varargin)
     else
         myhandles.exp.partID=varargin{1};
         myhandles.exp.arm=lower(varargin{2});
-        myhandles.exp.dir=fullfile('D:','Kacey','data',varargin{1},varargin{2});
+        myhandles.exp.dir=fullfile('C:\Users\Kacey Suvada\OneDrive - Northwestern University\TACS\Data',varargin{1},varargin{2});
+     
+%        myhandles.exp.dir=fullfile('C:\Users\Kacey Suvada\OneDrive - Northwestern University\TACS\Data',varargin{1},varargin{2});
     end
 end
 
