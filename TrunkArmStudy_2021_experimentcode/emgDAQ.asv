@@ -359,7 +359,7 @@ emgDAQ.Fig.Visible = 'on';
         % Delete DAQ objects if they already exist to avoid errors
         if isfield(myhandles,'s'), delete(myhandles.s); myhandles=rmfield(myhandles, 's'); end
         % Create regular DAQ object
-        myhandles.s = daq('ni');
+        myhandles.s = daq.createSession('ni');
         % Add analog input channels specified in myhandles.Channels
         myhandles.s.addAnalogInputChannel(myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
         % Set DAQ object sampling rate and time
