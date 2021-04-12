@@ -118,6 +118,8 @@ xtrunk=x(:,tidx:(tidx+2)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 
 
 %% Compute the BL in the global CS using P_LCS 
+%From MetriaKinDaq
+% dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
 
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker
