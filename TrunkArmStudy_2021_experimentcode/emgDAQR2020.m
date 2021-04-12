@@ -39,8 +39,9 @@ myhandles.maxChannels = 24;
 
 myhandles.itrial = 1;
 myhandles.filename = 'trial';
+myhandles.datadir=pwd;
 
-myhandles.max_sabdf=40;
+myhandles.max_sabdf=0;
 myhandles.MVFdaq=0;
 
 % Initialize beep played at the beginning of each trial (queue for
@@ -151,7 +152,7 @@ emgDAQ.Fig.Visible = 'on';
                 set(myhandles.Line(i,2),'XData',[],'YData',[]);
             end
 %             startBackground(myhandles.s);
-            start(myhandles.s,"Continuous");
+            start(myhandles.s,'Continuous');
         else
             stop(myhandles.s);
 %             myhandles.s.IsContinuous = false;
@@ -369,7 +370,8 @@ emgDAQ.Fig.Visible = 'on';
         % Delete DAQ objects if they already exist to avoid errors
         if isfield(myhandles,'s'), delete(myhandles.s); myhandles=rmfield(myhandles, 's'); end
         % Create regular DAQ object
-        myhandles.s = daq('ni');
+       myhandles.s = daq('ni');
+
         % Add analog input channels specified in myhandles.Channels
         addinput(myhandles.s,myhandles.daqDevice,floor(myhandles.Channels/8)*16+rem(myhandles.Channels,8),'Voltage');
         % Set DAQ object sampling rate and time (R2020 sampling length is
@@ -406,7 +408,10 @@ emgDAQ.Fig.Visible = 'on';
             myhandles.pbMVFdaq.Enable='off';
         end
 %         [data,t]=startForeground(myhandles.s);
-        [data,t]=start(myhandles.s,"Duration",myhandles.sTime,"OutputFormat","Matrix");
+        start(myhandles.s,'Duration',myhandles.sTime)
+        pause(5)
+        [data,t]=read(myhandles.s,'all','OutputFormat','Matrix');
+%         data=read(myhandles.s,'all');
         displayData(myhandles.nChan, t, data, myhandles.sRate, [myhandles.datadir,'\',myhandles.filename,num2str(myhandles.itrial),'.mat']); % AMA 7/2/19
         myhandles.itrial = myhandles.itrial+1;
         myhandles.TrialNumber.String = num2str(myhandles.itrial);
@@ -421,7 +426,7 @@ emgDAQ.Fig.Visible = 'on';
         source.Enable = 'off';
         myhandles.MVFdaq=1;
         % Open figure window for max force feedback
-        [hFig,hAxis,hArea,hLine] = createMVFAxis(myhandles.max_sabd);
+%         [myhandles.mvf.hFig,myhandles.mvf.hAxis,myhandles.mvf.hArea,myhandles.mvf.hLine] = createMVFAxis(myhandles.max_sabdf);
 
         if myhandles.RTdaq
             stop(myhandles.s);
@@ -431,11 +436,11 @@ emgDAQ.Fig.Visible = 'on';
 %             myhandles.RTdaq = 0;
         end
         myhandles.RTcheckbox.Enable = 'off'; % disable realtime checkbox
-        jr3chan=myhandles.Channels(end)+(1:6);
-        addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
-        start(myhandles.s,"Duration",5)
-        while myhandles.s.Running, end
-        myhandles.MVF_Display.Text=num2str(myhandles.max_sabdf,'%7.2f');
+%         jr3chan=myhandles.Channels(end)+(1:6);
+%         addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
+        start(myhandles.s,'Duration',5)
+        pause(5)
+        myhandles.MVF_Display.String=num2str(myhandles.max_sabdf,'%7.2f');
         source.Enable = 'on';
         myhandles.MVFdaq=0;
         myhandles.RTcheckbox.Enable = 'on'; % enable realtime checkbox
@@ -452,9 +457,13 @@ emgDAQ.Fig.Visible = 'on';
         end
         jr3chan=myhandles.Channels(end)+(1:6);
         addinput(myhandles.s,myhandles.daqDevice,floor(jr3chan/8)*16+rem(jr3chan,8),'Voltage');
-        data = read(myhandles.s, seconds(1),"OutputFormat","Matrix");
+        data = read(myhandles.s, seconds(1),'OutputFormat','Matrix');
         myhandles.FMzero = mean(data(:,myhandles.nChan+(0:5)));
-        [myhandles.mvf.hFig,myhandles.mvf.hAxis,myhandles.mvf.hArea,myhandles.mvf.hLine] = createMVFAxis(myhandles.max_sabdf);
+        [myhandles.mvf.hFig,myhandles.mvf.hAxis,myhandles.mvf.hArea,myhandles.mvf.hLine] = createMVFAxis(20);
+%         jr3mat=load('adjJR32620xV2');
+%         myhandles.JR3mat = jr3mat.adjJR32620xV2;
+        jr3mat=load('JR3U760Large');
+        myhandles.JR3mat = jr3mat.JR3U760Large;
         myhandles.pbMVFdaq.Enable='On';
     end
 % Function to plot data at the end of the data acquisition
@@ -480,10 +489,10 @@ emgDAQ.Fig.Visible = 'on';
     % AMA - function to display data in real time and play beep at 200 ms 
     function localTimerAction(obj, event)
         if myhandles.RTdaq || myhandles.MVFdaq
-            data = read(obj,obj.ScansAvailableFcnCount,"OutputFormat","Matrix");
+            data = read(obj,obj.ScansAvailableFcnCount,'OutputFormat','Matrix');
             localDisplayData(myhandles.timebuffer,data,myhandles.nChan)
         else
-            if obj.NumScansAvailable == 0.2*myhandles.sRate, play(myhandles.beep, [1 myhandles.beep.SampleRate*0.5]); end
+            if obj.NumScansAvailable == 0.2*myhandles.sRate, play(myhandles.beep); end
         end
     end
 
@@ -517,8 +526,8 @@ emgDAQ.Fig.Visible = 'on';
             else
                 set(myhandles.mvf.hLine,'Color','c');
             end
-            set(myhandles.mvf.hArea,'YData',zforce([1 1]));
-            myhandles.max_sabd=maxforce;
+            set(myhandles.mvf.hArea,'YData',force([1 1]));
+            myhandles.max_sabdf=maxforce;
         end
         drawnow
     end
@@ -542,6 +551,7 @@ emgDAQ.Fig.Visible = 'on';
         hArea = area('Parent',hAxis,[0 0],'FaceColor','r','EdgeColor','none');
         
         hLine = line('Parent',hAxis,'Visible','on','Xdata',hArea.XData,'Ydata',[sabdf0 sabdf0],'Color','g','LineWidth',5);
+        set(hAxis,'Color','k')
     end
 
     function FMx=JR3toSAbdF(FMraw,JR3mat)
@@ -556,9 +566,9 @@ emgDAQ.Fig.Visible = 'on';
 
         % Decouple FM
         [frows,fcol]=size(FMraw);
-        if (frows>fcol) FMraw=FMraw'; end
+%         if (frows>fcol) FMraw=FMraw'; end
 
-        FMjr=(JR3mat*FMraw)';
+        FMjr=(JR3mat*FMraw')';
 
         % Convert to N and Nm if using old JR3
         if JR3mat(4,4) > JR3mat(1,1)
@@ -569,8 +579,9 @@ emgDAQ.Fig.Visible = 'on';
         % Convert to right hand coordinate system
         FMjr(:,[3 6])=-FMjr(:,[3 6]);
 
-        % Rotated JR3 - AMA Is this necessary? Check!
-        FMjr(:,[1,2,4,5])=-FMjr(:,[1,2,4,5]); 
+        % Rotated JR3 - AMA Is this necessary? Check! COMMENTED OUT, IT WAS
+        % FLIPPING X
+%         FMjr(:,[1,2,4,5])=-FMjr(:,[1,2,4,5]); 
 
         % Flip coordinate system to right arm if necessary
 %         if strcmp(arm,'left')
@@ -589,7 +600,11 @@ emgDAQ.Fig.Visible = 'on';
 % Function to cleanup once GUI is closed
     function closeMainGUI(source,event)
         disp('Goodbye :)');
-        close('all');
+        if isfield(myhandles,'mvf')
+            delete(myhandles.mvf.hFig)
+        end
+        delete(emgDAQ.Fig)
+%         close('all');
     end
 
 end
