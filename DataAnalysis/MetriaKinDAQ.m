@@ -189,7 +189,7 @@ if ~isempty(probeidx)
         % But we need the inverse to get tip of pointer in LCS 
         
         TG_RB = TRB_G'; % the GCS to RB frame
-        TDP_G = metdata(probeidx(1)+(0:7)); %Tip of pointer to GCS
+        TDP_G = metdata(probeidx(1)+(0:7)); %pointer marker in GCS
         TDP_RB = TG_RB* TDP_G; %transform for pointer tool tip to RB frame
         
         XP = [-001.323 071.946 004.697]';

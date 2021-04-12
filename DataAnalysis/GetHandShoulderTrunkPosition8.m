@@ -122,9 +122,10 @@ xtrunk=x(:,tidx:(tidx+2)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker
     Tftom = quat2tform(xfore(i,4:7));
-    Tftom(1:3,4) = xfore(i,1:3)';
+    Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix for forearm in time i
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
-    BLg=(Tftom) *setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and 
+%     BLg=(Tftom) *setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and
+       BLg=(Tftom)*(bl{1,4}(4,1:4))';
     xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
 %     % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
@@ -156,7 +157,9 @@ shtrdisp =0;
  %%
  
  figure
- p1=plot([xhand(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xhand(:,2) xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
+ 
+  p1=plot([xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2);
+ % p1=plot([xhand(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xhand(:,2) xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 hold on
 p2=plot(gca,nanmean([xhand(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
