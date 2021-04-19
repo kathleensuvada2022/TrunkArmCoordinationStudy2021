@@ -1,4 +1,4 @@
-function [xshldr,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition4(filepath,filename,partid)
+% function [xshldr,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition4(filepath,filename,partid)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. The hand position is computed based on the forearm marker because
 % the hand marker was not visible in all trials.
@@ -22,7 +22,7 @@ function [xshldr,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosi
 % X FROM UDP 
 % MARKERID X,Y,Z,Qr,Qx,Qy,Qz 
 % For UDP dated 1.28.21
-load([filepath filename]);
+% load([filepath filename]);
 x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
@@ -64,12 +64,12 @@ th =xact(:,8); % for rotation to compute 3rd MCP
 % 
 % 
 % % Build the time vector
-% t=x(:,1)-x(1,1);
-
-load([filepath '/' partid '_setup'])
-
-% Build the time vector
-t = (1:length(x))';
+% % t=x(:,1)-x(1,1);
+% 
+% load([filepath '/' partid '_setup'])
+% 
+% % Build the time vector
+% t = (1:length(x))';
 
 %% Extract trunk, arm, forearm, hand marker position
 % %hidx=find(x(1,:)==setup.markerid(5)); xhand=x(:,hidx+(5:4:15)); 
@@ -78,6 +78,9 @@ t = (1:length(x))';
 % sidx=find(x(1,:)==setup.markerid(2)); %xshldr=x(:,sidx+(5:4:15));% 
 % tidx=find(x(1,:)==setup.markerid(1)); xtrunk=x(:,tidx+(5:4:15)); %if ~isempty(tidx), xtrunk=x(:,tidx+(5:4:15)); else xtrunk=zeros(size(xhand));end
 
+
+% markerid=[Trunk Shoulder Arm Forearm ]
+% setup.markerid=[80 19 87 73];
     
 [ridx,cidx]=find(x==setup.markerid(4));
 fidx =cidx(1)+1;
@@ -119,16 +122,17 @@ xtrunk=x(:,tidx:(tidx+2)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 
 %% Compute the BL in the global CS using P_LCS 
 %From MetriaKinDaq
-% dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
+% dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB];
+%Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
 
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker
     Tftom = quat2tform(xfore(i,4:7));
     Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix for forearm in time i
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
-%     BLg=(Tftom) *setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and
-       BLg=(Tftom)*(bl{1,4}(4,1:4))';
-    xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+%      BLg=(Tftom)*setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and
+       BLg = Tftom*(bl{1,4}(4,1:4))';
+      xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
 %     % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
 %     Tstom = [Tstom;0 0 0 1]; 
@@ -160,8 +164,9 @@ shtrdisp =0;
  
  figure
  
-  p1=plot([xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2);
- % p1=plot([xhand(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xhand(:,2) xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
+%   p1=plot([xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2);
+  p1=plot([xhand(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],[xhand(:,2) xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2)
+  hold on
 % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 hold on
 p2=plot(gca,nanmean([xhand(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
@@ -169,20 +174,53 @@ p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to 
 % p2=plot(gca,-nanmean([xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xshldr(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
 
 % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-% phandles=[p1' p2 p3];
-% phandles=[p1' p2 p3];
+ phandles=[p1;p2;p3];
+
 axis 'equal'
 % legend(phandles,'Hand','Shoulder','Trunk','Home','Max Reach')
-% legend(phandles,'Hand','Shoulder','Trunk','Forearm','Home');
+ legend(phandles,'Hand','Shoulder','Trunk','Forearm','Home');
 % title(filename,'Interpreter','none')
 
 
+
+%% Plot using quiver just forearm
+
+% At first frame
+
+HTfore_global = quat2tform(xfore(:,4:7));
+
+for i =1:length(HTfore_global)
+HTfore_global(1:3,4,i)=xfore(i,1:3);
+end
+plot(xfore(1,1),xfore(1,2),'*')
+
+
+
+for i = 1
+quiver(xfore(i,1),xfore(i,2),HTfore_global(1,1,i),HTfore_global(2,1,i))%for x axis
+
+hold on
+quiver(xfore(i,1),xfore(i,2),HTfore_global(1,2),HTfore_global(2,2)) %for y axis
+
+
+legend('x axis',' y axis','3rd MCP')
+% xlim([20 45])
+% ylim([-20 5])
+end 
+
+% Plot of 3rd MCP and forearm in GCS
+plot(xfore(:,1),xfore(:,2),'g','LineWidth',2)
+hold on
+plot(xhand(:,1)+100,xhand(:,2)+100,'m','LineWidth',2)  % Looks like off by 100 mm ---CHECK UNITS!!!!
+legend('forearm','3rdMCP')
+axis equal
+close 
 return
-%% Compute the mean trunk position
-mtpos=nanmean(xtrunk); 
-stdtpos=nanstd(xtrunk); 
-mspos=nanmean(xshldr);
-stdspos=nanstd(xshldr);
+% Compute the mean trunk position
+% mtpos=nanmean(xtrunk); 
+% stdtpos=nanstd(xtrunk); 
+% mspos=nanmean(xshldr);
+% stdspos=nanstd(xshldr);
 
 % disp([mtpos stdtpos mspos stdspos])
 
