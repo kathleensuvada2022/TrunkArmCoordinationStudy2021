@@ -9,9 +9,6 @@
 %      partid='RTIS2001';
 
 
-%Kacey's Comments April 2021
-% Just need to load in the BL file and the trial then run script 
-
 %% Load marker data
 % Matrix size = [Nimages x (2 + Nmarkers*14)]
 % [FrameTime,Marker,ST,HT(1,1:4),HT(2,1:4),HT(3,1:4)]
@@ -87,10 +84,7 @@ nmark=(nmark)/8;
 
 
 %for testing
-setup.markerid(4) = 73;
-setup.markerid(3) = 87;
-setup.markerid(2) = 19;
-setup.markerid(1) = 80;
+setup.markerid(4) = 
 
 [ridx,cidx]=find(x==setup.markerid(4));
 fidx =cidx(1)+1;
@@ -197,8 +191,7 @@ legend('Hand','Shoulder','Trunk','Forearm');
 %% Testing Forearm data and 3rd MCP position
 
 
-%For one frame
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %For one frame%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %grabbing the HT of the forearm marker (used for creating the forearm
 %marker coordinate system)
@@ -208,49 +201,28 @@ for i =1:length(HTfore_global)
 HTfore_global(1:3,4,i)=xfore(i,1:3);
 end
 
-%Plotting CS for the forearm marker
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-for i = 1  % for one frame
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for i = 1:nimag
 quiver(xfore(i,1),xfore(i,2),HTfore_global(1,1,i),HTfore_global(2,1,i))%for x axis
 
 hold on
-quiver(xfore(i,1),xfore(i,2),HTfore_global(1,2,i),HTfore_global(2,2,i)) %for y axis
+quiver(xfore(i,1),xfore(i,2),HTfore_global(1,2),HTfore_global(2,2)) %for y axis
 
-legend('x axis',' y axis')
+
+legend('x axis',' y axis','3rd MCP')
 % xlim([20 45])
 % ylim([-20 5])
 end 
 
 % Plot of 3rd MCP and forearm in GCS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-plot(xfore(:,1),xfore(:,2),'g','LineWidth',2)
+plot(xfore(:,1),-xfore(:,2),'g','LineWidth',2)
 hold on
-plot(xhand(:,1),xhand(:,2),'m','LineWidth',2)  
+plot(xhand(:,1),-xhand(:,2),'m','LineWidth',2)  
 legend('forearm','3rdMCP')
 axis equal
-
-
-%Plot of 3rd MCP and forearm CS 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i = 1:3
-quiver(xfore(i,1),xfore(i,2),HTfore_global(1,1,i),HTfore_global(2,1,i))%for x axis
-hold on
-quiver(xfore(i,1),xfore(i,2),HTfore_global(1,2,i),HTfore_global(2,2,i)) %yaxis
-
-hold on
-plot(xhand(i,1),xhand(i,2),'*','LineWidth',2)  
-legend('X axis Forearm','Y axis Forearm','3rd MCP')
-
-end
-
-
-
-
-
-
-
-
+close 
 % return
 % Compute the mean trunk position
 % mtpos=nanmean(xtrunk); 
