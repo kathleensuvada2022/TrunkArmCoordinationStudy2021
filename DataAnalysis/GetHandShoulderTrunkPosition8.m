@@ -96,18 +96,17 @@ setup.markerid(1) = 80;
 fidx =cidx(1)+1;
 xfore=x(:,fidx:(fidx+6));  
 
-
 [ridx,cidx]=find(x==setup.markerid(3));
 aidx =cidx(1)+1;
-xarm=x(:,aidx:(aidx+2)); %extracting humerus marker
+xarm=x(:,aidx:(aidx+6)); %extracting humerus marker
 
 [ridx,cidx]=find(x==setup.markerid(2));
 sidx=cidx(1)+1;
-xshldr=x(:,sidx:(sidx+ 2)); % extracting shoulder marker
+xshldr=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 
 [ridx,cidx]=find(x==setup.markerid(1)); 
 tidx=cidx(1)+1;
-xtrunk=x(:,tidx:(tidx+2)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 %%
 % compute the hand position (3rd MCP) from the end effector
 % position - From ACT3DTACS
