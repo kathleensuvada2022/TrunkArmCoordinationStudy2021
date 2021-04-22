@@ -82,7 +82,7 @@ dig.fname='BL';
 
 % setappdata(digGUI,'databuffer',zeros(2*myhandles.timer.TasksToExecute,43));
 
-larm=(30+25)*10; % Convert to mm
+% larm=(30+25)*10; % Convert to mm
 myhandles.met.blah = axes('Parent', myhandles.met.fig,'Units','normal','Position', [0.05 0.2 .43 .55],'Color','k','DataAspectRatio',[1 1 1]);
 set(myhandles.met.blah,'xlim',[-400 400],'ylim',[-500 500],'zlim',[-800 800]); 
 % set(myhandles.met.blah,'xlim',[-1000 1000],'ylim',[-500 500],'zlim',[-2000 2000]); 
@@ -302,7 +302,7 @@ P_pointer = metdata(:,probeidx(1)+(1:3))';
 HT_marker = Quaternion2tForm(quat_RB);
 HT_marker(1:3,4,:) = P_RB;
 
-HT_marker;
+% HT_marker
 
 
 % HT_probe = quat2tform(quat_pointer) ; 
@@ -310,11 +310,12 @@ HT_probe = Quaternion2tForm(quat_pointer);
 HT_probe(1:3,4,:) = P_pointer;
 
 % This will give the location of the pointer tool MARKER not the tip... 
-HT_probe 
+% HT_probe 
    
         
 
- %HT marker in GCS
+ %HT marker in GCS AMA - Redundant code. If this name is easier, call it
+ %this from the beginning
   TRB_G = HT_marker; % This should give the location of the marker on the sheet of paper not the pointer tool
         
   % offset of the tip of the pointer tool from the marker in that
@@ -322,11 +323,11 @@ HT_probe
   
 %   load('Marker9Offset.mat'); Not sure why wouldn't load before
  
-%   XP = ID9;
+%   XP = ID9; Tip of the pointer tool coordinates in LCS
 
-XP = [0.584000000000000;172.168000000000;-6.88900000000000;1];
+XP = [0.584;172.168;-6.889;1];
 
-  %Getting tip of pointer tool in GCS
+  %Getting tip of pointer tool in GCS = Bony landmark coordinates in GCS
   Ptip_G =HT_probe*XP;
        
   %GCS to RB frame
@@ -339,10 +340,13 @@ XP = [0.584000000000000;172.168000000000;-6.88900000000000;1];
         
    %Getting RB marker in it's own CS IE LCS -- should be about 0001
 
-    PRB_RB = TG_RB*TRB_G(:,4); % Point of RGB in it's own CS
+    PRB_RB = TG_RB*TRB_G(:,4); % Point of RGB in it's own CS - AMA - I don't think it's necessary to save or even compute this
        
-    TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS
+    TRB_RB = TG_RB*TRB_G; %HT for RGB marker in its own CS - AMA - you are not even saving this, comment out
 
+     % AMA - From these, you only really need the BL coordinates in GCS.
+     % Maybe remove everything else since you already tested and are sure
+     % it works?
      dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB]; %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
 
         
