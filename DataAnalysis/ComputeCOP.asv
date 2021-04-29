@@ -36,16 +36,15 @@ ppsdata= ppsdata{1,2};
        % need to reshape to be a 16x16 where we have Nframes matrices
         Pressuremat1_frame= zeros(16,16,nframes);
         Pressuremat2_frame= zeros(16,16,nframes);
-        
-        for i=1:nframes
+  for i=1:nframes
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); % used flip so that it is from sitting in the chair perspective (Butt is lower on Y) 
         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
-        end
+  end
         
 
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
-        CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
-        CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
+        CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1];
+        CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2];
         
         stdMat1 = std(CoP1); %gives standard deviation of x and y COP 
         stdMat2 = std(CoP2); %gives standard deviation of x and y COP 
@@ -84,9 +83,10 @@ for i =1:nframes
 %           I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15; % creating where the COP is multiply by 4 (scaling factor)
 
 
-          imagesc(I(:,:,i)+abs(min_I),[0 9.3])
-         title('Pressure Mat Pressure Values with COP - BACKCHAIR')
-         xlabel('X position KNEES')
+          imagesc(I(:,:,i)+abs(min_I),[-2 10])
+ 
+         title('Pressure Mat Pressure Values with COP - KNEES')
+         xlabel('X position - BACK CHAIR')
          ylabel('Y position')
          colorbar
 %         hold on
