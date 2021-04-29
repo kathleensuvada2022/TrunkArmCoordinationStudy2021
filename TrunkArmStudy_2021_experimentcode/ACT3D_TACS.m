@@ -1801,10 +1801,10 @@ function EXP_saveSetup_Callback(source,event)
     % AMA ADD ACT3D VARIABLES THAT NEED TO BE SAVED
 if isfield(myhandles.exp,'partID')
     setup.exp=struct('Date',date,'partID',myhandles.exp.partID,'Protocol',myhandles.exp.Protocol,'Notes',myhandles.exp.Notes,...
-        'sTime',myhandles.exp.sTime,'sRate',myhandles.exp.sRate,'arm',myhandles.exp.arm,...
+        'sTime',myhandles.exp.sTime,'sRate',myhandles.exp.sRate,'arm',myhandles.exp.arm,'ee2eLength',myhandles.exp.ee2eLength,...
         'armLength',myhandles.exp.armLength,'e2hLength',myhandles.exp.e2hLength,...
-        'ee2eLength',myhandles.exp.ee2eLength,'abdAngle',myhandles.exp.abdAngle,'shfAngle',myhandles.exp.shfAngle,...
-        'elfAngle',myhandles.exp.elfAngle,'hometar',myhandles.exp.hometar,'shpos',myhandles.exp.shpos,...
+        'abdAngle',myhandles.exp.abdAngle,'shfAngle',myhandles.exp.shfAngle,'elfAngle',myhandles.exp.elfAngle,...
+        'trunkhome',myhandles.exp.trunkhome,'hometar',myhandles.exp.hometar,'shpos',myhandles.exp.shpos,...
         'midpos',myhandles.exp.midpos,'origin',myhandles.exp.origin,'armweight',myhandles.exp.arm_weight,'max_sabd',myhandles.exp.max_sabd);
     if myhandles.daq.on
         setup.daq=struct('nChan',myhandles.daq.nChan,'Channels',myhandles.daq.Channels,'ChannelNames',{myhandles.daq.ChannelNames},...
@@ -1862,7 +1862,6 @@ end
 %% Computation functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 % Function to compute the hand position (3rd MCP) from the end effector position
 function p=gethandpos(x,th,exp)
 % x - ACT3D end effector position
@@ -1870,11 +1869,15 @@ function p=gethandpos(x,th,exp)
 % exp - structure with experiment variables
 % p - hand position column vector
 
+% AMA 4/22/21 Fixed transformation. Rotation angle is just th for the left
+% hand and -th for right hand
 if strcmp(exp.arm,'right')
-    p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
-    p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+    p=x(:)+rotz(-th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 end
 p=p-exp.origin; % Correct for the origin once it's set
