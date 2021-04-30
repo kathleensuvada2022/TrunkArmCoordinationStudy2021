@@ -131,6 +131,7 @@ myhandles.exp.arm = 'right';
 % myhandles.exp.endpos=[3.24 -2.31 4.56];
 myhandles.exp.hometar=[];
 myhandles.exp.shpos=[];
+myhandles.exp.trunkhome=[];
 myhandles.exp.arm_weight=[];
 myhandles.exp.max_sabd=40;
 myhandles.exp.isrunning=0;
@@ -172,7 +173,6 @@ guidata(act3dTACS, myhandles);
 function myhandles=GUI_AddPanels(fighandle,myhandles)
 % Get figure structure
 % myhandles = guidata(fighandle);
-
 % KCS 8.17.20 Changed fonts to make bigger on GUI and panels
 
 %% ACT3D Panel
@@ -211,10 +211,10 @@ uicontrol(expPanel,'Style','text','String','Upper arm length (cm)','HorizontalAl
 myhandles.ui.exp_ualength = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.armLength),'Callback',@EXP_UALength_Callback,'Tag','UALength','HorizontalAlignment','center','Units','normalized','Position',[.65 .9 .3 .1],'UserData','right','FontSize',12);
 % Elbow to hand (3rd MCP) distance
 uicontrol(expPanel,'Style','text','String','Elbow to hand (cm)','HorizontalAlignment','left','Units','normalized','Position',[0.05,0.73,0.6,0.1],'FontSize',12);
-myhandles.ui.exp_ehlength = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.e2hLength),'Callback',@EXP_EHLength_Callback,'Tag','EHLength','HorizontalAlignment','center','Units','normalized','Position',[.65 .6 .3 .1],'UserData','right','FontSize',12);
+myhandles.ui.exp_ehlength = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.e2hLength),'Callback',@EXP_EHLength_Callback,'Tag','EHLength','HorizontalAlignment','center','Units','normalized','Position',[.65 .75 .3 .1],'UserData','right','FontSize',12);
 % End effector to hand (3rd MCP) distance
 uicontrol(expPanel,'Style','text','String','End effector to elbow (cm)','HorizontalAlignment','left','Units','normalized','Position',[0.05,0.58,0.6,0.1],'FontSize',12);
-myhandles.ui.exp_eeelength = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.ee2eLength),'Callback',@EXP_EELength_Callback,'Tag','EELength','HorizontalAlignment','center','Units','normalized','Position',[.65 .75 .3 .1],'UserData','right','FontSize',12);
+myhandles.ui.exp_eeelength = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.ee2eLength),'Callback',@EXP_EELength_Callback,'Tag','EELength','HorizontalAlignment','center','Units','normalized','Position',[.65 .6 .3 .1],'UserData','right','FontSize',12);
 % Shoulder abduction angle - used to compute shoulder position
 uicontrol(expPanel,'Style','text','String','Shoulder Abduction (deg)','HorizontalAlignment','left','Units','normalized','Position',[0.05,0.43,.6,.1],'FontSize',12);
 myhandles.ui.exp_abdangle = uicontrol(expPanel,'Style','edit','String',num2str(myhandles.exp.abdAngle),'Callback',@EXP_abdAngle_Callback,'Tag','abdAngle','HorizontalAlignment','center','Units','normalized','Position',[.65 .45 .3 .1],'UserData','right','FontSize',12);
@@ -681,7 +681,7 @@ function ACT3D_loadbg_Callback(~,event)
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Disable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
                  myhandles.haptic.horizontalPosition(3) = -0.20; %was-.24
                 % set position of horizontal haptic effect in robot
-               myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
+                myhandles.haptic.SetPosition(myhandles.haptic.horizontalPosition,myhandles.haptic.horizontalName);
                 myhandles.haptic.isHorizontalEnabled=myhandles.haptic.Enable(myhandles.haptic.isHorizontalCreated,myhandles.haptic.isHorizontalEnabled,myhandles.haptic.horizontalName);
             end
             pause(1)
@@ -1268,8 +1268,8 @@ end
 % If device is in FIXED state, switch to NORMAL -commented out lines 1266-1273 3.8.21
 if strcmp(myhandles.robot.currentState,'fixed')
     uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
-    set(myhandles.ui.act3d_state,'String','NORMAL');
-    ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+%     set(myhandles.ui.act3d_state,'String','NORMAL');
+    ACT3D_Init_Callback(myhandles.ui.act3d_init,[])
 %     myhandles.act3d.state='NORMAL';
 %     myhandles.robot.SwitchState(lower(myhandles.act3d.state));
 %     myhandles.ui.act3d_state.String=myhandles.act3d.state;
@@ -1279,8 +1279,8 @@ end
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of sternum with elbow at 90 degrees','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out lines 1279 and 1280 3.8.21
-set(myhandles.ui.act3d_state,'String','FIXED');
-ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
+% set(myhandles.ui.act3d_state,'String','FIXED');
+ACT3D_Init_Callback(myhandles.ui.act3d_init,[])
 % myhandles.act3d.state='FIXED';
 % myhandles.robot.SwitchState(lower(myhandles.act3d.state));
 % myhandles.ui.act3d_state.String=myhandles.act3d.state;
@@ -1315,21 +1315,21 @@ myhandles.exp.midpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.ro
 
 % Switch to NORMAL state
 uiwait(msgbox('\fontsize{12}Switching to NORMAL state','ACT3D-TACS',myhandles.txt_struct));
-set(myhandles.ui.act3d_state,'String','NORMAL');
-ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-myhandles.act3d.state='NORMAL';
-myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-myhandles.ui.act3d_state.String=myhandles.act3d.state;
+% set(myhandles.ui.act3d_state,'String','NORMAL');
+ACT3D_Init_Callback(myhandles.ui.act3d_init,[])
+% myhandles.act3d.state='NORMAL';
+% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+% myhandles.ui.act3d_state.String='FIXED';
 
 % Prompt user to align tip of middle finger with participant's midline
 uiwait(msgbox('\fontsize{12}Move 3rd MCP joint in front of shoulder with elbow at 90 degrees. Make sure participant is relaxed to weigh arm','ACT3D-TACS',myhandles.txt_struct));
 
 % switch the robot to FIXED state to keep the participant's arm still commented out next two lines 
-set(myhandles.ui.act3d_state,'String','FIXED');
-ACT3D_Init_Callback(myhandles.ui.act3d_state,[])
-myhandles.act3d.state='FIXED';
-myhandles.robot.SwitchState(lower(myhandles.act3d.state));
-myhandles.ui.act3d_state.String=myhandles.act3d.state;
+% set(myhandles.ui.act3d_state,'String','FIXED');
+ACT3D_Init_Callback(myhandles.ui.act3d_init,[])
+% myhandles.act3d.state='FIXED';
+% myhandles.robot.SwitchState(lower(myhandles.act3d.state));
+% myhandles.ui.act3d_state.String='NORMAL';
 
 % Read endpoint effector position
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
@@ -1340,9 +1340,9 @@ myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
 % Origin: x:midline
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
 % Origin y,z: home target
-% myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
+myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
 % Origin y,z: shoulder position
-myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
+% myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
 myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
@@ -1357,6 +1357,7 @@ set(myhandles.ui.mon_awgt,'String',num2str(myhandles.exp.arm_weight,'%7.2f')); %
 
 larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
 
+% Update the home target position
 if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
@@ -1366,13 +1367,12 @@ else
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
 end
-ylimit=larm;
+ylimit=larm-myhandles.exp.origin(2); disp([larm myhandles.exp.origin(2) ylimit])
 set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline
-
 % disp([myhandles.exp.origin' larm ylimit])
 
-set(myhandles.exp.hAxis,'ylim',[-0.05 ylimit+0.02]);
+set(myhandles.exp.hAxis,'ylim',[-0.1 ylimit+0.1]);
 set(myhandles.exp.hAxis,'xlim',[-0.3 0.3]);
 % Update trunk home position if Metria on
 if myhandles.met.on
@@ -1495,7 +1495,7 @@ if myhandles.met.on
     end
     
     % Initialize trunk home circle
-    if isfield(myhandles.exp,'trunkhome'), trhome=myhandles.exp.trunkhome(1:2)';
+    if ~isempty(myhandles.exp.trunkhome), trhome=myhandles.exp.trunkhome(1:2)';
     else trhome=[-50 -50];
     end
     myhandles.met.hLine=rectangle('Position',[trhome 100 100],'Curvature',[1 1],'EdgeColor','m','LineWidth',3,'Visible','on'); % home target
