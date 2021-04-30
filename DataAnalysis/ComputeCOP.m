@@ -38,11 +38,11 @@ ppsdata= ppsdata{1,2};
         Pressuremat2_frame= zeros(16,16,nframes);
         
         for i=1:nframes
-        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); % used flip so that it is from sitting in the chair perspective (Butt is lower on Y) 
+        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
         
-
+        % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
         CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
@@ -66,7 +66,7 @@ end
 
 %KCS 4.28.21 find the minimum for all frames
 
-% Finding the minimum for each frame
+% Finding the minimum for each frame of scaled variable I
 for h = 1:nframes
 min_I = min(I(:,:,h));
 min_I(h) = min(min_I);
@@ -81,7 +81,7 @@ for i =1:nframes
 
           % Needs to be the y value since Y is moving across the rows - X
           % moving across the columns 
-%           I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15; % creating where the COP is multiply by 4 (scaling factor)
+         I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15; % creating where the COP is multiply by 4 (scaling factor)
 
 
           imagesc(I(:,:,i)+abs(min_I),[0 9.3])
@@ -97,11 +97,36 @@ end
 
 
 %% Video works ! but larger pixels 
-    %    axis tight manual
+   
+%Finding minimum of non scaled pressure data 
+
+min_Pressuremat1 = zeros(1,nframes);
+
+%Min Presure for all frames
+for i = 1:nframes
+min_Pressuremat1(i)= min(Pressuremat1_frame(:,:,i),[],'all');
+end
+
+%absolute min pressure for Mat 1
+min_Pressuremat1 = min(min_Pressuremat1);
+
+   
+%Finding the COP index
+element_idx= round([CoP1(:,1) CoP1(:,2)]); %location in x and y where the COP is for all frames of the trial
+
+for i = 1:nframes
+Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 20;  
+%Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 0; % Y is going by rows and X is going by columns 
+end           
+
+
+%    axis tight manual
 %         set(gca,'nextplot','replacechildren');
 %         set(gca,'YDir','normal') 
         v = VideoWriter('pps.avi');
         open(v);
+        
+    
         
 %     get max across all frames and min to set colorbar range    
    % want colorbar to stay the same across frames... need to find the max and min ofwhole trial all frames     
@@ -113,10 +138,8 @@ end
         for i=1:nframes
             
 %           
-            element_idx = round([CoP1(i,1) CoP1(i,2)]); % don't think need .5 since used above to calculate it?
-             Pressuremat1_frame(element_idx(1),element_idx(2),i) = 2;
-%            
-         imagesc(Pressuremat1_frame(:,:,i),[-15 -2])
+         
+         imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[0 10])
 %             imagesc(I(:,:,i))
             
             %colormap(hot)
@@ -162,7 +185,7 @@ end
             
 %          imagesc(I(:,:,i),[-15 -2])
 
-          imagesc(I(:,:,i)+abs(min_I),[-2 13])
+          imagesc(I(:,:,i)+abs(min_I),[0 9.3])
  
          title('Pressure Mat Pressure Values with COP')
          xlabel('X position')
@@ -182,46 +205,15 @@ end
 %         implay('pps.avi')
         
 
-  %%
+  %% Testing COP calculation 
         
-        
-% Figures showing average COP         
-%         figure
-%         plot(CoP1(:,1),CoP1(:,2),'o')
-%         xlabel ('XCOP')
-%         ylabel('YCOP')
-%         title('Mat 1')
-%         xlim([0 16])
-%         ylim([0 16])
-%         
-%         figure
-%         plot(CoP2(:,1),CoP2(:,2),'o')
-%         xlabel ('XCOP')
-%         ylabel('YCOP')
-%         title('Mat 2')
-%          xlim([0 16])
-%         ylim([0 16])
-        
+testmatrix = [4,10; 20, 0];
 
+imagesc(testmatrix); 
+colorbar
 
-        
-%   
-% %from test analysis creating video file
-% Z = peaks;
-% surf(Z); 
-% axis tight manual 
-% set(gca,'nextplot','replacechildren'); 
-% v = VideoWriter('peaks.avi');
-% open(v);
-% for k = 1:20 
-%    surf(sin(2*pi*k/20)*Z,Z)
-%    frame = getframe(gcf);
-%    writeVideo(v,frame);
-% end
-% 
-% close(v);
-% implay('peaks.avi')
-%         
+        rm=(0:3); rm=rm'; rm=rm(:);
+        CoP1=[sum(testmatrix(:,1:4).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
         
 
 end 
