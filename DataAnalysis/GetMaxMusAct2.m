@@ -23,6 +23,8 @@ function maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
 load([flpath '/' setfname]);
 
 % Specify the width of the averaging window in seconds
+sampRate = setup.daq.sRate;
+
 avgwindow=0.25; ds=sampRate*avgwindow;
 trials=dir([flpath '/*' basename '*.mat']);
 
