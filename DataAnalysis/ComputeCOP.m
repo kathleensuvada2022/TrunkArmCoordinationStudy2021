@@ -38,13 +38,16 @@ ppsdata= ppsdata{1,2};
    %     Pressuremat2_frame= zeros(16,16,nframes);
         
         for i=1:nframes
-        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
+            % flipped to align with PPS mat layout
+        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])');
+       %  Pressuremat1_frame(:,:,i) =reshape(Pressuremat1(i,:),[16,16])';
       %  Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
         
         % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+        CoP1(:,2) = 16- CoP1(:,2);
       %  CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
         
         stdMat1 = std(CoP1); %gives standard deviation of x and y COP 
@@ -138,10 +141,12 @@ end
         for i=1:nframes
             
 %           
-         
-         imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[50 100])
-
-%             imagesc(I(:,:,i))
+         clf
+        % imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[50 100])
+         imagesc(.5,.5,Pressuremat1_frame(:,:,i))%,[-20 100])
+         hold on
+         plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+%           imagesc(I(:,:,i))
             
             %colormap(hot)
           %   colormap(turbo)
@@ -222,8 +227,8 @@ totalp = sum(sum(testmatrix));
    
 hold on
 plot(CoP1(1),CoP1(2),'*')
-h.Parent.YTickLabel=cell(1.5:0.5)
-
+set(h.Parent,'YTickLabel',cellstr(string((1.5:-1:0.5)')));
+h.Parent.XTickLabel=cellstr(string((0.5:1.5)'));
 end 
 
 
