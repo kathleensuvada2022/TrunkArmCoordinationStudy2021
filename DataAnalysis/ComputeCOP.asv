@@ -207,22 +207,15 @@ end
         
 
   %% Testing COP calculation 
-testmatrix = [10 10; 20 20];
-  
-% testmatrix = [10 10; 10 10];
-clf
-h=imagesc(.5,.5,testmatrix);
-%imagesc([.5 1.5],[1.5 .5],testmatrix)
-colorbar
-totalp = sum(sum(testmatrix));
+        
+testmatrix = [4,10; 20, 0];
 
-       % rm=(0:3); rm=rm'; rm=rm(:);
-       
-        CoP1=[sum(sum(testmatrix(:,1:2).*repmat((0:1)+.5,2,1),2)./totalp); sum(sum(testmatrix(1:2,:).*(repmat((0:1)+.5,2,1))',2)./totalp)]; % mat 1
-   
-hold on
-plot(CoP1(1),CoP1(2),'*')
-h.Parent.YTickLabel=cell(1.5:0.5)
+imagesc(testmatrix); 
+colorbar
+
+        rm=(0:3); rm=rm'; rm=rm(:);
+        CoP1=[sum(testmatrix(:,1:2).*repmat((0:1),2,1),2)./totalp sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+        
 
 end 
 
