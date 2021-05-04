@@ -212,7 +212,7 @@ end
         
 
   %% Testing COP calculation 
-testmatrix = [10 10; 20 20];
+testmatrix = [-10 -10; -20 -20];
   
 % testmatrix = [10 10; 10 10];
 clf
@@ -226,11 +226,11 @@ totalp = sum(sum(testmatrix));
         CoP1=[sum(sum(testmatrix(:,1:2).*repmat((0:1)+.5,2,1),2)./totalp); sum(sum(testmatrix(1:2,:).*(repmat((0:1)+.5,2,1))',2)./totalp)]; % mat 1
    
 hold on
-plot(CoP1(1),CoP1(2),'*')
+plot(CoP1(1),CoP1(2),'s','MarkerFaceColor','k','MarkerSize',16)
 set(h.Parent,'YTickLabel',cellstr(string((1.5:-1:0.5)')));
 h.Parent.XTickLabel=cellstr(string((0.5:1.5)'));
 
-
+%%
 
 % Testing with the dimensions of the pressure mat 16X16
 ppsdata = zeros(1,256);
@@ -259,7 +259,7 @@ CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum
 CoP1(:,2) = 16- CoP1(:,2);
 
 
-
+clf
 imagesc(.5,.5,Pressuremat1_frame(:,:,i))%,[-20 100])
 colorbar
 hold on
