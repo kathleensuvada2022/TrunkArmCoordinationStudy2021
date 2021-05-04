@@ -19,8 +19,8 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 datafilepath ='/Users/kcs762/Box/KACEY/Data/';
 % datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 
-if exist([datafilepath partid '/maxes/maxEMG.mat'])==2, 
-    load([datafilepath partid '/maxes/maxEMG.mat']);
+if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
+    load([datafilepath partid '/Maxes/maxEMG.mat']);
     %disp(maxEMG)
 else
     disp('Computing Maximum Muscle EMGs. Make sure you check them')
@@ -30,7 +30,9 @@ end
 
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
-load([datafilepath '/' partid '/' 'Trials' '/' partid '_setup'])
+%load setup in manually for the different shoulder positions if using ACT3D
+%data
+% load([datafilepath '/' partid '/' partid '_setup'])
 
 
 % switch expcond - uncomment when running participants with MOCAP changed
@@ -51,7 +53,7 @@ load([datafilepath '/' partid '/' 'Trials' '/' partid '_setup'])
 % afilepath =[partid '/act3d/']; % this is for the ACT 3D find reach start
 
 % all the same file path now
-afilepath = [datafilepath '/' partid '/Trials'];
+afilepath = [datafilepath '/' partid];
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 
@@ -84,8 +86,6 @@ maxTrunk_current_trial=zeros(ntrials,1);
 emgsmaxvel_vals = zeros(ntrials,15);
 %%
 for i=1:length(mtrials)
-    
-   
     
 % UNCOMMENT IF USING MOCAP DATA RTIS2001 and RTIS 2002   
 %     if mtrials(i)<10
@@ -130,15 +130,15 @@ disp(mfname) % displays trial
 %     else
 % 
 %
-pause
 
 
- [xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid);
+
+[xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid);
    
- maxreach_seconds = maxreachtime;
- maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
+% maxreach_seconds = maxreachtime;
+% maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
 %  maxTrunk_current_trial(i) = trdisp/10   % trunk displacement in CM
- maxreachtime;
+% maxreachtime;
 %  end
 %     figure(1)
 %     if i==1
@@ -203,7 +203,6 @@ emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix f
     
 
 
-%% 
 
 %     figure
 % %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
@@ -224,7 +223,8 @@ emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix f
 
 % text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
 % print('-f3','-djpeg',[partid '_RT'])
-disp(maxreach/10)
+
+%disp(maxreach/10)
 
 
 
