@@ -117,8 +117,9 @@ for i=1:nimag % loop through time points
     Tftom(1:3,4) = xfore(i,1:3)';
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
 %     BLg=Tftom *setup.bl.lcs{4}(:,4);  % grabbing the XYZ point of the 3rd metacarpal in the LCS and 
-    BLg=Tftom *[setup.bl{4}(4,1:3) 1]';  % grabbing the XYZ point of the 3rd metacarpal in the LCS and 
-    xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time
+   % BLg=Tftom *[setup.bl{4}(4,1:3) 1]';  % grabbing the XYZ point of the 3rd metacarpal in the LCS and 
+   BLg=Tftom *[bl{4}(4,1:3) 1]'; 
+   xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time
     % lcsfore=[lcsx lcsy]
     lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 %     % for the acromion using the shoulder marker 
