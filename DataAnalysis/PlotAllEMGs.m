@@ -1,8 +1,11 @@
 function PlotAllEMGs(emg,t)
 
-emg = emg(:, [1:2 5:16]);
-% emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};
- emgchan = {'LES','RES','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};
+% for testing kacey
+emg = emg(:,1:15);
+
+%emg = emg(:, [1:2 5:16]);
+ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% emgchan = {'LES','RES','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};
 figure(1) 
 clf
 sampRate=1000;
@@ -15,8 +18,8 @@ meanEMG=movmean(emg,ds);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL
 
-%  idx1 = [1:16]
- idx1= [1:14]; 
+ idx1 = [1:15];
+ %idx1= [1:14]; 
 nEMG=length(idx1);
 memg=max(emg(:,idx1));
 yspacing=cumsum([0 memg(2:nEMG)+.05]);

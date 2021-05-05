@@ -133,16 +133,18 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 %From MetriaKinDaq
 % dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB];
 %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
-
+lcsfore=zeros(2*nimag,2);
 for i=1:nimag % loop through time points
     % For the 3rd metacarpal grabbing the forearm marker
-    Tftom = quat2tform(xfore(i,4:7));
+    Tftom = quat2tform(circshift(xfore(i,4:7)));
     Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix for forearm in time i
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
 %      BLg=(Tftom)*setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and
-       BLg = Tftom*(bl{1,4}(4,1:4))';
+%        BLg = Tftom*(bl{1,4}(4,1:4))';
+      BLg=Tftom *[bl{4}(4,1:3) 1]'; 
       xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
-%     % for the acromion using the shoulder marker 
+      lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
+% for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
 %     Tstom = [Tstom;0 0 0 1]; 
 %     BLg2=(Tstom) *setup.bl.lcs{2}(:,1);  %grabbing the XYZ point of the anterior acromion in the LCS
@@ -190,7 +192,6 @@ axis 'equal'
 %  legend(phandles,'Hand','Shoulder','Trunk','Forearm','Home');
 legend('Hand','Shoulder','Trunk','Forearm');
 % title(filename,'Interpreter','none')
-
 
 
 %% Testing Forearm data and 3rd MCP position

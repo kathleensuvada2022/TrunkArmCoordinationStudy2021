@@ -50,11 +50,13 @@ legend('Reach Start',' Max Velocity','Max Distance','Velocity','Distance','FontS
 
 
 
- emg = emg(1:1000,:);
+%  emg = emg(1:1000,:);
 
  sampRate=1000;
 %  nEMG=size(emg,2);
 temg=(0:size(emg,1)-1)/sampRate;% Assuming sampling rate is 1000 Hz
+
+
 temg=temg';
 % avgwindow=.25; ds=sampRate*avgwindow;
 
@@ -93,42 +95,54 @@ t0_emgs_idx =round(t0_emgs*1000); %emg indices where certain max vel etc occur
 maxdist_idx = t0_emgs_idx(3); %index where the max distance occurs for EMGS -- use to cut the EMGS
 
 
-% MAKE MORE CHANGES TO CROP EMG DATA USE LINE 98 WORKS -- replace 430 with
-% variable for max distance
+%COLUMN 1
 lax1 = axes('position',[0.07,0.05,0.4,0.7]);
 set(lax1,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax1,'YTick',fliplr(-yspacing(1:length(idx1))),'YTickLabel',fliplr(emgchan(idx1)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[])
 
 %cuts off EMGS AT MAX DIst
- line(lax1,temg(1:maxdist_idx),emg(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
+%  line(lax1,temg(1:maxdist_idx),emg(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
 
 %plots whole trial
-% line(lax1,temg(1:end),emg(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
+ line(lax1,temg(1:end),emg(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
 
 
 co=get(lax1,'ColorOrder');
 set(lax1,'ColorOrder',co(end-1:-1:1,:))
+%plots whole trial 
+ line(lax1,temg(1:end),meanEMG(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx1)),'LineWidth',2)
 %  line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
- line(lax1,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx1)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx1)),'LineWidth',2)
-% 
+
+%COLUMN 2
 lax2 = axes('position',[0.55,0.05,.4,0.7]);
  set(lax2,'color','none','xgrid','off','ygrid','off')%,'box','off','TickLabelInterpreter','none')
 set(lax2,'YTick',fliplr(-yspacing(1:length(idx2))),'YTickLabel',fliplr(emgchan(idx2)),...
     'YLim',[-yspacing(end) memg(1)],'FontSize',14)%,'XTick',[],'XTickLabel',[],'FontSize',14);
-% line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
-line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
 
+%plots whole trial
+ line(lax2,temg(1:end),emg(1:end,idx2)-yspacing(ones(length(temg(1:end)),1),1:length(idx2)),'LineWidth',2)
+
+ %cuts off at max
+% line(lax2,temg(1:maxdist_idx),emg(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+
+%set(lax2,'ColorOrder',co(end-1:-1:1,:))
+
+co=get(lax2,'ColorOrder');
 set(lax2,'ColorOrder',co(end-1:-1:1,:))
-line(lax2,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+
+%cuts off at max dist
+%line(lax2,temg(1:maxdist_idx),meanEMG(1:maxdist_idx,idx2)-yspacing(ones(length(temg(1:maxdist_idx)),1),1:length(idx2)),'LineWidth',2)
+
+line(lax2,temg(1:end),meanEMG(1:end,idx1)-yspacing(ones(length(temg(1:end)),1),1:length(idx2)),'LineWidth',2)
 
 
 
 %  if nargin >1 
-       line(lax1,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax1.YLim,'LineWidth',1); % start reach
-       line(lax1,'Color','m','Xdata',[t0_emgs(2) t0_emgs(2)],'Ydata',lax1.YLim,'LineWidth',1); % max vel
-      line(lax2,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax2.YLim,'LineWidth',1);
-       line(lax2,'Color','m','Xdata',[t0_emgs(2) t0_emgs(2)],'Ydata',lax2.YLim,'LineWidth',1);
+%        line(lax1,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax1.YLim,'LineWidth',1); % start reach
+%        line(lax1,'Color','m','Xdata',[t0_emgs(2) t0_emgs(2)],'Ydata',lax1.YLim,'LineWidth',1); % max vel
+%       line(lax2,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax2.YLim,'LineWidth',1);
+%        line(lax2,'Color','m','Xdata',[t0_emgs(2) t0_emgs(2)],'Ydata',lax2.YLim,'LineWidth',1);
 %       %line(lax2,'Color','r','Xdata',[t0(1) t0(1)],'Ydata',lax2.YLim,'LineWidth',1);
 %      % line(lax2,'Color','k','Xdata',[t0(4) t0(4)],'Ydata',lax2.YLim,'LineWidth',1);
 %      % line(lax2,'Color','b','Xdata',[maxreachtime maxreachtime],'Ydata',lax2.YLim,'LineWidth',1);

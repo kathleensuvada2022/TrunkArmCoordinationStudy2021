@@ -1140,7 +1140,7 @@ function EXP_displayData(data)
     if myhandles.pps.on
 %         ppsdata=data.pps{2}(:,:); commented out because now only READING
 %         data after the PPS initialization 2.3.21
-          ppsdata=data.pps{2}(20:end,:); 
+          ppsdata=data.pps{2}(1:end,:); 
         TotalPressure1 = sum(ppsdata(:,1:256),2); 
         TotalPressure2 = sum(ppsdata(:,257:end),2);
 
