@@ -108,9 +108,9 @@ classdef PPS < handle
             % Added by NH 5/22/18
             if ~obj.isInitialized, calllib('PPSDaqAPI','ppsInitialize',obj.cfgFile,0); end
             msgbox('\fontsize{12}PPS System Initializing','ACT3D-TACS',obj.CreateStruct)
-%             disp('PPS system Initialized');
+           disp('PPS system Initialized'); %uncommented KCS 5.5.21
             
-%             calllib('PPSDaqAPI','ppsSetBaseline')
+             calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21
             calllib('PPSDaqAPI','ppsStart');
             tic
             while toc<=1, end
@@ -137,7 +137,9 @@ classdef PPS < handle
 %                 if (ceil(n / 2) == i) %<= Resets baseline halfway through initial data collection
 % %                     msgbox({'\fontsize{12}Resetting baseline with current values'},'ACT3D-TACS',obj.CreateStruct)
 % %                     disp('Resetting baseline with current values.');
-%                     calllib('PPSDaqAPI', 'ppsSetBaseline')
+%                   
+                  %line from Gordon
+%                   calllib('PPSDaqAPI', 'ppsSetBaseline')
 %                 end
 %                 pause(obj.ReadInterval/1000);
 %                 

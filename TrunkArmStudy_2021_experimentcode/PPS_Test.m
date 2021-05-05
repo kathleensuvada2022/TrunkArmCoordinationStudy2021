@@ -4,18 +4,18 @@
 dir=pwd;
 ppsmat = PPS('TactArray_Trunk',dir);
 
+
 % Initialize
 ppsmat.Initialize(dir);
 
+
 % Start data collection
 ppsmat.StartPPS; 
-% pause(1)
-[~,ppst,ppsdata]=ppsmat.ReadData;
-pause(5);
-
+ pause(3)
 [~,ppst,ppsdata]=ppsmat.ReadData;
 
 
+% [~,ppst,ppsdata]=ppsmat.ReadData;
 
 ppsmat.StopPPS;
 
