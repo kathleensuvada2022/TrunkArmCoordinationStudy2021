@@ -39,7 +39,7 @@ ppsdata= ppsdata{1,2};
         
         for i=1:nframes
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
-        Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
+%         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
         
         % elements 1" apart
@@ -118,7 +118,7 @@ for i = 1:nframes
 Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 20;  
 %Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 0; % Y is going by rows and X is going by columns 
 end           
-
+%%
 
 %    axis tight manual
 %         set(gca,'nextplot','replacechildren');
@@ -135,11 +135,12 @@ end
 
 
 %         ppsmaxreachindx = maxreach_seconds*39.5;  %scan rate of pressure mats is 13.5 HZ
-        for i=1:nframes
+        for i=2:nframes
             
 %           
          
          imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[0 10])
+   %     imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[50 100])
 %             imagesc(I(:,:,i))
             
             %colormap(hot)
