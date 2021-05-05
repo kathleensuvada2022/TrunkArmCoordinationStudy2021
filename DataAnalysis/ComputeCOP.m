@@ -35,20 +35,28 @@ ppsdata= ppsdata{1,2};
         
        % need to reshape to be a 16x16 where we have Nframes matrices
         Pressuremat1_frame= zeros(16,16,nframes);
-        Pressuremat2_frame= zeros(16,16,nframes);
+   %     Pressuremat2_frame= zeros(16,16,nframes);
         
         for i=1:nframes
+
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
 %         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
+
+            % flipped to align with PPS mat layout
+        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])');
+       %  Pressuremat1_frame(:,:,i) =reshape(Pressuremat1(i,:),[16,16])';
+      %  Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
+
         end
         
         % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
-        CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
+        CoP1(:,2) = 16- CoP1(:,2);
+      %  CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
         
         stdMat1 = std(CoP1); %gives standard deviation of x and y COP 
-        stdMat2 = std(CoP2); %gives standard deviation of x and y COP 
+      %  stdMat2 = std(CoP2); %gives standard deviation of x and y COP 
 %% Plotting COP and Pressure for Mat 1 Using Loop and Pause
 
 element_idx= round([CoP1(:,1) CoP1(:,2)]); %location in x and y where the COP is for all frames of the trial
@@ -115,10 +123,9 @@ min_Pressuremat1 = min(min_Pressuremat1);
 element_idx= round([CoP1(:,1) CoP1(:,2)]); %location in x and y where the COP is for all frames of the trial
 
 for i = 1:nframes
-Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 20;  
+Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 0;  
 %Pressuremat1_frame(element_idx(i,2),element_idx(i,1),i) = 0; % Y is going by rows and X is going by columns 
 end           
-%%
 
 %    axis tight manual
 %         set(gca,'nextplot','replacechildren');
@@ -142,6 +149,14 @@ end
          imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[0 10])
    %     imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[50 100])
 %             imagesc(I(:,:,i))
+
+         clf
+        % imagesc(Pressuremat1_frame(:,:,i)+abs(min_Pressuremat1),[50 100])
+         imagesc(.5,.5,Pressuremat1_frame(:,:,i))%,[-20 100])
+         hold on
+         plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+%           imagesc(I(:,:,i))
+
             
             %colormap(hot)
           %   colormap(turbo)
@@ -207,15 +222,59 @@ end
         
 
   %% Testing COP calculation 
-        
-testmatrix = [4,10; 20, 0];
-
-imagesc(testmatrix); 
+testmatrix = [-10 -10; -20 -20];
+  
+% testmatrix = [10 10; 10 10];
+clf
+h=imagesc(.5,.5,testmatrix);
+%imagesc([.5 1.5],[1.5 .5],testmatrix)
 colorbar
+totalp = sum(sum(testmatrix));
 
-        rm=(0:3); rm=rm'; rm=rm(:);
-        CoP1=[sum(testmatrix(:,1:4).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+       % rm=(0:3); rm=rm'; rm=rm(:);
+       
+        CoP1=[sum(sum(testmatrix(:,1:2).*repmat((0:1)+.5,2,1),2)./totalp); sum(sum(testmatrix(1:2,:).*(repmat((0:1)+.5,2,1))',2)./totalp)]; % mat 1
+   
+hold on
+plot(CoP1(1),CoP1(2),'s','MarkerFaceColor','k','MarkerSize',16)
+set(h.Parent,'YTickLabel',cellstr(string((1.5:-1:0.5)')));
+h.Parent.XTickLabel=cellstr(string((0.5:1.5)'));
+
+%%
+
+% Testing with the dimensions of the pressure mat 16X16
+ppsdata = zeros(1,256);
+ppsdata(1,1:8) = 20;
+ppsdata(1,17:17+7) = 20;
+ppsdata(1,33:33+7) = 20;
+ppsdata(1,49:49+7) = 20;
+
+TotalPressure1 = sum(ppsdata(:,1:256),2);
+Pressuremat1 = ppsdata(:,1:256);
+nframes=size(ppsdata,1);
+
+Pressuremat1_frame= zeros(16,16,nframes);
+
+       for i=1:nframes
+        % flipped to align with PPS mat layout
+        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])');
+       % Pressuremat1_frame(:,:,i) =reshape(Pressuremat1(i,:),[16,16])';
+       % Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
+       end
         
+       
+ % elements 1" apart
+rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
+CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+CoP1(:,2) = 16- CoP1(:,2);
+
+
+clf
+imagesc(.5,.5,Pressuremat1_frame(:,:,i))%,[-20 100])
+colorbar
+hold on
+plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+
 
 end 
 
