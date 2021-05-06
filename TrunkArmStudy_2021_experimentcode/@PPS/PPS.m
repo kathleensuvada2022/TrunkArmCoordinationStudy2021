@@ -108,22 +108,21 @@ classdef PPS < handle
             % Added by NH 5/22/18
             if ~obj.isInitialized, calllib('PPSDaqAPI','ppsInitialize',obj.cfgFile,0); end
             msgbox('\fontsize{12}PPS System Initializing','ACT3D-TACS',obj.CreateStruct)
-           disp('PPS system Initialized'); %uncommented KCS 5.5.21
+            disp('PPS system Initialized'); %uncommented KCS 5.5.21
             
-             calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21
             calllib('PPSDaqAPI','ppsStart');
             tic
-            while toc<=1, end
-            nReady = calllib('PPSDaqAPI', 'ppsFramesReady');
-            obj.time = libpointer('ulongPtr', zeros(nReady, 1));
-            obj.data = libpointer('singlePtr', zeros(obj.FrameSize, nReady));
-            [~, t, data] = calllib('PPSDaqAPI', 'ppsGetData', nReady, obj.time, obj.data);
+            while toc<=3, end
+            obj.ReadData;
+            calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21
+
+            [~,t,data]=obj.ReadData;
             calllib('PPSDaqAPI','ppsStop');
 %             calllib('PPSDaqAPI','ppsSetBaseline') % If the readings show drift at the beginning, reset baseline
 %             t=double(data_out)';
 %             time_out=double(time_out(:));
-            t=double(t(:));
-            data=double(data)';
+%             t=double(t(:));
+%             data=double(data)';
             save(fullfile(datadir,'pps_baseline'),'t','data')
 %             msgbox('\fontsize{12}Data recording stopped','ACT3D-TACS',obj.CreateStruct)
 %            disp('Data recording stopped.')

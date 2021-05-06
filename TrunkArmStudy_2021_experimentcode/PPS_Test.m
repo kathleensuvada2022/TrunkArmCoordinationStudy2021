@@ -12,10 +12,13 @@ ppsmat.Initialize(dir);
 % Start data collection
 ppsmat.StartPPS; 
  pause(3)
+ %to flush out bad data 
 [~,ppst,ppsdata]=ppsmat.ReadData;
 
 
-% [~,ppst,ppsdata]=ppsmat.ReadData;
+pause(5)
+%good data
+[~,ppst,ppsdata]=ppsmat.ReadData;
 
 ppsmat.StopPPS;
 

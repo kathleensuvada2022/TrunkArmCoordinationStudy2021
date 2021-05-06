@@ -13,14 +13,15 @@ clear; close all; clc;
 % end
 
 %For Kacey
-[~,~]=loadlibrary( 'PPSDaqAPI','PPSDaq.h' );
+ [~,~]=loadlibrary( 'PPSDaqAPI','PPSDaq.h' );
 
 %creating variable list of functionality 
 list = libfunctions('PPSDaqAPI','-full');
 
 
 %% Standard configuration options that must always be specified
-ConfigFileDef  = '16x16_emulator.cfg';
+% ConfigFileDef  = '16x16_emulator.cfg';
+ConfigFileDef  ='D:\Kacey\TrunkArmStudy\setup\PN7931R1-STA-NorthwesternDual.cfg';
 LogLevel       = 2;                 % 0 to disable
 
 %% Settings specific to our demo application
@@ -44,7 +45,8 @@ disp(['Using configuration file ' , configFile]);
 disp('Initializing connection to API...');
 
 
-if (~calllib('PPSDaqAPI','ppsInitialize', uint16(configFile), LogLevel))
+% if (~calllib('PPSDaqAPI','ppsInitialize', uint16(configFile), LogLevel))
+if (~calllib('PPSDaqAPI','ppsInitialize', configFile, LogLevel))
     disp('Could not initialise PPS API, please see the log file in the working directory'); 
     return;
 end;
@@ -56,6 +58,7 @@ data      = zeros(1, BufferSize * frameSize);
 times      = zeros(1, BufferSize);
 ptimes = libpointer('ulongPtr',  times);
 pdata  = libpointer('singlePtr', data); 
+
 
 disp(['RecordSize is ', num2str(frameSize), ' elements.']);
 if(calllib('PPSDaqAPI', 'ppsIsCalibrated'))
@@ -76,8 +79,9 @@ fid = fopen(OutputFile, 'w');
 fprintf(fid, [headerline,'\n']);
 fclose(fid)
 
-
+return
 try
+  %%
     disp('Starting acquisition...');
     if(~calllib('PPSDaqAPI', 'ppsStart'))
         return;
@@ -109,7 +113,11 @@ try
     %% Reset the baseline
     calllib('PPSDaqAPI', 'ppsSetBaseline');
     nReady = calllib('PPSDaqAPI', 'ppsFramesReady');
-    calllib('PPSDaqAPI', 'ppsGetData', nReady, ptimes, pdata); %Remove junk data
+%     ptimes = libpointer('ulongPtr', zeros(nReady, 1));
+%     pdata = libpointer('singlePtr', zeros(frameSize, nReady));
+    calllib('PPSDaqAPI', 'ppsGetData', nReady, ptimes, pdata);
+
+%     calllib('PPSDaqAPI', 'ppsGetData', nReady, ptimes, pdata); %Remove junk data
     
     
     %% Read chunks of data and output to our file
