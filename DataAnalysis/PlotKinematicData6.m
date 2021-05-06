@@ -1,4 +1,4 @@
-function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,act3dfname,expcond)
+function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,act3dfname,setupf,expcond)
 
 % partid,'2001tf_final_000000','Target_',3
 % partid = 'RTIS2001';
@@ -16,7 +16,9 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 % UT - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[2 5 7 9 10])
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
-datafilepath ='/Users/kcs762/Box/KACEY/Data/';
+% datafilepath ='/Users/kcs762/Box/KACEY/Data/';
+datafilepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data/';
+
 % datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 
 if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
@@ -33,6 +35,11 @@ expcondname={'RT','R25','R50','UT','U25','U50'};
 %load setup in manually for the different shoulder positions if using ACT3D
 %data
 % load([datafilepath '/' partid '/' partid '_setup'])
+
+%Now can specify the setup file using
+load([datafilepath '/' partid '/' setupf])
+
+%load('/Users/kcs762/Box/KACEY/Data/RTIS2003/42321/RTIS2003_setup_Final_TU.mat')
 
 
 % switch expcond - uncomment when running participants with MOCAP changed
@@ -77,6 +84,20 @@ emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
+maxreach=zeros(ntrials,1);
+emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
+
+
+
+emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
+rdist = zeros(ntrials,1);
+
+
+ 
+%initializing all the variables we are saving EMG data/and Max reach 
+maxreach_current_trial =zeros(ntrials,1);
+maxTrunk_current_trial=zeros(ntrials,1);
+emgsmaxvel_vals = zeros(ntrials,15);
 
 
  
@@ -132,8 +153,8 @@ disp(mfname) % displays trial
 %
 
 
-
-[xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid);
+%Plotting Metria Data
+[xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setupf);
    
 % maxreach_seconds = maxreachtime;
 % maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
@@ -159,7 +180,7 @@ disp(mfname) % displays trial
     
     % Plot EMGs
      load([afilepath afname])
-    emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
+   emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
    
     
@@ -173,7 +194,10 @@ disp(mfname) % displays trial
 %             end
 %     end
     
-       index = ceil(time/.001);
+%      index = ceil(time/.001);
+      
+      
+      
 %     ibefore = timebefore/.001;
 %     ibefore = int32(ibefore);
 %     ivelmax = timevelmax/.001;
@@ -187,7 +211,7 @@ disp(mfname) % displays trial
 %   emgbefore = emg(ibefore,1:15)
 %     emgmaxvel = emg(ivelmax,1:15)
     
-    figure(2)
+%    figure(2)
 %     Lines 175-178?? Why here?? 
 %     emg=emg(1001:end,:);
 %     t=t-1;
@@ -199,7 +223,7 @@ disp(mfname) % displays trial
 %     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
 
-emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
+%emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
     
 
 

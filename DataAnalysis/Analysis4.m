@@ -198,6 +198,7 @@ avg_emg_maxvel = PlotKinematicData6(partid,'trial','trial',5);
 %U50
 avg_emg_maxvel= PlotKinematicData6(partid,'trial','trial',6);
 
+
 % RTIS2003  - Updated 3rd Session 4.23.21
 
 partid = 'RTIS2003/42321';
