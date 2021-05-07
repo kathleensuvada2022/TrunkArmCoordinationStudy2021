@@ -2,7 +2,7 @@ function emgs_maxvel=PlotEMGs5(emg,dist,vel,t0,t,fname)
 % AMA 5/1/20 - Modified for KCS NRSA
 % GetMaxMusAct2(flpath,sename,setfname,partid,plotflag)
 
-clf
+figure(2), clf
 % if nargin >1 
     
 % totaltime = (length(dist)-1)/50; % sampling f of act 3d is 50 hz 
