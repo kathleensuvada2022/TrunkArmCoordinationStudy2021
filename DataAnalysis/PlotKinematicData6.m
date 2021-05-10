@@ -253,10 +253,10 @@ disp(mfname) % displays trial
 
 
 % % Calling COP Function
-% 
-ppsdata =data.pps;
-%[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
-[CoP1]= ComputeCOP(ppsdata);
+% % 
+% ppsdata =data.pps;
+% %[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
+% [CoP1]= ComputeCOP(ppsdata);
 
      pause   %pausing between each trial
     

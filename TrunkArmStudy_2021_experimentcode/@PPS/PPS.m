@@ -113,10 +113,10 @@ classdef PPS < handle
             calllib('PPSDaqAPI','ppsStart');
             tic
             while toc<=3, end
-            obj.ReadData;
-            calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21
+           [~,t,data]=obj.ReadData; % remove first few frames because will have the odd behavior Baseline file
+            calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21 TARE
 
-            [~,t,data]=obj.ReadData;
+            
             calllib('PPSDaqAPI','ppsStop');
 %             calllib('PPSDaqAPI','ppsSetBaseline') % If the readings show drift at the beginning, reset baseline
 %             t=double(data_out)';

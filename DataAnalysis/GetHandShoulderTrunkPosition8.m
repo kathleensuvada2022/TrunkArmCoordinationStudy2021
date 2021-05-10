@@ -74,28 +74,30 @@ xactha=data.act(:,2:4)*1000; % Convert to mm
 
 % th =xact(:,8); % for rotation to compute 3rd MCP
 xactth =data.act(:,8); % end effector rotation
-
 % Hand position was incorrect in data collected up to 4/22/21. Recalculate
 % based on end effector position and end effector rotation
 % Also note that data collected on Jass had incorrect e2h and ee2e lengths,
 % hence the negative sign in front
 
-p=zeros(3,length(xactee));
-for i=1:length(xactee)
-    p(:,i)=xactee(i,:)'+rotz(xactth(i))*[-(setup.exp.e2hLength-setup.exp.ee2eLength)*10 0 0]';
-end
-p=p';
+
+% Right hand any data to correct for issue above... anyone after this date
+% DO NOT NEED
 
 
-
-
-%% CHANGE THIS !!!! 4.20.20
-% % load(['/Users/kcs762/Desktop/Strokedata/RTIS2001/RTIS2001_setup'])
-% % RTIS2001/metria/trunkrestrained/RTIS2001_setup
-% % disp([filepath partid '_setup'])
-% load([partid '/' partid '_setup'])
+% p=zeros(3,length(xactee));
+% for i=1:length(xactee)
+% if strcmp(setup.exp.arm,'right')
+% %     p(:,i)=xactee(i,:)'+rotz(xactth(i))*[-(setup.exp.e2hLength-setup.exp.ee2eLength)*10 0 0]';
+% else
+%       p=xactee(i,:)'+rotz(-th)*[(setup.exp.e2hLength-setup.exp.ee2eLength)/100 0 0]'; % added by Kacey for left arm
+% end
 % 
-% 
+% % end
+% % p=p';
+
+
+%%
+%
 % % Build the time vector
 % % t=x(:,1)-x(1,1);
 % 
@@ -155,8 +157,6 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 % %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 % end
 % 
-
-
 
 
 %% Compute the BL in the global CS using P_LCS 
