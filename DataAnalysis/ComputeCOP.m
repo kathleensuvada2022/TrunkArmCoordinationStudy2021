@@ -70,16 +70,16 @@ figure(3), clf
       
      
          %Mat 1
-         %imagesc(.5,.5,Pressuremat1_frame(:,:,i),[min_new max_ppsdata])
-        % hold on
-         %plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+         imagesc(.5,.5,Pressuremat1_frame(:,:,i))
+        hold on
+         plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
          
          
-         %Mat 2
-         imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 3])
-         hold on
-         plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-         
+%          %Mat 2
+%          imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 3])
+%          hold on
+%          plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+%          
            
          %colormap(hot)
          %colormap(turbo)
