@@ -7,7 +7,7 @@ function [CoP1]=  ComputeCOP(ppsdata,maxreach_seconds)
 % cut out beginning with odd behavior and then cut the end of the trial max
 % reach 
     
-ppsdata= ppsdata{1,2};
+ppsdataraw= ppsdataraw{1,2};
 %% Loading in Data for Mat 1 and 2
         
         % NEED TO MAKE PRESSURE MAT DATA POSITIVE, SO FIND MINIMUM AND ADD ABS 
@@ -41,28 +41,24 @@ ppsdata= ppsdata{1,2};
         
        % need to reshape to be a 16x16 where we have Nframes matrices
         Pressuremat1_frame= zeros(16,16,nframes);
-   %     Pressuremat2_frame= zeros(16,16,nframes);
+        Pressuremat2_frame= zeros(16,16,nframes);
         
         for i=1:nframes
-
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
-%         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
-
-            % flipped to align with PPS mat layout
-        Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])');
-       %  Pressuremat1_frame(:,:,i) =reshape(Pressuremat1(i,:),[16,16])';
-      %  Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
-
+        Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
-        
-        
+ %%       
         % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
         CoP1(:,2) = 16- CoP1(:,2);
-      %  CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
         
-      
+        CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 1
+        CoP2(:,2) = 16- CoP2(:,2);
+
+        
+        CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 1
+        CoP2(:,2) = 16- CoP2(:,2);
 
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1
    
@@ -71,11 +67,19 @@ ppsdata= ppsdata{1,2};
 %         open(v);
 figure(3), clf    
         for i=1:nframes
-         clf
+      
      
-         imagesc(.5,.5,Pressuremat1_frame(:,:,i),[min_new max_ppsdata])
+         %Mat 1
+         %imagesc(.5,.5,Pressuremat1_frame(:,:,i),[min_new max_ppsdata])
+        % hold on
+         %plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+         
+         
+         %Mat 2
+         imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 2.5])
          hold on
-         plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+         plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+         
            
          %colormap(hot)
          %colormap(turbo)
@@ -88,6 +92,21 @@ figure(3), clf
         end
 %         close(v); for video uncomment if want
 
+
+
+
+%% Plotting the Center of Pressure Changes
+
+figure(4), clf
+for i = 1:nframes
+plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+xlabel('Postion in X','FontSize',16)
+ylabel('Position in Y','FontSize',16)
+title('Trajectory of COP')
+hold on
+axis([0 16 0 16])
+pause(.5)
+end
         
  %% Plotting COP and Pressure for Mat 1- smaller scaling 
 
