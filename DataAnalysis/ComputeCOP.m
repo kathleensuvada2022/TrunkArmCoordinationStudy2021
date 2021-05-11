@@ -47,7 +47,7 @@ ppsdata= ppsdata{1,2};
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
- %%       
+ %% Calculating COP for Both Mats    
         % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
@@ -76,7 +76,7 @@ figure(3), clf
          
          
          %Mat 2
-         imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 2.5])
+         imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 3])
          hold on
          plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
          
@@ -98,15 +98,13 @@ figure(3), clf
 %% Plotting the Center of Pressure Changes
 
 figure(4), clf
-for i = 1:nframes
-plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+
+plot(CoP2(:,1),CoP2(:,2),'s','LineWidth',16)
 xlabel('Postion in X','FontSize',16)
 ylabel('Position in Y','FontSize',16)
 title('Trajectory of COP')
 hold on
 axis([0 16 0 16])
-pause(.5)
-end
         
  %% Plotting COP and Pressure for Mat 1- smaller scaling 
 
