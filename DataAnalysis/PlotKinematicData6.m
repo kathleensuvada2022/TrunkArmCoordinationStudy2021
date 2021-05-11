@@ -107,33 +107,6 @@ maxTrunk_current_trial=zeros(ntrials,1);
 emgsmaxvel_vals = zeros(ntrials,15);
 %%
 for i=1:length(mtrials)
-    
-% UNCOMMENT IF USING MOCAP DATA RTIS2001 and RTIS 2002   
-%     if mtrials(i)<10
-%         %       000000                  % number that goes after 0s
-%         mfname=[metriafname '0' num2str(mtrials(i)) '.hts']; 
-%     else
-%         mfname=[metriafname num2str(mtrials(i)) '.hts'];
-%     end
-%     if atrials(i)<10
-%         if (expcond==1 || expcond==2) && atrials(i)>6
-%             afname=[act3dfname '0' num2str(atrials(i)) '_1_table_nidaq_emg.mat'];
-%             afname2=[act3dfname '0' num2str(atrials(i)) '_1_table']; % to make file name of the ACT 3D reaching file
-%         else
-%             afname=[act3dfname '0' num2str(atrials(i)) '_2_table_nidaq_emg.mat']; 
-%             afname2=[act3dfname '0' num2str(atrials(i)) '_2_table.mat'];
-%         end
-%     else
-%         if (expcond==1 || expcond==2)
-%             afname=[act3dfname num2str(atrials(i)) '_1_table_nidaq_emg.mat'];
-%             afname2=[act3dfname num2str(atrials(i)) '_1_table.mat'];
-%         else
-%             afname=[act3dfname num2str(atrials(i)) '_2_table_nidaq_emg.mat'];
-%             afname2=[act3dfname num2str(atrials(i)) '_2_table.mat'];
-%         end
-%     end
-% 
-
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname = mfname;
 afname2 = mfname;
@@ -153,39 +126,25 @@ disp(mfname) % displays trial
 %
 
 
-%Plotting Metria Data
-[xaa,xxp,maxreach,trdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setupf);
+%% Getting Metria Data 
+[xhand,xshoulder,xtrunk,maxreach,shtrdisp,maxreachtime]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setupf);
    
 % maxreach_seconds = maxreachtime;
 % maxreach_current_trial(i) =maxreach/10 % reaching distance in CM
 %  maxTrunk_current_trial(i) = trdisp/10   % trunk displacement in CM
 % maxreachtime;
-%  end
-%     figure(1)
-%     if i==1
-%         p1=plot([xhand(:,1) xshoulder(:,1) xtrunk(:,1)],-[xhand(:,3) xshoulder(:,3) xtrunk(:,3)],'LineWidth',2);
-%         hold on
-% %         p2=plot(nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xshoulder(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-%         p2=plot([xhand(1,1) xshoulder(1,1) xtrunk(1,1)],-[xhand(1,3) xshoulder(1,3) xtrunk(1,3)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-%         p3=plot([xhand(end,1) xshoulder(end,1) xtrunk(end,1)],-[xhand(end,3) xshoulder(end,3) xtrunk(end,3)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
-%     else
-%         p1=plot([xhand(:,1) xshoulder(:,1) xtrunk(:,1)],-[xhand(:,3) xshoulder(:,3) xtrunk(:,3)],'LineWidth',2);
-% %         hold on
-% %         p2=plot(nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xshoulder(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-%         p2=plot([xhand(1,1) xshoulder(1,1) xtrunk(1,1)],-[xhand(1,3) xshoulder(1,3) xtrunk(1,3)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-%         p3=plot([xhand(end,1) xshoulder(end,1) xtrunk(end,1)],-[xhand(end,3) xshoulder(end,3) xtrunk(end,3)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
-%     end
-%      set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
- 
+
+
     
-    % Plot EMGs
-     load([afilepath afname])
+%% Loading in EMGS 
+   load([afilepath afname])
    emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
    
     
-    % Computing the start of the reach
-    [dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
+ %% Computing the start of the reach
+
+[dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
     
 %     switch partid
 %         case 'RTIS2001'
@@ -218,24 +177,32 @@ disp(mfname) % displays trial
 %     time=time-1;
 %     dist=dist(
 
-   emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
-%     disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-%     title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+%% Plotting EMGS
+
+
+emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
+% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+%  %   title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
 
-%emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to maxtrix for all trials
-    
+%emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to
+%% Main Cumulative Metria Figure
+figure(2)
+ 
+        p1=plot([xhand(:,1) xshoulder(:,1) xtrunk(:,1)],[xhand(:,2) xshoulder(:,2) xtrunk(:,2)],'LineWidth',2);
+        hold on
+         p2=plot(nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%        p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+        p3=plot([xhand(end,1) xshoulder(end,1) xtrunk(end,1)],[xhand(end,2) xshoulder(end,2) xtrunk(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
+
+        set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
 
 
-
-%     figure
-% %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-% plot([x3mcp(:,1) xxp(:,1)],[x3mcp(:,2)  xxp(:,2)],'LineWidth',2);
-% axis 'equal'
-% % axis([-0.3 0.2 -1.05 -0.15])
-% xlabel('x(m)'),ylabel('y(m)')
-% title(mfname)
-
+legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
+axis 'equal'
+xlabel('X'),ylabel('Y')
+title(mfname)
+%% 
 % 
 % title('Reaching with trunk unrestrained - 5% Max SABD')
 % title('Reaching with trunk unrestrained - table')
@@ -252,12 +219,11 @@ disp(mfname) % displays trial
 
 
 
-% % Calling COP Function
-% % 
-% ppsdata =data.pps;
-% %[CoP1,CoP2,stdMat1,stdMat2]= ComputeCOP(ppsdata,maxreach_seconds);
-% [CoP1]= ComputeCOP(ppsdata);
-
+%% Calling COP Function
+ppsdata =data.pps;
+%[CoP1,CoP2]= ComputeCOP(ppsdata);
+[CoP1]= ComputeCOP(ppsdata);
+%%
      pause   %pausing between each trial
     
 

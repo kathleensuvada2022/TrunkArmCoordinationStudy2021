@@ -66,7 +66,7 @@ ppsdata= ppsdata{1,2};
 %         v = VideoWriter('pps.avi');
 %         open(v);
 figure(3), clf    
-        for i=1:nframes
+        i=1
       
      
          %Mat 1
@@ -89,7 +89,7 @@ figure(3), clf
 %         writeVideo(v,frame); for video uncomment if want
           pause(.1)
             
-        end
+ %       end
 %         close(v); for video uncomment if want
 
 
@@ -105,7 +105,7 @@ ylabel('Position in Y','FontSize',16)
 title('Trajectory of COP')
 hold on
 axis([0 16 0 16])
-        
+%         
  %% Plotting COP and Pressure for Mat 1- smaller scaling 
 
 % element_idx= round([CoP1(:,1) CoP1(:,2)]); %location in x and y where the COP is for all frames of the trial
