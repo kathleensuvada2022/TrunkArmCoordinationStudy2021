@@ -114,7 +114,10 @@ classdef PPS < handle
             tic
             while toc<=3, end
            [~,t,data]=obj.ReadData; % remove first few frames because will have the odd behavior Baseline file
-            calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21 TARE
+           
+         %  pause
+           
+           calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21 TARE
 
             
             calllib('PPSDaqAPI','ppsStop');

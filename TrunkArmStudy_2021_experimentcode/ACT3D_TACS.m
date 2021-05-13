@@ -1250,6 +1250,7 @@ end
 % step procedure: 1) set midline 2) set home target and weigh arm
 % Based on locateShoulderPushButton_Callback in CreateInitializeRobotCallbacks.m
 function EXP_LSWA_Callback(hObject,event)
+    disp('test1')
 if strcmp(myhandles.exp.timer.Running,'on'), stop(myhandles.exp.timer);
 elseif myhandles.daq.rt
     myhandles.daq.rt=0;
@@ -1367,7 +1368,7 @@ else
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
 end
-ylimit=larm-myhandles.exp.origin(2); disp([larm myhandles.exp.origin(2) ylimit])
+ylimit=larm-myhandles.exp.origin(2); disp('test');disp([myhandles.robot.endEffectorPosition' myhandles.exp.hometar])
 set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline
 % disp([myhandles.exp.origin' larm ylimit])
