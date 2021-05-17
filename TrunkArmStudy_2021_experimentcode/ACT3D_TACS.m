@@ -967,11 +967,11 @@ function EXP_localDisplayData(data)
 % data{1}(1:3)=hpos
 % data{1}(4)=myhandles.robot.endEffectorRotation(1)
 % data{1}(5)=myhandles.robot.endEffectorForce(3)
-set(myhandles.ui.mon_epos,'String',num2str([data{1}(1:3)*100, data{1}(4)*180/pi],'%7.2f'));
-set(myhandles.ui.mon_eforce,'String',num2str(data{1}(5))); % Vertical endpoint force
 
 % Update participant feedback
 if strcmp(myhandles.exp.arm,'right'), data{1}(1:2)=-data{1}(1:2); end % Flip coordinate system so that + is to the right and forward
+set(myhandles.ui.mon_epos,'String',num2str([data{1}(1:3)*100, data{1}(4)*180/pi],'%7.2f'));
+set(myhandles.ui.mon_eforce,'String',num2str(data{1}(5))); % Vertical endpoint force
 set(myhandles.exp.hLine(1),'XData',data{1}(1)+[-0.05 0.05],'YData',data{1}([2 2])); % Cross mark - horizontal
 set(myhandles.exp.hLine(2),'XData',data{1}([1 1]),'YData',data{1}(2)+[-0.05 0.05]); % Cross mark - vertical
 % set(myhandles.exp.hLine(3),'XData',databuffer(:,1),'YData',databuffer(:,2));
@@ -1250,7 +1250,6 @@ end
 % step procedure: 1) set midline 2) set home target and weigh arm
 % Based on locateShoulderPushButton_Callback in CreateInitializeRobotCallbacks.m
 function EXP_LSWA_Callback(hObject,event)
-    disp('test1')
 if strcmp(myhandles.exp.timer.Running,'on'), stop(myhandles.exp.timer);
 elseif myhandles.daq.rt
     myhandles.daq.rt=0;
@@ -1349,11 +1348,9 @@ myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
 myhandles.exp.shpos=myhandles.exp.shpos-myhandles.exp.origin;
 
-EXP_saveSetup_Callback(hObject,[])
 
 % disp([myhandles.exp.origin myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar myhandles.exp.shpos])
 
-set(myhandles.ui.mon_spos,'String',num2str(myhandles.exp.shpos'*100,'%7.2f')); 
 set(myhandles.ui.mon_awgt,'String',num2str(myhandles.exp.arm_weight,'%7.2f')); % Vertical endpoint force
 
 larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
@@ -1362,13 +1359,15 @@ larm=(myhandles.exp.armLength+myhandles.exp.e2hLength)/100;
 if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
-    set(myhandles.exp.hLine(4),'Position',[-(myhandles.exp.hometar(1:2)'-[0.05 0.05]) 0.1 0.1]); % home target
+    set(myhandles.exp.hLine(4),'Position',[(-myhandles.exp.hometar(1:2)'-[0.05 0.05]) 0.1 0.1]); % home target
+    set(myhandles.ui.mon_spos,'String',num2str(-myhandles.exp.shpos'*100,'%7.2f')); 
 else
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    set(myhandles.ui.mon_spos,'String',num2str(-myhandles.exp.shpos'*100,'%7.2f')); 
 end
-ylimit=larm-myhandles.exp.origin(2); disp('test');disp([myhandles.robot.endEffectorPosition' myhandles.exp.hometar])
+ylimit=larm-myhandles.exp.origin(2); 
 set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline
 % disp([myhandles.exp.origin' larm ylimit])
@@ -1381,6 +1380,9 @@ if myhandles.met.on
 end
 
 drawnow
+
+EXP_saveSetup_Callback(hObject,[])
+
 start(myhandles.exp.timer);
 
 end
