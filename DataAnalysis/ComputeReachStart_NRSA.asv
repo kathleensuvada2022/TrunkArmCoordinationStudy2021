@@ -38,9 +38,7 @@ dist = sqrt((Xpos-Xo).^2 +(Ypos-Yo).^2 + (Zpos-Zo).^2);
 vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
 t = length(vel)/ 50; % time in seconds
-t = 0:.02:5;
-t = t(2:end);
-
+t = 0:.016:5;
 idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
 idx(1) = find(vel>.05,1); % start reaching 
 
@@ -72,28 +70,17 @@ ibefore = ceil(timebefore*50);
 timeend = idx(4)*(1/50);
 
 figure(1)
-clf
-plot(t(1:50),dist(1:50))
+plot(dist)
 hold on
-plot(t(1:50),vel(1:50))
-%  plot(timestart,dist(idx(1)),'-o') %reach start
-%  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
-%  %plot(timebefore,dist(ibefore),'-o') %Time before
-%  plot(timedistmax ,dist(idx(3)),'-o') %max distance
-%  plot(timeend,dist(idx(4)),'-o') %end of reach
-p1 = line('Color','b','Xdata',[timestart timestart],'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'LineWidth',.5); %max dist
-p4= line('Color','g','Xdata',[timeend timeend],'LineWidth',.5); %endreach
-
-% co=get(lax1,'ColorOrder');
-% set(lax1,'ColorOrder',co(end-1:-1:1,:))
-
-
+plot(vel)
+plot(idx(1),dist(idx(1)),'-o') %reach start
+plot(idx(2),vel(idx(2)),'-o') % Max velocity
+% plot(ibefore,dist(ibefore),'-o')
+plot(idx(3),dist(idx(3)),'-o') %max distance
 xlabel('time')
 ylabel('Distance/ Velocity') 
-legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
-title('Distance and Velocity During Reach')
+legend('Distance', 'Velocity','Start Reach','Max Velocity',' Max Distance')
+title('3D Distance and Velocity During Reach')
 
 
 end 
