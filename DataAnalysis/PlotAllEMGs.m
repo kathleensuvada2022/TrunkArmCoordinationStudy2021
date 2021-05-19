@@ -1,7 +1,7 @@
 % function PlotAllEMGs(emg,t)
 
 function PlotAllEMGs(emg,t,timestart,timevelmax,timeend,timedistmax)
-
+%function PlotAllEMGs(emg,t)
 
 % for testing kacey
 emg = emg(:,1:15);
@@ -15,7 +15,7 @@ sampRate=1000;
 nEMG=size(emg,2);
 % t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
 avgwindow=0.25; ds=sampRate*avgwindow;
- emg=abs(detrend(emg));
+% emg=abs(detrend(emg));
  meanEMG=movmean(emg,ds);
 % memg=max(emg);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
@@ -32,14 +32,14 @@ set(lax1,'YTick',fliplr(-yspacing),'YTickLabel',fliplr(emgchan(idx1)),...
     'YLim',[-yspacing(end) memg(1)])%,'XTick',[],'XTickLabel',[],'FontSize',14)
 line(lax1,t,emg(:,idx1)-yspacing(ones(length(t),1),:))
 %        line(lax1,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax1.YLim,'LineWidth',1); % start reach
-p1 = line(lax1,'Color','b','Xdata',[timestart timestart],'Ydata',lax1.YLim,'LineWidth',1); % start reach
-p2= line(lax1,'Color','m','Xdata',[timevelmax timevelmax],'Ydata',lax1.YLim,'LineWidth',1); % max vel
-p3= line(lax1,'Color','c','Xdata',[timedistmax timedistmax],'Ydata',lax1.YLim,'LineWidth',1); %max dist
-p4= line(lax1,'Color','g','Xdata',[timeend timeend],'Ydata',lax1.YLim,'LineWidth',1); %endreach
-
-co=get(lax1,'ColorOrder');
-set(lax1,'ColorOrder',co(end-1:-1:1,:))
-% line(lax1,t,meanEMG(:,idx1)-yspacing(ones(length(t),1),:),'LineWidth',2)
-legend([p1 p2 p3 p4], 'Start Reach','Max Vel','Max Dist','End Reach')
+% p1 = line(lax1,'Color','b','Xdata',[timestart timestart],'Ydata',lax1.YLim,'LineWidth',1); % start reach
+% p2= line(lax1,'Color','m','Xdata',[timevelmax timevelmax],'Ydata',lax1.YLim,'LineWidth',1); % max vel
+% p3= line(lax1,'Color','c','Xdata',[timedistmax timedistmax],'Ydata',lax1.YLim,'LineWidth',1); %max dist
+% p4= line(lax1,'Color','g','Xdata',[timeend timeend],'Ydata',lax1.YLim,'LineWidth',1); %endreach
+% 
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
+% % line(lax1,t,meanEMG(:,idx1)-yspacing(ones(length(t),1),:),'LineWidth',2)
+% legend([p1 p2 p3 p4], 'Start Reach','Max Vel','Max Dist','End Reach')
 
 end

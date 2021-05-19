@@ -73,9 +73,10 @@ timeend = idx(4)*(1/50);
 
 figure(1)
 clf
-plot(t(1:50),dist(1:50))
+%plot(t(1:50),dist(1:50))
+plot(t,dist)
 hold on
-plot(t(1:50),vel(1:50))
+plot(t,vel)
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  %plot(timebefore,dist(ibefore),'-o') %Time before
