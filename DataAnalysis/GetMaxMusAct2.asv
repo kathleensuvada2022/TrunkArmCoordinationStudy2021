@@ -1,4 +1,4 @@
-function [maxEMG newemg]=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag,p)
+function maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag,p)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
 % which contains the following matrices:
 % Inputs: basename: trial file name (before index)
@@ -154,13 +154,11 @@ if plotflag
 %     lax=axes('position',[0.68,0.03,0.25,0.7]);
   %  plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*'),hold
   %  on; uncomment if plotting all emgs
-  plot(t,newemg(:,p));
+  plot(t,newemg(:,j));
 %    co=get(lax,'ColorOrder');
  %   set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
 %     plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
   %  ylabel 'V'
-  
-  title ('MVC')
 %     title(['Maximum EMGs across all trials - ' flpath(1:end)],'Interpreter','none')
     print('-f1','-djpeg',[flpath '\MaxEMGs'])
 end % if plotflag

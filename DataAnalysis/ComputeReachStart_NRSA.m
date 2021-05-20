@@ -72,7 +72,8 @@ ibefore = ceil(timebefore*50);
 timeend = idx(4)*(1/50);
 
 figure(1)
-clf
+subplot(3,3,2)
+%ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
 plot(t,dist)
 hold on
