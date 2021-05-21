@@ -141,25 +141,30 @@ if plotflag
         newemg(:,k)=data(:,k); % First 5 channels are forces and torques %updated 10.2019 because channels changed
     end
 %     PlotEMGs(newemg)
-    subplot(3,3,6)
+%     subplot(3,3,6) UNCOMMENT FOR SINGLE PLot 
     newemg=abs(detrend(newemg));
     newmeanEMG=movmean(newemg,ds);
     memg=max(newemg);
+  %% UNCOMMENT FOR SINGLE PLot 
+    
     yspacing=cumsum([0 memg(2:nEMG)+.1]);
-   % rax = axes('position',[0.68,0.03,0.25,0.7]);
-  %  set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
-   % set(rax,'TickLabelInterpreter','none')
-    %set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
-  %      'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
-%     lax=axes('position',[0.68,0.03,0.25,0.7]);
-  %  plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*'),hold
-  %  on; uncomment if plotting all emgs
-  plot(t,newemg(:,p));
-%    co=get(lax,'ColorOrder');
- %   set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
-%     plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
-  %  ylabel 'V'
+   rax = axes('position',[0.05,0.03,0.7,0.9]);
+   set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
+   set(rax,'TickLabelInterpreter','none')
+    set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
+       'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
+    lax=axes('position',[0.05,0.03,0.7,0.9]);
+   plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
+   hold on
+   %%
+%   plot(t,newemg(:,1));
+%%  UNCOMMENT FOR SINGLE PLot  
   
+  co=get(lax,'ColorOrder');
+   set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
+    plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
+   ylabel 'V'
+ %% 
   title ('MVC')
 %     title(['Maximum EMGs across all trials - ' flpath(1:end)],'Interpreter','none')
     print('-f1','-djpeg',[flpath '\MaxEMGs'])
