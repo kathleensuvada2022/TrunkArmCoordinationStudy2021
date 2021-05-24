@@ -27,7 +27,7 @@ nEMG=length(idx1);
 memg=max(emg(:,idx1));
 yspacing=cumsum([0 memg(2:nEMG)+.05]);
 % lax1 = axes('position',[0.05,0.03,0.25,0.7]);
-figure(1)
+%figure()
 subplot(3,3,4)
 % hold on
 % set(lax1,'color','none','xgrid','on','ygrid','off','box','off','TickLabelInterpreter','none')

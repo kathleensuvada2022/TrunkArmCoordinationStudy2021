@@ -131,7 +131,7 @@ maxTlength=max(Tlength);
 
 %% Plots 
 if plotflag
-     figure(1)
+   %  figure()
     newemg=zeros(maxTlength,nEMG);
     t=(0:maxTlength - 1)/sampRate;
     for k=1:nEMG
@@ -157,7 +157,7 @@ if plotflag
 %    plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
 %    hold on
    %%
-   plot(t,newemg(:,1));
+   plot(t,newemg(:,p)); % looping through each muscle 
 %  UNCOMMENT FOR SINGLE PLot  
   
 %   co=get(lax,'ColorOrder');

@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,g)
 
 % load([flpath '/' filename]);
 
@@ -70,8 +70,11 @@ timedistmax = idx(3) *(1/50); %when at max dist
 timebefore = timestart-.05; %time 50 ms prior to start of reach
 ibefore = ceil(timebefore*50); 
 timeend = idx(4)*(1/50);
+%% Plotting Data 
 
-figure(1)
+Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
+
+figure()
 subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
@@ -95,7 +98,7 @@ p4= line('Color','g','Xdata',[timeend timeend],'LineWidth',.5); %endreach
 xlabel('time')
 ylabel('Distance/ Velocity') 
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
-title('Distance and Velocity During Reach')
+title(Muscles(g))
 
 
 end 

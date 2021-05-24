@@ -17,6 +17,7 @@ maxes = maxes.maxEMG;
 load([filepath partid '/' 'RTIS1003_setup.mat']); %loading set up 
 
 
+
 %% RTIS 1002 (AMA) 
 partid = '/RTIS1002'
 maxes = load([filepath partid '/' 'maxes' '/' 'maxEMG.mat']);
@@ -69,11 +70,8 @@ for i = 1:length(trials)
     
     
     for j = 1: 15
-        
-        
-        
     %Plotting Distance and Velocity of Trial 
-    [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,j) 
+    [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata) 
     
    
     %EMG DATA DURING TRIAL
