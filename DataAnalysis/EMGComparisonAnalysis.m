@@ -25,7 +25,7 @@ load([filepath partid '/' 'RTIS1002_setup.mat']); %loading set up
 baselinetrials = 1:4;
 emgbaseline = load([filepath '/' partid '/' 'restingemg' num2str(baselinetrials(1))]); % can change this to confirm consistency
 tbaseline = emgbaseline.t;
-emgbaseline = emgbaseline.data;
+emgbaseline = detrend(emgbaseline.data);
 
 %% RTIS2003
 % partid = '/RTIS2003/Left42321';
@@ -39,7 +39,7 @@ baselinetrials = 97:99;
 emgbaseline = load([filepath '/' partid '/' 'trial' num2str(baselinetrials(1))]); % can change this to confirm consistency
 tbaseline = emgbaseline.data.daq{1,1} ;
 emgbaseline = emgbaseline.data.daq{1,2};
-emgbaseline = emgbaseline(:,1:15);
+emgbaseline = detrend(emgbaseline(:,1:15));
 
 %% Setting the experimental condition
 % 1-TRtable 2-TR 25%  3-TR 50% 4-TUtable 5-TU 25% 6-TU 50% 
@@ -58,7 +58,9 @@ for i = 1:length(trials)
     pause
 
     emg = data.daq{1,2};
-    emg = emg(:,1:15);
+    emg = detrend(emg(:,1:15)); % centers data at 0 
+    
+    
     %emg = emg./maxes; %normalizing
     
     
@@ -66,16 +68,18 @@ for i = 1:length(trials)
       
     actdata=data.act;
     
-    
+    metdata= data.met;
     
     for j = 1: 15
         
         
         
-    %Plotting Distance and Velocity of Trial 
-    [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,j) 
+    %Plotting Distance and Velocity Using ACT3D Data
+    %[dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,j) 
     
-   
+    %Using Metria data
+    [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(actdata,metdata,setup,j) 
+
     %EMG DATA DURING TRIAL
     PlotAllEMGs(emg(:,j),t)
     

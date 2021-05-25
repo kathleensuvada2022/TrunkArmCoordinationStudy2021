@@ -5,7 +5,7 @@ function PlotAllEMGsBaseline(emg,t,j)
 
 % % for testing kacey
 % emg = emg(:,j);
-
+ 
 %emg = emg(:, [1:2 5:16]);
  emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 % emgchan = {'LES','RES','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};

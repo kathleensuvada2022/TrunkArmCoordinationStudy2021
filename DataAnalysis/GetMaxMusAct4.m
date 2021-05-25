@@ -49,7 +49,7 @@ for j=1:length(trials)
 
     emg=detrend(data(:,1:15)); %updated 10.2019
     % Rectify EMG
-    emg=abs(emg);
+    %emg=abs(emg); rectifying 
     % Compute the mean EMG
     meanEMG=movmean(emg,ds);  %movmean change from previous function
     % Find maximum EMG
@@ -142,7 +142,9 @@ if plotflag
     end
 
     subplot(3,3,6) 
-    newemg=abs(detrend(newemg));
+%     newemg=abs(detrend(newemg));
+
+    newemg=detrend(newemg);   
     newmeanEMG=movmean(newemg,ds);
     memg=max(newemg);
 %   %% UNCOMMENT FOR ALL PLot 
