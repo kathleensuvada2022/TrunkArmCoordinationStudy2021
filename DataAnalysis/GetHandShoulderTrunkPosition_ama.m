@@ -7,10 +7,13 @@
 %      filepath='/Users/kcs762/Box/KACEY/Data/RTIS2001/metria/trunkfree';
 %      filename='/2001tf_final_00000011.hts';
 %      partid='RTIS2001';
-filepath='F:\usr\Ana Maria\OneDrive - Northwestern University\Data\TACS\Data\MetriaPPSDataJass4821\test4821';
-filename='trial2';
-partid='test4821';
+% filepath='F:\usr\Ana Maria\OneDrive - Northwestern University\Data\TACS\Data\MetriaPPSDataJass4821\test4821';
+% partid='test4821';
+filepath='F:\usr\Ana Maria\OneDrive - Northwestern University\Data\TACS\Data\RTIS2003\Right51221';
+filename='trial3';
+partid='RTIS2003';
 
+load(fullfile(filepath,[partid '_Setup']));
 
 %% Load marker data
 % Matrix size = [Nimages x (2 + Nmarkers*14)]
@@ -45,11 +48,11 @@ nmark=(nmark)/8;
 % t=x(:,1)-x(1,1);
 tact=[0;cumsum(data.act(:,1))];
 % xactee =(data.act(:,5:7)-repmat(setup.exp.origin',length(xactee),1))*1000; % Convert to mm
-xactee =data.act(:,5:7)*1000; % Convert to mm
+xactee =data.act(:,5:7); %*1000; % Convert to mm
 % xee = xact(:,5);
 % yee = xact(:,6);
 % zee = xact(:,7);
-xactha=data.act(:,2:4)*1000; % Convert to mm
+xactha=data.act(:,2:4); %*1000; % Convert to mm
 % xhnd = xact(:,2);
 % yhnd = xact(:,3);
 % zhnd = xact(:,4);
@@ -60,32 +63,28 @@ xactth =data.act(:,8); % end effector rotation
 % Hand position was incorrect in data collected up to 4/22/21. Recalculate
 % based on end effector position and end effector rotation
 % Also note that data collected on Jass had incorrect e2h and ee2e lengths,
-% hence the negative sign in front
-
-p=zeros(3,length(xactee));
+% hence the negative sign in front. This only applies to right arm
+p=zeros(length(xactee),3);
 for i=1:length(xactee)
-    p(:,i)=xactee(i,:)'+rotz(xactth(i))*[-(setup.exp.e2hLength-setup.exp.ee2eLength)*10 0 0]';
+    p(i,:)=gethandpos(xactee(i,:),xactth(i),setup.exp)';
 end
-p=p';
 
-% compute the hand position (3rd MCP) from the end effector
-% position - From ACT3DTACS
-
-
-% x - ACT3D end effector position  endEffectorPosition = [X, Y, Z] (replace with forearm data from metria);
-% th - ACT3D end effector rotation
-% exp - structure with experiment variables
-% p - hand position column vector
-% 
-% if strcmp(setup.exp.arm,'right')
-%     p=xfore(:,1:3)+rotz(th+pi/2)*[(setup.exp.e2hLength-setup.exp.ee2eLength)/100 0 0]';
-% %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
-% else
-%     p=xfore(:,1:3)+rotz(th-pi/2)*[(setup.exp.e2hLength-setup.exp.ee2eLength)/100 0 0]';
-% %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
-% end
-% 
-
+%%
+clf
+% p3 = plot(-[xactee(:,1) p(:,1)],-[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
+% p3 = plot(-[xactee(:,1) xactha(:,1)],-[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
+p3 = plot(-[xactee(:,1) xactha(:,1) p(:,1)],-[xactee(:,2) xactha(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
+hold on
+p4 = plot(-setup.exp.hometar(1),-setup.exp.hometar(2),'o','MarkerSize',10,'MarkerFaceColor','g');
+p5 = plot(-setup.exp.shpos(1),-setup.exp.shpos(2),'o','MarkerSize',10,'MarkerFaceColor','r');
+% p4 = plot(setup.exp.hometar(1)*1000,setup.exp.hometar(2)*1000,'o','MarkerSize',10,'MarkerFaceColor','g');
+% p5 = plot(setup.exp.shpos(1)*1000,setup.exp.shpos(2)*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
+phandles=[p3; p4; p5];
+axis 'equal'
+xlabel('x (mm)')
+ylabel('y (mm)')
+legend(phandles,'ACTEE','ACTHA','ACTHA2','Pht','Psh');
+return
 
 %% METRIA DATA
 % Load setup file
@@ -215,4 +214,25 @@ xtrunk=xtrunk(1:mridx,:);
 % xshldr=xshldr(1:mridx2,:);
 % xtrunk=xtrunk(1:mridx2,:);
 
+% Function to compute the hand position (3rd MCP) from the end effector position
+function p=gethandpos(x,th,exp)
+% x - ACT3D end effector position
+% th - ACT3D end effector rotation
+% exp - structure with experiment variables
+% p - hand position column vector
 
+% AMA 4/22/21 Fixed transformation. Rotation angle is just th for the right
+% arm and -th for the left arm
+if strcmp(exp.arm,'right')
+    p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
+else
+    p=x(:)+rotz(-th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+%     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
+end
+p=p-exp.origin; % Correct for the origin once it's set
+
+
+end
