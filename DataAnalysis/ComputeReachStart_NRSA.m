@@ -86,10 +86,10 @@ plot(t,vel)
 %  %plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
-p1 = line('Color','b','Xdata',[timestart timestart],'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'LineWidth',.5); %max dist
-p4= line('Color','g','Xdata',[timeend timeend],'LineWidth',.5); %endreach
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[0 150], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[0 150],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[0 150],'LineWidth',.5); %max, dist
+p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[0 150],'LineWidth',.5); %endreach
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
