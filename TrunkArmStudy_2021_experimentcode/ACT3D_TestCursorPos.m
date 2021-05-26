@@ -1,4 +1,4 @@
-
+%% Updated 
 % ACT-3D data saved
 % Column 1 time in s
 % Column 2-4 hand position (3rd MCP)
@@ -65,10 +65,10 @@ function p=gethandpos(x,th,exp)
 [m,n]=size(x);
 for i=1:m
     if strcmp(exp.arm,'right')
-        p(i,:)=x(i,:)+transpose(rotz(th(i)+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]');
+        p(i,:)=x(i,:)+transpose(rotz(th(i))*[(exp.e2hLength-exp.ee2eLength)/100 0 0]');
         %     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
     else
-        p(i,:)=x(i,:)+transpose(rotz(th(i)-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]');
+        p(i,:)=x(i,:)+transpose(rotz(-th(i))*[(exp.e2hLength-exp.ee2eLength)/100 0 0]');
         %     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
     end
 end

@@ -1250,7 +1250,7 @@ end
 % step procedure: 1) set midline 2) set home target and weigh arm
 % Based on locateShoulderPushButton_Callback in CreateInitializeRobotCallbacks.m
 function EXP_LSWA_Callback(hObject,event)
-    disp('test1')
+% Stop the real time display
 if strcmp(myhandles.exp.timer.Running,'on'), stop(myhandles.exp.timer);
 elseif myhandles.daq.rt
     myhandles.daq.rt=0;
@@ -1338,7 +1338,7 @@ myhandles.exp.hometar=gethandpos(myhandles.robot.endEffectorPosition,myhandles.r
 myhandles.exp.shpos=getshoulderpos(myhandles.exp.hometar,myhandles.exp);
 % disp(myhandles.exp.shpos)
 % myhandles.exp.origin(2:3)=myhandles.exp.shpos(2:3);
-% Origin: x:midline
+% Origin x:midline
 myhandles.exp.origin(1)=myhandles.exp.midpos(1);
 % Origin y,z: home target
 myhandles.exp.origin(2:3)=myhandles.exp.hometar(2:3);
@@ -1348,8 +1348,6 @@ myhandles.exp.arm_weight=myhandles.robot.endEffectorForce(3);
 
 myhandles.exp.hometar=myhandles.exp.hometar-myhandles.exp.origin;
 myhandles.exp.shpos=myhandles.exp.shpos-myhandles.exp.origin;
-
-EXP_saveSetup_Callback(hObject,[])
 
 % disp([myhandles.exp.origin myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar myhandles.exp.shpos])
 
@@ -1368,7 +1366,7 @@ else
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
 end
-ylimit=larm-myhandles.exp.origin(2); disp('test');disp([myhandles.robot.endEffectorPosition' myhandles.exp.hometar])
+ylimit=larm-myhandles.exp.origin(2);
 set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline
 % disp([myhandles.exp.origin' larm ylimit])
@@ -1381,6 +1379,10 @@ if myhandles.met.on
 end
 
 drawnow
+
+disp([myhandles.robot.endEffectorPosition(:) myhandles.exp.hometar])
+EXP_saveSetup_Callback(hObject,[])
+
 start(myhandles.exp.timer);
 
 end
@@ -1870,16 +1872,12 @@ function p=gethandpos(x,th,exp)
 % exp - structure with experiment variables
 % p - hand position column vector
 
-% AMA 4/22/21 Fixed transformation. Rotation angle is just th for the left
-% hand and -th for right hand
+% AMA 4/22/21 Fixed transformation. Rotation angle is just th for the right
+% arm and -th for the left arm
 if strcmp(exp.arm,'right')
     p=x(:)+rotz(th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
-%     p=x(:)+rotz(th+pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
-%     p=x(:)-rotz(th-3*pi/2)*[0 (exp.e2hLength-exp.ee2eLength)/100 0]';
 else
     p=x(:)+rotz(-th)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
-%     p=x(:)+rotz(th-pi/2)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
-%     p=x(:)-rotz(th-2*pi)*[(exp.e2hLength-exp.ee2eLength)/100 0 0]';
 end
 p=p-exp.origin; % Correct for the origin once it's set
 
@@ -1907,56 +1905,6 @@ else
 end
 p = x(:) + p;    
 
-
-% From Air Hockey game code          
-% compute shoulder position using arm measurements and initial end effector position
-%  	ShoulderX = tHmPos.m_dCoords[0] - (dForearmLength)*cos(dArmrestAngle) + UAL*cos(dHomeElbowAngle-dArmrestAngle) + dArmRestOffsetX;
-% 	ShoulderY = tHmPos.m_dCoords[1] + (dForearmLength)*sin(dArmrestAngle) + UAL*sin(dHomeElbowAngle-dArmrestAngle) + dArmRestOffsetY;
-% 	ShoulderZ = tHmPos.m_dCoords[2] + dArmRestOffsetZ;// + (0.5*dShoulderRadius);
-% if strcmp(arm,'Right')
-
-% AMA - Why isn't the elbow angle used to compute shoulder position??? 
-% From Stuart's code
-            % rotate shoulder abduction angle to 0 degrees in the plane
-            % that the subject is reaching
-%             adjustedShoulderAbductionAngle = shoulderAbductionAngle - pi/2;
-%                 obj.shoulderPosition(chairPosition,1) = endEffectorPosition(1)...
-%                     - obj.elbowToEndEffector * cos(endEffectorRotation)  ...
-%                     + obj.upperArmLength * cos(shoulderFlexionAngle) * cos(adjustedShoulderAbductionAngle);
-% 				obj.shoulderPosition(chairPosition,2) = endEffectorPosition(2)...
-%                     + obj.elbowToEndEffector * sin(endEffectorRotation)...
-%                     + obj.upperArmLength * sin(shoulderFlexionAngle) * cos(adjustedShoulderAbductionAngle);
-
-%                 obj.shoulderPosition(chairPosition,1) = endEffectorPosition(1)...
-%                     - obj.elbowToEndEffector * cos(pi/4)  ...
-%                     + obj.upperArmLength * cos(shoulderFlexionAngle) * cos(adjustedShoulderAbductionAngle);
-% 				obj.shoulderPosition(chairPosition,2) = endEffectorPosition(2)...
-%                     + obj.elbowToEndEffector * sin(pi/4)...
-%                     + obj.upperArmLength * sin(shoulderFlexionAngle) * cos(adjustedShoulderAbductionAngle);
-% 
-%             % left arm
-%             else
-%                 % shoulder x position
-%                 obj.shoulderPosition(chairPosition,1) = endEffectorPosition(1)...
-%                     + obj.upperArmLength * cos( shoulderFlexionAngle ) * cos(adjustedShoulderAbductionAngle)...
-% 					- obj.elbowToEndEffector * cos( endEffectorRotation ) ;
-%                 
-%                 obj.shoulderPosition(chairPosition,1) = endEffectorPosition(1)...
-%                     + obj.upperArmLength * cos( shoulderFlexionAngle ) * cos(adjustedShoulderAbductionAngle)...
-% 					- obj.elbowToEndEffector * cos( pi/4 ) ;
-                
-                % shoulder y position
-%                 obj.shoulderPosition(chairPosition,2) = endEffectorPosition(2)...
-%                     - obj.upperArmLength * sin( shoulderFlexionAngle ) * cos(adjustedShoulderAbductionAngle)...
-% 					- obj.elbowToEndEffector * sin( endEffectorRotation );
-%                   
-%                   obj.shoulderPosition(chairPosition,2) = endEffectorPosition(2)...
-%                     - obj.upperArmLength * sin( shoulderFlexionAngle ) * cos(adjustedShoulderAbductionAngle)...
-% 					- obj.elbowToEndEffector * sin( pi/4 );   
-%             end
-%             
-%             obj.shoulderPosition(chairPosition,3) = endEffectorPosition(3) -...
-% 				obj.upperArmLength * sin(adjustedShoulderAbductionAngle);
 end
 
 % Function to plot a cube in haxes
