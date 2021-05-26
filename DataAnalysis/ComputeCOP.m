@@ -1,14 +1,25 @@
 % Feb 2021. Function used to compute center of pressure offline post
 % experiment.
 
+%For running through trials fast 
+%%
 
-function [CoP1]=  ComputeCOP(ppsdata,maxreach_seconds)
+  
+
+ for f = 12:13
+    
+ load(['/Users/kcs762/OneDrive - Northwestern University/TACS/Data/testpps51221jass' '/' 'trial' num2str(f)]); 
+
+
+
+% function [CoP1]=  ComputeCOP(ppsdata,maxreach_seconds)
 
 % cut out beginning with odd behavior and then cut the end of the trial max
 % reach 
     
+ppsdata=data.pps;
 ppsdata= ppsdata{1,2};
-%% Loading in Data for Mat 1 and 2
+% Loading in Data for Mat 1 and 2
         
         % NEED TO MAKE PRESSURE MAT DATA POSITIVE, SO FIND MINIMUM AND ADD ABS 
         
@@ -16,6 +27,7 @@ ppsdata= ppsdata{1,2};
         
         ppsdata = ppsdata+abs(min_ppsdata);
         
+      %  ppsdata(:,496:511)=0;
         %Finding the max of new data for scaling of ImageSC
         
         max_ppsdata = max(max(ppsdata));
@@ -35,9 +47,11 @@ ppsdata= ppsdata{1,2};
         
         Pressuremat1 = ppsdata(:,1:256);
         Pressuremat2 = ppsdata(:,257:end);
+        
+        
        
  
-  %% Creating Matrices to Replicate Pressure Mat
+  % Creating Matrices to Replicate Pressure Mat
         
        % need to reshape to be a 16x16 where we have Nframes matrices
         Pressuremat1_frame= zeros(16,16,nframes);
@@ -47,7 +61,7 @@ ppsdata= ppsdata{1,2};
         Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS) 
         Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
         end
- %% Calculating COP for Both Mats    
+ % Calculating COP for Both Mats    
         % elements 1" apart
         rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
         CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
@@ -59,53 +73,62 @@ ppsdata= ppsdata{1,2};
         
         CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 1
         CoP2(:,2) = 16- CoP2(:,2);
+        
+        
+        f
+        
+        deltax = CoP2(end,1)-CoP2(1,1)
+        
+        deltay =CoP2(end,2)-CoP2(1,2)
 
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1
-   
-% For video uncomment if needed 
-%         v = VideoWriter('pps.avi');
-%         open(v);
-figure(3), clf    
-        i=1
-      
-     
-         %Mat 1
-         imagesc(.5,.5,Pressuremat1_frame(:,:,i))
-        hold on
-         plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-         
-         
+%    
+% %For video uncomment if needed 
+%    %     v = VideoWriter('pps.avi');
+%   %      open(v);
+% figure(3), clf    
+%     for i =1:nframes
+%       
+%      
+% %          %Mat 1
+% %          imagesc(.5,.5,Pressuremat1_frame(:,:,i))
+% %         hold on
+% %          plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+% %          
+% %          
 %          %Mat 2
-%          imagesc(.5,.5,Pressuremat2_frame(:,:,i),[.5 3])
+%          imagesc(.5,.5,Pressuremat2_frame(:,:,i),[5 8])
 %          hold on
 %          plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
 %          
-           
-         %colormap(hot)
-         %colormap(turbo)
-         colorbar
-             
-%         frame = getframe(gcf); for video uncomment if want
-%         writeVideo(v,frame); for video uncomment if want
-          pause(.1)
-            
- %       end
-%         close(v); for video uncomment if want
-
-
+%            
+%          %colormap(hot)
+%          %colormap(turbo)
+%          colorbar
+%              
+%    %     frame = getframe(gcf);% for video uncomment if want
+%    %     writeVideo(v,frame);% for video uncomment if want
+%           pause(.1)
+%             
+%        end
+%    %      close(v); %for video uncomment if want
+% 
+% 
 
 
 %% Plotting the Center of Pressure Changes
 
-figure(4), clf
+%figure(4), clf
 
-plot(CoP2(:,1),CoP2(:,2),'s','LineWidth',16)
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-title('Trajectory of COP')
-hold on
-axis([0 16 0 16])
-%         
+plot(CoP2(:,1),CoP2(:,2),'LineWidth',1)
+xlabel('Postion in X (cm)','FontSize',16)
+ylabel('Position in Y (cm)','FontSize',16)
+title('Back Down','Fontsize',16)
+ %text(8.128,7.79, num2str([deltax deltay]) )
+% text(8.21,7.98, num2str([deltax deltay]) )
+%axis([7.9 8 7.7 7.9])
+hold on    
+pause
  %% Plotting COP and Pressure for Mat 1- smaller scaling 
 
 % element_idx= round([CoP1(:,1) CoP1(:,2)]); %location in x and y where the COP is for all frames of the trial

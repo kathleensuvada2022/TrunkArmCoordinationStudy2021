@@ -8,19 +8,22 @@
 
 % needs act 3d file path and file name 
 
-function [dist,vel,timestart]=ComputeReachStart_NRSA(flpath,filename)
+% function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-load([flpath '/' filename]);
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(actdata,metdata,g)
+
+% load([flpath '/' filename]);
 
 
-Xpos = cell2mat(trialData(3,2:end));
-Ypos = -cell2mat(trialData(4,2:end));
-Zpos = cell2mat(trialData(5,2:end));
 
-Xvel = cell2mat(trialData(6,2:end));
-Yvel = -cell2mat(trialData(7,2:end));
-Zvel = cell2mat(trialData(8,2:end));
 
+Xpos = actdata(:,2);
+Ypos = actdata(:,3);
+Zpos = actdata(:,4);
+
+Xvel = actdata(:,9);
+Yvel = actdata(:,10);
+Zvel = actdata(:,11);
 
 Xo = mean(Xpos(1:50));
 Yo = mean(Ypos(1:50)); 
@@ -34,53 +37,68 @@ Zov = mean(Zvel(1:50));
 dist = sqrt((Xpos-Xo).^2 +(Ypos-Yo).^2 + (Zpos-Zo).^2);
 vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
-ivel = find(vel ==max(vel));
+t = length(vel)/ 50; % time in seconds
+t = 0:.02:5;
+t = t(2:end);
 
+idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
+idx(1) = find(vel>.05,1); % start reaching 
 
-i = find(vel>.1);
-istart = i(1);
+% idx(1) = i(1); 
+[vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
+% [~,idx(2)] = max(vel); %max vel
+idx(2)=vlocs(1); %finding the first peak as the max vel
 
-% for i = 1:length(dist)
-%     if dist(i)>= .02
-%     istart= i
-%     break;
-%     else 
-%     continue;
-%     end    
-% end 
+%Yielded odd results 
+% [dpks,dlocs] = findpeaks(dist(idx(1):end)); dlocs=dlocs+idx(1)-1;
+% % [~,idx(3)] = max(dist(idx(2)+1:end)); % idx3 max reach
+% idx(3)=dlocs(1); %Finding first peak of max distance
+% rdist=dpks(1);
+
+%Finding Max dist
+maxdist= max(dist);
+idx(3)= find(dist==maxdist);
+
+idx(4)=idx(3)+3; % Mark end of movement 0.5s after max reac
 
 %sampling rate of act 3d - 50 HZ
 
 % start time in seconds 
-timestart = istart*(1/50);% sampling rate of ACT 50 samples/sec
-timevelmax = ivel*(1/50); % time when max velocity
+timestart = idx(1)*(1/50);% sampling rate of ACT 50 samples/sec
+timevelmax = idx(2)*(1/50); % time when max velocity
+timedistmax = idx(3) *(1/50); %when at max dist
 timebefore = timestart-.05; %time 50 ms prior to start of reach
 ibefore = ceil(timebefore*50); 
+timeend = idx(4)*(1/50);
+%% Plotting Data 
+
+Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
+
+figure()
+subplot(3,3,2)
+%ax = axes('position',[0.12,0.75,0.75,0.22]);
+%plot(t(1:50),dist(1:50))
+plot(t,dist)
+% hold on
+plot(t,vel)
+%  plot(timestart,dist(idx(1)),'-o') %reach start
+%  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
+%  %plot(timebefore,dist(ibefore),'-o') %Time before
+%  plot(timedistmax ,dist(idx(3)),'-o') %max distance
+%  plot(timeend,dist(idx(4)),'-o') %end of reach
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[0 150], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[0 150],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[0 150],'LineWidth',.5); %max, dist
+p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[0 150],'LineWidth',.5); %endreach
+
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
 
 
-% % computing emg activation 
-% figure(1)
-% hold on
-% title(' ACT 3D Plot Reach ') 
-% xlabel('X Position Meters')
-% ylabel('Y Position Meters')
-% plot(Xpos,Ypos)
-% plot(Xpos(istart),Ypos(istart),'-o')
-% % plot(istart,Ypos(istart),'-o')
-% % hold off
-% 
-%  figure(2)
-% plot(dist)
-% hold on
-% plot(vel)
-% plot(istart,dist(istart),'-o')
-% %plot(ivel,dist(ivel),'-o')
-% %plot(ibefore,dist(ibefore),'-o')
-% xlabel('time')
-% ylabel('3D Distance/ Velocity') 
-% legend('Distance','Velocity','Start Reach','Max Velocity','50 ms Before Reach')
-% title('3D Distance and Velocity During Reach')
-% 
-% % 
+xlabel('time')
+ylabel('Distance/ Velocity') 
+legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
+title(Muscles(g))
+
 
 end 

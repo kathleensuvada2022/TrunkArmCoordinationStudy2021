@@ -1,4 +1,4 @@
-function [maxEMG newemg]=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag,p)
+function [maxEMG newemg]=GetMaxMusAct4(flpath,basename,setfname,partid,plotflag,p)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
 % which contains the following matrices:
 % Inputs: basename: trial file name (before index)
@@ -49,7 +49,7 @@ for j=1:length(trials)
 
     emg=detrend(data(:,1:15)); %updated 10.2019
     % Rectify EMG
-    emg=abs(emg);
+    %emg=abs(emg); rectifying 
     % Compute the mean EMG
     meanEMG=movmean(emg,ds);  %movmean change from previous function
     % Find maximum EMG
@@ -131,7 +131,7 @@ maxTlength=max(Tlength);
 
 %% Plots 
 if plotflag
-     figure(1)
+   %  figure()
     newemg=zeros(maxTlength,nEMG);
     t=(0:maxTlength - 1)/sampRate;
     for k=1:nEMG
@@ -140,29 +140,31 @@ if plotflag
 %         data=structData.totalData; % no longer need this line 10.2019
         newemg(:,k)=data(:,k); % First 5 channels are forces and torques %updated 10.2019 because channels changed
     end
-%     PlotEMGs(newemg)
-%     subplot(3,3,6) UNCOMMENT FOR SINGLE PLot 
-    newemg=abs(detrend(newemg));
+
+    subplot(3,3,6) 
+%     newemg=abs(detrend(newemg));
+
+    newemg=detrend(newemg);   
     newmeanEMG=movmean(newemg,ds);
     memg=max(newemg);
-  %% UNCOMMENT FOR SINGLE PLot 
-    
-    yspacing=cumsum([0 memg(2:nEMG)+.1]);
-   rax = axes('position',[0.05,0.03,0.7,0.9]);
-   set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
-   set(rax,'TickLabelInterpreter','none')
-    set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
-       'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
-    lax=axes('position',[0.05,0.03,0.7,0.9]);
-   plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
-   hold on
+%   %% UNCOMMENT FOR ALL PLot 
+%     
+%     yspacing=cumsum([0 memg(2:nEMG)+.1]);
+%    rax = axes('position',[0.05,0.03,0.7,0.9]);
+%    set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
+%    set(rax,'TickLabelInterpreter','none')
+%     set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
+%        'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
+%     lax=axes('position',[0.05,0.03,0.7,0.9]);
+%    plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
+%    hold on
    %%
-%   plot(t,newemg(:,1));
-%%  UNCOMMENT FOR SINGLE PLot  
+   plot(t,newemg(:,p)); % looping through each muscle 
+%  UNCOMMENT FOR SINGLE PLot  
   
-  co=get(lax,'ColorOrder');
-   set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
-    plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
+%   co=get(lax,'ColorOrder');
+%    set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
+%     plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
    ylabel 'V'
  %% 
   title ('MVC')
