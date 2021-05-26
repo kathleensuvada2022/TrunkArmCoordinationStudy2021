@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,g)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(actdata,metdata,setup,g)
 
 %% Loading in ACT3D Data
 
@@ -65,7 +65,7 @@ for i=1:nimag % loop through time points
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
       BLg=Tftom *setup.bl.lcs{1,4}(1:4,4) ; %changed from BL file 
-      xhandold(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+      xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
@@ -76,22 +76,13 @@ end
 
 %% Resampling Xhand 
 
-%xhand old is the origninal mnot resampled version
-[xhand t] = resample(xhandold,t,1000);
+
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
 
-%using original data
-Xoold = nanmean(xhandold(1:50,1));
-Yoold = nanmean(xhandold(1:50,2)); 
-Zoold = nanmean(xhandold(1:50,3)); 
-
-
-%using Resampled Data
 Xo = nanmean(xhand(1:50,1));
 Yo = nanmean(xhand(1:50,2)); 
 Zo = nanmean(xhand(1:50,3)); 
-
 
 %Computing Velocity from hand position
 Xvel = diff(xhand(:,1));
@@ -103,11 +94,6 @@ Yov = nanmean(Yvel(1:50));
 Zov = nanmean(Zvel(1:50)); 
 
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
-distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
-distold = distold(:)-distold(1);
-
-dist = dist(:)-dist(1); %offsetting so not starting above 0
-
 
 vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
@@ -117,9 +103,9 @@ vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
- idx(1) = find(dist>50,1); % start reaching 
+idx(1) = find(vel>.05,1); % start reaching 
 
-
+% idx(1) = i(1); 
 
 
 % [vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
@@ -140,19 +126,17 @@ idx(2)= find(vel==maxvel);
 maxdist= max(dist);
 idx(3)= find(dist==maxdist);
 
-%idx(4)=idx(3)+6; % Mark end of movement 1s after max velocity
+idx(4)=idx(3)+6; % Mark end of movement 1s after max velocity
 
 %sampling rate of act 3d - 50 HZ
 
 % start time in seconds 
-timestart = idx(1)*(1/1000);% divide by sampling rate
-timevelmax = idx(2)*(1/1000); % time when max velocity
-timedistmax = idx(3) *(1/1000); %when at max dist
-% timebefore = timestart-.05; %time 50 ms prior to start of reach
-timebefore =1;
-timeend = timedistmax+2;
-%ibefore = ceil(timebefore*50); 
-%timeend = idx(4)*(1/1000);
+timestart = idx(1)*(1/50);% sampling rate of ACT 50 samples/sec
+timevelmax = idx(2)*(1/50); % time when max velocity
+timedistmax = idx(3) *(1/50); %when at max dist
+timebefore = timestart-.05; %time 50 ms prior to start of reach
+ibefore = ceil(timebefore*50); 
+timeend = idx(4)*(1/50);
 %% Plotting Data 
 
 Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
@@ -161,20 +145,20 @@ figure()
 subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
-plot(t,dist)
+plot(t(1:249),dist(1:249))
 hold on
-plot(t(1:(end-1)),vel)
+plot(t(1:249),vel)
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-50 200], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-50 200],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-50 200],'LineWidth',.5); %max, dist
-p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-50 200],'LineWidth',.5); %time prior
-p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-50 200],'LineWidth',.5);
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[0 150], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[0 150],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[0 150],'LineWidth',.5); %max, dist
+p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[0 150],'LineWidth',.5); %endreach
+
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
@@ -183,7 +167,7 @@ xlim([0 5])
 
 xlabel('time')
 ylabel('Distance/ Velocity') 
-legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist','Time Prior','Time End')
+legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
 title(Muscles(g))
 
 

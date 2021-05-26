@@ -115,10 +115,10 @@ Fnyq=fs/2;
 N = length(emg(:,j));
 freqs=0:1000/N:Fnyq;
 
-data_fft_bl = fft(emgbaseline(:,j));
-Px_data_bl = data_fft_bl.*conj(data_fft_bl);
+% data_fft_bl = fft(emgbaseline(:,j));
+% Px_data_bl = data_fft_bl.*conj(data_fft_bl);
 
-% [Pxx f] = pwelch(emgbaseline(:,j),5)
+Pxx = pwelch(X,WINDOW)
 
 % figure(1)
 subplot(3,3,7)
