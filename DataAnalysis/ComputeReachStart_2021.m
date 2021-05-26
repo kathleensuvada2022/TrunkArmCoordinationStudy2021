@@ -93,14 +93,14 @@ Yo = nanmean(xhand(1:50,2));
 Zo = nanmean(xhand(1:50,3)); 
 
 
-%Computing Velocity from hand position
-Xvel = diff(xhand(:,1));
-Yvel = diff(xhand(:,2));
-Zvel = diff(xhand(:,3));
+% %Computing Velocity from hand position
+% Xvel = diff(xhand(:,1));
+% Yvel = diff(xhand(:,2));
+% Zvel = diff(xhand(:,3));
 
-Xov = nanmean(Xvel(1:50));
-Yov = nanmean(Yvel(1:50)); 
-Zov = nanmean(Zvel(1:50)); 
+% Xov = nanmean(Xvel(1:50));
+% Yov = nanmean(Yvel(1:50)); 
+% Zov = nanmean(Zvel(1:50)); 
 
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
 distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
@@ -109,7 +109,10 @@ distold = distold(:)-distold(1);
 dist = dist(:)-dist(1); %offsetting so not starting above 0
 
 
-vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
+% Using function from AMA to compute Vel
+vel = ddt(dist,1/1000);
+
+% vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
 % t = length(vel)/ 50; % time in seconds sampling rate of metria? 250 samples in 5 seconds
 % t = 0:.02:5;
@@ -122,12 +125,13 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT
 
 
 
-% [vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
-% [~,idx(2)] = max(vel); %max vel
-% idx(2)=vlocs(1); %finding the first peak as the max vel
+[vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
+[~,idx(2)] = max(vel); %max vel
 
-maxvel =max(vel);
-idx(2)= find(vel==maxvel);
+idx(2)=vlocs(length(vlocs/2)); %finding the first peak as the max vel
+
+% maxvel =max(vel);
+% idx(2)= find(vel==maxvel);
 
 
 %Yielded odd results 
@@ -161,27 +165,27 @@ figure()
 subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
-plot(t,dist)
+ plot(t,dist)
 hold on
-plot(t(1:(end-1)),vel)
+plot(t,vel) 
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-50 200], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-50 200],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-50 200],'LineWidth',.5); %max, dist
-p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-50 200],'LineWidth',.5); %time prior
-p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-50 200],'LineWidth',.5);
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-500 500], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-500 500],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-500 500],'LineWidth',.5); %max, dist
+p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 
-xlim([0 5])
+xlim([0.5 5])
 
-xlabel('time')
+xlabel('time in seconds')
 ylabel('Distance/ Velocity') 
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist','Time Prior','Time End')
 title(Muscles(g))
