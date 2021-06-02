@@ -46,7 +46,7 @@ emgbaseline = detrend(emgbaseline(:,1:15));
 % 
 %  trials = setup.trial{1,ExpCond};
 
-trials = 2;
+trials = 30;
 
 for i = 1:length(trials)
 
@@ -69,7 +69,7 @@ for i = 1:length(trials)
     
     metdata= data.met;
     
-    for j = 15
+    for j = 2
         
         
         
@@ -111,47 +111,33 @@ for i = 1:length(trials)
 % Baseline
 
 fs = 1000;
-Fnyq=fs/2;
-N = length(emg(:,j));
-freqs=0:1000/N:Fnyq;
+[pxx,f] = pwelch(emgbaseline(:,j),2000,500,500,fs);
 
-data_fft_bl = fft(emgbaseline(:,j));
-Px_data_bl = data_fft_bl.*conj(data_fft_bl);
 
-% [Pxx f] = pwelch(emgbaseline(:,j),5)
 
-% figure(1)
 subplot(3,3,7)
-plot(freqs,abs(data_fft_bl(1:N/2+1)))
+plot(f,pxx)
 xlabel('Frequency')
 
 
 % During Trial 
 
 fs = 1000;
-Fnyq=fs/2;
-N = length(emg(:,j));
-freqs=0:1000/N:Fnyq;
+[pxx,f] = pwelch(emg(:,j),2000,500,500,fs);
 
 
-data_fft = fft(emg(:,j)-mean(emg(:,j)));
 
-Px_data = data_fft.*conj(data_fft);
-
-% figure(1)
 subplot(3,3,8)
-plot(freqs,abs(data_fft(1:N/2+1)))
+plot(f,pxx)
 xlabel('Frequency')
 
 
 % Maxes 
-data_fft_maxes = fft(newemg(:,j)-mean(newemg(:,j)));
+fs = 1000;
+[pxx,f] = pwelch(newemg(:,j),2000,500,500,fs);
 
-Px_data_maxes = data_fft_maxes.*conj(data_fft_maxes);
-
-% figure(1)
 subplot(3,3,9)
-plot(freqs,abs(data_fft_maxes(1:N/2+1)))
+plot(f,pxx)
 xlabel('Frequency')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

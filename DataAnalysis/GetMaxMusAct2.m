@@ -1,4 +1,4 @@
-function [maxEMG newemg]=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag,p)
+function [maxEMG]=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
 % which contains the following matrices:
 % Inputs: basename: trial file name (before index)
