@@ -144,7 +144,7 @@ disp(mfname) % displays trial
     
  %% Computing the start of the reach
 
-[dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
+% [dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
     
 %     switch partid
 %         case 'RTIS2001'
@@ -180,7 +180,7 @@ disp(mfname) % displays trial
 %% Plotting EMGS
 
 
-emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
+% emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
 % disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %  %   title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
@@ -202,27 +202,11 @@ legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','sout
 axis 'equal'
 xlabel('X'),ylabel('Y')
 title(mfname)
-%% 
-% 
-% title('Reaching with trunk unrestrained - 5% Max SABD')
-% title('Reaching with trunk unrestrained - table')
-%  title('Reaching with trunk restrained - table')
-
-% text(-0.1,-0.25,['TR DISP= ', num2str((trdisp/10))])
-% text(-0.28,-0.55,['MAX REACH = ', num2str((maxreach/10))])
-% text(-.28,-.45,['MFNAME = ', num2str((mfname))])
-
-% text(-0.28,-0.3,['STD of Max reach = ', num2str(std(maxreach))])
-% print('-f3','-djpeg',[partid '_RT'])
-
-%disp(maxreach/10)
-
-
 
 %% Calling COP Function
-ppsdata =data.pps;
-%[CoP1,CoP2]= ComputeCOP(ppsdata);
-[CoP1]= ComputeCOP(ppsdata);
+% ppsdata =data.pps;
+% 
+% [CoP1]= ComputeCOP(ppsdata);
 %%
      pause   %pausing between each trial
     
