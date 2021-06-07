@@ -111,7 +111,7 @@ mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname = mfname;
 afname2 = mfname;
       
-disp(mfname); % displays trial 
+disp(mfname) % displays trial 
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -213,8 +213,6 @@ title(mfname)
 
 
 end
-
-hold off
 %%
 %avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
 avgmaxreach =mean(maxreach_current_trial)
