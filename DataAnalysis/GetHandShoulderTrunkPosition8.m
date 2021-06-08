@@ -179,8 +179,6 @@ end
 rdist=sqrt(sum((xhand-xshoulder(:,1:3)).^2,2));
 [maxreach,mridx]=max(rdist);
 
- disp(maxreach/10);%in cm
-% 
 
 % maxreachidx = mridx;
 %  %% Comparing with ACT3D data (xhand2)

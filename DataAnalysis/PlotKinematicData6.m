@@ -20,15 +20,15 @@ function [avg_emg_maxvel avgmaxreach] = PlotKinematicData6(partid,metriafname,ac
 datafilepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data/';
 
 % datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
-
-if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
-    load([datafilepath partid '/Maxes/maxEMG.mat']);
-    %disp(maxEMG)
-else
-    disp('Computing Maximum Muscle EMGs. Make sure you check them')
-%     maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
-    [maxEMG]=GetMaxMusAct2([partid '/maxes'],'maxes','savedsetupKacey','Control',0);
-end
+% 
+% if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
+%     load([datafilepath partid '/Maxes/maxEMG.mat']);
+%     %disp(maxEMG)
+% else
+%     disp('Computing Maximum Muscle EMGs. Make sure you check them')
+% %     maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
+%     [maxEMG]=GetMaxMusAct2([partid '/maxes'],'maxes','savedsetupKacey','Control',0);
+% end
 
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
@@ -111,7 +111,7 @@ mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname = mfname;
 afname2 = mfname;
       
-disp(mfname); % displays trial 
+%disp(mfname); % displays trial 
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -137,8 +137,8 @@ disp(mfname); % displays trial
 
     
 %% Loading in EMGS 
-   load([afilepath afname])
-   emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
+   %load([afilepath afname])
+  % emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
    
     
@@ -201,14 +201,14 @@ disp(mfname); % displays trial
 legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
 axis 'equal'
 xlabel('X'),ylabel('Y')
-title(mfname)
+title([mfname expcond])
 
 %% Calling COP Function
 % ppsdata =data.pps;
 % 
 % [CoP1]= ComputeCOP(ppsdata);
 %%
-     pause   %pausing between each trial
+   %  pause   %pausing between each trial
     
 
 
