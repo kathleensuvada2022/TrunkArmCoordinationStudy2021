@@ -3,6 +3,7 @@
 % Main Script that calls : PlotAllEMGsBaseline, Comp (baseline data, ComputeReach Start_NRSA (plots dist and vel),
 % GetMaxMusAct4 (plot maxes), PlotAllEMGs (trial emg data)
 
+
 % Chage to your CD with data: 
 filepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data';
 %% RTIS1003 (JB) 
@@ -40,7 +41,7 @@ tbaseline = emgbaseline.data.daq{1,1} ;
 emgbaseline = emgbaseline.data.daq{1,2};
 emgbaseline = detrend(emgbaseline(:,1:15));
 
-%% Setting the experimental condition
+%% Main Code that Creates Plots of Distance, Velocity, EMGS, and PSDS
 % 1-TRtable 2-TR 25%  3-TR 50% 4-TUtable 5-TU 25% 6-TU 50% 
 %  ExpCond = 3;
 % 
