@@ -1,4 +1,4 @@
- function [xhand,xshoulder,xtrunk,maxreach]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setupf)
+ function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setupf)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -154,10 +154,13 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 % dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB];
 %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
 
+% myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
+% myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 
 lcsfore=zeros(2*nimag,2);
 for i=1:nimag % loop through time points
-    % For the 3rd metacarpal grabbing the forearm marker
+    
+% For the 3rd metacarpal grabbing the forearm marker
     Tftom = quat2tform(circshift(xfore(i,4:7),1,2));
     Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix for forearm in time i
 %     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
@@ -165,12 +168,21 @@ for i=1:nimag % loop through time points
 %        BLg = Tftom*(bl{1,4}(4,1:4))';
       BLg=Tftom *[bl{4}(4,1:3) 1]'; 
       xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
-      lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
+      lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); %what is this?
+
 % for the acromion using the shoulder marker 
-%     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
+     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% grabbing the HT of the shoulder marker 
+     Tstom(1:3,4) = xshoulder(i,1:3)';
 %     Tstom = [Tstom;0 0 0 1]; 
-%     BLg2=(Tstom) *setup.bl.lcs{2}(:,1);  %grabbing the XYZ point of the anterior acromion in the LCS
-%     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
+     BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point of the anterior acromion in the LCS
+     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time 
+
+% for the jugular notch using the trunk marker 
+     Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));% grabbing the HT of the shoulder marker 
+     Tttom(1:3,4) = xtrunk(i,1:3)';
+%     Tstom = [Tstom;0 0 0 1]; 
+     BLg3=(Tttom) *[bl{1}(2,1:3) 1]';  %grabbing the XYZ point of the anterior acromion in the LCS
+     xjug(i,:)=BLg3(1:3,1)'; % X Y Z of Jugular notch in the global frame and rows are time 
 end
 
 
@@ -276,7 +288,7 @@ rdist=sqrt(sum((xhand-xshoulder(:,1:3)).^2,2));
 % disp([mtpos stdtpos mspos stdspos])
 
 %% Compute shoulder and trunk displacement at maximum reach
-% shtrdisp=sqrt(sum(([xshldr(mridx,:);xtrunk(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xtrunk(1:20,:))]).^2,2))'
+ shtrdisp=sqrt(sum(([xshldr(mridx,:);xtrunk(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xtrunk(1:20,:))]).^2,2))'
 
 %% Truncate data until max reach
  xhand=xhand(1:mridx,:);
