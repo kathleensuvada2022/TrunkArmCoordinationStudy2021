@@ -13,8 +13,8 @@
 function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,g)
 
 %% Loading in ACT3D Data
-
-
+%Use if plotting ACT3D data
+% 
 % Xpos = actdata(:,2);
 % Ypos = actdata(:,3);
 % Zpos = actdata(:,4);
@@ -26,6 +26,7 @@ function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReac
 %% Loading in Metria Data
 % Sampling Rate for Metria is 89 HZ
 
+%uncomment this section is using 
 
 t = (metdata(:,2)-metdata(1,2))/89;
 
