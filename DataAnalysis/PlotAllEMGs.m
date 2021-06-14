@@ -1,7 +1,7 @@
 % function PlotAllEMGs(emg,t)
 
 %function PlotAllEMGs(emg,t,timestart,timevelmax,timeend,timedistmax)
-function PlotAllEMGsBaseline(emg,t,j)
+function PlotAllEMGsBaseline(emg,t,timestart,timevelmax,timeend,timedistmax)
 
 % for testing kacey
 %emg = emg(:,1:15);
@@ -32,11 +32,12 @@ yspacing=cumsum([0 memg(2:nEMG)+.05]);
   %  'YLim',[-yspacing(end) memg(1)])%,'XTick',[],'XTickLabel',[],'FontSize',14)
 line(t,emg(:,idx1)-yspacing(ones(length(t),1),:))
 %        line(lax1,'Color','b','Xdata',[t0_emgs(1) t0_emgs(1)],'Ydata',lax1.YLim,'LineWidth',1); % start reach
-% p1 = line(lax1,'Color','b','Xdata',[timestart timestart],'Ydata',lax1.YLim,'LineWidth',1); % start reach
-% p2= line(lax1,'Color','m','Xdata',[timevelmax timevelmax],'Ydata',lax1.YLim,'LineWidth',1); % max vel
-% p3= line(lax1,'Color','c','Xdata',[timedistmax timedistmax],'Ydata',lax1.YLim,'LineWidth',1); %max dist
-% p4= line(lax1,'Color','g','Xdata',[timeend timeend],'Ydata',lax1.YLim,'LineWidth',1); %endreach
-title('Trial Data') 
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-.01 .01],'LineWidth',1); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-.01 .01],'LineWidth',1); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-.01 .01],'LineWidth',1); %max dist
+p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[-.01 .01],'LineWidth',1); %endreach
+title('Trial Data')
+xlim([0 1.5])
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 % % line(lax1,t,meanEMG(:,idx1)-yspacing(ones(length(t),1),:),'LineWidth',2)

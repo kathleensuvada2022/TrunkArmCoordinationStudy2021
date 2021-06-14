@@ -10,10 +10,9 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(actdata,metdata,g)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(actdata,g)
 
 % load([flpath '/' filename]);
-
 
 
 
@@ -40,7 +39,7 @@ vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 t = length(vel)/ 50; % time in seconds
 t = 0:.02:5;
 t = t(2:end);
-
+%%
 idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
 idx(1) = find(vel>.05,1); % start reaching 
 
@@ -59,8 +58,9 @@ idx(2)=vlocs(1); %finding the first peak as the max vel
 maxdist= max(dist);
 idx(3)= find(dist==maxdist);
 
-idx(4)=idx(3)+3; % Mark end of movement 0.5s after max reac
+%idx(4)= find(vel<.025); % Mark end of movement 0.5s after max reac
 
+idx(4) = idx(3)*2;
 %sampling rate of act 3d - 50 HZ
 
 % start time in seconds 
@@ -78,25 +78,27 @@ figure()
 subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
-plot(t,dist)
-% hold on
-plot(t,vel)
+%%
+plot(t,dist,'LineWidth',2)
+hold on
+plot(t,vel,'LineWidth',2)
+
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  %plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[0 150], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[0 150],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[0 150],'LineWidth',.5); %max, dist
-p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[0 150],'LineWidth',.5); %endreach
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-0.05 .3], 'LineWidth',.7); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-0.05 .3],'LineWidth',.7); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-0.05 .3],'LineWidth',.7); %max, dist
+p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[-0.05 .3],'LineWidth',.7); %endreach
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 
-
-xlabel('time')
-ylabel('Distance/ Velocity') 
+xlim([0 1.5])
+xlabel('time in seconds')
+ylabel('Distance/ Velocity (m)') 
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
 title(Muscles(g))
 

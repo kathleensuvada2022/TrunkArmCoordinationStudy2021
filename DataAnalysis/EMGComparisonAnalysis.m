@@ -70,15 +70,14 @@ for i = 1:length(trials)
     
     metdata= data.met;
     
-    for j = 2
-        
+    for j = 6
         
         
     %Plotting Distance and Velocity Using ACT3D Data
-    %[dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,j) 
+    [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,j) 
     
     %Using Metria data
-    [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,j) 
+%     [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,j) 
 
     %Comparing the metria data and the resampled data
 %     figure(2)
@@ -92,7 +91,7 @@ for i = 1:length(trials)
 %     
     
     %EMG DATA DURING TRIAL
-    PlotAllEMGs(emg(:,j),t)
+    PlotAllEMGs(emg(:,j),t,timestart,timevelmax,timeend,timedistmax)
     
     
     %Plotting the Maxes
