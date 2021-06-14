@@ -43,11 +43,11 @@ emgbaseline = detrend(emgbaseline(:,1:15));
 
 %% Main Code that Creates Plots of Distance, Velocity, EMGS, and PSDS
 % 1-TRtable 2-TR 25%  3-TR 50% 4-TUtable 5-TU 25% 6-TU 50% 
-%  ExpCond = 3;
+  ExpCond = 1;
 % 
-%  trials = setup.trial{1,ExpCond};
+  trials = setup.trial{1,ExpCond};
 
-trials = 30;
+% trials = 30;
 
 for i = 1:length(trials)
 
@@ -70,7 +70,7 @@ for i = 1:length(trials)
     
     metdata= data.met;
     
-    for j = 6
+    for j = 15
         
         
     %Plotting Distance and Velocity Using ACT3D Data
