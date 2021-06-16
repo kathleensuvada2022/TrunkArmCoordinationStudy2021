@@ -1,4 +1,4 @@
- function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setupf)
+ function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach, shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setupf)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -188,7 +188,7 @@ end
 
 
 %% Compute reaching distance (between shoulder and hand from hand marker)
-rdist=sqrt(sum((xhand-xshoulder(:,1:3)).^2,2));
+rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 [maxreach,mridx]=max(rdist);
 
 
@@ -287,15 +287,16 @@ rdist=sqrt(sum((xhand-xshoulder(:,1:3)).^2,2));
 
 % disp([mtpos stdtpos mspos stdspos])
 
-%% Compute shoulder and trunk displacement at maximum reach
- shtrdisp=sqrt(sum(([xshldr(mridx,:);xtrunk(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xtrunk(1:20,:))]).^2,2))'
+%% Compute shoulder and trunk displacement at maximum reach - using BLS
+
+  shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
 
 %% Truncate data until max reach
- xhand=xhand(1:mridx,:);
-% %xfore=xfore(1:mridx,:);
-% %xarm=xarm(1:mridx2,:);
- xshoulder=xshoulder(1:mridx,:);
- xtrunk=xtrunk(1:mridx,:);
+ xhand=xhand(1:mridx,:); %Using BL 3rd MCP
+% % %xfore=xfore(1:mridx,:);
+% % %xarm=xarm(1:mridx2,:);
+  xshldr=xshldr(1:mridx,:);%Using BL Acromion
+ xjug=xjug(1:mridx,:); %Using BL jug notch
 
 % xhand=xhand(1:mridx2,:);
 % xfore=xfore(1:mridx2,:);
