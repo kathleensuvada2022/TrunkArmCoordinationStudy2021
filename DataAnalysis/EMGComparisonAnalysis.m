@@ -1,3 +1,9 @@
+%% NOTES FROM AMA
+% Use fullfile to create the filename with the full path so you don't have
+% to include "\" in partid. For example:
+% maxes = load(fullfile(filepath,partid,maxe,'maxEMG.mat'));
+% emgbaseline = load(fullfile(filepath,partid,['restingemg' num2str(baselinetrials(1))]));
+
 %% Plots EMGS  May 2021
 % Runs through baseline data,maxes, and trial data unrectified and raw EMG
 % Main Script that calls : PlotAllEMGsBaseline, Comp (baseline data, ComputeReach Start_NRSA (plots dist and vel),
@@ -7,7 +13,6 @@
 % Chage to your CD with data: 
 filepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data';
 %% RTIS1003 (JB) 
-
 
 % NOTE: comment the baseline plots for EMGS and PSDs since no baseline data
 % for participant 
