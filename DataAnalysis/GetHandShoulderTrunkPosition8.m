@@ -26,10 +26,10 @@ x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
 nmark=(nmark)/8; 
 
-
+t = (data.met(:,2)-data.met(1,2))/89; 
 
 % %  Load in the act3d data to compare with metria
-% xact =data.act; 
+% actdata =data.act; 
 % xee = xact(:,5);
 % yee = xact(:,6);
 % zee = xact(:,7);
@@ -191,8 +191,6 @@ end
 rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 [maxreach,mridx]=max(rdist);
 
-
-% maxreachidx = mridx;
 %  %% Comparing with ACT3D data (xhand2)
 % p1=plot([xhand(:,1) xhand2(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xhand(:,3) xhand2(:,3) xshldr(:,3) xtrunk(:,3) xfore(:,3)],'LineWidth',2); hold on
 % p2=plot(gca,nanmean([xhand(1:10,1) xhand2(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xhand2(1:10,3) xshldr(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g');
@@ -203,9 +201,13 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 % legend(phandles,'Hand','Hand2','Shoulder','Trunk','Forearm','Home','Max Reach');
 % title(filename,'Interpreter','none')
  %% Main Figure 
- 
-% figure(1), clf
-% p1=plot([xhand(:,1) xshoulder(:,1) xtrunk(:,1) xfore(:,1) xarm(:,1)],[xhand(:,2) xshoulder(:,2) xtrunk(:,2) xfore(:,2) xarm(:,2)],'LineWidth',2); hold on
+figure(1),clf
+
+% Metria Kinematic Trajectories from computed BLs 
+subplot(2,1,1)
+ plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+ hold on
+plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
 % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 % hold on
 % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
@@ -217,15 +219,26 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 % 
 % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
 % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-% phandles=[p1; p2; p4];
+
 % % phandles=[p1' p2 p3];
-% axis 'equal'
-% % legend(phandles,'Hand','Shoulder','Trunk','Home','Max Reach')
-% xlabel('x (mm)')
-% ylabel('y (mm)')
-% legend(phandles,'MHand','MShoulder','MTrunk','MForearm','MArm','MHome','ACTEE','ACTHA','ACTHome','ForeCS');
+ axis 'equal'
+  legend('Hand','Shoulder','Trunk')
+xlabel('x (mm)')
+ylabel('y (mm)')
+title(filename)
 
+% Metria Distance Plot with Max Distance Marked
+subplot(2,1,2)
+plot(rdist)
+hold on
+p1 = line('Color','b','Xdata',[mridx mridx],'Ydata',[400 650], 'LineWidth',.5); % start reach
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
+xlabel('samples')
+ylabel('Distance') 
+legend('Distance','Max Dist')
 
+pause
 %% Testing Forearm data and 3rd MCP position
 % 
 % 

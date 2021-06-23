@@ -26,7 +26,6 @@ function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReac
 %% Loading in Metria Data
 % Sampling Rate for Metria is 89 HZ
 
-%uncomment this section is using 
 
 t = (metdata(:,2)-metdata(1,2))/89;
 
@@ -65,7 +64,7 @@ for i=1:nimag % loop through time points
 %        BLg = Tftom*(bl{1,4}(4,1:4))';
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
-      BLg=Tftom *setup.bl.lcs{1,4}(1:4,4) ; %changed from BL file 
+      BLg=Tftom *setup.bl{1,4}(1:4,4) ; %changed from BL file 
       xhandold(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
@@ -163,12 +162,12 @@ timeend = timedistmax+2;
 Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
 
 figure()
-subplot(3,3,2)
+% subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
  plot(t,dist)
 hold on
-plot(t,vel) 
+%plot(t,vel) 
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
@@ -176,10 +175,10 @@ plot(t,vel)
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
 p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-500 500], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-500 500],'LineWidth',.5); % max vel
+%p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-500 500],'LineWidth',.5); % max vel
 p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-500 500],'LineWidth',.5); %max, dist
 p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
-p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+% p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
@@ -189,7 +188,7 @@ xlim([0.5 5])
 xlabel('time in seconds')
 ylabel('Distance/ Velocity') 
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist','Time Prior','Time End')
-title(Muscles(g))
+%title(Muscles(g))
 
 
 end 
