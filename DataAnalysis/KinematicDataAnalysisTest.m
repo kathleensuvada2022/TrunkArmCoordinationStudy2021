@@ -4,7 +4,10 @@
 
 % Testing 
 %   flpath = '/Users/kcs762/Desktop/Strokedata/Control1/act3d/trunkrestrained/AllData'
-filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data'
+filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data';
+partid = 'RTIS1002';
+load(fullfile(filepath,partid,[partid '_setup.mat'])); %load setup file 
+
 %    filename = 'Target_01_2_table.mat'
 
 % needs act 3d file path and file name 
@@ -14,7 +17,7 @@ filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS
 % function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,g)
 
 %% Load ACT3D Data
-load(fullfile(filepath,partid,['trials' num2str(trials(i))]))
+load(fullfile(filepath,partid,'trials2'))
 actdata=data.act;
 x= data.met;
 
@@ -34,7 +37,6 @@ x= data.met;
 %uncomment this section is using 
 
 t = (x(:,2)-x(1,2))/89;
-
 
 % x = metdata;
 x(x==0)=NaN; %h Replace zeros with NaN
@@ -71,7 +73,7 @@ for i=1:nimag % loop through time points
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
       BLg=Tftom *setup.bl.lcs{1,4}(1:4,4) ; %changed from BL file 
-      xhandold(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+      xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
@@ -80,43 +82,53 @@ for i=1:nimag % loop through time points
 %     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
 end
 
+
 %% Resampling Xhand 
 
-%xhand old is the origninal mnot resampled version
-[xhand t] = resample(xhandold,t,1000);
+%xhand old is the original mnot resampled version
+% [xhand2,t2] = resample(xhand,t,1000,10,89);
+[xhand2,t2]=resampledata(xhand,t,100,89);
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
-
 %using original data
-Xoold = nanmean(xhandold(1:50,1));
-Yoold = nanmean(xhandold(1:50,2)); 
-Zoold = nanmean(xhandold(1:50,3)); 
+% Xoold = nanmean(xhandold(1:50,1));
+% Yoold = nanmean(xhandold(1:50,2)); 
+% Zoold = nanmean(xhandold(1:50,3)); 
+% 
+% %using Resampled Data
+% Xo = nanmean(xhand(1:50,1));
+% Yo = nanmean(xhand(1:50,2)); 
+% Zo = nanmean(xhand(1:50,3)); 
+% 
+% % %Computing Velocity from hand position
+% % Xvel = diff(xhand(:,1));
+% % Yvel = diff(xhand(:,2));
+% % Zvel = diff(xhand(:,3));
+% 
+% % Xov = nanmean(Xvel(1:50));
+% % Yov = nanmean(Yvel(1:50)); 
+% % Zov = nanmean(Zvel(1:50)); 
+% 
+% dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+% distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
+% distold = distold(:)-distold(1);
+% 
+% dist = dist(:)-dist(1); %offsetting so not starting above 0
 
+% AMA - You want to compute the distance between the home target or the
+% beggining of the trial and max reach.
+dist=sqrt(sum(xhand'.^2));
+dist=dist-mean(dist(1:10));
 
-%using Resampled Data
-Xo = nanmean(xhand(1:50,1));
-Yo = nanmean(xhand(1:50,2)); 
-Zo = nanmean(xhand(1:50,3)); 
-
-
-% %Computing Velocity from hand position
-% Xvel = diff(xhand(:,1));
-% Yvel = diff(xhand(:,2));
-% Zvel = diff(xhand(:,3));
-
-% Xov = nanmean(Xvel(1:50));
-% Yov = nanmean(Yvel(1:50)); 
-% Zov = nanmean(Zvel(1:50)); 
-
-dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
-distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
-distold = distold(:)-distold(1);
-
-dist = dist(:)-dist(1); %offsetting so not starting above 0
-
+dist2=sqrt(sum(xhand2'.^2));
+dist2=dist2-mean(dist2(1:10));
 
 % Using function from AMA to compute Vel
-vel = ddt(dist,1/1000);
+vel = ddt(smo(dist,3),1/89);
+[vel2,t2] = resampledata(vel,t,100,89);
+subplot(211),plot(t,xhand,t2,xhand2,'-')
+subplot(212),yyaxis left; plot(t,dist,t2,dist2); yyaxis right; plot(t,vel,t2,vel2)
+return
 
 % vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
 
@@ -127,9 +139,6 @@ vel = ddt(dist,1/1000);
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
  idx(1) = find(dist>50,1); % start reaching 
-
-
-
 
 [vpks,vlocs] = findpeaks(vel(idx(1):end)); vlocs=vlocs+idx(1)-1;
 [~,idx(2)] = max(vel); %max vel
@@ -196,5 +205,21 @@ ylabel('Distance/ Velocity')
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist','Time Prior','Time End')
 title(Muscles(g))
 
+function [y,ty]=resampledata(x,t,fs,fsnew)
+% compute slope and offset (y = a1 x + a2)
+[nr,nc]=size(x);
+for i=1:nc
+    a(1) = (x(end,i)-x(1,i)) / (t(end)-t(1));
+    a(2) = x(1,i);
+    
+    % detrend the signal
+    xdetrend = x(:,i) - polyval(a,t);
+    [ydetrend,ty] = resample(xdetrend,t,fsnew,10,fs);
+    
+    if i==1, y=zeros(length(ty),nc); end
+    
+    y(:,i) = ydetrend + polyval(a,ty);
+end
+end
 
 % end 
