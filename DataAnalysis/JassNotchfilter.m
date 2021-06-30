@@ -33,15 +33,16 @@ emg_time = 0:1/Fs:(length(emg_trial)-1)/Fs;
 % figure()
 % plot(emg_time,emg_trial(:,2))
 
+%Changed to 8th order 
 
-d60 = designfilt('bandstopiir','FilterOrder',4, ...
+d60 = designfilt('bandstopiir','FilterOrder',8, ...
                'HalfPowerFrequency1',59,'HalfPowerFrequency2',61, ...
                'DesignMethod','butter','SampleRate',Fs);
            
-d120 = designfilt('bandstopiir','FilterOrder',4, ...
+d120 = designfilt('bandstopiir','FilterOrder',8, ...
                'HalfPowerFrequency1',119,'HalfPowerFrequency2',121, ...
                'DesignMethod','butter','SampleRate',Fs);
-d180 = designfilt('bandstopiir','FilterOrder',4, ...
+d180 = designfilt('bandstopiir','FilterOrder',8, ...
               'HalfPowerFrequency1',179,'HalfPowerFrequency2',181, ...
               'DesignMethod','butter','SampleRate',Fs);
            
@@ -52,7 +53,7 @@ d180 = designfilt('bandstopiir','FilterOrder',4, ...
 %compensate for filter delay.
 
 % Make sure to change for given muscle
-% butt_trial60 = filtfilt(d60,emg_trial); %doing butterworth on 60hz
+%butt_trial60 = filtfilt(d60,emg_trial); %doing butterworth on 60hz
 %butt_trial180 = filtfilt(d180,butt_trial60); %using this for 180 -- taking new trial without 60hz (need filtered data) 
 %%
 %saving filtered data for all filtered muscle data
@@ -60,6 +61,8 @@ for i = 1:15
 butt_trial60(:,i) = filtfilt(d60,emg_trial(:,i)); 
 butt_trial120(:,i) = filtfilt(d120,butt_trial60(:,i)); 
 butt_trial180(:,i) = filtfilt(d180,butt_trial120(:,i)); 
+
+%Low pass filter 240 HZ
 fpass=240;
 clean_trial = lowpass(butt_trial180,fpass,Fs);  
 filename1=sprintf('clean_trial_trialHB_%d',k);  % FILENAME CHANGE!!!
