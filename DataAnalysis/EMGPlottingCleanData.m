@@ -1,4 +1,4 @@
-%June 2021
+%July 2021
 %Script to go through EMGs and plot distance and velocity for given trials and participants 
 
 %% Run this for given file path  
@@ -25,12 +25,13 @@ ExpCond = 1;
 
  %loading in act data
  actdata=data.act;
- %Plotting normalized clean EMG data  
- PlotEMGs(clean_trial,maxes)
  
-
  %Plotting distance and velocity traces
- ComputeReachStart_NRSA(actdata,i)
+ [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,i)
  
+ %Plotting normalized clean EMG data  
+ PlotEMGsClean(clean_trial,maxes,timestart,timevelmax,timeend,timedistmax)
+ 
+%pause between trials 
  pause
  end 
