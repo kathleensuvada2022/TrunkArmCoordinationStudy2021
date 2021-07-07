@@ -22,13 +22,15 @@ function maxEMG=GetMaxMusAct3(flpath,basename,setfname,partid,plotflag)
 %
 load([flpath '/' setfname]);
 
+sampRate= setup.daq.sRate;
+
 % Specify the width of the averaging window in seconds
 avgwindow=0.25; ds=sampRate*avgwindow;
 trials=dir([flpath '/*' basename '*.mat']);
 
 %Updated 10.14.19
 %emgchan = chanList(1:15);
-emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL','ADEL'};
+emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 nEMG= length(emgchan);
 maxTEMG=zeros(length(trials),nEMG);
 Tlength=zeros(length(trials),1);
@@ -45,7 +47,7 @@ for j=1:length(trials)
     end
 %     Tlength(j)=length(data);
 
-    emg=detrend(data(:,1:16)); %updated 11.2020
+    emg=detrend(data(:,1:15)); %updated 11.2020
     % Rectify EMG
     emg=abs(emg);
     % Compute the mean EMG
@@ -399,7 +401,7 @@ if plotflag
         newemg(:,k)=data(:,k);  %updated 10.2019 because channels changed
     end
 end
-    PlotEMGs4(newemg)
+    PlotEMGs(newemg)
     figure(2), clf
     newemg=abs(detrend(newemg));
     newmeanEMG=movmean(newemg,ds);
