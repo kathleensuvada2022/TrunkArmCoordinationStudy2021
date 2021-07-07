@@ -123,7 +123,7 @@ for j=1:length(trials)
     end
     Tlength(j)=size(data,1);
     
-end 
+end
 
 [maxEMG,maxidx]=max(maxTEMG);
 maxTlength=max(Tlength);

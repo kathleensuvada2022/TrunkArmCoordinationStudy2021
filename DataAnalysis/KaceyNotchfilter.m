@@ -9,7 +9,7 @@ fc=240;
 % numfiles = 47; % CHANGE NUM FILES 
 % mydata = cell(1, numfiles);
 
-numfiles = 47;
+numfiles = 84;
 mydata = cell(1, numfiles);
 
 for k = 1:numfiles
@@ -17,7 +17,7 @@ for k = 1:numfiles
 % myfilename = sprintf('maxes%d.mat', k); % for maxes everything else same
  %as resting
    
-  myfilename = sprintf('trials%d.mat', k); % CHANGE FILENAME 
+  myfilename = sprintf('trial%d.mat', k); % CHANGE FILENAME 
    load(myfilename);
    emg_trial = data.daq{1,2} ;   % CHANGE FORMAT (same for resting and
 %   maxes)
@@ -77,10 +77,14 @@ v=fft(butt_trial180,n); %Discrete Fourier Transform
 
 Wn=2*fc/Fs; % the normalized cutoff frequency for butter function
 nn=8; % the order
+
+%butter returns the transfer function coefficients of an 8th-order lowpass digital Butterworth filter with normalized cutoff frequency Wn.
 [b,a] = butter(nn,Wn,'low');
-d240=filter(b,a,butt_trial180);
-cleandata(:,i) = filtfilt(d240,butt_trial180(:,i)); 
-filename1=sprintf('clean_data_trialHB_%d',k);  % FILENAME CHANGE!!!
+%filter is 1-D digital filter which filters the input data butt_trial180 defined by the transfer function coefficients obtained from butter
+%d240=filter(b,a,butt_trial180);
+
+cleandata(:,i) = filtfilt(b,a,butt_trial180(:,i)); 
+filename1=sprintf('clean_data_trial_%d',k);  % FILENAME CHANGE!!!
 save(filename1, 'cleandata');
 % vv=fft(cleandata);
 
@@ -126,7 +130,7 @@ Fs = 1000;
 figure()
 %plot(f,10*log10(pxx))
 plot(f,pxx)
-title('RRA - Filtered')
+title('Filtered Data PSD')
   
 
 % figure(5)

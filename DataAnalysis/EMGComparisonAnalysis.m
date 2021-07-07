@@ -53,7 +53,7 @@ emgbaseline = detrend(emgbaseline(:,1:15));
   trials = setup.trial{1,ExpCond};
 
 % trials = 30;
-
+%%
 for i = 1:length(trials)
 
     load([filepath '/' partid '/' 'trials' num2str(trials(i))])
