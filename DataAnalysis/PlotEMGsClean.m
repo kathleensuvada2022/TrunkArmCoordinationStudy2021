@@ -1,7 +1,7 @@
-function PlotEMGsClean(emg,maxes,timestart,timevelmax,timeend,timedistmax)
+function PlotEMGsClean(emg,maxes,timestart,timevelmax,timeend,timedistmax,i)
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-clf
-figure(1)
+%clf
+figure(i)
 emg=emg./maxes; %normalizing
 sampRate=1000;
 nEMG=size(emg,2);

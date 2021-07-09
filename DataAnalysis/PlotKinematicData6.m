@@ -17,7 +17,7 @@ function [avgshouldertrunk  avgmaxreach] = PlotKinematicData6(partid,metriafname
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
 % datafilepath ='/Users/kcs762/Box/KACEY/Data/';
-datafilepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data/';
+datafilepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data';
 
 % datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 % 
@@ -37,7 +37,8 @@ expcondname={'RT','R25','R50','UT','U25','U50'};
 % load([datafilepath '/' partid '/' partid '_setup'])
 
 %Now can specify the setup file using
-load([datafilepath '/' partid '/' setupf])
+%load([datafilepath '/' partid '/' setupf])
+load([datafilepath '/' partid '/' 'RTIS2001_setup.mat']); %loading set up 
 
 %load('/Users/kcs762/Box/KACEY/Data/RTIS2003/42321/RTIS2003_setup_Final_TU.mat')
 
@@ -60,7 +61,7 @@ load([datafilepath '/' partid '/' setupf])
 % afilepath =[partid '/act3d/']; % this is for the ACT 3D find reach start
 
 % all the same file path now
-afilepath = [datafilepath '/' partid];
+afilepath = [datafilepath partid];
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 

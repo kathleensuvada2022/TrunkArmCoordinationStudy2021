@@ -74,7 +74,7 @@ timeend = idx(4)*(1/50);
 
 Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
 
-figure(1)
+figure(g)
 subplot(3,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))

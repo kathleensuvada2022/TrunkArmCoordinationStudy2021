@@ -1,8 +1,8 @@
-function PlotEMGs(emg,maxes)
+function PlotEMGs(emg)
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 clf
 figure(1)
-emg=emg./maxes; %normalizing
+% emg=emg./maxes; %normalizing
 sampRate=1000;
 nEMG=size(emg,2);
 t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz

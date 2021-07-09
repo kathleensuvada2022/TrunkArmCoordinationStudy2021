@@ -121,7 +121,7 @@ for j=1:length(trials)
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
        end
     end
-    Tlength(j)=size(data,1);
+   % Tlength(j)=size(data,1);
     
 end 
 
