@@ -201,7 +201,7 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 % legend(phandles,'Hand','Hand2','Shoulder','Trunk','Forearm','Home','Max Reach');
 % title(filename,'Interpreter','none')
  %% Main Figure 
-figure(1),clf
+figure(),clf
 
 % Metria Kinematic Trajectories from computed BLs 
 subplot(2,1,1)

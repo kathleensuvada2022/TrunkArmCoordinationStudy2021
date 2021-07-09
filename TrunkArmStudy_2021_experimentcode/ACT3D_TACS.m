@@ -881,23 +881,22 @@ function EXP_localTimerAction(source, event)
 % end
 % Read current data from ACT3D
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
-% hpos=gethandpos(hpos',myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
-hpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
-data={[hpos',myhandles.robot.endEffectorRotation(1),myhandles.robot.endEffectorForce(3)]};
-% NI DAQ data only needed if RT checkbox is on
 if myhandles.daq.on, if myhandles.daq.rt, data{2}=event.Data; end; end
 if myhandles.met.on
      metriadata = metriaComm_collectPoint2(myhandles.met.socket,myhandles.met.markerid(1:4),myhandles.met.cameraSerials);
+    data{3}=metriadata;
  
 % [metdata] = metriaComm_collectPoint(myhandles.met.socket,myhandles.met.nmarker); % Changed by KCS 12.9.2020 for new metriaComm_collectPoint
 %     metriadata=[metdata1,metdata2];
     
 %     [metdata1,metdata2] = metriaComm_collectPoint(myhandles.met.socket,myhandles.met.nmarker);
 %     metriadata=[metdata1,metdata2];
-    data{3}=metriadata;
 %     disp(metriadata(counter,:))
 end
-
+% hpos=gethandpos(hpos',myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
+hpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
+data={[hpos',myhandles.robot.endEffectorRotation(1),myhandles.robot.endEffectorForce(3)]};
+% NI DAQ data only needed if RT checkbox is on
 
 % If collecting data (initiated with GO button), play sound at 200 ms after start of trial
 % and populate ACT3D and Metria databuffers
@@ -1058,8 +1057,7 @@ end
 
 
 function EXP_TimerStopAction(hObject,event,data)
-actdata=getappdata(act3dTACS,'actdatabuffer');
-data.act=actdata;
+data.act=getappdata(act3dTACS,'actdatabuffer');
 
 if myhandles.met.on 
     data.met=getappdata(act3dTACS,'metdatabuffer');
