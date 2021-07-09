@@ -1,3 +1,4 @@
+
 function ACT3D_TACS(varargin)
 % AMA 1/7/2020 Adapted from main.m and make.m
 % KCS 10.23.20 - adding PPS callback function for checkbox EDITS TO PPS1 CLASS
@@ -780,7 +781,7 @@ function DAQ_Init_Callback(source,event)
 stop(myhandles.exp.timer)
 myhandles.daq.on=1;
 % Initialize DAQ variables
-myhandles.daq.Device='Dev1';
+myhandles.daq.Device='Dev3';
 % myhandles.daq.Enable=0;
 myhandles.daq.nChan=16;
 myhandles.daq.sRate=1000;
