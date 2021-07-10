@@ -1,4 +1,4 @@
-function [avgshouldertrunk  avgmaxreach] = PlotKinematicData6(partid,metriafname,act3dfname,setupf,expcond)
+function [avgshouldertrunk  avgmaxreach] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond)
 
 % partid,'2001tf_final_000000','Target_',3
 % partid = 'RTIS2001';
@@ -16,10 +16,9 @@ function [avgshouldertrunk  avgmaxreach] = PlotKinematicData6(partid,metriafname
 % UT - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[2 5 7 9 10])
 % UL - PlotKinematicData('RTIS2001','RTIS2001\metria\trunkfree\','2001tf_final_000000',[1 3 4 6 8])
 
-% datafilepath ='/Users/kcs762/Box/KACEY/Data/';
-datafilepath = '/Users/kcs762/OneDrive - Northwestern University/TACS/Data';
+datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
-% datafilepath='/Users/kcs762/Northwestern University/Anamaria Acosta - TACS/Data';
 % 
 % if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
 %     load([datafilepath partid '/Maxes/maxEMG.mat']);
@@ -38,7 +37,7 @@ expcondname={'RT','R25','R50','UT','U25','U50'};
 
 %Now can specify the setup file using
 %load([datafilepath '/' partid '/' setupf])
-load([datafilepath '/' partid '/' 'RTIS2001_setup.mat']); %loading set up 
+%load([datafilepath '/' partid '/' 'RTIS1005_setup.mat']); %loading set up 
 
 %load('/Users/kcs762/Box/KACEY/Data/RTIS2003/42321/RTIS2003_setup_Final_TU.mat')
 
@@ -61,7 +60,7 @@ load([datafilepath '/' partid '/' 'RTIS2001_setup.mat']); %loading set up
 % afilepath =[partid '/act3d/']; % this is for the ACT 3D find reach start
 
 % all the same file path now
-afilepath = [datafilepath partid];
+afilepath = datafilepath;
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 
@@ -128,7 +127,7 @@ afname2 = mfname;
 
 %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
 
-[xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setupf);
+[xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup);
    
 
 % maxreach_seconds = maxreachtime;

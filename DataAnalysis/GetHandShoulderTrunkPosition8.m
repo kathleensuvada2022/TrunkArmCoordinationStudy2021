@@ -1,10 +1,10 @@
- function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach, shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setupf)
+ function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach, shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
 
 load([filepath '/BL.mat'])
-load([filepath '/' setupf])
+% load([filepath '/' partid,'_',setup])
 %% Load marker data
 % Matrix size = [Nimages x (2 + Nmarkers*14)]
 % [FrameTime,Marker,ST,HT(1,1:4),HT(2,1:4),HT(3,1:4)]
