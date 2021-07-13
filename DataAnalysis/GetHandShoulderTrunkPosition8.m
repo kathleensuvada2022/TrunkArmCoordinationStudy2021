@@ -238,7 +238,7 @@ xlabel('samples')
 ylabel('Distance') 
 legend('Distance','Max Dist')
 
-pause
+%pause
 %% Testing Forearm data and 3rd MCP position
 % 
 % 
