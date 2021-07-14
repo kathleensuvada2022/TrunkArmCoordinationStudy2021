@@ -881,6 +881,8 @@ function EXP_localTimerAction(source, event)
 % end
 % Read current data from ACT3D
 myhandles.robot.SetForceGetInfo(myhandles.exp.arm);
+hpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
+data={[hpos',myhandles.robot.endEffectorRotation(1),myhandles.robot.endEffectorForce(3)]};
 if myhandles.daq.on, if myhandles.daq.rt, data{2}=event.Data; end; end
 if myhandles.met.on
      metriadata = metriaComm_collectPoint2(myhandles.met.socket,myhandles.met.markerid(1:4),myhandles.met.cameraSerials);
@@ -894,8 +896,6 @@ if myhandles.met.on
 %     disp(metriadata(counter,:))
 end
 % hpos=gethandpos(hpos',myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
-hpos=gethandpos(myhandles.robot.endEffectorPosition,myhandles.robot.endEffectorRotation,myhandles.exp); % Compute hand (3rd MCP) position
-data={[hpos',myhandles.robot.endEffectorRotation(1),myhandles.robot.endEffectorForce(3)]};
 % NI DAQ data only needed if RT checkbox is on
 
 % If collecting data (initiated with GO button), play sound at 200 ms after start of trial
