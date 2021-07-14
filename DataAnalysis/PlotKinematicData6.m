@@ -1,4 +1,4 @@
-function [avgshouldertrunk  avgmaxreach] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond)
+function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond)
 
 % partid,'2001tf_final_000000','Target_',3
 % partid = 'RTIS2001';
@@ -188,17 +188,17 @@ afname2 = mfname;
 
 %emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel to
 % %%
-% % Main Cumulative Metria Figure
-% 
-% 
+%% Main Cumulative Metria Figure
+%  figure(2)
 %         p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',1);
 %         hold on
-%    %      p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-% %        p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-%   %      p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
+%    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+% %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%   %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
 % 
 %         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
 %         viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
+% %        viscircles(xhand(1,1),xhand(1,2),10,'Color','g')
 % 
 % %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
 % legend([p1'],'Hand','Shoulder','Trunk','Location','southeast')
@@ -244,5 +244,7 @@ hold off
 %
 %avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
 avgmaxreach =nanmean(maxreach_current_trial)
+std_maxreach = nanstd(maxreach_current_trial)
 avgshouldertrunk = nanmean(shtrdisp_current_trial)
+std_shldtr = nanstd(shtrdisp_current_trial)
 end   

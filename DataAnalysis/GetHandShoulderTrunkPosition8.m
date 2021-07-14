@@ -201,10 +201,10 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 % legend(phandles,'Hand','Hand2','Shoulder','Trunk','Forearm','Home','Max Reach');
 % title(filename,'Interpreter','none')
  %% Main Figure 
-figure(),clf
-
-% Metria Kinematic Trajectories from computed BLs 
-subplot(2,1,1)
+ figure(1),clf
+% 
+% % Metria Kinematic Trajectories from computed BLs 
+ subplot(2,1,1)
  plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
  hold on
 plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
@@ -226,9 +226,9 @@ plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
 xlabel('x (mm)')
 ylabel('y (mm)')
 title(filename)
-
-% Metria Distance Plot with Max Distance Marked
-subplot(2,1,2)
+% 
+% % Metria Distance Plot with Max Distance Marked
+ subplot(2,1,2)
 plot(rdist)
 hold on
 p1 = line('Color','b','Xdata',[mridx mridx],'Ydata',[400 650], 'LineWidth',.5); % start reach
@@ -237,8 +237,8 @@ p1 = line('Color','b','Xdata',[mridx mridx],'Ydata',[400 650], 'LineWidth',.5); 
 xlabel('samples')
 ylabel('Distance') 
 legend('Distance','Max Dist')
-
-%pause
+% 
+ pause
 %% Testing Forearm data and 3rd MCP position
 % 
 % 
