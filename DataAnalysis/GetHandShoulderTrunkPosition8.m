@@ -1,4 +1,4 @@
- function [xhand,xshoulder,xtrunk,xshldr,xjug,maxreach, shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup)
+ function [t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -191,6 +191,7 @@ end
 rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 [maxreach,mridx]=max(rdist);
 
+
 %  %% Comparing with ACT3D data (xhand2)
 % p1=plot([xhand(:,1) xhand2(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xhand(:,3) xhand2(:,3) xshldr(:,3) xtrunk(:,3) xfore(:,3)],'LineWidth',2); hold on
 % p2=plot(gca,nanmean([xhand(1:10,1) xhand2(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xhand2(1:10,3) xshldr(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g');
@@ -200,45 +201,34 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 % % legend(phandles,'Hand','Shoulder','Trunk','Home','Max Reach')
 % legend(phandles,'Hand','Hand2','Shoulder','Trunk','Forearm','Home','Max Reach');
 % title(filename,'Interpreter','none')
- %% Main Figure 
- figure(1),clf
-% 
-% % Metria Kinematic Trajectories from computed BLs 
- subplot(2,1,1)
- plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
- hold on
-plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
-% % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
-% hold on
-% p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-% % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
-% % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
-% %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
-% p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
-% 
-% 
-% %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
-% % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
 
-% % phandles=[p1' p2 p3];
- axis 'equal'
-  legend('Hand','Shoulder','Trunk')
-xlabel('x (mm)')
-ylabel('y (mm)')
-title(filename)
-% 
-% % Metria Distance Plot with Max Distance Marked
- subplot(2,1,2)
-plot(rdist)
-hold on
-p1 = line('Color','b','Xdata',[mridx mridx],'Ydata',[400 650], 'LineWidth',.5); % start reach
-% co=get(lax1,'ColorOrder');
-% set(lax1,'ColorOrder',co(end-1:-1:1,:))
-xlabel('samples')
-ylabel('Distance') 
-legend('Distance','Max Dist')
-% 
- pause
+
+%% 
+% Compute the mean trunk position
+% mtpos=nanmean(xtrunk); 
+% stdtpos=nanstd(xtrunk); 
+% mspos=nanmean(xshldr);
+% stdspos=nanstd(xshldr);
+
+% disp([mtpos stdtpos mspos stdspos])
+
+%% Compute shoulder and trunk displacement at maximum reach - using BLS
+
+  shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
+
+%% Truncate data until max reach
+ xhand=xhand(1:mridx,:); %Using BL 3rd MCP
+% % %xfore=xfore(1:mridx,:);
+% % %xarm=xarm(1:mridx2,:);
+  xshldr=xshldr(1:mridx,:);%Using BL Acromion
+ xjug=xjug(1:mridx,:); %Using BL jug notch
+
+% xhand=xhand(1:mridx2,:);
+% xfore=xfore(1:mridx2,:);
+% xarm=xarm(1:mridx2,:);
+% xshldr=xshldr(1:mridx2,:);
+% xtrunk=xtrunk(1:mridx2,:);
+
 %% Testing Forearm data and 3rd MCP position
 % 
 % 
@@ -290,33 +280,6 @@ legend('Distance','Max Dist')
 % end
 % 
 % 
-
-%% 
-% Compute the mean trunk position
-% mtpos=nanmean(xtrunk); 
-% stdtpos=nanstd(xtrunk); 
-% mspos=nanmean(xshldr);
-% stdspos=nanstd(xshldr);
-
-% disp([mtpos stdtpos mspos stdspos])
-
-%% Compute shoulder and trunk displacement at maximum reach - using BLS
-
-  shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
-
-%% Truncate data until max reach
- xhand=xhand(1:mridx,:); %Using BL 3rd MCP
-% % %xfore=xfore(1:mridx,:);
-% % %xarm=xarm(1:mridx2,:);
-  xshldr=xshldr(1:mridx,:);%Using BL Acromion
- xjug=xjug(1:mridx,:); %Using BL jug notch
-
-% xhand=xhand(1:mridx2,:);
-% xfore=xfore(1:mridx2,:);
-% xarm=xarm(1:mridx2,:);
-% xshldr=xshldr(1:mridx2,:);
-% xtrunk=xtrunk(1:mridx2,:);
-
 
  end
  
