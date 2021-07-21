@@ -3,10 +3,10 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach] = PlotKinematic
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
-%% Loading in Max EMGS if they exist
+%% Loading in Max EMGS
 % if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
-%     load([datafilepath partid '/Maxes/maxEMG.mat']);
-%     %disp(maxEMG)
+    load([datafilepath partid '/Maxes/maxEMG.mat']);
+    %disp(maxEMG)
 % else
 %     disp('Computing Maximum Muscle EMGs. Make sure you check them')
 % %     maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
@@ -14,7 +14,6 @@ load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 % end
 %% Loading and setting file name and condition
 expcondname={'RT','R25','R50','UT','U25','U50'};
-
 
 % all the same file path now
 afilepath = datafilepath;
