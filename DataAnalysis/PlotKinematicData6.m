@@ -5,7 +5,7 @@ load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 %% Loading in Max EMGS
 % if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
-    load([datafilepath partid '/Maxes/maxEMG.mat']);
+%     load([datafilepath partid '/Maxes/maxEMG.mat']);
     %disp(maxEMG)
 % else
 %     disp('Computing Maximum Muscle EMGs. Make sure you check them')

@@ -148,6 +148,7 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 % end
 % 
 
+%% Plot 3D Position of markers in computed ROOM coords 
 
 %% Compute the BL in the global CS using P_LCS 
 %From MetriaKinDaq
