@@ -149,8 +149,33 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 % 
 
 %% Plot 3D Position of markers in computed ROOM coords 
+Tftom= zeros(4,4,nimag);
+Forearm_Room=zeros(4,4,nimag);
+rcsfore=zeros(2*nimag,2);
+for i=1:nimag % loop through time points
+    
+% For the 3rd metacarpal grabbing the forearm marker
+    Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2));
+    Tftom(1:3,4,i) = xfore(i,1:3)';% Transformation matrix for forearm in time i
 
-%% Compute the BL in the global CS using P_LCS 
+   Forearm_Room(:,:,i) =(Tftom(:,:,i))*(HTrC'); % Now have forarm HT in room CS************
+    
+% % for the acromion using the shoulder marker 
+%      Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% grabbing the HT of the shoulder marker 
+%      Tstom(1:3,4) = xshoulder(i,1:3)';
+%      
+%     Tstom =Tstom*(HTrC'); % Now have shoulder HT in room CS************
+% 
+% % for the jugular notch using the trunk marker 
+%      Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));% grabbing the HT of the shoulder marker 
+%      Tttom(1:3,4) = xtrunk(i,1:3)';
+%     Tttom =Tttom*(HTrC'); % Now have Trunk HT in room CS************
+
+end
+
+
+
+%% Compute the BL in the global CS 
 %From MetriaKinDaq
 % dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB];
 %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
@@ -162,26 +187,24 @@ lcsfore=zeros(2*nimag,2);
 for i=1:nimag % loop through time points
     
 % For the 3rd metacarpal grabbing the forearm marker
-    Tftom = quat2tform(circshift(xfore(i,4:7),1,2));
-    Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix for forearm in time i
-%     Tftom= [reshape(x(i,fidx+(2:13)),4,3)';[0 0 0 1]]; % Transformation matrix for forearm in time i
-%      BLg=(Tftom)*setup.bl.lcs{4}(:,4);  %grabbing the XYZ point of the 3rd metacarpal in the LCS and
-%        BLg = Tftom*(bl{1,4}(4,1:4))';
+  %  Tftom = quat2tform(circshift(xfore(i,4:7),1,2));  **** Uncomment ***
+  %  Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix *************
+
       BLg=Tftom *[bl{4}(4,1:3) 1]'; 
       xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); %what is this?
 
 % for the acromion using the shoulder marker 
-     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% grabbing the HT of the shoulder marker 
-     Tstom(1:3,4) = xshoulder(i,1:3)';
-%     Tstom = [Tstom;0 0 0 1]; 
+%      Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2)); *************
+%      Tstom(1:3,4) = xshoulder(i,1:3)'; *************
+
      BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point of the anterior acromion in the LCS
      xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time 
 
 % for the jugular notch using the trunk marker 
-     Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));% grabbing the HT of the shoulder marker 
-     Tttom(1:3,4) = xtrunk(i,1:3)';
-%     Tstom = [Tstom;0 0 0 1]; 
+%      Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  ************* 
+%      Tttom(1:3,4) = xtrunk(i,1:3)'; *************
+     
      BLg3=(Tttom) *[bl{1}(2,1:3) 1]';  %grabbing the XYZ point of the anterior acromion in the LCS
      xjug(i,:)=BLg3(1:3,1)'; % X Y Z of Jugular notch in the global frame and rows are time 
 end

@@ -127,3 +127,9 @@ Yr = [Yr;0]; % Normalized Y vector
 
 HTrC = [Xr Yr Zr CPorigin];
 
+%Plotting the Room CS in Camera Coordinate Frame
+H=quiver3(HTrC([1 1 1],4)',HTrC([2 2 2],4)',HTrC([3 3 3],4)',10*HTrC(1,1:3),10*HTrC(2,1:3),10*HTrC(3,1:3));
+text(HTrC([1 1 1],4)'+10*HTrC(1,1:3),HTrC([2 2 2],4)'+10*HTrC(2,1:3),HTrC([3 3 3],4)'+10*HTrC(3,1:3),{'X','Y','Z'})
+xlabel('x') 
+ylabel('y')
+zlabel('z')
