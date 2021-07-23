@@ -4,14 +4,7 @@ datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/'
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %% Loading in Max EMGS
-% if exist([datafilepath partid '/Maxes/maxEMG.mat'])==2, 
-%     load([datafilepath partid '/Maxes/maxEMG.mat']);
-    %disp(maxEMG)
-% else
-%     disp('Computing Maximum Muscle EMGs. Make sure you check them')
-% %     maxEMG=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
-%     [maxEMG]=GetMaxMusAct2([partid '/maxes'],'maxes','savedsetupKacey','Control',0);
-% end
+     load([datafilepath '/Maxes/maxEMG.mat']);
 %% Loading and setting file name and condition
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
@@ -35,8 +28,6 @@ emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
 maxreach=zeros(ntrials,1);
 emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
-
-
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
@@ -122,15 +113,18 @@ legend('Distance','Max Dist')
 
 
 %% Loading in EMGS 
-%load([afilepath afname])
-%emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
 
-   
+% Normalized EMGS
+load([afilepath afname])
+emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
     
 %% Computing the start of the reach
+actdata=data.act;
+metdata=data.met;
 
-% [dist,vel,time,rdist,t]= ComputeReachStart5(afilepath,afname);
+ [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]= ComputeReachStart_2021(actdata,metdata,setup);
 %%    
+% Clean this up? Is any of this neccessary anymore?
 %     switch partid
 %         case 'RTIS2001'
 %             if expcond==3 && i==1
@@ -140,8 +134,7 @@ legend('Distance','Max Dist')
     
 %      index = ceil(time/.001);
       
-      
-      
+     
 %     ibefore = timebefore/.001;
 %     ibefore = int32(ibefore);
 %     ivelmax = timevelmax/.001;
@@ -163,14 +156,10 @@ legend('Distance','Max Dist')
 
 
 %% Plotting EMGS
-% emgs_maxvel=PlotEMGs5(emg,dist,vel,time,t,[partid '_EMG' expcondname{expcond} num2str(i)]);%,title([partid '-' afname],'Interpreter','none','Position',[-2,1,0])
-% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-%  %   title(ax,[partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-%     print('-f3','-djpeg',[partid '_EMG' num2str(expcond) num2str(i)])
+PlotEMGsClean(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
-%emgsmaxvel_vals(i,:)=emgs_maxvel; %saving each emg value at max vel 
 %% Main Cumulative Metria Figure
- figure(2)
+ figure(3)
         p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',1);
         hold on
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -215,10 +204,9 @@ end
 
 %  [CoP1]= ComputeCOP(ppsdata);
 
-
+pause
 end
-
-%avg_emg_maxvel =mean(emgsmaxvel_vals); % gives the EMG values at the maximum velocity across trials
+%% Printing out the max reach, std, shoulder and trunk displacement and std
 avgmaxreach =nanmean(maxreach_current_trial)
 std_maxreach = nanstd(maxreach_current_trial)
 avgshouldertrunk = nanmean(shtrdisp_current_trial)
