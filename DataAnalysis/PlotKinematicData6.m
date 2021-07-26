@@ -59,7 +59,6 @@ afname2 = mfname;
 % 
 %
 
-
 %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
 
 [t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
@@ -123,7 +122,7 @@ emg=abs(detrend(cleandata(:,1:15)))./maxEMG(ones(length(cleandata(:,1:15)),1),:)
 load([mfilepath mfname])
 metdata=data.met;
 
- [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]= ComputeReachStart_2021(metdata,setup);
+[dist2,vel2,t2,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup);
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid

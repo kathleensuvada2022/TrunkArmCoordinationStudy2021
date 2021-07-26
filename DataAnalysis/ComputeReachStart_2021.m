@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup)
+function [dist2,vel2,t2,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(metdata,setup)
 
 %% Loading in ACT3D Data
 %Use if plotting ACT3D data
@@ -19,13 +19,12 @@ function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReac
 % Ypos = actdata(:,3);
 % Zpos = actdata(:,4);
 % 
-Xvel = actdata(:,9);
-Yvel = actdata(:,10);
-Zvel = actdata(:,11);
+% Xvel = actdata(:,9);
+% Yvel = actdata(:,10);
+% Zvel = actdata(:,11);
 
 %% Loading in Metria Data
 % Sampling Rate for Metria is 89 HZ
-
 
 t = (metdata(:,2)-metdata(1,2))/89;
 
@@ -65,7 +64,7 @@ for i=1:nimag % loop through time points
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
       BLg=Tftom *setup.bl{1,4}(1:4,4) ; %changed from BL file 
-      xhandold(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+      xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
@@ -76,83 +75,50 @@ end
 
 %% Resampling Xhand 
 
-%xhand old is the origninal mnot resampled version
-% [xhand t] = resample(xhandold,t,1000);
+[xhand2,t2]=resampledata(xhand,t,100,89); %updated July 2021 
 
-[xhand,t]=resampledata(xhand,t,100,89); %updated July 2021 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
 
 %using original data
-Xoold = nanmean(xhandold(1:50,1));
-Yoold = nanmean(xhandold(1:50,2)); 
-Zoold = nanmean(xhandold(1:50,3)); 
-
-
-%using Resampled Data
-Xo = nanmean(xhand(1:50,1));
+Xo= nanmean(xhand(1:50,1));
 Yo = nanmean(xhand(1:50,2)); 
 Zo = nanmean(xhand(1:50,3)); 
 
-
-% %Computing Velocity from hand position
-% Xvel = diff(xhand(:,1));
-% Yvel = diff(xhand(:,2));
-% Zvel = diff(xhand(:,3));
-
-% Xov = nanmean(Xvel(1:50));
-% Yov = nanmean(Yvel(1:50)); 
-% Zov = nanmean(Zvel(1:50)); 
-
-% dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
-% distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
-% distold = distold(:)-distold(1);
-
-%Updated July 2021
-dist=sqrt(sum(xhand'.^2));
-dist=dist-mean(dist(1:10));
-
-
+dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
 dist = dist(:)-dist(1); %offsetting so not starting above 0
 
+%using Resampled Data
+Xo = nanmean(xhand2(1:50,1));
+Yo = nanmean(xhand2(1:50,2)); 
+Zo = nanmean(xhand2(1:50,3)); 
 
-% Using function from AMA to compute Vel
-vel = ddt(dist,1/1000);
+dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
+dist2 = dist2(:)-dist2(1);
 
-% vel = sqrt((Xvel-Xov).^2 +(Yvel-Yov).^2 + (Zvel-Zov).^2);
+% Computing Velocity and resampling 
+vel = ddt(smo(dist,3),1/89);
+[vel2,t2] = resampledata(vel,t,100,89);
 
-% t = length(vel)/ 50; % time in seconds sampling rate of metria? 250 samples in 5 seconds
-% t = 0:.02:5;
-% t = t(2:end);
 
+%% Finding Time Points 
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
- idx(1) = find(vel(1000:5000)>50,1); % start reaching 
+idx(1) = find(vel2>250,1); % start reaching 
 
 
-
- maxvel =max(vel(1000:8000)); %cutting at 5 seconds
- idx(2)= find(vel==maxvel);
-
-
-%Yielded odd results 
-% [dpks,dlocs] = findpeaks(dist(idx(1):end)); dlocs=dlocs+idx(1)-1;
-% % [~,idx(3)] = max(dist(idx(2)+1:end)); % idx3 max reach
-% idx(3)=dlocs(1); %Finding first peak of max distance
-% rdist=dpks(1);
+%Finding Max Vel
+ maxvel =max(vel2);
+ idx(2)= find(vel2==maxvel);
 
 %Finding Max dist
-maxdist= max(dist(1000:8000));
-idx(3)= find(dist==maxdist);
+maxdist= max(dist2);
+idx(3)= find(dist2==maxdist);
 
-%idx(4)=idx(3)+6; % Mark end of movement 1s after max velocity
-
-%sampling rate of act 3d - 50 HZ
-
-% start time in seconds 
-timestart = idx(1)*(1/1000);% divide by sampling rate
-timevelmax = idx(2)*(1/1000); % time when max velocity
-timedistmax = idx(3) *(1/1000); %when at max dist
+% Start Time 
+timestart = idx(1)*(1/89);% divide by sampling rate
+timevelmax = idx(2)*(1/89); % time when max velocity
+timedistmax = idx(3) *(1/89); %when at max dist
 % timebefore = timestart-.05; %time 50 ms prior to start of reach
 timebefore =1;
 timeend = timedistmax+2;
@@ -165,21 +131,20 @@ clf
  subplot(3,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
- plot(t,dist)
+ plot(t2,dist2)
 hold on
-plot(t,vel) 
+plot(t2,vel2) 
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
-timevelmax
-timedistmax
 
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-500 500], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-500 500],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-500 500],'LineWidth',.5); %max, dist
+
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel2) max(vel2)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel2) max(vel2)],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel2) max(vel2)],'LineWidth',.5); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
