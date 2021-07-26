@@ -42,7 +42,7 @@ shtrdisp_current_trial=zeros(ntrials,2);
 %% Main loop that grabs Metria data and plots 
 for i=1:length(mtrials)
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
-afname = mfname;
+afname =  ['/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']; %loading cleaned up EMG data
 afname2 = mfname;
       
 
@@ -116,13 +116,14 @@ legend('Distance','Max Dist')
 
 % Normalized EMGS
 load([afilepath afname])
-emg=abs(detrend(data.daq{1,2}(:,1:15)))./maxEMG(ones(length(data.daq{1,2}(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
+emg=abs(detrend(cleandata(:,1:15)))./maxEMG(ones(length(cleandata(:,1:15)),1),:); % Detrend and rectify EMG % Changed based on new data structure 
     
 %% Computing the start of the reach
-actdata=data.act;
+%actdata=data.act;
+load([mfilepath mfname])
 metdata=data.met;
 
- [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]= ComputeReachStart_2021(actdata,metdata,setup);
+ [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]= ComputeReachStart_2021(metdata,setup);
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid

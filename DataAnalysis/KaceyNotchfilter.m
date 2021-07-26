@@ -9,7 +9,7 @@ fc=240;
 % numfiles = 47; % CHANGE NUM FILES 
 % mydata = cell(1, numfiles);
 
-numfiles = 37;
+numfiles = 102;
 mydata = cell(1, numfiles);
 %%
 for k = 1:numfiles
@@ -19,11 +19,11 @@ for k = 1:numfiles
    
   myfilename = sprintf('trial%d.mat', k); % CHANGE FILENAME 
    load(myfilename);
-%    emg_trial = data.daq{1,2} ;   % CHANGE FORMAT (same for resting and
+    emg_trial = data.daq{1,2};   % CHANGE FORMAT (same for resting and
 %   maxes)
 
 
- emg_trial = detrend(data(:,1:15)); 
+ emg_trial = detrend(emg_trial(:,1:15)); 
 
 %Replace line 22 for actual trials
 %emg_trial = detrend(data(1).daq{:,2});

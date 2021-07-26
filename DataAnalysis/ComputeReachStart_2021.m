@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(metdata,setup)
 
 %% Loading in ACT3D Data
 %Use if plotting ACT3D data
