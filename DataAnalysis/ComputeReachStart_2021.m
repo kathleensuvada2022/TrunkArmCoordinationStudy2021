@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(metdata,setup)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup)
 
 %% Loading in ACT3D Data
 %Use if plotting ACT3D data
@@ -19,9 +19,9 @@ function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReac
 % Ypos = actdata(:,3);
 % Zpos = actdata(:,4);
 % 
-% Xvel = actdata(:,9);
-% Yvel = actdata(:,10);
-% Zvel = actdata(:,11);
+Xvel = actdata(:,9);
+Yvel = actdata(:,10);
+Zvel = actdata(:,11);
 
 %% Loading in Metria Data
 % Sampling Rate for Metria is 89 HZ
@@ -77,7 +77,9 @@ end
 %% Resampling Xhand 
 
 %xhand old is the origninal mnot resampled version
-[xhand t] = resample(xhandold,t,1000);
+% [xhand t] = resample(xhandold,t,1000);
+
+[xhand,t]=resampledata(xhand,t,100,89); %updated July 2021 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
 
@@ -102,9 +104,14 @@ Zo = nanmean(xhand(1:50,3));
 % Yov = nanmean(Yvel(1:50)); 
 % Zov = nanmean(Zvel(1:50)); 
 
-dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
-distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
-distold = distold(:)-distold(1);
+% dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+% distold =sqrt((xhandold(:,1)-Xoold).^2 +(xhandold(:,2)-Yoold).^2 + (xhandold(:,3)-Zoold).^2);
+% distold = distold(:)-distold(1);
+
+%Updated July 2021
+dist=sqrt(sum(xhand'.^2));
+dist=dist-mean(dist(1:10));
+
 
 dist = dist(:)-dist(1); %offsetting so not starting above 0
 
