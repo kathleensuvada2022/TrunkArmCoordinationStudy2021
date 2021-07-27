@@ -103,27 +103,30 @@ vel = ddt(smo(dist,3),1/89);
 
 %% Finding Time Points 
 
-idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
-idx(1) = find(vel2>250,1); % start reaching 
 
+idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
+idx(1) = find(vel>50,1); % start reaching  %%% MAY NEED TO CHANGE PLOT!
 
 %Finding Max Vel
- maxvel =max(vel2);
- idx(2)= find(vel2==maxvel);
+ maxvel =max(vel);
+ idx(2)= find(vel==maxvel);
 
 %Finding Max dist
-maxdist= max(dist2);
-idx(3)= find(dist2==maxdist);
+maxdist= max(dist);
+idx(3)= find(dist==maxdist);
+
+ timestart = t(idx(1));
+ timevelmax = t(idx(2));
+ timedistmax = t(idx(3));
 
 % Start Time 
-timestart = idx(1)*(1/89);% divide by sampling rate
-timevelmax = idx(2)*(1/89); % time when max velocity
-timedistmax = idx(3) *(1/89); %when at max dist
-% timebefore = timestart-.05; %time 50 ms prior to start of reach
-timebefore =1;
-timeend = timedistmax+2;
+% timestart = idx(1)*(1/89);% divide by sampling rate
+% timevelmax = idx(2)*(1/89); % time when max velocity
+% timedistmax = idx(3) *(1/89); %when at max dist
+ timebefore = timestart-.05; %time 50 ms prior to start of reach
+% timebefore =1;
+ timeend = timedistmax+2;
 %ibefore = ceil(timebefore*50); 
-%timeend = idx(4)*(1/1000);
 %% Plotting Data 
 
 figure(2)
@@ -131,9 +134,9 @@ clf
  subplot(3,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
- plot(t2,dist2)
+ plot(t,dist)
 hold on
-plot(t2,vel2) 
+plot(t,vel) 
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
@@ -142,9 +145,9 @@ plot(t2,vel2)
 
 
 
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel2) max(vel2)], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel2) max(vel2)],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel2) max(vel2)],'LineWidth',.5); %max, dist
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
