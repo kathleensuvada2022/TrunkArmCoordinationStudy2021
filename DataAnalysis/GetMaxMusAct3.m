@@ -1,10 +1,10 @@
 %%% USED JULY 2021 WORKS!
 
 %%
-flpath='/Users/kcs762/OneDrive - Northwestern University/TACS/Data/RTIS2002/Left/maxes';
+flpath='/Users/kcs762/OneDrive - Northwestern University/TACS/Data/RTIS2003/Left/maxes';
 basename='clean_data_trial_';
-partid='RTIS2002';
-setfname='RTIS2002_setup';
+partid='RTIS2003';
+    setfname='RTIS2003_setup';
 
 plotflag=1;
 %%
@@ -66,6 +66,9 @@ for j=1:length(trials)
     [maxTEMG(j,:),maxtidx(j,:)]=max(meanEMG);
     
     % ARTIFACT CORRECTION
+
+ %%%%%%%%%%%%%%%%RTIS 2001%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 %  if strcmp(partid,'RTIS2001')  %% RIGHT ARM
 %          if strcmp(trials(j).name,'clean_data_trial_2.mat') % Trial containing artifact
 %             % In order to exclude the artifact from the analysis, set upid
@@ -193,374 +196,614 @@ for j=1:length(trials)
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
          end
   end 
+%%%%%%%%%%%%%%%%RTIS 2002%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%    if strcmp(partid,'RTIS2002') %% LEFT ARM 
+%          if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%          if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%          if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=4000; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%          
+%          if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%         if strcmp(trials(j).name,'clean_data_trial_40.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%         end
+%          if strcmp(trials(j).name,'clean_data_trial_39.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%           if strcmp(trials(j).name,'clean_data_trial_26.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1003; iemg=2;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           if strcmp(trials(j).name,'clean_data_trial_17.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=2500; dnid=5000; iemg=5;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_10.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=3500; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%         end
+%        
+%         if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=3000; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%         end
+%        
+%        if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1700; dnid=2000; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%        end
+%        
+%        if strcmp(trials(j).name,'clean_data_trial_35.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1500; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%        end
+%        
+%        if strcmp(trials(j).name,'clean_data_trial_36.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1500; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%        end
+%        
+%           if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=2500; dnid=3000; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_24.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=2000; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%            if strcmp(trials(j).name,'clean_data_trial_11.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=3000; iemg=7;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%            if strcmp(trials(j).name,'clean_data_trial_36.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=4000; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%            end
+%           if strcmp(trials(j).name,'clean_data_trial_26.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=4000; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           if strcmp(trials(j).name,'clean_data_trial_30.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=4000; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           if strcmp(trials(j).name,'clean_data_trial_37.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=4000; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%          if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1500; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%           
+%            if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1500; dnid=4500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%        
+%          if strcmp(trials(j).name,'clean_data_trial_35.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1500; dnid=5000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%          end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_28.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1500; dnid=5000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=1500; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%                     
+%           if strcmp(trials(j).name,'clean_data_trial_29.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_31.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_26.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_36.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_30.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_37.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end   
 %  
-   if strcmp(partid,'RTIS2002') %% LEFT ARM 39??
-         if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
+%            if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%            end
+%            
+%            
+%            if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%            end
+%            
+%            if strcmp(trials(j).name,'clean_data_trial_29.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%            end
+%            
+%            if strcmp(trials(j).name,'clean_data_trial_28.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%            end  
+%                   
+%           if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_35.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_31.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=5000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=2000; iemg=11;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_26.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1; dnid=4500; iemg=8;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_29.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=2000; dnid=5000; iemg=8;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_13.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1; dnid=2000; iemg=8;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end
+%           
+%  
+%           if strcmp(trials(j).name,'clean_data_trial_8.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1; dnid=2000; iemg=8;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end 
+%           
+%           if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             %REO
+%             upid=1000; dnid=3000; iemg=8;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%           end 
+%    end
+% %   
+% %   
+ 
+%  
+   if strcmp(partid,'RTIS2002') %% Right ARM 
+         if strcmp(trials(j).name,'clean_data_trial_28.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
             % trial that excludes the artifact. iemg is the EMG channel
             % that has the artifact.
             %REO
-            upid=1000; dnid=1003; iemg=2;
+            upid=2200; dnid=2300; iemg=1;
             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
          end
-         if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
+         
+         if strcmp(trials(j).name,'clean_data_trial_29.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
             % trial that excludes the artifact. iemg is the EMG channel
             % that has the artifact.
             %REO
-            upid=1000; dnid=1003; iemg=2;
+            upid=1500; dnid=3000; iemg=1;
             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
          end
+         
+         
+         if strcmp(trials(j).name,'clean_data_trial_37.mat') % Trial containing artifact
+            % In order to exclude the artifact from the analysis, set upid
+            % and dnid to the beginning sample and final sample of the
+            % trial that excludes the artifact. iemg is the EMG channel
+            % that has the artifact.
+            %REO
+            upid=1000; dnid=3000; iemg=1;
+            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+         end
+         
+         if strcmp(trials(j).name,'clean_data_trial_30.mat') % Trial containing artifact
+            % In order to exclude the artifact from the analysis, set upid
+            % and dnid to the beginning sample and final sample of the
+            % trial that excludes the artifact. iemg is the EMG channel
+            % that has the artifact.
+            %REO
+            upid=1500; dnid=3000; iemg=2;
+            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+         end
+         
+         if strcmp(trials(j).name,'clean_data_trial_28.mat') % Trial containing artifact
+            % In order to exclude the artifact from the analysis, set upid
+            % and dnid to the beginning sample and final sample of the
+            % trial that excludes the artifact. iemg is the EMG channel
+            % that has the artifact.
+            %REO
+            upid=2000; dnid=2500; iemg=2;
+            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+         end
+         
+         if strcmp(trials(j).name,'clean_data_trial_28.mat') % Trial containing artifact
+            % In order to exclude the artifact from the analysis, set upid
+            % and dnid to the beginning sample and final sample of the
+            % trial that excludes the artifact. iemg is the EMG channel
+            % that has the artifact.
+            %REO
+            upid=1000; dnid=4500; iemg=7;
+            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+         end
+         
          if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
             % trial that excludes the artifact. iemg is the EMG channel
             % that has the artifact.
             %REO
-            upid=1000; dnid=1003; iemg=2;
+            upid=1000; dnid=3500; iemg=7;
             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
          end
          
-         if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
+         if strcmp(trials(j).name,'clean_data_trial_25.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
             % trial that excludes the artifact. iemg is the EMG channel
             % that has the artifact.
             %REO
-            upid=1000; dnid=1003; iemg=2;
+            upid=1000; dnid=2500; iemg=11;
             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
          end
-        if strcmp(trials(j).name,'clean_data_trial_40.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=1003; iemg=2;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-        end
-         if strcmp(trials(j).name,'clean_data_trial_39.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=1003; iemg=2;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-         end
-          if strcmp(trials(j).name,'clean_data_trial_26.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=1003; iemg=2;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-          end
-          if strcmp(trials(j).name,'clean_data_trial_17.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=2500; dnid=5000; iemg=5;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-          end
-        if strcmp(trials(j).name,'clean_data_trial_33.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=3000; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-        end
-       
-       if strcmp(trials(j).name,'clean_data_trial_34.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1700; dnid=2000; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-       end
-       
-       if strcmp(trials(j).name,'clean_data_trial_35.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=1500; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-       end
-       
-       if strcmp(trials(j).name,'clean_data_trial_36.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=1500; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-       end
-       
-          if strcmp(trials(j).name,'clean_data_trial_32.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=2500; dnid=3000; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-          end
-          
-          if strcmp(trials(j).name,'clean_data_trial_24.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=2000; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-          end
-           if strcmp(trials(j).name,'clean_data_trial_11.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            %REO
-            upid=1000; dnid=3000; iemg=7;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-          end
-       
-   
    end
-%   
-%   
   
-  
-%      if strcmp(partid,'RTIS1001') % Name of folder containing artifact trial. Include "/" at the end.
-%     
-%         if strcmp(trials(j).name,'MAXES8.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=1500; dnid=5000; iemg=13;
+%%%%%%%%%%%%%%%%%RTIS2003%%%%%%%%%%%%%%%%
+    if strcmp(partid,'RTIS2003') %Left 
+%       if strcmp(trials(j).name,'clean_data_trial_3.mat') % Trial containing artifact
+%             upid=2500; dnid=3500; iemg=2;
 %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
 %             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'MAXES28.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2500; dnid=5000; iemg=13;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'MAXES27.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4000; dnid=5000; iemg=13;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'MAXES36.mat') 
-%             % LRA
-%             upid=3000; dnid=5000; iemg=3;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%             % LD
-%             upid=2500; dnid=3000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%             % RIO
-%             upid=4000; dnid=5000; iemg=8;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;           
-% 
-%         elseif strcmp(trials(j).name,'MAXES5.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=1;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'MAXES34.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'MAXES7.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=13;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;   
-%        elseif strcmp(trials(j).name,'MAXES1.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2000; dnid=3500; iemg=13;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-%       
-%        elseif strcmp(trials(j).name,'MAXES4.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2000; dnid=5000; iemg=13;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-%             
-%        elseif strcmp(trials(j).name,'MAXES39.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=1500; dnid=2500; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-%       elseif strcmp(trials(j).name,'MAXES32.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2000; dnid=3000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%             
-%       elseif strcmp(trials(j).name,'MAXES31.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=1500; dnid=2000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%        
-%        
-%      elseif strcmp(trials(j).name,'MAXES30.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%            
-%             % LD
-%             upid=4800; dnid=5000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%             
-%        
-%             
-%       elseif strcmp(trials(j).name,'MAXES37.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2500; dnid=3500; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%             
-%       elseif strcmp(trials(j).name,'MAXES38.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=3000; dnid=3500; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;      
-%       
-%       elseif strcmp(trials(j).name,'MAXES35.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4000; dnid=5000; iemg=11;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;       
-%         end
-%      end
-% 
-%     if strcmp(partid,'RTIS2003') % Name of folder containing artifact trial. Include "/" at the end.
-%       if strcmp(trials(j).name,'maxes27.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=2500; dnid=3500; iemg=16;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%       elseif strcmp(trials(j).name,'maxes29.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=16;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%        elseif strcmp(trials(j).name,'maxes28.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=16;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;  
-%        elseif strcmp(trials(j).name,'maxes38.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=16;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;         
-%         elseif strcmp(trials(j).name,'maxes36.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=16;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-%         elseif strcmp(trials(j).name,'maxes40.mat') % Trial containing artifact
-%             % In order to exclude the artifact from the analysis, set upid
-%             % and dnid to the beginning sample and final sample of the
-%             % trial that excludes the artifact. iemg is the EMG channel
-%             % that has the artifact.
-%             upid=4500; dnid=5000; iemg=12;
-%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;          
-%                  
 %       end
-%     end
+    end
 %       
 %    if strcmp(partid,'RTIS2005') % Name of folder containing artifact trial. Include "/" at the end.
 %       if strcmp(trials(j).name,'maxes17.mat') % Trial containing artifact
