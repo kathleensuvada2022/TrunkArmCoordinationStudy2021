@@ -781,7 +781,7 @@ function DAQ_Init_Callback(source,event)
 stop(myhandles.exp.timer)
 myhandles.daq.on=1;
 % Initialize DAQ variables
-myhandles.daq.Device='Dev3';
+myhandles.daq.Device='Dev1';
 % myhandles.daq.Enable=0;
 myhandles.daq.nChan=16;
 myhandles.daq.sRate=1000;
