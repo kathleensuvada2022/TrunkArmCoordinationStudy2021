@@ -10,7 +10,7 @@
 
 % function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
 
-function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_NRSA(actdata,g)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_DISTVELACT(actdata,mrtime)
 
 % load([flpath '/' filename]);
 
@@ -72,13 +72,13 @@ ibefore = ceil(timebefore*50);
 timeend = idx(4)*(1/50);
 %% Plotting Data 
 
-Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
-
-figure(g)
-subplot(3,1,1)
+%Muscles = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'}
+figure(1)
+subplot(2,1,2)
+%subplot(3,3,2)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
-%%
+
 plot(t,dist,'LineWidth',2)
 hold on
 plot(t,vel,'LineWidth',2)
@@ -88,10 +88,10 @@ plot(t,vel,'LineWidth',2)
 %  %plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-0.1 .4], 'LineWidth',.7); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-0.1 .4],'LineWidth',.7); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[-0.1 .4],'LineWidth',.7); %max, dist
-p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[-0.1 .4],'LineWidth',.7); %endreach
+% p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[-0.1 .4], 'LineWidth',.7); % start reach
+% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-0.1 .4],'LineWidth',.7); % max vel
+ p3= line('Color','c','Xdata',[mrtime mrtime],'Ydata',[-0.1 .4],'LineWidth',.7); %max, reach as computed by metria data
+% p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[-0.1 .4],'LineWidth',.7); %endreach
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
@@ -99,8 +99,8 @@ p4= line('Color','g','Xdata',[timeend timeend],'Ydata',[-0.1 .4],'LineWidth',.7)
 xlim([0 1.5])
 xlabel('time in seconds')
 ylabel('Distance/ Velocity (m)') 
-legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist',' End of Reach')
-title(Muscles(g))
+legend('Distance', 'Velocity','Max Reach')
+%title(Muscles(g))
 
 
 end 

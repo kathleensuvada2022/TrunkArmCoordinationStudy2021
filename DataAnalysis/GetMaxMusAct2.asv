@@ -1,4 +1,4 @@
-function [maxEMG newemg]=GetMaxMusAct4(flpath,basename,setfname,partid,plotflag,p)
+function [maxEMG]=GetMaxMusAct2(flpath,basename,setfname,partid,plotflag)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
 % which contains the following matrices:
 % Inputs: basename: trial file name (before index)
@@ -49,34 +49,33 @@ for j=1:length(trials)
 
     emg=detrend(data(:,1:15)); %updated 10.2019
     % Rectify EMG
-    %emg=abs(emg); rectifying 
+    emg=abs(emg);
     % Compute the mean EMG
     meanEMG=movmean(emg,ds);  %movmean change from previous function
     % Find maximum EMG
     [maxTEMG(j,:),maxtidx(j,:)]=max(meanEMG);
     
-    
-%     % This is an example, change it to fit your data *Kacey changed
+%     
+% %     % This is an example, change it to fit your data 
 	if strcmp(partid,'RTIS2001') % Name of folder containing artifact trial. Include "/" at the end.
-       if strcmp(trials(j).name,'maxes26.mat') % Trial containing artifact
+       if strcmp(trials(j).name,'maxes34.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
             % trial that excludes the artifact. iemg is the EMG channel
             % that has the artifact.
-            upid=1; dnid=6000; iemg=4;
+            upid=1; dnid=500; iemg=2;
             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-       elseif strcmp(trials(j).name,'maxes27.mat') % Trial containing artifact
-            % In order to exclude the artifact from the analysis, set upid
-            % and dnid to the beginning sample and final sample of the
-            % trial that excludes the artifact. iemg is the EMG channel
-            % that has the artifact.
-            upid=1; dnid=9000; iemg=10;
-            [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-            maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+%        elseif strcmp(trials(j).name,'maxes27.mat') % Trial containing artifact
+%             % In order to exclude the artifact from the analysis, set upid
+%             % and dnid to the beginning sample and final sample of the
+%             % trial that excludes the artifact. iemg is the EMG channel
+%             % that has the artifact.
+%             upid=1; dnid=9000; iemg=10;
+%             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
 
-%             disp(maxtidx(j,iemg))
-%             figure(4), plot(abs(data(:,iemg)))
+
        end
     elseif strcmp(partid,'RTIS1001') % Name of folder containing artifact trial. Include "/" at the end.
        if strcmp(trials(j).name,'MAXES8.mat') % Trial containing artifact
@@ -121,9 +120,9 @@ for j=1:length(trials)
             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
        end
     end
-    Tlength(j)=size(data,1);
+   Tlength(j)=size(data,1);
     
-end
+end 
 
 [maxEMG,maxidx]=max(maxTEMG);
 maxTlength=max(Tlength);
@@ -131,8 +130,8 @@ maxTlength=max(Tlength);
 
 %% Plots 
 if plotflag
-   %  figure()
-    newemg=zeros(maxTlength,nEMG);
+     figure(1)
+    newemg=zeros(length(data),nEMG);
     t=(0:maxTlength - 1)/sampRate;
     for k=1:nEMG
         load([flpath '/' trials(maxidx(k)).name]);
@@ -140,31 +139,29 @@ if plotflag
 %         data=structData.totalData; % no longer need this line 10.2019
         newemg(:,k)=data(:,k); % First 5 channels are forces and torques %updated 10.2019 because channels changed
     end
-
-    subplot(3,3,6) 
-%     newemg=abs(detrend(newemg));
-
-    newemg=detrend(newemg);   
+%     PlotEMGs(newemg)
+%     subplot(3,3,6) UNCOMMENT FOR SINGLE PLot 
+    newemg=abs(detrend(newemg));
     newmeanEMG=movmean(newemg,ds);
     memg=max(newemg);
-%   %% UNCOMMENT FOR ALL PLot 
-%     
-%     yspacing=cumsum([0 memg(2:nEMG)+.1]);
-%    rax = axes('position',[0.05,0.03,0.7,0.9]);
-%    set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
-%    set(rax,'TickLabelInterpreter','none')
-%     set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
-%        'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
-%     lax=axes('position',[0.05,0.03,0.7,0.9]);
-%    plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
-%    hold on
+  %% UNCOMMENT FOR SINGLE PLot 
+    
+    yspacing=cumsum([0 memg(2:nEMG)+.1]);
+   rax = axes('position',[0.05,0.03,0.7,0.9]);
+   set(rax,'YAxisLocation','right','color','none','xgrid','off','ygrid','off','box','off');
+   set(rax,'TickLabelInterpreter','none')
+    set(rax,'YTick',fliplr(-yspacing),'YTickLabel',flipud(strcat(emgchan','-',strvcat(trials(maxidx).name))),...
+       'YLim',[-yspacing(end) memg(1)],'XTick',[],'XTickLabel',[])
+    lax=axes('position',[0.05,0.03,0.7,0.9]);
+   plot(t,newemg-yspacing(ones(length(t),1),:),t(diag(maxtidx(maxidx,1:nEMG))),maxEMG-yspacing,'k*')
+   hold on
    %%
-   plot(t,newemg(:,p)); % looping through each muscle 
-%  UNCOMMENT FOR SINGLE PLot  
+%   plot(t,newemg(:,1));
+%%  UNCOMMENT FOR SINGLE PLot  
   
-%   co=get(lax,'ColorOrder');
-%    set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
-%     plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
+  co=get(lax,'ColorOrder');
+   set(lax,'ColorOrder',co(end-1:-1:1,:),'YLim',[-yspacing(end) memg(1)])
+    plot(t,newmeanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
    ylabel 'V'
  %% 
   title ('MVC')
