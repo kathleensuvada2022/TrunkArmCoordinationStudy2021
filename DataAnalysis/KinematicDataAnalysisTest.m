@@ -4,7 +4,10 @@
 
 % Testing 
 %   flpath = '/Users/kcs762/Desktop/Strokedata/Control1/act3d/trunkrestrained/AllData'
-filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data'
+filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data';
+filepath = 'F:\usr\Ana Maria\OneDrive - Northwestern University\Data\TACS\Data';
+partid='RTIS1002';
+load(fullfile(filepath,partid,[partid '_setup.mat']));
 %    filename = 'Target_01_2_table.mat'
 
 % needs act 3d file path and file name 
@@ -14,9 +17,11 @@ filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS
 % function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,g)
 
 %% Load ACT3D Data
-load(fullfile(filepath,partid,['trials' num2str(trials(i))]))
+load(fullfile(filepath,partid,'trials2'))
 actdata=data.act;
 x= data.met;
+
+
 
 %Use if plotting ACT3D data
 % 
@@ -34,6 +39,20 @@ x= data.met;
 %uncomment this section is using 
 
 t = (x(:,2)-x(1,2))/89;
+
+% Resample data
+[xhand2, t2] = resample(xhand,t,1000,10,89);
+% compute slope and offset (y = a1 x + a2)
+a(1) = (x(end)-x(1)) / (t(end)-t(1));
+a(2) = x(1);
+
+% detrend the signal
+xdetrend = x - polyval(a,t);
+[ydetrend,ty] = resample(xdetrend,t,desiredFs,p,q,lpFilt);
+
+y = ydetrend + polyval(a,ty);
+plot(t,xdetrend)
+plot(t,xhand,'*',t2,xhand2,'o')
 
 
 % x = metdata;
@@ -71,7 +90,7 @@ for i=1:nimag % loop through time points
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
       BLg=Tftom *setup.bl.lcs{1,4}(1:4,4) ; %changed from BL file 
-      xhandold(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
+      xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
 %     Tstom= reshape(x(i,sidx+(2:13)),4,3)'; % grabbing the HT of the shoulder marker 
@@ -80,11 +99,12 @@ for i=1:nimag % loop through time points
 %     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of BL in the global frame and rows are time 
 end
 
-%% Resampling Xhand 
+%% Resampling Xhand - RESAMPLE ORIGINAL DATA
 
-%xhand old is the origninal mnot resampled version
-[xhand t] = resample(xhandold,t,1000);
-
+%xhand old is the origninal mnot reampled version
+% [xhand2, t2] = resample(xhand,t,1000,10,89);
+% plot(t,xhand,'*',t2,xhand2,'o')
+return
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
 
 %using original data
@@ -195,6 +215,28 @@ xlabel('time in seconds')
 ylabel('Distance/ Velocity') 
 legend('Distance', 'Velocity','Start Reach','Max Velocity','Max Dist','Time Prior','Time End')
 title(Muscles(g))
+
+function y=resampledata(x,fs,newfs)
+% Detrend data to avoid ringing at the beginning and end
+% compute slope and offset (y = a1 x + a2)
+if size(x,2)>1, 
+    resampledata(x(:,
+else
+a(1) = (x(end)-x(1)) / (t(end)-t(1));
+a(2) = x(1);
+
+% detrend the signal
+xdetrend = x - polyval(a,t);
+[ydetrend,ty] = resample(xdetrend,t,desiredFs,p,q,lpFilt);
+
+y = ydetrend + polyval(a,ty);
+
+
+% Resample data
+[xhand2, t2] = resample(xhand,t,1000,10,89);
+end
+plot(t,xdetrend)
+plot(t,xhand,'*',t2,xhand2,'o')
 
 
 % end 
