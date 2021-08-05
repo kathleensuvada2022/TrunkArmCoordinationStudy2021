@@ -1,10 +1,10 @@
 %%% USED JULY 2021 WORKS!
 
 %%
-flpath='/Users/kcs762/OneDrive - Northwestern University/TACS/Data/RTIS2003/Left/maxes';
+flpath='/Users/kcs762/OneDrive - Northwestern University/TACS/Data/RTIS2006/Right/Maxes';
 basename='clean_data_trial_';
-partid='RTIS2003';
-    setfname='RTIS2003_setup';
+partid='RTIS2006';
+    setfname='RTIS2006_setup';
 
 plotflag=1;
 %%
@@ -797,7 +797,7 @@ for j=1:length(trials)
    end
   
 %%%%%%%%%%%%%%%%%RTIS2003%%%%%%%%%%%%%%%%
-    if strcmp(partid,'RTIS2003') %Left 
+    if strcmp(partid,'RTIS2003') %Right (Left didn't need any ) 
 %       if strcmp(trials(j).name,'clean_data_trial_3.mat') % Trial containing artifact
 %             upid=2500; dnid=3500; iemg=2;
 %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
@@ -977,8 +977,8 @@ if strcmp(trials(j).name,'maxes16.mat') % Trial containing artifact
              maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
 end
    end
-   
-     if strcmp(partid,'RTIS2006') 
+ %%%%%%%%%%%%RTIS2006%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     if strcmp(partid,'RTIS2006')  % RIGHT
          if strcmp(trials(j).name,'clean_data_trial_38.mat') % Trial containing artifact
             % In order to exclude the artifact from the analysis, set upid
             % and dnid to the beginning sample and final sample of the
@@ -999,31 +999,22 @@ end
              [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
              maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
      end
-    if strcmp(trials(j).name,'maxes2.mat') % Trial containing artifact
-             upid=2500; dnid=3000; iemg=7;
+    if strcmp(trials(j).name,'clean_data_trial_10.mat') % Trial containing artifact
+             upid=500; dnid=3500; iemg=6;
              [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
              maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
     end
-    if strcmp(trials(j).name,'maxes4.mat') % Trial containing artifact
-             upid=500; dnid=1000; iemg=7;
+    
+ 
+    if strcmp(trials(j).name,'clean_data_trial_10.mat') % Trial containing artifact
+             upid=500; dnid=3500; iemg=11;
              [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
              maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
     end
-    if strcmp(trials(j).name,'maxes1.mat') % Trial containing artifact
-             upid=3500; dnid=4000; iemg=7;
-             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-    end
-    if strcmp(trials(j).name,'maxes5.mat') % Trial containing artifact
-             upid=1; dnid=5000; iemg=7;
-             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-    end
-    if strcmp(trials(j).name,'maxes3.mat') % Trial containing artifact
-             upid=4000; dnid=5000; iemg=7;
-             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1; 
-    end
+    
+   
+
+
     end
     
    if strcmp(partid,'RTIS2011') 
