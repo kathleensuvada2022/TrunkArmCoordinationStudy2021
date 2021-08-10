@@ -131,7 +131,7 @@ idx(3)= find(dist==maxdist);
 
 figure(2)
 clf
- subplot(3,1,1)
+ subplot(4,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
  plot(t,dist)
@@ -161,5 +161,35 @@ ylabel('Distance/ Velocity')
 legend('Distance', 'Velocity','Time Start','Max Vel','Max Dist')
 % %title(Muscles(g))
 
+figure(3)
+clf
+ subplot(4,1,1)
+%ax = axes('position',[0.12,0.75,0.75,0.22]);
+%plot(t(1:50),dist(1:50))
+ plot(t,dist)
+hold on
+plot(t,vel) 
+%  plot(timestart,dist(idx(1)),'-o') %reach start
+%  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
+%  plot(timebefore,dist(ibefore),'-o') %Time before
+%  plot(timedistmax ,dist(idx(3)),'-o') %max distance
+%  plot(timeend,dist(idx(4)),'-o') %end of reach
+
+
+
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
+%p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+%p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
+
+xlim([0.5 5])
+
+xlabel('time in seconds')
+ylabel('Distance/ Velocity') 
+legend('Distance', 'Velocity','Time Start','Max Vel','Max Dist')
 
 end 
