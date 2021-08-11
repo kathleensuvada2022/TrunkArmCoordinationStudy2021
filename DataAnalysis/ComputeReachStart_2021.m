@@ -131,7 +131,7 @@ idx(3)= find(dist==maxdist);
 
 figure(2)
 clf
- subplot(4,1,1)
+ subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
  plot(t,dist)
@@ -144,7 +144,7 @@ plot(t,vel)
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
 
-
+title('Trunk Muscles')
 p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
 p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
 p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
@@ -163,7 +163,7 @@ legend('Distance', 'Velocity','Time Start','Max Vel','Max Dist')
 
 figure(3)
 clf
- subplot(4,1,1)
+ subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
  plot(t,dist)
@@ -174,7 +174,7 @@ plot(t,vel)
 %  plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
-
+title('Reaching Arm Muscles')
 
 
 p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
