@@ -26,7 +26,7 @@ subplot(5,2,3)
 line(t,emg(:,idx1(1)))
 title(emgchan(idx1(1)))
 pause
-cla
+clf
 subplot(5,2,3)
 line(t,cleandata(:,idx1(1)))
 yl=ylim;
@@ -41,7 +41,7 @@ subplot(5,2,4)
 line(t,emg(:,idx2(1)))
 title(emgchan(idx2(1)))
 pause
-cla
+clf
 subplot(5,2,4)
 line(t,cleandata(:,idx2(1)))
 hold on
@@ -56,7 +56,7 @@ subplot(5,2,5)
 line(t,emg(:,idx1(2)))
 title(emgchan(idx1(2)))
 pause
-cla
+clf
 subplot(5,2,5)
 line(t,cleandata(:,idx1(2)))
 hold on
@@ -71,7 +71,7 @@ subplot(5,2,6)
 line(t,emg(:,idx2(2)))
 title(emgchan(idx2(2)))
 pause
-cla
+clf
 subplot(5,2,6)
 line(t,cleandata(:,idx2(2)))
 hold on
@@ -86,7 +86,7 @@ subplot(5,2,7)
 line(t,emg(:,idx1(3)))
 title(emgchan(idx1(3)))
 pause
-cla
+clf
 subplot(5,2,7)
 line(t,cleandata(:,idx1(3)))
 hold on
@@ -101,7 +101,7 @@ subplot(5,2,8)
 line(t,emg(:,idx2(3)))
 title(emgchan(idx2(3)))
 pause
-cla
+clf
 subplot(5,2,8)
 line(t,cleandata(:,idx2(3)))
 hold on
@@ -116,7 +116,7 @@ subplot(5,2,9)
 line(t,emg(:,idx1(4)))
 title(emgchan(idx1(4)))
 pause
-cla
+clf
 subplot(5,2,9)
 line(t,cleandata(:,idx1(4)))
 hold on
@@ -131,7 +131,7 @@ subplot(5,2,10)
 line(t,emg(:,idx2(4)))
 title(emgchan(idx2(4)))
 pause
-cla
+clf
 subplot(5,2,10)
 line(t,cleandata(:,idx2(4)))
 hold on
@@ -148,7 +148,7 @@ subplot(5,2,3)
 line(t,emg(:,idx1(5)))
 title(emgchan(idx1(5)))
 pause
-cla
+clf
 subplot(5,2,3)
 line(t,cleandata(:,idx1(5)))
 hold on
@@ -163,8 +163,6 @@ subplot(5,2,4)
 line(t,emg(:,idx2(5)))
 title(emgchan(idx2(5)))
 pause
-cla
-subplot(5,2,4)
 line(t,cleandata(:,idx2(5)))
 hold on
 yl=ylim;
@@ -178,8 +176,6 @@ subplot(5,2,5)
 line(t,emg(:,idx1(6)))
 title(emgchan(idx1(6)))
 pause
-cla
-subplot(5,2,5)
 line(t,cleandata(:,idx1(6)))
 hold on
 yl=ylim;
@@ -193,8 +189,6 @@ subplot(5,2,6)
 line(t,emg(:,idx2(6)))
 title(emgchan(idx2(6)))
 pause
-cla
-subplot(5,2,6)
 line(t,cleandata(:,idx2(6)))
 hold on
 yl=ylim;
@@ -208,8 +202,6 @@ subplot(5,2,7)
 line(t,emg(:,idx1(7)))
 title(emgchan(idx1(7)))
 pause
-cla
-subplot(5,2,7)
 line(t,cleandata(:,idx1(7)))
 hold on
 yl=ylim;
@@ -223,8 +215,7 @@ subplot(5,2,8)
 line(t,emg(:,idx2(7)))
 title(emgchan(idx2(7)))
 pause
-cla
-subplot(5,2,8)
+clf
 line(t,cleandata(:,idx2(7)))
 hold on
 yl=ylim;
@@ -238,8 +229,7 @@ subplot(5,2,9)
 line(t,emg(:,idx1(8)))
 title(emgchan(idx1(8)))
 pause
-cla
-subplot(5,2,9)
+clf
 line(t,cleandata(:,idx1(8)))
 hold on
 yl=ylim;

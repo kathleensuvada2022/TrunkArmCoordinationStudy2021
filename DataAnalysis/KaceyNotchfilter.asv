@@ -1,6 +1,7 @@
-function [cleandata] = KaceyNotchfilter(emg) 
+
+
+funcdtion 
 fc=240;
-Fs=1000;
 %emg_trial = data(1).daq{:,2};
 %emg_time = data(1).daq{:,1};
   
@@ -9,24 +10,25 @@ Fs=1000;
 % numfiles = 47; % CHANGE NUM FILES 
 % mydata = cell(1, numfiles);
 
-%numfiles = 64;
-%mydata = cell(1, numfiles);
+numfiles = 64;
+mydata = cell(1, numfiles);
 %%
-%for k = 1:numfiles
+for k = 1:numfiles
  % myfilename = sprintf('restingemg%d.mat', k);
 % myfilename = sprintf('maxes%d.mat', k); % for maxes everything else same
  %as resting
    
-%   myfilename = sprintf('trial%d.mat', k); % CHANGE FILENAME 
-%    load(myfilename);
-%  emg_trial = data.daq{1,2};   
+  myfilename = sprintf('trial%d.mat', k); % CHANGE FILENAME 
+   load(myfilename);
+ emg_trial = data.daq{1,2};   % CHANGE FORMAT (same for resting and
+%   maxes)
 
 
- emg_trial = detrend(emg(:,1:15)); 
+ emg_trial = detrend(emg_trial(:,1:15)); 
 
 %Replace line 22 for actual trials
 %emg_trial = detrend(data(1).daq{:,2});
-
+emg_trial = detrend(emg_trial);
 
 emg_time = 0:1/Fs:(length(emg_trial)-1)/Fs;
 xc=length(emg_time);
@@ -83,8 +85,8 @@ nn=8; % the order
 %d240=filter(b,a,butt_trial180);
 
 cleandata(:,i) = filtfilt(b,a,butt_trial180(:,i)); 
-% filename1=sprintf('clean_data_trial_%d',k);  % FILENAME CHANGE!!!
-% save(filename1, 'cleandata');
+filename1=sprintf('clean_data_trial_%d',k);  % FILENAME CHANGE!!!
+save(filename1, 'cleandata');
 % vv=fft(cleandata);
 
 % subplot(2,1,1)
@@ -95,7 +97,7 @@ cleandata(:,i) = filtfilt(b,a,butt_trial180(:,i));
 
 % filename2=sprintf('butt_trial180_%d',k);
 % save(filename2, 'butt_trial180');
-%end 
+end 
 end
 % %%
 % %%%%%%%%%%%%%%% Plotting %%%%%%%%%%%%%%%%%%%%
@@ -154,4 +156,4 @@ end
 % legend('Unfiltered','Filtered')
 % grid
 
-end
+ 
