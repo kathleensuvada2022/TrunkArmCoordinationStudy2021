@@ -1,16 +1,4 @@
-%% COMPUTEREACHSTART
-
-% Script for computing where the reach begins for participant  
-
-% Testing 
-%   flpath = '/Users/kcs762/Desktop/Strokedata/Control1/act3d/trunkrestrained/AllData'
-%    filename = 'Target_01_2_table.mat'
-
-% needs act 3d file path and file name 
-
-% function [dist,vel,timestart,timevelmax]=ComputeReachStart_NRSA(flpath,filename)
-
-function [dist2,vel2,t2,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(metdata,setup)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(metdata,setup)
 
 %% Loading in ACT3D Data
 %Use if plotting ACT3D data
@@ -75,7 +63,7 @@ end
 
 %% Resampling Xhand 
 
-[xhand2,t2]=resampledata(xhand,t,100,89); %updated July 2021 
+[xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
@@ -97,27 +85,31 @@ dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
 dist2 = dist2(:)-dist2(1);
 
 % Computing Velocity and resampling 
-vel = ddt(smo(dist,3),1/89);
-[vel2,t2] = resampledata(vel,t,100,89);
+%vel = ddt(smo(dist,3),1/89);
+%[vel2,t2] = resampledata(vel,t,100,89);
 
+velx= ddt(smo(xhand(:,1),3),1/89);
+vely= ddt(smo(xhand(:,2),3),1/89);
 
+vel = sqrt(velx.^2+vely.^2);
 %% Finding Time Points 
 
 
-idx=zeros(1,4); % creating variable with the indices of vel and distance for ACT3D
-idx(1) = find(vel>50,1); % start reaching  %%% MAY NEED TO CHANGE PLOT!
-
+idx=zeros(1,4); % creating variable with the indices of vel and distance
 %Finding Max Vel
- maxvel =max(vel);
- idx(2)= find(vel==maxvel);
+ maxvel =max(vel(10:200));
+ idx(2)= find(vel==maxvel)
+
+%Start Reach
+idx(1) = find(abs(vel(10:200))>=(.1*maxvel),1);
 
 %Finding Max dist
 maxdist= max(dist);
 idx(3)= find(dist==maxdist);
 
- timestart = t(idx(1));
- timevelmax = t(idx(2));
- timedistmax = t(idx(3));
+ timestart = t(idx(1))
+ timevelmax = t(idx(2))
+ timedistmax = t(idx(3))
 
 % Start Time 
 % timestart = idx(1)*(1/89);% divide by sampling rate
@@ -134,9 +126,15 @@ clf
  subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
- plot(t,dist)
+yyaxis left
+plot(t,dist)
+ylabel('Distance (mm)')
 hold on
+yyaxis right
 plot(t,vel) 
+plot(t,velx)
+plot(t,vely)
+ylabel('Velocity (mm/s)')
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
@@ -153,30 +151,31 @@ p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel
 
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-
 xlim([0.5 5])
-
 xlabel('time in seconds')
-ylabel('Distance/ Velocity') 
-legend('Distance', 'Velocity','Time Start','Max Vel','Max Dist')
-% %title(Muscles(g))
+legend('Distance','Velocity','Velx', 'Vely','Time Start','Max Vel','Max Dist')
+
 
 figure(3)
 clf
  subplot(5,1,1)
-%ax = axes('position',[0.12,0.75,0.75,0.22]);
-%plot(t(1:50),dist(1:50))
- plot(t,dist)
+yyaxis left
+plot(t,dist)
+ylabel('Distance (mm)')
 hold on
+yyaxis right
 plot(t,vel) 
+plot(t,velx)
+plot(t,vely)
+ylabel('Velocity (mm/s)')
+hold on
+
 %  plot(timestart,dist(idx(1)),'-o') %reach start
 %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
 %  plot(timebefore,dist(ibefore),'-o') %Time before
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 title('Reaching Arm Muscles')
-
-
 p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
 p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
 p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
@@ -189,7 +188,6 @@ p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel
 xlim([0.5 5])
 
 xlabel('time in seconds')
-ylabel('Distance/ Velocity') 
-legend('Distance', 'Velocity','Time Start','Max Vel','Max Dist')
+legend('Distance','Velocity','Velx', 'Vely','Time Start','Max Vel','Max Dist')
 
 end 
