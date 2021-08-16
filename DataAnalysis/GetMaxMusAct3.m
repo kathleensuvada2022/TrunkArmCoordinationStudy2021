@@ -2311,7 +2311,7 @@ if plotflag
         load([flpath '/' trials(maxidx(k)).name]);
 %         newemg(:,k)=[data(:,k+6);zeros(maxTlength-length(data),1)];
 %         data=structData.totalData; % no longer need this line 10.2019
-        newemg(:,k)=cleandata(:,k);  %updated 10.2019 because channels changed
+        newemg(:,k)=cleandata(:,k);  
     end
 end
    % PlotEMGs(newemg)

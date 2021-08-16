@@ -94,22 +94,30 @@ vely= ddt(smo(xhand(:,2),3),1/89);
 vel = sqrt(velx.^2+vely.^2);
 %% Finding Time Points 
 
+% ***** NOTE **** Shift EMG muscles back by 50 ms because they occur earlier than the
+% movement itself.. Move back 
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
 %Finding Max Vel
- maxvel =max(vel(10:200));
- idx(2)= find(vel==maxvel)
+ maxvel =max(vel(10:50));
+ idx(2)= find(vel==maxvel) ;
+ % ********subtract 50 samples from this number to have it align with the movement
+ % better 
 
 %Start Reach
-idx(1) = find(abs(vel(10:200))>=(.1*maxvel),1);
+%windowvel=vel(25:200);
+%velcond =abs(windowvel)>=(270);
+% distcond= find(abs(dist)>5,1);
+idx(1)= find(vel(10:50)>.15*maxvel,1); % to account for the asymptotic behavior 
+idx(1) = idx(1)+9;
 
 %Finding Max dist
-maxdist= max(dist);
+maxdist= max(dist(1:100));
 idx(3)= find(dist==maxdist);
 
- timestart = t(idx(1))
- timevelmax = t(idx(2))
- timedistmax = t(idx(3))
+ timestart = t(idx(1));
+ timevelmax = t(idx(2));
+ timedistmax = t(idx(3));
 
 % Start Time 
 % timestart = idx(1)*(1/89);% divide by sampling rate
@@ -141,11 +149,11 @@ ylabel('Velocity (mm/s)')
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 
-
+y1=ylim;
 title('Trunk Muscles')
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
@@ -155,7 +163,7 @@ xlim([0.5 5])
 xlabel('time in seconds')
 legend('Distance','Velocity','Velx', 'Vely','Time Start','Max Vel','Max Dist')
 
-
+%%
 figure(3)
 clf
  subplot(5,1,1)
@@ -176,9 +184,10 @@ hold on
 %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 title('Reaching Arm Muscles')
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[min(vel) max(vel)], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[min(vel) max(vel)],'LineWidth',.5); %max, dist
+y1=ylim;
+p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); % max vel
+p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
