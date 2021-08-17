@@ -184,7 +184,7 @@ plot(t,meanEMG(:,idx2(5)),'LineWidth',2,'Color','g')
 yl=ylim;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx2(5)))
 
@@ -198,9 +198,9 @@ line(t,abs(cleandata(:,idx1(6))))
 hold on
 plot(t,meanEMG(:,idx1(6)),'LineWidth',2,'Color','g')
 yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+line('Color','b','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx1(6)))
 
@@ -214,9 +214,9 @@ line(t,abs(cleandata(:,idx2(6))))
 hold on
 plot(t,meanEMG(:,idx2(6)),'LineWidth',2,'Color','g')
 yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+line('Color','b','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx2(6)))
 
@@ -230,9 +230,9 @@ line(t,abs(cleandata(:,idx1(7))))
 hold on
 plot(t,meanEMG(:,idx1(7)),'LineWidth',2,'Color','g')
 yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+line('Color','b','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx1(7)))
 
@@ -246,9 +246,9 @@ line(t,abs(cleandata(:,idx2(7))))
 hold on
 plot(t,meanEMG(:,idx2(7)),'LineWidth',2,'Color','g')
 yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+line('Color','b','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx2(7)))
 
@@ -262,9 +262,9 @@ line(t,abs(cleandata(:,idx1(8))))
 hold on
 plot(t,meanEMG(:,idx1(8)),'LineWidth',2,'Color','g')
 yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+line('Color','b','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
 title(emgchan(idx1(8)))
 %%

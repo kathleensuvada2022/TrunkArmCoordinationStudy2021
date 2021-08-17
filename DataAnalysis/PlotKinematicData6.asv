@@ -15,8 +15,7 @@ mfilepath = afilepath2;
 
 
 %updated for new data structure 1.28.21
- mtrials=setup.trial{expcond};
- atrials=setup.trial{expcond};
+ mtrials=setup.trial{expcond}; atrials=setup.trial{expcond};
  ntrials=length(mtrials);
 
 %% Initializing Variables
@@ -158,7 +157,7 @@ metdata=data.met;
 
 
 %% Plotting EMGS
- %PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+% PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 %% Main Cumulative Metria Figure
  figure(4)
@@ -218,7 +217,7 @@ end
 
 %  [CoP1]= ComputeCOP(ppsdata);
 
-pause
+% pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 avgmaxreach =nanmean(maxreach_current_trial)
