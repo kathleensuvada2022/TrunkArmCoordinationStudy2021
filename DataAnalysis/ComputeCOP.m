@@ -1,24 +1,10 @@
-% Feb 2021. Function used to compute center of pressure offline post
+%Function used to compute center of pressure offline post
 % experiment.
 
-%For running through trials fast 
-%%
+ function [CoP2]=  ComputeCOP(ppsdata,maxreach_seconds)
 
-  
+  %%  
 
- for f = 12:13
-    
- load(['/Users/kcs762/OneDrive - Northwestern University/TACS/Data/testpps51221jass' '/' 'trial' num2str(f)]); 
-
-
-
-% function [CoP1]=  ComputeCOP(ppsdata,maxreach_seconds)
-
-% cut out beginning with odd behavior and then cut the end of the trial max
-% reach 
-    
-ppsdata=data.pps;
-ppsdata= ppsdata{1,2};
 % Loading in Data for Mat 1 and 2
         
         % NEED TO MAKE PRESSURE MAT DATA POSITIVE, SO FIND MINIMUM AND ADD ABS 
@@ -49,8 +35,7 @@ ppsdata= ppsdata{1,2};
         Pressuremat2 = ppsdata(:,257:end);
         
         
-       
- 
+      
   % Creating Matrices to Replicate Pressure Mat
         
        % need to reshape to be a 16x16 where we have Nframes matrices
@@ -75,11 +60,11 @@ ppsdata= ppsdata{1,2};
         CoP2(:,2) = 16- CoP2(:,2);
         
         
-        f
+      
         
-        deltax = CoP2(end,1)-CoP2(1,1)
+        deltax = CoP2(end,1)-CoP2(1,1) % change in x in cm
         
-        deltay =CoP2(end,2)-CoP2(1,2)
+        deltay =CoP2(end,2)-CoP2(1,2) % change in y in cm
 
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1
 %    
@@ -118,16 +103,22 @@ ppsdata= ppsdata{1,2};
 
 %% Plotting the Center of Pressure Changes
 
-%figure(4), clf
+figure(6)
 
-plot(CoP2(:,1),CoP2(:,2),'LineWidth',1)
+h1 = plot(CoP2(:,1),-CoP2(:,2),'LineWidth',2);
 xlabel('Postion in X (cm)','FontSize',16)
 ylabel('Position in Y (cm)','FontSize',16)
-title('Back Down','Fontsize',16)
- %text(8.128,7.79, num2str([deltax deltay]) )
-% text(8.21,7.98, num2str([deltax deltay]) )
-%axis([7.9 8 7.7 7.9])
-hold on    
+yl = ylim;
+xl= xlim;
+rangex = (xl(2)-xl(1));
+rangey = (yl(2)-yl(1));
+% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+hold on
+c1= viscircles([CoP2(1,1),-CoP2(1,2)],.0001,'Color','g');
+c2= viscircles([CoP2(end,1),-CoP2(end,2)],.0001,'Color','r');
+set(h1,'Color',[0 0.4470 0.7410]);
+
+axis equal 
 pause
  %% Plotting COP and Pressure for Mat 1- smaller scaling 
 

@@ -214,9 +214,11 @@ title('Trunk Unrestrained 50%','FontSize',18)
 end
 % 
 %% Calling COP Function
-%  ppsdata =data.pps;
-
-%  [CoP1]= ComputeCOP(ppsdata);
+  ppsdata =data.pps;
+  tpps = data.pps{1,1};
+  ppsdata= ppsdata{1,2};
+  ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
+ [CoP2]= ComputeCOP(ppsdata,tpps);
 
 pause
 end
