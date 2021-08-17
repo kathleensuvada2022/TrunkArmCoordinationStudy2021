@@ -1,4 +1,4 @@
-function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(metdata,setup)
+function [dist,vel,timestart,timevelmax,timeend,timedistmax]=ComputeReachStart_2021(metdata,setup,mridx)
 
 %% Loading in ACT3D Data
 %Use if plotting ACT3D data
@@ -99,7 +99,7 @@ vel = sqrt(velx.^2+vely.^2);
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
 %Finding Max Vel
- maxvel =max(vel(10:50));
+ maxvel =max(vel(10:mridx));
  idx(2)= find(vel==maxvel) ;
  % ********subtract 50 samples from this number to have it align with the movement
  % better 
@@ -108,12 +108,12 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 %windowvel=vel(25:200);
 %velcond =abs(windowvel)>=(270);
 % distcond= find(abs(dist)>5,1);
-idx(1)= find(vel(10:50)>.15*maxvel,1); % to account for the asymptotic behavior 
+idx(1)= find(vel(10:100)>.15*maxvel,1); % to account for the asymptotic behavior shifted over 
 idx(1) = idx(1)+9;
 
 %Finding Max dist
-maxdist= max(dist(1:100));
-idx(3)= find(dist==maxdist);
+
+idx(3)= mridx; %pulled from gethandshouldtrunk8
 
  timestart = t(idx(1));
  timevelmax = t(idx(2));
@@ -185,9 +185,9 @@ hold on
 %  plot(timeend,dist(idx(4)),'-o') %end of reach
 title('Reaching Arm Muscles')
 y1=ylim;
-p1 = line('Color','b','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
+p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
 p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); % max vel
-p3= line('Color','c','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
+p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 
