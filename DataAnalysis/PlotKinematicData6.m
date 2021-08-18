@@ -69,7 +69,7 @@ afname2 = mfname;
  if flag
  figure(1),clf
  subplot(2,1,1)
- plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+ plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
  hold on
 plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
 % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
@@ -162,18 +162,23 @@ metdata=data.met;
 
 %% Main Cumulative Metria Figure
  figure(4)
-        p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+        %p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+        p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
+
         hold on
        
         idxvelmax = find(t==timevelmax,1);
-       c1= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+     %  c1= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
         
-        idxreachstart = find(t==timestart,1);
-       c2= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+     Newreachx = (xhand(:,1)-xjug(1,1));
+     Newreachy = (xhand(:,2)-xjug(1,2));
+        
+     idxreachstart = find(t==timestart,1);
+       c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
 
       
-        idxdistmax = length(xhand);
-       c3= viscircles([xhand(idxdistmax,1),xhand(idxdistmax,2)],5,'Color','r');
+       idxdistmax = length(xhand);
+       c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
 %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -184,41 +189,42 @@ metdata=data.met;
 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c1 c2 c3],'Hand','Shoulder','Trunk','Max Vel','Reach Start','Max Distance','Location','northwest','FontSize',16)
-axis 'equal'
+legend([p1' c2 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
+%axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
-
+ xlim([-30 250])
+ ylim([-150 700])
 if expcond== 1 
-title('Trunk Restrained Table','FontSize',18)
+title('Restrained Table','FontSize',18)
 end
 
 if expcond== 2 
-title('Trunk Restrained 25%','FontSize',18)
+title('Restrained 25%','FontSize',18)
 end
 
 if expcond== 3 
-title('Trunk Restrained 50%','FontSize',18)
+title('Restrained 50%','FontSize',18)
 end
 
 if expcond== 4
-title('Trunk Unrestrained Table','FontSize',18)
+title('Unrestrained Table','FontSize',18)
 end
 
 if expcond== 5
-title('Trunk Unrestrained 25%','FontSize',18)
+title('Unrestrained 25%','FontSize',18)
 end
 
 if expcond== 6
-title('Trunk Unrestrained 50%','FontSize',18)
+title('Unrestrained 50%','FontSize',18)
 end
 % 
 %% Calling COP Function
-  ppsdata =data.pps;
-  tpps = data.pps{1,1};
-  ppsdata= ppsdata{1,2};
-  ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
- [CoP2]= ComputeCOP(ppsdata,tpps);
+%   ppsdata =data.pps;
+%   tpps = data.pps{1,1};
+%   ppsdata= ppsdata{1,2};
+%   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
+%  [CoP2]= ComputeCOP(ppsdata,tpps);
 
 pause
 end

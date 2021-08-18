@@ -2,27 +2,84 @@
 
 %KINEMATIC DATA
 %% Stroke Data
-RT = [1.018 .819 .984 .843 .820 .988 .872 1.010];
-R25 = [.911 .724 .946 .811 .748 .981 .846 .939];
-R50 = [.896 .716 .953 .805 .746 .975 .851 .923];
+RTP = [1.018 .819 .984 .843 .820 .988 .872 1.010];
+R25P = [.911 .724 .946 .811 .748 .981 .846 .939];
+R50P = [.896 .716 .953 .805 .746 .975 .851 .923];
 
-UT = [.983 .821 .947 .851 .818 .977 .843 1.004];
-U25= [.822 .708 .946 .777 .755 .908 .804 .918];
-U50 = [.823 .730 .930 .785 .749 1.006 .806 .906];
-%% Trunk Restrained
-R = [ RT; R25 ; R50]';
-boxchart(R)
+UTP = [.983 .821 .947 .851 .818 .977 .843 1.004];
+U25P= [.822 .708 .946 .777 .755 .908 .804 .918];
+U50P = [.823 .730 .930 .785 .749 1.006 .806 .906];
+
+M = [ RT;UT; R25 ;U25; R50;U50]';
+boxchart(M)
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
-xticklabels({'Table','25% MVT','50% MVT'})
-hold on
-U = [ UT; U25 ; U50]';
-boxchart(U)
+%U = [ UT; U25 ; U50]';
+%boxchart(U)
 title('Effect of Trunk Restraint and Limb Loading - Stroke', 'FontSize',24);
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
-xticklabels({'Table','25% MVT','50% MVT'})
-legend('Trunk Restrained', 'Trunk Unrestrained','FontSize',16)
+xticklabels({'Restrained Table','Unrestrained Table','Restrained 25%','Unrestrained 25%','Restrained 50%','Unrestrained 50%'})
+%legend('Trunk Restrained', 'Trunk Unrestrained','FontSize',16)
+%% Stroke Non Paretic 
+
+RT = [.926 .969 .926];
+R25= [.909 .970 .916];
+R50= [.916 .970 .914];
+
+UT = [.913 .963 .921];
+U25 = [.927 .956 .910];
+U50= [.930 .951 .910];
+
+
+M1 = [RTP; UTP; R25P; U25P; R50P; U50P]'; %Paretic arm matrix
+
+M2 = [RT; UT; R25; U25; R50; U50]' ; % non-paretic arm matrix 
+
+boxchart(M1)
+ylabel('Reaching Distance', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+%U = [ UT; U25 ; U50]';
+%boxchart(U)
+title('Effect of Trunk Restraint and Limb Loading - Stroke', 'FontSize',24);
+ylabel('Reaching Distance', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+xticklabels({'Restrained Table','Unrestrained Table','Restrained 25%','Unrestrained 25%','Restrained 50%','Unrestrained 50%'})
+legend('Paretic', 'Non-Paretic','FontSize',16)
+hold on
+boxchart(M2)
+ylabel('Reaching Distance', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+%U = [ UT; U25 ; U50]';
+%boxchart(U)
+% title('Effect of Trunk Restraint and Limb Loading - Non-Paretic', 'FontSize',24);
+ylabel('Reaching Distance', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+xticklabels({'Restrained Table','Unrestrained Table','Restrained 25%','Unrestrained 25%','Restrained 50%','Unrestrained 50%'})
+%legend('Trunk Restrained', 'Trunk Unrestrained','FontSize',16)
+
+
+
+
+%% Controls
+RT = [.896 1.010];
+R25 = [.920 .994];
+R50 = [.918 .982];
+
+UT = [.851 .955];
+U25 = [.911 .949];
+U50 = [.902 .957];
+M2 = [ RT;UT; R25 ;U25; R50;U50]';
+
+boxchart(M2)
+ylabel('Reaching Distance', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+xticklabels({'Restrained Table','Unrestrained Table','Restrained 25%','Unrestrained 25%','Restrained 50%','Unrestrained 50%'})
+title('Effect of Trunk Restraint and Limb Loading - Controls', 'FontSize',24);
+
+
+
+
 
 %% Kinetic Data RTIS2002
 
