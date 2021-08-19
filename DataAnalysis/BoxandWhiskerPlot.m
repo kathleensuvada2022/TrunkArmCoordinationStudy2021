@@ -12,20 +12,21 @@ U50P = [.823 .730 .930 .785 .749 1.006 .806 .906];
 
 R = [ RTP; R25P ; R50P;]';
 MedR = median(R);
-boxchart(R)
+h1= boxchart(R)
 hold on
 plot(MedR,'ro-')
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
 U = [ UTP; U25P ; U50P]';
 MedU=median(U);
-boxchart(U)
+h2= boxchart(U)
 plot(MedU,'ro-')
-title('Effect of Trunk Restraint and Limb Loading - Paretic Limb', 'FontSize',24);
+ylim([.5 1.1])
+%title('Effect of Trunk Restraint and Limb Loading - Paretic Limb', 'FontSize',24);
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
 xticklabels({'Table','25%','50%'})
-legend('Trunk Restrained','', 'Trunk Unrestrained','','FontSize',16)
+legend([h1 h2],'Trunk Restrained','Trunk Unrestrained','FontSize',16)
 %% Stroke Non Paretic 
 
 RT = [.926 .969 .926];
@@ -38,21 +39,21 @@ U50= [.930 .951 .910];
 
 R = [ RT; R25 ; R50;]';
 MedR = median(R);
-boxchart(R)
+h1=boxchart(R);
 hold on
+h2=boxchart(U);
+legend([h1 h2],'Trunk Restrained','Trunk Unrestrained','FontSize',16)
 plot(MedR,'ro-')
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
 U = [ UT; U25 ; U50]';
 MedU=median(U);
-boxchart(U)
 plot(MedU,'ro-')
-title('Effect of Trunk Restraint and Limb Loading - Non-Paretic Limb', 'FontSize',24);
+%title('Effect of Trunk Restraint and Limb Loading - Non-Paretic Limb', 'FontSize',24);
+ylim([.5 1.1])
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
 xticklabels({'Table','25%','50%'})
-legend('Trunk Restrained','', 'Trunk Unrestrained','','FontSize',16)
-
 
 
 %%

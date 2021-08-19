@@ -195,8 +195,9 @@ legend([p1' c3 y1],'Hand','Shoulder','Trunk','Max Distance',' Arm Length','Locat
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
-  xlim([-50 255])
- ylim([-100 650])
+axis equal
+xlim([-500 100])
+ylim([-100 800])
 if expcond== 1 
 title('Restrained Table','FontSize',18)
 end
