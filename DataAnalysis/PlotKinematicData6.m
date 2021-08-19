@@ -161,16 +161,18 @@ metdata=data.met;
 % PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 %% Main Cumulative Metria Figure
- figure(4)
-        %p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
-        p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
+ figure(4),clf
+        p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+%         p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
      Newreachx = (xhand(:,1)-xjug(1,1));
      Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
        
         idxvelmax = find(t==timevelmax,1);
-    %   c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
-        
+%        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
+             
+       c1= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+
 
         
      idxreachstart = find(t==timestart,1);
@@ -178,7 +180,8 @@ metdata=data.met;
 
       
        idxdistmax = length(xhand);
-       c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
+%        c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
+ c3= viscircles([xhand(idxdistmax,1),xhand(idxdistmax,2)],5,'Color','r');
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
 %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -191,13 +194,13 @@ metdata=data.met;
   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c3 y1],'Hand','Shoulder','Trunk','Max Distance',' Arm Length','Location','northwest','FontSize',16)
+legend([p1' c1 c3 y1],'Hand','Shoulder','Trunk','Max Velocity','Max Distance',' Arm Length','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 axis equal
-xlim([-500 100])
-ylim([-100 800])
+% xlim([-500 100])
+% ylim([-100 800])
 if expcond== 1 
 title('Restrained Table','FontSize',18)
 end
