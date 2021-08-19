@@ -164,17 +164,17 @@ metdata=data.met;
  figure(4)
         %p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
         p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-
+     Newreachx = (xhand(:,1)-xjug(1,1));
+     Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
        
         idxvelmax = find(t==timevelmax,1);
-     %  c1= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+    %   c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
         
-     Newreachx = (xhand(:,1)-xjug(1,1));
-     Newreachy = (xhand(:,2)-xjug(1,2));
+
         
      idxreachstart = find(t==timestart,1);
-       c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
+ %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
 
       
        idxdistmax = length(xhand);
@@ -187,14 +187,16 @@ metdata=data.met;
         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
   %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
 
+  armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+  y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c2 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
+legend([p1' c3 y1],'Hand','Shoulder','Trunk','Max Distance',' Arm Length','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
- xlim([-30 250])
- ylim([-150 700])
+  xlim([-50 255])
+ ylim([-100 650])
 if expcond== 1 
 title('Restrained Table','FontSize',18)
 end

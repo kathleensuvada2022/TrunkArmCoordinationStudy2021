@@ -108,7 +108,7 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 %windowvel=vel(25:200);
 %velcond =abs(windowvel)>=(270);
 % distcond= find(abs(dist)>5,1);
-idx(1)= find(vel(10:100)>.15*maxvel,1); % to account for the asymptotic behavior shifted over 
+idx(1)= find(vel(10:100)>.20*maxvel,1); % to account for the asymptotic behavior shifted over 
 idx(1) = idx(1)+9;
 
 %Finding Max dist
