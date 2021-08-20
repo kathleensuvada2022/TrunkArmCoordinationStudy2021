@@ -73,7 +73,8 @@ Xo= nanmean(xhand(1:50,1));
 Yo = nanmean(xhand(1:50,2)); 
 Zo = nanmean(xhand(1:50,3)); 
 
-dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+%dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
 dist = dist(:)-dist(1); %offsetting so not starting above 0
 
 %using Resampled Data
@@ -108,7 +109,7 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 %windowvel=vel(25:200);
 %velcond =abs(windowvel)>=(270);
 % distcond= find(abs(dist)>5,1);
-idx(1)= find(vel(10:100)>.20*maxvel,1); % to account for the asymptotic behavior shifted over 
+idx(1)= find(dist(10:100)>10,1); % to account for the asymptotic behavior shifted over and 100mm for 5cm circle diameter 
 idx(1) = idx(1)+9;
 
 %Finding Max dist
