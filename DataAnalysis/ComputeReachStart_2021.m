@@ -109,7 +109,7 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 %windowvel=vel(25:200);
 %velcond =abs(windowvel)>=(270);
 % distcond= find(abs(dist)>5,1);
-idx(1)= find(dist(10:100)>10,1); % to account for the asymptotic behavior shifted over and 100mm for 5cm circle diameter 
+idx(1)= find(xhand(10:100,2)>xhand(10:100,1),1); % to account for the asymptotic behavior shifted over and 100mm for 5cm circle diameter 
 idx(1) = idx(1)+9;
 
 %Finding Max dist
