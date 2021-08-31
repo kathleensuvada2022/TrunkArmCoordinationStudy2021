@@ -171,13 +171,13 @@ metdata=data.met;
         idxvelmax = find(t==timevelmax,1);
 %        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
              
-       c1= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+       c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
 
 
         
      idxreachstart = find(t==timestart,1);
  %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
-%   c2= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+   c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
 
       
        idxdistmax = length(xhand);
@@ -195,7 +195,7 @@ metdata=data.met;
   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c1 c3 y1],'Hand','Shoulder','Trunk','Max Vel','Max Distance',' Arm Length','Location','northwest','FontSize',16)
+legend([p1' c1 c2 c3 y1],'Hand','Shoulder','Trunk','Reach Start','Max Vel','Max Distance',' Arm Length','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)

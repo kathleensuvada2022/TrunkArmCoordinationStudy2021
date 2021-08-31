@@ -112,8 +112,10 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 % idx(1)= find(abs(xhand(10:100,2))-abs(xhand(1,2))>abs(xhand(10:100,1))-abs(xhand(1,1)),1); % when y displacement bigger than x displacement
 % idx(1) = idx(1)+9;
 
-idx(1) = find(dist>=.05*dist(mridx),1);% reach start when participant is 5% of max distance
-
+idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+% max(dist)
+% .05*max(dist)
+% t(idx(1))
 %Finding Max dist
 
 idx(3)= mridx; %pulled from gethandshouldtrunk8
@@ -134,7 +136,7 @@ idx(3)= mridx; %pulled from gethandshouldtrunk8
 
 figure(2)
 clf
- subplot(5,1,1)
+ %subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
 yyaxis left
