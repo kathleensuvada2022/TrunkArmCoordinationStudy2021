@@ -46,7 +46,7 @@ mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname =  mfname;
 afname2 = mfname;
       
-
+mfname
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -124,7 +124,7 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup,mridx);
+[dist,vel,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname);
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid
