@@ -124,7 +124,7 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname);
+[dist,vel,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid
