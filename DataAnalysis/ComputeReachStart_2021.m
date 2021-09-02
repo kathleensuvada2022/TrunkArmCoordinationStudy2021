@@ -115,7 +115,8 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 idx(1) = find(abs(dist)>=abs(.06*dist(mridx)),1);% reach start when participant is 5% of max distance
 
 %% Correcting if issues with reach start
-  
+
+%% RTIS 1004
 if  strcmp(partid,'RTIS1004') 
   
    if (expcond==1 && strcmp(mfname,'/trial2.mat')) % Trial containing artifact
@@ -389,98 +390,228 @@ if  strcmp(partid,'RTIS1004')
 end
 
 
-
+%% RTIS 1005
 
 if strcmp(partid,'RTIS1005') 
                    
-      if (expcond==2 && strcmp(mfname,'/trial11.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.105*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      if (expcond==2 && strcmp(mfname,'/trial12.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.19*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      if (expcond==2 && strcmp(mfname,'/trial13.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.19*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      if (expcond==2 && strcmp(mfname,'/trial14.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.22*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==2 && strcmp(mfname,'/trial15.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.20*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==2 && strcmp(mfname,'/trial21.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.17*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==2 && strcmp(mfname,'/trial22.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.18*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      if (expcond==2 && strcmp(mfname,'/trial25.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.18*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      if (expcond==3 && strcmp(mfname,'/trial16.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.15*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial17.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.12*dist(mridx),1);% reach start when participant is 5% of max distance
-      end 
-          
-      if (expcond==3 && strcmp(mfname,'/trial18.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.08*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial20.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.10*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial26.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.10*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial27.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.15*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial27.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.19*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==3 && strcmp(mfname,'/trial28.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.12*dist(mridx),1);% reach start when participant is 5% of max distance
-      end 
-      
-      if (expcond==3 && strcmp(mfname,'/trial29.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.05*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==5 && strcmp(mfname,'/trial51.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.12*dist(mridx),1);% reach start when participant is 5% of max distance
-      end
-      
-      
-      if (expcond==5 && strcmp(mfname,'/trial53.mat')) % Trial containing artifact
-      idx(1) = find(abs(dist)>=.15*dist(mridx),1);% reach start when participant is 5% of max distance
-      end    
-      
-  end
+    if (expcond==1 && strcmp(mfname,'/trial6.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    if (expcond==1 && strcmp(mfname,'/trial10.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    if (expcond==2 && strcmp(mfname,'/trial11.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+23;
+    end 
+    if (expcond==2 && strcmp(mfname,'/trial12.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+15;
+    end
+    
+    if (expcond==2 && strcmp(mfname,'/trial13.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+25;
+    end
+    
+    
+    if (expcond==2 && strcmp(mfname,'/trial14.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+18;
+    end
+    
+    if (expcond==2 && strcmp(mfname,'/trial15.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+23;
+    end
+    
+    if (expcond==2 && strcmp(mfname,'/trial21.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+28;
+    end
+    
+    if (expcond==2 && strcmp(mfname,'/trial22.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+15;
+    end
+    
+    
+    if (expcond==2 && strcmp(mfname,'/trial23.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+19;
+    end
+        
+    if (expcond==2 && strcmp(mfname,'/trial24.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+21;
+    end
+    if (expcond==2 && strcmp(mfname,'/trial25.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+19;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial16.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+18;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial17.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+20;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial18.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+22;
+    end
+    
+    
+    if (expcond==3 && strcmp(mfname,'/trial19.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+10;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial20.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+20;
+    end
+    
+    
+    if (expcond==3 && strcmp(mfname,'/trial26.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+22;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial27.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+15;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial28.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+22;
+    end
+    
+    if (expcond==3 && strcmp(mfname,'/trial29.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+5;
+    end
+    
+    if (expcond==4 && strcmp(mfname,'/trial31.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    if (expcond==4 && strcmp(mfname,'/trial34.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-4;
+    end
+    
+    if (expcond==4 && strcmp(mfname,'/trial35.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-1;
+    end
+        
+    if (expcond==4 && strcmp(mfname,'/trial36.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    
+    if (expcond==4 && strcmp(mfname,'/trial37.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-3;
+    end
+    
+    
+    if (expcond==4 && strcmp(mfname,'/trial38.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    
+    if (expcond==4 && strcmp(mfname,'/trial39.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    if (expcond==5 && strcmp(mfname,'/trial51.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+9;
+    end
+    
+    
+    if (expcond==5 && strcmp(mfname,'/trial53.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+29;
+    end
+    
+    
+    if (expcond==5 && strcmp(mfname,'/trial54.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+8;
+    end
+    
+    
+    if (expcond==5 && strcmp(mfname,'/trial55.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)-2;
+    end
+    
+    if (expcond==5 && strcmp(mfname,'/trial57.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+20;
+    end
+    
+    
+    if (expcond==5 && strcmp(mfname,'/trial60.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+11;
+    end
+    
+    
+    if (expcond==5 && strcmp(mfname,'/trial61.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+13;
+    end
+    
+        
+    if (expcond==6 && strcmp(mfname,'/trial41.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+28;
+    end
+    
+    if (expcond==6 && strcmp(mfname,'/trial42.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+17;
+    end
+    
+    if (expcond==6 && strcmp(mfname,'/trial43.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+15;
+    end
+    
+    if (expcond==6 && strcmp(mfname,'/trial44.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+21;
+    end
+    
+    
+    if (expcond==6 && strcmp(mfname,'/trial45.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+16;
+    end
+    
+    
+    if (expcond==6 && strcmp(mfname,'/trial46.mat')) % Trial containing artifact
+      %idx(1) = find(abs(dist)>=.10*dist(mridx),1)+;% reach start when participant is 5% of max distance
+      idx(1)=idx(1)+18;
+    end
+end
 %%
 % max distance
 idx(3)= mridx; %pulled from gethandshouldtrunk8
