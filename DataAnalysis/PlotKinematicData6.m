@@ -124,7 +124,8 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,timestart,timevelmax,timeend,timedistmax]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
+[dist,vel,distmax,timestart,timevelmax,timeend,timedistmax,idx]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
+maxhanddist(i)=distmax;
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid
@@ -171,18 +172,22 @@ metdata=data.met;
         idxvelmax = find(t==timevelmax,1);
 %        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
              
-       c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+%        c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+     c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
 
 
         
      idxreachstart = find(t==timestart,1);
  %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
-   c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+  % c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+    c1= plot(xhand(idxreachstart,1),xhand(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10);
 
       
        idxdistmax = length(xhand);
 %        c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
- c3= viscircles([xhand(idxdistmax,1),xhand(idxdistmax,2)],5,'Color','r');
+ %c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
+ c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
 %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -237,6 +242,7 @@ pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 avgmaxreach =nanmean(maxreach_current_trial)
+avgmaxhand = nanmean(maxhanddist)
 std_maxreach = nanstd(maxreach_current_trial)
 avgshouldertrunk = nanmean(shtrdisp_current_trial)
 std_shldtr = nanstd(shtrdisp_current_trial)

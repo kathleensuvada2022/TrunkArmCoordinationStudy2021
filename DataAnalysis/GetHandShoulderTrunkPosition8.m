@@ -241,18 +241,13 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
   shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
 
 %% Truncate data until max reach
- xhand=xhand(1:mridx,:); %Using BL 3rd MCP
-% % %xfore=xfore(1:mridx,:);
-% % %xarm=xarm(1:mridx2,:);
-  xshldr=xshldr(1:mridx,:);%Using BL Acromion
- xjug=xjug(1:mridx,:); %Using BL jug notch
+% xhand=xhand(1:mridx,:);
+%  xshldr=xshldr(1:mridx,:);%Using BL Acromion
+%  xjug=xjug(1:mridx,:); %Using BL jug notch
 
-% xhand=xhand(1:mridx2,:);
-% xfore=xfore(1:mridx2,:);
-% xarm=xarm(1:mridx2,:);
-% xshldr=xshldr(1:mridx2,:);
-% xtrunk=xtrunk(1:mridx2,:);
 
+% done to now cut off at max
+ %distance for hand movement
 %% Testing Forearm data and 3rd MCP position
 % 
 % 
