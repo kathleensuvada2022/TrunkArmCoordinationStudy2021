@@ -92,7 +92,13 @@ dist2 = dist2(:)-dist2(1);
 velx= ddt(smo(xhand(:,1),3),1/89);
 vely= ddt(smo(xhand(:,2),3),1/89);
 
+
+velx2= ddt(smo(xhand2(:,1),3),1/89);
+vely2= ddt(smo(xhand2(:,2),3),1/89);
+
+
 vel = sqrt(velx.^2+vely.^2);
+vel2= sqrt(velx2.^2+vely2.^2);
 %% Finding Time Points 
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
@@ -226,7 +232,7 @@ if strcmp(partid,'RTIS1005')
         
         
         if strcmp(mfname,'/trial28.mat')
-            maxdistint = max(dist)
+            maxdistint = max(dist);
             idx(3) = find(dist==maxdistint,1);
           
         end
@@ -245,6 +251,19 @@ if strcmp(partid,'RTIS1005')
             
             idx(1) = idx(1)-10;
           
+            
+          end
+          
+          
+          if strcmp(mfname,'/trial37.mat')
+            
+            idx(1) = idx(1)-10;
+            xhand = xhand2;
+            dist= dist2;
+            t= t2;
+            vel = vel2;
+            velx = velx2;
+            vely=vely2;
             
           end
         
@@ -736,6 +755,12 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
        
        if expcond ==3
            if strcmp(mfname,'/trial12.mat')
+           idx(1)=idx(1)+25;
+           end
+           
+           
+           
+           if strcmp(mfname,'/trial23.mat')
            idx(1)=idx(1)+25;
            end
        end
@@ -1450,39 +1475,39 @@ xlabel('time in seconds')
 legend('Distance','Velocity','Velx', 'Vely','Reach Start','Max Vel','Max Dist')
 
 %%
-% figure(3)
-% clf
-%  subplot(5,1,1)
-% yyaxis left
-% plot(t,dist)
-% ylabel('Distance (mm)')
-% hold on
-% yyaxis right
-% plot(t,vel) 
-% plot(t,velx)
-% plot(t,vely)
-% ylabel('Velocity (mm/s)')
-% hold on
-% 
-% %  plot(timestart,dist(idx(1)),'-o') %reach start
-% %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
-% %  plot(timebefore,dist(ibefore),'-o') %Time before
-% %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
-% %  plot(timeend,dist(idx(4)),'-o') %end of reach
-% title('Reaching Arm Muscles')
-% y1=ylim;
-% p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
-% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); % max vel
-% p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
-% %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
-% %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
-% 
-% % co=get(lax1,'ColorOrder');
-% % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-% 
-% xlim([0.5 5])
-% 
-% xlabel('time in seconds')
-% legend('Distance','Velocity','Velx', 'Vely','Time Start','Max Vel','Max Dist')
+figure(3)
+clf
+ subplot(5,1,1)
+yyaxis left
+plot(t,dist)
+ylabel('Distance (mm)')
+hold on
+yyaxis right
+plot(t,vel) 
+plot(t,velx)
+plot(t,vely)
+ylabel('Velocity (mm/s)')
+hold on
+
+%  plot(timestart,dist(idx(1)),'-o') %reach start
+%  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
+%  plot(timebefore,dist(ibefore),'-o') %Time before
+%  plot(timedistmax ,dist(idx(3)),'-o') %max distance
+%  plot(timeend,dist(idx(4)),'-o') %end of reach
+title('Reaching Arm Muscles')
+y1=ylim;
+p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); % max vel
+p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[y1(1) y1(2)],'LineWidth',.5); %max, dist
+%p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+%p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
+
+xlim([0.5 5])
+
+xlabel('time in seconds')
+legend('Distance','Velocity','Velx', 'Vely','Time Start','Max Vel','Max Dist')
 
 end 

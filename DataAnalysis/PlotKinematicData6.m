@@ -22,13 +22,13 @@ mfilepath = afilepath2;
 %% Initializing Variables
 
 maxreach=zeros(ntrials,1);
-emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
+emgstart = zeros(ntrials,15); 
 
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
 maxreach=zeros(ntrials,1);
-emgstart = zeros(ntrials,15); % changed to 16 because 16 EMGS
+emgstart = zeros(ntrials,15); 
 
 emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
 rdist = zeros(ntrials,1);
@@ -159,7 +159,7 @@ maxhanddist(i)=distmax;
 
 
 %% Plotting EMGS
-% PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+%PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 %% Main Cumulative Metria Figure
  figure(4),clf
@@ -181,7 +181,14 @@ maxhanddist(i)=distmax;
  %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
   % c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     c1= plot(xhand(idxreachstart,1),xhand(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10);
+        
+    plot(xshldr(idxreachstart,1),xshldr(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+   
+    plot(xjug(idxreachstart,1),xjug(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
 
+    
       
        idxdistmax = length(xhand);
 %        c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
