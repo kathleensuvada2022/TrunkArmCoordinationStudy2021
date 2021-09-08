@@ -241,7 +241,7 @@ maxhandexcrsn = max(handex);
 
 %% Compute shoulder and trunk displacement at maximum reach - using BLS
 
-  shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
+  shtrdisp=sqrt(sum(([xshldr(mridx,1:2);xjug(mridx,1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
   
   sh_exc = shtrdisp(1) -shtrdisp(2);
   
