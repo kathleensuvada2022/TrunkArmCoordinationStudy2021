@@ -1,4 +1,4 @@
- function [t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
+ function [t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,maxhandexcrsn,sh_exc,trunk_exc]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -129,6 +129,8 @@ xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 [ridx,cidx]=find(x==setup.markerid(1)); 
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+
+
 %%
 % compute the hand position (3rd MCP) from the end effector
 % position - From ACT3DTACS
@@ -212,20 +214,21 @@ end
 
 
 %% Compute reaching distance (between shoulder and hand from hand marker)
-rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
+rdist=sqrt(sum((xhand(:,1:2)-xshldr(:,1:2)).^2,2));
 [maxreach,mridx]=max(rdist);
 
+%% Max Hand Excursion
 
-%  %% Comparing with ACT3D data (xhand2)
-% p1=plot([xhand(:,1) xhand2(:,1) xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xhand(:,3) xhand2(:,3) xshldr(:,3) xtrunk(:,3) xfore(:,3)],'LineWidth',2); hold on
-% p2=plot(gca,nanmean([xhand(1:10,1) xhand2(1:10,1) xshldr(1:10,1) xtrunk(1:10,1)]),-nanmean([xhand(1:10,3) xhand2(1:10,3) xshldr(1:10,3) xtrunk(1:10,3)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-% p3=plot([xhand(mridx,1) xhand2(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xhand2(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-% phandles=[p1' p2 p3];
-% axis 'equal'
-% % legend(phandles,'Hand','Shoulder','Trunk','Home','Max Reach')
-% legend(phandles,'Hand','Hand2','Shoulder','Trunk','Forearm','Home','Max Reach');
-% title(filename,'Interpreter','none')
+%using original data
+Xo_sh= nanmean(xshldr(1:5,1));
+Yo_sh = nanmean(xshldr(1:5,2)); 
 
+
+
+%dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+handex = sqrt((xhand(:,1)-Xo_sh).^2 +(xhand(:,2)-Yo_sh).^2);
+
+maxhandexcrsn = max(handex);
 
 %% 
 % Compute the mean trunk position
@@ -239,15 +242,18 @@ rdist=sqrt(sum((xhand-xshldr(:,1:3)).^2,2));
 %% Compute shoulder and trunk displacement at maximum reach - using BLS
 
   shtrdisp=sqrt(sum(([xshldr(mridx,:);xjug(mridx,:)]-[nanmean(xshldr(1:20,:));nanmean(xjug(1:20,:))]).^2,2))';
+  
+  sh_exc = shtrdisp(1) -shtrdisp(2);
+  
+  trunk_exc = shtrdisp(2);
+    
+ 
 
 %% Truncate data until max reach
 % xhand=xhand(1:mridx,:);
 %  xshldr=xshldr(1:mridx,:);%Using BL Acromion
 %  xjug=xjug(1:mridx,:); %Using BL jug notch
 
-
-% done to now cut off at max
- %distance for hand movement
 %% Testing Forearm data and 3rd MCP position
 % 
 % 

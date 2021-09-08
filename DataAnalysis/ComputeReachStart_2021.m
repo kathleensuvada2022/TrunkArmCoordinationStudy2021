@@ -75,7 +75,6 @@ Zo = nanmean(xhand(1:5,3));
 
 %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
-% dist = dist(:)-dist(1); %offsetting so not starting above 0
 
 %using Resampled Data
 Xo = nanmean(xhand2(1:50,1));
@@ -106,6 +105,7 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 distmax = max(dist(1:70));
 idx(3)= find(dist==distmax,1);
 distmax = distmax+abs(min(dist));
+
 % Finding Max Vel
  maxvel =max(vel(10:idx(3)));
  idx(2)= find(vel==maxvel) ;

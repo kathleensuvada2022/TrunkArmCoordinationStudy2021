@@ -62,8 +62,18 @@ mfname
 
 %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
 
-[t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,shtrdisp]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
+[t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,maxhandexcrsn,sh_exc, trunk_exc]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
    
+%% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
+maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
+ 
+maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+ 
+shex_current_trial(i) = sh_exc;  
+
+trex_current_trial(i) = trunk_exc;
+
+
  %% Metria Trial by Trial Kinematic Data (computed BLS)
  
  if flag
@@ -105,12 +115,6 @@ legend('Distance','Max Dist')
  pause
  end
  
-%% 
-% maxreach_seconds = maxreachtime;
- maxreach_current_trial(i) =maxreach; % reaching distance in mM
- shtrdisp_current_trial(i,:) = shtrdisp;  % shoulder and trunk displacement in mM
-% maxreachtime;
-
 
 %% Loading in EMGS 
 
@@ -124,8 +128,8 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,distmax,timestart,timevelmax,timeend,timedistmax,idx]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
-maxhanddist(i)=distmax;
+[dist,vel,distmax, timestart,timevelmax,timeend,timedistmax,idx]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
+
 %%    
 % Clean this up? Is any of this neccessary anymore?
 %     switch partid
@@ -249,8 +253,15 @@ pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 avgmaxreach =nanmean(maxreach_current_trial)
-avgmaxhand = nanmean(maxhanddist)
 std_maxreach = nanstd(maxreach_current_trial)
-avgshouldertrunk = nanmean(shtrdisp_current_trial)
-std_shldtr = nanstd(shtrdisp_current_trial)
+
+avgmaxhand = nanmean(maxhandexcrsn_current_trial)
+std_maxhand= nanstd(maxhandexcrsn_current_trial)
+
+avgshldr = nanmean(shex_current_trial)
+stdshldr = nanstd(shex_current_trial)
+
+avgtrunk = nanmean(trex_current_trial)
+stdtrunk = nanstd(trex_current_trial)
+
 end   
