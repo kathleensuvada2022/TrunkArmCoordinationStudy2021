@@ -1,4 +1,4 @@
- function [t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,maxhandexcrsn,sh_exc,trunk_exc]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
+ function [t,xhand,xshoulder,xtrunk,xshldr,xjug]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -213,22 +213,6 @@ end
 
 
 
-%% Compute reaching distance (between shoulder and hand from hand marker)
-rdist=sqrt(sum((xhand(:,1:2)-xshldr(:,1:2)).^2,2));
-[maxreach,mridx]=max(rdist);
-
-%% Max Hand Excursion
-
-%using original data
-Xo_sh= nanmean(xshldr(1:5,1));
-Yo_sh = nanmean(xshldr(1:5,2)); 
-
-
-
-%dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
-handex = sqrt((xhand(:,1)-Xo_sh).^2 +(xhand(:,2)-Yo_sh).^2);
-
-maxhandexcrsn = max(handex);
 
 %% 
 % Compute the mean trunk position
@@ -239,14 +223,7 @@ maxhandexcrsn = max(handex);
 
 % disp([mtpos stdtpos mspos stdspos])
 
-%% Compute shoulder and trunk displacement at maximum reach - using BLS
 
-  shtrdisp=sqrt(sum(([xshldr(mridx,1:2);xjug(mridx,1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
-  
-  sh_exc = shtrdisp(1) -shtrdisp(2);
-  
-  trunk_exc = shtrdisp(2);
-    
  
 
 %% Truncate data until max reach

@@ -62,17 +62,8 @@ mfname
 
 %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
 
-[t,mridx,rdist,xhand,xshoulder,xtrunk,xshldr,xjug,maxreach,maxhandexcrsn,sh_exc, trunk_exc]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
+[t,xhand,xshoulder,xtrunk,xshldr,xjug]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
    
-%% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
-maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
- 
-maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
- 
-shex_current_trial(i) = sh_exc;  
-
-trex_current_trial(i) = trunk_exc;
-
 
  %% Metria Trial by Trial Kinematic Data (computed BLS)
  
@@ -128,7 +119,38 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,distmax, timestart,timevelmax,timeend,timedistmax,idx]= ComputeReachStart_2021(metdata,setup,mridx,expcond,partid,mfname,hand);
+[dist,vel,distmax,idx]= ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
+%% Compute reaching distance (between shoulder and hand from hand marker)
+%maxreach=sqrt(sum((xhand(idx(3),1:2)-xshldr(idx(3),1:2)).^2,2));
+maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
+
+%% Max Hand Excursion
+
+%using original data
+Xo_sh= nanmean(xshldr(1:5,1));
+Yo_sh = nanmean(xshldr(1:5,2)); 
+
+maxhandexcrsn = sqrt((xhand(idx(3),1)-Xo_sh)^2 +(xhand(idx(3),2)-Yo_sh)^2);
+
+
+%% Compute shoulder and trunk displacement at maximum reach - using BLS
+
+  shtrdisp=sqrt(sum(([xshldr(idx(3),1:2);xjug(idx(3),1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
+  
+  sh_exc = shtrdisp(1) -shtrdisp(2);
+  
+  trunk_exc = shtrdisp(2);
+
+
+%% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
+maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
+ 
+maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+ 
+shex_current_trial(i) = sh_exc;  
+
+trex_current_trial(i) = trunk_exc;
+
 
 %%    
 % Clean this up? Is any of this neccessary anymore?
@@ -163,17 +185,18 @@ metdata=data.met;
 
 
 %% Plotting EMGS
-%PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+% PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 %% Main Cumulative Metria Figure
- figure(4)
-        p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
+ figure(4),clf
+%        p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
+       p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
 %         p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
      Newreachx = (xhand(:,1)-xjug(1,1));
      Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
        
-        idxvelmax = find(t==timevelmax,1);
+%         idxvelmax = find(t==timevelmax,1);
 %        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
              
 %        c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
@@ -181,15 +204,15 @@ metdata=data.met;
 
 
         
-     idxreachstart = find(t==timestart,1);
+%      idxreachstart = find(t==timestart,1);
  %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
   % c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    c1= plot(xhand(idxreachstart,1),xhand(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10);
+    c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
         
-    plot(xshldr(idxreachstart,1),xshldr(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
    
-    plot(xjug(idxreachstart,1),xjug(idxreachstart,2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
 
     
@@ -207,18 +230,20 @@ metdata=data.met;
         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
   %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
 
-  armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+  armlength = (setup.exp.armLength+setup.exp.e2hLength)*10
   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
+ 
+
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c1 c3 y1],'Hand','Shoulder','Trunk','Reach Start','Max Distance',' Arm Length','Location','northwest','FontSize',16)
+%legend([p1' c1 c3 y1],'Hand','Shoulder','Trunk','Reach Start','Max Distance',' Arm Length','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 axis equal
 % xlim([-500 100])
 % ylim([-100 800])
-if expcond== 1 
+if mtrials== 1 
 title('Restrained Table','FontSize',18)
 end
 
@@ -241,7 +266,7 @@ end
 if expcond== 6
 title('Unrestrained 50%','FontSize',18)
 end
-% 
+
 %% Calling COP Function
 %   ppsdata =data.pps;
 %   tpps = data.pps{1,1};
