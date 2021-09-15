@@ -1,4 +1,4 @@
-function PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)
+function[emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
 cleandata=KaceyNotchfilter(emg);
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
@@ -16,6 +16,12 @@ meanEMG=movmean(emg,ds);
 % memg=max(emg);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL
+
+emg_idxstart= round(timestart*1000);
+emg_idxvel = round(timevelmax*1000);
+emg_timestart = emg(emg_idxstart,:);
+emg_timevel = emg(emg_idxvel,:);
+
 
 idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];
 

@@ -1,4 +1,4 @@
-function [dist,vel,distmax,idx]=ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
+function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax]=ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
 [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
@@ -1791,17 +1791,17 @@ idx;
 
 figure(2)
 clf
- %subplot(5,1,1)
+ subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
- % yyaxis left
+  yyaxis left
 
 plot(t,dist)
 hold on
- plot(t,xhand(:,3))
+%  plot(t,xhand(:,3))
 ylabel('Distance (mm)')
 hold on
-%  yyaxis right
+  yyaxis right
 plot(t,vel) 
 % plot(t,velx)
 % plot(t,vely)

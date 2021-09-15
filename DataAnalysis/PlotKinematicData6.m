@@ -1,4 +1,4 @@
-function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
+function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
@@ -40,6 +40,9 @@ emgsmaxvel_vals = zeros(ntrials,15);
 
 maxreach_current_trial =zeros(ntrials,1);
 shtrdisp_current_trial=zeros(ntrials,2);
+
+emgvel_trial= zeros(length(mtrials),15);
+emgstart_trial= zeros(length(mtrials),15);
 %% Main loop that grabs Metria data and plots 
 for i=1:length(mtrials)
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -119,7 +122,7 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,distmax,idx]= ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
+[dist,vel,distmax,idx,timestart,timevelmax, timedistmax]= ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
 %% Compute reaching distance (between shoulder and hand from hand marker)
 %maxreach=sqrt(sum((xhand(idx(3),1:2)-xshldr(idx(3),1:2)).^2,2));
 maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
@@ -185,19 +188,21 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-% PlotEMGsCleanV2(emg,timestart,timevelmax,timeend,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-
+%  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+% 
+%  emgvel_trial(i,:) = emg_timevel;
+%  emgstart_trial(i,:) = emg_timestart;
 %% Main Cumulative Metria Figure
- figure(4),clf
-%        p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
-       p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
-%         p1= plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
+ figure(4)
+  %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
+ %      p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+         p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
      Newreachx = (xhand(:,1)-xjug(1,1));
      Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
        
 %         idxvelmax = find(t==timevelmax,1);
-%        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');
+%        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');emgvel_trial
              
 %        c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
    %  c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
@@ -207,20 +212,20 @@ trex_current_trial(i) = trunk_exc;
 %      idxreachstart = find(t==timestart,1);
  %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
   % c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
+    c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
         
-    plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+    plot(xshldr(idx(1),1)-xjug(idx(1),1),xshldr(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(3),1)-xjug(idx(1),1),xshldr(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
    
-    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
+    plot(xjug(idx(1),1)-xjug(idx(1),1),xjug(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(3),1)-xjug(idx(1),1),xjug(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
 
     
       
        idxdistmax = length(xhand);
 %        c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
  %c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
- c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+ c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10);
 
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -230,20 +235,23 @@ trex_current_trial(i) = trunk_exc;
         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
   %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
 
-  armlength = (setup.exp.armLength+setup.exp.e2hLength)*10
-  y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
- 
+%   if i ==1  
+% %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
+% armlength = 397.7616;
+%   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
+%   end 
 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-%legend([p1' c1 c3 y1],'Hand','Shoulder','Trunk','Reach Start','Max Distance',' Arm Length','Location','northwest','FontSize',16)
+legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
-axis equal
-% xlim([-500 100])
-% ylim([-100 800])
-if mtrials== 1 
+% axis equal
+xlim([-250 25])
+ ylim([-200 550])
+
+if expcond== 1 
 title('Restrained Table','FontSize',18)
 end
 
@@ -277,16 +285,21 @@ end
 pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
-avgmaxreach =nanmean(maxreach_current_trial)
-std_maxreach = nanstd(maxreach_current_trial)
+avgmaxreach =nanmean(maxreach_current_trial);
+std_maxreach = nanstd(maxreach_current_trial);
 
-avgmaxhand = nanmean(maxhandexcrsn_current_trial)
-std_maxhand= nanstd(maxhandexcrsn_current_trial)
+avgmaxhand = nanmean(maxhandexcrsn_current_trial);
+std_maxhand= nanstd(maxhandexcrsn_current_trial);
 
-avgshldr = nanmean(shex_current_trial)
-stdshldr = nanstd(shex_current_trial)
+avgshldr = nanmean(shex_current_trial);
+stdshldr = nanstd(shex_current_trial);
 
-avgtrunk = nanmean(trex_current_trial)
-stdtrunk = nanstd(trex_current_trial)
+avgtrunk = nanmean(trex_current_trial);
+stdtrunk = nanstd(trex_current_trial);
+
+
+% 
+%  avgemg_vel = mean(emgvel_trial)
+%  avgemg_start = mean(emgstart_trial)
 
 end   
