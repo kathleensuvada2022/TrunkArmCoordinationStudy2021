@@ -1806,11 +1806,7 @@ plot(t,vel)
 % plot(t,velx)
 % plot(t,vely)
 ylabel('Velocity (mm/s)')
-%  plot(timestart,dist(idx(1)),'-o') %reach start
-%  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
-%  plot(timebefore,dist(ibefore),'-o') %Time before
-%  plot(timedistmax ,dist(idx(3)),'-o') %max distance
-%  plot(timeend,dist(idx(4)),'-o') %end of reach
+
 y1=ylim;
 
 title('Stroke- Severe','FontSize',24)
@@ -1840,12 +1836,7 @@ xlabel('time in seconds')
 % plot(t,vely)
 % ylabel('Velocity (mm/s)')
 % hold on
-% 
-% %  plot(timestart,dist(idx(1)),'-o') %reach start
-% %  plot(timevelmax,vel(idx(2)),'-o') % Max velocity
-% %  plot(timebefore,dist(ibefore),'-o') %Time before
-% %  plot(timedistmax ,dist(idx(3)),'-o') %max distance
-% %  plot(timeend,dist(idx(4)),'-o') %end of reach
+
 % title('Reaching Arm Muscles')
 % y1=ylim;
 % p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[y1(1) y1(2)], 'LineWidth',.5); % start reach

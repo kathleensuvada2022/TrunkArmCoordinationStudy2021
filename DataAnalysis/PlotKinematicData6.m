@@ -155,38 +155,6 @@ shex_current_trial(i) = sh_exc;
 trex_current_trial(i) = trunk_exc;
 
 
-%%    
-% Clean this up? Is any of this neccessary anymore?
-%     switch partid
-%         case 'RTIS2001'
-%             if expcond==3 && i==1
-%                 time(3)=t0(108);
-%             end
-%     end
-    
-%      index = ceil(time/.001);
-      
-     
-%     ibefore = timebefore/.001;
-%     ibefore = int32(ibefore);
-%     ivelmax = timevelmax/.001;
-    
-%      emgval(i,:,:) = emg(index,1:16); % CHANGE to 16 from 15  COMMENTED
-%     OUT DON't think need for EMGS? comment back in but was erroring
-     % emgstart(i,:)= emg(ivelmax,1:15);
-    
-    
-    
-%   emgbefore = emg(ibefore,1:15)
-%     emgmaxvel = emg(ivelmax,1:15)
-    
-
-%     Lines 175-178?? Why here?? 
-%     emg=emg(1001:end,:);
-%     t=t-1;
-%     time=time-1;
-
-
 %% Plotting EMGS
 %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 % 
@@ -196,36 +164,36 @@ trex_current_trial(i) = trunk_exc;
  figure(4)
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
  %      p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
-         p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
-     Newreachx = (xhand(:,1)-xjug(1,1));
-     Newreachy = (xhand(:,2)-xjug(1,2));
+        p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
+        Newreachx = (xhand(:,1)-xjug(1,1));
+        Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
        
-%         idxvelmax = find(t==timevelmax,1);
-%        c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');emgvel_trial
+%       idxvelmax = find(t==timevelmax,1);
+%       c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');emgvel_trial
              
-%        c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
-   %  c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
+%       c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+   %    c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
 
 
         
 %      idxreachstart = find(t==timestart,1);
- %      c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
-  % c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
+ %     c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
+  %    c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+       c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
         
-    plot(xshldr(idx(1),1)-xjug(idx(1),1),xshldr(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xshldr(idx(3),1)-xjug(idx(1),1),xshldr(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+        plot(xshldr(idx(1),1)-xjug(idx(1),1),xshldr(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+        plot(xshldr(idx(3),1)-xjug(idx(1),1),xshldr(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
    
-    plot(xjug(idx(1),1)-xjug(idx(1),1),xjug(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug(idx(3),1)-xjug(idx(1),1),xjug(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
+        plot(xjug(idx(1),1)-xjug(idx(1),1),xjug(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+        plot(xjug(idx(3),1)-xjug(idx(1),1),xjug(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
 
     
       
-       idxdistmax = length(xhand);
-%        c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
- %c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
- c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+        idxdistmax = length(xhand);
+%       c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
+        %c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
+        c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10);
 
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -235,11 +203,11 @@ trex_current_trial(i) = trunk_exc;
         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
   %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
 
-%   if i ==1  
-% %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
-% armlength = 397.7616;
-%   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
-%   end 
+    %   if i ==1  
+    %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
+    %   armlength = 397.7616;
+    %   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is 
+    %   end 
 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
@@ -249,7 +217,7 @@ xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 % axis equal
 xlim([-250 25])
- ylim([-200 550])
+ylim([-200 550])
 
 if expcond== 1 
 title('Restrained Table','FontSize',18)
@@ -297,8 +265,6 @@ stdshldr = nanstd(shex_current_trial);
 avgtrunk = nanmean(trex_current_trial);
 stdtrunk = nanstd(trex_current_trial);
 
-
-% 
 %  avgemg_vel = mean(emgvel_trial)
 %  avgemg_start = mean(emgstart_trial)
 
