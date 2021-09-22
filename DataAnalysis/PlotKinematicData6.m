@@ -156,15 +156,18 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-%  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-% 
-%  emgvel_trial(i,:) = emg_timevel;
-%  emgstart_trial(i,:) = emg_timestart;
+ [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+
+ emgvel_trial(i,:) = emg_timevel;
+ emgstart_trial(i,:) = emg_timestart;
 %% Main Cumulative Metria Figure
  figure(4)
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
- %      p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
-        p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
+%       p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+       % p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
+               
+        p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',1);
+
         Newreachx = (xhand(:,1)-xjug(1,1));
         Newreachy = (xhand(:,2)-xjug(1,2));
         hold on
@@ -216,8 +219,8 @@ legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Locat
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 % axis equal
-xlim([-250 25])
-ylim([-200 550])
+xlim([-525 50])
+ylim([-100 700])
 
 if expcond== 1 
 title('Restrained Table','FontSize',18)
@@ -236,7 +239,7 @@ title('Unrestrained Table','FontSize',18)
 end
 
 if expcond== 5
-title('Unrestrained 25%','FontSize',18)
+title('Unrestrained 25%-Stroke','FontSize',18)
 end
 
 if expcond== 6
