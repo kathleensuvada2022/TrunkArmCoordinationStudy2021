@@ -1791,36 +1791,66 @@ idx;
 
 figure(2)
 clf
- subplot(5,1,1)
+%  subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
 %plot(t(1:50),dist(1:50))
-  yyaxis left
+ yyaxis left
 
-plot(t,dist)
-hold on
-%  plot(t,xhand(:,3))
+plot(t,dist,'LineWidth',1)
+% plot(t,xhand(:,3))
+ hold on
+
 ylabel('Distance (mm)')
 hold on
-  yyaxis right
-plot(t,vel) 
+   yyaxis right
+ plot(t,vel,'LineWidth',1) 
 % plot(t,velx)
 % plot(t,vely)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
 
-title('Stroke- Severe','FontSize',24)
- p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',.5); % start reach
-p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',.5); % max vel
-p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',.5); %max, dist
+title('Distance and Velocity','FontSize',24)
+ p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
+% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
+p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
-ylim([-400 400])
+% ylim([-400 400])
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-%  legend('Distance','Z Distance', ' Velocity')
+legend('Distance', 'Velocity','Time Start','Time End','FontSize',16)
+
+
+figure (6),clf
+
+plot(t,xhand(:,3))
+hold on
+
+ylabel('Hand Position (mm)')
+% plot(t,vel,'LineWidth',1) 
+% plot(t,velx)
+% plot(t,vely)
+
+y1=ylim;
+
+title('Z Position of Hand','FontSize',24)
+ p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
+% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
+p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
+%p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+%p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+% ylim([-400 400])
+% co=get(lax1,'ColorOrder');
+% set(lax1,'ColorOrder',co(end-1:-1:1,:))
+xlim([0.25 5])
+ylim([0 300])
+xlabel('time in seconds')
+legend('Z position','Time Start','Time End','FontSize',16)
+
+
 
 %%
 % figure(3)

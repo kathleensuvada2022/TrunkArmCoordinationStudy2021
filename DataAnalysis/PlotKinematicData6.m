@@ -156,17 +156,17 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
- [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-
- emgvel_trial(i,:) = emg_timevel;
- emgstart_trial(i,:) = emg_timestart;
+% [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+% 
+%  emgvel_trial(i,:) = emg_timevel;
+%  emgstart_trial(i,:) = emg_timestart;
 %% Main Cumulative Metria Figure
  figure(4)
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
-%       p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+     p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
        % p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
                
-        p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',1);
+%         p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',1);
 
         Newreachx = (xhand(:,1)-xjug(1,1));
         Newreachy = (xhand(:,2)-xjug(1,2));
@@ -182,21 +182,21 @@ trex_current_trial(i) = trunk_exc;
         
 %      idxreachstart = find(t==timestart,1);
  %     c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
-  %    c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-       c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
+  %   c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+        c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
         
-        plot(xshldr(idx(1),1)-xjug(idx(1),1),xshldr(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-        plot(xshldr(idx(3),1)-xjug(idx(1),1),xshldr(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+        plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+        plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
    
-        plot(xjug(idx(1),1)-xjug(idx(1),1),xjug(idx(1),2)-xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),1)-xjug(idx(1),1),xjug(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trnk end
+        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trunk end
 
     
       
         idxdistmax = length(xhand);
 %       c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
-        %c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
-        c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+%         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
+        c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10);
 
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -219,31 +219,31 @@ legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Locat
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 % axis equal
-xlim([-525 50])
-ylim([-100 700])
+ xlim([-300 100])
+ ylim([-300 500])
 
 if expcond== 1 
-title('Restrained Table','FontSize',18)
+title('Restrained Table','FontSize',24)
 end
 
 if expcond== 2 
-title('Restrained 25%','FontSize',18)
+title('Restrained 25%','FontSize',24)
 end
 
 if expcond== 3 
-title('Restrained 50%','FontSize',18)
+title('Restrained 50%','FontSize',24)
 end
 
 if expcond== 4
-title('Unrestrained Table','FontSize',18)
+title('Unrestrained Table','FontSize',24)
 end
 
 if expcond== 5
-title('Unrestrained 25%-Stroke','FontSize',18)
+title('Unrestrained 25%','FontSize',24)
 end
 
 if expcond== 6
-title('Unrestrained 50%','FontSize',18)
+title('Unrestrained 50%','FontSize',24)
 end
 
 %% Calling COP Function
