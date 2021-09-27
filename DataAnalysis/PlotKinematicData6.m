@@ -4,6 +4,7 @@ datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/'
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %% Loading in Max EMGS
+
      load([datafilepath '/Maxes/maxEMG.mat']);
 %% Loading and setting file name and condition
 expcondname={'RT','R25','R50','UT','U25','U50'};
