@@ -133,12 +133,12 @@ if strcmp(partid,'RTIS1005')
            
     if expcond==1 
 
-        idx(1) = find(dist>=.02*dist(mridx),1);% reach start when participant is 5% of max distance
+        idx(1) = find(dist>=.02*max(dist),1);% reach start when participant is 5% of max distance
       
     end 
     
     if expcond==2
-        idx(1) = find(dist>=.025*dist(mridx),1);% reach start when participant is 5% of max distance
+        idx(1) = find(dist>=.025*max(dist),1);% reach start when participant is 5% of max distance
         if strcmp(mfname,'/trial14.mat')
             distMax= max(dist(1:60));
             idx(3)=find(dist==distMax,1);
@@ -160,7 +160,7 @@ if strcmp(partid,'RTIS1005')
     
     if expcond ==3 
               
-        idx(1) = find(dist>=.025*dist(mridx),1);% reach start when participant is 5% of max distance
+        idx(1) = find(dist>=.025*max(dist),1);% reach start when participant is 5% of max distance
            
         if strcmp(mfname,'/trial19.mat')
             
@@ -212,15 +212,15 @@ if strcmp(partid,'RTIS1005')
     
     if expcond ==5
               
-        idx(1) = find(dist>=.025*dist(mridx),1);
+        idx(1) = find(dist>=.025*max(dist),1);
     end 
 
     if expcond ==6 
           
-        idx(1) = find(dist>=.025*dist(mridx),1);
+        idx(1) = find(dist>=.025*max(dist),1);
           
         if strcmp(mfname,'/trial41.mat')
-            maxdistint= max(dist)
+            maxdistint= max(dist);
             idx(3) = find(dist==maxdistint);
        
            
@@ -239,7 +239,7 @@ end
 if strcmp(partid,'RTIS1006') 
     if expcond ==1 
             
-        idx(1) = find(dist>=.01*dist(mridx),1);% reach start when participant is 5% of max distance
+        idx(1) = find(dist>=.01*max(dist),1);% reach start when participant is 5% of max distance
         if strcmp(mfname,'/trial66.mat')
             idx(1) = idx(1)-5;
         end 
@@ -1824,32 +1824,32 @@ xlabel('time in seconds')
 legend('Distance', 'Velocity','Time Start','Time End','FontSize',16)
 
 
-figure (6),clf
-
-plot(t,xhand(:,3))
-hold on
-
-ylabel('Hand Position (mm)')
-% plot(t,vel,'LineWidth',1) 
-% plot(t,velx)
-% plot(t,vely)
-
-y1=ylim;
-
-title('Z Position of Hand','FontSize',24)
- p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
-% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
-p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
-%p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
-%p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
-% ylim([-400 400])
-% co=get(lax1,'ColorOrder');
-% set(lax1,'ColorOrder',co(end-1:-1:1,:))
-xlim([0.25 5])
-ylim([0 300])
-xlabel('time in seconds')
-legend('Z position','Time Start','Time End','FontSize',16)
-
+% figure (6),clf
+% 
+% plot(t,xhand(:,3))
+% hold on
+% 
+% ylabel('Hand Position (mm)')
+% % plot(t,vel,'LineWidth',1) 
+% % plot(t,velx)
+% % plot(t,vely)
+% 
+% y1=ylim;
+% 
+% title('Z Position of Hand','FontSize',24)
+%  p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
+% % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
+% p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
+% %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+% %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+% % ylim([-400 400])
+% % co=get(lax1,'ColorOrder');
+% % set(lax1,'ColorOrder',co(end-1:-1:1,:))
+% xlim([0.25 5])
+% ylim([0 300])
+% xlabel('time in seconds')
+% legend('Z position','Time Start','Time End','FontSize',16)
+% 
 
 
 %%

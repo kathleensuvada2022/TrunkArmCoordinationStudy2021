@@ -214,13 +214,13 @@ trex_current_trial(i) = trunk_exc;
 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
+legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
 % axis equal
- xlim([-300 100])
- ylim([-300 500])
+%  xlim([-300 100])
+%  ylim([-300 500])
 
 if expcond== 1 
 title('Restrained Table','FontSize',24)
