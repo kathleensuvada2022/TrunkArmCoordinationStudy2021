@@ -9,7 +9,7 @@ Fs=1000;
 % numfiles = 47; % CHANGE NUM FILES 
 % mydata = cell(1, numfiles);
 
-numfiles = 37;
+numfiles = 38;
 %mydata = cell(1, numfiles);
 %%
 for k = 1:numfiles
