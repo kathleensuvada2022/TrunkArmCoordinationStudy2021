@@ -304,6 +304,8 @@ end
 
 % Kacey's Definitions 10.4.21
 %Z: IJ-PX 
+%X : perpendicular to Z and normal to the plane containing (IJ,PX,C7,T8). Pointing right  %
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function t = asthorho(blmat)
 [IJ,PX,C7,T8]=deal(blmat(1:3,1),blmat(1:3,2),blmat(1:3,3),blmat(1:3,4));
@@ -350,6 +352,9 @@ end
 % % using matrix notation [x y z 1]*[A B C D]' = 0
 % % using the technique tlls
 % % input: m x 3 matrix with points; output: A,B,C and D
+
+% n vector: vector normal to the plane and describes desired plane
+% KACEY 10.4.21 what is DATA? just desired BLS
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [A,DATAa,nvector,e]=vlak(DATA)
 % disp('just entered the vlak program');
@@ -376,20 +381,22 @@ end
 % Origin   : SC-joint.                                                     %
 % Local X-axis : axis through the clavicle SC to AC.                       %
 % Local Z-axis : axis perpendicular to the X-axis and the thoracic Y-axis. %
-% Local Y-axis : axis perpendicular to the X-axis and Z-axis.              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function c =  asclav(blmat,Yt)
-[SC,AC]=deal(blmat(:,1),blmat(:,2));
-oc = SC;
-xc = (AC-SC)' / norm(AC-SC);
+% Local Y-axis : axis perpendicular to the X-axis and Z-axis. 
 
-zc = cross(xc,Yt);
-zc = zc / norm(zc);
-yc = cross(zc,xc);
-yc = yc / norm(yc);
-% c  = [xc yc zc];
-c  = [xc;yc;zc];
-end
+%KACEY 10.4.21 DON'T INCLUDE CLAVICLE. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function c =  asclav(blmat,Yt)
+% [SC,AC]=deal(blmat(:,1),blmat(:,2));
+% oc = SC;
+% xc = (AC-SC)' / norm(AC-SC);
+% 
+% zc = cross(xc,Yt);
+% zc = zc / norm(zc);
+% yc = cross(zc,xc);
+% yc = yc / norm(yc);
+% % c  = [xc yc zc];
+% c  = [xc;yc;zc];
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to calculate the scapula local coordinate system.               %
