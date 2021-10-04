@@ -384,9 +384,7 @@ end
 % Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function S =  asscap(blmat)
-% [AA,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
-%Edited to replace AA with AC Kacey 10.4.21
-[AC,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
+[AA,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
 % xs = (AA-TS) / norm(AA-TS);
 % zs = cross(xs,(AA-AI/norm(AA-AI)));
 % ys = cross(zs,xs);
@@ -400,8 +398,8 @@ function S =  asscap(blmat)
 % ys = cross(zs,xs);
 
 %10.4.21- Kacey Editing based on how want CS aligned 
-xs = norm(AC-TS); 
-ys = cross(xs,[Plane through AC,AI,TS]) % How cross product a plane?? How define this in matlab?
+xs = norm(AC-TS);
+ys = cross(xs,[Plane through AC,AI,TS]) % How cross product a plane??
 zs = cross(xs,ys);
 
 S = [xs,ys,zs];
@@ -430,16 +428,10 @@ H_mid=(EM+EL)/2;
 % z=z/norm(z);
 % x =cross(y,z);
 % h=[x,y,z];
-
-% yh = (GH-H_mid) / norm(GH-H_mid);
-% zh =  cross(EL-EM,yh); zh = zh/norm(zh);
-% xh = cross(yh,zh);
-% h = [xh,yh,zh];
-
-% Kacey Redefining X,Y,Z axes 10.4.21
-
-
-
+yh = (GH-H_mid) / norm(GH-H_mid);
+zh =  cross(EL-EM,yh); zh = zh/norm(zh);
+xh = cross(yh,zh);
+h = [xh,yh,zh];
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
