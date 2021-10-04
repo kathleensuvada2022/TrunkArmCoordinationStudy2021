@@ -299,19 +299,36 @@ end
 % % Origin   : IJ.                                                           %
 % % Y : from middle of T8-PX to middle of C7-IJ.                             %
 % % Z : perpendicular to X and normal to the plane containing (IJ,PX,C7,T8)  %
-% % X : perpendicular to Y and Z                                             %
+% % X : perpendicular to Y and Z
+
+
+% Kacey's Definitions 10.4.21
+%Z: IJ-PX 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function t = asthorho(blmat)
 [IJ,PX,C7,T8]=deal(blmat(1:3,1),blmat(1:3,2),blmat(1:3,3),blmat(1:3,4));
-yt = (IJ+C7)/2 - (PX+T8)/2;
-yt = yt/norm(yt);
+% yt = (IJ+C7)/2 - (PX+T8)/2;
+% yt = yt/norm(yt);
 
-[A,DATAa,nvector,e]=vlak(blmat);
-xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
-zt = cross(xhulp,yt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
-% zt = cross(xhulp,yt);
-zt=zt/norm(zt);
+%Z is up in desired CS KACEY 10.4.21
+zt = IJ-PX;
+zt = zt/norm(zt);
+
+% [A,DATAa,nvector,e]=vlak(blmat);
+% xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
+% zt = cross(xhulp,yt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
+% % zt = cross(xhulp,yt);
+% zt=zt/norm(zt);
 % xt = cross(yt,zt); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
+
+[A,DATAa,nvector,e]=vlak(blmat); % BL mat passing whole thing??
+
+
+%xhulp is vector normal to the plane
+xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
+yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? KACEY
+% zt = cross(xhulp,yt);
+yt=yt/norm(yt);
 
 xt = cross(yt(1:3),zt);
 
@@ -452,16 +469,18 @@ function [h,GH] =  ashum(blmat1,GH)
 % Kacey Redefining X,Y,Z axes 10.4.21
 H_mid=(EM+EL)/2;
 zh = (GH-H_mid) / norm(GH-H_mid);
-zh = -zh; % flipping so vector points cranially
+zh = -zh; % flipping so vector points cranially ?? maybe don't need 
 
-x= (EL-EM)/norm(EL-EM);
+%Yh: Need perpendicular to plane defined by z axis and line through em el
+x= (EL-EM)/norm(EL-EM); %Vector through EL and EM
 yh =cross(zh,x); %flipped order because z in opposite direction
 yh=y/norm(y);
+
 
 xh = cross (yh,zh);
 xh = xh/norm(xh);
 
-% h = [xh,yh,zh];
+h = [xh,yh,zh];
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
