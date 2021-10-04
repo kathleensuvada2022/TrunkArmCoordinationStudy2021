@@ -381,10 +381,17 @@ end
 %                                                                          %
 % Origin   : AA-joint.                                                     %
 % Local X-axis : axis from TS to AA.                                       %
-% Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).%
+% Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
+
+% KACEY 10.4.21
+% Origin   : AC joint                                                    %
+% Local X-axis : axis from TS to AC.                                       %
+% Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function S =  asscap(blmat)
-[AA,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
+% [AA,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
+%Edited to replace AA with AC Kacey 10.4.21
+[AC,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
 % xs = (AA-TS) / norm(AA-TS);
 % zs = cross(xs,(AA-AI/norm(AA-AI)));
 % ys = cross(zs,xs);
@@ -398,9 +405,11 @@ function S =  asscap(blmat)
 % ys = cross(zs,xs);
 
 %10.4.21- Kacey Editing based on how want CS aligned 
-xs = norm(AC-TS);
-ys = cross(xs,[Plane through AC,AI,TS]) % How cross product a plane??
+xs = (AC-TS)/norm(AC-TS); 
+ys = cross(xs,(AC-AI));
+ys = ys/norm(ys);
 zs = cross(xs,ys);
+zs= zs/norm(zs);
 
 S = [xs,ys,zs];
 end
@@ -412,6 +421,12 @@ end
 % Local Y-axis : line between GH and mid-point between epicondyles.
 % Local Z-axis : axis perpendicular to local X and Y-axis.
 % GH is determined using regression equations in GHEST.M
+
+% KACEY 10.4.21
+% Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
+% Local Z-axis : line between GH and mid-point between epicondyles.
+% Local Y-axis : axis perpendicular to local X and Y-axis.
+% GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [h,GH] =  ashum(blmat1,GH)
 % AMA 9/29/21 SWITCH CS definition so that x is to the right, y is anterior
@@ -421,17 +436,29 @@ function [h,GH] =  ashum(blmat1,GH)
 % Estimate GH joint location
 
 % Compute the local axes
-H_mid=(EM+EL)/2;
+
 % y = (GH-H_mid) / norm(GH-H_mid);
 % xh= (EL-EM)/norm(EL-EM);
 % z =cross(xh,y);
 % z=z/norm(z);
 % x =cross(y,z);
 % h=[x,y,z];
-yh = (GH-H_mid) / norm(GH-H_mid);
-zh =  cross(EL-EM,yh); zh = zh/norm(zh);
-xh = cross(yh,zh);
-h = [xh,yh,zh];
+
+% yh = (GH-H_mid) / norm(GH-H_mid);
+% zh =  cross(EL-EM,yh); zh = zh/norm(zh);
+% xh = cross(yh,zh);
+% h = [xh,yh,zh];
+
+% Kacey Redefining X,Y,Z axes 10.4.21
+H_mid=(EM+EL)/2;
+zh = (GH-H_mid) / norm(GH-H_mid);
+zh = -zh; % flipping so vector points cranially
+
+xh= (EL-EM)/norm(EL-EM);
+yh =cross(zh,xh); %flipped order because z in opposite direction
+yh=y/norm(y);
+
+xh 
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -492,94 +519,96 @@ end
 %       output: Cn (new clavicle coordinate system matrix)
 %               rot (clavicle rotations about local axes)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function[Cn,ROTr,ROTg]=axclav(C,S)
-% Ruststand van clavicula en scapula:
-Co = C(1:3,1:3); So = S(1:3,1:3);
+% Kacey Ignoring Clavicular CS 10.4.21
 
-% Relatie clavicula-scapula in ruststand:
-Mp = Co'*So;
-
-% Bepalen van de rotaties van de clavicula rond de lokale assen t.o.v.
-% thorax LCS:
-
-[n,m]=size(C);nDATA = n/3;
-
-r=[];
-J=0;
-for i=1:nDATA
-    Rc=Co'*C(3*i-2:3*i,1:3);
-    r = [r;Rc];
-end
-
-% r = rot2a(C,0);
-
-% Bepalen van de eulerrotaties (y,z,x):
-[ROTg]=roteuler(r,3);
-[ROTr]=ROTg*(pi/180);
-[rij,kolom]=size(ROTr);
-
-BETA = ROTr(:,1); GAMMA = ROTr(:,2); ALPHA = ROTr(:,3);
-
-for I=1:rij
-    beta=BETA(I);gamma=GAMMA(I);          % Benodigde hoeken
-    RS  = S(I*3-2:I*3,1:3);                 % Scapula stand i
-    %____________________________________________________________________
-    
-    % (Berekening van axiale rotatie volgens axrot (vd Helm))
-    
-    Ma = Co*roty(beta)*rotz(gamma);
-    alpha=0;
-    Sposd = Ma*rotx(alpha)*Mp;
-    Spos=RS;
-    Emat = Sposd'*Spos;
-    E = acos(Emat(1,1)) + acos(Emat(2,2)) + acos(Emat(3,3));
-    SSQ = E*E;
-    SSQo = 0;
-    while abs(SSQ-SSQo)>0.001,
-        dalpha = max(0.1,alpha)*sqrt(eps);
-        Sposdd = Ma*rotx(alpha + dalpha)*Mp;
-        Ematd = Sposdd'*Spos;
-        Ed = acos(Ematd(1,1)) + acos(Ematd(2,2)) + acos(Ematd(3,3));
-        dEdalpha = (Ed - E)/dalpha;
-        V = E/dEdalpha;
-        d=2;
-        alpha0=alpha;
-        SSQo = SSQ;
-        while (SSQo <= SSQ) & ((abs(SSQo - SSQ) > 0.001)|(d==2)),
-            d = d/2;
-            alpha1 = alpha0 - d*V;
-            Sposd = Ma*rotx(alpha1)*Mp;
-            Emat = Sposd'*Spos;
-            E = acos(Emat(1,1)) + acos(Emat(2,2)) + acos(Emat(3,3));
-            SSQ=E*E;
-        end
-        alpha=alpha1;
-        
-    end
-    %[I,alpha]
-    %pause
-    %____________________________________________________________________
-    
-    ALPHA(I) = alpha;
-    J = J+3;
-end
-
-ROTr(1:rij,3)=ALPHA;
-ROTg(1:rij,3)=ALPHA*180/pi;
-
-% Berekenen van de nieuwe positiematrix van de clavicula :
-% (volgens Ci = Co * R waarbij R = (roty*rotz*rotx)
-
-J = 0;
-
-for I=1:rij
-    Ry = roty(BETA(I));
-    Rz = rotz(GAMMA(I));
-    Rx = rotx(ALPHA(I));
-    Cn(I*3-2:I*3,1:3) = Co*Ry*Rz*Rx;
-    
-end
-end
+% function[Cn,ROTr,ROTg]=axclav(C,S)
+% % Ruststand van clavicula en scapula:
+% Co = C(1:3,1:3); So = S(1:3,1:3);
+% 
+% % Relatie clavicula-scapula in ruststand:
+% Mp = Co'*So;
+% 
+% % Bepalen van de rotaties van de clavicula rond de lokale assen t.o.v.
+% % thorax LCS:
+% 
+% [n,m]=size(C);nDATA = n/3;
+% 
+% r=[];
+% J=0;
+% for i=1:nDATA
+%     Rc=Co'*C(3*i-2:3*i,1:3);
+%     r = [r;Rc];
+% end
+% 
+% % r = rot2a(C,0);
+% 
+% % Bepalen van de eulerrotaties (y,z,x):
+% [ROTg]=roteuler(r,3);
+% [ROTr]=ROTg*(pi/180);
+% [rij,kolom]=size(ROTr);
+% 
+% BETA = ROTr(:,1); GAMMA = ROTr(:,2); ALPHA = ROTr(:,3);
+% 
+% for I=1:rij
+%     beta=BETA(I);gamma=GAMMA(I);          % Benodigde hoeken
+%     RS  = S(I*3-2:I*3,1:3);                 % Scapula stand i
+%     %____________________________________________________________________
+%     
+%     % (Berekening van axiale rotatie volgens axrot (vd Helm))
+%     
+%     Ma = Co*roty(beta)*rotz(gamma);
+%     alpha=0;
+%     Sposd = Ma*rotx(alpha)*Mp;
+%     Spos=RS;
+%     Emat = Sposd'*Spos;
+%     E = acos(Emat(1,1)) + acos(Emat(2,2)) + acos(Emat(3,3));
+%     SSQ = E*E;
+%     SSQo = 0;
+%     while abs(SSQ-SSQo)>0.001,
+%         dalpha = max(0.1,alpha)*sqrt(eps);
+%         Sposdd = Ma*rotx(alpha + dalpha)*Mp;
+%         Ematd = Sposdd'*Spos;
+%         Ed = acos(Ematd(1,1)) + acos(Ematd(2,2)) + acos(Ematd(3,3));
+%         dEdalpha = (Ed - E)/dalpha;
+%         V = E/dEdalpha;
+%         d=2;
+%         alpha0=alpha;
+%         SSQo = SSQ;
+%         while (SSQo <= SSQ) & ((abs(SSQo - SSQ) > 0.001)|(d==2)),
+%             d = d/2;
+%             alpha1 = alpha0 - d*V;
+%             Sposd = Ma*rotx(alpha1)*Mp;
+%             Emat = Sposd'*Spos;
+%             E = acos(Emat(1,1)) + acos(Emat(2,2)) + acos(Emat(3,3));
+%             SSQ=E*E;
+%         end
+%         alpha=alpha1;
+%         
+%     end
+%     %[I,alpha]
+%     %pause
+%     %____________________________________________________________________
+%     
+%     ALPHA(I) = alpha;
+%     J = J+3;
+% end
+% 
+% ROTr(1:rij,3)=ALPHA;
+% ROTg(1:rij,3)=ALPHA*180/pi;
+% 
+% % Berekenen van de nieuwe positiematrix van de clavicula :
+% % (volgens Ci = Co * R waarbij R = (roty*rotz*rotx)
+% 
+% J = 0;
+% 
+% for I=1:rij
+%     Ry = roty(BETA(I));
+%     Rz = rotz(GAMMA(I));
+%     Rx = rotx(ALPHA(I));
+%     Cn(I*3-2:I*3,1:3) = Co*Ry*Rz*Rx;
+%     
+% end
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the segment/joint Euler Angles based on the input
