@@ -49,7 +49,7 @@ function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,H
 if nargin<3, reffr='trunk'; end
 
 % The order in which the BL must be in the DATA matrix is:
-BL={'EM', 'EL', 'GH', 'SC', 'IJ', 'PX', 'C7', 'T8', 'AC', 'AA', 'TS', 'AI', 'PC'}; %, 'RS', 'US', 'OL'};
+BL={'EM', 'EL', 'GH', 'SC', 'IJ', 'PX', 'C7', 'T8', 'AC', 'AA', 'TS', 'AI', 'PC', 'RS', 'US', 'OL'};
 
 %% Calculate the data for the landmarks in the global coordinate frame vs the local coordinate frame
 % Concatenate the bony landmarks into one cell array {1x13}, each cell
@@ -231,31 +231,31 @@ end
 % Copied from DSEL model, written by Meskers et al 1996
 % REPLACED WITH HELICAL AXES METHOD (see Stokdijk, M et al) - ALJ 2016
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [gh] = CalculateGH(blmat1,blmat2)
-% n = size(blmat1,2);
-% Q = zeros(3);
-
-posEMEL1= blmat1(:,1:2,:);
-posEMEL2= blmat2(:,1:2,:);
-
-[h,pos] = helicalaxis3v3(posEMEL1,posEMEL2);
-
-gh = pos;
-% helax = h;
-% position = pos;
-
-% p = pos;
-% ha = h;
-% calcQ = eye(3) - helax*helax';
-% Q = Q + calcQ;
-% % end
-%
-% QplusS = zeros(3,1);
-% possum = (eye(3) - ha*ha')*p;
-% QplusS = possum + QplusS;
-% gh2 = (inv(Q)/n)*QplusS
-
-end
+% function [gh] = CalculateGH(blmat1,blmat2)
+% % n = size(blmat1,2);
+% % Q = zeros(3);
+% 
+% posEMEL1= blmat1(:,1:2,:);
+% posEMEL2= blmat2(:,1:2,:);
+% 
+% [h,pos] = helicalaxis3v3(posEMEL1,posEMEL2);
+% 
+% gh = pos;
+% % helax = h;
+% % position = pos;
+% 
+% % p = pos;
+% % ha = h;
+% % calcQ = eye(3) - helax*helax';
+% % Q = Q + calcQ;
+% % % end
+% %
+% % QplusS = zeros(3,1);
+% % possum = (eye(3) - ha*ha')*p;
+% % QplusS = possum + QplusS;
+% % gh2 = (inv(Q)/n)*QplusS
+% 
+% end
 
 %OLD FUNCTION USING REGRESSION MODEL
 % function gh=CalculateGH(blmat)
@@ -303,18 +303,21 @@ end
 
 
 % Kacey's Definitions 10.4.21
-%Z: IJ-PX 
-%X : perpendicular to Z and normal to the plane containing (IJ,PX,C7,T8). Pointing right  %
-
+%Z : from middle of T8-PX to middle of C7-IJ.  
+%Y : perpendicular to Z and normal to the plane containing (IJ,PX,C7,T8). Pointing right  %
+%X : Z cross Y
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function t = asthorho(blmat)
 [IJ,PX,C7,T8]=deal(blmat(1:3,1),blmat(1:3,2),blmat(1:3,3),blmat(1:3,4));
+
 % yt = (IJ+C7)/2 - (PX+T8)/2;
 % yt = yt/norm(yt);
 
-%Z is up in desired CS KACEY 10.4.21
-zt = IJ-PX;
-zt = zt/norm(zt);
+%Edited Kacey 10.5.21
+zt = (IJ+C7)/2 - (PX+T8)/2;
+zt = yt/norm(yt);
+
+
 
 % [A,DATAa,nvector,e]=vlak(blmat);
 % xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
@@ -328,11 +331,19 @@ zt = zt/norm(zt);
 
 %xhulp is vector normal to the plane
 xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
-yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? KACEY
+% yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+
+%Kacey 10.4.21 flipping order of cross product for Y into the page 
+yt = cross(zt(1:3),xhulp); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+
 % zt = cross(xhulp,yt);
+
 yt=yt/norm(yt);
 
-xt = cross(yt(1:3),zt);
+%xt = cross(yt(1:3),zt);
+
+%Redefined for Kacey 10.4.21
+xt = cross(zt,yt);
 
 % t = [xt,yt,zt];
 t = [xt,yt(1:3),zt]; %SABEEN CHANGE: NEED DIM OF 3 FOR THEM ALL TO MATCH
@@ -489,6 +500,56 @@ xh = xh/norm(xh);
 
 h = [xh,yh,zh];
 end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to compute the Forearm local coordinate system.
+
+%Inputs: RS,US,OL
+% KACEY 10.4.21
+% Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
+% Local Z-axis : line between GH and mid-point between epicondyles.
+% Local Y-axis : axis perpendicular to local X and Y-axis.
+% GH is determined using regression equations in GHEST.M
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [h,GH] =  asfore(blmat1,GH)
+% AMA 9/29/21 SWITCH CS definition so that x is to the right, y is anterior
+% and z is up.
+
+[EM,EL]=deal(blmat1(:,1),blmat1(:,2));
+% Estimate GH joint location
+
+% Compute the local axes
+
+% y = (GH-H_mid) / norm(GH-H_mid);
+% xh= (EL-EM)/norm(EL-EM);
+% z =cross(xh,y);
+% z=z/norm(z);
+% x =cross(y,z);
+% h=[x,y,z];
+
+% yh = (GH-H_mid) / norm(GH-H_mid);
+% zh =  cross(EL-EM,yh); zh = zh/norm(zh);
+% xh = cross(yh,zh);
+% h = [xh,yh,zh];
+
+% Kacey Redefining X,Y,Z axes 10.4.21
+H_mid=(EM+EL)/2;
+zh = (GH-H_mid) / norm(GH-H_mid);
+zh = -zh; % flipping so vector points cranially ?? maybe don't need 
+
+%Yh: Need perpendicular to plane defined by z axis and line through em el
+x= (EL-EM)/norm(EL-EM); %Vector through EL and EM
+yh =cross(zh,x); %flipped order because z in opposite direction
+yh=y/norm(y);
+
+
+xh = cross (yh,zh);
+xh = xh/norm(xh);
+
+h = [xh,yh,zh];
+end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to estimate the center of rotation of the GH joint
