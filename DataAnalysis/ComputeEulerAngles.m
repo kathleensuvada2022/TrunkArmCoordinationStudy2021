@@ -1,4 +1,4 @@
-function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,HT_seg,arm,reffr)
+function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,MetriaData,arm,reffr,setup)
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
 % Right now we are inputting bldata as the global coordinates of the
 % system, but I think we actually want the local coordinates and the data
@@ -34,36 +34,78 @@ function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,H
 %    and z is up.
 % 4) Ignore Clavicle for now
 
-
-
-% Procedure (EDIT)
-% First reorganize the bony landmarks into a [3 x nland x nsamples] matrix with
-% the bony landmarks in the following order (nland=12):
-% 1  2  3  4  5  6  7  8  9  10 11 12 13
-% EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
-% These are not included in the analysis because the forearm is not tracked
-% RS US OL
-% Right now, the order of the bony landmarks is:
-% 1  2  3  4  5  6  7  8  9  10 11 12 13
-% SC IJ PX C7 T8 AC AA TS AI PC EM EL GH so we need to switch them
-
 if nargin<3, reffr='trunk'; end
 
 % The order in which the BL must be in the DATA matrix is:
 BL={'EM', 'EL', 'GH', 'SC', 'IJ', 'PX', 'C7', 'T8', 'AC', 'AA', 'TS', 'AI', 'PC', 'RS', 'US', 'OL','MCP3'};
+Bones = {'Trunk','Scapula','Humerus','Forearm'};
 
-%From Kacey's Code "METRIAKINDAQ"
+%From Kacey's MetriaKinDAQ 10.2021
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm'};
 % myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 
-%% Calculate the data for the landmarks in the global coordinate frame vs the local coordinate frame
-% Concatenate the bony landmarks into one cell array {1x17}, each cell
-% [3xnsamples]
+%% Concatenate the bony landmarks into one cell array and Trial Data [HT_Marker in GCS]
 
 blmat=cat(1,bldata{3},bldata{1},bldata{2},bldata{4}); %coordinates in the frame of the marker
-
 nland=size(blmat,1);
-nsamples=size(blmat,3);
+
+x = MetriaData;
+x(x==0)=NaN; %h Replace zeros with NaN
+x = x(:,3:end); %omitting time and the camera series number
+[nimag,nmark]=size(x);
+nmark=(nmark)/8; 
+
+t = (MetriaData(:,2)-MetriaData(1,2))/89; 
+
+%Organizing Trial Data by Marker Number/ Bone 
+[ridx,cidx]=find(x==setup.markerid(4));
+fidx =cidx(1)+1;
+xfore=x(:,fidx:(fidx+6));  
+
+[ridx,cidx]=find(x==setup.markerid(3));
+aidx =cidx(1)+1;
+xhum=x(:,aidx:(aidx+6)); %extracting humerus marker
+
+[ridx,cidx]=find(x==setup.markerid(2));
+sidx=cidx(1)+1;
+xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
+
+[ridx,cidx]=find(x==setup.markerid(1)); 
+tidx=cidx(1)+1;
+xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
+
+Tftom = zeros(4,4,length(xfore));   
+% Need to reshape ST 4X4XN
+
+%Forearm
+for i=1:length(xfore)
+% forearm marker HT
+Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2)); 
+Tftom(1:3,4,i) = xfore(i,1:3)';  
+end
+
+%Shoulder
+Tstom= zeros(4,4,length(xshoulder));
+for i = 1:length(xshoulder)
+Tstom(:,:,i)= quat2tform(circshift(xshoulder(i,4:7),1,2));
+Tstom(1:3,4,i) = xshoulder(i,1:3)'; 
+end 
+
+%Trunk
+Tttom=zeros(4,4,length(xtrunk));
+for i =1:length(xtrunk)  
+Tttom(:,:,i)= quat2tform(circshift(xtrunk(i,4:7),1,2));      
+Tttom(1:3,4,i) = xtrunk(i,1:3)';    
+end
+
+%Humerus
+Thtom=zeros(4,4,length(xhum));
+for i =1:length(xtrunk)  
+Thtom(:,:,i)= quat2tform(circshift(xhum(i,4:7),1,2));      
+Thtom(1:3,4,i) = xhum(i,1:3)';    
+end
+
+Tbtom = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ******
 
 %Swap out the definition for the GH joint center that we estimated earlier
 %for the one calculated using the helical axes method
@@ -98,7 +140,7 @@ R = [0 0 -1;1 0 0;0 -1 0];
 % R=rotx(pi/2)*rotz(-pi/2); %should be correct
 % R = -R; %double check that the (-) sign is actually needed
 
-for i=1:nsamples-1
+  
     % ****************************************************************************
 %     pVectTot = blmat(1:3,5,i);
 %     T=[[R;zeros(1,3)] [(R*pVectTot(1:3));1]]; % Transformation matrix to go from experimentally defined CS to DSEL CS 
@@ -130,6 +172,9 @@ ScapCS=asscap(blmat); % AA,TS,AI
     %     ScapCS=asscap(blmat(:,9:11)); % AA,TS,AI
     %     blmat(1:3,[1:2 8:12],:)
     %Transform points from global to scapula frame before calculating
+  
+%Forearm CS
+[ForeCS] =  asfore(blmat1); 
     
 % Compute location of GH joint using Regression Function   
     GH=ghest(bl,Rscap);
@@ -139,15 +184,20 @@ ScapCS=asscap(blmat); % AA,TS,AI
     [HumCS,GH]=ashum(blmat,GH);
 %     [HumCS,GH]=ashum(blmat2(1:3,[1:2 8:12]),GH);
    
-% Kacey 10.2021 Forearm CS
-    [ForeCS] =  asfore(blmat1); 
+
    % AS = [TrunkCS,ClavCS,ScapCS,HumCS]; % Coordinate system for each bone at ith time
   
-   AS = [TrunkCS,ScapCS,HumCS,ForeCS]; % Coordinate system for each bone at ith time
-    %     forearm=asfore(X(im1+1,13:15)',X(im1+2,13:15)',X(im1+3,13:15)'); % Using OL
-    %     forearm=asfore2(X(im1+1,13:15)',X(im1+2,13:15)',X(im1+1,10:12)',X(im1+2,10:12)'); % Using mid Epi
-    
-    
+   % Coordinate system for each bone at ith time
+   AS = [TrunkCS,ScapCS,HumCS,ForeCS];
+   
+%% Looping through all frames in trial for each HT (marker in global)   
+for i = 1:length(xtrunk)
+%Trunk
+TttoG=Tbtom{1}(:,:,i)*
+   
+% *** ADD THE CS created above to get each BONE in Global CS ***********
+      
+        
     %     as=[t,c,s,h,f];
     %    if strcmp(arm,'left'), as(:,4:end)=roty(pi)*as(:,4:end); end
     % AS (#measurements x (3x12)) matrix: contains 4 local
@@ -205,6 +255,7 @@ ScapCS=asscap(blmat); % AA,TS,AI
     %       Euler angles, order xyz (thoracic movements), yzx (SC joint),
     %       yzx (AC joint) and yzy (GH joint)
     
+    
     if strcmp(reffr,'frame')
         %Use the frame as reference- makes rotation matrix for trunk all
         %ones, so it doesn't take into account rotations of trunk
@@ -220,6 +271,7 @@ ScapCS=asscap(blmat); % AA,TS,AI
     [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'YZX',0);  % Clavicle
     [gANGLES(7:9,:,i)]=CalcEulerAng(gR(:,7:9),'YZX',0);  % Scapula
     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY',0); % Humerus
+   
     [jANGLES(1:3,:,i)]=CalcEulerAng(jR(:,1:3),'XYZ',0); % Trunk
     [jANGLES(4:6,:,i)]=CalcEulerAng(jR(:,4:6),'YZX',0);  % Clavicle
     [jANGLES(7:9,:,i)]=CalcEulerAng(jR(:,7:9),'YZX',0);  % Scapula
@@ -233,7 +285,7 @@ ScapCS=asscap(blmat); % AA,TS,AI
     elseif strcmp(reffr,'frame')
         eval(['save ' flpath 'EulerAngles2 X gANGLES jANGLES'])
     end
-end
+
 
 %Moved this outside the for loop because the direction was changing after
 %every sample
@@ -245,8 +297,8 @@ if strcmp(arm,'left'),
     gANGLES([1,3,4,6,7,9,10,12],:)=-gANGLES([1,3,4,6,7,9,10,12],:);
     %         jANGLES(:,[13:15])=-jANGLES(:,[13:15]);
 end
-
 end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the center of rotation of the glenohumeral joint
