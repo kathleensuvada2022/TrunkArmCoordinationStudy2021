@@ -114,9 +114,7 @@ for i=1:nsamples-1
     %         | T8  0   AI  0   0  |
     % 1  2  3  4  5  6  7  8  9  10 11 12 13
     % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
-        
-    %KACEY 10.21: passing whole matrix, modifies in function
-    
+            
     
 %Trunk CS
 %TrunkCS=asthorho(blmat2(:,5:8));
@@ -133,7 +131,8 @@ ScapCS=asscap(blmat); % AA,TS,AI
     %     blmat(1:3,[1:2 8:12],:)
     %Transform points from global to scapula frame before calculating
     
-   
+% Compute location of GH joint using Regression Function   
+    GH=ghest(bl,Rscap);
 %Humerus CS
     %[HumCS,GH]=ashum(blmat2(1:3,[1:2]),GH);
 %     [HumCS,GH]=ashum(blmat2(1:3,[1:2 8:12]),GH);
@@ -571,20 +570,26 @@ function [f] =  asfore(blmat1)
 [RS,US,OL]=deal(blmat1(14,:),blmat1(15,:),blmat1(16,:));
 
 % Kacey Redefining X,Y,Z axes 10.6.21
-H_mid=(RS+US)/2;
-zf = (OL-H_mid) / norm(OL-H_mid);
+H_mid=(RS(1:3)+US(1:3))/2;
+zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
 zf = -zh; % flipping so vector points cranially 
 
 %Yh: Need perpendicular to plane defined by z axis and line through em el
-x= (RS-US)/norm(RS-US); %Vector through EL and EM
+x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
 yf =cross(zf,x); %flipped order because z in opposite direction
-yf=y/norm(y);
+yf=yf/norm(yf);
 
 
 xf = cross (yf,zf);
 xf = xf/norm(xf);
 
-f = [xf,yf,zf];
+f = [xf;yf;zf]';
+f = [f;0 0 0];
+org_fore = [OL(1:3) 1]';
+
+
+%Forearm Coordinate System in Marker CF
+f = [f org_fore];
 end
 
 
