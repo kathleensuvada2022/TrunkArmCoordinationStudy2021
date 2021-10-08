@@ -1,4 +1,4 @@
-function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax]=ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
+function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]=ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
 [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time

@@ -123,7 +123,20 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,distmax,idx,timestart,timevelmax, timedistmax]= ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
+[dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector]= ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
+
+%% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
+
+%Saves file for each trial
+extention='.mat';
+filepath_times=datafilepath;
+name_times = ['Times_Trial' num2str(mtrials(i)) '.mat'];
+matname = fullfile(filepath_times, [name_times extention]);
+    
+save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
+
+%save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
+
 %% Compute reaching distance (between shoulder and hand from hand marker)
 %maxreach=sqrt(sum((xhand(idx(3),1:2)-xshldr(idx(3),1:2)).^2,2));
 maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
@@ -254,7 +267,7 @@ end
 %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
 %  [CoP2]= ComputeCOP(ppsdata,tpps);
 
-pause
+%pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 avgmaxreach =nanmean(maxreach_current_trial);
