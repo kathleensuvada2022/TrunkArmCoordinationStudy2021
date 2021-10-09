@@ -45,10 +45,10 @@ Bones = {'Trunk','Scapula','Humerus','Forearm'};
 % myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 
 %% Concatenate the bony landmarks into one cell array and Trial Data [HT_Marker in GCS]
-
+bldata=bl;
 blmat=cat(1,bldata{3},bldata{1},bldata{2},bldata{4}); %coordinates in the frame of the marker
 nland=size(blmat,1);
-
+%%
 x = MetriaData;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
@@ -56,7 +56,7 @@ x = x(:,3:end); %omitting time and the camera series number
 nmark=(nmark)/8; 
 
 t = (MetriaData(:,2)-MetriaData(1,2))/89; 
-
+%%
 %Organizing Trial Data by Marker Number/ Bone 
 [ridx,cidx]=find(x==setup.markerid(4));
 fidx =cidx(1)+1;
@@ -75,7 +75,8 @@ tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
 Tftom = zeros(4,4,length(xfore));   
-% Need to reshape ST 4X4XN
+
+% Need to reshape 4X4XN
 
 %Forearm
 for i=1:length(xfore)
@@ -106,7 +107,7 @@ Thtom(1:3,4,i) = xhum(i,1:3)';
 end
 
 Tbtom = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ******
-
+%%
 %Swap out the definition for the GH joint center that we estimated earlier
 %for the one calculated using the helical axes method
 % BLlocal{13}
@@ -157,12 +158,12 @@ R = [0 0 -1;1 0 0;0 -1 0];
     % 1  2  3  4  5  6  7  8  9  10 11 12 13
     % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
             
-    
+ %%   
 %Trunk CS
 %TrunkCS=asthorho(blmat2(:,5:8));
 TrunkCS=asthorho(blmat);
-    
-    if strcmp(arm,'left'), TrunkCS=roty(pi)*TrunkCS; end
+ 
+if strcmp(arm,'left'), TrunkCS=roty(pi)*TrunkCS; end
     %     ClavCS=asclav(blmat(:,[3 8]),TrunkCS(:,2));  % SC,AC,Yt Yt: thorax local Y-axis
 %     ClavCS=asclav(blmat2(1:3,[4 9]),TrunkCS(:,2)); %[SC,AC]  % SC,AC,Yt Yt: thorax local Y-axis
    
@@ -191,10 +192,30 @@ ScapCS=asscap(blmat); % AA,TS,AI
    AS = [TrunkCS,ScapCS,HumCS,ForeCS];
    
 %% Looping through all frames in trial for each HT (marker in global)   
-for i = 1:length(xtrunk)
+for j = 1:length(xtrunk) %artibitrary choosing xtrunk just needs to go through frames 
+
+    Tbtom = {Tttom Tstom Thtom Tftom};
+    
 %Trunk
-TttoG=Tbtom{1}(:,:,i)*
-   
+%Trunk_Global  trial         CS created 
+TtoG(:,:,j)=Tbtom{1}(:,:,j).*AS{1};
+
+%TESTING TRUNK
+%%%%%%%%%%%%
+TtoG(:,:,j) = Tttom(:,:,j).*TrunkCS;
+%%%%%%%%%%%%
+
+%Shoulder
+StoG(:,:,j) = Tbtom{2}(:,:,j)*AS{2};
+
+%Humerus
+HtoG(:,:,j) = Tbtom{3}(:,:,j)*AS{3};
+
+%Forearm
+FtoG(:,:,j) = Tbtom{4}(:,:,j)*AS{4};
+
+  
+end
 % *** ADD THE CS created above to get each BONE in Global CS ***********
       
         
@@ -514,7 +535,6 @@ function S =  asscap(blmat)
 %Kacey 10.2021
 [AC,TS,AI]=deal(blmat(9,:),blmat(11,:),blmat(12,:));
 
-
 % xs = (AA-TS) / norm(AA-TS);
 % zs = cross(xs,(AA-AI/norm(AA-AI)));
 % ys = cross(zs,xs);
@@ -558,7 +578,6 @@ end
 % GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [h,GH] =  ashum(blmat1,GH)
-
 
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
@@ -668,7 +687,7 @@ Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 % ai=Rsca'*(ai-Osca);
 
 % Change origin to midpoint between AC and AA
-bl=bl-Osca;
+bl=bl-repmat(Osca,1,4); % for 4 Bls
 
 lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa);
 lacts=norm(bl(:,1)-bl(:,3)); %lacts=norm(ac-ts);
@@ -688,9 +707,13 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai);
 
 % AMA changed ghrel to gh since the last rotation is not needed.
   gh=[ ...
-    [1       lacts lacai      ]*[ 10       -0.40  0.22      ]';
-    [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
-    [1       lacts lacai      ]*[ -3       -0.30  0.06      ]'];
+    [1       lacts lacai      ]*[ 10       -0.40  0.22      ]'; % Xcoord
+    [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
+    [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; 
+
+
+% 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) 
+
 
 %gh=Rsca*ghrel+Osca; Not needed because GH is in scapular CS
 end
