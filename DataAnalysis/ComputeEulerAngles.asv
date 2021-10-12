@@ -196,8 +196,8 @@ GH = blmat(3,1:3); %XYZ coordinate of GH from Digitization
 
    % AS = [TrunkCS,ClavCS,ScapCS,HumCS]; % Coordinate system for each bone at ith time
   
-   % Coordinate system for each bone in LCS (marker)
-   B_CS = {TrunkCS,ScapCS,HumCS,ForeCS};
+   % Coordinate system for each bone 
+   AS = {TrunkCS,ScapCS,HumCS,ForeCS};
    
 %% Looping through all frames in trial for each HT (marker in global)   
 for j = 1:length(xtrunk) %artibitrary choosing xtrunk just needs to go through frames 
@@ -206,7 +206,7 @@ for j = 1:length(xtrunk) %artibitrary choosing xtrunk just needs to go through f
     
 %Trunk
 %Trunk_Global CS
-TtoG(:,:,j)=Tbtom{1}(:,:,j).*B_CS{1};
+TtoG(:,:,j)=Tbtom{1}(:,:,j).*AS{1};
 
 %TESTING TRUNK
 %%%%%%%%%%%%

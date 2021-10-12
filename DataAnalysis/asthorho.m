@@ -12,12 +12,12 @@
 %Y : perpendicular to Z and normal to the plane containing (IJ,PX,C7,T8). Pointing right  %
 %X : Z cross Y
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function t = asthorho(blmat)
+function TrunkCS = asthorho(blmat)
 %%
 %[IJ,PX,C7,T8]=deal(blmat(1:3,1),blmat(1:3,2),blmat(1:3,3),blmat(1:3,4));
 
 %Kacey 10.2021
-[IJ,PX,C7,T8]=deal(blmat(5,:),blmat(6,:),blmat(7,:),blmat(8,:));
+[IJ,PX,C7,T8]=deal(blmat(5,:),blmat(6,:),blmat(7,:),blmat(8,:)); % in Marker Local CS
 % yt = (IJ+C7)/2 - (PX+T8)/2;
 % yt = yt/norm(yt);
 
@@ -56,18 +56,22 @@ yt=yt/norm(yt);
 xt = cross(zt,yt);
 
 % t = [xt,yt,zt];
-t = [xt,yt(1:3),zt]; %SABEEN CHANGE: NEED DIM OF 3 FOR THEM ALL TO MATCH
-diff=norm(t)-1>=10*eps;
-if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
+t = [xt,yt,zt]; 
+
+
 % yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
 % xt = cross(yt,T8-PX);  xt = xt/norm(xt);
 % zt = cross(xt,yt);
 
 t = [xt;yt;zt]';
+
+diff=norm(t)-1>=10*eps;
+if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
+
 t = [t;0 0 0];
 orign_trunk = [IJ(1:3) 1]';
 
 %Trunk Coordinate System in Marker CS
-t = [t orign_trunk];
+TrunkCS = [t orign_trunk];
 %%
 end
