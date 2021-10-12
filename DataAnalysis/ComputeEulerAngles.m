@@ -225,7 +225,7 @@ FtoG(:,:,j) = Tbtom{4}(:,:,j)*AS{4};
   
 end
 % ***THE CSs created above are BONE CS in Global CS every point in time ***********
-      
+%%      
         
     %     as=[t,c,s,h,f];
     %    if strcmp(arm,'left'), as(:,4:end)=roty(pi)*as(:,4:end); end

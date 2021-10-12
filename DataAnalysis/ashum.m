@@ -1,6 +1,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Function to compute the humerus local coordinate system.
+% Function to compute the humerus in marker CS (local)
 % Inputs: EM, EL
 % Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
 % Local Y-axis : line between GH and mid-point between epicondyles.
