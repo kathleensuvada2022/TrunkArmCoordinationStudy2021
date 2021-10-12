@@ -18,7 +18,9 @@ function ScapCoord =  asscap(blmat)
 %Edited to replace AA with AC Kacey 10.4.21
 
 %Kacey 10.2021
-[AC,TS,AI]=deal(blmat(9,:),blmat(11,:),blmat(12,:));
+ACidx = find(blmat(:,1)=='AC');
+blmat=str2double(blmat);
+[AC,TS,AI]=deal(blmat(ACidx,2:end),blmat(ACidx+1,2:end),blmat(ACidx+2,2:end));
 
 % xs = (AA-TS) / norm(AA-TS);
 % zs = cross(xs,(AA-AI/norm(AA-AI)));
@@ -46,4 +48,44 @@ Orig = [AC(1:3) 1]';
 
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
+
+%% Testing Plotting CS and BLS in marker CS
+
+figure(2)
+quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',ScapCoord(1,1:3),ScapCoord(2,1:3),ScapCoord(3,1:3))
+text(ScapCoord(1,4)+ScapCoord(1,1:3),ScapCoord(2,4)+ScapCoord(2,1:3),ScapCoord(3,4)+ScapCoord(3,1:3),{'x','y','z'})
+
+hold on
+plot3(AC(1),AC(2),AC(3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(AC(1),AC(2),AC(3),'AC','FontSize',12)
+
+plot3(TS(1),TS(2),TS(3),'-o','Color','g','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(TS(1),TS(2),TS(3),'TS','FontSize',12)
+
+plot3(AI(1),AI(2),AI(3),'-o','Color','m','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(AI(1),AI(2),AI(3),'AI','FontSize',12)
+
+%% Plotting BLS, Bone CS in Marker CF just X,Y
+
+figure(1)
+quiver(ScapCoord([1 1],4)',ScapCoord([2 2],4)',ScapCoord(1,1:2),ScapCoord(2,1:2))
+text(ScapCoord(1,4)+ScapCoord(1,1:2),ScapCoord(2,4)+ScapCoord(2,1:2),{'x','y'})
+
+hold on
+plot(AC(1),AC(2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(AC(1),AC(2),'AC','FontSize',12)
+
+plot(TS(1),TS(2),'-o','Color','g','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(TS(1),TS(2),'TS','FontSize',12)
+
+plot(AI(1),AI(2),'-o','Color','m','MarkerSize',10,...
+   'MarkerFaceColor','#D9FFFF')
+text(AI(1),AI(2),'AI','FontSize',12)
+
+
 end

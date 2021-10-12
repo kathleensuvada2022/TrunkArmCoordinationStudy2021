@@ -17,7 +17,10 @@ function [Hum_CS,GH] =  ashum(blmat,GH)
 
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
-[EM,EL]=deal(blmat(1,:),blmat(2,:));
+Emidx = find(blmat(:,1)=='EM');
+blmat=str2double(blmat);
+[EM,EL]=deal(blmat(Emidx,2:end),blmat(Emidx+1,2:end));
+
 % Estimate GH joint location
 
 % Compute the local axes
@@ -56,5 +59,44 @@ Origin = [GH(1:3) 1]';
 
 %T of Humerus in marker CS
 Hum_CS = [h Origin];
+
+%% Testing Plotting CS and BLS in marker CS
+
+figure(2)
+quiver3(Hum_CS([1 1 1],4)',Hum_CS([2 2 2],4)',Hum_CS([3 3 3],4)',Hum_CS(1,1:3),Hum_CS(2,1:3),Hum_CS(3,1:3))
+text(Hum_CS(1,4)+Hum_CS(1,1:3),Hum_CS(2,4)+Hum_CS(2,1:3),Hum_CS(3,4)+Hum_CS(3,1:3),{'x','y','z'})
+
+hold on
+plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(EM(1),EM(2),EM(3),'EM','FontSize',12)
+
+plot3(EL(1),EL(2),EL(3),'-o','Color','g','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(EL(1),EL(2),EL(3),'EL','FontSize',12)
+
+plot3(GH(1),GH(2),GH(3),'-o','Color','m','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(GH(1),GH(2),GH(3),'GH','FontSize',12)
+
+%% Plotting BLS, Bone CS in Marker CF just X,Y
+
+figure(1)
+quiver(Hum_CS([1 1],4)',Hum_CS([2 2],4)',Hum_CS(1,1:2),Hum_CS(2,1:2))
+text(Hum_CS(1,4)+Hum_CS(1,1:2),Hum_CS(2,4)+Hum_CS(2,1:2),{'x','y'})
+
+hold on
+plot(EM(1),EM(2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(EM(1),EM(2),'RS','FontSize',12)
+
+plot(EL(1),EL(2),'-o','Color','g','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(EL(1),EL(2),'US','FontSize',12)
+
+plot(GH(1),GH(2),'-o','Color','m','MarkerSize',10,...
+   'MarkerFaceColor','#D9FFFF')
+text(GH(1),GH(2),'OL','FontSize',12)
+
 
 end

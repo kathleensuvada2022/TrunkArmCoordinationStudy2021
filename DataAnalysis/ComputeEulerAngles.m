@@ -37,20 +37,19 @@ function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,f
 if nargin<3, reffr='trunk'; end
 %%
 % The order in which the BL must be in the DATA matrix is:
-BL={'EM', 'EL', 'GH', 'SC', 'IJ', 'PX', 'C7', 'T8', 'AC', 'AA', 'TS', 'AI', 'PC', 'RS', 'US', 'OL','MCP3'};
-Bones = {'Trunk','Scapula','Humerus','Forearm'};
+
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
 load([datafilepath '/' partid,'_','setup']);
 
 %From Kacey's MetriaKinDAQ 10.2021
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm'};
-% myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
-
+bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP"]';
 %% Concatenate the bony landmarks into one cell array and Trial Data [HT_Marker in GCS]
 load([datafilepath '/BL.mat']) %loading in BL file 
 load([datafilepath,'/', filename]) %loading in trial data 
 bldata=bl;
-blmat=cat(1,bldata{3},bldata{1},bldata{2},bldata{4}); %coordinates in the frame of the marker
+blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
+blmat=cat(2,bonylmrks,blmat);
 nland=size(blmat,1);
 %%
 x = data.met;
@@ -182,10 +181,11 @@ ScapCS=asscap(blmat); % AA,TS,AI
 [ForeCS] =  asfore(blmat); 
     
 % Compute location of GH joint using Regression Function   
-    GH=ghest(bl,Rscap);
+    GH=ghest(bl,Rscap); %need to do this!!! 
     
 % Using GH from Digitization %%%%%%%%%
-GH = blmat(3,1:3); %XYZ coordinate of GH from Digitization
+GHIDX = find(bonylmrks=='GH');
+GH = blmat(GHIDX ,2:4); %XYZ coordinate of GH from Digitization in meantime
     
 %Humerus CS
     %[HumCS,GH]=ashum(blmat2(1:3,[1:2]),GH);
