@@ -48,8 +48,8 @@ bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "R
 load([datafilepath '/BL.mat']) %loading in BL file 
 load([datafilepath,'/', filename]) %loading in trial data 
 bldata=bl;
-blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
-blmat=cat(2,bonylmrks,blmat);
+blmat1=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
+blmat=cat(2,bonylmrks,blmat1);
 nland=size(blmat,1);
 %%
 x = data.met;

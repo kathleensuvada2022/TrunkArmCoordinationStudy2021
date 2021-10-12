@@ -45,7 +45,7 @@ ForeCS = [f org_fore];
 
 %% Testing Plotting CS and BLS in marker CS
 
-figure(2)
+figure(3)
 quiver3(ForeCS([1 1 1],4)',ForeCS([2 2 2],4)',ForeCS([3 3 3],4)',ForeCS(1,1:3),ForeCS(2,1:3),ForeCS(3,1:3))
 text(ForeCS(1,4)+ForeCS(1,1:3),ForeCS(2,4)+ForeCS(2,1:3),ForeCS(3,4)+ForeCS(3,1:3),{'x','y','z'})
 
@@ -58,9 +58,9 @@ plot3(US(1),US(2),US(3),'-o','Color','g','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(US(1),US(2),US(3),'US','FontSize',12)
 
-% plot3(OL(1),OL(2),OL(3),'-o','Color','m','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(OL(1),OL(2),OL(3),'OL','FontSize',12)
+plot3(MCP3(1),MCP3(2),MCP3(3),'-o','Color','m','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(MCP3(1),MCP3(2),MCP3(3),'MCP3','FontSize',12)
 
 %% Plotting BLS, Bone CS in Marker CF just X,Y
 
@@ -77,9 +77,8 @@ plot(US(1),US(2),'-o','Color','g','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(US(1),US(2),'US','FontSize',12)
 
-%plot(OL(1),OL(2),'-o','Color','m','MarkerSize',10,...
-   % 'MarkerFaceColor','#D9FFFF')
-%text(OL(1),OL(2),'OL','FontSize',12)
-
+plot(MCP3(1),MCP3(2),'-o','Color','m','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(MCP3(1),MCP3(2),'MCP3','FontSize',12)
 
 end
