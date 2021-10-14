@@ -7,8 +7,6 @@
 %BLnames:string array of the names of the bony landmarks
 %CS: coordinate system created for given bone. 
 
-
-
 function  plotBLandCS(BL,BLnames,CS)
 
 %% Plotting Bony Landmarks and BONE CS in MARKER frame 
