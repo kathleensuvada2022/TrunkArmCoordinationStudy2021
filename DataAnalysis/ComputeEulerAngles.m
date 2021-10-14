@@ -34,24 +34,35 @@ function [gANGLES,jANGLES,Pmcp_H,Pmcp_T,Pmcp_G, T] = ComputeEulerAngles(bldata,f
 %    and z is up.
 % 4) Ignore Clavicle for now
 
-if nargin<3, reffr='trunk'; end
+
+%% For testing
+ partid = 'RTIS1005';
+ arm='Right';
+
+
 %%
-% The order in which the BL must be in the DATA matrix is:
+if nargin<3, reffr='trunk'; end
+%% Loading in the BL data (Digitization) and the BLs Names
 
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
 load([datafilepath '/' partid,'_','setup']);
 
 %From Kacey's MetriaKinDAQ 10.2021
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm'};
-bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP"]';
+bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP"]';  % IN THIS ORDER
 %% Concatenate the bony landmarks into one cell array and Trial Data [HT_Marker in GCS]
 load([datafilepath '/BL.mat']) %loading in BL file 
-load([datafilepath,'/', filename]) %loading in trial data 
 bldata=bl;
-blmat1=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
-blmat=cat(2,bonylmrks,blmat1);
+blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
 nland=size(blmat,1);
-%%
+% Using GH from Digitization %%%%%%%%%
+GHIDX = find(bonylmrks=='GH');
+GH = blmat(GHIDX ,1:3); %XYZ coordinate of GH from Digitization in meantime
+GH = [GH 1];
+
+%% Loading in trial Data 
+load([datafilepath,'/', filename]) %loading in trial data 
+
 x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
@@ -183,10 +194,7 @@ ScapCS=asscap(blmat); % AA,TS,AI
 % Compute location of GH joint using Regression Function   
     GH=ghest(bl,Rscap); %need to do this!!! 
     
-% Using GH from Digitization %%%%%%%%%
-GHIDX = find(bonylmrks=='GH');
-GH = blmat(GHIDX ,2:4); %XYZ coordinate of GH from Digitization in meantime
-    
+
 %Humerus CS
     %[HumCS,GH]=ashum(blmat2(1:3,[1:2]),GH);
 %     [HumCS,GH]=ashum(blmat2(1:3,[1:2 8:12]),GH);
