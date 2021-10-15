@@ -1,7 +1,9 @@
-% October 2021- Function for plotting bony landmarks of give bone and the
-%coordinate system created of that bone. To be used for Metria Analysis
-%and this is used when the data is in the coordinate system of the
-%respective marker (LCS)
+    %October 2021
+
+    %Function for plotting bony landmarks of give bone and the
+    %coordinate system created of that bone. To be used for Metria Analysis
+    %and this is used when the data is in the coordinate system of the
+    %respective marker (LCS)
 
 %Inputs: BL: cell array with N elements for N Bony Landmarks 
 %BLnames:string array of the names of the bony landmarks
