@@ -10,7 +10,6 @@
 %CS: coordinate system created for given bone. 
 
 function  plotBLandCS(BL,BLnames,CS)
-
 %% Plotting Bony Landmarks and BONE CS in MARKER frame 
 figure()
 quiver3(CS([1 1 1],4)',CS([2 2 2],4)',CS([3 3 3],4)',50*CS(1,1:3),50*CS(2,1:3),50*CS(3,1:3))
