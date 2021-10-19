@@ -1,8 +1,5 @@
 
-% Function based off of "ComputeEulerAngles". Created October 2021 for
-% Kacey's Project. Used to get Metria Data into Local Coordinate systems of
-% markers and then to the global coordinate system. Creates bone coordinate
-% systems for the 1)trunk 2)shoulder 3) Forearm 4) Humerus.
+% Function based off of "ComputeEulerA
 
 %[BLs_G,BL_names_all,CS_G] = ComputeEulerAngles_KS('trial1','Right','RTIS1005')
 function [BLs_G,BL_names_all,CS_G] = ComputeEulerAngles_KS(filename,arm,partid)
