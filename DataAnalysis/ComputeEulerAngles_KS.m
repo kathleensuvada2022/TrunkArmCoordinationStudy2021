@@ -4,8 +4,15 @@
 % markers and then to the global coordinate system. Creates bone coordinate
 % systems for the 1)trunk 2)shoulder 3) Forearm 4) Humerus.
 
-%[BLs_G,BL_names_all,CS_G] = ComputeEulerAngles_KS('trial1','Right','RTIS1005')
-function [BLs_G,BL_names_all,CS_G] = ComputeEulerAngles_KS(filename,arm,partid)
+% Use Flag ==1 if want to plot local coordinate systems individually and
+% BLs in the created Bone CS. 
+
+% Use Flag ==0 if want all trial data in the global coordinate system. 
+
+%Use Below for Testing 
+%[BLs_G,BL_names_all,CS_G,PMCP_G] = ComputeEulerAngles_KS('trial1','Right','RTIS1005',1)
+
+function [BLs_G,BL_names_all,CS_G,PMCP_G] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
 % Right now we are inputting bldata as the global coordinates of the
@@ -42,11 +49,6 @@ function [BLs_G,BL_names_all,CS_G] = ComputeEulerAngles_KS(filename,arm,partid)
 %    and z is up.
 % 4) Ignore Clavicle for now
 
-
-%% For testing
-partid = 'RTIS1005';
-arm='Right';
-filename = 'trial10';
 
 %%
 %if nargin<3, reffr='trunk'; end
@@ -206,6 +208,14 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % digitzation 
 B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 
+%Using FLAG==1 if wanting to plot local CS 
+if flag ==1 
+    plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
+    plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
+    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
+    plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
+end 
+
 %% Looping through all frames in trial for each HT (marker in global)   
 
 for j = 1:length(xtrunk) %artibitrary choosing xtrunk just needs to go through frames 
@@ -246,7 +256,7 @@ BL_G_f(:,k,j) = FtoG(:,:,j)*inv(cell2mat(B_CS_marker(4)))*(BLs_lcs_f{1,k}(1:4)')
 end
 
 end
-%%
+%% OUTPUTS of Function
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %        TRUNK SHOULDER  HUM  FORE
@@ -258,10 +268,19 @@ CS_G = {TtoG,StoG,HtoG,FtoG}; %%%% MAIN OUTPUT HTs of BONES IN GLOBAL
 BL_names_all = {BLnames_t;BLnames_s;BLnames_h;BLnames_f};
 % ***THE CSs created above are BONE CS in Global CS every point in time ***********
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Want the PMCP to be output in GCS
+PMCP_G_test = BL_G_f(:,4,:); % MCP3 in GCS for all time points in trial
+PMCP_G = zeros(4,250);
 
-% Calling Function to plot all the data in GCS 
+%Reorganizing so that 4 rows by 250 columns
+for i = 1:length(xtrunk)
+PMCP_G(:,i) = cat(1,PMCP_G_test(:,1,i));
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+if flag==0 
+
+% Calling Function to plot all the data in Global Coord. 
 plotCoord_Global(BLs_G,BL_names_all,CS_G)
-
+end 
 end
