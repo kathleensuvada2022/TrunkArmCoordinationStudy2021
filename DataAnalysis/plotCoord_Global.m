@@ -11,7 +11,19 @@
 % CS = CS_G{1,4}; %global CS 
 %%
 %%%%%%%%%%%%%%%%%%
+% azimuth = 0 
+%view(0,90)  to change the view of the plot so can see view from above 
+%subplots 
+% Make plot with all CS together with not all BLS
+%PMCP in hum and output
 
+% How to show trunk, shoulder, and elbow into the reaching distance?
+
+% in stroke maybe more of trunk compared to controls? 
+
+
+% What trying to measure? and get out of data--> what are outcome measures
+% that will capture this
 function  plotCoord_Global(BLs_G,BL_names_all,CS_G)
 %%
 for k=1:50 %Number of frames of trial

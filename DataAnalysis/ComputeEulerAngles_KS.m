@@ -9,8 +9,17 @@
 
 % Use Flag ==0 if want all trial data in the global coordinate system. 
 
+
 %Use Below for Testing 
 %[BLs_G,BL_names_all,CS_G,PMCP_G] = ComputeEulerAngles_KS('trial1','Right','RTIS1005',1)
+
+%%%%%% Kacey's Notes%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Would be passing CS_G into Euler Angles to get angles in global CS and
+% would be in the loop
+
+% joint angles - Jangles- elbow angle relative 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [BLs_G,BL_names_all,CS_G,PMCP_G] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 
