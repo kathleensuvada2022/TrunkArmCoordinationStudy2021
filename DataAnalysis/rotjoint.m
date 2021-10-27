@@ -36,7 +36,7 @@ function [jR]=rotjoint(AS)
 
 jR(1:n,1:3) = AS(:,1:3);
 
-for i=1:nDATA
+for i=1:nDATA % don't need -- have this in the outer loop- and nData is time 
     jR(3*i-2:3*i,4:6)=AS(3*i-2:3*i,1:3)'*AS(3*i-2:3*i,4:6);
     jR(3*i-2:3*i,7:9)=AS(3*i-2:3*i,4:6)'*AS(3*i-2:3*i,7:9);
     jR(3*i-2:3*i,10:12)=AS(3*i-2:3*i,7:9)'*AS(3*i-2:3*i,10:12);

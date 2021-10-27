@@ -259,7 +259,7 @@ BL_names_all = {BLnames_t;BLnames_s;BLnames_h;BLnames_f};
     %     as=[t,c,s,h,f];
     %    if strcmp(arm,'left'), as(:,4:end)=roty(pi)*as(:,4:end); end
     % AS (#measurements x (3x12)) matrix: contains 4 local
-    % coordinate systems (3x3 matrices) of thorax, clavicle, scapula and
+    % coordinate systems (3x3 matrices) in global of thorax, clavicle, scapula and
     % humerus, respectively
     %     AS=[AS;as];
     
