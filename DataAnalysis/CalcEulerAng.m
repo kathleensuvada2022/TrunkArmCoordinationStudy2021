@@ -2,11 +2,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the segment/joint Euler Angles based on the input
 % rotation matrices for the segment/joints and the desired order.
-% Note that angles are output in radians.
+% Note that angles are output in degrees.
 % The rotation matrices are decomposed in the Euler angles around the global
 % coordinate system
-% alpha : first rotation
-% beta  : second rotation
+% alpha : first rotation elbow flexion extension
+% beta  : second rotation 
 % gamma : third rotation
 %
 % The possible order of rotations are:

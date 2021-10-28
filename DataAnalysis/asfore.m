@@ -19,6 +19,11 @@ rsidx = find(bonylmrks=='RS');
 BLnames = ["RS","US","OL","MCP3"];
 BLs_lcs ={RS,US,OL,MCP3};
 
+% For setting new origin as midline between EM and EL
+EM_idx = find(bonylmrks=='EM');
+EL_idx = find(bonylmrks=='EL');
+
+[EM,EL] = deal(blmat(EM_idx,:),blmat(EL_idx,:));
 %%
 % Kacey Redefining X,Y,Z axes 10.6.21
 H_mid=(RS(1:3)+US(1:3))/2;
@@ -36,7 +41,11 @@ xf = xf/norm(xf);
 
 f = [xf;yf;zf]';
 f = [f;0 0 0];
-org_fore = [OL(1:3) 1]';
+
+
+%Creating New Origin Midpoint Between EpiCondyles not OL
+H_mid=(EM(1:3)+EL(1:3))/2;
+org_fore = [H_mid 1]';
 
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];

@@ -12,7 +12,7 @@
 
 % Order the Coord. Sys are Output in:  TRUNK SHOULDER  HUM  FORE 
 %Use Below for Testing 
-%[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES] = ComputeEulerAngles_KS('trial10','Right','RTIS1006',1)
+%[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle] = ComputeEulerAngles_KS('trial10','Right','RTIS1006',1)
 
 
 function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle] = ComputeEulerAngles_KS(filename,arm,partid,flag)
@@ -285,7 +285,8 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 %     [jANGLES(4:6,:,i)]=CalcEulerAng(jR(:,4:6),'YZX',0);  % Clavicle
 %     [jANGLES(7:9,:,i)]=CalcEulerAng(jR(:,7:9),'YZX',0);  % Scapula
 %     [jANGLES(10:12,:,i)]=CalcEulerAng(jR(:,10:12),'YZY',0); % Humerus
-     [jANGLES(:,:,j)]=CalcEulerAng(jR,'XYZ',0);    % Forearm
+    
+    [jANGLES(:,:,j)]=CalcEulerAng(jR,'XZY',0);    % Forearm
     
     
     % **************************************************************
@@ -311,7 +312,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 end
 %% Calculating Elbow Angle
 for k = 1:length(jANGLES)
-elbowangle(k,1) = 180-jANGLES(1,1,k);
+elbowangle(k,1) = jANGLES(1,1,k);
 end
 
 
