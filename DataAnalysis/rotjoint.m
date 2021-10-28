@@ -30,16 +30,29 @@
 %  November 1996, Frans van der Helmfunction [jR]=rotjoint(AS)
 
 
+% Kacey October 2021 Testing
+
+% AS =[CS_G{1,1}(1:3,1:3,1) CS_G{1,2}(1:3,1:3,1) CS_G{1,3}(1:3,1:3,1) CS_G{1,4}(1:3,1:3,1)];
+
+
 function [jR]=rotjoint(AS)
 
-[n,m]=size(AS);nDATA = n/3;
+% [n,m]=size(AS);nDATA = n/3;
 
-jR(1:n,1:3) = AS(:,1:3);
+%jR(1:n,1:3) = AS(:,1:3);
+jR = zeros(3,3);
 
-for i=1:nDATA % don't need -- have this in the outer loop- and nData is time 
-    jR(3*i-2:3*i,4:6)=AS(3*i-2:3*i,1:3)'*AS(3*i-2:3*i,4:6);
-    jR(3*i-2:3*i,7:9)=AS(3*i-2:3*i,4:6)'*AS(3*i-2:3*i,7:9);
-    jR(3*i-2:3*i,10:12)=AS(3*i-2:3*i,7:9)'*AS(3*i-2:3*i,10:12);
-    %   jR(3*i-2:3*i,13:15)=AS(3*i-2:3*i,10:12)'*AS(3*i-2:3*i,13:15);
-end
+% for i=1:nDATA % don't need -- have this in the outer loop- and nData is time 
+%     jR(3*i-2:3*i,4:6)=AS(3*i-2:3*i,1:3)'*AS(3*i-2:3*i,4:6);
+%     jR(3*i-2:3*i,7:9)=AS(3*i-2:3*i,4:6)'*AS(3*i-2:3*i,7:9);
+%     jR(3*i-2:3*i,10:12)=AS(3*i-2:3*i,7:9)'*AS(3*i-2:3*i,10:12);
+%     jR(3*i-2:3*i,13:15)=AS(3*i-2:3*i,10:12)'*AS(3*i-2:3*i,13:15);
+%     10:12 is hum 13:15 is forearm (OLD WAY)
+  
+
+% For KACEY Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
+   jR(1:3,1:3)=AS(:,7:9)'*AS(:,10:12);
+    
+    
+% end
 end

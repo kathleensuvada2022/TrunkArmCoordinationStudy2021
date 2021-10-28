@@ -29,7 +29,7 @@ function ANGg = CalcEulerAng(R,Rorder,val)
 % Determine the Euler angles alpha, beta, gamma (abg).
 switch Rorder
     case 'XYZ'
-        [a,b,g] = rotxyz(R);  % KACEY 10.20.21 NEED THESE FUNCTIONS
+        [a,b,g] = rotxyz(R);  % For KACEY NEED XYZ NOW Rorder='XYZ'
     case 'XZY'
         [a,b,g] = rotxzy(R);
     case 'YZX'
