@@ -185,8 +185,15 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
     %         | T8  0   AI  0   0  |
     % 1  2  3  4  5  6  7  8  9  10 11 12 13
     % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
-            
- %%   
+%%   Getting EL and EM in Forearm Marker CS to set as origin for Forearm CS
+
+%HT_MarkforetoGlob= Tftom;  % HT of the forearm marker to global CS
+
+%P_EM_markHum = 
+
+    % Can't get with my data Kacey 10.21
+    
+    %%   
 %Trunk CS
 [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks);
 

@@ -44,8 +44,8 @@ f = [f;0 0 0];
 
 
 %Creating New Origin Midpoint Between EpiCondyles not OL
-H_mid=(EM(1:3)+EL(1:3))/2;
-org_fore = [H_mid 1]';
+% H_mid_2=(EM(1:3)+EL(1:3))/2;
+org_fore = [OL(1:3) 1]';
 
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];
