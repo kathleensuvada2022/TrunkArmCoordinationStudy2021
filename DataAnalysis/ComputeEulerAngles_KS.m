@@ -12,7 +12,7 @@
 
 % Order the Coord. Sys are Output in:  TRUNK SHOULDER  HUM  FORE 
 %Use Below for Testing 
-%[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle] = ComputeEulerAngles_KS('trial10','Right','RTIS1006',1)
+%[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle] = ComputeEulerAngles_KS('trial10','Right','RTIS1005',1)
 
 
 function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle] = ComputeEulerAngles_KS(filename,arm,partid,flag)
