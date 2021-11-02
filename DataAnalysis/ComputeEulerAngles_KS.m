@@ -1,5 +1,5 @@
-
-% Function based off of "ComputeEulerAngles". Created October 2021 for
+%% Created October 2021  K. Suvada
+% Function based off of "ComputeEulerAngles".  for
 % Kacey's Project. Used to get Metria Data into Local Coordinate systems of
 % markers and then to the global coordinate system. Creates bone coordinate
 % systems for the 1)trunk 2)shoulder 3) Forearm 4) Humerus.
@@ -278,22 +278,22 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 %         AS(:,1:3)=repmat(eye(3),length(AS)/3,1);
 %         if strcmp(arm,'left'), AS(:,1:3)=repmat(roty(pi)*eye(3),length(AS)/3,1); end
 %     end
-   
-     gR = rotbones(AS); %absolute angles % do i need rotbones??? 
-     
+
+% Absolute Global Angles
+     gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
+     gR(1:3,4:6) = AS(:,7:9); %humerus rotatin matrix in global
+% Angles relative to global CS 
+    [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk
+    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'XZY',0); % Humerus
+
      jR = rotjoint(AS); %relative angles
 
-    %     blah = CalcEulerAng(TrunkCS,'XYZ')
     %     [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ',0); % Trunk
     %     [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'YZX',0);  % Clavicle
     %     [gANGLES(7:9,:,i)]=CalcEulerAng(gR(:,7:9),'YZX',0);  % Scapula
-    %     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY',0); % Humerus
-    %    
-    % Angles relative to gloval CS 
-    [gANGLES(1:3,:,i)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk
-    [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'XZY',0); % Humerus
+    %     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY',0); % Humerus   
 
-    % Local angles relative to proximal segment
+% Local angles relative to proximal segment
     [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'XZY',0);    % Humerus in Trunk 
 

@@ -13,17 +13,17 @@
 function [ForeCS,BLs_lcs,BLnames] =  asfore(blmat,bonylmrks)
 
 %Kacey 10.2021
-
 rsidx = find(bonylmrks=='RS');
-[RS,US,OL,MCP3]=deal(blmat(rsidx,:),blmat(rsidx+1,:),blmat(rsidx+2,:),blmat(rsidx+3,:));
-BLnames = ["RS","US","OL","MCP3"];
-BLs_lcs ={RS,US,OL,MCP3};
+[RS,US,OL,MCP3,EM,EL]=deal(blmat(rsidx,:),blmat(rsidx+1,:),blmat(rsidx+2,:),blmat(rsidx+3,:),blmat(rsidx+4,:),blmat(rsidx+5,:));
+%RS';'US';'OL';'MCP3';'EM';'EL'
+BLnames = ["RS","US","OL","MCP3","EM","EL"];
+BLs_lcs ={RS,US,OL,MCP3,EM,EL};
 
-% For setting new origin as midline between EM and EL
-EM_idx = find(bonylmrks=='EM');
-EL_idx = find(bonylmrks=='EL');
-
-[EM,EL] = deal(blmat(EM_idx,:),blmat(EL_idx,:));
+% % For setting new origin as midline between EM and EL
+% EM_idx = find(bonylmrks=='EM');
+% EL_idx = find(bonylmrks=='EL');
+% 
+% [EM,EL] = deal(blmat(EM_idx,:),blmat(EL_idx,:));
 %%
 % Kacey Redefining X,Y,Z axes 10.6.21
 H_mid=(RS(1:3)+US(1:3))/2;
@@ -43,13 +43,12 @@ f = [xf;yf;zf]';
 f = [f;0 0 0];
 
 
-%Creating New Origin Midpoint Between EpiCondyles not OL
-% H_mid_2=(EM(1:3)+EL(1:3))/2;
-org_fore = [OL(1:3) 1]';
+%Creating New Origin Midpoint Between Epicondyles not OL
+H_mid_2=(EL(1:3)+EM(1:3)).'/2;
+org_fore = [H_mid_2;1];
 
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];
-
 
 
 %% Testing Plotting CS and BLS in marker CS

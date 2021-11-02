@@ -1,4 +1,4 @@
-% November 1 2021
+% November 1 2021 K.Suvada
 % Function for plotting segments after a trial. Used to double check and
 % see if angles make sense based on ComputeEulerAngles. Input is the
 % BonyLandmarks in the Global CS. 
