@@ -40,7 +40,7 @@ function [jR]=rotjoint(AS)
 % [n,m]=size(AS);nDATA = n/3;
 
 %jR(1:n,1:3) = AS(:,1:3);
-jR = zeros(3,3);
+jR = zeros(3,6);
 
 % for i=1:nDATA % don't need -- have this in the outer loop- and nData is time 
 %     jR(3*i-2:3*i,4:6)=AS(3*i-2:3*i,1:3)'*AS(3*i-2:3*i,4:6);
@@ -53,6 +53,7 @@ jR = zeros(3,3);
 % For KACEY Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
    jR(1:3,1:3)=AS(:,7:9)'*AS(:,10:12);
     
-    
+   % To get humerus (columns 7:9) in trunk (columns 1:3) cs 
+   jR(1:3,4:6)=AS(:,1:3)'*AS(:,7:9);  
 % end
 end
