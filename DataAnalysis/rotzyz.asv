@@ -43,22 +43,14 @@ z2 = atan2(sz,cz);
 sza = r(2,3)/sin(y2);
 %cya = r(2,1)/sin(z2);
 cza = r(2,1)/sin(y2);
-%ya2 = atan2(sya,cya);
-za2 = atan2(sza,cza);
-%if (0 <= z1 & z1 <= pi)
-if (0 <= y1 & y1 <= pi)
-
-  % y = y1;
-  z = z1;
-   %z = z1;
+ya2 = atan2(sya,cya);
+ya2 = atan2(sya,cya);
+if (0 <= z1 & z1 <= pi)
    y = y1;
-  % ya = ya1;
-  za = za1;
+   z = z1;
+   ya = ya1;
 else
-   %y = y2;
-   z = z2;
-   %z = z2;
    y = y2;
-   %ya = ya2;
-   za = za2;
+   z = z2;
+   ya = ya2;
 end
