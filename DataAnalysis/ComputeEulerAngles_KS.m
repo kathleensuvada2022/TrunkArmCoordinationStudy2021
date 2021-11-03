@@ -212,6 +212,12 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 %Humerus CS
 
 [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks);
+
+
+%% GH Computation Here 
+% Pass in ScapCoord into ghest function
+
+% save GH to BL file 
    
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
@@ -284,7 +290,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
      gR(1:3,4:6) = AS(:,7:9); %humerus rotatin matrix in global
 % Angles relative to global CS 
     [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk
-    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'XZY',0); % Humerus
+    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'ZYZ',0); % Humerus
 
      jR = rotjoint(AS); %relative angles
 
@@ -295,7 +301,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 
 % Local angles relative to proximal segment
     [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
-    [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'XZY',0);    % Humerus in Trunk 
+    [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 
 
     
     % **************************************************************

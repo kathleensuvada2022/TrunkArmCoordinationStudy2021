@@ -34,14 +34,14 @@ US_IDX = find(ForeNames=='US');
 %%
 for i = 50:100 
     %Humerus
-     H_Mid_H =(EL(1:3,1,i)+EM(1:3,1,i)).'/2;
+     H_Mid_H(i,1:3) =squeeze(EL(1:3,1,i)+EM(1:3,1,i))'/2;
 
 if i ==50   
     % Plotting GH, midpoint between EL and EM
     figure (1)
-    plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
+    plot3(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'*');
     hold on
-     text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
+     text(H_Mid_H(1,1),H_Mid_H(1,2),H_Mid_H(1,3),'MID_E_M_E_L');
 
     plot3(EM(1,1,i),EM(2,1,i),EM(3,1,i),'*');
    text(EM(1,1,i),EM(2,1,i),EM(3,1,i),'EM');
@@ -58,14 +58,14 @@ end
 plot3([GH(1,1,i) H_Mid_H(1)],[GH(2,1,i) H_Mid_H(2)],[GH(3,1,i) H_Mid_H(3)])
   hold on  
 %Forearm
-H_Mid_f =(RS(1:3,1,i)-US(1:3,1,i))/2;
+H_Mid_f(i,1:3) =squeeze(RS(1:3,1,i)-US(1:3,1,i))'/2;
 
 % Plotting GH, midpoint between RS and US
 figure (1)
-plot3(H_Mid_f(1),H_Mid_f(2),H_Mid_f(3),'*');
+plot3(H_Mid_f(i,1),H_Mid_f(i,2),H_Mid_f(i,3),'*');
 hold on
 if i ==50
-text(H_Mid_f(1),H_Mid_f(2),H_Mid_f(3),'Midpnt RS/US');
+text(H_Mid_f(i,1),H_Mid_f(i,2),H_Mid_f(i,3),'Midpnt RS/US');
 
 plot3(OL(1,1,i),OL(2,1,i),OL(3,1,i),'*');
 text(OL(1,1,i),OL(2,1,i),OL(3,1,i),'OL');

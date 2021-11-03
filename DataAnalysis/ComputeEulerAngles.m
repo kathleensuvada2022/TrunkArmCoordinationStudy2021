@@ -710,12 +710,19 @@ end
 %                              the scapular CS)
 %               Rsca (scapula rotation matrix)
 %       output: gh (3D coordinates of the center of rotation of the GH
-%                   joint in scapular CS)
+%                   joint in scapular CS) -
+
+% want to add to BL file so want
+%                   it in the 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function gh=ghest(bl,Rscap)
 % Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
+%Rotating 180 about Z
 Rsca=Rsca*diag([-1 -1 1]); % Flips the x and y axes == 180 degree rotation about z FIGURE OUT IF THIS IS NEEDED
- 
+
+% Rotate 180 degrees about Y (Kacey)
+Rsca=Rsca*diag([-1 1 -1]);
+
 Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 
 % ac=Rsca'*(ac-Osca); No necessary because BLs are already in scapular CS
@@ -726,7 +733,7 @@ Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 % Change origin to midpoint between AC and AA
 bl=bl-repmat(Osca,1,4); % for 4 Bls
 
-lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa);
+lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa); % length from AC to AA
 lacts=norm(bl(:,1)-bl(:,3)); %lacts=norm(ac-ts);
 lacai=norm(bl(:,1)-bl(:,4)); %lacai=norm(ac-ai);
 ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai);
@@ -746,8 +753,8 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai);
   gh=[ ...
     [1       lacts lacai      ]*[ 10       -0.40  0.22      ]'; % Xcoord
     [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
-    [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; 
-
+    [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
+% Kacey: Write out matrix. GH regression paper to see where numbers from
 
 % 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) 
 
