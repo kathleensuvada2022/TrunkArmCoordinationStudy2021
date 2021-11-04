@@ -19,29 +19,22 @@ rsidx = find(bonylmrks=='RS');
 BLnames = ["RS","US","OL","MCP3","EM","EL"];
 BLs_lcs ={RS,US,OL,MCP3,EM,EL};
 
-% % For setting new origin as midline between EM and EL
-% EM_idx = find(bonylmrks=='EM');
-% EL_idx = find(bonylmrks=='EL');
-% 
-% [EM,EL] = deal(blmat(EM_idx,:),blmat(EL_idx,:));
-%%
-% Kacey Redefining X,Y,Z axes 10.6.21
+%% Old way of defining CS
 H_mid=(RS(1:3)+US(1:3))/2;
-zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
-%zf = zf; % flipping so vector points cranially 
+yf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+yf = -yf; % flipping so vector points cranially 
 
 %Yh: Need perpendicular to plane defined by z axis and line through em el
 x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
-yf =cross(zf,x); %flipped order because z in opposite direction
-yf=-(yf/norm(yf));
-
+zf =cross(yf,x); 
+zf=-(zf/norm(zf));
 
 xf = cross (zf,yf);
 xf = xf/norm(xf);
+xf = -xf;
 
 f = [xf;yf;zf]';
 f = [f;0 0 0];
-
 
 %Creating New Origin Midpoint Between Epicondyles not OL
 H_mid_2=(EL(1:3)+EM(1:3)).'/2;
@@ -50,51 +43,32 @@ org_fore = [H_mid_2;1];
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];
 
+%% Kacey Redefining X,Y,Z axes 10.6.21
 
-%% Testing Plotting CS and BLS in marker CS
+% H_mid=(RS(1:3)+US(1:3))/2;
+% zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+% %zf = zf; % flipping so vector points cranially 
 % 
-% figure(3)
-% quiver3(ForeCS([1 1 1],4)',ForeCS([2 2 2],4)',ForeCS([3 3 3],4)',50*ForeCS(1,1:3),50*ForeCS(2,1:3),50*ForeCS(3,1:3))
-% %quiver3(ForeCS([1 1 1],4)',ForeCS([2 2 2],4)',ForeCS([3 3 3],4)',50,50,50)
-% text(ForeCS(1,4)+50*ForeCS(1,1:3),ForeCS(2,4)+50*ForeCS(2,1:3),ForeCS(3,4)+50*ForeCS(3,1:3),{'x','y','z'})
+% %Yh: Need perpendicular to plane defined by z axis and line through em el
+% x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
+% yf =cross(zf,x); %flipped order because z in opposite direction
+% yf=-(yf/norm(yf));
 % 
-% hold on
-% plot3(RS(1),RS(2),RS(3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(RS(1),RS(2),RS(3),'RS','FontSize',12)
 % 
-% plot3(US(1),US(2),US(3),'-o','Color','g','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(US(1),US(2),US(3),'US','FontSize',12)
+% xf = cross (zf,yf);
+% xf = xf/norm(xf);
 % 
-% plot3(MCP3(1),MCP3(2),MCP3(3),'-o','Color','m','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(MCP3(1),MCP3(2),MCP3(3),'MCP3','FontSize',12)
+% f = [xf;yf;zf]';
+% f = [f;0 0 0];
 % 
-% plot3(OL(1),OL(2),OL(3),'-o','Color','m','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(OL(1),OL(2),OL(3),'OL','FontSize',12)
 % 
-% axis equal
-% %% Plotting BLS, Bone CS in Marker CF just X,Y
+% %Creating New Origin Midpoint Between Epicondyles not OL
+% H_mid_2=(EL(1:3)+EM(1:3)).'/2;
+% org_fore = [H_mid_2;1];
 % 
-% % change u and V to see magnitude 
-% figure(1)
-% quiver(ForeCS([1 1],4)',ForeCS([2 2],4)',ForeCS(1,1:2),ForeCS(2,1:2))
-% text(ForeCS(1,4)+ForeCS(1,1:2),ForeCS(2,4)+ForeCS(2,1:2),{'x','y'})
-% 
-% hold on
-% plot(RS(1),RS(2),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(RS(1),RS(2),'RS','FontSize',12)
-% 
-% plot(US(1),US(2),'-o','Color','g','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(US(1),US(2),'US','FontSize',12)
-% 
-% plot(MCP3(1),MCP3(2),'-o','Color','m','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(MCP3(1),MCP3(2),'MCP3','FontSize',12)
-% 
+% %Forearm Coordinate System in Marker CF
+% ForeCS = [f org_fore];
+
+
 
 end

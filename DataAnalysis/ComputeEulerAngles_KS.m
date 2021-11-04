@@ -227,9 +227,9 @@ B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 
 %Using FLAG==1 if wanting to plot local CS 
 if flag ==1 
+    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
-    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
     plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
 end 
 

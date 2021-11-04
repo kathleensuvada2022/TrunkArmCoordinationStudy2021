@@ -24,18 +24,25 @@ BLnames = ["EM","EL","GH"];
 BLs_lcs ={EM,EL,GH};
 
 %% Old way of defining CS
+% X towards lateral epcondyle
+% Y is down towards EM and EL from GH
+% Z is into the page 
 
 H_mid=(EM(1:3)+EL(1:3))/2;
 
 y = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
 
+y = -y;
+
 xh= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3));
 z =cross(xh,y);
 z=z/norm(z);
-x =cross(y,z);
-h=[x;y;z]';
 
- h = [h;0 0 0];
+x =cross(y,z);
+
+h=[x;y;-z]';
+
+h = [h;0 0 0];
 Origin = [GH(1:3) 1]';
 
 Hum_CS = [h Origin];
