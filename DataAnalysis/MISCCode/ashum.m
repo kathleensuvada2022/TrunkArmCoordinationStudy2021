@@ -23,52 +23,29 @@ Emidx = find(bonylmrks=='EM');
 BLnames = ["EM","EL","GH"];
 BLs_lcs ={EM,EL,GH};
 
-%% Old way of defining CS
-% X towards lateral epcondyle
-% Y is down towards EM and EL from GH
-% Z is into the page 
-
+% Kacey Redefining X,Y,Z axes 10.4.21 
 H_mid=(EM(1:3)+EL(1:3))/2;
+zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
+zh = zh; 
 
-y = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
+%Yh: Need perpendicular to plane defined by z axis and line through em el
+x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
+yh =cross(zh,x); %flipped order because z in opposite direction
+yh=yh/norm(yh);
 
-y = -y;
 
-xh= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3));
-z =cross(xh,y);
-z=z/norm(z);
+xh = cross (yh,zh);
+xh = xh/norm(xh);
 
-x =cross(y,z);
-
-h=[x;y;-z]';
+h = [xh;yh;zh]';
 
 h = [h;0 0 0];
+
 Origin = [GH(1:3) 1]';
 
+%T of Humerus in marker CS
 Hum_CS = [h Origin];
-%% Kacey Redefining X,Y,Z axes 10.4.21 
-% H_mid=(EM(1:3)+EL(1:3))/2;
-% zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
-% zh = zh; 
-% 
-% %Yh: Need perpendicular to plane defined by z axis and line through em el
-% x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
-% yh =cross(zh,x); %flipped order because z in opposite direction
-% yh=yh/norm(yh);
-% 
-% 
-% xh = cross (yh,zh);
-% xh = xh/norm(xh);
-% 
-% h = [xh;yh;zh]';
-% 
-% h = [h;0 0 0];
-% 
-% Origin = [GH(1:3) 1]';
-% 
-% %T of Humerus in marker CS
-% Hum_CS = [h Origin];
-% 
+
 
 
 end

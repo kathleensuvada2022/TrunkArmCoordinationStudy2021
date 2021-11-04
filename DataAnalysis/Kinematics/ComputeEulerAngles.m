@@ -1,4 +1,4 @@
-function [gANGLES,jANGLES] = ComputeEulerAngles(bldata,arm,reffr)
+%function [gANGLES,jANGLES] = ComputeEulerAngles(bldata,arm,reffr)
 %
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
 %
@@ -162,7 +162,7 @@ for i=1:nsamples
     
 end
 
-end
+%end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the center of rotation of the glenohumeral joint

@@ -31,13 +31,13 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)];
 %xhulp is vector normal to the plane
 xhulp = nvector; 
 
-zt = cross(yt(1:3),xhulp);
+zt = cross(xhulp,yt(1:3));
 zt=zt/norm(zt);
 
 %xt = cross(yt(1:3),zt);
 
 %Redefined for Kacey 10.4.21
-xt = cross(zt,yt);
+xt = cross(yt,zt);
 
 % t = [xt,yt,zt];
 t = [xt,yt,zt]; 

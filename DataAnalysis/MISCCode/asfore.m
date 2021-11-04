@@ -19,22 +19,25 @@ rsidx = find(bonylmrks=='RS');
 BLnames = ["RS","US","OL","MCP3","EM","EL"];
 BLs_lcs ={RS,US,OL,MCP3,EM,EL};
 
-%% Old way of defining CS
+
+% Kacey Redefining X,Y,Z axes 10.6.21
+
 H_mid=(RS(1:3)+US(1:3))/2;
-yf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
-yf = -yf; % flipping so vector points cranially 
+zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+%zf = zf; % flipping so vector points cranially 
 
 %Yh: Need perpendicular to plane defined by z axis and line through em el
 x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
-zf =cross(yf,x); 
-zf=-(zf/norm(zf));
+yf =cross(zf,x); %flipped order because z in opposite direction
+yf=-(yf/norm(yf));
+
 
 xf = cross (zf,yf);
 xf = xf/norm(xf);
-xf = -xf;
 
 f = [xf;yf;zf]';
 f = [f;0 0 0];
+
 
 %Creating New Origin Midpoint Between Epicondyles not OL
 H_mid_2=(EL(1:3)+EM(1:3)).'/2;
@@ -42,32 +45,6 @@ org_fore = [H_mid_2;1];
 
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];
-
-%% Kacey Redefining X,Y,Z axes 10.6.21
-
-% H_mid=(RS(1:3)+US(1:3))/2;
-% zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
-% %zf = zf; % flipping so vector points cranially 
-% 
-% %Yh: Need perpendicular to plane defined by z axis and line through em el
-% x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
-% yf =cross(zf,x); %flipped order because z in opposite direction
-% yf=-(yf/norm(yf));
-% 
-% 
-% xf = cross (zf,yf);
-% xf = xf/norm(xf);
-% 
-% f = [xf;yf;zf]';
-% f = [f;0 0 0];
-% 
-% 
-% %Creating New Origin Midpoint Between Epicondyles not OL
-% H_mid_2=(EL(1:3)+EM(1:3)).'/2;
-% org_fore = [H_mid_2;1];
-% 
-% %Forearm Coordinate System in Marker CF
-% ForeCS = [f org_fore];
 
 
 
