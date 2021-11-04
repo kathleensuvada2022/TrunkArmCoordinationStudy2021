@@ -40,6 +40,8 @@ switch Rorder
         [a,b,g] = rotzxy(R);
     case 'YZY'
         [a,b,g] = rotyzy(R);
+    case 'ZYZ'
+        [a,b,g] = rotzyz(R);
 end
 
 ANGr = [a,b,g];

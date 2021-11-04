@@ -28,54 +28,67 @@ US_IDX = find(ForeNames=='US');
 
 %Humerus
 [GH,EL,EM] = deal(BLs_G{1,3}(:,GH_IDX,:), BLs_G{1,3}(:,EL_IDX,:),BLs_G{1,3}(:,EM_IDX,:));
+EL = squeeze(EL)';
+EM = squeeze(EM)';
+GH = squeeze(GH)';
 
 %Forearm
 [OL,RS,US] = deal(BLs_G{1,4}(:,OL_IDX,:), BLs_G{1,4}(:,RS_IDX,:),BLs_G{1,4}(:,US_IDX,:));
+OL = squeeze(OL)';
+RS=squeeze(RS)';
+US = squeeze(US)';
 %%
-for i = 50:100 
+for i = 1:250 
     %Humerus
-     H_Mid_H(i,1:3) =squeeze(EL(1:3,1,i)+EM(1:3,1,i))'/2;
+     H_Mid_H(i,1:3) =(EL(i,1:3)+EM(i,1:3))'/2;
 
-if i ==50   
+if i ==1   
     % Plotting GH, midpoint between EL and EM
     figure (1)
     plot3(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'*');
     hold on
-     text(H_Mid_H(1,1),H_Mid_H(1,2),H_Mid_H(1,3),'MID_E_M_E_L');
+     text(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'MID_E_M_E_L');
 
-    plot3(EM(1,1,i),EM(2,1,i),EM(3,1,i),'*');
-   text(EM(1,1,i),EM(2,1,i),EM(3,1,i),'EM');
-    hold on
-    plot3(EL(1,1,i),EL(2,1,i),EL(3,1,i),'*');
-   text(EL(1,1,i),EL(2,1,i),EL(3,1,i),'EL');
+   plot3(EM(i,1),EM(i,2),EM(i,3),'*');
+   text(EM(i,1),EM(i,2),EM(i,3),'EM');
+   hold on
+   plot3(EL(i,1),EL(i,2),EL(i,3),'*');
+   text(EL(i,1),EL(i,2),EL(i,3),'EL');
 
-    plot3(GH(1,1,i),GH(2,1,i),GH(3,1,i),'*');
+   plot3(GH(i,1),GH(i,2),GH(i,3),'*');
 
-    text(GH(1,1,i),GH(2,1,i),GH(3,1,i),'GH');
+   text(GH(i,1),GH(i,2),GH(i,3),'GH');
 end
   
 %Line from GH to MidPnt between Epicondyles
-plot3([GH(1,1,i) H_Mid_H(1)],[GH(2,1,i) H_Mid_H(2)],[GH(3,1,i) H_Mid_H(3)])
+plot3([GH(i,1) H_Mid_H(i,1)],[GH(i,2) H_Mid_H(i,2)],[GH(i,3) H_Mid_H(i,3)])
   hold on  
 %Forearm
-H_Mid_f(i,1:3) =squeeze(RS(1:3,1,i)-US(1:3,1,i))'/2;
+H_Mid_f(i,1:3) =(RS(i,1:3)+US(i,1:3))'/2;
 
 % Plotting GH, midpoint between RS and US
 figure (1)
 plot3(H_Mid_f(i,1),H_Mid_f(i,2),H_Mid_f(i,3),'*');
+% plot3(RS(i,1),RS(i,2),RS(i,3),'*');
+% text(RS(i,1),RS(i,2),RS(i,3),'RS');
+% plot3(US(i,1),US(i,2),US(i,3),'*')
+% text(US(i,1),US(i,2),US(i,3),'RS');
 hold on
-if i ==50
+if i ==1
 text(H_Mid_f(i,1),H_Mid_f(i,2),H_Mid_f(i,3),'Midpnt RS/US');
 
-plot3(OL(1,1,i),OL(2,1,i),OL(3,1,i),'*');
-text(OL(1,1,i),OL(2,1,i),OL(3,1,i),'OL');
+
+plot3(OL(i,1),OL(i,2),OL(i,3),'*');
+text(OL(i,1),OL(i,2),OL(i,3),'OL');
 end
 
 title('Humerus/Forearm BLs in Global','FontSize',16)
-
+xlabel('X axis')
+ylabel('Y axis')
+zlabel('Z axis')
 %Line from GH to MidPnt between Epicondyles
- plot3([OL(1,1,i) H_Mid_f(1)],[OL(2,1,i) H_Mid_f(2)],[OL(3,1,i) H_Mid_f(3)])
- 
+ plot3([H_Mid_H(i,1) H_Mid_f(i,1)],[H_Mid_H(i,2) H_Mid_f(i,2)],[H_Mid_H(i,3) H_Mid_f(i,3)])
+ view(0,90)  % XY
  pause()
 end
 
