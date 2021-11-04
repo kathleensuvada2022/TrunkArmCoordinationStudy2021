@@ -138,3 +138,30 @@ org_fore = [H_mid_2;1];
 %Forearm Coordinate System in Marker CF
 ForeCS = [f org_fore];
 end
+function [ScapCoord,BLnames,BLs_lcs ] =  asscap(blmat,bonylmrks)
+%% Old way of creating CS
+ACidx = find(bonylmrks=='AC');
+[AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
+BLnames = ["AC","TS","AI"];
+BLs_lcs ={AC,TS,AI};
+
+
+
+xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
+
+zs = cross(xs,(AC(1:3)-AI(1:3)));
+zs = zs/norm(zs);
+
+ys = cross(xs,zs);
+ys= ys/norm(ys);
+ys=ys;
+
+S = [xs;ys;-zs]';
+S = [S; 0 0 0];
+
+Orig = [AC(1:3) 1]';
+
+%Scapular CS in Marker Frame
+ScapCoord = [S Orig];
+
+end

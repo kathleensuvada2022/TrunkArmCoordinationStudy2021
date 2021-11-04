@@ -20,59 +20,39 @@ ACidx = find(bonylmrks=='AC');
 BLnames = ["AC","TS","AI"];
 BLs_lcs ={AC,TS,AI};
 
+%%
+%Kacey 10.2021
+ACidx = find(bonylmrks=='AC');
+[AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
+BLnames = ["AC","TS","AI"];
+BLs_lcs ={AC,TS,AI};
+% xs = (AA-TS) / norm(AA-TS);
+% zs = cross(xs,(AA-AI/norm(AA-AI)));
+% ys = cross(zs,xs);
+% S = [xs,ys,zs];
 
+% % AMA 9/29/21 SWITCH CS definition so that x is to the right, y is anterior
+% % and z is up.
+% xs = (AA-TS) / norm(AA-TS);
+% zs = cross(xs,(AA-AI));
+% zs = zs/norm(zs);
+% ys = cross(zs,xs);
 
+%10.4.21- Kacey Editing based on how want CS aligned 
 xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
+ys = cross(xs,(AC(1:3)-AI(1:3)));
+ys = ys/norm(ys);
+zs = cross(xs,ys);
+zs= zs/norm(zs);
+zs=-zs;
 
-zs = cross(xs,(AC(1:3)-AI(1:3)));
-zs = zs/norm(zs);
-
-ys = cross(xs,zs);
-ys= ys/norm(ys);
-ys=ys;
-
-S = [xs;ys;-zs]';
+S = [xs;ys;zs]';
 S = [S; 0 0 0];
 
 Orig = [AC(1:3) 1]';
 
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
-
-
-%%
-% %Kacey 10.2021
-% ACidx = find(bonylmrks=='AC');
-% [AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
-% BLnames = ["AC","TS","AI"];
-% BLs_lcs ={AC,TS,AI};
-% % xs = (AA-TS) / norm(AA-TS);
-% % zs = cross(xs,(AA-AI/norm(AA-AI)));
-% % ys = cross(zs,xs);
-% % S = [xs,ys,zs];
-% 
-% % % AMA 9/29/21 SWITCH CS definition so that x is to the right, y is anterior
-% % % and z is up.
-% % xs = (AA-TS) / norm(AA-TS);
-% % zs = cross(xs,(AA-AI));
-% % zs = zs/norm(zs);
-% % ys = cross(zs,xs);
-% 
-% %10.4.21- Kacey Editing based on how want CS aligned 
-% xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
-% ys = cross(xs,(AC(1:3)-AI(1:3)));
-% ys = ys/norm(ys);
-% zs = cross(xs,ys);
-% zs= zs/norm(zs);
-% zs=-zs;
-% 
-% S = [xs;ys;zs]';
-% S = [S; 0 0 0];
-% 
-% Orig = [AC(1:3) 1]';
-% 
-% %Scapular CS in Marker Frame
-% ScapCoord = [S Orig];
 
 
 end

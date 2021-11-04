@@ -1,4 +1,10 @@
 %% Created October 2021  K. Suvada
+
+%% Works as of NOV 4th 2021
+%%
+% Kacey's Bone CSs are st: the Y is forwards, X is to the right and Z is up
+% ( from behind)
+
 % Function based off of "ComputeEulerAngles".  for
 % Kacey's Project. Used to get Metria Data into Local Coordinate systems of
 % markers and then to the global coordinate system. Creates bone coordinate
@@ -190,15 +196,9 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
     %         | T8  0   AI  0   0  |
     % 1  2  3  4  5  6  7  8  9  10 11 12 13
     % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
-%%   Getting EL and EM in Forearm Marker CS to set as origin for Forearm CS
 
-%HT_MarkforetoGlob= Tftom;  % HT of the forearm marker to global CS
-
-%P_EM_markHum = 
-
-    % Can't get with my data Kacey 10.21
     
-    %%   
+%% Creating Bone CS for Each Segment
 %Trunk CS
 [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks);
 
@@ -335,9 +335,6 @@ for k = 1:length(jANGLES)
 elbowangle(k,1) = jANGLES(1,1,k);
 end
 
-%% OUTPUTS of Function
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %        TRUNK SHOULDER  HUM  FORE
 
 BLs_G = {BL_G_t,BL_G_s,BL_G_h,BL_G_f}; % MAIN OUTPUT BLS in GLOBAL *******  
@@ -355,8 +352,7 @@ PMCP_G = zeros(4,250);
 for i = 1:length(xtrunk)
 PMCP_G(:,i) = cat(1,PMCP_G_test(:,1,i));
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 if flag==0 
 
 % Calling Function to plot all the data in Global Coord. 
@@ -364,10 +360,21 @@ plotCoord_Global(BLs_G,BL_names_all,CS_G)
 end 
 %end
 
+% FUNCTIONS BELOW
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [TrunkCS,BLnames,BLs_lcs ] = asthorho(blmat,bonylmrks)
 %% Edited based on shifted CS for K.Suvada's Experiments
+IJidx = find(bonylmrks=='IJ');
 
+[IJ,PX,C7,T8]=deal(blmat(IJidx,:),blmat(IJidx+1,:),blmat(IJidx+2,:),blmat(IJidx+3,:)); % in Marker Local CS
+BLnames = ["IJ","PX","C7","T8"];
+BLs_lcs ={IJ,PX,C7,T8};
+
+%%
 zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
 zt = zt/norm(zt);
 
@@ -435,7 +442,13 @@ end
 % GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Hum_CS,BLs_lcs,BLnames] =  ashum(blmat,GH,bonylmrks)
+%Kacey 10.2021
+%Grabbing medial and laterial epi from matrix and matching to EM and EL
+Emidx = find(bonylmrks=='EM');
 
+[EM,EL]=deal(blmat(Emidx,:),blmat(Emidx+1,:));
+BLnames = ["EM","EL","GH"];
+BLs_lcs ={EM,EL,GH};
 % Kacey Redefining X,Y,Z axes 10.4.21 
 H_mid=(EM(1:3)+EL(1:3))/2;
 zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
@@ -509,3 +522,197 @@ ForeCS = [f org_fore];
 
 
 end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to calculate the scapula local coordinate system.               %
+% Input : aa,ts & ai                                                       %
+% Output : S = [Xs,Ys,Zs]                                                  %
+%                                                                          %
+% Origin   : AA-joint.                                                     %
+% Local X-axis : axis from TS to AA.                                       %
+% Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
+
+% KACEY 10.4.21
+% Origin   : AC joint                                                    %
+% Local X-axis : axis from TS to AC.                                       %
+% Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [ScapCoord,BLnames,BLs_lcs ] =  asscap(blmat,bonylmrks)
+%% Old way of creating CS
+ACidx = find(bonylmrks=='AC');
+[AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
+BLnames = ["AC","TS","AI"];
+BLs_lcs ={AC,TS,AI};
+
+%%
+%Kacey 10.2021
+ACidx = find(bonylmrks=='AC');
+[AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
+BLnames = ["AC","TS","AI"];
+BLs_lcs ={AC,TS,AI};
+% xs = (AA-TS) / norm(AA-TS);
+% zs = cross(xs,(AA-AI/norm(AA-AI)));
+% ys = cross(zs,xs);
+% S = [xs,ys,zs];
+
+% % AMA 9/29/21 SWITCH CS definition so that x is to the right, y is anterior
+% % and z is up.
+% xs = (AA-TS) / norm(AA-TS);
+% zs = cross(xs,(AA-AI));
+% zs = zs/norm(zs);
+% ys = cross(zs,xs);
+
+%10.4.21- Kacey Editing based on how want CS aligned 
+xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
+ys = cross(xs,(AC(1:3)-AI(1:3)));
+ys = ys/norm(ys);
+zs = cross(xs,ys);
+zs= zs/norm(zs);
+zs=-zs;
+
+S = [xs;ys;zs]';
+S = [S; 0 0 0];
+
+Orig = [AC(1:3) 1]';
+
+%Scapular CS in Marker Frame
+ScapCoord = [S Orig];
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to compute the segment/joint Euler Angles based on the input
+% rotation matrices for the segment/joints and the desired order.
+% Note that angles are output in degrees.
+% The rotation matrices are decomposed in the Euler angles around the global
+% coordinate system
+% alpha : first rotation elbow flexion extension
+% beta  : second rotation 
+% gamma : third rotation
+%
+% The possible order of rotations are:
+% XYZ    (thor)
+% XZY    (fore)
+% YZX    (clav,scap)
+% ZYX
+% ZXY
+% YZY    (hum)
+% Based on rotbones.m, rotjoint.m and roteuler.m from the DESM.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function abg = CalcEulerAng(A,B,Rorder)
+function ANGg = CalcEulerAng(R,Rorder,val)
+% R: rotations from B to A LCS
+%       B*R = A  -> R = B'*A
+% A
+% B
+% R = B'*A;  % B to A
+
+% Determine the Euler angles alpha, beta, gamma (abg).
+switch Rorder
+    case 'XYZ'
+        [a,b,g] = rotxyz(R);  % For KACEY NEED XYZ NOW Rorder='XYZ'
+    case 'XZY'
+        [a,b,g] = rotxzy(R);
+    case 'YZX'
+        [a,b,g] = rotyzx(R);
+    case 'ZYX'
+        [a,b,g] = rotzyx(R);
+    case 'ZXY'
+        [a,b,g] = rotzxy(R);
+    case 'YZY'
+        [a,b,g] = rotyzy(R);
+    case 'ZYZ'
+        [a,b,g] = rotzyz(R);
+end
+
+ANGr = [a,b,g];
+% ANGr = abg;
+ANGg = ANGr*(180/pi);
+ANGg = ANGg';
+
+if val == 1
+    disp('ANGg: ');
+    disp(ANGg);
+end
+
+end
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Function to calculate the parameters of a plane in R3
+% %              Ax + By + Cz + D = 0
+% % using matrix notation [x y z 1]*[A B C D]' = 0
+% % using the technique tlls
+% % input: m x 3 matrix with points; output: A,B,C and D
+
+% n vector: vector normal to the plane and describes desired plane
+% KACEY 10.4.21 what is DATA? just desired BLS
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [A,DATAa,nvector,e]=vlak(DATA)
+% disp('just entered the vlak program');
+[m,n]      = size(DATA);
+[Ubef,Sbef,Vbef]    = svd(DATA);
+Ubef*Sbef*Vbef';
+DATA       = [DATA 1000000*ones(m,1)];
+[U,S,V]    = svd(DATA);
+S(n,n+1) = 0;
+% S(n+1,n+1) = 0; %SABEEN CHANGED FIRST ONE FROM N+1 TO N, ASK AMA
+
+DATAa = U*S*V';
+A          = V(:,n+1)/V(n+1,n+1);
+DATAa      = DATAa(:,1:3);
+DATA       = DATA(:,1:3);
+e          = sqrt(sum((DATA-DATAa)'.^2))';
+A          = [A(1:3)/1000000;1];
+nvector    = A(1:3)/norm(A(1:3));
+end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Function to calculate the relative bone rotation matrices with respect
+% to the previous segment.
+%
+% jR: 3x12 matrices
+%     jR(:,1:3): rotations from global to thoracic LCS
+%       G*Rti = Ti  -> Rti = G'*Ti = Ti
+%
+%     jR(:,4:6): rotations from thoracic to clavicular LCS
+%       Ti*Rci = Ci  -> Rci = Ti'*Ci
+%
+%     jR(:,7:9): rotations from clavicular to scapular LCS
+%       Ci*Rsi = Si  -> Rsi = Ci'*Si
+%
+%     jR(:,10:12): rotations from scapular to humeral LCS
+%       Si*Rhi = Hi  -> Rhi = Si'*Hi
+%
+%     jR(:,13:15): rotations from humeral to forearm LCS
+%       Hi*Rfi = Fi  -> Rfi = Hi'*Fi
+%
+
+% AS (#measurements x (3x12)) matrix: contains 4 local
+    % coordinate systems (3x3 matrices) of thorax, clavicle, scapula and
+    % humerus, respectively
+    
+
+function [jR]=rotjoint(AS)
+
+% [n,m]=size(AS);nDATA = n/3;
+
+%jR(1:n,1:3) = AS(:,1:3);
+jR = zeros(3,6);
+
+% for i=1:nDATA % don't need -- have this in the outer loop- and nData is time 
+%     jR(3*i-2:3*i,4:6)=AS(3*i-2:3*i,1:3)'*AS(3*i-2:3*i,4:6);
+%     jR(3*i-2:3*i,7:9)=AS(3*i-2:3*i,4:6)'*AS(3*i-2:3*i,7:9);
+%     jR(3*i-2:3*i,10:12)=AS(3*i-2:3*i,7:9)'*AS(3*i-2:3*i,10:12);
+%     jR(3*i-2:3*i,13:15)=AS(3*i-2:3*i,10:12)'*AS(3*i-2:3*i,13:15);
+%     10:12 is hum 13:15 is forearm (OLD WAY)
+  
+
+% For KACEY Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
+   jR(1:3,1:3)=AS(:,7:9)'*AS(:,10:12);
+    
+   % To get humerus (columns 7:9) in trunk (columns 1:3) cs 
+   jR(1:3,4:6)=AS(:,1:3)'*AS(:,7:9);  
+% end
+end
+
