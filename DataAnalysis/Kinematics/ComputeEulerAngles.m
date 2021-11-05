@@ -215,6 +215,8 @@ end
 function t = asthorho(blmat)
 
 [IJ,PX,C7,T8]=deal(bl(:,1),bl(:,2),bl(:,3),bl(:,4));
+
+
 yt = (IJ+C7)/2 - (PX+T8)/2; yt = yt/norm(yt);
 [A,DATAa,nvector,e]=vlak(blmat);
 xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end

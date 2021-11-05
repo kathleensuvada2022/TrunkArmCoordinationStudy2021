@@ -54,7 +54,7 @@ end
 hold on
 end
 
-axis equal
+
 
 
 % Shoulder 

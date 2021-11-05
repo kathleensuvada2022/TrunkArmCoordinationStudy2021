@@ -13,7 +13,8 @@
 function PlotSegmentsGlobal(BLs_G,BL_names_all)
 HumNames = BL_names_all{3,1}; 
 ForeNames = BL_names_all{4,1}; 
-
+ShldrNames= BL_names_all{2,1}; 
+TrkNames= BL_names_all{1,1}; 
 %Finding indices of Humerus BLs
 GH_IDX = find(HumNames=='GH');
 EL_IDX=  find(HumNames=='EL');
@@ -23,6 +24,19 @@ EM_IDX=  find(HumNames=='EM');
 OL_IDX = find(ForeNames=='OL');
 RS_IDX = find(ForeNames=='RS');
 US_IDX = find(ForeNames=='US');
+
+%Shoulder BLS 
+AA_IDX = find(ShldrNames=='AA');
+AI_IDX = find(ShldrNames=='AI');
+TS_IDX = find(ShldrNames=='TS');
+AC_IDX = find(ShldrNames=='AC');
+
+%Trunk BLS
+IJ_IDX = find(TrkNames=='IJ');
+PX_IDX = find(TrkNames=='PX');
+C7_IDX = find(TrkNames=='C7');
+T8_IDX = find(TrkNames=='T8');
+
 
 %Aligning BL data in GCS and creating Variables 
 
@@ -37,6 +51,21 @@ GH = squeeze(GH)';
 OL = squeeze(OL)';
 RS=squeeze(RS)';
 US = squeeze(US)';
+
+%Shoulder 
+[AA,AI,TS,AC] = deal(BLs_G{1,2}(:,AA_IDX,:), BLs_G{1,2}(:,AI_IDX,:),BLs_G{1,2}(:,TS_IDX,:),BLs_G{1,2}(:,AC_IDX,:));
+AA = squeeze(AA)';
+AI=squeeze(AI)';
+TS = squeeze(TS)';
+AC = squeeze(AC)';
+
+%TRUNK 
+[IJ,PX,C7,T8] = deal(BLs_G{1,1}(:,IJ_IDX,:), BLs_G{1,1}(:,PX_IDX,:),BLs_G{1,1}(:,C7_IDX,:),BLs_G{1,1}(:,T8_IDX,:));
+IJ = squeeze(IJ)';
+PX=squeeze(PX)';
+C7 = squeeze(C7)';
+T8 = squeeze(T8)';
+
 %%
 for i = 1:250 
     %Humerus
@@ -49,15 +78,35 @@ if i ==1
     hold on
      text(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'MID_E_M_E_L');
 
-   plot3(EM(i,1),EM(i,2),EM(i,3),'*');
-   text(EM(i,1),EM(i,2),EM(i,3),'EM');
-   hold on
-   plot3(EL(i,1),EL(i,2),EL(i,3),'*');
-   text(EL(i,1),EL(i,2),EL(i,3),'EL');
+    plot3(EM(i,1),EM(i,2),EM(i,3),'*');
+    text(EM(i,1),EM(i,2),EM(i,3),'EM');
+    hold on
+    plot3(EL(i,1),EL(i,2),EL(i,3),'*');
+    text(EL(i,1),EL(i,2),EL(i,3),'EL');
 
-   plot3(GH(i,1),GH(i,2),GH(i,3),'*');
+    plot3(GH(i,1),GH(i,2),GH(i,3),'*');
+    text(GH(i,1),GH(i,2),GH(i,3),'GH');
 
-   text(GH(i,1),GH(i,2),GH(i,3),'GH');
+    plot3(AA(i,1),AA(i,2),AA(i,3),'*');
+    text(AA(i,1),AA(i,2),AA(i,3),'AA');
+    plot3(AI(i,1),AI(i,2),AI(i,3),'*');
+    text(AI(i,1),AI(i,2),AI(i,3),'AI');
+    plot3(TS(i,1),TS(i,2),TS(i,3),'*');
+    text(TS(i,1),TS(i,2),TS(i,3),'TS');
+    plot3(AC(i,1),AC(i,2),AC(i,3),'*');
+    text(AC(i,1),AC(i,2),AC(i,3),'AC');
+    
+    
+    plot3(IJ(i,1),IJ(i,2),IJ(i,3),'*');
+    text(IJ(i,1),IJ(i,2),IJ(i,3),'IJ');
+    plot3(PX(i,1),PX(i,2),PX(i,3),'*');
+    text(PX(i,1),PX(i,2),PX(i,3),'PX');
+    plot3(C7(i,1),C7(i,2),C7(i,3),'*');
+    text(C7(i,1),C7(i,2),C7(i,3),'C7');
+    plot3(T8(i,1),T8(i,2),T8(i,3),'*');
+    text(T8(i,1),T8(i,2),T8(i,3),'T8');
+    
+
 end
   
 %Line from GH to MidPnt between Epicondyles
@@ -88,7 +137,9 @@ ylabel('Y axis')
 zlabel('Z axis')
 %Line from GH to MidPnt between Epicondyles
  plot3([H_Mid_H(i,1) H_Mid_f(i,1)],[H_Mid_H(i,2) H_Mid_f(i,2)],[H_Mid_H(i,3) H_Mid_f(i,3)])
- view(0,90)  % XY
+
+ 
+ %view(0,90)  % XY
  pause()
 end
 

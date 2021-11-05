@@ -33,7 +33,7 @@
 filename = 'trial10';
 arm = 'Right';
 partid = 'RTIS1005';
-flag =1;
+flag =0;
 %% Loading in the BL data (Digitization) and the BLs Names
 
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
@@ -125,18 +125,19 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 %Do we need this??? Kacey 10.2021
 %if strcmp(arm,'left'), TrunkCS=roty(pi)*TrunkCS; end
 
-%Scapula CS
+%% Scapula CS
 [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks);
-
+%%
 %Forearm CS
 [ForeCS,BLs_lcs_f,BLnames_f] =  asfore(blmat,bonylmrks);
-
+%%
 % Compute location of GH joint using Regression Function   
 % GH=ghest(bl,Rscap); %need to do this!!! 
     
 %Humerus CS
+%%
 
-[Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks);
+[Hum_CS,BLs_lcs_h,BLnames_h] =  ashum_orig(blmat,GH,bonylmrks);
 
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
@@ -188,7 +189,7 @@ FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*B_CS_marker{4};
 for k = 1:length(BLs_lcs_f) 
 BL_G_f(:,k,j) = FtoG(:,:,j)*inv(cell2mat(B_CS_marker(4)))*(BLs_lcs_f{1,k}(1:4)');
 end
-%% Creating matrix AS for a given time point j to get ELBOW ANGLE
+% Creating matrix AS for a given time point j to get ELBOW ANGLE
 %      TRUNK SHOULDER  HUM  FORE
 
 % Need 3x3 rotation matrix for the bones 
@@ -202,34 +203,34 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 %         if strcmp(arm,'left'), AS(:,1:3)=repmat(roty(pi)*eye(3),length(AS)/3,1); end
 %     end
 
-    [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ'); % Trunk
-    [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'YZX');  % Clavicle
-    [gANGLES(7:9,:,i)]=CalcEulerAng(gR(:,7:9),'YZX');  % Scapula
-    [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY'); % Humerus
-    
-    [jANGLES(1:3,:,i)]=CalcEulerAng(jR(:,1:3),'XYZ'); % Trunk
-    [jANGLES(4:6,:,i)]=CalcEulerAng(jR(:,4:6),'YZX');  % Clavicle
-    [jANGLES(7:9,:,i)]=CalcEulerAng(jR(:,7:9),'YZX');  % Scapula
-    [jANGLES(10:12,:,i)]=CalcEulerAng(jR(:,10:12),'YZY'); % Humerus
-%     [jANGLES(13:15,:,i)]=CalcEulerAng(jR(:,13:15),2);    % Forearm
-
+%     [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ'); % Trunk
+%     [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'YZX');  % Clavicle
+%     [gANGLES(7:9,:,i)]=CalcEulerAng(gR(:,7:9),'YZX');  % Scapula
+%     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY'); % Humerus
+%     
+%     [jANGLES(1:3,:,i)]=CalcEulerAng(jR(:,1:3),'XYZ'); % Trunk
+%     [jANGLES(4:6,:,i)]=CalcEulerAng(jR(:,4:6),'YZX');  % Clavicle
+%     [jANGLES(7:9,:,i)]=CalcEulerAng(jR(:,7:9),'YZX');  % Scapula
+%     [jANGLES(10:12,:,i)]=CalcEulerAng(jR(:,10:12),'YZY'); % Humerus
+% %     [jANGLES(13:15,:,i)]=CalcEulerAng(jR(:,13:15),2);    % Forearm
+% 
 
 
 % Absolute Global Angles
-     gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
-     gR(1:3,4:6) = AS(:,7:9); %humerus rotatin matrix in global
-% Angles relative to global CS 
-    [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk
-    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'ZYZ',0); % Humerus
-
-     jR = rotjoint(AS); %relative angles
-
-
-% Local angles relative to proximal segment
-    [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
-%     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 
-
-    
+%      gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
+%      gR(1:3,4:6) = AS(:,7:9); %humerus rotatin matrix in global
+% % Angles relative to global CS 
+%     [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XXY',0); % Trunk %changed for original CS
+%     [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'YZY',0); % Humerus
+% 
+%      jR = rotjoint(AS); %relative angles
+% 
+% 
+% % Local angles relative to proximal segment
+%     [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XYZ',0);    % Forearm in Hum
+% %     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 
+% 
+%     
     % **************************************************************
 %     if strcmp(reffr,'trunk')
 %         eval(['save ' flpath 'EulerAngles X gANGLES jANGLES'])
@@ -255,7 +256,7 @@ end
 for k = 1:length(jANGLES)
 elbowangle(k,1) = jANGLES(1,1,k);
 end
-
+%%
 %        TRUNK SHOULDER  HUM  FORE
 
 BLs_G = {BL_G_t,BL_G_s,BL_G_h,BL_G_f}; % MAIN OUTPUT BLS in GLOBAL *******  
@@ -283,7 +284,7 @@ end
 
 
 
-%%% FUNCTIONS BELOW%%%%%%
+%% FUNCTIONS BELOW%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -342,16 +343,16 @@ BLnames = ["IJ","PX","C7","T8"];
 BLs_lcs ={IJ,PX,C7,T8};
 
 
-yt = (IJ+C7)/2 - (PX+T8)/2; yt = yt/norm(yt);
+yt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2; yt = yt/norm(yt);
 [A,DATAa,nvector,e]=vlak(blmat);
-xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
-zt = cross(xhulp,yt);zt=zt/norm(zt);
-xt = cross(yt,zt);
+xhulp = -nvector;  if xhulp(1)<0 xhulp = -nvector;end
+xt = cross(xhulp,yt);xt=xt/norm(xt);
+zt = cross(yt,xt);
 
-%    xt,yt,zt,pause
-t = [xt,yt,zt];
-diff=norm(t)-1>=10*eps;
-if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
+% %    xt,yt,zt,pause
+% t = [xt,yt,zt];
+% diff=norm(t)-1>=10*eps;
+% if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
 
 t = [xt;yt;zt]';
 
@@ -411,13 +412,28 @@ end
 % Local X-axis : axis from TS to AA.                                       %
 % Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function S =  asscap(blmat)
-[AA,TS,AI]=deal(blmat(:,1),blmat(:,2),blmat(:,3));
-xs = (AA-TS) / norm(AA-TS);
-zhulp = cross(xs,(AA-AI));
+function [ScapCoord,BLnames,BLs_lcs ] =  asscap(blmat,bonylmrks)
+%Kacey 10.2021
+% "AC" "AA" "TS" "AI"
+ACidx = find(bonylmrks=='AC');
+[AC,AA,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:),blmat(ACidx+3,:));
+BLnames = ["AC","AA","TS","AI"];
+BLs_lcs ={AC,AA,TS,AI};
+
+
+xs = (AA(1:3)-TS(1:3)) / norm(AA(1:3)-TS(1:3));
+zhulp = cross(xs,(AA(1:3)-AI(1:3)));
 zs = zhulp/norm(zhulp);
 ys = cross(zs,xs);
-s = [xs,ys,zs];
+%s = [xs,ys,zs];
+S = [xs;ys;zs]';
+S = [S; 0 0 0];
+
+Orig = [AC(1:3) 1]';
+
+%Scapular CS in Marker Frame
+ScapCoord = [S Orig];
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -453,6 +469,44 @@ Origin = [GH(1:3) 1]';
 
 %T of Humerus in marker CS
 Hum_CS = [h Origin];
+end
+%% Function for defining original forearm CS
+function [ForeCS,BLs_lcs,BLnames] =  asfore(blmat,bonylmrks)
+%Kacey 10.2021
+rsidx = find(bonylmrks=='RS');
+[RS,US,OL,MCP3,EM,EL]=deal(blmat(rsidx,:),blmat(rsidx+1,:),blmat(rsidx+2,:),blmat(rsidx+3,:),blmat(rsidx+4,:),blmat(rsidx+5,:));
+%RS';'US';'OL';'MCP3';'EM';'EL' We added this to the file already so not
+%the order of metriakindaq
+BLnames = ["RS","US","OL","MCP3","EM","EL"];
+BLs_lcs ={RS,US,OL,MCP3,EM,EL};
+
+
+% Kacey Redefining X,Y,Z axes 10.6.21
+
+H_mid=(RS(1:3)+US(1:3))/2;
+yf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+yf = yf; % flipping so vector points cranially 
+
+%Yh: Need perpendicular to plane defined by z axis and line through em el
+x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
+zf =cross(x,yf); %flipped order because z in opposite direction
+zf=(zf/norm(zf));
+
+xf = cross (yf,zf);
+xf = xf/norm(xf);
+
+
+f = [xf;yf;zf]';
+f = [f;0 0 0];
+
+
+%Creating New Origin Midpoint Between Epicondyles not OL
+H_mid_2=(EL(1:3)+EM(1:3)).'/2;
+org_fore = [H_mid_2;1];
+
+%Forearm Coordinate System in Marker CF
+ForeCS = [f org_fore];
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 02-08-91 %%
