@@ -1,6 +1,7 @@
 %% Created October 2021  K. Suvada
 
 %% Works as of NOV 4th 2021
+% This is with Kacey's new redefined CS
 %%
 % Kacey's Bone CSs are st: the Y is forwards, X is to the right and Z is up
 % ( from behind)

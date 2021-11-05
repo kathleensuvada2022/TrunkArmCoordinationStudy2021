@@ -1,5 +1,9 @@
 %function [gANGLES,jANGLES] = ComputeEulerAngles(bldata,arm,reffr)
-%
+%% NOV 2021- K.SUVADA
+% This is with the original bone segment definitions
+
+
+
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
 %
 % Use :	[gANGLES,jANGLES]=ComputeEulerAngles(bldata,reffr)
@@ -132,7 +136,7 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
     
 %Humerus CS
 
-[Hum_CS,BLs_lcs_h,BLnames_h] =  ashum_orig(blmat,GH,bonylmrks);
+[Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks);
 
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
@@ -434,9 +438,9 @@ BLs_lcs ={EM,EL,GH};
 % % Estimate GH joint location
 % GH=CalculateGH(blmat(:,3:end));
 % Compute the local axes
-H_mid=(EM+EL)/2;
+H_mid=(EM(1:3)+EL(1:3))/2;
 y = (GH-H_mid) / norm(GH-H_mid);
-xh= (EL-EM)/norm(EL-EM);
+xh= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3));
     
 z =cross(xh,y);z=z/norm(z);
 x =cross(y,z);

@@ -1,6 +1,7 @@
 function [Hum_CS,BLs_lcs,BLnames] =  ashum_orig(blmat,GH,bonylmrks)
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
+%original definitions
 Emidx = find(bonylmrks=='EM');[EM,EL]=deal(blmat(Emidx,:),blmat(Emidx+1,:));
 BLnames = ["EM","EL","GH"];
 BLs_lcs ={EM,EL,GH};
