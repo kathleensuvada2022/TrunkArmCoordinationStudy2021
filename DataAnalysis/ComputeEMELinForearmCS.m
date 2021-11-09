@@ -5,9 +5,9 @@
 
 
 % testing
-% partid = 'RTIS1005';
-% arm='Right';
-% trial ='trial10';
+partid = 'RTIS2006';
+arm='Right';
+trial ='trial10';
 
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)
 
@@ -113,7 +113,7 @@ EL_Fore= HT_Hum2Fore*EL;
 bl{1,4}(5:6,:) = zeros;
 bl{1,4}(5,1:4) = EM_Fore;
 bl{1,4}(6,1:4) = EL_Fore;
-
+%%
 %saving to file
 save('BL.mat','bl')
 end

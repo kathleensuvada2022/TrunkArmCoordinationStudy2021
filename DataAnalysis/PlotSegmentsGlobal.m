@@ -10,11 +10,12 @@
 % Order of BonyLandmarks
 % {BL_G_t,BL_G_s,BL_G_h,BL_G_f}; 
 % Trunk Shoulder Humerus Forearm
-function PlotSegmentsGlobal(BLs_G,BL_names_all)
-HumNames = BL_names_all{3,1}; 
-ForeNames = BL_names_all{4,1}; 
-ShldrNames= BL_names_all{2,1}; 
+function PlotSegmentsGlobal(BLs_G,BL_names_all,i)
+HumNames = BL_names_all{1,3}; 
+ForeNames = BL_names_all{1,4}; 
+ShldrNames= BL_names_all{1,2}; 
 TrkNames= BL_names_all{1,1}; 
+
 %Finding indices of Humerus BLs
 GH_IDX = find(HumNames=='GH');
 EL_IDX=  find(HumNames=='EL');
@@ -67,7 +68,7 @@ C7 = squeeze(C7)';
 T8 = squeeze(T8)';
 
 %%
-for i = 1:250 
+
     %Humerus
      H_Mid_H(i,1:3) =(EL(i,1:3)+EM(i,1:3))'/2;
 
@@ -87,6 +88,7 @@ if i ==1
     plot3(GH(i,1),GH(i,2),GH(i,3),'*');
     text(GH(i,1),GH(i,2),GH(i,3),'GH');
 
+    % shoulder 
     plot3(AA(i,1),AA(i,2),AA(i,3),'*');
     text(AA(i,1),AA(i,2),AA(i,3),'AA');
     plot3(AI(i,1),AI(i,2),AI(i,3),'*');
@@ -96,8 +98,10 @@ if i ==1
     plot3(AC(i,1),AC(i,2),AC(i,3),'*');
     text(AC(i,1),AC(i,2),AC(i,3),'AC');
     
-    
+    %trunk
+    %figure(2)
     plot3(IJ(i,1),IJ(i,2),IJ(i,3),'*');
+    hold on
     text(IJ(i,1),IJ(i,2),IJ(i,3),'IJ');
     plot3(PX(i,1),PX(i,2),PX(i,3),'*');
     text(PX(i,1),PX(i,2),PX(i,3),'PX');
@@ -110,6 +114,7 @@ if i ==1
 end
   
 %Line from GH to MidPnt between Epicondyles
+figure(1)
 plot3([GH(i,1) H_Mid_H(i,1)],[GH(i,2) H_Mid_H(i,2)],[GH(i,3) H_Mid_H(i,3)])
   hold on  
 %Forearm
@@ -140,8 +145,8 @@ zlabel('Z axis')
 
  
  %view(0,90)  % XY
- pause()
-end
+
+
 
 
 end 
