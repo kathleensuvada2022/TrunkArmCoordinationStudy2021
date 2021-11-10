@@ -302,13 +302,15 @@ EM_IDX=  find(BLnames_h=='EM');
 H_Mid_H(1:3) =(EL(1:3)+EM(1:3))'/2;
 
  figure(1)
-plot3(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'*');
+plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
 hold on
-text(H_Mid_H(i,1),H_Mid_H(i,2),H_Mid_H(i,3),'MID_E_M_E_L');
+text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
 
 %Line from GH to MidPnt between Epicondyles
 plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
-
+xlabel('X axis')
+ylabel('y axis')
+zlabel('z axis')
  
 
 %% Forearm
@@ -363,9 +365,9 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
      gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
      gR(1:3,4:6) = AS(:,7:9); %humerus rotatin matrix in global
 % Angles relative to global CS 
-    [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk
-    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'ZYZ',0); % Humerus
-
+    [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+    [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+ 
      jR = rotjoint(AS); %relative angles
 
     %     [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ',0); % Trunk
@@ -375,7 +377,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 
 % Local angles relative to proximal segment
     [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
-%     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 
+    [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
 
     
     % **************************************************************
@@ -398,7 +400,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 % end
 
 
-end
+%end
 %% Calculating Elbow Angle
 for k = 1:length(jANGLES)
 elbowangle(k,1) = jANGLES(1,1,k);
