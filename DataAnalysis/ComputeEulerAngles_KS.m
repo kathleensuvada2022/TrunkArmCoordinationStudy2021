@@ -210,32 +210,7 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
     % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
 
     
- %% Creating Bone CS for Each Segment
-% %Trunk CS
-%[TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks);
-% 
-% %Do we need this??? Kacey 10.2021
-% %if strcmp(arm,'left'), TrunkCS=roty(pi)*TrunkCS; end
-% 
-% %Scapula CS
-% [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks);
-% 
-% %Forearm CS
-% [ForeCS,BLs_lcs_f,BLnames_f] =  asfore(blmat,bonylmrks);
-% 
-% % Compute location of GH joint using Regression Function   
-% % GH=ghest(bl,Rscap); %need to do this!!! 
-%     
-% %Humerus CS
-% 
-% [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks);
 
-
-%% GH Computation Here 
-% Pass in ScapCoord into ghest function
-
-% save GH to BL file 
-   
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
 % digitzation 
@@ -340,26 +315,11 @@ H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2;
 %Plotting line between midpoint of epicondyles to midpoibt of styloids
 plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
 
-pause
-end
-%%%%%%%%%%%%%%%% Plotting BonyLandmarks in GCS
-BLs_G = {BL_G_t,BL_G_s,BL_G_h,BL_G_f}; % MAIN OUTPUT BLS in GLOBAL *******  
-
-PlotSegmentsGlobal(BLs_G,BL_names_all,j) 
-
-%% Creating matrix AS for a given time point j to get ELBOW ANGLE
-%      TRUNK SHOULDER  HUM  FORE
+%% Computing Euler Angles Frame by Frame
 
 % Need 3x3 rotation matrix for the bones 
 AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 
-%Kacey need this? not for elbow angle but if want trunk disp?
-%     if strcmp(reffr,'frame')
-%         %Use the frame as reference- makes rotation matrix for trunk all
-%         %ones, so it doesn't take into account rotations of trunk
-%         AS(:,1:3)=repmat(eye(3),length(AS)/3,1);
-%         if strcmp(arm,'left'), AS(:,1:3)=repmat(roty(pi)*eye(3),length(AS)/3,1); end
-%     end
 
 % Absolute Global Angles
      gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
@@ -379,7 +339,12 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
     [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
 
-    
+pause
+
+end
+
+
+
     % **************************************************************
 %     if strcmp(reffr,'trunk')
 %         eval(['save ' flpath 'EulerAngles X gANGLES jANGLES'])
@@ -401,36 +366,11 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 
 
 %end
-%% Calculating Elbow Angle
-for k = 1:length(jANGLES)
-elbowangle(k,1) = jANGLES(1,1,k);
-end
-
-%        TRUNK SHOULDER  HUM  FORE
 
 
-CS_G = {TtoG,StoG,HtoG,FtoG}; %%%% MAIN OUTPUT HTs of BONES IN GLOBAL At all points in time during trial 
 
-BL_names_all = {BLnames_t;BLnames_s;BLnames_h;BLnames_f};
-% ***THE CSs created above are BONE CS in Global CS every point in time ***********
 
-% Want the PMCP to be output in GCS
-PMCP_G_test = BL_G_f(:,4,:); % MCP3 in GCS for all time points in trial
-PMCP_G = zeros(4,250);
-
-%Reorganizing so that 4 rows by 250 columns
-for i = 1:length(xtrunk)
-PMCP_G(:,i) = cat(1,PMCP_G_test(:,1,i));
-end
-
-if flag==0 
-
-% Calling Function to plot all the data in Global Coord. 
-plotCoord_Global(BLs_G,BL_names_all,CS_G)
-end 
-%end
-
-% FUNCTIONS BELOW
+                                % FUNCTIONS BELOW
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
