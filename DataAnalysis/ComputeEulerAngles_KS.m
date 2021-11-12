@@ -242,6 +242,13 @@ plot3(BL_G_t(1,h),BL_G_t(2,h),BL_G_t(3,h),'*')
 hold on
 text(BL_G_t(1,h),BL_G_t(2,h),BL_G_t(3,h),num2str(BLnames_t(h)))
 end
+
+TtoG_frame = TtoG(:,:,j); %trunk CS in global at given frame of trial
+quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x','y','z'})
+
+
+
 %% Shoulder
 StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2};
 
@@ -254,6 +261,12 @@ plot3(BL_G_s(1,h),BL_G_s(2,h),BL_G_s(3,h),'*')
 hold on
 text(BL_G_s(1,h),BL_G_s(2,h),BL_G_s(3,h),num2str(BLnames_s(h)))
 end
+
+StoG_frame = StoG(:,:,j); %trunk CS in global at given frame of trial
+quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',25*StoG_frame(1,1:3),25*StoG_frame(2,1:3),25*StoG_frame(3,1:3))
+
+text(StoG_frame(1,4)+25*StoG_frame(1,1:3),StoG_frame(2,4)+25*StoG_frame(2,1:3),StoG_frame(3,4)+25*StoG_frame(3,1:3),{'x','y','z'})
+
 
 %% Humerus
 HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{3};
@@ -287,6 +300,11 @@ xlabel('X axis')
 ylabel('y axis')
 zlabel('z axis')
  
+HtoG_frame = HtoG(:,:,j); %trunk CS in global at given frame of trial
+quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',25*HtoG_frame(1,1:3),25*HtoG_frame(2,1:3),25*HtoG_frame(3,1:3))
+
+text(HtoG_frame(1,4)+25*HtoG_frame(1,1:3),HtoG_frame(2,4)+25*HtoG_frame(2,1:3),HtoG_frame(3,4)+25*HtoG_frame(3,1:3),{'x','y','z'})
+
 
 %% Forearm
 FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{4};
@@ -315,11 +333,18 @@ H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2;
 %Plotting line between midpoint of epicondyles to midpoibt of styloids
 plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
 
+FtoG_frame = FtoG(:,:,j); %trunk CS in global at given frame of trial
+quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',25*FtoG_frame(1,1:3),25*FtoG_frame(2,1:3),25*FtoG_frame(3,1:3))
+
+text(FtoG_frame(1,4)+25*FtoG_frame(1,1:3),FtoG_frame(2,4)+25*FtoG_frame(2,1:3),FtoG_frame(3,4)+25*FtoG_frame(3,1:3),{'x','y','z'})
+
+
+
 %% Computing Euler Angles Frame by Frame
 
 % Need 3x3 rotation matrix for the bones 
 AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
-
+%%
 
 % Absolute Global Angles
      gR(1:3,1:3) = AS(:,1:3); %trunk rotation matrix in global
@@ -327,7 +352,7 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
 % Angles relative to global CS 
     [gANGLES(:,1,j)]=CalcEulerAng(gR(:,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
     [gANGLES(:,2,j)]=CalcEulerAng(gR(:,4:6),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
- 
+ %%
      jR = rotjoint(AS); %relative angles
 
     %     [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ',0); % Trunk
@@ -336,9 +361,9 @@ AS =[TtoG(1:3,1:3,j) StoG(1:3,1:3,j) HtoG(1:3,1:3,j) FtoG(1:3,1:3,j)];
     %     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY',0); % Humerus   
 
 % Local angles relative to proximal segment
-    [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum
+    [jANGLES(:,1,j)]=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum 
     [jANGLES(:,2,j)]=CalcEulerAng(jR(:,4:6),'ZYZ',0);    % Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
-
+%%
 pause
 
 end
@@ -375,67 +400,67 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-function [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks)
-%% Edited based on shifted CS for K.Suvada's Experiments
-IJidx = find(bonylmrks=='IJ');
-
-[IJ,PX,C7,T8]=deal(blmat(IJidx,:),blmat(IJidx+1,:),blmat(IJidx+2,:),blmat(IJidx+3,:)); % in Marker Local CS
-BLnames_t = ["IJ","PX","C7","T8"];
-BLs_lcs_t ={IJ,PX,C7,T8};
-
-%%
-zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
-zt = zt/norm(zt);
-
-blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)];
-
-
-% [A,DATAa,nvector,e]=vlak(blmat);
+% 
+% function [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks)
+% %% Edited based on shifted CS for K.Suvada's Experiments
+% IJidx = find(bonylmrks=='IJ');
+% 
+% [IJ,PX,C7,T8]=deal(blmat(IJidx,:),blmat(IJidx+1,:),blmat(IJidx+2,:),blmat(IJidx+3,:)); % in Marker Local CS
+% BLnames_t = ["IJ","PX","C7","T8"];
+% BLs_lcs_t ={IJ,PX,C7,T8};
+% 
+% %%
+% zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
+% zt = zt/norm(zt);
+% 
+% blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)];
+% 
+% 
+% % [A,DATAa,nvector,e]=vlak(blmat);
+% % xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
+% % zt = cross(xhulp,yt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
+% % % zt = cross(xhulp,yt);
+% % zt=zt/norm(zt);
+% % xt = cross(yt,zt); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
+% 
+% [A,DATAa,nvector,e]=vlak(blmat_th); 
+% 
+% 
+% %xhulp is vector normal to the plane
 % xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
-% zt = cross(xhulp,yt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
+% % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+% 
+% %Kacey 10.4.21 flipping order of cross product for Y into the page 
+% yt = cross(zt(1:3),xhulp); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+% 
 % % zt = cross(xhulp,yt);
-% zt=zt/norm(zt);
-% xt = cross(yt,zt); %SABEEN CHANGE: NEED DIM OF 3 FOR CP
-
-[A,DATAa,nvector,e]=vlak(blmat_th); 
-
-
-%xhulp is vector normal to the plane
-xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
-% yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
-
-%Kacey 10.4.21 flipping order of cross product for Y into the page 
-yt = cross(zt(1:3),xhulp); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
-
-% zt = cross(xhulp,yt);
-
-yt=yt/norm(yt);
-
-%xt = cross(yt(1:3),zt);
-
-%Redefined for Kacey 10.4.21
-xt = cross(zt,yt);
-
-% t = [xt,yt,zt];
-t = [xt,yt,zt]; 
-
-
-% yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
-% xt = cross(yt,T8-PX);  xt = xt/norm(xt);
-% zt = cross(xt,yt);
-
-t = [xt;yt;zt]';
-
-diff=norm(t)-1>=10*eps;
-if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
-
-t = [t;0 0 0];
-orign_trunk = [IJ(1:3) 1]';
-
-%Trunk Coordinate System in Marker CS
-TrunkCS = [t orign_trunk];
-end
+% 
+% yt=yt/norm(yt);
+% 
+% %xt = cross(yt(1:3),zt);
+% 
+% %Redefined for Kacey 10.4.21
+% xt = cross(zt,yt);
+% 
+% % t = [xt,yt,zt];
+% t = [xt,yt,zt]; 
+% 
+% 
+% % yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
+% % xt = cross(yt,T8-PX);  xt = xt/norm(xt);
+% % zt = cross(xt,yt);
+% 
+% t = [xt;yt;zt]';
+% 
+% diff=norm(t)-1>=10*eps;
+% if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
+% 
+% t = [t;0 0 0];
+% orign_trunk = [IJ(1:3) 1]';
+% 
+% %Trunk Coordinate System in Marker CS
+% TrunkCS = [t orign_trunk];
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the humerus in marker CS (local)
@@ -450,136 +475,136 @@ end
 % Local Z-axis : line between GH and mid-point between epicondyles.
 % Local Y-axis : axis perpendicular to local X and Y-axis.
 % GH is determined using regression equations in GHEST.M
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [Hum_CS,BLs_lcs,BLnames] =  ashum(blmat,GH,bonylmrks)
-%Kacey 10.2021
-%Grabbing medial and laterial epi from matrix and matching to EM and EL
-Emidx = find(bonylmrks=='EM');
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function [Hum_CS,BLs_lcs,BLnames] =  ashum(blmat,GH,bonylmrks)
+% %Kacey 10.2021
+% %Grabbing medial and laterial epi from matrix and matching to EM and EL
+% Emidx = find(bonylmrks=='EM');
+% 
+% [EM,EL]=deal(blmat(Emidx,:),blmat(Emidx+1,:));
+% BLnames = ["EM","EL","GH"];
+% BLs_lcs ={EM,EL,GH};
+% % Kacey Redefining X,Y,Z axes 10.4.21 
+% H_mid=(EM(1:3)+EL(1:3))/2;
+% zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
+% zh = zh; 
+% 
+% %Yh: Need perpendicular to plane defined by z axis and line through em el
+% x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
+% yh =cross(zh,x); %flipped order because z in opposite direction
+% yh=yh/norm(yh);
+% 
+% 
+% xh = cross (yh,zh);
+% xh = xh/norm(xh);
+% 
+% h = [xh;yh;zh]';
+% 
+% h = [h;0 0 0];
+% 
+% Origin = [GH(1:3) 1]';
+% 
+% %T of Humerus in marker CS
+% Hum_CS = [h Origin];
+% end
 
-[EM,EL]=deal(blmat(Emidx,:),blmat(Emidx+1,:));
-BLnames = ["EM","EL","GH"];
-BLs_lcs ={EM,EL,GH};
-% Kacey Redefining X,Y,Z axes 10.4.21 
-H_mid=(EM(1:3)+EL(1:3))/2;
-zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
-zh = zh; 
-
-%Yh: Need perpendicular to plane defined by z axis and line through em el
-x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
-yh =cross(zh,x); %flipped order because z in opposite direction
-yh=yh/norm(yh);
-
-
-xh = cross (yh,zh);
-xh = xh/norm(xh);
-
-h = [xh;yh;zh]';
-
-h = [h;0 0 0];
-
-Origin = [GH(1:3) 1]';
-
-%T of Humerus in marker CS
-Hum_CS = [h Origin];
-end
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Function to compute the Forearm local coordinate system.
-
-%Inputs: RS,US,OL
-% KACEY 10.4.21
-% Local X-axis : defined by Y cross Z
-% Local Z-axis : line between OL and mid-point between styloids.
-% Local Y-axis : perpendicular to the plane defined by Z axis and line
-% through styloids
-% GH is determined using regression equations in GHEST.M
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ForeCS,BLs_lcs,BLnames] =  asfore(blmat,bonylmrks)
-
-%Kacey 10.2021
-rsidx = find(bonylmrks=='RS');
-[RS,US,OL,MCP3,EM,EL]=deal(blmat(rsidx,:),blmat(rsidx+1,:),blmat(rsidx+2,:),blmat(rsidx+3,:),blmat(rsidx+4,:),blmat(rsidx+5,:));
-%RS';'US';'OL';'MCP3';'EM';'EL'
-BLnames = ["RS","US","OL","MCP3","EM","EL"];
-BLs_lcs ={RS,US,OL,MCP3,EM,EL};
-
-
-% Kacey Redefining X,Y,Z axes 10.6.21
-
-H_mid=(RS(1:3)+US(1:3))/2;
-zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
-%zf = zf; % flipping so vector points cranially 
-
-%Yh: Need perpendicular to plane defined by z axis and line through em el
-x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
-yf =cross(zf,x); %flipped order because z in opposite direction
-yf=-(yf/norm(yf));
-
-
-xf = cross (zf,yf);
-xf = xf/norm(xf);
-
-f = [xf;yf;zf]';
-f = [f;0 0 0];
-
-
-%Creating New Origin Midpoint Between Epicondyles not OL
-H_mid_2=(EL(1:3)+EM(1:3)).'/2;
-org_fore = [H_mid_2;1];
-
-%Forearm Coordinate System in Marker CF
-ForeCS = [f org_fore];
-
-
-end
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Function to calculate the scapula local coordinate system.               %
-% Input : aa,ts & ai                                                       %
-% Output : S = [Xs,Ys,Zs]                                                  %
-%                                                                          %
-% Origin   : AA-joint.                                                     %
-% Local X-axis : axis from TS to AA.                                       %
-% Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
-
-% KACEY 10.4.21
-% Origin   : AC joint                                                    %
-% Local X-axis : axis from TS to AC.                                       %
-% Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ScapCoord,BLnames,BLs_lcs ] =  asscap(blmat,bonylmrks)
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Function to compute the Forearm local coordinate system.
+% 
+% %Inputs: RS,US,OL
+% % KACEY 10.4.21
+% % Local X-axis : defined by Y cross Z
+% % Local Z-axis : line between OL and mid-point between styloids.
+% % Local Y-axis : perpendicular to the plane defined by Z axis and line
+% % through styloids
+% % GH is determined using regression equations in GHEST.M
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function [ForeCS,BLs_lcs,BLnames] =  asfore(blmat,bonylmrks)
+% 
+% %Kacey 10.2021
+% rsidx = find(bonylmrks=='RS');
+% [RS,US,OL,MCP3,EM,EL]=deal(blmat(rsidx,:),blmat(rsidx+1,:),blmat(rsidx+2,:),blmat(rsidx+3,:),blmat(rsidx+4,:),blmat(rsidx+5,:));
+% %RS';'US';'OL';'MCP3';'EM';'EL'
+% BLnames = ["RS","US","OL","MCP3","EM","EL"];
+% BLs_lcs ={RS,US,OL,MCP3,EM,EL};
+% 
+% 
+% % Kacey Redefining X,Y,Z axes 10.6.21
+% 
+% H_mid=(RS(1:3)+US(1:3))/2;
+% zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+% %zf = zf; % flipping so vector points cranially 
+% 
+% %Yh: Need perpendicular to plane defined by z axis and line through em el
+% x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
+% yf =cross(zf,x); %flipped order because z in opposite direction
+% yf=-(yf/norm(yf));
+% 
+% 
+% xf = cross (zf,yf);
+% xf = xf/norm(xf);
+% 
+% f = [xf;yf;zf]';
+% f = [f;0 0 0];
+% 
+% 
+% %Creating New Origin Midpoint Between Epicondyles not OL
+% H_mid_2=(EL(1:3)+EM(1:3)).'/2;
+% org_fore = [H_mid_2;1];
+% 
+% %Forearm Coordinate System in Marker CF
+% ForeCS = [f org_fore];
+% 
+% 
+% end
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Function to calculate the scapula local coordinate system.               %
+% % Input : aa,ts & ai                                                       %
+% % Output : S = [Xs,Ys,Zs]                                                  %
+% %                                                                          %
+% % Origin   : AA-joint.                                                     %
+% % Local X-axis : axis from TS to AA.                                       %
+% % Local Z-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
+% 
+% % KACEY 10.4.21
+% % Origin   : AC joint                                                    %
+% % Local X-axis : axis from TS to AC.                                       %
+% % Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function [ScapCoord,BLnames,BLs_lcs ] =  asscap(blmat,bonylmrks)
+% 
+% % ACidx = find(bonylmrks=='AC');
+% % [AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
+% % BLnames = ["AC","TS","AI"];
+% % BLs_lcs ={AC,TS,AI};
+% 
+% 
+% %Kacey 10.2021
+% % "AC" "AA" "TS" "AI"
 % ACidx = find(bonylmrks=='AC');
-% [AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
-% BLnames = ["AC","TS","AI"];
-% BLs_lcs ={AC,TS,AI};
-
-
-%Kacey 10.2021
-% "AC" "AA" "TS" "AI"
-ACidx = find(bonylmrks=='AC');
-[AC,AA,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:),blmat(ACidx+3,:));
-BLnames = ["AC","AA","TS","AI"];
-BLs_lcs ={AC,AA,TS,AI};
-
-
-%10.4.21- Kacey Editing based on how want CS aligned 
-xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
-ys = cross(xs,(AC(1:3)-AI(1:3)));
-ys = ys/norm(ys);
-zs = cross(xs,ys);
-zs= zs/norm(zs);
-zs=-zs;
-
-S = [xs;ys;zs]';
-S = [S; 0 0 0];
-
-Orig = [AC(1:3) 1]';
-
-%Scapular CS in Marker Frame
-ScapCoord = [S Orig];
-
-end
+% [AC,AA,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:),blmat(ACidx+3,:));
+% BLnames = ["AC","AA","TS","AI"];
+% BLs_lcs ={AC,AA,TS,AI};
+% 
+% 
+% %10.4.21- Kacey Editing based on how want CS aligned 
+% xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
+% ys = cross(xs,(AC(1:3)-AI(1:3)));
+% ys = ys/norm(ys);
+% zs = cross(xs,ys);
+% zs= zs/norm(zs);
+% zs=-zs;
+% 
+% S = [xs;ys;zs]';
+% S = [S; 0 0 0];
+% 
+% Orig = [AC(1:3) 1]';
+% 
+% %Scapular CS in Marker Frame
+% ScapCoord = [S Orig];
+% 
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to compute the segment/joint Euler Angles based on the input

@@ -1,10 +1,10 @@
-function [TrunkCS,BLnames,BLs_lcs ] = asthorho(blmat,bonylmrks)
+function [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks)
 %% Edited based on shifted CS for K.Suvada's Experiments
 IJidx = find(bonylmrks=='IJ');
 
 [IJ,PX,C7,T8]=deal(blmat(IJidx,:),blmat(IJidx+1,:),blmat(IJidx+2,:),blmat(IJidx+3,:)); % in Marker Local CS
-BLnames = ["IJ","PX","C7","T8"];
-BLs_lcs ={IJ,PX,C7,T8};
+BLnames_t = ["IJ","PX","C7","T8"];
+BLs_lcs_t ={IJ,PX,C7,T8};
 
 %%
 zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
@@ -37,11 +37,10 @@ yt=yt/norm(yt);
 %xt = cross(yt(1:3),zt);
 
 %Redefined for Kacey 10.4.21
-xt = cross(zt,yt);
+xt = cross(yt,zt);
 
 % t = [xt,yt,zt];
 t = [xt,yt,zt]; 
-
 
 % yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
 % xt = cross(yt,T8-PX);  xt = xt/norm(xt);
