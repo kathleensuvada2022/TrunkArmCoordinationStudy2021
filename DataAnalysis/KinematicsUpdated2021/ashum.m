@@ -17,9 +17,9 @@ function [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks)
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
 %%
-Emidx = find(bonylmrks=='EM');
+Emidx = find(bonylmrks=='EM',1); %EM is at the end as well for Forearm CS
 
-[EM,EL]=deal(blmat(Emidx,:),blmat(Emidx+1,:));
+[EM,EL]=deal(blmat(:,Emidx),blmat(:,Emidx+1));
 BLnames_h = ["EM","EL","GH"];
 BLs_lcs_h ={EM,EL,GH};
 % Kacey Redefining X,Y,Z axes 10.4.21 
@@ -36,11 +36,11 @@ yh=yh/norm(yh);
 xh = cross (yh,zh);
 xh = xh/norm(xh);
 
-h = [xh;yh;zh]';
+h = [xh,yh,zh];
 
 h = [h;0 0 0];
 
-Origin = [GH(1:3) 1]';
+Origin = [GH(1:3);1];
 
 %T of Humerus in marker CS
 Hum_CS = [h Origin];

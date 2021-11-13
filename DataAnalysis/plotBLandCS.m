@@ -35,14 +35,14 @@ text(BL{1,k}(1),BL{1,k}(2),BL{1,k}(3),BLnames(k),'FontSize',12)
 % plot3(BL{1,4}(1),BL{1,4}(2),BL{1,4}(3),'-o','Color','m','MarkerSize',10,...
 %     'MarkerFaceColor','#D9FFFF')
 % text(BL{1,4}(1),BL{1,4}(2),BL{1,4}(3),BLnames(4),'FontSize',12)
-title([titleplot '-(in LCS)'],'FontSize',14)
+%title([titleplot '-(in LCS)'],'FontSize',14)
 hold on
 end
 axis equal
 
 %% Computing BLs in the Bone Coordinate Frame
 for i = 1:length(BL)
-BL_coords= (BL{1,i}(1:4))';
+BL_coords= (BL{1,i}(1:4));
 BL_bone{i} = inv(CS)*BL_coords;
 end
 
@@ -61,7 +61,7 @@ for p = 1:length(BL_bone)
 plot3(BL_bone{1,p}(1),BL_bone{1,p}(2),BL_bone{1,p}(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(BL_bone{1,p}(1),BL_bone{1,p}(2),BL_bone{1,p}(3),BLnames(p),'FontSize',12)
-title([titleplot '-(in Bone CS)'],'FontSize',14)
+%title([titleplot '-(in Bone CS)'],'FontSize',14)
 % plot3(BL_bone{1,2}(1),BL_bone{1,2}(2),BL_bone{1,2}(3),'-o','Color','r','MarkerSize',10,...
 %     'MarkerFaceColor','#D9FFFF')
 % text(BL_bone{1,2}(1),BL_bone{1,2}(2),BL_bone{1,2}(3),BLnames(2),'FontSize',12)
