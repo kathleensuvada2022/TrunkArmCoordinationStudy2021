@@ -25,11 +25,11 @@
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 %%
-filename = 'trial10';
+filename = 'trial4';
 arm = 'Right';
-partid = 'RTIS2006';
+partid = 'RTIS1005';
 flag =1;
-j=1;
+%j=1;
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
 % Right now we are inputting bldata as the global coordinates of the
 % system, but I think we actually want the local coordinates and the data
@@ -233,8 +233,11 @@ Hum_Trunk_Ang= zeros(3,30);
 
 flag =0; % SET TO 1 if want plots to show
 
+
+
 %%
-for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames 
+for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+
   % TRUNK SHOULDER HUMERUS FOREARM
 % Trunk
 
@@ -248,8 +251,9 @@ if flag ==1
 figure(1)
 for h = 1:length(BLnames_t)
 plot3(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),'*')
-hold on
+if j == 1 hold on; 
 text(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),num2str(BLnames_t(h)))
+end
 end
 end
 
@@ -264,8 +268,9 @@ if flag ==1
 figure(1)
 for h = 1:length(BLnames_s)
 plot3(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),'*')
-hold on
+if j == 1 hold on; 
 text(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),num2str(BLnames_s(h)))
+end
 end
 end
 
@@ -279,8 +284,9 @@ if flag==1
 figure(1)
 for h = 1:length(BLnames_h)
 plot3(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),'*')
-hold on
+if j == 1 hold on; 
 text(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),num2str(BLnames_h(h)))
+end
 end
 end 
 
@@ -296,9 +302,10 @@ H_Mid_H(1:3,j) =(EL(1:3)+EM(1:3))'/2;
 if flag ==1
 figure(1)
 plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
-hold on
-text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
+if j == 1 hold on; 
 
+text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
+end
 %Line from GH to MidPnt between Epicondyles
 plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
 % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
@@ -317,8 +324,9 @@ if flag ==1
 figure(1)
 for h = 1:length(BLnames_f)
 plot3(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),'*')
-hold on
+if j == 1 hold on; 
 text(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),num2str(BLnames_f(h)))
+end
 end
 end
 %Finding indices of Forearm BLs
@@ -340,6 +348,7 @@ end
 
 % Plotting Bone Coordinate Systems in Global Coordinate System
 
+if j ==1 
 %Trunk
 TtoG_frame = TtoG(:,:,j); %trunk CS in global at given frame of trial
 if flag ==1
@@ -376,6 +385,7 @@ if flag ==1
 quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
 text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
 end
+end
 
 % Computing Euler Angles Frame by Frame
 
@@ -391,8 +401,14 @@ end
 %     [gANGLES(:,2,j)]=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
   
 Trunk_Globe_ANG(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',1); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
- %
+%Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+
+% Euler Ang Function
+% Only compatible with ROTZYZ no XZY
+rotm=HtoG(1:3,1:3,j);
+Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
+
+%
 %      jR = rotjoint(AS); %relative angles
 
     %     [gANGLES(1:3,:,i)]=CalcEulerAng(TrunkCS,'XYZ',0); % Trunk
@@ -403,16 +419,33 @@ Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about ver
     
 % Kacey removed rotjoint function and placed code here Nov 2021
 %  Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
-   jR(1:3,1:3)=HtoG(1:3,1:3,j)'*FtoG(1:3,1:3,j);
+   jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
     
    % To get humerus (columns 7:9) in trunk (columns 1:3) cs 
    jR(1:3,4:6)=TtoG(1:3,1:3,j)'*HtoG(1:3,1:3,j);  
 
 % Local angles relative to proximal segment
 Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',1);    % Forearm in Hum 
-Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',1);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
+%Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',1);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
 
+% Computing Euler Angles with matlab function 
+rotm=jR(:,4:6);
+Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm,'ZYZ'));
+
+end
+
+%%
+
+% ACT-3D data saved
+% Column 1 period in s
+% Column 2-4 hand position (3rd MCP)
+% Column 5-7 robot.endEffectorPosition
+% Column 8 robot.endEffectorRotation(1);
+% Column 9-11 robot.endEffectorVelocity;
+% Column 12-14 robot.endEffectorForce;
+% Column 15-17 robot.endEffectorTorque;
 % pause
+
 
 % % For trouble shooting Euler Angles
 % view(0,90)  % XY
@@ -421,9 +454,60 @@ Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',1);   % XY% Humerus in Trunk 1) 
 % pause
 % view(90,0)  % YZ
 
-end
+
+%% 
+
+% Getting Angle from act3d data
+act3ddata = data.act;
+endeff_rotation = act3ddata(:,8);
 
 
+% getting 3rd MCP in global 
+MCP3_Glob_x = squeeze(BL_G_f(1,4,:));
+MCP3_Glob_y = squeeze(BL_G_f(2,4,:));
+
+%% Plotting ACT3D Data and Metria
+
+figure()
+plot(-act3ddata(:,2),-act3ddata(:,3))
+hold on
+axis equal
+xlabel('X position (m)')
+ylabel('Y Position (m)')
+title('ACT3D EE Position','FontSize',16)
+figure()
+plot(MCP3_Glob_x,MCP3_Glob_y)
+axis equal
+xlabel('X position (mm)')
+ylabel('Y Position(mm)')
+title('Metria 3rd MCP in GCS','FontSize',16)
+
+
+%% Plotting angles 
+
+
+figure(2)
+plot(Trunk_Globe_ANG(1,:)) 
+hold on
+plot(Trunk_Globe_ANG(2,:))
+plot(Hum_Globe_ANG(1,:))
+plot(Hum_Globe_ANG(2,:))
+xlabel('Samples')
+ylabel('Angle in Degrees')
+legend('Trunk Angle Global (X)','Trunk Angle Global (Z)', ' Hum Angle Global (Z)', 'Hum Angle Global (Y)')
+title('Angles About Global CS','FontSize', 16)
+
+figure(3)
+plot(Fore_Hum_Ang(1,:)) 
+hold on
+plot(Fore_Hum_Ang(2,:))
+plot(Hum_Trunk_Ang(1,:))
+plot(Hum_Trunk_Ang(2,:))
+xlabel('Samples')
+ylabel('Angle in Degrees')
+legend('Forearm in Hum (X)','Forearm in Hum (Z)', ' Hum in Trunk (Z)', 'Hum in Trunk (Y)')
+title('Angles About Proximal Bone CS','FontSize', 16)
+%%
 
     % **************************************************************
 %     if strcmp(reffr,'trunk')
