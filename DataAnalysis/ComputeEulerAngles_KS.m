@@ -400,13 +400,13 @@ end
 %     [gANGLES(:,1,j)]=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',1); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 %     [gANGLES(:,2,j)]=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
   
-Trunk_Globe_ANG(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',1); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-%Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+Trunk_Globe_ANG(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
-% Euler Ang Function
-% Only compatible with ROTZYZ no XZY
-rotm=HtoG(1:3,1:3,j);
-Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
+% % Euler Ang Function
+% % Only compatible with ROTZYZ no XZY
+% rotm=HtoG(1:3,1:3,j);
+% Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
 
 %
 %      jR = rotjoint(AS); %relative angles
@@ -425,12 +425,12 @@ Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
    jR(1:3,4:6)=TtoG(1:3,1:3,j)'*HtoG(1:3,1:3,j);  
 
 % Local angles relative to proximal segment
-Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',1);    % Forearm in Hum 
-%Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',1);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
+Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row is elbow angle
+Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',0);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
 
-% Computing Euler Angles with matlab function 
-rotm=jR(:,4:6);
-Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm,'ZYZ'));
+% % Computing Euler Angles with matlab function 
+% rotm=jR(:,4:6);
+% Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm,'ZYZ'));
 
 end
 
