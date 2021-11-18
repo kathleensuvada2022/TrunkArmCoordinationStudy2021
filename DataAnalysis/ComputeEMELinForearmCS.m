@@ -5,9 +5,9 @@
 
 
 % testing
-partid = 'RTIS2006';
-arm='Right';
-trial ='trial10';
+% partid = 'RTIS2002';
+% arm='Right';
+% trial ='trial4';
 
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)
 
