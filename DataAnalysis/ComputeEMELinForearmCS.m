@@ -4,10 +4,10 @@
 % cs be at the midpoint between medial and lateral epicondyles. 
 
 
-% testing
-% partid = 'RTIS2002';
-% arm='Right';
-% trial ='trial4';
+
+partid = 'RTIS1006';
+arm='Right';
+trial ='trial4';
 
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)
 

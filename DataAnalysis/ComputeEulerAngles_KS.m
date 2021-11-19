@@ -27,7 +27,7 @@
 %%
 filename = 'trial4';
 arm = 'Right';
-partid = 'RTIS2002';
+partid = 'RTIS2011';
 flag =1;
 %j=1;
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
@@ -236,7 +236,7 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-%for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
 
   % TRUNK SHOULDER HUMERUS FOREARM
 % Trunk
@@ -432,7 +432,7 @@ Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',0);   % XY% Humerus in Trunk 1) 
 % rotm=jR(:,4:6);
 % Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm,'ZYZ'));
 
-%end
+end
 
 %%
 

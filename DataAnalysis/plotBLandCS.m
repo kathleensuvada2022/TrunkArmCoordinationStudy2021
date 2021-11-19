@@ -35,7 +35,7 @@ text(BL{1,k}(1),BL{1,k}(2),BL{1,k}(3),BLnames(k),'FontSize',12)
 % plot3(BL{1,4}(1),BL{1,4}(2),BL{1,4}(3),'-o','Color','m','MarkerSize',10,...
 %     'MarkerFaceColor','#D9FFFF')
 % text(BL{1,4}(1),BL{1,4}(2),BL{1,4}(3),BLnames(4),'FontSize',12)
-%title([titleplot '-(in LCS)'],'FontSize',14)
+title([titleplot '-(in LCS)'],'FontSize',14)
 hold on
 end
 axis equal
