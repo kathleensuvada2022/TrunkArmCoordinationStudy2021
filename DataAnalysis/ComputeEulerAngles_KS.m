@@ -82,14 +82,14 @@ BLnames_f = ["RS","US","OL","MCP3","EM","EL"];
 BLnames_h = ["EM","EL","GH"];
 BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
 %% Concatenate the bony landmarks into one cell array 
-load([datafilepath '/BL.mat']) %loading in BL file 
-bldata=bl;
-blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
-nland=size(blmat,1);
-% Using GH from Digitization %%%%%%%%%
-GHIDX = find(bonylmrks=='GH');
-GH = blmat(GHIDX ,1:3); %XYZ coordinate of GH from Digitization in meantime
-GH = [GH 1];
+% load([datafilepath '/BL.mat']) %loading in BL file 
+% bldata=bl;
+% blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
+% nland=size(blmat,1);
+% % Using GH from Digitization %%%%%%%%%
+% GHIDX = find(bonylmrks=='GH');
+% GH = blmat(GHIDX ,1:3); %XYZ coordinate of GH from Digitization in meantime
+% GH = [GH 1];
 
 %% Loading in BLs (in marker CS) and Bone CS created (in Marker CS)
 BLs = setup.bl; % BLs in marker CS
@@ -236,8 +236,8 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
-
+%for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 % Trunk
 
@@ -401,12 +401,13 @@ end
 %     [gANGLES(:,2,j)]=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
   
 Trunk_Globe_ANG(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
-
+% Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+% Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
+% Hum_Globe_ANG(3,j)=Hum_Globe_ANG(3,j)-180;
 % % Euler Ang Function
 % % Only compatible with ROTZYZ no XZY
-% rotm=HtoG(1:3,1:3,j);
-% Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
+rotm=HtoG(1:3,1:3,j);
+Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
 
 %
 %      jR = rotjoint(AS); %relative angles
@@ -426,13 +427,14 @@ Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about ver
 
 % Local angles relative to proximal segment
 Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row is elbow angle
-Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',0);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
-
+% Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',0);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
+% Hum_Trunk_Ang(1,j) = Hum_Trunk_Ang(1,j)+180;
+% Hum_Trunk_Ang(3,j) = Hum_Trunk_Ang(3,j)-180;
 % % Computing Euler Angles with matlab function 
-% rotm=jR(:,4:6);
-% Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm,'ZYZ'));
+rotm2=jR(:,4:6);
+Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
-end
+
 
 %%
 

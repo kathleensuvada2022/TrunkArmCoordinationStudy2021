@@ -24,7 +24,7 @@ function [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks)
 %Kacey 10.2021
 % "AC" "AA" "TS" "AI"
 ACidx = find(bonylmrks=='AC');
-[AC,AA,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:),blmat(ACidx+3,:));
+[AC,AA,TS,AI]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3));
 BLnames_s = ["AC","AA","TS","AI"];
 BLs_lcs_s ={AC,AA,TS,AI};
 
@@ -36,10 +36,10 @@ ys = ys/norm(ys);
 zs = cross(ys,xs);
 zs= zs/norm(zs);
 
-S = [xs;ys;zs]';
-S = [S; 0 0 0];
+S = [xs ys zs];
+S = [S;0 0 0];
 
-Orig = [AC(1:3) 1]';
+Orig = AC(1:4);
 
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
