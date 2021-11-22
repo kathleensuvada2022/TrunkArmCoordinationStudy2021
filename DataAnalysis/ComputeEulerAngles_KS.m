@@ -25,7 +25,7 @@
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 %%
-filename = 'trial4';
+filename = 'trial15';
 arm = 'Right';
 partid = 'RTIS2011';
 flag =1;
@@ -236,8 +236,8 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-%for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
-j=1;
+for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+% j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 % Trunk
 
@@ -435,7 +435,7 @@ rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
-
+end
 %%
 
 % ACT-3D data saved
