@@ -13,7 +13,7 @@
 % Local X-axis : axis from TS to AC.                                       %
 % Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks)
+function [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks,arm)
 
 % ACidx = find(bonylmrks=='AC');
 % [AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
@@ -37,10 +37,34 @@ zs = cross(ys,xs);
 zs= zs/norm(zs);
 
 S = [xs ys zs];
-S = [S;0 0 0];
 
+
+%%
+if strcmp(arm,'Left')
+ rot_180= rotz(180);
+ 
+ S = S*rot_180;
+   
+end 
+
+
+
+%%
+
+S = [S;0 0 0];
+%%
 Orig = AC(1:4);
 
+if strcmp(arm,'Left')
+
+Orig =Orig(1:3)'* rot_180; 
+
+Orig= [Orig 1]';
+    
+end
+
+
+%%
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
 %%

@@ -23,14 +23,16 @@ Emidx = find(bonylmrks=='EM',1); %EM is at the end as well for Forearm CS
 BLnames_h = ["EM","EL","GH"];
 BLs_lcs_h ={EM,EL,GH};
 % Kacey Redefining X,Y,Z axes 10.4.21 
-
+%%
 H_mid=(EM(1:3)+EL(1:3))/2;
 zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
 
-%if strcmp(arm,'Right')
-    
 %Yh: Need perpendicular to plane defined by z axis and line through em el
 x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
+
+% if strcmp(arm,'Left')
+% x= (EM(1:3)-EL(1:3))/norm(EM(1:3)-EL(1:3)); %Vector through EL and EM
+% end
 
 yh =cross(zh,x); 
 yh=yh/norm(yh);
@@ -38,29 +40,43 @@ yh=yh/norm(yh);
 xh = cross (yh,zh);
 xh = xh/norm(xh);
 
-%else 
-% %Yh: Need perpendicular to plane defined by z axis and line through em el
-% x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
-% 
-%     
-% yh =cross(zh,x); 
-% yh=yh/norm(yh);
-% 
-% xh = cross (yh,zh);
-% xh = xh/norm(xh);
-%   
-    
-%end
 
 h = [xh yh zh];
+%%
+
+% if strcmp(arm,'Left')
+%  rot_180= rotz(180);
+%  
+%  h = h*rot_180;
+%    
+% end 
 
 h = [h;0 0 0];
+%%
+Origin = GH(1:3)';
+% 
+% if strcmp(arm,'Left')
+% Origin = GH(1:3)'*rot_180;   
+% end
+%%
+Origin =[Origin 1]';
 
-Origin = GH(1:4);
-
+%%
 %T of Humerus in marker CS
 Hum_CS = [h Origin];
 %%
+
+% if strcmp(arm,'Left')
+% GH = Origin ;
+% 
+% EM = EM(1:3)'*rot_180;
+% EM = [EM 1]';
+% EL = EL(1:3)'*rot_180;
+% EL = [EL 1]';
+% BLs_lcs_h ={EM,EL,GH};
+% end
+
+
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -25,9 +25,9 @@
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 %%
-filename = 'trial15';
-arm = 'Right';
-partid = 'RTIS2011';
+filename = 'trial4';
+arm = 'Left';
+partid = 'RTIS1004';
 flag =1;
 %j=1;
 % Function to process bony landmark data to compute bone and joint rotations (adapted from Dutch program CalcInputKinem).
@@ -236,8 +236,8 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
-% j=1;
+%for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+ j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 % Trunk
 
@@ -246,6 +246,7 @@ TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1});
 
 % Trunk Bonylandmarks in GCS
 BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; %{1,1} is trunk  
+
 
 if flag ==1
 figure(1)
@@ -279,6 +280,14 @@ HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4};
 
 % Humerus Bonylandmarks in GCS
 BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
+
+if strcmp(arm,'Left')
+HtoG(1:3,1:3,j) =HtoG(1:3,1:3,j)*rotz(180);
+HtoG(1:3,4,j) =(HtoG(1:3,4,j)'*rotz(180))';
+
+BL_G_h(1:3,:,j) =(BL_G_h(1:3,:,j)'*rotz(180))';
+    
+end
 
 if flag==1 
 figure(1)
@@ -435,7 +444,7 @@ rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
-end
+% end
 %%
 
 % ACT-3D data saved

@@ -76,6 +76,7 @@ text(BL_bone{1,p}(1),BL_bone{1,p}(2),BL_bone{1,p}(3),BLnames(p),'FontSize',12)
 %     'MarkerFaceColor','#D9FFFF')
 % text(BL_bone{1,4}(1),BL_bone{1,4}(2),BL_bone{1,4}(3),BLnames(4),'FontSize',12)
 hold on
+title('Global CS')
 end
 axis equal
 
