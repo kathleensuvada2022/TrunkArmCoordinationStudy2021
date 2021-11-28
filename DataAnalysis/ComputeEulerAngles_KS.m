@@ -27,7 +27,8 @@
 %%
 filename = 'trial4';
 arm = 'Left';
-partid = 'RTIS2011';
+% arm = 'Right';
+partid = 'RTIS2006';
 flag =1;
 
 %%
@@ -238,7 +239,7 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-%for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+ %for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
  j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 
@@ -475,7 +476,8 @@ Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
     
 % Kacey removed rotjoint function and placed code here Nov 2021
 %  Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
-   jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
+%    jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
+  jR(1:3,1:3)=HtoG(1:3,1:3,j)'*FtoG(1:3,1:3,j);
     
    % To get humerus (columns 7:9) in trunk (columns 1:3) cs 
    jR(1:3,4:6)=TtoG(1:3,1:3,j)'*HtoG(1:3,1:3,j);  

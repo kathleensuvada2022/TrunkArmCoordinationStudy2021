@@ -5,10 +5,10 @@
 
 
 
-partid = 'RTIS2011';
+partid = 'RTIS2006';
 arm='Left';
 trial ='trial4';
-
+%
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)
 
 filepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
