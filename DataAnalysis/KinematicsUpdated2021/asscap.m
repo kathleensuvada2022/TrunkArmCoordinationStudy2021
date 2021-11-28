@@ -13,7 +13,7 @@
 % Local X-axis : axis from TS to AC.                                       %
 % Local Y-axis : axis perpendicular to the X-axis and the plane (AA,TS,AI).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks,arm)
+function [ScapCoord,BLnames_s,BLs_lcs_s ] =  asscap(blmat,bonylmrks)
 
 % ACidx = find(bonylmrks=='AC');
 % [AC,TS,AI]=deal(blmat(ACidx,:),blmat(ACidx+1,:),blmat(ACidx+2,:));
@@ -27,7 +27,7 @@ ACidx = find(bonylmrks=='AC');
 [AC,AA,TS,AI]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3));
 BLnames_s = ["AC","AA","TS","AI"];
 BLs_lcs_s ={AC,AA,TS,AI};
-
+%%
 
 %10.4.21- Kacey Editing based on how want CS aligned 
 xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
@@ -40,13 +40,13 @@ S = [xs ys zs];
 
 
 %%
-if strcmp(arm,'Left')
- rot_180= rotz(180);
- 
- S = S*rot_180;
-   
-end 
-
+% if strcmp(arm,'Left')
+%  rot_180= rotz(180);
+%  
+%  S = S*rot_180;
+%    
+% end 
+% 
 
 
 %%
@@ -55,13 +55,13 @@ S = [S;0 0 0];
 %%
 Orig = AC(1:4);
 
-if strcmp(arm,'Left')
-
-Orig =Orig(1:3)'* rot_180; 
-
-Orig= [Orig 1]';
-    
-end
+% if strcmp(arm,'Left')
+% 
+% Orig =Orig(1:3)'* rot_180; 
+% 
+% Orig= [Orig 1]';
+%     
+% end
 
 
 %%

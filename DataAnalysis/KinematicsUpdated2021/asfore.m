@@ -10,7 +10,7 @@
 % through styloids
 % GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ForeCS,BLs_lcs_f,BLnames_f] =  asfore(blmat,bonylmrks,arm)
+function [ForeCS,BLs_lcs_f,BLnames_f] =  asfore(blmat,bonylmrks)
 
 %Kacey 10.2021
 rsidx = find(bonylmrks=='RS');
@@ -38,12 +38,12 @@ xf = xf/norm(xf);
 f = [xf yf zf];
 
 %%
-if strcmp(arm,'Left')
- rot_180= rotz(180);
- 
- f = f*rot_180;
-   
-end 
+% if strcmp(arm,'Left')
+%  rot_180= rotz(180);
+%  
+%  f = f*rot_180;
+%    
+% end 
 
 
 %%
@@ -53,14 +53,14 @@ f = [f;0 0 0];
 %Creating New Origin Midpoint Between Epicondyles not OL
 H_mid_2=(EL(1:3)+EM(1:3)).'/2;
 org_fore = [H_mid_2 1]';
-%%
-if strcmp(arm,'Left')
-
-org_fore =org_fore(1:3)'* rot_180; 
-
-org_fore= [org_fore 1]';
-    
-end
+% %%
+% if strcmp(arm,'Left')
+% 
+% org_fore =org_fore(1:3)'* rot_180; 
+% 
+% org_fore= [org_fore 1]';
+%     
+% end
 
 
 %%

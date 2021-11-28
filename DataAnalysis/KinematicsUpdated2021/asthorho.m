@@ -1,4 +1,4 @@
-function [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks)
+function [TrunkCS,BLnames_t,BLs_lcs_t ] = asthorho(blmat,bonylmrks,arm)
 %% Edited based on shifted CS for K.Suvada's Experiments
 IJidx = find(bonylmrks=='IJ');
 
@@ -33,6 +33,11 @@ yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP????
 % zt = cross(xhulp,yt);
 
 yt=yt/norm(yt);
+
+if strcmp(arm,'Left')
+    
+yt = cross(zt(1:3),xhulp);  
+end
 
 %xt = cross(yt(1:3),zt);
 

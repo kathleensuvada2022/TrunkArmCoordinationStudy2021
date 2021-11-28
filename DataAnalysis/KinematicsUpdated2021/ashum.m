@@ -13,7 +13,7 @@
 % Local Y-axis : axis perpendicular to local X and Y-axis.
 % GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks,arm)
+function [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum(blmat,GH,bonylmrks)
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
 %%
