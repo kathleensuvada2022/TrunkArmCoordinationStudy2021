@@ -27,4 +27,10 @@ else
   y=y2;
   z=z2;
   x=x2;
+  
+  
 end
+
+disp(rad2deg([x1 z1 y1;x2 z2 y2]));
+  end
+  

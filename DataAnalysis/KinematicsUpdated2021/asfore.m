@@ -14,10 +14,10 @@ function [ForeCS,BLs_lcs_f,BLnames_f] =  asfore(blmat,bonylmrks)
 
 %Kacey 10.2021
 rsidx = find(bonylmrks=='RS');
-[RS,US,OL,MCP3,EM,EL]=deal(blmat(:,rsidx),blmat(:,rsidx+1),blmat(:,rsidx+2),blmat(:,rsidx+3),blmat(:,rsidx+4),blmat(:,rsidx+5));
+[RS,US,OL,MCP3,EL,EM]=deal(blmat(:,rsidx),blmat(:,rsidx+1),blmat(:,rsidx+2),blmat(:,rsidx+3),blmat(:,rsidx+4),blmat(:,rsidx+5));
 %RS';'US';'OL';'MCP3';'EM';'EL'
-BLnames_f = ["RS","US","OL","MCP3","EM","EL"];
-BLs_lcs_f ={RS,US,OL,MCP3,EM,EL};
+BLnames_f = ["RS","US","OL","MCP3","EL","EM"];
+BLs_lcs_f ={RS,US,OL,MCP3,EL,EM};
 
 %%
 % Kacey Redefining X,Y,Z axes 10.6.21

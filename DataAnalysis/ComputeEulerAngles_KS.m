@@ -26,9 +26,9 @@
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 %%
 filename = 'trial4';
-arm = 'Left';
-% arm = 'Right';
-partid = 'RTIS2006';
+%arm = 'Left';
+ arm = 'Right';
+partid = 'RTIS2011';
 flag =1;
 
 %%
@@ -78,10 +78,10 @@ load([datafilepath '/' partid,'_','setup']);
 
 %From Kacey's MetriaKinDAQ 10.2021
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm'};
-bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP","EM","EL"]';  % IN THIS ORDER
+bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP","EL","EM"]';  % IN THIS ORDER
 BLnames_t = ["SC","IJ","PX","C7","T8"];
 BLnames_s = ["AC","AA","TS","AI","PC"];
-BLnames_f = ["RS","US","OL","MCP3","EM","EL"];
+BLnames_f = ["RS","US","OL","MCP3","EL","EM"];
 BLnames_h = ["EM","EL","GH"];
 BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
 %% Concatenate the bony landmarks into one cell array 
@@ -378,7 +378,7 @@ BL_G_f(:,:,j) = TmarkertoGlob{4}(:,:,j)*BLs{1,4};
 
 if flag ==1
 figure(1)
-for h = 1:length(BLnames_f)
+for h = 1:4
 plot3(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),'*')
 if j == 1 hold on; 
 text(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),num2str(BLnames_f(h)))
@@ -546,7 +546,7 @@ title('Metria 3rd MCP in GCS','FontSize',16)
 %% Plotting angles 
 
 
-figure(2)
+figure(1)
 plot(Trunk_Globe_ANG(1,:)) 
 hold on
 plot(Trunk_Globe_ANG(2,:))
