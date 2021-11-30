@@ -1,7 +1,4 @@
-%% Created October 2021  K. Suvada
-
-%% Works as of NOV 4th 2021
-% This is with Kacey's new redefined CS
+%% 2021  K. Suvada
 %%
 % Kacey's Bone CSs are st: the Y is forwards, X is to the right and Z is up
 % ( from behind)
@@ -73,7 +70,8 @@ flag =1;
 %if nargin<3, reffr='trunk'; end
 %% Loading in the BL data (Digitization) and the BLs Names
 
-datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
+%datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
+datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 load([datafilepath '/' partid,'_','setup']);
 
 %From Kacey's MetriaKinDAQ 10.2021
@@ -493,7 +491,7 @@ Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
 %  end
-%% For Computing Elbow Angle based on bony land marks 
+%% For Computing Elbow Angle based on bony landmarks 
 % With midpoints 
 a=norm(BL_G_f(1:3,4)-(BL_G_h(1:3,1)+BL_G_h(1:3,2))/2);
 b=norm((BL_G_h(1:3,1)+BL_G_h(1:3,2))/2 - BL_G_h(1:3,3));
