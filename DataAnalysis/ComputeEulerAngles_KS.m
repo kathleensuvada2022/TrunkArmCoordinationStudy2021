@@ -25,7 +25,7 @@
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
 %%
-filename = 'trial4';
+filename = 'trial5';
 %arm = 'Left';
  arm = 'Right';
 partid = 'RTIS2011';
@@ -239,7 +239,7 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
- %for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
+%  for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
  j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 
@@ -492,7 +492,23 @@ rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
-% end
+%  end
+%% For Computing Elbow Angle based on bony land marks 
+% With midpoints 
+a=norm(BL_G_f(1:3,4)-(BL_G_h(1:3,1)+BL_G_h(1:3,2))/2);
+b=norm((BL_G_h(1:3,1)+BL_G_h(1:3,2))/2 - BL_G_h(1:3,3));
+c=norm((BL_G_f(1:3,4)-BL_G_h(1:3,3)));
+
+%Elbow Angle
+th=rad2deg(acos((a^2+b^2-c^2)/(2*a*b)))
+
+%just bonylandmarks
+a2=norm(BL_G_f(1:3,4)-BL_G_f(1:3,3));
+b2=norm(BL_G_f(1:3,3)-BL_G_h(1:3,3));
+c2=norm(BL_G_f(1:3,4)-BL_G_h(1:3,3));
+%Elbow Angle
+th2=rad2deg(acos((a2^2+b2^2-c2^2)/(2*a2*b2)))
+
 %%
 
 % ACT-3D data saved
