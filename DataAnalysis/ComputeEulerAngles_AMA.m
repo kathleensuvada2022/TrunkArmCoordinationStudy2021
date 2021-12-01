@@ -72,6 +72,7 @@ flag =1;
 
 %datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
 datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
+datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 load([datafilepath '/' partid,'_','setup']);
 
 %From Kacey's MetriaKinDAQ 10.2021
@@ -238,22 +239,21 @@ flag =1; % SET TO 1 if want plots to show
 
 %%
 %  for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
- j=1;
+j=1;
   % TRUNK SHOULDER HUMERUS FOREARM
 
   % Trunk
 
-if strcmp(arm,'Left')
-    
-rot = rotz(pi);
-row0 = [0 0 0 1];
-col0 = [0 0 0]';
-rotatz= cat(2,rot,col0);
-rotatz = cat(1,rotatz,row0);
-
-TmarkertoGlob{1}(:,:,j) =rotatz*TmarkertoGlob{1}(:,:,j);
-end
-
+ if strcmp(arm,'Left')
+     rot = rotz(pi);
+     row0 = [0 0 0 1];
+     col0 = [0 0 0]';
+     rotatz= cat(2,rot,col0);
+     rotatz = cat(1,rotatz,row0);
+     
+     TmarkertoGlob{1}(:,:,j) =rotatz*TmarkertoGlob{1}(:,:,j);
+ end
+  
 %Trunk in global 
 TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1});
 
@@ -395,8 +395,8 @@ US_IDX = find(BLnames_f=='US');
 H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2;
 
 if flag ==1
-%Plotting line between midpoint of epicondyles to midpoibt of styloids
-plot3([H_Mid_F(1)  H_Mid_H(1,j)],[H_Mid_F(2)  H_Mid_H(2,j)],[H_Mid_F(3)  H_Mid_H(3,j)])
+%Plotting line between midpoint of epicondyles to midpoint of styloids
+plot3([H_Mid_F(1) H_Mid_H(1,j)],[H_Mid_F(2) H_Mid_H(2,j)],[H_Mid_F(3) H_Mid_H(3,j)])
 end
 
 
@@ -441,6 +441,7 @@ text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_fram
 end
 end
 
+return
 % Computing Euler Angles Frame by Frame
 
 % % Need 3x3 rotation matrix for the bones 
