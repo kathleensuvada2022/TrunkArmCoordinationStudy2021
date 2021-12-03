@@ -54,7 +54,7 @@ Bone_bone =CS*inv(CS);
 figure()
 quiver3(Bone_bone([1 1 1],4)',Bone_bone([2 2 2],4)',Bone_bone([3 3 3],4)',50*Bone_bone(1,1:3),50*Bone_bone(2,1:3),50*Bone_bone(3,1:3))
 %quiver3(ForeCS([1 1 1],4)',ForeCS([2 2 2],4)',ForeCS([3 3 3],4)',50,50,50)
-text(50*Bone_bone(1,1:3),50*Bone_bone(2,1:3),50*Bone_bone(3,1:3),{'x','y','z'})
+
 
 hold on
 for p = 1:length(BL_bone)
