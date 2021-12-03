@@ -9,13 +9,13 @@
 % systems for the 1)trunk 2)shoulder 3) Forearm 4) Humerus.
 
 % Use Flag ==1 if want to plot local coordinate systems individually and
-% BLs in the created Bone CS. 
+% BLs in the created Bone CS.
 
-% Use Flag ==0 if want all trial data in the global coordinate system. 
+% Use Flag ==0 if want all trial data in the global coordinate system.
 
 
-% Order the Coord. Sys are Output in:  TRUNK SHOULDER  HUM  FORE 
-%Use Below for Testing 
+% Order the Coord. Sys are Output in:  TRUNK SHOULDER  HUM  FORE
+%Use Below for Testing
 %[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS('trial10','Right','RTIS1005',1)
 
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
@@ -24,7 +24,7 @@
 %%
 filename = 'trial5';
 %arm = 'Left';
- arm = 'Right';
+arm = 'Right';
 partid = 'RTIS2011';
 flag =1;
 
@@ -71,9 +71,11 @@ flag =1;
 %% Loading in the BL data (Digitization) and the BLs Names
 
 %datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
-datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
-datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
-load([datafilepath '/' partid,'_','setup']);
+% datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
+% datafilepath = ['D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data','\',partid,'\',arm];
+datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
+datafilepath = fullfile(datafilepath,partid,arm);
+load(fullfile(datafilepath,[partid,'_','setup']));
 
 %From Kacey's MetriaKinDAQ 10.2021
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm'};
@@ -83,8 +85,8 @@ BLnames_s = ["AC","AA","TS","AI","PC"];
 BLnames_f = ["RS","US","OL","MCP3","EL","EM"];
 BLnames_h = ["EM","EL","GH"];
 BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
-%% Concatenate the bony landmarks into one cell array 
-% load([datafilepath '/BL.mat']) %loading in BL file 
+%% Concatenate the bony landmarks into one cell array
+% load([datafilepath '/BL.mat']) %loading in BL file
 % bldata=bl;
 % blmat=cat(1,bldata{1},bldata{2},bldata{3},bldata{4}); %coordinates in the frame of the marker
 % nland=size(blmat,1);
@@ -98,21 +100,21 @@ BLs = setup.bl; % BLs in marker CS
 BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 
 
-%% Loading in trial Data 
-load([datafilepath,'/', filename]) %loading in trial data 
+%% Loading in trial Data
+load([datafilepath,'/', filename]) %loading in trial data
 
 x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
-nmark=(nmark)/8; 
+nmark=(nmark)/8;
 
-t = (x(:,2)-x(1,2))/89; 
-%% Getting HT in marker to global (during trial data) 
-%Organizing Trial Data by Marker Number/ Bone 
+t = (x(:,2)-x(1,2))/89;
+%% Getting HT in marker to global (during trial data)
+%Organizing Trial Data by Marker Number/ Bone
 [ridx,cidx]=find(x==setup.markerid(4));
 fidx =cidx(1)+1;
-xfore=x(:,fidx:(fidx+6));  
+xfore=x(:,fidx:(fidx+6));
 
 [ridx,cidx]=find(x==setup.markerid(3));
 aidx =cidx(1)+1;
@@ -122,43 +124,27 @@ xhum=x(:,aidx:(aidx+6)); %extracting humerus marker
 sidx=cidx(1)+1;
 xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 
-[ridx,cidx]=find(x==setup.markerid(1)); 
+[ridx,cidx]=find(x==setup.markerid(1));
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
-Tftom = zeros(4,4,length(xfore));   
+Tftom = zeros(4,4,length(xfore)); %Forearm
+Tstom= zeros(4,4,length(xshoulder)); %Shoulder
+Tttom=zeros(4,4,length(xtrunk)); %Trunk
+Thtom=zeros(4,4,length(xhum)); %Humerus
 
-% Need to reshape 4X4XN
-
-%Forearm
-for i=1:length(xfore)
-% forearm marker HT
-Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2)); 
-Tftom(1:3,4,i) = xfore(i,1:3)';  
+for i=1:nimag
+    Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2)); % forearm marker HT
+    Tftom(1:3,4,i) = xfore(i,1:3)';
+    Tstom(:,:,i)= quat2tform(circshift(xshoulder(i,4:7),1,2));
+    Tstom(1:3,4,i) = xshoulder(i,1:3)';
+    Tttom(:,:,i)= quat2tform(circshift(xtrunk(i,4:7),1,2));
+    Tttom(1:3,4,i) = xtrunk(i,1:3)';
+    Thtom(:,:,i)= quat2tform(circshift(xhum(i,4:7),1,2));
+    Thtom(1:3,4,i) = xhum(i,1:3)';
 end
 
-%Shoulder
-Tstom= zeros(4,4,length(xshoulder));
-for i = 1:length(xshoulder)
-Tstom(:,:,i)= quat2tform(circshift(xshoulder(i,4:7),1,2));
-Tstom(1:3,4,i) = xshoulder(i,1:3)'; 
-end 
-
-%Trunk
-Tttom=zeros(4,4,length(xtrunk));
-for i =1:length(xtrunk)  
-Tttom(:,:,i)= quat2tform(circshift(xtrunk(i,4:7),1,2));      
-Tttom(1:3,4,i) = xtrunk(i,1:3)';    
-end
-
-%Humerus
-Thtom=zeros(4,4,length(xhum));
-for i =1:length(xhum)  
-Thtom(:,:,i)= quat2tform(circshift(xhum(i,4:7),1,2));      
-Thtom(1:3,4,i) = xhum(i,1:3)';    
-end
-
-%               TRUNK SHOULDER HUMERUS FOREARM
+%                TRUNK SHOULDER HUMERUS FOREARM
 TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ******
 %%
 %Swap out the definition for the GH joint center that we estimated earlier
@@ -172,7 +158,7 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % to transform the locally defined bony landmark points to points in the
 % transmitter CS
 % bldata={zeros(4,5,nsamples),zeros(4,5,nsamples),zeros(4,3,nsamples)};
-% 
+%
 % for i = 1:3
 %     for j = 1:nsamples
 %         bldata{i}(:,:,j)=data{i}(:,:,j)*BLlocal{i};
@@ -184,50 +170,49 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 
 % R=(rotx(pi/2)*roty(pi/2)*rotz(pi/2)); %fix so that the rotations already take the (-) sign into account
 %use Amee's guide to determine rotation
-    % 1) Transform data to the global coordinate system with IJ as the origin
-    %    (X: left-right, Y: upwards, Z: backwards)
-    %    Note that the data is in the transmitter coordinate system
-    %    (X: forward, Y: left-right, Z: downwards)
-    %     disp('entered the for loop');
+% 1) Transform data to the global coordinate system with IJ as the origin
+%    (X: left-right, Y: upwards, Z: backwards)
+%    Note that the data is in the transmitter coordinate system
+%    (X: forward, Y: left-right, Z: downwards)
+%     disp('entered the for loop');
 % R = rotx(pi/2);
 %R = [0 0 -1;1 0 0;0 -1 0];
 % R=rotx(pi/2)*rotz(-pi/2); %should be correct
 % R = -R; %double check that the (-) sign is actually needed
 
-  
-    % ****************************************************************************
+
+% ****************************************************************************
 %     pVectTot = blmat(1:3,5,i);
-%     T=[[R;zeros(1,3)] [(R*pVectTot(1:3));1]]; % Transformation matrix to go from experimentally defined CS to DSEL CS 
+%     T=[[R;zeros(1,3)] [(R*pVectTot(1:3));1]]; % Transformation matrix to go from experimentally defined CS to DSEL CS
 %     blmat2 = T*blmat(:,:,i);
 %     blmat3(:,:,i) = blmat2;
-    
-    % **************************************************************
-    % 2) Calculate the local coordinate system for each bone
-    %    Replaces [AS] = asfunc(X,datast(1).arm);
-    % 	 BL = | IJ  SC  AC  EM  RS
-    %         | PX  AC  AA  EL  US |
-    %         | C7  0   TS  GH  OL |
-    %         | T8  0   AI  0   0  |
-    % 1  2  3  4  5  6  7  8  9  10 11 12 13
-    % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
 
-    
+% **************************************************************
+% 2) Calculate the local coordinate system for each bone
+%    Replaces [AS] = asfunc(X,datast(1).arm);
+% 	 BL = | IJ  SC  AC  EM  RS
+%         | PX  AC  AA  EL  US |
+%         | C7  0   TS  GH  OL |
+%         | T8  0   AI  0   0  |
+% 1  2  3  4  5  6  7  8  9  10 11 12 13
+% EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
+
 
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
-% digitization 
+% digitization
 % B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
-% 
-% %Using FLAG==1 if wanting to plot local CS 
-if flag ==1 
+%
+% %Using FLAG==1 if wanting to plot local CS
+if flag ==1
     plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
     plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
-end 
+end
 
-%% Looping through all frames in trial for each HT (marker in global)   
- 
+%% Looping through all frames in trial for each HT (marker in global)
+
 Trunk_Globe_ANG = zeros(3,30);
 Hum_Globe_ANG = zeros(3,30);
 Fore_Hum_Ang = zeros(3,30);
@@ -235,213 +220,103 @@ Hum_Trunk_Ang= zeros(3,30);
 
 flag =1; % SET TO 1 if want plots to show
 
-
+return
 
 %%
-%  for j = 1:250 %artibitrary choosing xtrunk just needs to go through all frames
 j=1;
-  % TRUNK SHOULDER HUMERUS FOREARM
-
-  % Trunk
-
- if strcmp(arm,'Left')
-     rot = rotz(pi);
-     row0 = [0 0 0 1];
-     col0 = [0 0 0]';
-     rotatz= cat(2,rot,col0);
-     rotatz = cat(1,rotatz,row0);
-     
-     TmarkertoGlob{1}(:,:,j) =rotatz*TmarkertoGlob{1}(:,:,j);
- end
-  
-%Trunk in global 
-TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1});
-
-% Trunk Bonylandmarks in GCS
-BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; %{1,1} is trunk  
-
-
-
-if flag ==1
-figure(1)
-for h = 1:length(BLnames_t)
-plot3(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),'*')
-if j == 1 hold on; 
-text(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),num2str(BLnames_t(h)))
-end
-end
-end
-
-
-% Shoulder
-if strcmp(arm,'Left')
+% for j = 1 %:nimag %artibitrary choosing xtrunk just needs to go through all frames
+    % TRUNK SHOULDER HUMERUS FOREARM
     
-rot = rotz(pi);
-row0 = [0 0 0 1];
-col0 = [0 0 0]';
-rotatz= cat(2,rot,col0);
-rotatz = cat(1,rotatz,row0);
-
-TmarkertoGlob{2}(:,:,j) =rotatz*TmarkertoGlob{2}(:,:,j);
-end
-
-
-StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2};
-
-% Shoulder Bonylandmarks in GCS
-BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};
-
-
-
-if flag ==1
-figure(1)
-for h = 1:length(BLnames_s)
-plot3(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),'*')
-if j == 1 hold on; 
-text(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),num2str(BLnames_s(h)))
-end
-end
-end
-
-% Humerus
-if strcmp(arm,'Left')
+    if strcmp(arm,'Left')
+        TmarkertoGlob{1}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{1}(:,:,j); % Trunk
+        TmarkertoGlob{2}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{2}(:,:,j); % Shoulder
+        TmarkertoGlob{3}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{3}(:,:,j); % Humerus
+        TmarkertoGlob{4}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{4}(:,:,j); % Forearm
+    end
     
-rot = rotz(pi);
-row0 = [0 0 0 1];
-col0 = [0 0 0]';
-rotatz= cat(2,rot,col0);
-rotatz = cat(1,rotatz,row0);
-
-TmarkertoGlob{3}(:,:,j) =rotatz*TmarkertoGlob{3}(:,:,j);
-end
-
-
-HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4};
-
-BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
-
-
-if flag==1 
-figure(1)
-for h = 1:length(BLnames_h)
-plot3(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),'*')
-if j == 1 hold on; 
-text(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),num2str(BLnames_h(h)))
-end
-end
-end 
-
-%Finding indices of Humerus BLs
-GH_IDX = find(BLnames_h=='GH');
-EL_IDX=  find(BLnames_h=='EL');
-EM_IDX=  find(BLnames_h=='EM');
-[GH,EM,EL] = deal(BL_G_h(:,GH_IDX,j),BL_G_h(:,EM_IDX,j),BL_G_h(:,EL_IDX,j));
-
-%MidPont Humerus
-H_Mid_H(1:3,j) =(EL(1:3)+EM(1:3))'/2;
-
-if flag ==1
-figure(1)
-plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
-if j == 1 hold on; 
-
-text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
-end
-%Line from GH to MidPnt between Epicondyles
-plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
-% plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
-xlabel('X axis')
-ylabel('y axis')
-zlabel('z axis')
-end
-
-% Forearm
-if strcmp(arm,'Left')
     
-rot = rotz(pi);
-row0 = [0 0 0 1];
-col0 = [0 0 0]';
-rotatz= cat(2,rot,col0);
-rotatz = cat(1,rotatz,row0);
+    TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1}); % Trunk in global
+    BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
+    StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
+    BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
+    HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
+    BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
+    FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
+    BL_G_f(:,:,j) = TmarkertoGlob{4}(:,:,j)*BLs{1,4};% Forearm Bonylandmarks in GCS
+    
+    %Finding indices of Humerus BLs
+    GH_IDX = find(BLnames_h=='GH');
+    EL_IDX=  find(BLnames_h=='EL');
+    EM_IDX=  find(BLnames_h=='EM');
+    [GH,EM,EL] = deal(BL_G_h(:,GH_IDX,j),BL_G_h(:,EM_IDX,j),BL_G_h(:,EL_IDX,j));
+    H_Mid_H(1:3,j) =(EL(1:3)+EM(1:3))'/2; %MidPont Humerus
+    
+    %Finding indices of Forearm BLs
+    OL_IDX = find(BLnames_f=='OL');
+    RS_IDX = find(BLnames_f=='RS');
+    US_IDX = find(BLnames_f=='US');
+    [OL,RS,US] = deal(BL_G_f(:,OL_IDX,j),BL_G_f(:,RS_IDX,j),BL_G_f(:,US_IDX,j));
+    H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2; % midpoint between styloids
+    
+    TtoG_frame = TtoG(:,:,j); %trunk CS in global at given frame of trial
+    StoG_frame = StoG(:,:,j); %SH CS in global at given frame of trial
+    HtoG_frame = HtoG(:,:,j); %Hum CS in global at given frame of trial
+    FtoG_frame = FtoG(:,:,j); %Fore CS in global at given frame of trial
+    HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS
+    
+    if flag ==1
+        figure(1)
+        plot3(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),'*')
+        if j == 1 hold on; end
+        plot3(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),'*')
+        plot3(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),'*')
+        plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
+        plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
+        plot3(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),'*')
+        plot3([H_Mid_F(1) H_Mid_H(1,j)],[H_Mid_F(2) H_Mid_H(2,j)],[H_Mid_F(3) H_Mid_H(3,j)])
+        
+        if j==1
+            text(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),BLnames_t)
+            text(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),BLnames_s)
+            text(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),BLnames_h)
+            text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
+            text(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),BLnames_f)
+            
+            quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+            text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+            
+            quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
+            text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
+            
+            quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+            text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
+            
+            quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
+            text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
+            
+            quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+            text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+            
+            %Line from GH to MidPnt between Epicondyles
+            % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+            xlabel('x (mm)')
+            ylabel('y (mm)')
+            zlabel('z (mm)')
+            axis 'equal'
+            
+            figure(2)
+            quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+            text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
+            hold on
+            quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+            text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
+            axis 'equal'
+             
+            [
+        end
+    end
 
-TmarkertoGlob{4}(:,:,j) =rotatz*TmarkertoGlob{4}(:,:,j);
-end
 
-
-FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
-
-% Forearm Bonylandmarks in GCS
-BL_G_f(:,:,j) = TmarkertoGlob{4}(:,:,j)*BLs{1,4};
-
-
-if flag ==1
-figure(1)
-for h = 1:4
-plot3(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),'*')
-if j == 1 hold on; 
-text(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),num2str(BLnames_f(h)))
-end
-end
-end
-%Finding indices of Forearm BLs
-OL_IDX = find(BLnames_f=='OL');
-RS_IDX = find(BLnames_f=='RS');
-US_IDX = find(BLnames_f=='US');
-
-%Forearm
-[OL,RS,US] = deal(BL_G_f(:,OL_IDX,j),BL_G_f(:,RS_IDX,j),BL_G_f(:,US_IDX,j));
-
-%midpoint between styloids
-H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2;
-
-if flag ==1
-%Plotting line between midpoint of epicondyles to midpoint of styloids
-plot3([H_Mid_F(1) H_Mid_H(1,j)],[H_Mid_F(2) H_Mid_H(2,j)],[H_Mid_F(3) H_Mid_H(3,j)])
-end
-
-
-% Plotting Bone Coordinate Systems in Global Coordinate System
-
-if j ==1 
-%Trunk
-TtoG_frame = TtoG(:,:,j); %trunk CS in global at given frame of trial
-if flag ==1
-quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
-text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
-end
-
-%Shoulder
-StoG_frame = StoG(:,:,j); %SH CS in global at given frame of trial
-if flag ==1 
-quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
-text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
-end
-
-%Humerus
-HtoG_frame = HtoG(:,:,j); %Hum CS in global at given frame of trial
-
-if flag ==1 
-quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
-end
-
-
-%Forearm 
-FtoG_frame = FtoG(:,:,j); %Fore CS in global at given frame of trial
-if flag ==1
-quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
-text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
-end
-
-HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS 
-
-if flag ==1
-quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
-end
-end
-
-return
 % Computing Euler Angles Frame by Frame
 
 % % Need 3x3 rotation matrix for the bones 
@@ -455,11 +330,14 @@ return
 %     [gANGLES(:,1,j)]=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',1); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 %     [gANGLES(:,2,j)]=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
   
-Trunk_Globe_ANG(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
 % Hum_Globe_ANG(3,j)=Hum_Globe_ANG(3,j)-180;
 % % Euler Ang Function
+
 % % Only compatible with ROTZYZ no XZY
 rotm=HtoG(1:3,1:3,j);
 Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
@@ -494,19 +372,29 @@ Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 %  end
 %% For Computing Elbow Angle based on bony landmarks 
 % With midpoints 
-a=norm(BL_G_f(1:3,4)-(BL_G_h(1:3,1)+BL_G_h(1:3,2))/2);
-b=norm((BL_G_h(1:3,1)+BL_G_h(1:3,2))/2 - BL_G_h(1:3,3));
-c=norm((BL_G_f(1:3,4)-BL_G_h(1:3,3)));
+a=norm(BL_G_f(1:3,4,j)-(BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2);
+b=norm((BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2 - BL_G_h(1:3,3,j));
+c=norm((BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j)));
 
 %Elbow Angle
-th=rad2deg(acos((a^2+b^2-c^2)/(2*a*b)))
+thel=rad2deg(acos((a^2+b^2-c^2)/(2*a*b)));
 
 %just bonylandmarks
-a2=norm(BL_G_f(1:3,4)-BL_G_f(1:3,3));
-b2=norm(BL_G_f(1:3,3)-BL_G_h(1:3,3));
-c2=norm(BL_G_f(1:3,4)-BL_G_h(1:3,3));
+a2=norm(BL_G_f(1:3,4,j)-BL_G_f(1:3,3,j));
+b2=norm(BL_G_f(1:3,3,j)-BL_G_h(1:3,3,j));
+c2=norm(BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j));
 %Elbow Angle
-th2=rad2deg(acos((a2^2+b2^2-c2^2)/(2*a2*b2)))
+thel2=rad2deg(acos((a2^2+b2^2-c2^2)/(2*a2*b2)));
+
+%% Compute shoulder angles based on bony landmarks
+P1=[BL_G_h(1:2,3,j);H_Mid_H(3,j)];
+P2=[;H_Mid_H(1,j);BL_G_h(2:3,3,j)];
+a=norm(BL_G_h(1:3,3,j)-P1);
+c=norm(BL_G_h(1:3,3,j)-H_Mid_H(1:3,j));
+b=norm(BL_G_h(1:3,3,j)-P2);
+
+thsab=rad2deg(acos(a/c));
+thsfl=rad2deg(acos(b/c));
 
 %%
 
