@@ -265,9 +265,10 @@ BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; %{1,1} is trunk
 if flag ==1
 figure(1)
 for h = 1:length(BLnames_t)
-plot3(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),'*')
+plot3(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
 if j == 1 hold on; 
-text(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),num2str(BLnames_t(h)))
+text(BL_G_t(1,h,j),BL_G_t(2,h,j),BL_G_t(3,h,j),num2str(BLnames_t(h)),'FontSize',14)
 end
 end
 end
@@ -296,9 +297,10 @@ BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};
 if flag ==1
 figure(1)
 for h = 1:length(BLnames_s)
-plot3(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),'*')
+plot3(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
 if j == 1 hold on; 
-text(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),num2str(BLnames_s(h)))
+text(BL_G_s(1,h,j),BL_G_s(2,h,j),BL_G_s(3,h,j),num2str(BLnames_s(h)),'FontSize',14)
 end
 end
 end
@@ -324,9 +326,10 @@ BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
 if flag==1 
 figure(1)
 for h = 1:length(BLnames_h)
-plot3(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),'*')
+plot3(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
 if j == 1 hold on; 
-text(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),num2str(BLnames_h(h)))
+text(BL_G_h(1,h,j),BL_G_h(2,h,j),BL_G_h(3,h,j),num2str(BLnames_h(h)),'FontSize',14)
 end
 end
 end 
@@ -345,10 +348,10 @@ figure(1)
 plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
 if j == 1 hold on; 
 
-text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
+%text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L','FontSize',14);
 end
 %Line from GH to MidPnt between Epicondyles
-plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
+plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)],'Color','b','LineWidth',8)
 % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
 xlabel('X axis')
 ylabel('y axis')
@@ -377,9 +380,10 @@ BL_G_f(:,:,j) = TmarkertoGlob{4}(:,:,j)*BLs{1,4};
 if flag ==1
 figure(1)
 for h = 1:4
-plot3(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),'*')
+plot3(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
 if j == 1 hold on; 
-text(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),num2str(BLnames_f(h)))
+text(BL_G_f(1,h,j),BL_G_f(2,h,j),BL_G_f(3,h,j),num2str(BLnames_f(h)),'FontSize',14)
 end
 end
 end
@@ -396,7 +400,7 @@ H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2;
 
 if flag ==1
 %Plotting line between midpoint of epicondyles to midpoibt of styloids
-plot3([H_Mid_F(1)  H_Mid_H(1,j)],[H_Mid_F(2)  H_Mid_H(2,j)],[H_Mid_F(3)  H_Mid_H(3,j)])
+plot3([H_Mid_F(1)  H_Mid_H(1,j)],[H_Mid_F(2)  H_Mid_H(2,j)],[H_Mid_F(3)  H_Mid_H(3,j)],'Color','b','LineWidth',8)
 end
 
 
