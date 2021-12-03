@@ -3,6 +3,7 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgem
 datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
+%% TESTING
 %% Loading in Max EMGS
 
      load([datafilepath '/Maxes/maxEMG.mat']);
