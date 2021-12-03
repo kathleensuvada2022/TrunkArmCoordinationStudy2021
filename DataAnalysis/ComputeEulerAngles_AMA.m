@@ -74,6 +74,7 @@ flag =1;
 % datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 % datafilepath = ['D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data','\',partid,'\',arm];
 datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
+datafilepath = 'F:\usr\Ana Maria\My Documents\Research\Projects\Stroke Trunk Arm Interaction\TrunkArmCoordinationStudy2021';
 datafilepath = fullfile(datafilepath,partid,arm);
 load(fullfile(datafilepath,[partid,'_','setup']));
 
@@ -197,14 +198,13 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % 1  2  3  4  5  6  7  8  9  10 11 12 13
 % EM EL GH SC IJ PX C7 T8 AC AA TS AI PC
 
-
 %%
 % Coordinate system for each bone in LCS (marker) -- 1 frame because during
 % digitization
 % B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 %
 % %Using FLAG==1 if wanting to plot local CS
-if flag ==1
+if flag ==0
     plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
@@ -220,7 +220,6 @@ Hum_Trunk_Ang= zeros(3,30);
 
 flag =1; % SET TO 1 if want plots to show
 
-return
 
 %%
 j=1;
@@ -311,8 +310,11 @@ j=1;
             quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
             text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
             axis 'equal'
+            Hrz
+            quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+            
              
-            [
+            
         end
     end
 
@@ -333,6 +335,7 @@ j=1;
 gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
+return
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
 % Hum_Globe_ANG(3,j)=Hum_Globe_ANG(3,j)-180;
