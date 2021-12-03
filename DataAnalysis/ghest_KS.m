@@ -27,7 +27,7 @@ Rscap_mark = ScapCoord; % HT Matrix in marker CS
 bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%function gh=ghest(bl_mark,Rscap_mark)
+%function gh=ghest(bl_mark,Rscap_mark)EL
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -51,9 +51,9 @@ end
 bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS
 
 %%
-RotX_90 =rotx(deg2rad(90));
-RotX_90= cat(2, RotX_90,col0);
-RotX_90 = cat(1, RotX_90,row0); %Adding a column of 0s and row of 1s st 4x4
+% RotX_90 =rotx(deg2rad(90));
+% RotX_90= cat(2, RotX_90,col0);
+% RotX_90 = cat(1, RotX_90,row0); %Adding a column of 0s and row of 1s st 4x4
 
 %Rotating BLS 90 about x so aligned with original system
 bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
@@ -126,10 +126,17 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
 
 gh_rot = rotx(-90)*gh; % Rotated GH still in the Bone CS
 
-%% Then Get back into marker CS 
+%% Then Get back into Scapula marker CS 
 %Rscap_mark2 = Rscap_mark(1:3,1:3); % Just the rotation matrix
 gh_markr = Rscap_mark*[gh_rot;1]; %Rotated GH now converted to the Marker CS --> THIS IS MARKER OF SCAPULAR 
 
+
+
+%% Saving to set up file 
+setupID = 'RTIS2011_setup';
+setup.GHComp_shmarker = gh_markr;
+
+save(setupID,'setup');
 
 %%
 %gh=Rsca*ghrel+Osca; Not needed because GH is in scapular CS
