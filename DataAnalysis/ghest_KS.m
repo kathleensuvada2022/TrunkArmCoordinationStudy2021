@@ -22,12 +22,12 @@
 % 2) Convert BLs and CS to Bone CS 
 
 
-%% testing 
-Rscap_mark = ScapCoord; % HT Matrix in marker CS
-bl_mark = BLs_lcs_s;% in marker CS
+% %% testing 
+% Rscap_mark = ScapCoord; % HT Matrix in marker CS
+% bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%function gh=ghest(bl_mark,Rscap_mark)EL
+function gh=ghest_KS(bl_mark,Rscap_mark)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -141,13 +141,13 @@ gh_markr = Rscap_mark*[gh_rot;1]; %Rotated GH now converted to the Marker CS -->
 
 
 %% Saving to set up file 
-setupID = 'RTIS2011_setup';
-setup.GHComp_shmarker = gh_markr;
-
-save(setupID,'setup');
+% setupID = 'RTIS2011_setup';
+% setup.GHComp_shmarker = gh_markr;
+% 
+% save(setupID,'setup');
 
 %%
 %gh=Rsca*ghrel+Osca; Not needed because GH is in scapular CS
 
 
-%end
+end
