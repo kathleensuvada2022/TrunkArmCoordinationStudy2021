@@ -204,12 +204,12 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 %
 % %Using FLAG==1 if wanting to plot local CS
-if flag ==0
-    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
-    plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
-    plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
-    plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
-end
+% if flag ==0
+%     plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
+%     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
+%     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
+%     plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
+% end
 
 %% Looping through all frames in trial for each HT (marker in global)
 
@@ -222,8 +222,8 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-j=1;
-% for j = 1 %:nimag %artibitrary choosing xtrunk just needs to go through all frames
+
+ for j = 1 :nimag %artibitrary choosing xtrunk just needs to go through all frames
     % TRUNK SHOULDER HUMERUS FOREARM
     
     if strcmp(arm,'Left')
@@ -239,10 +239,12 @@ j=1;
     StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
     BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
-   
-    gh(j) =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs)
     
-    GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh(j); %Computed GH from Shoulder Marker Frame now in GCS
+   
+    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs)
+%
+    GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
+ 
     HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
     BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
     FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
@@ -342,7 +344,7 @@ j=1;
 gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
-return
+% return
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
 % Hum_Globe_ANG(3,j)=Hum_Globe_ANG(3,j)-180;
@@ -379,7 +381,7 @@ rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
-%  end
+  end
 %% For Computing Elbow Angle based on bony landmarks 
 % With midpoints 
 a=norm(BL_G_f(1:3,4,j)-(BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2);

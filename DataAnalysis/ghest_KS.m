@@ -27,14 +27,14 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh=ghest_KS(bl_mark,Rscap_mark)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
-%organizing BLS
-bl = zeros(4,4);
-for i =1:4
-bl(1:4,i) = bl_mark{1,i}(:,1);
-end
+%organizing BLS don't need anymore?
+% bl = zeros(4,4);
+% for i =1:4
+% bl(1:4,i) = bl_mark{1,i}(:,1);
+% end
 
 %%
 
@@ -47,7 +47,7 @@ end
 % col0 = [0 0 0]';`
 % Rscap_mark= cat(2, Rscap_mark,col0);
 % Rscap_mark = cat(1, Rscap_mark,row0);
-
+bl = bl_mark;
 bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS
 
 %% Rotating BLS 90 about x so aligned with original system
@@ -58,7 +58,7 @@ bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
 % Rsca=Rsca*diag([-1 -1 1]); % Flips the x and y axes == 180 degree rotation about z % changing to that Scap Coord follows original definition
 
 
-Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
+% Osca=(bl(1:3,1)+bl(1:3,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 
 % ac=Rsca'*(ac-Osca); No necessary because BLs are already in scapular CS
 % aa=Rsca'*(aa-Osca);
@@ -66,7 +66,7 @@ Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 % ai=Rsca'*(ai-Osca);
 
 % Change origin to midpoint between AC and AA
-bl=bl-repmat(Osca,1,4); % for 4 Bls
+% bl(1:3)=bl(1:3)-repmat(Osca,1,4); % for 4 Bls
 
 %%
 lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa); % length from AC to AA
@@ -103,31 +103,31 @@ ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
 ScapCS_bone= [rotx(pi/2) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 %% Testing out Plotting BLs (With Computed GH) before rotating back
-figure()
-quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-hold on
-text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
-
-plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
-plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
-plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
-plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
-axis equal
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
-
-plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+% figure()
+% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+% hold on
+% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+% 
+% plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+% plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+% plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+% plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+% axis equal
+% xlabel('x axis')
+% ylabel('y axis')
+% zlabel('z axis')
+% 
+% plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 
 %% Rotate GH back to my Coordinate system definition
 gh(2) = -gh(2);
