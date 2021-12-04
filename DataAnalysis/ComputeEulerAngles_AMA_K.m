@@ -98,6 +98,7 @@ BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
 
 %% Loading in BLs (in marker CS) and Bone CS created (in Marker CS)
 BLs = setup.bl; % BLs in marker CS
+gh_markr = setup.GHComp_shmarker; %loading in computed GH from setup 
 BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 
 
