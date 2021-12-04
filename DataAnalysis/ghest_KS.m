@@ -127,11 +127,12 @@ zlabel('z axis')
 
 plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14)
+text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 
 %% Rotate GH back to my Coordinate system definition
-
-gh_rot = rotx(-90)*gh; % Rotated GH still in the Bone CS
+gh(2) = -gh(2);
+gh(3) = -gh(3);
+gh_rot = rotx(-pi/2)*gh; % Rotated GH still in the Bone CS
 
 %% Then Get back into Scapula marker CS 
 %Rscap_mark2 = Rscap_mark(1:3,1:3); % Just the rotation matrix

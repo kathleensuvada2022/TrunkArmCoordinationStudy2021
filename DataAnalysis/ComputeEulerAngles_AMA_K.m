@@ -25,7 +25,7 @@
 filename = 'trial5';
 %arm = 'Left';
 arm = 'Right';
-partid = 'RTIS1005';
+partid = 'RTIS2011';
 flag =1;
 
 %%
