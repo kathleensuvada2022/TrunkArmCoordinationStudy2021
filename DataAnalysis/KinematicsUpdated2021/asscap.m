@@ -67,13 +67,13 @@ Orig = AC(1:4);
 % Gh_bone = inv(ScapCoord)*gh_markr;
 % plot3(Gh_bone(1),Gh_bone(2),Gh_bone(3),'-o','Color','b','MarkerSize',10,...
 %     'MarkerFaceColor','#D9FFFF')
-
-%After Running 
-plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
-hold on
-plot3(Gh_bone(1),Gh_bone(2),Gh_bone(3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(Gh_bone(1),Gh_bone(2),Gh_bone(3),'GH Computed','FontSize',12)
+% 
+% %After Running 
+% plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
+% hold on
+% plot3(Gh_bone(1),Gh_bone(2),Gh_bone(3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(Gh_bone(1),Gh_bone(2),Gh_bone(3),'GH Computed','FontSize',12)
 
 
 %%
