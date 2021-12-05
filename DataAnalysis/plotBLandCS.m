@@ -53,9 +53,7 @@ Bone_bone =CS*inv(CS);
 %% Plotting bone CS and BLS in bone cf
 figure()
 quiver3(Bone_bone([1 1 1],4)',Bone_bone([2 2 2],4)',Bone_bone([3 3 3],4)',50*Bone_bone(1,1:3),50*Bone_bone(2,1:3),50*Bone_bone(3,1:3))
-% quiver3(Bone_bone([1 1 1],4)',Bone_bone([2 2 2],4)',Bone_bone([3 3 3],4)',50,50,50)
-%text(Bone_bone(1,4)+Bone_bone*CS(1,1:3),Bone_bone(2,4)+50*Bone_bone(2,1:3),Bone_bone(3,4)+50*Bone_bone(3,1:3),{'x','y','z'})
-text(Bone_bone(1,4)+50*Bone_bone(1,1:3),Bone_bone(2,4)+50*Bone_bone(2,1:3),Bone_bone(3,4)+50*Bone_bone(3,1:3),{'x','y','z'})
+%quiver3(ForeCS([1 1 1],4)',ForeCS([2 2 2],4)',ForeCS([3 3 3],4)',50,50,50)
 
 
 hold on
@@ -78,7 +76,7 @@ text(BL_bone{1,p}(1),BL_bone{1,p}(2),BL_bone{1,p}(3),BLnames(p),'FontSize',12)
 %     'MarkerFaceColor','#D9FFFF')
 % text(BL_bone{1,4}(1),BL_bone{1,4}(2),BL_bone{1,4}(3),BLnames(4),'FontSize',12)
 hold on
-title('Bone CS')
+title('Global CS')
 end
 axis equal
 
