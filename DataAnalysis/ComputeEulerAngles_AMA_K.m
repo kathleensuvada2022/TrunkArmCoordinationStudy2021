@@ -70,11 +70,11 @@ flag =1;
 %if nargin<3, reffr='trunk'; end
 %% Loading in the BL data (Digitization) and the BLs Names
 
-%datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
+datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data'];%,'/',partid,'/',arm];
 % datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 % datafilepath = ['D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data','\',partid,'\',arm];
-datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
-datafilepath = 'F:\usr\Ana Maria\My Documents\Research\Projects\Stroke Trunk Arm Interaction\TrunkArmCoordinationStudy2021';
+% datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
+% datafilepath = 'F:\usr\Ana Maria\My Documents\Research\Projects\Stroke Trunk Arm Interaction\TrunkArmCoordinationStudy2021';
 datafilepath = fullfile(datafilepath,partid,arm);
 load(fullfile(datafilepath,[partid,'_','setup']));
 
@@ -204,12 +204,12 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 %
 % %Using FLAG==1 if wanting to plot local CS
-if flag ==0
-    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
-    plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
-    plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
-    plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
-end
+% if flag ==0
+%     plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
+%     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
+%     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
+%     plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
+% end
 
 %% Looping through all frames in trial for each HT (marker in global)
 
@@ -222,8 +222,8 @@ flag =1; % SET TO 1 if want plots to show
 
 
 %%
-j=1;
-% for j = 1 %:nimag %artibitrary choosing xtrunk just needs to go through all frames
+
+ for j = 1 :nimag %artibitrary choosing xtrunk just needs to go through all frames
     % TRUNK SHOULDER HUMERUS FOREARM
     
     if strcmp(arm,'Left')
@@ -238,6 +238,13 @@ j=1;
     BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
     StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
+    BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
+    
+   
+    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs)
+%
+    GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
+ 
     HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
     BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
     FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
@@ -268,6 +275,7 @@ j=1;
         plot3(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),'*')
         if j == 1 hold on; end
         plot3(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),'*')
+        plot3(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'*')
         plot3(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),'*')
         plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
         plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
@@ -277,6 +285,7 @@ j=1;
         if j==1
             text(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),BLnames_t)
             text(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),BLnames_s)
+            text(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'GH Computed')
             text(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),BLnames_h)
             text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
             text(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),BLnames_f)
@@ -303,17 +312,17 @@ j=1;
             zlabel('z (mm)')
             axis 'equal'
             
-            figure(2)
-            quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-            text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
-            hold on
-            quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-            text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
-            axis 'equal'
-            Hrz
-            quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-            
-             
+%             figure(2)
+%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+%             text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
+%             hold on
+%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+%             text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
+%             axis 'equal'
+%             Hrz
+%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+%             
+%              
             
         end
     end
@@ -335,7 +344,7 @@ j=1;
 gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
-return
+% return
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
 % Hum_Globe_ANG(3,j)=Hum_Globe_ANG(3,j)-180;
@@ -372,7 +381,7 @@ rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 
-%  end
+  end
 %% For Computing Elbow Angle based on bony landmarks 
 % With midpoints 
 a=norm(BL_G_f(1:3,4,j)-(BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2);
