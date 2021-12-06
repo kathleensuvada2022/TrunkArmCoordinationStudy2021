@@ -241,7 +241,7 @@ j=1;
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
     
     BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
-    gh(j) =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs) via GH function
+    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs) via GH function
     GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
     
