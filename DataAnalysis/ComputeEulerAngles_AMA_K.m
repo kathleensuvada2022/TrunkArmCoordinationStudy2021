@@ -275,6 +275,7 @@ j=1;
         plot3(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),'*')
         if j == 1 hold on; end
         plot3(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),'*')
+        plot3(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'*') %kacey adding computed GH
         plot3(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),'*')
         plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
         plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
@@ -284,6 +285,7 @@ j=1;
         if j==1
             text(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),BLnames_t)
             text(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),BLnames_s)
+            text(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'GH Computed') %Kacey adding label for computed GH
             text(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),BLnames_h)
             text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
             text(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),BLnames_f)
