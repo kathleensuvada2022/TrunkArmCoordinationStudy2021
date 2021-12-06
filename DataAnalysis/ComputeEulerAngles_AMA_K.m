@@ -21,7 +21,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function GH_G_comp_s = ComputeEulerAngles_AMA_KS(filename,arm,partid,flag,k)
+function GH_G_comp_s = ComputeEulerAngles_AMA_K(filename,arm,partid,flag,k)
 %%
 % filename = 'trial5';
 % %arm = 'Left';
@@ -219,7 +219,7 @@ Hum_Globe_ANG = zeros(3,30);
 Fore_Hum_Ang = zeros(3,30);
 Hum_Trunk_Ang= zeros(3,30);
 
-flag =1; % SET TO 1 if want plots to show
+% flag =1; % SET TO 1 if want plots to show
 
 %return
 
@@ -243,8 +243,8 @@ j=k; % a part of larger loop outside this function.
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
     
     BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
-    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs) via GH function
-    GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
+    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2},flag) % Computing GH at jth time point (in sh marker cs) via GH function
+    GH_G_comp_s(:,:,1) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
     
     HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
@@ -326,7 +326,7 @@ j=k; % a part of larger loop outside this function.
         end
     end
 
-
+% GH_G_comp_s = squeeze(GH_G_comp_s); % now 4X nimag 
 % Computing Euler Angles Frame by Frame
 
 % % Need 3x3 rotation matrix for the bones 

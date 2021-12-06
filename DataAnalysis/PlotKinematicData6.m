@@ -139,8 +139,11 @@ matname = fullfile(filepath_times, [name_times extention]);
 %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
 %% Getting Computed GH
 flag=0; %will not plot all Segment CSes
-gh = ComputeEulerAngles_AMA_KS(mfname,hand,partid,flag,i) %This gives computed GH converted to GCS
+gh= zeros(4,length(metdata));
 
+for k = 1:length(metdata) %looping through each frame to get GH
+gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k) %This gives computed GH converted to GCS
+end
 
 %% Compute reaching distance (between shoulder and hand from hand marker)
 

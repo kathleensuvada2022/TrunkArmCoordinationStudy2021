@@ -27,7 +27,7 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh_markr=ghest_KS(bl_mark,Rscap_mark)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -127,6 +127,7 @@ ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
 % Rotating 90 degrees to align with CS
 ScapCS_bone= [rotx(pi/2) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 %% Kacey Testing and plotting computed GH 
+if flag==1
 figure()
 quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
 hold on
@@ -152,6 +153,8 @@ zlabel('z axis')
 plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
  text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+end 
+
 %%
 %Based on figure - make y and z neg
 gh(2) = -gh(2);
