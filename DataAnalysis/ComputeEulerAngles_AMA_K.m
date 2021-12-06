@@ -243,7 +243,7 @@ j=k; % a part of larger loop outside this function.
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
     
     BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
-    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2},flag) % Computing GH at jth time point (in sh marker cs) via GH function
+    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2},flag); % Computing GH at jth time point (in sh marker cs) via GH function
     GH_G_comp_s(:,:,1) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
     
@@ -378,7 +378,7 @@ Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row
 rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
-return
+% return
  end
 %% For Computing Elbow Angle based on bony landmarks 
 % % With midpoints 

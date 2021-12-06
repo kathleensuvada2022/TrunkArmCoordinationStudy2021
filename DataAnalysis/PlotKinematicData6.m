@@ -142,7 +142,7 @@ flag=0; %will not plot all Segment CSes
 gh= zeros(4,length(metdata));
 
 for k = 1:length(metdata) %looping through each frame to get GH
-gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k) %This gives computed GH converted to GCS
+gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
 end
 
 %% Compute reaching distance (between shoulder and hand from hand marker)

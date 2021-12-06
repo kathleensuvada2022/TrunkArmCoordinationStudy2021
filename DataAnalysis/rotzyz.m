@@ -69,4 +69,4 @@ else
    %ya = ya2;
    za = za2;
 end
-disp(rad2deg([z1 y1 za1;z2 y2 za2]))
+% disp(rad2deg([z1 y1 za1;z2 y2 za2]))
