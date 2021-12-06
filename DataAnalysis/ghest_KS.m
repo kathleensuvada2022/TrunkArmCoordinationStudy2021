@@ -126,32 +126,32 @@ ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
  
 % Rotating 90 degrees to align with CS
 ScapCS_bone= [rotx(pi/2) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
-%% 
-% figure()
-% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-% hold on
-% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
-% 
-% plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
-% plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
-% plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
-% plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
-% axis equal
-% xlabel('x axis')
-% ylabel('y axis')
-% zlabel('z axis')
-% 
-% plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-%  text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+%% Kacey Testing and plotting computed GH 
+figure()
+quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+hold on
+text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
+
+plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+ text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 %%
 %Based on figure - make y and z neg
 gh(2) = -gh(2);

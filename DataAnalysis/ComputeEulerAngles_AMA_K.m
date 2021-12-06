@@ -204,12 +204,12 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 % B_CS_marker = {TrunkCS,ScapCoord,Hum_CS,ForeCS};
 %
 % %Using FLAG==1 if wanting to plot local CS
-if flag ==1
-    plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
-    plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
-    plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
-    plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
-end
+% if flag ==1
+%     plotBLandCS(BLs_lcs_t,BLnames_t,TrunkCS,'Trunk CS')
+%     plotBLandCS(BLs_lcs_f,BLnames_f,ForeCS,'Forearm CS')
+%     plotBLandCS(BLs_lcs_h,BLnames_h,Hum_CS,'Humerus CS')
+%     plotBLandCS(BLs_lcs_s,BLnames_s,ScapCoord,'Shoulder CS')
+% end
 
 %% Looping through all frames in trial for each HT (marker in global)
 
@@ -376,7 +376,7 @@ Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row
 rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
-
+return
 %  end
 %% For Computing Elbow Angle based on bony landmarks 
 % With midpoints 
