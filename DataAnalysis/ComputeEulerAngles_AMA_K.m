@@ -70,10 +70,10 @@ flag =1;
 %if nargin<3, reffr='trunk'; end
 %% Loading in the BL data (Digitization) and the BLs Names
 
-%datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
+datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/'];
 % datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 % datafilepath = ['D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data','\',partid,'\',arm];
-datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
+%datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';
 datafilepath = fullfile(datafilepath,partid,arm);
 load(fullfile(datafilepath,[partid,'_','setup']));
 
@@ -220,7 +220,7 @@ Hum_Trunk_Ang= zeros(3,30);
 
 flag =1; % SET TO 1 if want plots to show
 
-return
+%return
 
 %%
 j=1;
@@ -309,16 +309,16 @@ j=1;
             ylabel('y (mm)')
             zlabel('z (mm)')
             axis 'equal'
+%             
+%             figure(2)
+%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+%             text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
+%             hold on
+%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+%             text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
+%             axis 'equal'
+%              
             
-            figure(2)
-            quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-            text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
-            hold on
-            quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-            text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
-            axis 'equal'
-             
-            [
         end
     end
 
