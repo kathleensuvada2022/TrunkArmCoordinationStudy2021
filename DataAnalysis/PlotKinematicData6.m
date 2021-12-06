@@ -138,7 +138,8 @@ matname = fullfile(filepath_times, [name_times extention]);
 
 %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
 %% Getting Computed GH
-[gh] = ComputeEulerAngles_KS(filename,arm,partid,flag,k) %This gives gh in scapular marker CS
+flag=0; %will not plot all Segment CSes
+gh = ComputeEulerAngles_AMA_KS(mfname,hand,partid,flag,i) %This gives computed GH converted to GCS
 
 
 %% Compute reaching distance (between shoulder and hand from hand marker)
@@ -146,7 +147,7 @@ matname = fullfile(filepath_times, [name_times extention]);
 % maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
 
 %Updating Definition using Computed GH 
-maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
+maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
 
 %% Max Hand Excursion
 
