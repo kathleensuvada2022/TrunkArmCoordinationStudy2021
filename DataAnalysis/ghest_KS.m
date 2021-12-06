@@ -23,11 +23,11 @@
 
 
 %% testing 
-Rscap_mark = ScapCoord; % HT Matrix in marker CS
-bl_mark = BLs_lcs_s;% in marker CS
+% Rscap_mark = ScapCoord; % HT Matrix in marker CS
+% bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%function gh=ghest(bl_mark,Rscap_mark)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -47,13 +47,13 @@ end
 % col0 = [0 0 0]';
 % Rscap_mark= cat(2, Rscap_mark,col0);
 % Rscap_mark = cat(1, Rscap_mark,row0);
-
+bl = bl_mark;
 bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS
 
 %%
-RotX_90 =rotx(deg2rad(90));
-RotX_90= cat(2, RotX_90,col0);
-RotX_90 = cat(1, RotX_90,row0); %Adding a column of 0s and row of 1s st 4x4
+% RotX_90 =rotx(deg2rad(90));
+% RotX_90= cat(2, RotX_90,col0);
+% RotX_90 = cat(1, RotX_90,row0); %Adding a column of 0s and row of 1s st 4x4
 
 %Rotating BLS 90 about x so aligned with original system
 bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
@@ -85,7 +85,7 @@ bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
 % zlabel('z')
  %%
 
-Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
+Osca=(bl(1:3,1)+bl(1:3,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 
 % ac=Rsca'*(ac-Osca); No necessary because BLs are already in scapular CS
 % aa=Rsca'*(aa-Osca);
@@ -93,7 +93,7 @@ Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
 % ai=Rsca'*(ai-Osca);
 
 % Change origin to midpoint between AC and AA
-bl=bl-repmat(Osca,1,4); % for 4 Bls
+bl(1:3)=bl(1:3)-repmat(Osca,1,4); % for 4 Bls
 
 %%
 lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa); % length from AC to AA
@@ -120,7 +120,42 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
     [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
 % Kacey: Write out matrix. GH regression paper to see where numbers from
 
-% 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) 
+% 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) '
+%% 
+ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
+ 
+% Rotating 90 degrees to align with CS
+ScapCS_bone= [rotx(pi/2) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
+%% 
+figure()
+quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+hold on
+text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
+
+plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+ text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+%%
+%Based on figure - make y and z neg
+gh(2) = -gh(2);
+gh(3) = -gh(3);
 
 %% Rotate GH back to my Coordinate system definition
 
@@ -135,4 +170,4 @@ gh_markr = Rscap_mark*[gh_rot;1]; %Rotated GH now converted to the Marker CS -->
 %gh=Rsca*ghrel+Osca; Not needed because GH is in scapular CS
 
 
-%end
+end
