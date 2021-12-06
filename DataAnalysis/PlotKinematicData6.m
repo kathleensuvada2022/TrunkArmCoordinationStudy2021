@@ -134,7 +134,7 @@ filepath_times=datafilepath;
 name_times = ['Times_Trial' num2str(mtrials(i)) '.mat'];
 matname = fullfile(filepath_times, [name_times extention]);
     
-save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
+% save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
 
 %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
 
@@ -153,7 +153,9 @@ maxhandexcrsn = sqrt((xhand(idx(3),1)-Xo_sh)^2 +(xhand(idx(3),2)-Yo_sh)^2);
 
 %% Compute shoulder and trunk displacement at maximum reach - using BLS
 
-  shtrdisp=sqrt(sum(([xshldr(idx(3),1:2);xjug(idx(3),1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
+% Based on Anterior Acromion
+%   shtrdisp=sqrt(sum(([xshldr(idx(3),1:2);xjug(idx(3),1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
+%
   
   sh_exc = shtrdisp(1) -shtrdisp(2);
   
