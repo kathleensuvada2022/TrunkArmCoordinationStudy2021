@@ -146,8 +146,8 @@ gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives compu
 end
 
 gh = gh';%Flipping so organized by columns (time = rows) like other variables
-gh(1,:) = -gh(:,1);
-gh(2,:) = -gh(:,2);
+gh(:,1) = -gh(:,1);
+gh(:,2) = -gh(:,2);
 %% Compute reaching distance (between shoulder and hand from hand marker)
 
 % maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
@@ -166,23 +166,21 @@ maxhandexcrsn = sqrt((xhand(idx(3),1)-Xo_sh)^2 +(xhand(idx(3),2)-Yo_sh)^2);
 
 %% Compute shoulder and trunk displacement at maximum reach - using BLS
 
-% Based on Anterior Acromion
-%   shtrdisp=sqrt(sum(([xshldr(idx(3),1:2);xjug(idx(3),1:2)]-[nanmean(xshldr(1:5,1:2));nanmean(xjug(1:5,1:2))]).^2,2))';
-%   sh_exc = shtrdisp(1) -shtrdisp(2);
-
+%Changed to be based on GH
+    sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
+%    sh_exc = shdisp(1) -shdisp(2);
+% sh_exc2 = sqrt((gh(idx(3),1)-nanmean(gh(1:5,1)))^2+(gh(idx(3),2)-nanmean(gh(1:5,2)))^2);
 %Based on jugular notch
-  trunk_exc=sqrt(sum(xjug(idx(3),1:2)-nanmean(xjug(1:5,1:2)).^2,2))';
+%   trunk_exc=sqrt(sum(xjug(idx(3),1:2)-nanmean(xjug(1:2,1:2)).^2,2))';
 
+trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
   
- 
-
-
 %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
 maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
  
 maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
  
-%shex_current_trial(i) = sh_exc;  
+shex_current_trial(i) = sh_exc;  
 
 trex_current_trial(i) = trunk_exc;
 
@@ -297,17 +295,18 @@ end
 %pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
-avgmaxreach =nanmean(maxreach_current_trial);
-std_maxreach = nanstd(maxreach_current_trial);
+avgmaxreach =nanmean(maxreach_current_trial)
+std_maxreach = nanstd(maxreach_current_trial)
 
 avgmaxhand = nanmean(maxhandexcrsn_current_trial);
 std_maxhand= nanstd(maxhandexcrsn_current_trial);
 
-% avgshldr = nanmean(shex_current_trial);
-% stdshldr = nanstd(shex_current_trial);
+%Updated based on GH computation
+avgshldr = nanmean(shex_current_trial)
+stdshldr = nanstd(shex_current_trial)
 
-avgtrunk = nanmean(trex_current_trial);
-stdtrunk = nanstd(trex_current_trial);
+avgtrunk = nanmean(trex_current_trial)
+stdtrunk = nanstd(trex_current_trial)
 
 %  avgemg_vel = mean(emgvel_trial)
 %  avgemg_start = mean(emgstart_trial)
