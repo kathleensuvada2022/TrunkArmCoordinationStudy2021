@@ -381,30 +381,30 @@ Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 return
  end
 %% For Computing Elbow Angle based on bony landmarks 
-% % With midpoints 
-% a=norm(BL_G_f(1:3,4,j)-(BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2);
-% b=norm((BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2 - BL_G_h(1:3,3,j));
-% c=norm((BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j)));
-% 
-% %Elbow Angle
-% thel=rad2deg(acos((a^2+b^2-c^2)/(2*a*b)));
-% 
-% %just bonylandmarks
-% a2=norm(BL_G_f(1:3,4,j)-BL_G_f(1:3,3,j));
-% b2=norm(BL_G_f(1:3,3,j)-BL_G_h(1:3,3,j));
-% c2=norm(BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j));
-% %Elbow Angle
-% thel2=rad2deg(acos((a2^2+b2^2-c2^2)/(2*a2*b2)));
+% With midpoints 
+a=norm(BL_G_f(1:3,4,j)-(BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2);
+b=norm((BL_G_h(1:3,1,j)+BL_G_h(1:3,2,j))/2 - BL_G_h(1:3,3,j));
+c=norm((BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j)));
+
+%Elbow Angle
+thel=rad2deg(acos((a^2+b^2-c^2)/(2*a*b)));
+
+%just bonylandmarks
+a2=norm(BL_G_f(1:3,4,j)-BL_G_f(1:3,3,j));
+b2=norm(BL_G_f(1:3,3,j)-BL_G_h(1:3,3,j));
+c2=norm(BL_G_f(1:3,4,j)-BL_G_h(1:3,3,j));
+%Elbow Angle
+thel2=rad2deg(acos((a2^2+b2^2-c2^2)/(2*a2*b2)));
 
 %% Compute shoulder angles based on bony landmarks
-% P1=[BL_G_h(1:2,3,j);H_Mid_H(3,j)];
-% P2=[;H_Mid_H(1,j);BL_G_h(2:3,3,j)];
-% a=norm(BL_G_h(1:3,3,j)-P1);
-% c=norm(BL_G_h(1:3,3,j)-H_Mid_H(1:3,j));
-% b=norm(BL_G_h(1:3,3,j)-P2);
-% 
-% thsab=rad2deg(acos(a/c));
-% thsfl=rad2deg(acos(b/c));
+P1=[BL_G_h(1:2,3,j);H_Mid_H(3,j)];
+P2=[;H_Mid_H(1,j);BL_G_h(2:3,3,j)];
+a=norm(BL_G_h(1:3,3,j)-P1);
+c=norm(BL_G_h(1:3,3,j)-H_Mid_H(1:3,j));
+b=norm(BL_G_h(1:3,3,j)-P2);
+
+thsab=rad2deg(acos(a/c));
+thsfl=rad2deg(acos(b/c));
 
 %%
 
@@ -429,57 +429,57 @@ return
 
 
 %% 
-% 
-% % Getting Angle from act3d data
-% act3ddata = data.act;
-% endeff_rotation = act3ddata(:,8);
-% 
-% 
-% % getting 3rd MCP in global 
-% MCP3_Glob_x = squeeze(BL_G_f(1,4,:));
-% MCP3_Glob_y = squeeze(BL_G_f(2,4,:));
+
+% Getting Angle from act3d data
+act3ddata = data.act;
+endeff_rotation = act3ddata(:,8);
+
+
+% getting 3rd MCP in global 
+MCP3_Glob_x = squeeze(BL_G_f(1,4,:));
+MCP3_Glob_y = squeeze(BL_G_f(2,4,:));
 
 %% Plotting ACT3D Data and Metria
-% 
-% figure()
-% plot(-act3ddata(:,2),-act3ddata(:,3))
-% hold on
-% axis equal
-% xlabel('X position (m)')
-% ylabel('Y Position (m)')
-% title('ACT3D EE Position','FontSize',16)
-% figure()
-% plot(MCP3_Glob_x,MCP3_Glob_y)
-% axis equal
-% xlabel('X position (mm)')
-% ylabel('Y Position(mm)')
-% title('Metria 3rd MCP in GCS','FontSize',16)
+
+figure()
+plot(-act3ddata(:,2),-act3ddata(:,3))
+hold on
+axis equal
+xlabel('X position (m)')
+ylabel('Y Position (m)')
+title('ACT3D EE Position','FontSize',16)
+figure()
+plot(MCP3_Glob_x,MCP3_Glob_y)
+axis equal
+xlabel('X position (mm)')
+ylabel('Y Position(mm)')
+title('Metria 3rd MCP in GCS','FontSize',16)
 
 
-% %% Plotting angles 
-% 
-% 
-% figure(1)
-% plot(Trunk_Globe_ANG(1,:)) 
-% hold on
-% plot(Trunk_Globe_ANG(2,:))
-% plot(Hum_Globe_ANG(1,:))
-% plot(Hum_Globe_ANG(2,:))
-% xlabel('Samples')
-% ylabel('Angle in Degrees')
-% legend('Trunk Angle Global (X)','Trunk Angle Global (Z)', ' Hum Angle Global (Z)', 'Hum Angle Global (Y)')
-% title('Angles About Global CS','FontSize', 16)
-% 
-% figure(3)
-% plot(Fore_Hum_Ang(1,:)) 
-% hold on
-% plot(Fore_Hum_Ang(2,:))
-% plot(Hum_Trunk_Ang(1,:))
-% plot(Hum_Trunk_Ang(2,:))
-% xlabel('Samples')
-% ylabel('Angle in Degrees')
-% legend('Forearm in Hum (X)','Forearm in Hum (Z)', ' Hum in Trunk (Z)', 'Hum in Trunk (Y)')
-% title('Angles About Proximal Bone CS','FontSize', 16)
+%% Plotting angles 
+
+
+figure(1)
+plot(Trunk_Globe_ANG(1,:)) 
+hold on
+plot(Trunk_Globe_ANG(2,:))
+plot(Hum_Globe_ANG(1,:))
+plot(Hum_Globe_ANG(2,:))
+xlabel('Samples')
+ylabel('Angle in Degrees')
+legend('Trunk Angle Global (X)','Trunk Angle Global (Z)', ' Hum Angle Global (Z)', 'Hum Angle Global (Y)')
+title('Angles About Global CS','FontSize', 16)
+
+figure(3)
+plot(Fore_Hum_Ang(1,:)) 
+hold on
+plot(Fore_Hum_Ang(2,:))
+plot(Hum_Trunk_Ang(1,:))
+plot(Hum_Trunk_Ang(2,:))
+xlabel('Samples')
+ylabel('Angle in Degrees')
+legend('Forearm in Hum (X)','Forearm in Hum (Z)', ' Hum in Trunk (Z)', 'Hum in Trunk (Y)')
+title('Angles About Proximal Bone CS','FontSize', 16)
 %%
 
     % **************************************************************
