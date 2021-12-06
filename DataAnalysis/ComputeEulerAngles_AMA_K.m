@@ -239,6 +239,12 @@ j=1;
     BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
     StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
+    
+    BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
+    gh(j) =ghest_KS(BL_M_s(:,:,j),BoneCS{2}) % Computing GH at jth time point (in sh marker cs) via GH function
+    GH_G_comp_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
+
+    
     HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
     BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
     FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
