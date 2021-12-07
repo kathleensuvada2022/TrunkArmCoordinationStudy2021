@@ -146,8 +146,11 @@ gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives compu
 end
 
 gh = gh';%Flipping so organized by columns (time = rows) like other variables
+
+if strcmp(hand,'Left') 
 gh(:,1) = -gh(:,1);
 gh(:,2) = -gh(:,2);
+end 
 %% Compute reaching distance (between shoulder and hand from hand marker)
 
 % maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
@@ -298,8 +301,8 @@ end
 avgmaxreach =nanmean(maxreach_current_trial)
 std_maxreach = nanstd(maxreach_current_trial)
 
-avgmaxhand = nanmean(maxhandexcrsn_current_trial);
-std_maxhand= nanstd(maxhandexcrsn_current_trial);
+avgmaxhand = nanmean(maxhandexcrsn_current_trial)
+std_maxhand= nanstd(maxhandexcrsn_current_trial)
 
 %Updated based on GH computation
 avgshldr = nanmean(shex_current_trial)
