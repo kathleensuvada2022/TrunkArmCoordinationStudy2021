@@ -615,7 +615,7 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         
     idx(3) = find(vel(idx(2):end)<=0,1)+idx(2)-5;
 
-    idx(1) = find(dist>=.08*max(dist),1)-5; 
+    idx(1) = find(dist>=.08*max(dist),1)-5;
     
     if strcmp(mfname,'/trial24.mat')
         idx(3)= idx(3)-5;
