@@ -1789,7 +1789,7 @@ idx;
 
 %% Plotting Data 
 
-figure(2)
+figure(1)
 clf
 %  subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);

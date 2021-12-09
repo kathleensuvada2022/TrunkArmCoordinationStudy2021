@@ -1,11 +1,11 @@
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = Reem_PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
-datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+%datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 % 
 % load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %For Kacey
-% datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+ datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 %% TESTING
 %% Loading in Max EMGSx
@@ -151,7 +151,7 @@ flag=0; %will not plot all Segment CSes
 gh= zeros(4,length(metdata));
 
 for k = 1:length(metdata) %looping through each frame to get GH
-gh(:,k) = Reem_ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
+gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
 end
 
 gh = gh';%Flipping so organized by columns (time = rows) like other variables
@@ -199,7 +199,7 @@ trex_current_trial(i) = trunk_exc;
 
 %% Plotting EMGS
 
-[emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+[emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 % emgvel_trial(i,:) = emg_timevel;
 % emgstart_trial(i,:) = emg_timestart;
