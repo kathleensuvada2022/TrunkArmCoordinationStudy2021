@@ -1,7 +1,7 @@
 function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]= Reem_ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
-[xhand2,t2]= Reem_resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
+% [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
@@ -15,12 +15,12 @@ Zo = nanmean(xhand(1:5,3));
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
 
 %using Resampled Data
-Xo = nanmean(xhand2(1:50,1));
-Yo = nanmean(xhand2(1:50,2)); 
-Zo = nanmean(xhand2(1:50,3)); 
-
-dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
-dist2 = dist2(:)-dist2(1);
+% Xo = nanmean(xhand2(1:50,1));
+% Yo = nanmean(xhand2(1:50,2)); 
+% Zo = nanmean(xhand2(1:50,3)); 
+% 
+% dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
+% dist2 = dist2(:)-dist2(1);
 
 % Computing Velocity and resampling 
 vel = ddt(smo(dist,3),1/89);
@@ -38,17 +38,18 @@ vel = ddt(smo(dist,3),1/89);
 % vel2= sqrt(velx2.^2+vely2.^2);
 %% Finding Time Points 
 
-idx=zeros(1,4); % creating variable with the indices of vel and distance
+idx=zeros(1,4); % creating variable with the indices of time points
 % Max distance
 distmax = max(dist(1:70));
-idx(3)= find(dist==distmax,1);
+idx(3)= find(dist==distmax,1); % Index that max distance occurs
 distmax = distmax+abs(min(dist));
 
 % Finding Max Vel
- maxvel =max(vel(10:idx(3)));
- idx(2)= find(vel==maxvel) ;
-% Start Reach
-idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+maxvel =max(vel(10:idx(3)));
+idx(2)= find(vel==maxvel) ; % Finding the max velocity index
+
+ % Start Reach
+idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 6% of max distance
 
 
 %% Correcting if issues with reach start
@@ -56,8 +57,9 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
  if  strcmp(partid,'RTIS1004') 
         if expcond==1 
 
-        idx(1) = find(dist>=.015*max(dist),1);% reach start when participant is 5% of max distance
-            if strcmp(mfname,'/trial6.mat')
+        idx(1) = find(dist>=.015*max(dist),1);% reach start when participant is 15% of max distance
+           
+        if strcmp(mfname,'/trial6.mat')
                 idx(1)=idx(1)-2;
             end
             
@@ -1789,7 +1791,7 @@ idx;
 
 %% Plotting Data 
 
-figure(2)
+figure(1)
 clf
 %  subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);

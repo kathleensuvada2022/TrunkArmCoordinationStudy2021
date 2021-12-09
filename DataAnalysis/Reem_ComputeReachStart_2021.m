@@ -38,17 +38,18 @@ vel = ddt(smo(dist,3),1/89);
 % vel2= sqrt(velx2.^2+vely2.^2);
 %% Finding Time Points 
 
-idx=zeros(1,4); % creating variable with the indices of vel and distance
+idx=zeros(1,4); % creating variable with the indices of time points
 % Max distance
 distmax = max(dist(1:70));
-idx(3)= find(dist==distmax,1);
+idx(3)= find(dist==distmax,1); % Index that max distance occurs
 distmax = distmax+abs(min(dist));
 
 % Finding Max Vel
- maxvel =max(vel(10:idx(3)));
- idx(2)= find(vel==maxvel) ;
-% Start Reach
-idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+maxvel =max(vel(10:idx(3)));
+idx(2)= find(vel==maxvel) ; % Finding the max velocity index
+
+ % Start Reach
+idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 6% of max distance
 
 
 %% Correcting if issues with reach start
@@ -56,7 +57,10 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
  if  strcmp(partid,'RTIS1004') 
         if expcond==1 
 
-        idx(1) = find(dist>=.015*max(dist),1);% reach start when participant is 5% of max distance
+        idx(1) = find(dist>=.015*max(dist),1);% reach start when participant is 15% of max distance
+            if strcmp(mfname,'/trial1.mat')
+                idx(1)=idx(1)+2;
+            end
             if strcmp(mfname,'/trial6.mat')
                 idx(1)=idx(1)-2;
             end
