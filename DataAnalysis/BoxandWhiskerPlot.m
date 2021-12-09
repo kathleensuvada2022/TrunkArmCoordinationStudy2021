@@ -1,16 +1,17 @@
 %% Box and Whisker plots 
-% For stroke participants 2021. Used MRS training day 2021 
+% For stroke participants 2021. Used MRS training day 2021 %updated for
+% NRSA 2021
 %% Stroke Data - updated for AHA RTIS2002 RITS2003 RTIS2006
 
 % Reaching Distance
 figure(1)
-RTP = [0.771439328 0.962683195 0.838069327];
-R25P = [0.672141513 0.93321198 0.803176213];
-R50P = [0.655813782 0.941008486 0.796450548];
+RTP = [.74 0.94 0.78];
+R25P = [0.69 0.92 0.75];
+R50P = [0.67 0.92 0.74];
 
-UTP = [0.781635126 0.923813977 0.848351017];
-U25P= [0.643475294 0.934970383 0.764955869];
-U50P = [0.682248235 0.916221963 0.775174178];
+UTP = [0.80 0.89 0.79];
+U25P= [0.66 0.91 0.71];
+U50P = [0.66 0.90 0.72];
 
 R = [ RTP; R25P ; R50P;]';
 MedR = median(R);
@@ -23,12 +24,50 @@ U = [ UTP; U25P ; U50P]';
 MedU=median(U);
 h2= boxchart(U)
 plot(MedU,'ro-')
-ylim([.5 1.1])
+ylim([.5 1])
 title('Effect of Trunk Restraint and Limb Loading - Paretic Limb (N=3)', 'FontSize',18);
 ylabel('Reaching Distance', 'FontSize' , 16);
 xlabel('Limb Loading', 'FontSize' , 16);
 xticklabels({'Table','25%','50%'})
 legend([h1 h2],'Trunk Restrained','Trunk Unrestrained','FontSize',16)
+
+%% Shoudler Displacement NRSA 2021
+
+%RTIS 2002, RTIS 2003, RTIS2006
+LL_02 =595;
+LL_03 = 601;
+LL_06= 639;
+
+figure(1)
+RTP = [39.29/LL_02*100 67.80/LL_03*100 45.37/LL_06*100];
+R25P = [22.72/LL_02*100 32.60/LL_03*100 19.03/LL_06*100];
+R50P = [26.48/LL_02*100 38.11/LL_03*100 10.72/LL_06*100];
+
+UTP = [62.47/LL_02*100 69.15/LL_03*100 78.03/LL_06*100];
+U25P= [46.71/LL_02*100 40.08/LL_03*100 48.63/LL_06*100];
+U50P = [37.80/LL_02*100 44.88/LL_03*100 37.90/LL_06*100];
+
+R = [ RTP; R25P ; R50P;]';
+MedR = median(R);
+h1= boxchart(R)
+hold on
+plot(MedR,'ro-')
+ylabel('Shoulder Displacement (% Limb Length)', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+U = [ UTP; U25P ; U50P]';
+MedU=median(U);
+h2= boxchart(U)
+plot(MedU,'ro-')
+ ylim([0 20])
+title('Effect of Trunk Restraint and Limb Loading - Shoulder Disp. (N=3)', 'FontSize',18);
+ylabel('Shoulder Disp', 'FontSize' , 16);
+xlabel('Limb Loading', 'FontSize' , 16);
+xticklabels({'Table','25%','50%'})
+legend([h1 h2],'Trunk Restrained','Trunk Unrestrained','FontSize',16)
+
+
+
+
 %  AHA RTIS2002 RITS2003 RTIS2006
 %% Reaching Excursion
 figure(2)

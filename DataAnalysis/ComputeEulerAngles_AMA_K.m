@@ -134,16 +134,17 @@ Tstom= zeros(4,4,length(xshoulder)); %Shoulder
 Tttom=zeros(4,4,length(xtrunk)); %Trunk
 Thtom=zeros(4,4,length(xhum)); %Humerus
 
-for i=1:nimag
-    Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2)); % forearm marker HT
-    Tftom(1:3,4,i) = xfore(i,1:3)';
-    Tstom(:,:,i)= quat2tform(circshift(xshoulder(i,4:7),1,2));
-    Tstom(1:3,4,i) = xshoulder(i,1:3)';
-    Tttom(:,:,i)= quat2tform(circshift(xtrunk(i,4:7),1,2));
-    Tttom(1:3,4,i) = xtrunk(i,1:3)';
-    Thtom(:,:,i)= quat2tform(circshift(xhum(i,4:7),1,2));
-    Thtom(1:3,4,i) = xhum(i,1:3)';
-end
+% for i=1:nimag 
+i = k;
+    Tftom = quat2tform(circshift(xfore(i,4:7),1,2)); % forearm marker HT
+    Tftom(1:3,4) = xfore(i,1:3)';
+    Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));
+    Tstom(1:3,4) = xshoulder(i,1:3)';
+    Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));
+    Tttom(1:3,4) = xtrunk(i,1:3)';
+    Thtom= quat2tform(circshift(xhum(i,4:7),1,2));
+    Thtom(1:3,4) = xhum(i,1:3)';
+% end
 
 %                TRUNK SHOULDER HUMERUS FOREARM
 TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ******
@@ -230,46 +231,53 @@ j=k; % a part of larger loop outside this function.
     % TRUNK SHOULDER HUMERUS FOREARM
     
     if strcmp(arm,'Left')
-        TmarkertoGlob{1}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{1}(:,:,j); % Trunk
-        TmarkertoGlob{2}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{2}(:,:,j); % Shoulder
-        TmarkertoGlob{3}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{3}(:,:,j); % Humerus
-        TmarkertoGlob{4}(:,:,j) =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{4}(:,:,j); % Forearm
+        TmarkertoGlob{1} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{1}; % Trunk
+        TmarkertoGlob{2} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{2}; % Shoulder
+        TmarkertoGlob{3} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{3}; % Humerus
+        TmarkertoGlob{4} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{4}; % Forearm
     end
-    
-    
-    TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1}); % Trunk in global
-    BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
-    StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
-    BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
-    
-    BL_M_s(:,:,j)=inv(TmarkertoGlob{2}(:,:,j))* BL_G_s(:,:,j); %Sh BLs in Sh marker CS
-    gh =ghest_KS(BL_M_s(:,:,j),BoneCS{2},flag); % Computing GH at jth time point (in sh marker cs) via GH function
-    GH_G_comp_s(:,:,1) = TmarkertoGlob{2}(:,:,j)*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
     
-    HtoG(:,:,j) = TmarkertoGlob{3}(:,:,j)*BoneCS{4}; % Humerus
-    BL_G_h(:,:,j) = TmarkertoGlob{3}(:,:,j)*BLs{1,3};
-    FtoG(:,:,j) = TmarkertoGlob{4}(:,:,j)*BoneCS{3}; %3 is FOREARM for BONE CS
-    BL_G_f(:,:,j) = TmarkertoGlob{4}(:,:,j)*BLs{1,4};% Forearm Bonylandmarks in GCS
+    TtoG=(TmarkertoGlob{1}*BoneCS{1}); % Trunk in global
+    BL_G_t =TmarkertoGlob{1}*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
+    StoG = TmarkertoGlob{2}*BoneCS{2}; % Shoulder in global
+    BL_G_s = TmarkertoGlob{2}*BLs{1,2};% Shoulder Bonylandmarks in GCS
+    
+        
+%     TtoG(:,:,j)=(TmarkertoGlob{1}(:,:,j)*BoneCS{1}); % Trunk in global
+%     BL_G_t(:,:,j) =TmarkertoGlob{1}(:,:,j)*BLs{1,1}; % Trunk Bonylandmarks in GCS {1,1} is trunk
+%     StoG(:,:,j) = TmarkertoGlob{2}(:,:,j)*BoneCS{2}; % Shoulder in global
+%     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
+    
+    BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %Sh BLs in Sh marker CS
+    gh =ghest_KS(BL_M_s,BoneCS{2},flag); % Computing GH at jth time point (in sh marker cs) via GH function
+    GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
+
+    return 
+    
+    HtoG = TmarkertoGlob{3}*BoneCS{4}; % Humerus
+    BL_G_h = TmarkertoGlob{3}*BLs{1,3};
+    FtoG = TmarkertoGlob{4}*BoneCS{3}; %3 is FOREARM for BONE CS
+    BL_G_f = TmarkertoGlob{4}*BLs{1,4};% Forearm Bonylandmarks in GCS
     
     %Finding indices of Humerus BLs
     GH_IDX = find(BLnames_h=='GH');
     EL_IDX=  find(BLnames_h=='EL');
     EM_IDX=  find(BLnames_h=='EM');
-    [GH,EM,EL] = deal(BL_G_h(:,GH_IDX,j),BL_G_h(:,EM_IDX,j),BL_G_h(:,EL_IDX,j));
-    H_Mid_H(1:3,j) =(EL(1:3)+EM(1:3))'/2; %MidPont Humerus
+    [GH,EM,EL] = deal(BL_G_h(:,GH_IDX),BL_G_h(:,EM_IDX),BL_G_h(:,EL_IDX));
+    H_Mid_H =(EL(1:3)+EM(1:3))'/2; %MidPont Humerus
     
     %Finding indices of Forearm BLs
     OL_IDX = find(BLnames_f=='OL');
     RS_IDX = find(BLnames_f=='RS');
     US_IDX = find(BLnames_f=='US');
-    [OL,RS,US] = deal(BL_G_f(:,OL_IDX,j),BL_G_f(:,RS_IDX,j),BL_G_f(:,US_IDX,j));
-    H_Mid_F(1:3) =(RS(1:3)+US(1:3))'/2; % midpoint between styloids
+    [OL,RS,US] = deal(BL_G_f(:,OL_IDX),BL_G_f(:,RS_IDX),BL_G_f(:,US_IDX));
+    H_Mid_F =(RS(1:3)+US(1:3))'/2; % midpoint between styloids
     
-    TtoG_frame = TtoG(:,:,j); %trunk CS in global at given frame of trial
-    StoG_frame = StoG(:,:,j); %SH CS in global at given frame of trial
-    HtoG_frame = HtoG(:,:,j); %Hum CS in global at given frame of trial
-    FtoG_frame = FtoG(:,:,j); %Fore CS in global at given frame of trial
+    TtoG_frame = TtoG; %trunk CS in global at given frame of trial
+    StoG_frame = StoG; %SH CS in global at given frame of trial
+    HtoG_frame = HtoG; %Hum CS in global at given frame of trial
+    FtoG_frame = FtoG; %Fore CS in global at given frame of trial
     HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS
     
     if flag ==1

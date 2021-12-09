@@ -46,7 +46,10 @@ shtrdisp_current_trial=zeros(ntrials,2);
 emgvel_trial= zeros(length(mtrials),15);
 emgstart_trial= zeros(length(mtrials),15);
 %% Main loop that grabs Metria data and plots 
-for i=1:length(mtrials)
+%   for i=2:6 %length(mtrials) for i =4 RTIS 2002
+ for i=1: length(mtrials)% i = 3 
+
+   
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname =  mfname;
 afname2 = mfname;
@@ -77,7 +80,9 @@ mfname
  subplot(2,1,1)
  plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
  hold on
-plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
+
+ plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
+
 % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
 % hold on
 % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
@@ -106,7 +111,7 @@ p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth'
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlabel('Time')
 ylabel('Distance') 
-legend('Distance','Max Dist')
+% legend('Distance','Max Dist')
 % 
  pause
  end
@@ -189,7 +194,7 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-% [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+ [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 % 
 %  emgvel_trial(i,:) = emg_timevel;
 %  emgstart_trial(i,:) = emg_timestart;
@@ -198,13 +203,14 @@ trex_current_trial(i) = trunk_exc;
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
 
   % This line worked NOV 2021!!! Uncomment if want to plot AA not GH 
-  %      p1=plot([xhand(:,1) xshldr(:,1) xjug(:,1)],[xhand(:,2) xshldr(:,2) xjug(:,2)],'LineWidth',2);
+%        p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',2);
         
-  p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',2);
+%     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
   
-       % p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (xshldr(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (xshldr(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',1);
-               
-%         p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',1);
+         p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+%           p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+   
+%          p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3);
 
         Newreachx = (xhand(:,1)-xjug(1,1));
         Newreachy = (xhand(:,2)-xjug(1,2));
@@ -219,26 +225,31 @@ trex_current_trial(i) = trunk_exc;
 
         
 %      idxreachstart = find(t==timestart,1);
- %     c2= viscircles([Newreachx(idxreachstart),Newreachy(idxreachstart)],5,'Color','g');
-  %   c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-        c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
+     % c1= plot(Newreachx(idx(1)),Newreachy(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
+          c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+    
+%      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+%          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
         
 %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
 %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
       
-         plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-         plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+         plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+         plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
 
    
-        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking trunk end
+        plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+        plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
 
     
       
         idxdistmax = length(xhand);
-%       c3= viscircles([Newreachx(idxdistmax),Newreachy(idxdistmax)],5,'Color','r');
+%        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
+%         c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+          c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerFaceColor','r','MarkerSize',10);
+
 %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
-        c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+%         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
 
 
    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
@@ -256,13 +267,13 @@ trex_current_trial(i) = trunk_exc;
 
 
 %legend([p1' p2 p3],'Hand','Shoulder','Trunk','Home','Max Reach','Location','southeast')
-legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+% legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
-% axis equal
-%  xlim([-300 100])
-%  ylim([-300 500])
+%  axis equal
+  xlim([-250 50])
+  ylim([-100 600])
 
 if expcond== 1 
 title('Restrained Table','FontSize',24)
