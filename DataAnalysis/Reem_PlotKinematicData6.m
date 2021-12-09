@@ -198,10 +198,11 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-% 
-% [emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-%  emgvel_trial(i,:) = emg_timevel;
-%  emgstart_trial(i,:) = emg_timestart;
+
+[emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+
+% emgvel_trial(i,:) = emg_timevel;
+% emgstart_trial(i,:) = emg_timestart;
  
 
 %% Main Cumulative Metria Figure

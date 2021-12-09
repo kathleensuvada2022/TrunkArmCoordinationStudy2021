@@ -24,7 +24,7 @@ load('/Users/Abi1/Documents/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/RT
 
 
 
-
+reachingtime= (timestart-0.15)*1000:timedistmax*1000;
 
 %% TESTING-- HOW DO I EXTRACT THE TIME REGION OF INTEREST?
 %trying to extract this value...

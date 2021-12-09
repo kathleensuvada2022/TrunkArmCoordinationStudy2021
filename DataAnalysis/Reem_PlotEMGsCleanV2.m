@@ -2,7 +2,8 @@ function[emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,ti
 
 %% cutting down the EMG Files to our timeslot of interest
 %%
-reachingtime= timestart*1000:timedistmax*1000;
+reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
+size(reachingtime)
 
 % (timestart*1000)-150 (or 0.15 w/ 1000)
 % looking at the movement itself (preporatory phase)
@@ -11,22 +12,25 @@ reachingtime= timestart*1000:timedistmax*1000;
 'all EMG values for our time window of interest for all muscles!'
 emg_timewindow = emg(round(reachingtime),:); 
 
-% EXTRACT AND PUT INTO BASE WORKSPACE.  
+clean_emg_timewindow = abs(cleandata(round(reachingtime),:));
+
+%% EXTRACT AND PUT INTO BASE WORKSPACE.  
 size(emg_timewindow)
+size(clean_emg_timewindow)
 assignin("base","emg_timewindow",emg_timewindow);
 
-% notes: These values indicate which muscle we're looking at
-idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];
-
-% look at this next-- if you want to find the specific muscle
-% use the *:, idx_(_), trunk(1) v arm (2)
-line(t,emg(:,idx1(1)))
-title(emgchan(idx1(1)))
-
-% size(emgLES) %checks
-% size(emg)
-% size(emg,1)
-% size(emg(round(reachingtime),:))
+% % notes: These values indicate which muscle we're looking at
+% idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];
+% 
+% % look at this next-- if you want to find the specific muscle
+% % use the *:, idx_(_), trunk(1) v arm (2)
+% line(t,emg(:,idx1(1)))
+% title(emgchan(idx1(1)))
+% 
+% % size(emgLES) %checks
+% % size(emg)
+% % size(emg,1)
+% % size(emg(round(reachingtime),:))
 
 %% start of original code
 %% note: replacing all emg with emg_timewindow?
