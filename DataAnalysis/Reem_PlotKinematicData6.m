@@ -1,11 +1,12 @@
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = Reem_PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
-%datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 % 
 % load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %For Kacey
- datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+%  datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 %% TESTING
 %% Loading in Max EMGSx
@@ -151,7 +152,7 @@ flag=0; %will not plot all Segment CSes
 gh= zeros(4,length(metdata));
 
 for k = 1:length(metdata) %looping through each frame to get GH
-gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
+gh(:,k) = Reem_ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
 end
 
 gh = gh';%Flipping so organized by columns (time = rows) like other variables

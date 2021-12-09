@@ -61,6 +61,10 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
             if strcmp(mfname,'/trial1.mat')
                 idx(1)=idx(1)+2;
             end
+
+            if strcmp(mfname,'/trial2.mat')
+                idx(1)=idx(1)+3;
+            end            
             if strcmp(mfname,'/trial6.mat')
                 idx(1)=idx(1)-2;
             end
