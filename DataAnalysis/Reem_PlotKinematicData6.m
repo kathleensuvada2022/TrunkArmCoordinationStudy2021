@@ -130,6 +130,11 @@ metdata=data.met;
 
 [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector]= Reem_ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand);
 
+%time points of interest--these are the cut off times
+timestart
+timedistmax
+% t_vector
+
 %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
 
 %Saves file for each trial
@@ -193,10 +198,12 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-% [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 % 
+% [emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 %  emgvel_trial(i,:) = emg_timevel;
 %  emgstart_trial(i,:) = emg_timestart;
+ 
+
 %% Main Cumulative Metria Figure
  figure(4)
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
