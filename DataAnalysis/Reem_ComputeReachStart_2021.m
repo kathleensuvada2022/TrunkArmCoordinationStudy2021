@@ -1820,7 +1820,7 @@ y1=ylim;
 
 title('Distance and Velocity','FontSize',24)
  p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
-% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
+p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
 p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
 %p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
@@ -1829,7 +1829,7 @@ p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'Lin
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Time Start','Time End','FontSize',16)
+legend('Distance', 'Velocity','Time Start','Max Velocity','Time End','FontSize',16)
 
 
 % figure (6),clf
