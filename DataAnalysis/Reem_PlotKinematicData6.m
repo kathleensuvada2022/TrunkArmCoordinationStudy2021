@@ -1,11 +1,11 @@
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = Reem_PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
-% datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 % 
 % load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %For Kacey
-datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+% datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 %% TESTING
 %% Loading in Max EMGSx
