@@ -1,7 +1,7 @@
 function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]= Reem_ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
-[xhand2,t2]=Reem_resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
+% [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
@@ -15,12 +15,12 @@ Zo = nanmean(xhand(1:5,3));
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
 
 %using Resampled Data
-Xo = nanmean(xhand2(1:50,1));
-Yo = nanmean(xhand2(1:50,2)); 
-Zo = nanmean(xhand2(1:50,3)); 
-
-dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
-dist2 = dist2(:)-dist2(1);
+% Xo = nanmean(xhand2(1:50,1));
+% Yo = nanmean(xhand2(1:50,2)); 
+% Zo = nanmean(xhand2(1:50,3)); 
+% 
+% dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
+% dist2 = dist2(:)-dist2(1);
 
 % Computing Velocity and resampling 
 vel = ddt(smo(dist,3),1/89);
