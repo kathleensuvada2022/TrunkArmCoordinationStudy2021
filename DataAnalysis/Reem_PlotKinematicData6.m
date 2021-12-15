@@ -4,8 +4,8 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgem
 % load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %For Kacey
-  datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
-% datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+%   datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 %% TESTING
@@ -200,8 +200,8 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
-
-% [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+mfname
+[emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
 % emgvel_trial(i,:) = emg_timevel;
 % emgstart_trial(i,:) = emg_timestart;
@@ -328,5 +328,11 @@ stdtrunk = nanstd(trex_current_trial)
 
 %  avgemg_vel = mean(emgvel_trial)
 %  avgemg_start = mean(emgstart_trial)
+
+fh = findall(0,'Type','Figure');
+set( findall(fh, '-property', 'fontsize'), 'fontsize', 14)
+xlabel('Time (s)')
+title('Trunk Restrained- 0% Load', 'fontsize', 22)
+set(gcf,'color','w');
 
 end   
