@@ -102,8 +102,8 @@ checkwalk=get(handles.checkbox_walking,'Value');
 if checkwalk==1;
     load Reem_mockwalking_test B Muscle_LST time %eventually modify this to allow user to select a file
 else
-    load example_postural_data B Muscle_LST
-    nmus=15; ncond=1; ntrials=1; nbins=1;
+    load Reem_FINALFILE_test_B B Muscle_LST % MUST have the same file names as Reem_mockwalking
+    nmus=15; ncond=6; ntrials=5; nbins=1; % changed all nmus to 15 instead of 16
     
 %     load PDP05P0M_EMG_data_only_begin150ms_nobkg_scaledtowalking DATAsrc DATA_LST
 %     DATAsrc(14:16,:)=[];
@@ -144,16 +144,17 @@ for i=1:nmus
             subplot(4,4,i) %to plot only one time bin
             %H=plot(0:30:330',squeeze(Data(:,:,k,i)),'Color','b');
             hold on
-            H=plot(0:30:330',mean(squeeze(Data(:,:,k,i))),'Color','b','MarkerSize',10);
+            H=plot(0:30:330',mean(squeeze(Data(:,:,k,i))),'Color','b','MarkerSize',10); %changed k-->1 to get figure to print out, but no figure is printed
             errorbar([0:30:330'],[mean(squeeze(Data(:,:,k,i)))],[std(squeeze(Data(:,:,k,i)))],'Color','b');
             set(H,'Clipping','off')
             axis([0 330 0 1])
-            set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1])
+            set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
             if k==3
                 ylabel(Muscle_LST(i,:))
             end
         end
         if i==1, title(['Muscle tuning curves']); end
+
     elseif checkwalk==1 %Plot entire trial for walking data
         subplot(8,2,i) %to plot only one time bin
         plot(time,B(i,:));
@@ -258,8 +259,7 @@ for i=1:nsyn
     b= bar(Wnnmf(:,i));
     set(b,'FaceColor',color(i,:),'EdgeColor',[1 1 1]);
     axis([0.5 nmus+.5 0 1])
-    set(gca,'YTickLabel',[]);
-    pau
+    set(gca,'XTickLabel',[]);  % removes those annoying ass numbers
     if i==1, title(['Synergies']); end
     xTickLabels=Muscle_LST;
     htext=text((1:length(Muscle_LST)), -0.1*ones(1,length(Muscle_LST)), xTickLabels,'fontsize',10);
@@ -273,7 +273,7 @@ for i=1:nsyn
         errorbar([0:30:330'],[mean(squeeze(C(:,:,3,i)))],[std(squeeze(C(:,:,3,i)))],'Color',color(i,:));
         set(gca,'Clipping','off')
         axis([0 330 0 1])
-        set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1])
+        set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
     end
     elseif checkwalk==1;
         subplot(nsyn,2,2*i)
@@ -424,7 +424,7 @@ for i=1:nsyn
         errorbar([0:30:330'],[mean(squeeze(C(:,:,3,i)))],[std(squeeze(C(:,:,3,i)))],'Color',color(i,:));
         set(gca,'Clipping','off')
         axis([0 330 -1 1])
-        set(gca,'Xtick',[0 90 180 270],'Ytick',[-1 0 1])
+        set(gca,'Xtick',[0 90 180 270],'Ytick',[-1 0 1]) % EDIT THIS, the Xticks are the conditions
     end
     if i==1, title(['Weights']); end
     elseif checkwalk==1;
@@ -497,7 +497,7 @@ if checkwalk==0;
     end
     clear ReconPart;
 elseif checkwalk==1;
-    nmus=16;
+    nmus=15;
     ReconPartsNMF=ReconPart;
 end
 

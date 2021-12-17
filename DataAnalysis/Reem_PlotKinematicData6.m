@@ -51,7 +51,7 @@ shtrdisp_current_trial=zeros(ntrials,2);
 emgvel_trial= zeros(length(mtrials),15);
 emgstart_trial= zeros(length(mtrials),15);
 %% Main loop that grabs Metria data and plots 
-for i=1:length(mtrials)
+for i= 5:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname =  mfname;
 afname2 = mfname;
@@ -334,5 +334,5 @@ set( findall(fh, '-property', 'fontsize'), 'fontsize', 14)
 xlabel('Time (s)')
 title('Trunk Restrained- 0% Load', 'fontsize', 22)
 set(gcf,'color','w');
-
+close all
 end   

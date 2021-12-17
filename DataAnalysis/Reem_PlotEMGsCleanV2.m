@@ -1,40 +1,5 @@
 function[emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
-%% cutting down the EMG Files to our timeslot of interest
-%%
-reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
-size(reachingtime)
-
-% (timestart*1000)-150 (or 0.15 w/ 1000)
-% looking at the movement itself (preporatory phase)
-% biomechanics--time points are dependent
-% (timestart*1000)
-'all EMG values for our time window of interest for all muscles!'
-cleandata= KaceyNotchfilter(emg); %use cleandata instead of emg
-
-emg_timewindow = abs(cleandata(round(reachingtime),:)); 
-% emg_timewindow = cleandata(round(reachingtime),:); 
-size(emg_timewindow)
-
- %% EXTRACT AND PUT INTO BASE WORKSPACE.  
-% count = count + 1
-
-'which trial are we on?:'
-
-% assignin("base","emg_timewindow_1",emg_timewindow);
-% assignin("base","emg_timewindow_2",emg_timewindow);
-% assignin("base","emg_timewindow_3",emg_timewindow);
-% assignin("base","emg_timewindow_4",emg_timewindow);
-assignin("base","emg_timewindow_5",emg_timewindow);
-pause
-
-
-
-
-
-
-
-
 
 % % notes: These values indicate which muscle we're looking at
 % idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];
@@ -55,7 +20,7 @@ pause
 cleandata= KaceyNotchfilter(emg);
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-assignin("base","Muscle_LST", emgchan);
+assignin("base","Muscle_LST", char(emgchan)); %data name list structure
 
 %clf
 figure(2)
@@ -67,6 +32,8 @@ nEMG=size(emg,2);
 t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
 avgwindow=0.25; ds=sampRate*avgwindow;
 emg=abs(detrend(emg));
+
+%% use this value
 meanEMG=movmean(emg,ds);
 % memg=max(emg);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
@@ -85,149 +52,206 @@ nEMG=length(idx1);
 memg=max([max(emg(:,idx1));[max(emg(:,idx2)) 0]]);
 yspacing=cumsum([0 memg(2:nEMG)+.9]);
 
+
+
+
+
+
+
+
+%% Extracting values for NMF analysis
+
+reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
+size(reachingtime)
+
+% (timestart*1000)-150 (or 0.15 w/ 1000)
+% looking at the movement itself (preporatory phase)
+% biomechanics--time points are dependent
+% (timestart*1000)
+
+'all EMG values for our time window of interest for all muscles!'
+cleandata= KaceyNotchfilter(emg); %use MEANEMG instead of emg or cleandata
+
+emg_timewindow = abs(cleandata(round(reachingtime),:)); %test--looking at cleandata for NMF
+size(emg_timewindow)
+
+meanEMG_timewindow_mini = meanEMG(round(reachingtime),:); %final--looking at meanEMG for NMF (201x15)
+meanEMG_timewindow_mini = mean(meanEMG_timewindow_mini); %finding the average over that one time window (1x15)
+
+meanEMG_timewindow = transpose(meanEMG_timewindow_mini);  %transpose--data structure needs to be muscles x time/window (15x1)
+size(meanEMG_timewindow)
+
+
+
+% EXTRACT AND PUT INTO BASE WORKSPACE.  
+% basically what I'm trying to do is for each trial extract my variable
+% of interest for each trial seperately. Once theyre all in the workspace,
+% I highlight them all and save them as a given file (refer to
+% Reem_mockwalking_test.mat)
+
+'which trial are we on?:'
+
+% trialEMG = 
+
+% assignin("base",'emg_timewindow_1', meanEMG_timewindow);
+% assignin("base","emg_timewindow_2", meanEMG_timewindow);
+% assignin("base","emg_timewindow_3",meanEMG_timewindow);
+% assignin("base","emg_timewindow_4",meanEMG_timewindow);
+assignin("base","emg_timewindow_5",meanEMG_timewindow);
+
+%% copypaste this and change to indicate # of control
+% list_Control2 = cat(2, emg_timewindow_1, emg_timewindow_2, emg_timewindow_3, emg_timewindow_4, emg_timewindow_5)
+pause
+
+
+
+
+
+
+
 %% Trunk muscles
 
-% ***** NOTE **** Shift EMG muscles back by 50 ms because they occur earlier than the
-% movement itself.. Move back 
-subplot(5,2,3)
-line(t,emg(:,idx1(1)))
-title(emgchan(idx1(1)))
-
-
-
-
-
-
-
-pause
-cla
-subplot(5,2,3)
-line(t,abs(cleandata(:,idx1(1))))
-yl=ylim;
-hold on
-plot(t,meanEMG(:,idx1(1)),'LineWidth',2,'Color','g')
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx1(1)))
-
-subplot(5,2,4)
-line(t,emg(:,idx2(1)))
-title(emgchan(idx2(1)))
-pause
-cla
-subplot(5,2,4)
-line(t,abs(cleandata(:,idx2(1))))
-hold on
-plot(t,meanEMG(:,idx2(1)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx2(1)))
-
-subplot(5,2,5)
-line(t,emg(:,idx1(2)))
-title(emgchan(idx1(2)))
-pause
-cla
-subplot(5,2,5)
-line(t,abs(cleandata(:,idx1(2))))
-hold on
-plot(t,meanEMG(:,idx1(2)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx1(2)))
-
-subplot(5,2,6)
-line(t,emg(:,idx2(2)))
-title(emgchan(idx2(2)))
-pause
-cla
-subplot(5,2,6)
-line(t,abs(cleandata(:,idx2(2))))
-hold on
-plot(t,meanEMG(:,idx2(2)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx2(2)))
-
-subplot(5,2,7)
-line(t,emg(:,idx1(3)))
-title(emgchan(idx1(3)))
-pause
-cla
-subplot(5,2,7)
-line(t,abs(cleandata(:,idx1(3))))
-hold on
-plot(t,meanEMG(:,idx1(3)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx1(3)))
-
-subplot(5,2,8)
-line(t,emg(:,idx2(3)))
-title(emgchan(idx2(3)))
-pause
-cla
-subplot(5,2,8)
-line(t,abs(cleandata(:,idx2(3))))
-hold on
-plot(t,meanEMG(:,idx2(3)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx2(3)))
-
-subplot(5,2,9)
-line(t,emg(:,idx1(4)))
-title(emgchan(idx1(4)))
-pause
-cla
-subplot(5,2,9)
-line(t,abs(cleandata(:,idx1(4))))
-hold on
-plot(t,meanEMG(:,idx1(4)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx1(4)))
-
-subplot(5,2,10)
-line(t,emg(:,idx2(4)))
-title(emgchan(idx2(4)))
-pause
-cla
-subplot(5,2,10)
-line(t,abs(cleandata(:,idx2(4))))
-hold on
-plot(t,meanEMG(:,idx2(4)),'LineWidth',2,'Color','g')
-yl=ylim;
-line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
-%line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
-title(emgchan(idx2(4)))
+% % ***** NOTE **** Shift EMG muscles back by 50 ms because they occur earlier than the
+% % movement itself.. Move back 
+% subplot(5,2,3)
+% line(t,emg(:,idx1(1)))
+% title(emgchan(idx1(1)))
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% pause
+% cla
+% subplot(5,2,3)
+% line(t,abs(cleandata(:,idx1(1))))
+% yl=ylim;
+% hold on
+% plot(t,meanEMG(:,idx1(1)),'LineWidth',2,'Color','g')
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx1(1)))
+% 
+% subplot(5,2,4)
+% line(t,emg(:,idx2(1)))
+% title(emgchan(idx2(1)))
+% pause
+% cla
+% subplot(5,2,4)
+% line(t,abs(cleandata(:,idx2(1))))
+% hold on
+% plot(t,meanEMG(:,idx2(1)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx2(1)))
+% 
+% subplot(5,2,5)
+% line(t,emg(:,idx1(2)))
+% title(emgchan(idx1(2)))
+% pause
+% cla
+% subplot(5,2,5)
+% line(t,abs(cleandata(:,idx1(2))))
+% hold on
+% plot(t,meanEMG(:,idx1(2)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx1(2)))
+% 
+% subplot(5,2,6)
+% line(t,emg(:,idx2(2)))
+% title(emgchan(idx2(2)))
+% pause
+% cla
+% subplot(5,2,6)
+% line(t,abs(cleandata(:,idx2(2))))
+% hold on
+% plot(t,meanEMG(:,idx2(2)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx2(2)))
+% 
+% subplot(5,2,7)
+% line(t,emg(:,idx1(3)))
+% title(emgchan(idx1(3)))
+% pause
+% cla
+% subplot(5,2,7)
+% line(t,abs(cleandata(:,idx1(3))))
+% hold on
+% plot(t,meanEMG(:,idx1(3)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx1(3)))
+% 
+% subplot(5,2,8)
+% line(t,emg(:,idx2(3)))
+% title(emgchan(idx2(3)))
+% pause
+% cla
+% subplot(5,2,8)
+% line(t,abs(cleandata(:,idx2(3))))
+% hold on
+% plot(t,meanEMG(:,idx2(3)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx2(3)))
+% 
+% subplot(5,2,9)
+% line(t,emg(:,idx1(4)))
+% title(emgchan(idx1(4)))
+% pause
+% cla
+% subplot(5,2,9)
+% line(t,abs(cleandata(:,idx1(4))))
+% hold on
+% plot(t,meanEMG(:,idx1(4)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx1(4)))
+% 
+% subplot(5,2,10)
+% line(t,emg(:,idx2(4)))
+% title(emgchan(idx2(4)))
+% pause
+% cla
+% subplot(5,2,10)
+% line(t,abs(cleandata(:,idx2(4))))
+% hold on
+% plot(t,meanEMG(:,idx2(4)),'LineWidth',2,'Color','g')
+% yl=ylim;
+% line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
+% line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
+% %line('Color','r','Xdata',[timeend timeend],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %endreach
+% title(emgchan(idx2(4)))
 
 
 % 
-figure(3)
-% %% Arm Muscle 
+% figure(3)
+%% Arm Muscle 
 % subplot(5,2,3)
 % line(t,emg(:,idx1(5)))
 % title(emgchan(idx1(5)))
