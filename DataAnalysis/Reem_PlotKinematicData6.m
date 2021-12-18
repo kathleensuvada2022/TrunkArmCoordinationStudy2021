@@ -50,8 +50,12 @@ shtrdisp_current_trial=zeros(ntrials,2);
 
 emgvel_trial= zeros(length(mtrials),15);
 emgstart_trial= zeros(length(mtrials),15);
+
 %% Main loop that grabs Metria data and plots 
 for i= 5:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
+
+%could add in Reem_ExtractEMGMatrixNMF here to save the values in the workspace quickly
+% without having to end the program
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname =  mfname;
 afname2 = mfname;

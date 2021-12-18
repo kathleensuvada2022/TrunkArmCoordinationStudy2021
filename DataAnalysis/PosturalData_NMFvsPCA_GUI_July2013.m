@@ -129,7 +129,11 @@ global B Muscle_LST checkwalk time nmus ncond ntrials nbins
 if checkwalk==0
 
 % Plot the data (tuning curves)
-Data=reshape(B',[ntrials ncond nbins nmus]);
+Data=reshape(B',[ntrials ncond nbins nmus])
+size(Data)
+% figure
+% plot(Data(:,:,:,1))
+% pause
 elseif checkwalk==1
     Data=B;
     nmus=size(B,1);
@@ -139,17 +143,21 @@ figure
 for i=1:nmus
     if checkwalk==0 %Plot tuning curves for postural data
         %for k=1:nbins %to plot all 4 time bins
-        for k=3:3 %to plot only one time bin
+        for k= 1:nbins %to plot only one time bin
             %subplot(nmus,nbins,((nbins)*i)-(nbins-k)) %to plot all 4 time bins
             subplot(4,4,i) %to plot only one time bin
             %H=plot(0:30:330',squeeze(Data(:,:,k,i)),'Color','b');
             hold on
-            H=plot(0:30:330',mean(squeeze(Data(:,:,k,i))),'Color','b','MarkerSize',10); %changed k-->1 to get figure to print out, but no figure is printed
-            errorbar([0:30:330'],[mean(squeeze(Data(:,:,k,i)))],[std(squeeze(Data(:,:,k,i)))],'Color','b');
+            size(mean(squeeze(Data(:,:,k,i))) )
+
+            %% Changed the X = 0:30:330 to 1:6 to represent the 
+            H=plot(1:6,mean(squeeze(Data(:,:,k,i))),'Color','b','MarkerSize',10); %changed k-->1 to get figure to print out, but no figure is printed
+            errorbar([1:6],[mean(squeeze(Data(:,:,k,i)))],[std(squeeze(Data(:,:,k,i)))],'Color','b');
+%             pause
             set(H,'Clipping','off')
-            axis([0 330 0 1])
-            set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
-            if k==3
+            axis([1 6 0 1]) %changed 330 to 6 for same reason as above
+            set(gca,'Xtick',[0:7],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
+            if k==1
                 ylabel(Muscle_LST(i,:))
             end
         end
@@ -268,12 +276,15 @@ for i=1:nsyn
     text(15,0.75,[num2str(round(syncontr(i))),'%'],'FontSize',6)
 
     if checkwalk==0;
-    for k=3:3
+    for k=1:nbins
         subplot(nsyn,2,2*i)
-        errorbar([0:30:330'],[mean(squeeze(C(:,:,3,i)))],[std(squeeze(C(:,:,3,i)))],'Color',color(i,:));
+        % Index in position 3 exceeds array bounds. Index must not exceed
+        % 1.  error? check what k=?. For 1participant 30 conditions 
+        % k= 1 (timewindow designation, look above)
+        errorbar([1:6'],[mean(squeeze(C(:,:,1,i)))],[std(squeeze(C(:,:,1,i)))],'Color',color(i,:));
         set(gca,'Clipping','off')
-        axis([0 330 0 1])
-        set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
+        axis([1 6 0 1])
+        set(gca,'Xtick',[0:7],'Ytick',[0 1]) % EDIT THIS, the Xticks are the conditions
     end
     elseif checkwalk==1;
         subplot(nsyn,2,2*i)
@@ -419,12 +430,12 @@ for i=1:nsyn
     text(15,0.75,[num2str(VAFs(i)),'%'],'FontSize',6)
 
     if checkwalk==0;
-    for k=3:3
+    for k=1:nbins
         subplot(nsyn,2,2*i)
-        errorbar([0:30:330'],[mean(squeeze(C(:,:,3,i)))],[std(squeeze(C(:,:,3,i)))],'Color',color(i,:));
+        errorbar([1:6'],[mean(squeeze(C(:,:,3,i)))],[std(squeeze(C(:,:,3,i)))],'Color',color(i,:));
         set(gca,'Clipping','off')
-        axis([0 330 -1 1])
-        set(gca,'Xtick',[0 90 180 270],'Ytick',[-1 0 1]) % EDIT THIS, the Xticks are the conditions
+        axis([1 6 -1 1])
+        set(gca,'Xtick',[0:7],'Ytick',[-1 0 1]) % EDIT THIS, the Xticks are the conditions
     end
     if i==1, title(['Weights']); end
     elseif checkwalk==1;
@@ -510,16 +521,16 @@ set(gcf,'PaperOrientation','landscape')
 if checkwalk==0;
     for k=1:nmus
         %for b=1:nbins
-        for b=3:3  %plot only the third bin for now
+        for b=1:nbins  %plot only the third bin for now
             %subplot(nmus,nbins,((nbins)*(k-16))-(nbins-b)) %use this to show all muscles on one plot
             subplot(4,4,k) %to plot only one time bin
 
             %Plot only a single trial data and recon
             dat=squeeze(Data(:,:,b,k));
             reca=squeeze(ReconAll(:,:,b,k));
-            H=plot(0:30:330',dat(whichtrial_NMF,:),'--','Color',[0 0 0]);  %%plot the first trial of data in dotted line
+            H=plot(1:6',dat(whichtrial_NMF,:),'--','Color',[0 0 0]);  %%plot the first trial of data in dotted line
             hold on
-            I=plot(0:30:330',reca(whichtrial_NMF,:),'Color',[0 0 0]);   %%plot the total recon of the first trial in solid line
+            I=plot(1:6',reca(whichtrial_NMF,:),'Color',[0 0 0]);   %%plot the total recon of the first trial in solid line
             %shows r2 of the average real data and average reconstruction
             rsqr = (corr(dat(whichtrial_NMF,:)',reca(whichtrial_NMF,:)'))^2;
             text(10,0.8,['r2 =', ' ', num2str(rsqr)],'FontSize',10)
@@ -529,15 +540,15 @@ if checkwalk==0;
             %plot each syn contribution
             for j=1:nsyn
                 recp=squeeze(ReconPartsNMF(j,:,:,b,k));
-                J=plot(0:30:330',recp(whichtrial_NMF,:),'Color',color(j,:));                       %%plot each synergy's contribution as line with std dev
+                J=plot(1:6',recp(whichtrial_NMF,:),'Color',color(j,:));                       %%plot each synergy's contribution as line with std dev
             end
 
             if b==3
                 ylabel(Muscle_LST(k,:))
             end
             
-            axis([0 330 0 1])
-            set(gca,'Xtick',[0 90 180 270],'Ytick',[0 1])
+            axis([1 6 0 1])
+            set(gca,'Xtick',[0:7],'Ytick',[0 1])
         end
     end
 
@@ -624,16 +635,16 @@ set(gcf,'PaperOrientation','landscape')
 if checkwalk==0;
     for k=1:nmus
         %for b=1:numbins
-        for b=3:3  %plot only the third bin for now
+        for b=1:nbins  %plot only the third bin for now
             %subplot(nmus,numbins,((numbins)*(k-16))-(numbins-b)) %use this to show all muscles on one plot
             subplot(4,4,k) %to plot only one time bin
 
             %Plot only a single trial data and recon
             dat=squeeze(Data(:,:,b,k));
             reca=squeeze(ReconAll(:,:,b,k));
-            H=plot(0:30:330',dat(whichtrial_PCA,:),'--','Color',[0 0 0]);  %%plot the first trial of data in dotted line
+            H=plot(1:6',dat(whichtrial_PCA,:),'--','Color',[0 0 0]);  %%plot the first trial of data in dotted line
             hold on
-            I=plot(0:30:330',reca(whichtrial_PCA,:),'Color',[0 0 0]);   %%plot the total recon of the first trial in solid line
+            I=plot(1:6',reca(whichtrial_PCA,:),'Color',[0 0 0]);   %%plot the total recon of the first trial in solid line
             %shows r2 of the average real data and average reconstruction
             rsqr = (corr(dat(whichtrial_PCA,:)',reca(whichtrial_PCA,:)'))^2;
             text(10,0.8,['r2 =', ' ', num2str(rsqr)],'FontSize',10)
@@ -643,15 +654,15 @@ if checkwalk==0;
             %plot each syn contribution
             for j=1:nsyn
                 recp=squeeze(ReconPartsPCA(j,:,:,b,k));
-                J=plot(0:30:330',recp(whichtrial_PCA,:),'Color',color(j,:));                       %%plot each synergy's contribution as line with std dev
+                J=plot(1:6',recp(whichtrial_PCA,:),'Color',color(j,:));                       %%plot each synergy's contribution as line with std dev
             end
 
             if b==3
                 ylabel(Muscle_LST(k,:))
             end
 
-            axis([0 330 -1 1])
-            set(gca,'Xtick',[0 90 180 270],'Ytick',[-1 0 1])
+            axis([1 6 -1 1])
+            set(gca,'Xtick',[0:7],'Ytick',[-1 0 1])
         end
     end
 
