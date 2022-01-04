@@ -55,18 +55,6 @@ afname =  mfname;
 afname2 = mfname;
       
 mfname
-if strcmp(partid,'RTIS1005')
-if strcmp(mfname,'/trial21.mat')
-    continue
-end 
-if strcmp(mfname,'/trial36.mat')
-    continue
-end 
-if strcmp(mfname,'/trial53.mat')
-    continue
-end 
-end 
-
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -154,7 +142,7 @@ matname = fullfile(filepath_times, [name_times extention]);
 % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
 
 %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-%% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
+%% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Oct/Nov 2021
 flag=0; %will not plot all Segment CSes
 gh= zeros(4,length(metdata));
 
