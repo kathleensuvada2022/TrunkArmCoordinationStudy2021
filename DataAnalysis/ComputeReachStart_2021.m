@@ -132,7 +132,7 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
 if strcmp(partid,'RTIS1005') 
     end_reach = find(vel(1:75)>=.15*max(vel));
     idx(3) = end_reach(length(end_reach));  
-    idx(1) = find(dist>=.02*max(dist),1);
+    idx(1) = find(dist>=.02*max(dist),1)-1;
 
     if expcond==1        
         if strcmp(mfname,'/trial10.mat')
@@ -161,7 +161,7 @@ if strcmp(partid,'RTIS1005')
         end
         
         if strcmp(mfname,'/trial15.mat')
-            idx(1) = idx(1)-6;
+            idx(1) = idx(1)-4;
         end
         
         if strcmp(mfname,'/trial21.mat')
@@ -169,7 +169,7 @@ if strcmp(partid,'RTIS1005')
         end
         
         if strcmp(mfname,'/trial22.mat')
-            idx(1) = idx(1)-6;
+            idx(1) = idx(1)-4;
         end
         
         if strcmp(mfname,'/trial25.mat')
