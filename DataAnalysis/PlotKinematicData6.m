@@ -55,6 +55,8 @@ afname =  mfname;
 afname2 = mfname;
       
 mfname
+
+%skipping trials that are missing metria data for forearm 
 if strcmp(partid,'RTIS1005')
 if strcmp(mfname,'/trial21.mat')
     continue
@@ -69,6 +71,25 @@ if strcmp(mfname,'/trial53.mat')
     continue
 end 
 end 
+
+
+if strcmp(partid,'RTIS1006')
+
+if strcmp(mfname,'/trial67.mat')
+    continue
+end     
+  
+if strcmp(mfname,'/trial58.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial44.mat')
+    continue
+end
+
+end
+
+
 
 % 
 % % Kacey added to call new function to plot in GCS
