@@ -61,15 +61,15 @@ if strcmp(partid,'RTIS1005')
 if strcmp(mfname,'/trial21.mat')
     continue
 end 
-if strcmp(mfname,'/trial31.mat')
-    continue
-end 
-if strcmp(mfname,'/trial36.mat')
-    continue
-end 
-if strcmp(mfname,'/trial53.mat')
-    continue
-end 
+% if strcmp(mfname,'/trial31.mat')
+%     continue
+% end 
+% if strcmp(mfname,'/trial36.mat')
+%     continue
+% end 
+% if strcmp(mfname,'/trial53.mat')
+%     continue
+% end 
 end 
 
 
@@ -363,30 +363,9 @@ end
 %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
 %  [CoP2]= ComputeCOP(ppsdata,tpps);
 
- pause
+ %pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
-
-% UPDATED KCS Jan 2022 -- to fix large standard dev issue
-% Need to change 0s from skipped trials to NANs 
-
-for k = 1:length(maxreach_current_trial)
-   
-    if maxreach_current_trial(k)== 0
-        maxreach_current_trial(k) = nan;
-    end
-    if maxhandexcrsn_current_trial(k) ==0 
-        maxhandexcrsn_current_trial(k) = nan;
-    end
-    if shex_current_trial(k) ==0
-        shex_current_trial(k) = nan;
-    end
-    
-    if trex_current_trial(k) ==0
-        trex_current_trial(k) = nan;
-    end
-end
-        
 avgmaxreach =nanmean(maxreach_current_trial)
 std_maxreach = nanstd(maxreach_current_trial)
 
