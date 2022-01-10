@@ -100,6 +100,10 @@ if strcmp(mfname,'/trial96.mat')
     continue
 end
 
+if strcmp(mfname,'/trial84.mat')
+    continue
+end
+
 
 end
 

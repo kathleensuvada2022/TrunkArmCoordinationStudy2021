@@ -450,20 +450,10 @@ if strcmp(partid,'RTIS1006')
     if expcond ==6 
         idx(1) = find(dist>=.10*max(dist),1);
         
-        if strcmp(mfname,'/trial86.mat')
-            idx(1) = idx(1)-4;
-            idx(3) = idx(3)+3;
-        end
-                
-        if strcmp(mfname,'/trial100.mat')
-            idx(1) = idx(1)-2;
-            idx(3) = idx(3)+1;
-        end
-                        
-        if strcmp(mfname,'/trial101.mat')
-            idx(1) = idx(1)+6;
-            
-        end
+      if strcmp(mfname,'/trial86.mat')
+          idx(1) = idx(1)-2;
+          idx(3) = idx(3)+3;
+      end
     end 
     
 end
