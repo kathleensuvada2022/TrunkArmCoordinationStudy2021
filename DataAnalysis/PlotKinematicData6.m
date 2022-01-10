@@ -73,35 +73,35 @@ end
 end 
 
 
-% if strcmp(partid,'RTIS1006')
-% 
-% if strcmp(mfname,'/trial67.mat')
-%     continue
-% end     
-%   
-% if strcmp(mfname,'/trial58.mat')
-%     continue
-% end
-% 
-% if strcmp(mfname,'/trial44.mat')
-%     continue
-% end
-% 
-% if strcmp(mfname,'/trial91.mat')
-%     continue
-% end
-% if strcmp(mfname,'/trial93.mat')
-%     continue
-% end
-% if strcmp(mfname,'/trial94.mat')
-%     continue
-% end
-% if strcmp(mfname,'/trial96.mat')
-%     continue
-% end
-% 
-% 
-% end
+if strcmp(partid,'RTIS1006')
+
+if strcmp(mfname,'/trial67.mat')
+    continue
+end     
+  
+if strcmp(mfname,'/trial58.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial44.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial91.mat')
+    continue
+end
+if strcmp(mfname,'/trial93.mat')
+    continue
+end
+if strcmp(mfname,'/trial94.mat')
+    continue
+end
+if strcmp(mfname,'/trial96.mat')
+    continue
+end
+
+
+end
 
 
 
