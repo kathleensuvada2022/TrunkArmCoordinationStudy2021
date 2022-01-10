@@ -53,80 +53,34 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
 
 %% Correcting if issues with reach start
 % RTIS 1004
- if  strcmp(partid,'RTIS1004') 
-        if expcond==1 
+if  strcmp(partid,'RTIS1004') 
+    end_reach = find(vel(1:75)>=.05*max(vel(1:75)));
+    idx(3) = end_reach(length(end_reach));  
+    idx(1) = find(dist>=.02*max(dist),1)-1;
+    
+    if expcond==1 
+        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        distcond = find(dist>=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond); 
+        idx(3) = vUd(length(vUd));
+        
+        if strcmp(mfname,'/trial6.mat')
+        idx(1) = idx(1) -1;   
+        end
+        
+        if strcmp(mfname,'/trial7.mat')
+        idx(1) = idx(1) +4;   
+        end
+        
+        if strcmp(mfname,'/trial10.mat')
+        idx(1) = idx(1) -1;   
+        end
+    end 
 
-        idx(1) = find(dist>=.015*max(dist),1);% reach start when participant is 5% of max distance
-            if strcmp(mfname,'/trial6.mat')
-                idx(1)=idx(1)-2;
-            end
-            
-            if strcmp(mfname,'/trial10.mat')
-                idx(1)=idx(1)-2;
-            end 
-        end 
-        
-        if expcond==2
-            idx(1) = find(dist>=.05*max(dist),1);% reach start when participant is 5% of max distance
-            if strcmp(mfname,'/trial25.mat')
-                idx(1)=idx(1)-2;
-            end
-            
-        end
-        
-        
-        if expcond==4
-            idx(1) = find(dist>=.05*max(dist),1);% reach start when participant is 5% of max distance
-            if strcmp(mfname,'/trial36.mat')
-                idx(1)=idx(1)-5;
-            end
-            
-            if strcmp(mfname,'/trial37.mat')
-                idx(1)=idx(1)-5;
-            end
-            
-            
-            if strcmp(mfname,'/trial38.mat')
-                idx(1)=idx(1)-5;
-            end
-            
-            if strcmp(mfname,'/trial39.mat')
-                idx(1)=idx(1)-5;
-            end
-            
-            
-            if strcmp(mfname,'/trial44.mat')
-                idx(1)=idx(1)-5;
-            end
-            
-        end
-        
-        
-        if expcond==5
-             
-            if strcmp(mfname,'/trial51.mat')
-                idx(1)=idx(1)-5;
-            
-            end 
-        end
-        
-        
-        if expcond==6
-             
-            if strcmp(mfname,'/trial62.mat')
-                idx(1)=idx(1)-5;
-            
-            end 
-            
-             if strcmp(mfname,'/trial64.mat')
-                idx(1)=idx(1)-5;
-            
-            end 
-        end 
-     
-     
- end
-
+    
+end
 %% RTIS 1005
 
 if strcmp(partid,'RTIS1005') 
