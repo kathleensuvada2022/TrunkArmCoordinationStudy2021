@@ -429,7 +429,16 @@ if strcmp(partid,'RTIS1006')
       
         if strcmp(mfname,'/trial89.mat')
              idx(1) = idx(1)-2;
-             idx(3) = idx(3)-2;
+             idx(3) = idx(3)+10;
+        end
+        
+        if strcmp(mfname,'/trial90.mat')
+%              idx(1) = idx(1)-2;
+             idx(3) = idx(3)+1;
+        end
+        if strcmp(mfname,'/trial95.mat')
+%              idx(1) = idx(1)-2;
+             idx(3) = idx(3)+9;
         end
     end  
     
