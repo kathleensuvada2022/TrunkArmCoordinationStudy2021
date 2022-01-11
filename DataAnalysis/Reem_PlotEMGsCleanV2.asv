@@ -29,11 +29,13 @@ figure(2)
 %emg=emg./maxes; %normalizing
 sampRate=1000;
 avgwindow=0.25; ds=sampRate*avgwindow;
-nEMG=size(emg,2);
-t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
+nEMG=size(cleandata,2);
+t=(0:size(cleandata,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
 avgwindow=0.25; ds=sampRate*avgwindow;
-emg=abs(detrend(emg));
+emg=abs(detrend(cleandata));
 
+% Kacey changed Jan 2022 emg to cleandata so using filtered EMG data
+% without 60hz room noise. 
 %% use this value
 meanEMG=movmean(emg,ds);
 % memg=max(emg);
@@ -64,27 +66,38 @@ yspacing=cumsum([0 memg(2:nEMG)+.9]);
 
 % creating DATAsrc: muscles x (trials * conditions), 60x15
 
+'all EMG values for our time window of interest for all muscles!'
+
+%% plot the clean data
+% 
+% figure
+% plot(cleandata(:, 1)) % has negative values, raw data filtered through
+% size(cleandata) % 5000x 15
+% 
+% figure
+% plot(emg(:, 1)) % abs function done, all nonnegative values
+% size(emg) % 5000x 15
+% 
+% figure
+% plot(meanEMG(:, 1)) % abs function done, all nonnegative values
+% size(meanEMG) % 5000x 15
+% pause
+
 %% time window
-reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
-size(reachingtime)
+%this is sampling rate, *******reaching time in samples*****
+reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000; %interval at start of the reach (-150ms--> 50ms)
+                % this is by samples--trial 5 seconds, collect 1000 data
+                % points every second. (sampling rate)
+size(reachingtime) %time in seconds
+reachin
+% pause
 
 % (timestart*1000)-150 (or 0.15 w/ 1000)
 % looking at the movement itself (preporatory phase)
 % biomechanics--time points are dependent
 % (timestart*1000)
 
-'all EMG values for our time window of interest for all muscles!'
-% cleandata= KaceyNotchfilter(emg); %use MEANEMG instead of emg or cleandata
-% % figure
-% % plot(cleandata)
-% size(cleandata) % 5000x 15
-% 
-% % pause
-% emg_timewindow = abs(cleandata(round(reachingtime),:)); %test--looking at cleandata for NMF
-% size(emg_timewindow)
-
-meanEMG_1=movmean(emg,ds);
-
+%% creating EMG with time window of interest for all 15 muscles
 meanEMG_timewindow_mini = meanEMG(round(reachingtime),:); %final--looking at meanEMG for NMF (201x15)
 meanEMG_timewindow_mini = mean(meanEMG_timewindow_mini); %finding the average over that one time window (1x15)
 

@@ -66,34 +66,46 @@ yspacing=cumsum([0 memg(2:nEMG)+.9]);
 
 % creating DATAsrc: muscles x (trials * conditions), 60x15
 
+'all EMG values for our time window of interest for all muscles!'
+
+%% plot the clean data
+% 
+% figure
+% plot(cleandata(:, 1)) % has negative values, raw data filtered through
+% size(cleandata) % 5000x 15
+% 
+% figure
+% plot(emg(:, 1)) % abs function done, all nonnegative values
+% size(emg) % 5000x 15
+% 
+% figure
+% plot(meanEMG(:, 1)) % abs function done, all nonnegative values
+% size(meanEMG) % 5000x 15
+% pause
+
 %% time window
-reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
-size(reachingtime)
+%this is sampling rate, *******reaching time in samples*****
+reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000; %interval at start of the reach (-150ms--> 50ms)
+                % this is by samples--trial 5 seconds, collect 1000 data
+                % points every second. (sampling rate)
+size(reachingtime) %time in seconds
+% reachingtime
+% pause
 
 % (timestart*1000)-150 (or 0.15 w/ 1000)
 % looking at the movement itself (preporatory phase)
 % biomechanics--time points are dependent
 % (timestart*1000)
 
-'all EMG values for our time window of interest for all muscles!'
-cleandata= KaceyNotchfilter(emg); %use MEANEMG instead of emg or cleandata
-
-%% plot the clean data
-figure
-plot(cleandata(:, 1))
-size(cleandata) % 5000x 15
-
-figure
-plot(emg(:, 1))
-size(emg) % 5000x 15
-pause
+%% creating EMG with time window of interest for all 15 muscles
 
 meanEMG_timewindow_mini = meanEMG(round(reachingtime),:); %final--looking at meanEMG for NMF (201x15)
 meanEMG_timewindow_mini = mean(meanEMG_timewindow_mini); %finding the average over that one time window (1x15)
+size(meanEMG_timewindow_mini)
 
 meanEMG_timewindow = transpose(meanEMG_timewindow_mini);  %transpose--data structure needs to be muscles x time/window (15x1)
 size(meanEMG_timewindow)
-plot(meanEMG_timewindow)
+% plot(meanEMG_timewindow)
 
 
 
@@ -104,17 +116,18 @@ plot(meanEMG_timewindow)
 % Reem_mockwalking_test.mat)
 
 'which trial are we on?:'
+close all
 
-assignin("base",'emg_timewindow_1', meanEMG_timewindow);
+% assignin("base",'emg_timewindow_1', meanEMG_timewindow);
 % assignin("base","emg_timewindow_2", meanEMG_timewindow);
 % assignin("base","emg_timewindow_3",meanEMG_timewindow);
-% assignin("base","emg_timewindow_4",meanEMG_timewindow);
+assignin("base","emg_timewindow_4",meanEMG_timewindow);
 % assignin("base","emg_timewindow_5",meanEMG_timewindow);
 % assignin("base","emg_timewindow_6", meanEMG_timewindow);
 % assignin("base","emg_timewindow_7",meanEMG_timewindow);
 % assignin("base","emg_timewindow_8",meanEMG_timewindow);
 % assignin("base","emg_timewindow_9",meanEMG_timewindow);
-% assignin("base","emg_timewindow_9",meanEMG_timewindow);
+% assignin("base","emg_timewindow_10",meanEMG_timewindow);
 
 
 %% copypaste this and change to indicate # of control

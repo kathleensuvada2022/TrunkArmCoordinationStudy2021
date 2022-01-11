@@ -4,8 +4,8 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgem
 % load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
 %For Kacey
-   datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
-%datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+%    datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
+datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
 
@@ -68,7 +68,7 @@ emgstart_trial= zeros(length(mtrials),15);
 
 %% Main loop that grabs Metria data and plots 
 
-for i= 1:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
+for i= 4:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
 
 %could add in Reem_ExtractEMGMatrixNMF here to save the values in the workspace quickly
 % without having to end the program
@@ -232,6 +232,7 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS and getting the trial data
+
 mfname
 % trialnum = num2str(mtrials(i)) %trial number
 % 
