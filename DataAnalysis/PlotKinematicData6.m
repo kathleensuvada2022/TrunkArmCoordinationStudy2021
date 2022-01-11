@@ -55,6 +55,68 @@ afname =  mfname;
 afname2 = mfname;
       
 mfname
+
+%skipping trials that are missing metria data for forearm 
+if strcmp(partid,'RTIS1004')
+if strcmp(mfname,'/trial21.mat')
+    continue
+end 
+
+end 
+
+
+if strcmp(partid,'RTIS1005')
+if strcmp(mfname,'/trial21.mat')
+    continue
+end 
+if strcmp(mfname,'/trial31.mat')
+    continue
+end 
+if strcmp(mfname,'/trial36.mat')
+    continue
+end 
+if strcmp(mfname,'/trial53.mat')
+    continue
+end 
+end 
+
+
+if strcmp(partid,'RTIS1006')
+
+if strcmp(mfname,'/trial67.mat')
+    continue
+end     
+  
+if strcmp(mfname,'/trial58.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial44.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial91.mat')
+    continue
+end
+if strcmp(mfname,'/trial93.mat')
+    continue
+end
+if strcmp(mfname,'/trial94.mat')
+    continue
+end
+if strcmp(mfname,'/trial96.mat')
+    continue
+end
+
+if strcmp(mfname,'/trial84.mat')
+    continue
+end
+
+
+end
+
+
+
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -142,7 +204,7 @@ matname = fullfile(filepath_times, [name_times extention]);
 % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
 
 %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-%% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Oct/Nov 2021
+%% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
 flag=0; %will not plot all Segment CSes
 gh= zeros(4,length(metdata));
 
@@ -194,12 +256,13 @@ trex_current_trial(i) = trunk_exc;
 
 
 %% Plotting EMGS
- [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+%  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 % 
 %  emgvel_trial(i,:) = emg_timevel;
 %  emgstart_trial(i,:) = emg_timestart;
 %% Main Cumulative Metria Figure
  figure(4)
+ clf 
   %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
 
   % This line worked NOV 2021!!! Uncomment if want to plot AA not GH 
@@ -207,8 +270,15 @@ trex_current_trial(i) = trunk_exc;
         
 %     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
   
-         p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
-%           p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+%% Works for plotting GH just from start to end reach : subtracting initial trunk position
+%          p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+%% Plotting whole trial with GH - UN COMMENT JAN 2022
+         p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3);
+
+%          p1= plot((xhand(:,1)-xjug(idx(1),1)) ,(xhand(:,2)-xjug(idx(1),2)),'LineWidth',3);
+
+%%
+%p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
    
 %          p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3);
 
@@ -226,28 +296,31 @@ trex_current_trial(i) = trunk_exc;
         
 %      idxreachstart = find(t==timestart,1);
      % c1= plot(Newreachx(idx(1)),Newreachy(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
-          c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    
+%%  UN COMMENT JAN 2022
+c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%%    
 %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
 %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
         
 %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
 %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
-      
+%%    UN COMMENT!!! JAN 2022  
          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
 
    
         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-
+%%
     
       
         idxdistmax = length(xhand);
 %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
 %         c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
-          c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerFaceColor','r','MarkerSize',10);
-
+  
+%% UN COMMENT Jan 2022
+c3= plot(xhand(idx(3),1)-xjug(idx(1),1),xhand(idx(3),2)-xjug(idx(1),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%%
 %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
 %         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
 
@@ -256,8 +329,11 @@ trex_current_trial(i) = trunk_exc;
 %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
   %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
 
-        set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
-  %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
+   
+  
+   set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+
+   %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
 
     %   if i ==1  
     %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
@@ -271,9 +347,9 @@ trex_current_trial(i) = trunk_exc;
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
-%  axis equal
-  xlim([-250 50])
-  ylim([-100 600])
+%   axis equal
+%   xlim([-250 50])
+%   ylim([-100 600])
 
 if expcond== 1 
 title('Restrained Table','FontSize',24)
@@ -306,9 +382,30 @@ end
 %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
 %  [CoP2]= ComputeCOP(ppsdata,tpps);
 
-% pause
+ pause
 end
 %% Printing out the max reach, std, shoulder and trunk displacement and std
+
+% UPDATED KCS Jan 2022 -- to fix large standard dev issue
+% Need to change 0s from skipped trials to NANs 
+
+for k = 1:length(maxreach_current_trial)
+   
+    if maxreach_current_trial(k)== 0
+        maxreach_current_trial(k) = nan;
+    end
+    if maxhandexcrsn_current_trial(k) ==0 
+        maxhandexcrsn_current_trial(k) = nan;
+    end
+    if shex_current_trial(k) ==0
+        shex_current_trial(k) = nan;
+    end
+    
+    if trex_current_trial(k) ==0
+        trex_current_trial(k) = nan;
+    end
+end
+        
 avgmaxreach =nanmean(maxreach_current_trial)
 std_maxreach = nanstd(maxreach_current_trial)
 
