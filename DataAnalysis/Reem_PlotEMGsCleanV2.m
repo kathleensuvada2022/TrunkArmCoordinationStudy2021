@@ -121,17 +121,18 @@ close all
 % assignin("base",'emg_timewindow_1', meanEMG_timewindow);
 % assignin("base","emg_timewindow_2", meanEMG_timewindow);
 % assignin("base","emg_timewindow_3",meanEMG_timewindow);
-assignin("base","emg_timewindow_4",meanEMG_timewindow);
+% assignin("base","emg_timewindow_4",meanEMG_timewindow);
 % assignin("base","emg_timewindow_5",meanEMG_timewindow);
 % assignin("base","emg_timewindow_6", meanEMG_timewindow);
 % assignin("base","emg_timewindow_7",meanEMG_timewindow);
 % assignin("base","emg_timewindow_8",meanEMG_timewindow);
 % assignin("base","emg_timewindow_9",meanEMG_timewindow);
-% assignin("base","emg_timewindow_10",meanEMG_timewindow);
+assignin("base","emg_timewindow_10",meanEMG_timewindow);
 
 
-%% copypaste this and change to indicate # of control
-% list_Control2 = cat(2, emg_timewindow_1, emg_timewindow_2, emg_timewindow_3, emg_timewindow_4, emg_timewindow_5)
+% %% copypaste this and change to indicate # of control
+% list_Control2 = cat(2, emg_timewindow_1, emg_timewindow_2, emg_timewindow_3, emg_timewindow_4, emg_timewindow_5, ...
+%     emg_timewindow_6, emg_timewindow_7, emg_timewindow_8, emg_timewindow_9)
 pause
 
 

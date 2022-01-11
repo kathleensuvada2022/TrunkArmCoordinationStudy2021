@@ -102,8 +102,15 @@ checkwalk=get(handles.checkbox_walking,'Value');
 if checkwalk==1;
     load Reem_mockwalking_test B Muscle_LST time %eventually modify this to allow user to select a file
 else
-    load Reem_FINALFILE_test_B B Muscle_LST % MUST have the same file names as Reem_mockwalking
+    load Reem_FINALFILE_test list_Control_all Muscle_LST % MUST have the same file names as Reem_mockwalking
+
+    B = list_Control_all % B = main concatenated matrix 15x60 (15x30 for Reem_FINALFILE_test_B)
+
+    %% KACEY--THIS IS WHAT YOU CHANGE AS YOU GO.
+    % the number of trials will change depending on the condition
+    % nbins-- we're looking at only 1 now
     nmus=15; ncond=6; ntrials=5; nbins=1; % changed all nmus to 15 instead of 16
+
     
 %     load PDP05P0M_EMG_data_only_begin150ms_nobkg_scaledtowalking DATAsrc DATA_LST
 %     DATAsrc(14:16,:)=[];
@@ -143,7 +150,10 @@ figure
 for i=1:nmus
     if checkwalk==0 %Plot tuning curves for postural data
         %for k=1:nbins %to plot all 4 time bins
-        for k= 1:nbins %to plot only one time bin
+
+        %% k dictates how many bins we're looking at
+
+        for k= 1:nbins %to plot only one time bin     %% 3:3?? look at a specific time bin 
             %subplot(nmus,nbins,((nbins)*i)-(nbins-k)) %to plot all 4 time bins
             subplot(4,4,i) %to plot only one time bin
             %H=plot(0:30:330',squeeze(Data(:,:,k,i)),'Color','b');
