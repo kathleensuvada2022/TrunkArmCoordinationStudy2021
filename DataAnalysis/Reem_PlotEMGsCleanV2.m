@@ -22,6 +22,7 @@ cleandata= KaceyNotchfilter(emg);
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 assignin("base","Muscle_LST", char(emgchan)); %data name list structure
 
+% pause
 %clf
 figure(2)
 %subplot(2,1,2)
@@ -61,6 +62,9 @@ yspacing=cumsum([0 memg(2:nEMG)+.9]);
 
 %% Extracting values for NMF analysis
 
+% creating DATAsrc: muscles x (trials * conditions), 60x15
+
+%% time window
 reachingtime= (timestart-0.15)*1000:(timestart+0.05)*1000;
 size(reachingtime)
 
@@ -72,14 +76,22 @@ size(reachingtime)
 'all EMG values for our time window of interest for all muscles!'
 cleandata= KaceyNotchfilter(emg); %use MEANEMG instead of emg or cleandata
 
-emg_timewindow = abs(cleandata(round(reachingtime),:)); %test--looking at cleandata for NMF
-size(emg_timewindow)
+%% plot the clean data
+figure
+plot(cleandata(:, 1))
+size(cleandata) % 5000x 15
+
+figure
+plot(emg(:, 1))
+size(emg) % 5000x 15
+pause
 
 meanEMG_timewindow_mini = meanEMG(round(reachingtime),:); %final--looking at meanEMG for NMF (201x15)
 meanEMG_timewindow_mini = mean(meanEMG_timewindow_mini); %finding the average over that one time window (1x15)
 
 meanEMG_timewindow = transpose(meanEMG_timewindow_mini);  %transpose--data structure needs to be muscles x time/window (15x1)
 size(meanEMG_timewindow)
+plot(meanEMG_timewindow)
 
 
 
@@ -91,13 +103,17 @@ size(meanEMG_timewindow)
 
 'which trial are we on?:'
 
-% trialEMG = 
-
-% assignin("base",'emg_timewindow_1', meanEMG_timewindow);
+assignin("base",'emg_timewindow_1', meanEMG_timewindow);
 % assignin("base","emg_timewindow_2", meanEMG_timewindow);
 % assignin("base","emg_timewindow_3",meanEMG_timewindow);
 % assignin("base","emg_timewindow_4",meanEMG_timewindow);
-assignin("base","emg_timewindow_5",meanEMG_timewindow);
+% assignin("base","emg_timewindow_5",meanEMG_timewindow);
+% assignin("base","emg_timewindow_6", meanEMG_timewindow);
+% assignin("base","emg_timewindow_7",meanEMG_timewindow);
+% assignin("base","emg_timewindow_8",meanEMG_timewindow);
+% assignin("base","emg_timewindow_9",meanEMG_timewindow);
+% assignin("base","emg_timewindow_9",meanEMG_timewindow);
+
 
 %% copypaste this and change to indicate # of control
 % list_Control2 = cat(2, emg_timewindow_1, emg_timewindow_2, emg_timewindow_3, emg_timewindow_4, emg_timewindow_5)

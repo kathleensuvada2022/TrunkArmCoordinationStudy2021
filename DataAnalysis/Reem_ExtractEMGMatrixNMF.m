@@ -78,13 +78,20 @@ size(meanEMG_timewindow)
 
 'which trial are we on?:'
 
+counter = 0 
+
+for u = 1:6
+    counter = counter+1
+
 % trialEMG = 
+
+['emg_timewindow' + counter] = evalin('base', meanEMG_timewindow)
 
 % assignin("base",'emg_timewindow_1', meanEMG_timewindow);
 % assignin("base","emg_timewindow_2", meanEMG_timewindow);
 % assignin("base","emg_timewindow_3",meanEMG_timewindow);
 % assignin("base","emg_timewindow_4",meanEMG_timewindow);
-assignin("base","emg_timewindow_5",meanEMG_timewindow);
+assignin('base',['emg_timewindow'],meanEMG_timewindow);
 
 %% copypaste this and change to indicate # of control
 % list_Control2 = cat(2, emg_timewindow_1, emg_timewindow_2, emg_timewindow_3, emg_timewindow_4, emg_timewindow_5)

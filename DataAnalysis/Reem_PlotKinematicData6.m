@@ -8,7 +8,9 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgem
 datafilepath = ['/Users/Abi1/Documents/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
 
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file 
-%% TESTING
+
+
+
 %% Loading in Max EMGSx
 
      load([datafilepath '/Maxes/maxEMG.mat']);
@@ -51,16 +53,30 @@ shtrdisp_current_trial=zeros(ntrials,2);
 emgvel_trial= zeros(length(mtrials),15);
 emgstart_trial= zeros(length(mtrials),15);
 
+
+
+
+
+
+
+
+
+
+
+%% For getting individual files to export to the workspace, change the
+%% i = ___: length(mtrials).
+
 %% Main loop that grabs Metria data and plots 
-for i= 5:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
+
+for i= 1:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
 
 %could add in Reem_ExtractEMGMatrixNMF here to save the values in the workspace quickly
 % without having to end the program
 mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
 afname =  mfname;
 afname2 = mfname;
-      
 mfname
+
 % 
 % % Kacey added to call new function to plot in GCS
 % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -203,13 +219,44 @@ shex_current_trial(i) = sh_exc;
 trex_current_trial(i) = trunk_exc;
 
 
-%% Plotting EMGS
+
+
+
+
+
+
+
+
+
+
+
+
+%% Plotting EMGS and getting the trial data
 mfname
+% trialnum = num2str(mtrials(i)) %trial number
+% 
+% % [emg_timevel emg_timestart counter]= Reem_ExtractEMGMatrixNMF(emg,timestart,timevelmax,timedistmax,i)
+% % pause
+
 [emg_timevel emg_timestart]= Reem_PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
 
+
+pause
 % emgvel_trial(i,:) = emg_timevel;
 % emgstart_trial(i,:) = emg_timestart;
  
+
+
+
+
+
+
+
+
+
+
+
+
 
 %% Main Cumulative Metria Figure
  figure(4)
