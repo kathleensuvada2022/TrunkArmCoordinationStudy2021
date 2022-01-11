@@ -29,11 +29,13 @@ figure(2)
 %emg=emg./maxes; %normalizing
 sampRate=1000;
 avgwindow=0.25; ds=sampRate*avgwindow;
-nEMG=size(emg,2);
-t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
+nEMG=size(cleandata,2);
+t=(0:size(cleandata,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
 avgwindow=0.25; ds=sampRate*avgwindow;
-emg=abs(detrend(emg));
+emg=abs(detrend(cleandata));
 
+% Kacey changed Jan 2022 emg to cleandata so using filtered EMG data
+% without 60hz room noise. 
 %% use this value
 meanEMG=movmean(emg,ds);
 % memg=max(emg);
