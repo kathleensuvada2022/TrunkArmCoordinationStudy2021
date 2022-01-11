@@ -1,4 +1,4 @@
-function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]=ComputeReachStart_2021(t,xhand,setup,expcond,partid,mfname,hand)
+function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
 [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
@@ -2073,6 +2073,20 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
     
     
 end
+
+%% Testing to see if shoulder, trunk marker visible at indices 
+for h = idx(1):length(xshldr)
+if isnan(xshldr(h)) || isnan(xjug(h))
+    idx(1) = h+1;
+end
+end 
+
+for k = idx(3):length(xshldr)
+if isnan(xshldr(k)) || isnan(xjug(k))
+    idx(3) = k+1;
+end
+end 
+
 
 %%
 idx;
