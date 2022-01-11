@@ -68,7 +68,7 @@ emgstart_trial= zeros(length(mtrials),15);
 
 %% Main loop that grabs Metria data and plots 
 
-for i= 4:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
+for i= 9:length(mtrials) %  QUICKEST WAY TO GET VALUES FOR EACH TRIAL IS TO CHANGE THIS TO THE TRIAL # OF INTEREST 1-5
 
 %could add in Reem_ExtractEMGMatrixNMF here to save the values in the workspace quickly
 % without having to end the program
@@ -234,6 +234,7 @@ trex_current_trial(i) = trunk_exc;
 %% Plotting EMGS and getting the trial data
 
 mfname
+length(mtrials)
 % trialnum = num2str(mtrials(i)) %trial number
 % 
 % % [emg_timevel emg_timestart counter]= Reem_ExtractEMGMatrixNMF(emg,timestart,timevelmax,timedistmax,i)
