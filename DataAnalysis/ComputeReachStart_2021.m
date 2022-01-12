@@ -2075,11 +2075,16 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
 end
 
 %% Testing to see if shoulder, trunk marker visible at indices 
-for h = idx(1):length(xshldr)
+%missing shoulder 
+% for h = idx(1):length(xshldr)
 if isnan(xshldr(h)) || isnan(xjug(h))
     idx(1) = h+1;
 end
-end 
+
+%use find to see where NAN in xshldr and xjug then ~ to get true where
+%numbers then bump up one if NAN
+
+% end 
 
 for k = idx(3):length(xshldr)
 if isnan(xshldr(k)) || isnan(xjug(k))
