@@ -26,8 +26,8 @@ dist2 = dist2(:)-dist2(1);
 vel = ddt(smo(dist,3),1/89);
 %[vel2,t2] = resampledata(vel,t,100,89);
 
-% velx= ddt(smo(xhand(:,1),3),1/89);
-% vely= ddt(smo(xhand(:,2),3),1/89);
+velx= ddt(smo(xhand(:,1),3),1/89);
+vely= ddt(smo(xhand(:,2),3),1/89);
 % 
 % 
 % velx2= ddt(smo(xhand2(:,1),3),1/89);
@@ -53,11 +53,26 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
 
 %% Correcting if issues with reach start
 % RTIS 1004
-if  strcmp(partid,'RTIS1004') 
+if  strcmp(partid,'RTIS1004')
+    %
+    %testing out using y vel for start idx 
+    pos_vely = find(vely>0);
+    
+    if vely(pos_vely(1):pos_vely(1)+10) >0
+        idxstart = pos_vely(1);
+    else 
+        idxstart = pos_vely(2)
+    end 
+    
+
+
+    
+    %
     end_reach = find(vel(1:75)>=.05*max(vel(1:75)));
     idx(3) = end_reach(length(end_reach));  
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
+ 
     if expcond==1 
         velcond = find(vel(1:75)>=.10*max(vel(1:75)));
         distcond = find(dist>=.2*max(dist));
@@ -2127,7 +2142,7 @@ hold on
    yyaxis right
  plot(t,vel,'LineWidth',1) 
 % plot(t,velx)
-% plot(t,vely)
+ plot(t,vely)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -2136,14 +2151,14 @@ title('Distance and Velocity','FontSize',24)
  p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
 % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
 p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
-%p4= line('Color','g','Xdata',[timebefore timebefore],'Ydata',[-500 500],'LineWidth',.5); %time prior
+p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 % ylim([-400 400])
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Time Start','Time End','FontSize',16)
+legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','FontSize',16)
 
 
 % figure (6),clf
@@ -2166,7 +2181,7 @@ legend('Distance', 'Velocity','Time Start','Time End','FontSize',16)
 % %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 % % ylim([-400 400])
 % % co=get(lax1,'ColorOrder');
-% % set(lax1,'ColorOrder',co(end-1:-1:1,:))
+% % set(lax1,'ColorOrder',co(end-1:-1:1,:))[-5000 5000]
 % xlim([0.25 5])
 % ylim([0 300])
 % xlabel('time in seconds')
