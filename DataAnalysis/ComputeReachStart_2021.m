@@ -28,6 +28,14 @@ vel = ddt(smo(dist,3),1/89);
 
 velx= ddt(smo(xhand(:,1),3),1/89);
 vely= ddt(smo(xhand(:,2),3),1/89);
+
+% Computing Angle of velocity vector 
+% ratio_vel = vely./velx;
+% theta_vel = atand(ratio_vel);
+
+theta_vel2 = atan2(vely,velx);
+theta_vel2 = rad2deg(theta_vel2);
+
 % 
 % 
 % velx2= ddt(smo(xhand2(:,1),3),1/89);
@@ -55,18 +63,15 @@ idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is
 % RTIS 1004
 if  strcmp(partid,'RTIS1004')
     %
-    %testing out using y vel for start idx 
-    pos_vely = find(vely>0);
-    
-    if vely(pos_vely(1):pos_vely(1)+10) >0
-        idxstart = pos_vely(1);
-    else 
-        idxstart = pos_vely(2)
-    end 
-    
+%     %testing out using y vel for start idx 
+%     pos_vely = find(vely>0);
+%     
+%     if vely(pos_vely(1):pos_vely(1)+10) >0
+%         idxstart = pos_vely(1);
+%     else 
+%         idxstart = pos_vely(2);
+%     end 
 
-
-    
     %
     end_reach = find(vel(1:75)>=.05*max(vel(1:75)));
     idx(3) = end_reach(length(end_reach));  
@@ -127,10 +132,7 @@ if  strcmp(partid,'RTIS1004')
         end
         
     end
-    
-    
-    
-    
+
     if expcond==3 
         velcond = find(vel(1:75)>=.10*max(vel(1:75)));
         distcond = find(dist<=.2*max(dist));
@@ -166,6 +168,10 @@ if  strcmp(partid,'RTIS1004')
     
     
     if expcond ==4 
+      PosAngleStart=  find(theta_vel2 <= 130 & theta_vel2>= 90);
+      idx(1) = PosAngleStart(1);
+      theta_vel2(idx(1));
+
         velcond = find(vel(1:75)<=.10*max(vel(1:75)));
         distcond = find(dist>=.2*max(dist));
 
@@ -175,12 +181,25 @@ if  strcmp(partid,'RTIS1004')
              
         if strcmp(mfname,'/trial35.mat')
         idx(3) = idx(3) -3;
-        idx(1) = idx(1)+10; 
+%         idx(1) = idx(1)+10; 
         end
-                     
+        
+        if strcmp(mfname,'/trial37.mat')
+        idx(3) = idx(3) -4;
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1);
+        end     
+        
+        if strcmp(mfname,'/trial38.mat')
+        idx(3) = idx(3) -4;
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1);
+        end
+        
         if strcmp(mfname,'/trial39.mat')
         idx(3) = idx(3) -4;
-        idx(1) = idx(1)+5; 
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1);
         end
                              
         if strcmp(mfname,'/trial40.mat')
@@ -193,11 +212,23 @@ if  strcmp(partid,'RTIS1004')
                                              
         if strcmp(mfname,'/trial42.mat')
         idx(3) = idx(3) -2;
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1);
         end
         
         if strcmp(mfname,'/trial43.mat')
         idx(3) = idx(3) -3;
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1); 
         end
+        
+        if strcmp(mfname,'/trial44.mat')
+       % idx(3) = idx(3) -3;
+        start = find(vel>=.05*max(vel)) ;
+        idx(1) = start(1);
+        end
+        
+        
     end
     
     if expcond ==5
