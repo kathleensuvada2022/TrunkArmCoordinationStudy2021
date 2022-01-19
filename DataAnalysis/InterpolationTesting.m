@@ -49,6 +49,10 @@ xlim([0 5])
 
 vel2 = ddt(smo(F,3),1/89);
 
+% BETTER METHOD
+% Fill distance data first, then take derivative of that to get filled
+% velocity.
+
 %% Comparing Ab ove with Computing Vel then filling in
 
 [Vel_F,TF] = fillmissing(vel,'spline','SamplePoints',t);
@@ -59,8 +63,9 @@ figure()
 plot(t,vel2,'LineWidth',.75)
 hold on 
 plot(t,Vel_F,'LineWidth',.75)
+plot(t,vel,'o')
 xlabel('Time','FontSize',14);
 ylabel('Vel','FontSize',14);
-legend('Filled Dist','Filled Vel','FontSize',14)
+legend('Filled Dist','Filled Vel','Original Missing Data Set','FontSize',14)
 title('New Velocity Filled','FontSize',16)
 xlim([0 5])
