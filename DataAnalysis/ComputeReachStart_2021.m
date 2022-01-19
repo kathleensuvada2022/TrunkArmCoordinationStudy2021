@@ -14,6 +14,11 @@ Zo = nanmean(xhand(1:5,3));
 %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
 
+if isnan(dist)   
+    [dist,TF] = fillmissing(dist,'spline','SamplePoints',t); 
+end 
+
+
 %using Resampled Data
 Xo = nanmean(xhand2(1:50,1));
 Yo = nanmean(xhand2(1:50,2)); 
