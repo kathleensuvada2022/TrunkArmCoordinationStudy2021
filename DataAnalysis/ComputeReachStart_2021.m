@@ -172,10 +172,9 @@ if  strcmp(partid,'RTIS1004')
     
     
     if expcond ==4 
-      PosAngleStart=  find(theta_vel2 <= 130 & theta_vel2>= 90);
-      idx(1) = PosAngleStart(1);
-      theta_vel2(idx(1));
-
+       %% JAN 2022 KCS % USING DIST/VEL/ ANGLE
+         
+        % Finding idx(3) max distance
         velcond = find(vel(1:75)<=.10*max(vel(1:75)));
         distcond = find(dist>=.2*max(dist));
 
@@ -183,54 +182,62 @@ if  strcmp(partid,'RTIS1004')
         vUd = intersect (velcond,distcond); 
         idx(3) = vUd(1);  
              
-        if strcmp(mfname,'/trial35.mat')
-        idx(3) = idx(3) -3;
-%         idx(1) = idx(1)+10; 
-        end
+        %Finding Start of the Reach (idx(1)) 
+        startvelcond = find(vel>=.05*max(vel)) ;     % finding velocity range 
+      
+        % Did not need DIST condition -- will probably for stroke. 
+        %startdist_velcond = find(dist(startvelcond)>=.02*max(dist));
+
+        %startdist_velcond = startvelcond(startdist_velcond); %where both vel and dist apply
         
-        if strcmp(mfname,'/trial37.mat')
-        idx(3) = idx(3) -4;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1);
-        end     
+        PosAngleStart=  find(theta_vel2(startvelcond) <= 180 & theta_vel2(startvelcond)>= 90); %looking in velocity range for angle range
+        idx(1) = startvelcond(PosAngleStart(1)); %setting start idx to be velocity range 
         
-        if strcmp(mfname,'/trial38.mat')
-        idx(3) = idx(3) -4;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1);
-        end
-        
-        if strcmp(mfname,'/trial39.mat')
-        idx(3) = idx(3) -4;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1);
-        end
-                             
-        if strcmp(mfname,'/trial40.mat')
-        idx(3) = idx(3) -4;
-        end
-                                     
-        if strcmp(mfname,'/trial41.mat')
-        idx(3) = idx(3) -3;
-        end
-                                             
-        if strcmp(mfname,'/trial42.mat')
-        idx(3) = idx(3) -2;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1);
-        end
-        
-        if strcmp(mfname,'/trial43.mat')
-        idx(3) = idx(3) -3;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1); 
-        end
-        
-        if strcmp(mfname,'/trial44.mat')
-       % idx(3) = idx(3) -3;
-        start = find(vel>=.05*max(vel)) ;
-        idx(1) = start(1);
-        end
+  %%      
+            if strcmp(mfname,'/trial35.mat')
+            idx(3) = idx(3) -3;
+            end
+            
+            if strcmp(mfname,'/trial36.mat')
+            idx(3) = idx(3) -3;
+            end
+
+
+            if strcmp(mfname,'/trial37.mat')
+             idx(3) = idx(3) -1;
+            %idx(1) = idx(1) -1;
+            end     
+
+            if strcmp(mfname,'/trial38.mat')
+           idx(3) = idx(3) -3;
+           % idx(1) = idx(1) -1;
+            end
+
+            if strcmp(mfname,'/trial39.mat')
+            idx(3) = idx(3) -4;
+            end
+
+            if strcmp(mfname,'/trial40.mat')
+            idx(3) = idx(3) -4;
+            idx(1) = idx(1) +3;
+            end
+
+            if strcmp(mfname,'/trial41.mat')
+            idx(3) = idx(3) -3;
+            idx(1) = idx(1) +1;
+            end
+
+            if strcmp(mfname,'/trial42.mat')
+            idx(3) = idx(3) -2;
+            end
+
+            if strcmp(mfname,'/trial43.mat')
+            idx(3) = idx(3) -3;
+            end
+
+            if strcmp(mfname,'/trial44.mat')
+            idx(3) = idx(3) -2;
+            end
         
         
     end
