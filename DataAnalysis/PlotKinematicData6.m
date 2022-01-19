@@ -191,7 +191,9 @@ emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend 
 load([mfilepath mfname])
 metdata=data.met;
 
-[dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector]= ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand);
+
+
+[dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector,xhand]= ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand);
 
 %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
 

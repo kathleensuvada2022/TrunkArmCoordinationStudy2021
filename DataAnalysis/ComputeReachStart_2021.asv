@@ -1,13 +1,13 @@
-function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
+function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
 %% Resampling Xhand 
 
- [xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
+[xhand2,t2]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
 
 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data 
 
-if sum(isnan(xhand)) %returns true now if any element is NAN
-[xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t); 
+if isnan(xhand)   
+    [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t); 
 end 
 
 %using original data
