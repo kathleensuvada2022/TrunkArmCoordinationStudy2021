@@ -75,9 +75,9 @@ end
 if strcmp(mfname,'/trial36.mat')
     continue
 end 
-if strcmp(mfname,'/trial53.mat')
-    continue
-end 
+% if strcmp(mfname,'/trial53.mat')
+%     continue
+% end 
 end 
 
 
@@ -348,7 +348,7 @@ c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',
     %   end 
 
 
- legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+ legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)
