@@ -35,7 +35,22 @@ function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=Comput
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data
 
 if sum(isnan(xhand)) %returns true now if any element is NAN
-    [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+    'NAN are present'
+    find(isnan(xhand))
+    
+    if strcmp(partid,'RTIS1006')
+        if expcond==6
+            
+            [xhand,TF] = fillmissing(xhand,'spline');
+        end
+        
+    else
+        [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+    else 
+             [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+en   
+        
+    
 end
 
 %using original data
@@ -373,7 +388,7 @@ if  strcmp(partid,'RTIS1004')
         end
                 
         if strcmp(mfname,'/trial58.mat')
-            idx(1) = idx(1) +6;
+            idx(1) = idx(1) +4;
             idx(3) = idx(3) -2;
         end
                         
@@ -388,11 +403,35 @@ if  strcmp(partid,'RTIS1004')
         end
                                         
         if strcmp(mfname,'/trial61.mat')
-%            idx(1) = idx(1) +6;
-            idx(3) = idx(3) -3;
+            idx(1) = idx(1) +8;
+%            idx(3) = idx(3) -3;
         end
-        
-        
+                                                
+        if strcmp(mfname,'/trial62.mat')
+            idx(1) = idx(1) +2;
+            idx(3) = idx(3) -2;
+        end
+                                                        
+        if strcmp(mfname,'/trial63.mat')
+            idx(1) = idx(1) +2;
+            idx(3) = idx(3) -2;
+        end
+                                                             
+        if strcmp(mfname,'/trial64.mat')
+            idx(1) = idx(1) +2;
+            idx(3) = idx(3) -1;
+        end
+                                                                 
+        if strcmp(mfname,'/trial65.mat')
+%            idx(1) = idx(1) +2;
+            idx(3) = idx(3) -2;
+        end
+                                                             
+        if strcmp(mfname,'/trial66.mat')
+            idx(1) = idx(1) +1;
+%            idx(3) = idx(3) -2;
+        end
+               
     end
     
 end
@@ -404,8 +443,11 @@ if strcmp(partid,'RTIS1005')
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
     if expcond==1
+        if strcmp(mfname,'/trial5.mat')
+            idx(3) = idx(3)+1;
+        end
         if strcmp(mfname,'/trial8.mat')
-            idx(3) = idx(3)+2;
+            idx(3) = idx(3);
         end
         if strcmp(mfname,'/trial10.mat')
             idx(3) = idx(3)-6;
@@ -422,34 +464,37 @@ if strcmp(partid,'RTIS1005')
         idx(1) = vUd(1);
         
         if strcmp(mfname,'/trial11.mat')
-            idx(3) = idx(3)+3;
+            idx(3) = idx(3);
         end
         
         if strcmp(mfname,'/trial12.mat')
-            idx(1) = idx(1)-2;
+            idx(1) = idx(1)-4;
         end
         % %
         if strcmp(mfname,'/trial13.mat')
-            idx(1) = idx(1)+4;
+            idx(1) = idx(1)+7;
         end
         if strcmp(mfname,'/trial14.mat')
             idx(1) = idx(1)-4;
         end
         
         if strcmp(mfname,'/trial15.mat')
-            idx(1) = idx(1)-4;
+            idx(1) = idx(1)-3;
         end
         
         if strcmp(mfname,'/trial22.mat')
-            idx(1) = idx(1)-4;
+            idx(1) = idx(1)-3;
         end
-        
+                
+        if strcmp(mfname,'/trial23.mat')
+            idx(3) = idx(3)-1;
+        end
         if strcmp(mfname,'/trial24.mat')
             idx(3) = idx(3)+1;
         end
         
         if strcmp(mfname,'/trial25.mat')
-            idx(1) = idx(1)+1;
+            idx(1) = idx(1)+12;
             idx(3) = idx(3)+1;
         end
         
@@ -462,6 +507,10 @@ if strcmp(partid,'RTIS1005')
         %Finding where distance and vel threshold apply
         vUd = intersect (velcond,distcond);
         idx(1) = vUd(1)-5;
+                
+        if strcmp(mfname,'/trial16.mat')
+            idx(1) = idx(1)+1;
+        end
         
         if strcmp(mfname,'/trial20.mat')
             idx(1) = idx(1)+4;
@@ -475,7 +524,7 @@ if strcmp(partid,'RTIS1005')
         end
         
         if strcmp(mfname,'/trial28.mat')
-            idx(1) = idx(1)+2;
+            idx(1) = idx(1)+1;
         end
         %
         if strcmp(mfname,'/trial29.mat')
@@ -490,6 +539,14 @@ if strcmp(partid,'RTIS1005')
     if expcond ==4
         if strcmp(mfname,'/trial32.mat')
             idx(1)=idx(1)-4;
+        end
+        
+        if strcmp(mfname,'/trial35.mat')
+            idx(3)=idx(3)-3;
+        end
+                
+        if strcmp(mfname,'/trial40.mat')
+            idx(3)=idx(3)-2;
         end
         
     end
@@ -507,13 +564,21 @@ if strcmp(partid,'RTIS1005')
         if strcmp(mfname,'/trial51.mat')
             idx(3)=idx(3)+3;
         end
+                
+        if strcmp(mfname,'/trial53.mat')
+            idx(1)=idx(1)+1;
+        end
+                        
+        if strcmp(mfname,'/trial57.mat')
+            idx(1)=idx(1)+2;
+        end
         
         if strcmp(mfname,'/trial60.mat')
             idx(3)=idx(3)+2;
         end
         
         if strcmp(mfname,'/trial61.mat')
-            idx(3)=idx(3)+9;
+            idx(3)=idx(3);
         end
         
         
@@ -538,6 +603,7 @@ if strcmp(partid,'RTIS1005')
         
         if strcmp(mfname,'/trial43.mat')
             idx(3)=idx(3)+4;
+            idx(1)=idx(1)+2;
         end
         
         if strcmp(mfname,'/trial46.mat')
@@ -558,13 +624,19 @@ if strcmp(partid,'RTIS1006')
     
     
     if expcond ==1
+                
+        if strcmp(mfname,'/trial64.mat')
+            idx(3) = idx(3)+1;
+            idx(1) = idx(1)-2;
+        end
         
-        if strcmp(mfname,'/trial66.mat')
+        if strcmp(mfname,'/trial65.mat')
             idx(3) = idx(3)+1;
         end
         
         if strcmp(mfname,'/trial66.mat')
             idx(1) = idx(1)-2;
+%             idx(3) = idx(3)-1;
         end
         
         if strcmp(mfname,'/trial67.mat')
@@ -573,17 +645,17 @@ if strcmp(partid,'RTIS1006')
         end
         
         if strcmp(mfname,'/trial68.mat')
-            idx(1) = idx(1)+1;
+            %             idx(1) = idx(1)+1;
             idx(3) = idx(3)+2;
         end
         if strcmp(mfname,'/trial69.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+3;
+            idx(3) = idx(3)+2;
         end
         
         if strcmp(mfname,'/trial70.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+9;
+            idx(3) = idx(3)+1;
         end
         
         if strcmp(mfname,'/trial71.mat')
@@ -603,7 +675,7 @@ if strcmp(partid,'RTIS1006')
         
         if strcmp(mfname,'/trial74.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+2;
+            idx(3) = idx(3)+1;
         end
     end
     
@@ -667,9 +739,11 @@ if strcmp(partid,'RTIS1006')
         
         if strcmp(mfname,'/trial48.mat')
             idx(3) = idx(3)-4;
+            idx(1) = idx(1)-1;
         end
         if strcmp(mfname,'/trial49.mat')
             idx(3) = idx(3)-2;
+            idx(1) = idx(1)-2;
         end
         
         if strcmp(mfname,'/trial50.mat')
@@ -2294,7 +2368,7 @@ p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time pr
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','FontSize',16)
+legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

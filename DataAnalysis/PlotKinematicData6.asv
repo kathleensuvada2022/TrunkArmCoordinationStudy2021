@@ -111,10 +111,6 @@ end
 if strcmp(mfname,'/trial84.mat')
     continue
 end
-% 
-% if strcmp(mfname,'/trial87.mat')
-%     continue
-% end
 
 
 end
@@ -311,6 +307,8 @@ trex_current_trial(i) = trunk_exc;
      % c1= plot(Newreachx(idx(1)),Newreachy(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
 %% Jan 2022 marking start and end hand trace
 %c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); % minus trunk 
+c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
 
 % ******RTIS1006******
 % because created room coordinate system and flipped x and y (may
@@ -318,10 +316,6 @@ trex_current_trial(i) = trunk_exc;
 if strcmp(partid,'RTIS1006')
     c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
     c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
-else 
-    c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-
 end
 %%    
 %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
@@ -337,27 +331,26 @@ end
 %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
 %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
       
+% Not minus trunk 
+        plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+        plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
 
+
+        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+        
+        
 % ******RTIS1006******
 % because created room coordinate system and flipped x and y (may
 % have to deal with this more later down the line
 if strcmp(partid,'RTIS1006')
-    plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    
-    
-    plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-else 
-    % Not minus trunk
-    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    
-    
-    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    
-    
+        plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+        plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+
+
+        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+        
 end
 %%
     
@@ -386,7 +379,7 @@ end
     %   end 
 
 
- legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
+ legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
 %axis 'equal'
 xlabel('X (mm)','FontSize',16)
 ylabel('Y (mm)','FontSize',16)

@@ -35,7 +35,23 @@ function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=Comput
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data
 
 if sum(isnan(xhand)) %returns true now if any element is NAN
-    [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+%     'NAN are present'
+%     find(isnan(xhand))
+    
+    if strcmp(partid,'RTIS1006')
+        if expcond==6 || expcond ==4
+            
+            [xhand,TF] = fillmissing(xhand,'spline');
+            
+        else
+            [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+        end
+        
+    else
+        [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+    end
+    
+    
 end
 
 %using original data
@@ -549,13 +565,21 @@ if strcmp(partid,'RTIS1005')
         if strcmp(mfname,'/trial51.mat')
             idx(3)=idx(3)+3;
         end
+                
+        if strcmp(mfname,'/trial53.mat')
+            idx(1)=idx(1)+1;
+        end
+                        
+        if strcmp(mfname,'/trial57.mat')
+            idx(1)=idx(1)+2;
+        end
         
         if strcmp(mfname,'/trial60.mat')
             idx(3)=idx(3)+2;
         end
         
         if strcmp(mfname,'/trial61.mat')
-            idx(3)=idx(3)+9;
+            idx(3)=idx(3);
         end
         
         
@@ -580,6 +604,7 @@ if strcmp(partid,'RTIS1005')
         
         if strcmp(mfname,'/trial43.mat')
             idx(3)=idx(3)+4;
+            idx(1)=idx(1)+2;
         end
         
         if strcmp(mfname,'/trial46.mat')
@@ -600,13 +625,19 @@ if strcmp(partid,'RTIS1006')
     
     
     if expcond ==1
+                
+        if strcmp(mfname,'/trial64.mat')
+            idx(3) = idx(3)+1;
+            idx(1) = idx(1)-2;
+        end
         
-        if strcmp(mfname,'/trial66.mat')
+        if strcmp(mfname,'/trial65.mat')
             idx(3) = idx(3)+1;
         end
         
         if strcmp(mfname,'/trial66.mat')
             idx(1) = idx(1)-2;
+%             idx(3) = idx(3)-1;
         end
         
         if strcmp(mfname,'/trial67.mat')
@@ -615,17 +646,17 @@ if strcmp(partid,'RTIS1006')
         end
         
         if strcmp(mfname,'/trial68.mat')
-            idx(1) = idx(1)+1;
+            %             idx(1) = idx(1)+1;
             idx(3) = idx(3)+2;
         end
         if strcmp(mfname,'/trial69.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+3;
+            idx(3) = idx(3)+2;
         end
         
         if strcmp(mfname,'/trial70.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+9;
+            idx(3) = idx(3)+1;
         end
         
         if strcmp(mfname,'/trial71.mat')
@@ -645,7 +676,7 @@ if strcmp(partid,'RTIS1006')
         
         if strcmp(mfname,'/trial74.mat')
             %            idx(1) = idx(1)+9;
-            idx(3) = idx(3)+2;
+            idx(3) = idx(3)+1;
         end
     end
     
@@ -709,9 +740,11 @@ if strcmp(partid,'RTIS1006')
         
         if strcmp(mfname,'/trial48.mat')
             idx(3) = idx(3)-4;
+            idx(1) = idx(1)-1;
         end
         if strcmp(mfname,'/trial49.mat')
             idx(3) = idx(3)-2;
+            idx(1) = idx(1)-2;
         end
         
         if strcmp(mfname,'/trial50.mat')
@@ -2336,7 +2369,7 @@ p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time pr
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','FontSize',16)
+legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
 
 
 % figure (6),clf
