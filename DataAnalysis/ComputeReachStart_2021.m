@@ -50,8 +50,7 @@ if sum(isnan(xhand)) %returns true now if any element is NAN
     else
         [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
     end
-    
-    
+       
 end
 
 %using original data
