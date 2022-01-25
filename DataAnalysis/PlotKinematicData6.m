@@ -119,6 +119,30 @@ end
 % 
 % 
 % end
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+
+if strcmp(mfname,'/trial8.mat')
+maxhandexcrsn_current_trial(i) = 0;
+shex_current_trial(i) =0;
+trex_current_trial(i) =0;
+    continue
+end
+
+if strcmp(mfname,'/trial9.mat')
+    maxhandexcrsn_current_trial(i) = 0;   
+    shex_current_trial(i) =0;
+    trex_current_trial(i) =0;
+    continue
+end 
+
+if strcmp(mfname,'/trial10.mat')
+    maxhandexcrsn_current_trial(i) = 0;   
+    shex_current_trial(i) =0;
+    trex_current_trial(i) =0;
+    continue
+end 
+
+end 
 
 
 
@@ -225,30 +249,71 @@ if strcmp(hand,'Left')
 gh(:,1) = -gh(:,1);
 gh(:,2) = -gh(:,2);
 end 
+
+%% Checking to see if GH has NANs via missing shoulder marker
+if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
+     'NAN SHLDR present Start/End Trial'
+    %     find(isnan(xhand))
+ 
+    num_NANS_sh = find(isnan(gh(:,1))); %Finding # of nans
+    
+  %%%%% NOTE: find indices where NAN, if they are 3 or less frames apart,
+  %%%%% count as true (don't want too many close together missing). 
+  %%%%% If this happens 5 indices in a row, skip.
+
+    if sum(diff(num_NANS_sh)<=3) <=5 % seeing if NANs consecutive 
+        [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+    else 
+        'CHECK GH DATA- NUM_NANS CONSEC >5';
+        length(num_NANS_sh)
+       
+        pause
+    end
+    
+end
+%% Checking to see where Trunk has NANs
+if isnan(xjug(idx(1),1)) || isnan(xjug(idx(3),1))  %returns true now if any element is NAN
+    'NAN TRUNK present Start/End Trial'
+    %     find(isnan(xhand))
+    
+    num_NANS_tr = find(isnan(xjug(:,1))); %Finding # of nans
+    
+  %%%%% NOTE: find indices where NAN, if they are 3 or less frames apart,
+  %%%%% count as true (don't want too many close together missing). 
+  %%%%% If this happens 5 indices in a row, skip.
+
+    if sum(diff(num_NANS_tr)<=3) <=5 % seeing if NANs consecutive 
+        %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
+        [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+    else
+        'CHECK Trunk DATA- NUM_NANS CONSEC >5';
+        length(num_NANS_tr)
+        pause
+    end
+    
+end
 %% Compute reaching distance (between shoulder and hand from hand marker)
 
-% maxreach = sqrt((xhand(idx(3),1)-xshldr(idx(3),1))^2+(xhand(idx(3),2)-xshldr(idx(3),2))^2);
-
-%Updating Definition using Computed GH 
+%Updating Definition using Computed GH
 maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
 
 %% Max Hand Excursion
 
 %using original data
-Xo_sh= nanmean(xshldr(1:5,1));
-Yo_sh = nanmean(xshldr(1:5,2)); 
+% Xo_sh= nanmean(xshldr(1:5,1));
+% Yo_sh = nanmean(xshldr(1:5,2)); 
 
-maxhandexcrsn = sqrt((xhand(idx(3),1)-Xo_sh)^2 +(xhand(idx(3),2)-Yo_sh)^2);
+maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
 
 
 %% Compute shoulder and trunk displacement at maximum reach - using BLS
 
 %Changed to be based on GH
-    sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
+sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
 
 %Based on jugular notch
 trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
-  
+
 %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
 maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
  
@@ -426,8 +491,12 @@ end
 %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
 %  [CoP2]= ComputeCOP(ppsdata,tpps);
 
- pause
-end
+%  pause
+ end
+
+ 
+ 
+ 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
 % UPDATED KCS Jan 2022 -- to fix large standard dev issue
