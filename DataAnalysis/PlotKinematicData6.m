@@ -252,22 +252,28 @@ end
 
 %% Checking to see if GH has NANs via missing shoulder marker
 if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
-     'NAN SHLDR present Start/End Trial'
+    'NAN SHLDR present Start/End Trial'
     %     find(isnan(xhand))
- 
-    num_NANS_sh = find(isnan(gh(:,1))); %Finding # of nans
     
-  %%%%% NOTE: find indices where NAN, if they are 3 or less frames apart,
-  %%%%% count as true (don't want too many close together missing). 
-  %%%%% If this happens 5 indices in a row, skip.
-
-    if sum(diff(num_NANS_sh)<=3) <=5 % seeing if NANs consecutive 
+    num_NANS_sh = find(isnan(gh(:,1))); %Finding indices where NAN
+    
+    %%%%% NOTE: find indices where NAN, if they are 3 or less frames apart,
+    %%%%% count as true (don't want too many close together missing).
+    %%%%% If this happens 5 times, skip.
+    
+    if sum(diff(num_NANS_sh)<=3) <=5 % seeing if NANs consecutive
         [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-    else 
-        'CHECK GH DATA- NUM_NANS CONSEC >5';
-        length(num_NANS_sh)
-       
-        pause
+    else
+        if sum(diff(num_NANS_sh)<=3) ==6 % allowing if it's just 1 over
+            [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+        else
+            'CHECK GH DATA- NUM_NANS CONSEC >5';
+            sum(diff(num_NANS_sh)<=3)
+            mfname
+            pause
+            continue
+        end
+        
     end
     
 end
@@ -281,16 +287,23 @@ if isnan(xjug(idx(1),1)) || isnan(xjug(idx(3),1))  %returns true now if any elem
   %%%%% NOTE: find indices where NAN, if they are 3 or less frames apart,
   %%%%% count as true (don't want too many close together missing). 
   %%%%% If this happens 5 indices in a row, skip.
-
-    if sum(diff(num_NANS_tr)<=3) <=5 % seeing if NANs consecutive 
-        %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
-        [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-    else
-        'CHECK Trunk DATA- NUM_NANS CONSEC >5';
-        length(num_NANS_tr)
-        pause
-    end
-    
+  
+  if sum(diff(num_NANS_tr)<=3) <=5 % seeing if NANs consecutive
+      %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
+      [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+  else
+      
+      if sum(diff(num_NANS_tr)<=3) ==6 % allowing if it's just 1 over
+          [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+      else
+          'CHECK Trunk DATA- NUM_NANS CONSEC >5';
+          sum(diff(num_NANS_tr)<=3)
+          mfname
+          pause
+          continue
+      end
+  end
+  
 end
 %% Compute reaching distance (between shoulder and hand from hand marker)
 
@@ -491,7 +504,7 @@ end
 %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
 %  [CoP2]= ComputeCOP(ppsdata,tpps);
 
-%  pause
+ pause
  end
 
  

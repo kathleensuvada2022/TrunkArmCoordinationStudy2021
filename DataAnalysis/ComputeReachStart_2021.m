@@ -917,27 +917,85 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
     end
     
+    if expcond ==2
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .2*max(zdisp));
+        idx(1) = indxZDisp(1);
+            
+        if strcmp(mfname,'/trial11.mat')
+            idx(1)= idx(1)+1;
+            %             idx(3)= idx(3)-1;
+        end
+        
+                    
+        if strcmp(mfname,'/trial13.mat')
+            idx(1)= idx(1)+1;
+            idx(3)= idx(3)-6;
+        end
+                
+                    
+        if strcmp(mfname,'/trial14.mat')
+            idx(1)= idx(1)+4;
+%            idx(3)= idx(3)-5;
+        end
+                            
+        if strcmp(mfname,'/trial15.mat')
+            idx(1)= idx(1)+3;
+            idx(3)= idx(3)-1;
+        end
+        
+                                    
+        if strcmp(mfname,'/trial16.mat')
+            idx(1)= idx(1)+1;
+            idx(3)= idx(3)-7;
+        end
+                                            
+        if strcmp(mfname,'/trial17.mat')
+            idx(1)= idx(1)+2;
+            idx(3)= idx(3)+6;
+        end
+        
+                                                    
+        if strcmp(mfname,'/trial18.mat')
+            idx(1)= idx(1)+1;
+        %    idx(3)= idx(3)+6;
+        end
+        
+                                                            
+        if strcmp(mfname,'/trial19.mat')
+%             idx(1)= idx(1)-5;
+            idx(3)= idx(3)-6;
+            idx(1) = idx(3);
+            idx(3) = idx(3)+5;
+        end
+        
+        
+    end
 
     if expcond ==3
-        
-        if strcmp(mfname,'/trial22.mat')
-            idx(1)= idx(1)+10;
-        end
-        
-        
-        if strcmp(mfname,'/trial26.mat')
-            idx(1)= idx(1)+10;
-        end
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .2*max(zdisp));
+        idx(1) = indxZDisp(1);
         
         
-        if strcmp(mfname,'/trial28.mat')
-            idx(1)= idx(1)+21;
-        end
-        
-        
-        if strcmp(mfname,'/trial29.mat')
-            idx(1)= idx(1)+26;
-        end
+%         if strcmp(mfname,'/trial22.mat')
+%             idx(1)= idx(1)+10;
+%         end
+%         
+%         
+%         if strcmp(mfname,'/trial26.mat')
+%             idx(1)= idx(1)+10;
+%         end
+%         
+%         
+%         if strcmp(mfname,'/trial28.mat')
+%             idx(1)= idx(1)+21;
+%         end
+%         
+%         
+%         if strcmp(mfname,'/trial29.mat')
+%             idx(1)= idx(1)+26;
+%         end
     end
     
     
@@ -2441,16 +2499,16 @@ clf
 %plot(t(1:50),dist(1:50))
 yyaxis left
 
-plot(t,dist,'LineWidth',1)
+%plot(t,dist,'LineWidth',1)
 % plot(t,xhand(:,3))
 hold on
-
+plot(t,xhand(:,3)-xhand(1,3),'LineWidth',1))
 ylabel('Distance (mm)')
 hold on
 yyaxis right
-plot(t,vel,'LineWidth',1)
+% plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-plot(t,vely)
+plot(t,vely,'LineWidth',1))
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -2459,14 +2517,15 @@ title('Distance and Velocity','FontSize',24)
 p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
 % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
 p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
-p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
+%p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 % ylim([-400 400])
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
+%egend('Distance','Z displacement', 'Velocity','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
+legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
 
 
 % figure (6),clf
