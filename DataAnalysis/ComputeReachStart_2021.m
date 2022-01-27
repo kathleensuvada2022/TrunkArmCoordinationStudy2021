@@ -1017,8 +1017,8 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
     
     if expcond ==4
         idx(1) = find(dist>=.02*max(dist),1)-1;
-        end_reach = find(vel(1:75)<=max(vel(1:75)));
-        idx(3) = end_reach(length(end_reach));
+        vel_threshold= find(vel(1:75)>.2*max(vel));
+        idx(3) = vel_threshold(length(vel_threshold));
         
         if strcmp(mfname,'/trial32.mat')
             
@@ -1026,16 +1026,22 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
             idx(3) = end_reach(length(end_reach));
         end
         
-
-        
-        if strcmp(mfname,'/trial33.mat')
-%             idx(3)= idx(3)-18;
+        if strcmp(mfname,'/trial34.mat')
+            idx(1)= idx(1)-4;
+            idx(3)= idx(3)+1;
         end
-        %
-        %
-        %         if strcmp(mfname,'/trial49.mat')
-        %             idx(1)= idx(1)-6;
-        %         end
+                
+        if strcmp(mfname,'/trial47.mat')
+            idx(3)= idx(3)-1;
+        end
+                        
+        if strcmp(mfname,'/trial48.mat')
+            idx(3)= idx(3)+1;
+        end
+                                
+        if strcmp(mfname,'/trial51.mat')
+            idx(3)= idx(3)+2;
+        end
         
         
     end

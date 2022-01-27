@@ -203,6 +203,7 @@ for i=1: length(mtrials)% i = 3
         xlabel('Time')
         ylabel('Distance')
         % legend('Distance','Max Dist')
+        axis equal
         %
         pause
     end
@@ -547,6 +548,7 @@ for i=1: length(mtrials)% i = 3
     if expcond== 6
         title('Unrestrained 50%','FontSize',24)
     end
+    axis equal
     
     %% Calling COP Function
     %   ppsdata =data.pps;
