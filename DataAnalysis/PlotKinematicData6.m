@@ -335,11 +335,11 @@ for i=1: length(mtrials)% i = 3
         
         else
         % For end index
-        Locs1_end= find(num_real_sh<idx(3));
+        Locs1_end= find(num_real_tr <idx(3));
         Locs1_end = Locs1_end(length(Locs1_end));
         
-        Locs2_end= find(num_real_sh>idx(3),1);
-        Locs2_end = num_real_sh(Locs2_end);
+        Locs2_end= find(num_real_tr>idx(3),1);
+        Locs2_end = num_real_tr(Locs2_end);
         
         if abs(Locs2_end-Locs1_end)-1 <=5 % seeing if NANs consecutive
             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
