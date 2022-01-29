@@ -1070,7 +1070,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         end
 
         if strcmp(mfname,'/trial40.mat')
-            idx(1)= idx(1)-2;
+            idx(1)= idx(1);
             idx(3)= idx(3)-9;
         end
         
@@ -1096,7 +1096,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial59.mat')
             idx(1)= idx(1)+1;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
-            idx(3) = vely_threshold(length(vely_threshold))+2;
+            idx(3) = vely_threshold(length(vely_threshold))+1;
    
         end 
         
@@ -1104,17 +1104,17 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial60.mat')
             idx(1)= idx(1)+1;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
-            idx(3) = vely_threshold(length(vely_threshold))+2;
+            idx(3) = vely_threshold(length(vely_threshold))+1;
    
-        end 
-                
+        
+        end       
                                        
         if strcmp(mfname,'/trial61.mat')
             idx(1)= idx(1)+2;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
-            idx(3) = vely_threshold(length(vely_threshold))+2;
+            idx(3) = vely_threshold(length(vely_threshold))-37;
    
-        end 
+        end
         
         
         
@@ -1124,40 +1124,111 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         zdisp = xhand(:,3)-xhand(1,3);
         indxZDisp =  find(zdisp>= .2*max(zdisp));
         idx(1) = indxZDisp(1);
-        vel_threshold= find(vel(1:75)>.2*max(vel));
-        idx(3) = vel_threshold(length(vel_threshold));
+        
+        vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+        idx(3) = vely_threshold(length(vely_threshold))+1;
         
         %
-        %         if strcmp(mfname,'/trial43.mat')
-        %             idx(1)= idx(1)+12;
-        %         end
+        if strcmp(mfname,'/trial42.mat')
+            idx(3)= idx(3)+1;
+        end
         %
         %
-        %         if strcmp(mfname,'/trial52.mat')
-        %             idx(1)= idx(1)+15;
-        %         end
+        if strcmp(mfname,'/trial43.mat')
+            idx(1)= idx(1)+1;
+            idx(3) = idx(3) -12;
+        end
         %
         %
-        %         if strcmp(mfname,'/trial53.mat')
-        %             idx(1)= idx(1)+10;
-        %             velint = max(vel(idx(1):idx(3)));
-        %             idx(2) = find(vel==velint,1);
-        %
-        %         end
-        %
-        %
-        %         if strcmp(mfname,'/trial56.mat')
-        %             idx(1)= idx(1)+15;
-        %
-        %         end
+        if strcmp(mfname,'/trial44.mat')
+            idx(1)= idx(1)+1;
+            idx(3) = idx(3)+1;
+       
+            
+        end
         %
         %
+        if strcmp(mfname,'/trial45.mat')
+            idx(1)= idx(1)+3;
+            idx(3) = idx(3)-1;
+        
+        end
+        
+        if strcmp(mfname,'/trial46.mat')
+%             idx(1)= idx(1)+3;
+            idx(3) = idx(3)-1;
+            
+        end
+                
+        if strcmp(mfname,'/trial52.mat')
+             idx(1)= idx(1)+1;            
+        end
+                        
+        if strcmp(mfname,'/trial54.mat')
+             idx(1)= idx(1)-1;  
+             idx(3)= idx(3)-1; 
+        end
+        
+        
+        if strcmp(mfname,'/trial55.mat')
+            idx(1)= idx(1)+6;
+        end
+                   
+        if strcmp(mfname,'/trial56.mat')
+            idx(3)= idx(3)-25;
+        end
     end
     
     
     
 end
 
+%% RTIS 2001 Non-Paretic
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
+    
+    if expcond ==1
+        idx(1) = find(dist>=.02*max(dist),1)-1;
+        idx(3)= find(dist(1:75)==max(dist));
+        %
+        
+        
+        if strcmp(mfname,'/trial1.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-1;
+        end
+        
+        if strcmp(mfname,'/trial2.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-1;
+        end
+        
+        if strcmp(mfname,'/trial5.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-1;
+        end
+                
+        if strcmp(mfname,'/trial6.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-2;
+        end
+                
+                        
+        if strcmp(mfname,'/trial11.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-1;
+        end
+                        
+        if strcmp(mfname,'/trial12.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-2;
+        end
+    end
+    
+    
+    
+    
+    
+end
 
 
 %% RTIS 2003 Paretic
@@ -2590,15 +2661,15 @@ clf
 %plot(t(1:50),dist(1:50))
 yyaxis left
 
-% plot(t,dist,'LineWidth',1)
+ plot(t,dist,'LineWidth',1)
 
-plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
+%plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
 ylabel('Distance (mm)')
 hold on
 yyaxis right
-% plot(t,vel,'LineWidth',1)
+ plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-plot(t,vely,'LineWidth',1)
+% plot(t,vely,'LineWidth',1)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -2614,9 +2685,9 @@ p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'Lin
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-%egend('Distance','Z displacement', 'Velocity','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
+legend('Distance', 'Velocity','Time Start','Time End','Location','northwest','FontSize',16)
 %legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Z Displacement','Vel y','Time Start','Time End','Location','northwest','FontSize',16)
+%legend('Z Displacement','Vel y','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

@@ -23,28 +23,36 @@ ntrials=length(mtrials);
 
 %% Initializing Variables
 
-maxreach=zeros(ntrials,1);
-emgstart = zeros(ntrials,15);
+maxreach_current_trial=zeros(ntrials,1);
 
+maxhandexcrsn_current_trial =zeros(ntrials,1);
 
-emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
-rdist = zeros(ntrials,1);
-maxreach=zeros(ntrials,1);
-emgstart = zeros(ntrials,15);
+shex_current_trial=zeros(ntrials,1);
 
-emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
-rdist = zeros(ntrials,1);
+trex_current_trial=zeros(ntrials,1);
 
-maxreach_current_trial =zeros(ntrials,1);
-maxTrunk_current_trial=zeros(ntrials,1);
-emgsmaxvel_vals = zeros(ntrials,15);
-
-
-maxreach_current_trial =zeros(ntrials,1);
-shtrdisp_current_trial=zeros(ntrials,2);
-
-emgvel_trial= zeros(length(mtrials),15);
-emgstart_trial= zeros(length(mtrials),15);
+% NOT SURE ABOUT ONES BELOW
+% maxreach=zeros(ntrials,1);
+% emgstart = zeros(ntrials,15);
+% 
+% emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
+% % rdist = zeros(ntrials,1);
+% maxreach=zeros(ntrials,1);
+% emgstart = zeros(ntrials,15);
+% 
+% emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
+% rdist = zeros(ntrials,1);
+% 
+% % maxreach_current_trial =zeros(ntrials,1);
+% % maxTrunk_current_trial=zeros(ntrials,1);
+% % emgsmaxvel_vals = zeros(ntrials,15);
+% 
+% 
+% maxreach_current_trial =zeros(ntrials,1);
+% shtrdisp_current_trial=zeros(ntrials,2);
+% 
+% emgvel_trial= zeros(length(mtrials),15);
+% emgstart_trial= zeros(length(mtrials),15);
 %% Main loop that grabs Metria data and plots
 %   for i=2:6 %length(mtrials) for i =4 RTIS 2002
 for i=1: length(mtrials)% i = 3
@@ -316,7 +324,7 @@ for i=1: length(mtrials)% i = 3
         Locs1_start = Locs1_start(length(Locs1_start));
         
         Locs2_start= find(num_real_tr>idx(1),1);
-        Locs2_start = num_real_sh(Locs2_start);
+        Locs2_start = num_real_tr(Locs2_start);
         
         if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
