@@ -152,6 +152,23 @@ for i=1: length(mtrials)% i = 3
         
     end
     
+    if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
+        
+        % These were empty matrices metria data
+        if strcmp(mfname,'/trial66.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial67.mat')
+            
+            continue
+        end
+        
+        
+    end
+    
+    
     
     
     %
@@ -525,7 +542,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-    legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+   % legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)

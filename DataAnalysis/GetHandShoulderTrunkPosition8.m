@@ -119,6 +119,7 @@ fidx =cidx(1)+1;
 xfore=x(:,fidx:(fidx+6));  
 
 [ridx,cidx]=find(x==setup.markerid(3));
+
 aidx =cidx(1)+1;
 xarm=x(:,aidx:(aidx+6)); %extracting humerus marker
 
