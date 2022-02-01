@@ -1061,14 +1061,14 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial38.mat')
             idx(3)= idx(3)-11;
             idx(1)= idx(1)+1;
-
+            
         end
         if strcmp(mfname,'/trial39.mat')
             idx(3)= idx(3)-8;
             idx(1)= idx(1)+2;
             
         end
-
+        
         if strcmp(mfname,'/trial40.mat')
             idx(1)= idx(1);
             idx(3)= idx(3)-9;
@@ -1078,42 +1078,42 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
             idx(1)= idx(1)+2;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
             idx(3) = vely_threshold(length(vely_threshold))+2;
-   
+            
         end
         
-                
+        
         if strcmp(mfname,'/trial57.mat')
             idx(3)= idx(3)+1;
-
+            
         end
         
-                      
+        
         if strcmp(mfname,'/trial58.mat')
             idx(3)= idx(3)+1;
-
+            
         end
-                               
+        
         if strcmp(mfname,'/trial59.mat')
             idx(1)= idx(1)+1;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
             idx(3) = vely_threshold(length(vely_threshold))+1;
-   
-        end 
+            
+        end
         
-                                       
+        
         if strcmp(mfname,'/trial60.mat')
             idx(1)= idx(1)+1;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
             idx(3) = vely_threshold(length(vely_threshold))+1;
-   
+            
+            
+        end
         
-        end       
-                                       
         if strcmp(mfname,'/trial61.mat')
             idx(1)= idx(1)+2;
             vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
             idx(3) = vely_threshold(length(vely_threshold))-37;
-   
+            
         end
         
         
@@ -1143,7 +1143,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial44.mat')
             idx(1)= idx(1)+1;
             idx(3) = idx(3)+1;
-       
+            
             
         end
         %
@@ -1151,29 +1151,29 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial45.mat')
             idx(1)= idx(1)+3;
             idx(3) = idx(3)-1;
-        
+            
         end
         
         if strcmp(mfname,'/trial46.mat')
-%             idx(1)= idx(1)+3;
+            %             idx(1)= idx(1)+3;
             idx(3) = idx(3)-1;
             
         end
-                
+        
         if strcmp(mfname,'/trial52.mat')
-             idx(1)= idx(1)+1;            
+            idx(1)= idx(1)+1;
         end
-                        
+        
         if strcmp(mfname,'/trial54.mat')
-             idx(1)= idx(1)-1;  
-             idx(3)= idx(3)-1; 
+            idx(1)= idx(1)-1;
+            idx(3)= idx(3)-1;
         end
         
         
         if strcmp(mfname,'/trial55.mat')
             idx(1)= idx(1)+6;
         end
-                   
+        
         if strcmp(mfname,'/trial56.mat')
             idx(3)= idx(3)-25;
         end
@@ -1206,25 +1206,180 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
             %             idx(1)= idx(1)-10;
             idx(3) = idx(3)-1;
         end
-                
+        
         if strcmp(mfname,'/trial6.mat')
             %             idx(1)= idx(1)-10;
             idx(3) = idx(3)-2;
         end
-                
-                        
+        
+        
         if strcmp(mfname,'/trial11.mat')
             %             idx(1)= idx(1)-10;
             idx(3) = idx(3)-1;
         end
-                        
+        
         if strcmp(mfname,'/trial12.mat')
             %             idx(1)= idx(1)-10;
             idx(3) = idx(3)-2;
         end
     end
     
+    if expcond ==2
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .3*max(zdisp));
+        
+        yvelcond = find(vely(indxZDisp) > .2*max(vely));
+        
+        idx(1) = indxZDisp(yvelcond(1));
+        
+        
+        idx(3)= find(dist(1:75)==max(dist));
+        
+        if strcmp(mfname,'/trial30.mat')
+            %             idx(1)= idx(1)-10;
+            idx(3) = idx(3)-1;
+        end
+        
+        
+        if strcmp(mfname,'/trial31.mat')
+            %             idx(1)= idx(1)-10;
+            idx(1) = idx(1)-2;
+        end
+        
+        
+        if strcmp(mfname,'/trial34.mat')
+            %             idx(1)= idx(1)-10;
+            idx(1) = idx(1)-1;
+            %             idx(3) = idx(3)-4;
+        end
+        
+        if strcmp(mfname,'/trial35.mat')
+            %             idx(1)= idx(1)-10;
+            idx(1) = idx(1)+11;
+            idx(3) = idx(3)-4;
+        end
+        
+        
+        if strcmp(mfname,'/trial36.mat')
+            idx(1) = idx(1)+10;
+            idx(3) = idx(3)-3;
+        end
+        
+        
+        
+        if strcmp(mfname,'/trial18.mat')
+            idx(1) = idx(1)-1;
+        end
+        
+    end
     
+    
+    if expcond ==3
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(abs(zdisp)>.2*max(abs(zdisp)));
+        
+        idx(1) = indxZDisp(1);
+        
+        idx(3)= find(dist(1:75)==max(dist(1:75)));
+        
+        if strcmp(mfname,'/trial13.mat')
+            idx(1) = idx(1)-6;
+        end
+        
+        if strcmp(mfname,'/trial14.mat')
+            idx(1) = idx(1)+6;
+        end
+        
+        if strcmp(mfname,'/trial15.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial16.mat')
+            
+            %             indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            %             idx(1) =indx(1)+10-1;
+            
+            idx(1) = idx(1) +5;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial17.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial23.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial24.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        
+        
+        if strcmp(mfname,'/trial25.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial26.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            
+        end
+        
+        if strcmp(mfname,'/trial27.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial28.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial29.mat')
+            
+            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            idx(1) =indx(1)+10-1;
+            idx(3) = idx(3) -1;
+            
+        end
+        
+        
+        if strcmp(mfname,'/trial37.mat')
+            idx(1) = idx(1) -3;
+            idx(3) = idx(3) -1;
+            
+        end
+        
+    end
     
     
     
@@ -2661,15 +2816,16 @@ clf
 %plot(t(1:50),dist(1:50))
 yyaxis left
 
- plot(t,dist,'LineWidth',1)
+plot(t,dist,'LineWidth',1)
+hold on
 
-%plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
+plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
 ylabel('Distance (mm)')
 hold on
 yyaxis right
- plot(t,vel,'LineWidth',1)
+%  plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-% plot(t,vely,'LineWidth',1)
+plot(t,vely,'LineWidth',1)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -2685,9 +2841,9 @@ p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'Lin
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
 xlabel('time in seconds')
-legend('Distance', 'Velocity','Time Start','Time End','Location','northwest','FontSize',16)
-%legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-%legend('Z Displacement','Vel y','Time Start','Time End','Location','northwest','FontSize',16)
+% legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
+% legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
+legend('Distance','Z Displacement','Vel y','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

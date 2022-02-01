@@ -279,7 +279,7 @@ for i=1: length(mtrials)% i = 3
             if abs(Locs2_start-Locs2_start)-1  ==6 % allowing if it's just 1 over
                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
             else
-                'CHECK GH DATA- NUM_NANS CONSEC START >5';
+                'CHECK GH DATA- NUM_NANS CONSEC START >5'
                 %            abs(NANLocations_2-NANLocations_1)-1
                 %             mfname
                 pause
@@ -302,7 +302,7 @@ for i=1: length(mtrials)% i = 3
             if abs(Locs2_end-Locs2_end)-1  ==6 % allowing if it's just 1 over
                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
             else
-                'CHECK GH DATA- NUM_NANS CONSEC END >5';
+                'CHECK GH DATA- NUM_NANS CONSEC END >5'
                 %            abs(NANLocations_2-NANLocations_1)-1
                 %             mfname
                 pause
@@ -334,7 +334,7 @@ for i=1: length(mtrials)% i = 3
             if abs(Locs2_start-Locs2_start)-1 ==6 % allowing if it's just 1 over
                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
             else
-                'CHECK Trunk DATA- NUM_NANS CONSEC START >5';
+                'CHECK Trunk DATA- NUM_NANS CONSEC START >5'
                 % mfname
                 pause
                 continue
@@ -357,7 +357,7 @@ for i=1: length(mtrials)% i = 3
             if abs(Locs2_end-Locs2_end)-1 ==6 % allowing if it's just 1 over
                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
             else
-                'CHECK Trunk DATA- NUM_NANS CONSEC END >5';
+                'CHECK Trunk DATA- NUM_NANS CONSEC END >5'
                 % mfname
                 pause
                 continue
@@ -525,7 +525,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-    legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northwest','FontSize',16)
+    legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
