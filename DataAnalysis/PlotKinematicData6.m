@@ -54,7 +54,6 @@ trex_current_trial=zeros(ntrials,1);
 % emgvel_trial= zeros(length(mtrials),15);
 % emgstart_trial= zeros(length(mtrials),15);
 %% Main loop that grabs Metria data and plots
-%   for i=2:6 %length(mtrials) for i =4 RTIS 2002
 for i=1: length(mtrials)% i = 3
     
     
@@ -64,7 +63,7 @@ for i=1: length(mtrials)% i = 3
     
     mfname
     
-    %skipping trials that are missing metria data for forearm
+    %skipping trials that are missing data
     if strcmp(partid,'RTIS1004')
         if strcmp(mfname,'/trial21.mat')
             continue
@@ -83,50 +82,11 @@ for i=1: length(mtrials)% i = 3
         if strcmp(mfname,'/trial36.mat')
             continue
         end
-        % if strcmp(mfname,'/trial53.mat')
-        %     continue
-        % end
+
     end
     
     
-    % if strcmp(partid,'RTIS1006') NO LONGER NEED (FOR NAN HAND)
-    %
-    % if strcmp(mfname,'/trial67.mat')
-    %     continue
-    % end
-    %
-    % if strcmp(mfname,'/trial58.mat')
-    %     continue
-    % end
-    %
-    % if strcmp(mfname,'/trial44.mat')
-    %     continue
-    % end
-    %
-    % % if strcmp(mfname,'/trial91.mat')
-    % %     continue
-    % % end
-    % %
-    % % if strcmp(mfname,'/trial93.mat')
-    % %     continue
-    % % end
-    % % if strcmp(mfname,'/trial94.mat')
-    % %     continue
-    % % end
-    % % if strcmp(mfname,'/trial96.mat')
-    % %     continue
-    % % end
-    % %
-    % % if strcmp(mfname,'/trial84.mat')
-    % %     continue
-    % % end
-    % %
-    % % if strcmp(mfname,'/trial87.mat')
-    % %     continue
-    % % end
-    %
-    %
-    % end
+
     if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial8.mat')
@@ -242,14 +202,11 @@ for i=1: length(mtrials)% i = 3
     emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
     
     %% Computing the start of the reach
-    %actdata=data.act;
-    load([mfilepath mfname])
-    metdata=data.met;
-    
     
     
     [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector,xhand]= ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand);
     
+    continue
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
     
     %Saves file for each trial
@@ -424,157 +381,157 @@ for i=1: length(mtrials)% i = 3
     
     
     %% Main Cumulative Metria Figure
-    figure(4)
-    clf
-    %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
-    
-    %     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
-    
-    % Works for plotting GH just from start to end reach : subtracting initial trunk position
-    %          p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
-    %% Plotting whole trial with GH - UN COMMENT JAN 2022
-    %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
-    
-    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
-    
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        p1=plot([xhand(:,2) gh(:,2) xjug(:,2)],-[xhand(:,1) gh(:,1) xjug(:,1)],'LineWidth',3);% not subtracting trunk
-        
-    end
-    
-    
-    %%
-    %p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
-    
-    %          p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3);
-    
-    Newreachx = (xhand(:,1)-xjug(1,1));
-    Newreachy = (xhand(:,2)-xjug(1,2));
-    hold on
-    
-    %       idxvelmax = find(t==timevelmax,1);
-    %       c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');emgvel_trial
-    
-    %       c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
-    %    c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
-    
-    
-    
-    %      idxreachstart = find(t==timestart,1);
-    % c1= plot(Newreachx(idx(1)),Newreachy(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
-    %% Jan 2022 marking start and end hand trace
-    %c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); % minus trunk
-    
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
-        c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
-    else
-        c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-        c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-        
-    end
-    %%
-    %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    
-    %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
-    %%    UN COMMENT!!! JAN 2022  - minus trunk
-    %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    %
-    %
-    %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    
-    
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-        plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-        
-        
-        plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    else
-        % Not minus trunk
-        plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-        plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-        
-        
-        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-        
-        
-    end
-    %%
-    
-    %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
-    %         c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
-    
-    %%
-    %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
-    %         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    
-    
-    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-    %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-    %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
-    
-    
-    
-    set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
-    
-    %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
-    
-    %   if i ==1
-    %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
-    %   armlength = 397.7616;
-    %   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is
-    %   end
-    
-    
-   % legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
-    %axis 'equal'
-    xlabel('X (mm)','FontSize',16)
-    ylabel('Y (mm)','FontSize',16)
-    %   axis equal
-    %   xlim([-250 50])
-    %   ylim([-100 600])
-    
-    if expcond== 1
-        title('Restrained Table','FontSize',24)
-    end
-    
-    if expcond== 2
-        title('Restrained 25%','FontSize',24)
-    end
-    
-    if expcond== 3
-        title('Restrained 50%','FontSize',24)
-    end
-    
-    if expcond== 4
-        title('Unrestrained Table','FontSize',24)
-    end
-    
-    if expcond== 5
-        title('Unrestrained 25%','FontSize',24)
-    end
-    
-    if expcond== 6
-        title('Unrestrained 50%','FontSize',24)
-    end
-    axis equal
-    
+%     figure(4)
+%     clf
+%     %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
+%     
+%     %     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
+%     
+%     % Works for plotting GH just from start to end reach : subtracting initial trunk position
+%     %          p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+%     %% Plotting whole trial with GH - UN COMMENT JAN 2022
+%     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
+%     
+%     p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+%     
+%     % ******RTIS1006******
+%     % because created room coordinate system and flipped x and y (may
+%     % have to deal with this more later down the line
+%     if strcmp(partid,'RTIS1006')
+%         p1=plot([xhand(:,2) gh(:,2) xjug(:,2)],-[xhand(:,1) gh(:,1) xjug(:,1)],'LineWidth',3);% not subtracting trunk
+%         
+%     end
+%     
+%     
+%     %%
+%     %p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
+%     
+%     %          p1= plot([(xhand(:,1)-xjug(idx(1),1)) (xshldr(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (xshldr(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3);
+%     
+%     Newreachx = (xhand(:,1)-xjug(1,1));
+%     Newreachy = (xhand(:,2)-xjug(1,2));
+%     hold on
+%     
+%     %       idxvelmax = find(t==timevelmax,1);
+%     %       c1= viscircles([Newreachx(idxvelmax),Newreachy(idxvelmax)],5,'Color','m');emgvel_trial
+%     
+%     %       c2= viscircles([xhand(idxvelmax,1),xhand(idxvelmax,2)],5,'Color','m');
+%     %    c2=  plot(xhand(idxvelmax,1),xhand(idxvelmax,2),'o','MarkerEdgeColor','m','MarkerSize',10);
+%     
+%     
+%     
+%     %      idxreachstart = find(t==timestart,1);
+%     % c1= plot(Newreachx(idx(1)),Newreachy(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
+%     %% Jan 2022 marking start and end hand trace
+%     %c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); % minus trunk
+%     
+%     % ******RTIS1006******
+%     % because created room coordinate system and flipped x and y (may
+%     % have to deal with this more later down the line
+%     if strcmp(partid,'RTIS1006')
+%         c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
+%         c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
+%     else
+%         c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%         
+%     end
+%     %%
+%     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+%     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%     
+%     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+%     %%    UN COMMENT!!! JAN 2022  - minus trunk
+%     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%     %
+%     %
+%     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%     
+%     
+%     % ******RTIS1006******
+%     % because created room coordinate system and flipped x and y (may
+%     % have to deal with this more later down the line
+%     if strcmp(partid,'RTIS1006')
+%         plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%         plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%         
+%         
+%         plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%         plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%     else
+%         % Not minus trunk
+%         plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%         plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%         
+%         
+%         plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%         plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%         
+%         
+%     end
+%     %%
+%     
+%     %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
+%     %         c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+%     
+%     %%
+%     %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
+%     %         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%     
+%     
+%     %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%     %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%     %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
+%     
+%     
+%     
+%     set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+%     
+%     %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
+%     
+%     %   if i ==1
+%     %   armlength = ((setup.exp.armLength+setup.exp.e2hLength)*10)-abs(xshldr(idx(3),2))
+%     %   armlength = 397.7616;
+%     %   y1= yline( armlength,'LineWidth',2,'Color','b');% Line where the arm length is
+%     %   end
+%     
+%     
+%    % legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+%     %axis 'equal'
+%     xlabel('X (mm)','FontSize',16)
+%     ylabel('Y (mm)','FontSize',16)
+%     %   axis equal
+%     %   xlim([-250 50])
+%     %   ylim([-100 600])
+%     
+%     if expcond== 1
+%         title('Restrained Table','FontSize',24)
+%     end
+%     
+%     if expcond== 2
+%         title('Restrained 25%','FontSize',24)
+%     end
+%     
+%     if expcond== 3
+%         title('Restrained 50%','FontSize',24)
+%     end
+%     
+%     if expcond== 4
+%         title('Unrestrained Table','FontSize',24)
+%     end
+%     
+%     if expcond== 5
+%         title('Unrestrained 25%','FontSize',24)
+%     end
+%     
+%     if expcond== 6
+%         title('Unrestrained 50%','FontSize',24)
+%     end
+%     axis equal
+%     
     %% Calling COP Function
     %   ppsdata =data.pps;
     %   tpps = data.pps{1,1};

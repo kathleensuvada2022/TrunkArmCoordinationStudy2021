@@ -24,39 +24,13 @@
 % K.SUVADA 2021-2022
 %%
 
-
-
 function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
-%% Resampling Xhand for Slower participants
+%% Resampling XHAND
+% This is so have more samples and will better map to time points on EMG
 
-% Need to use resampled time vector (now replacing t vector) with orignal
-% xhand data
-
-if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-[xhand2,t]=resampledata(xhand,t,100,89); %250x3 X,Y,Z across time
-
-t = t(1:250);
-end 
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data
 
-if isnan(sum(xhand)) %returns true now if any element is NAN
-    %     'NAN are present'
-    %     find(isnan(xhand))
-    
-    if strcmp(partid,'RTIS1006')
-        if expcond==6 || expcond ==4
-            
-            [xhand,TF] = fillmissing(xhand,'spline');
-            
-        else
-            [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
-        end
-        
-    else
-        [xhand,TF] = fillmissing(xhand,'spline','SamplePoints',t);
-    end
-    
-end
+
 
 %using original data
 Xo= nanmean(xhand(1:5,1));
@@ -66,36 +40,16 @@ Zo = nanmean(xhand(1:5,3));
 %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
 dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
 
-
-% %using Resampled Data
-% Xo = nanmean(xhand2(1:50,1));
-% Yo = nanmean(xhand2(1:50,2));
-% Zo = nanmean(xhand2(1:50,3));
-
-% dist2 =sqrt((xhand2(:,1)-Xo).^2 +(xhand2(:,2)-Yo).^2 + (xhand2(:,3)-Zo).^2);
-% dist2 = dist2(:)-dist2(1);
-
 % Computing Velocity and resampling
 vel = ddt(smo(dist,3),1/89);
-%[vel2,t2] = resampledata(vel,t,100,89);
 
 velx= ddt(smo(xhand(:,1),3),1/89);
 vely= ddt(smo(xhand(:,2),3),1/89);
 
-% Computing Angle of velocity vector
-% ratio_vel = vely./velx;
-% theta_vel = atand(ratio_vel);
 
 theta_vel2 = atan2(vely,velx);
 theta_vel2 = rad2deg(theta_vel2);
 
-
-% velx2= ddt(smo(xhand2(:,1),3),1/89);
-% vely2= ddt(smo(xhand2(:,2),3),1/89);
-%
-%
-% vel = sqrt(velx.^2+vely.^2);
-% vel2= sqrt(velx2.^2+vely2.^2);
 %% Finding Time Points
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
@@ -125,13 +79,14 @@ if  strcmp(partid,'RTIS1004')
     %     end
     
     %
-    end_reach = find(vel(1:75)>=.05*max(vel(1:75)));
+%     end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
     idx(3) = end_reach(length(end_reach));
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
     
     if expcond==1
-        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -152,7 +107,7 @@ if  strcmp(partid,'RTIS1004')
     end
     
     if expcond==2
-        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist<=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -186,7 +141,7 @@ if  strcmp(partid,'RTIS1004')
     end
     
     if expcond==3
-        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist<=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -223,7 +178,7 @@ if  strcmp(partid,'RTIS1004')
         %% JAN 2022 KCS % USING DIST/VEL/ ANGLE
         
         % Finding idx(3) max distance
-        velcond = find(vel(1:75)<=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)<=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -302,7 +257,7 @@ if  strcmp(partid,'RTIS1004')
         idx(1) = idx(1) -3;
         
         % Finding end of reach idx(3)
-        velcond = find(vel(1:75)<=.1*max(vel(1:75)));
+        velcond = find(vel(1:501)<=.1*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -375,7 +330,7 @@ if  strcmp(partid,'RTIS1004')
         idx(1) = idx(1) -3;
         
         % Finding end of reach idx(3)
-        velcond = find(vel(1:75)<=.1*max(vel(1:75)));
+        velcond = find(vel(1:501)<=.1*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -443,7 +398,7 @@ end
 %% RTIS 1005
 
 if strcmp(partid,'RTIS1005')
-    end_reach = find(vel(1:75)>=.15*max(vel));
+    end_reach = find(vel(1:501)>=.15*max(vel));
     idx(3) = end_reach(length(end_reach));
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
@@ -460,7 +415,7 @@ if strcmp(partid,'RTIS1005')
     end
     
     if expcond==2
-        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -506,7 +461,7 @@ if strcmp(partid,'RTIS1005')
     end
     
     if expcond ==3
-        velcond = find(vel(1:75)>=.08*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.08*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -535,7 +490,7 @@ if strcmp(partid,'RTIS1005')
         if strcmp(mfname,'/trial29.mat')
             idx(1) = idx(1)+3;
             
-            end_reach = find(vel(1:75)>=.10*max(vel));
+            end_reach = find(vel(1:501)>=.10*max(vel));
             idx(3) = end_reach(length(end_reach));
             idx(3) = idx(3)+4;
         end
@@ -558,7 +513,7 @@ if strcmp(partid,'RTIS1005')
     
     
     if expcond ==5
-        velcond = find(vel(1:75)>=.10*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -595,7 +550,7 @@ if strcmp(partid,'RTIS1005')
         %             maxdistint= max(dist);
         %             idx(3) = find(dist==maxdistint);
         %         end
-        velcond = find(vel(1:75)>=.08*max(vel(1:75)));
+        velcond = find(vel(1:501)>=.08*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
         %Finding where distance and vel threshold apply
@@ -623,7 +578,7 @@ end
 
 %% RTIS1006
 if strcmp(partid,'RTIS1006')
-    end_reach = find(vel(1:75)>=.15*max(vel));
+    end_reach = find(vel(1:501)>=.15*max(vel));
     idx(3) = end_reach(length(end_reach));
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
@@ -1022,12 +977,12 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
     
     if expcond ==4
         idx(1) = find(dist>=.02*max(dist),1)-1;
-        vel_threshold= find(vel(1:75)>.2*max(vel));
+        vel_threshold= find(vel(1:501)>.2*max(vel));
         idx(3) = vel_threshold(length(vel_threshold));
         
         if strcmp(mfname,'/trial32.mat')
             
-            end_reach = find(vel(1:75)>=.05*max(vel(1:75)));
+            end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
             idx(3) = end_reach(length(end_reach));
         end
         
@@ -1055,7 +1010,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         zdisp = xhand(:,3)-xhand(1,3);
         indxZDisp =  find(zdisp>= .2*max(zdisp));
         idx(1) = indxZDisp(1);
-        vel_threshold= find(vel(1:75)>.2*max(vel));
+        vel_threshold= find(vel(1:501)>.2*max(vel));
         idx(3) = vel_threshold(length(vel_threshold));
         
         
@@ -1081,7 +1036,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial41.mat')
             idx(1)= idx(1)+2;
-            vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
             idx(3) = vely_threshold(length(vely_threshold))+2;
             
         end
@@ -1100,7 +1055,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial59.mat')
             idx(1)= idx(1)+1;
-            vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
             idx(3) = vely_threshold(length(vely_threshold))+1;
             
         end
@@ -1108,7 +1063,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial60.mat')
             idx(1)= idx(1)+1;
-            vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
             idx(3) = vely_threshold(length(vely_threshold))+1;
             
             
@@ -1116,7 +1071,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial61.mat')
             idx(1)= idx(1)+2;
-            vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
             idx(3) = vely_threshold(length(vely_threshold))-37;
             
         end
@@ -1130,7 +1085,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         indxZDisp =  find(zdisp>= .2*max(zdisp));
         idx(1) = indxZDisp(1);
         
-        vely_threshold= find(vely(1:75) > .15*max(vely(1:75)));
+        vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
         idx(3) = vely_threshold(length(vely_threshold))+1;
         
         %
@@ -1193,7 +1148,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
     
     if expcond ==1
         idx(1) = find(dist>=.02*max(dist),1)-1;
-        idx(3)= find(dist(1:75)==max(dist));
+        idx(3)= find(dist(1:501)==max(dist));
         %
         
         
@@ -1238,7 +1193,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         idx(1) = indxZDisp(yvelcond(1));
         
         
-        idx(3)= find(dist(1:75)==max(dist));
+        idx(3)= find(dist(1:501)==max(dist));
         
         if strcmp(mfname,'/trial30.mat')
             %             idx(1)= idx(1)-10;
@@ -1285,7 +1240,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         idx(1) = indxZDisp(1);
         
-        idx(3)= find(dist(1:75)==max(dist(1:75)));
+        idx(3)= find(dist(1:501)==max(dist(1:501)));
         
         if strcmp(mfname,'/trial13.mat')
             idx(1) = idx(1)-6;
@@ -1297,7 +1252,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial15.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
@@ -1305,7 +1260,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial16.mat')
             
-            %             indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            %             indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             %             idx(1) =indx(1)+10-1;
             
             idx(1) = idx(1) +5;
@@ -1315,7 +1270,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial17.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
@@ -1323,7 +1278,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial23.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
@@ -1331,7 +1286,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial24.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
@@ -1340,7 +1295,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial25.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
@@ -1348,14 +1303,14 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial26.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             
         end
         
         if strcmp(mfname,'/trial27.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10;
             
         end
@@ -1363,7 +1318,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial28.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10;
             
         end
@@ -1371,7 +1326,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial29.mat')
             
-            indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+            indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
             idx(1) =indx(1)+10-1;
             idx(3) = idx(3) -1;
             
@@ -1390,7 +1345,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
     
     if expcond ==4
         idx(1) = find(dist>=.02*max(dist),1)-1;
-        idx(3)= find(dist(1:75)==max(dist));
+        idx(3)= find(dist(1:501)==max(dist));
         
         
         if strcmp(mfname,'/trial39.mat')
@@ -1436,7 +1391,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         idx(1) = indxZDisp(yvelcond(1));
   
    
-        idx(3)= find(dist(1:75)==max(dist));
+        idx(3)= find(dist(1:501)==max(dist));
         
 %               
         if strcmp(mfname,'/trial51.mat')
@@ -1454,10 +1409,10 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
     
     
     if expcond ==6
-        indx =  find(abs(vely(10:75))>.2*max(abs(vely(10:75))));
+        indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
         idx(1) =indx(1)+10-1;
         
-        idx(3)= find(dist(1:75)==max(dist(1:75)));
+        idx(3)= find(dist(1:501)==max(dist(1:501)));
         
         
         
@@ -1897,7 +1852,7 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         
         
         if strcmp(mfname,'/trial77.mat')
-            % idx(1)= idx(1)+6;
+            % idx(1)= idx(1)+6;/
             idx(3) = idx(3)+5;
         end
         if strcmp(mfname,'/trial78.mat')
@@ -2005,7 +1960,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
     if expcond==1
         
         idx(1) = find(dist>=.02*max(dist),1)-1;
-        idx(3)= find(dist(1:75)==max(dist(1:75)));
+        idx(3)= find(dist(1:501)==max(dist(1:501)));
         %
 %         idx(1) = find(dist>=.02*max(dist),1);
 %         
@@ -2071,7 +2026,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
     
     
     if expcond ==3
-        idx(1) =find(xhand(:,3)>=.75*max(xhand(:,3)),1);
+        idx(1) =find(xhand(:,3)>=.501*max(xhand(:,3)),1);
         %        idx(3) = find(vel(idx(2):end)<=0,1)+idx(2);
         
         
@@ -2168,13 +2123,13 @@ end
 
 if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
     if expcond==1
-        velthresh = find(vely(1:75)>.02*max(vely(1:75)));
+        velthresh = find(vely(1:501)>.02*max(vely(1:501)));
         distthresh = find(dist(velthresh)>.02*max(dist(velthresh)));
         
         idx(1) = velthresh(distthresh(1));
         
         
-        indx= find(vel(1:75)>.2*max(vel(1:75)));
+        indx= find(vel(1:501)>.2*max(vel(1:501)));
         idx(3) = indx(length(indx));
         
         if strcmp(mfname,'/trial2.mat')
@@ -2205,7 +2160,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         indxZDisp =  find(zdisp>.2*max(zdisp));     
         idx(1) = indxZDisp(1);
        
-        idx(3)= find(dist(1:75)==max(dist));
+        idx(3)= find(dist(1:501)==max(dist));
         
         if strcmp(mfname,'/trial14.mat')
             idx(1) = idx(1)-8;
@@ -2253,7 +2208,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         indxZDisp =  find(zdisp>.2*max(zdisp));     
         idx(1) = indxZDisp(1);
        
-        idx(3)= find(dist(1:75)==max(dist));        
+        idx(3)= find(dist(1:501)==max(dist));        
 %        
         if strcmp(mfname,'/trial17.mat')
             idx(1) = idx(1)-5;
@@ -2319,13 +2274,13 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
     end
     
     if expcond==4
-        velthresh = find(vely(1:75)>.02*max(vely(1:75)));
+        velthresh = find(vely(1:501)>.02*max(vely(1:501)));
         distthresh = find(dist(velthresh)>.02*max(dist(velthresh)));
         
         idx(1) = velthresh(distthresh(1));
         
         
-        indx= find(vel(1:75)>.2*max(vel(1:75)));
+        indx= find(vel(1:501)>.2*max(vel(1:501)));
         idx(3) = indx(length(indx));
         
         if strcmp(mfname,'/trial53.mat')
