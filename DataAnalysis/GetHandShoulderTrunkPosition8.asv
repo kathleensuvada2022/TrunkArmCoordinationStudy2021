@@ -24,21 +24,19 @@ x = data.met;
 x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
 
+nmark=(nmark)/8; 
+
 t = (data.met(:,2)-data.met(1,2))/89; 
 
 %% Resampling Metria Data So maps more directly to EMG data 
 % KCS February 2022 
-
-%Replacing original 'x' and 't' variable 250 samples long with resampled ~1300
-%samples long but changes trial to trial. Makes sample 101 -1 second
-
 % [y,ty]=resampledata(x,t,fs,fsnew)
+
 [x,t]=resampledata(x,t,89,100); %250x3 X,Y,Z across time
 
-% Needed to move this so correct frames
 [nimag,nmark]=size(x); 
-nmark=(nmark)/8; 
-
+%Replacing original 'x' and 't' variable 250 samples long with resampled ~1300
+%samples long but changes trial to trial. Makes sample 101 -1 second
 %%
 
 % %  Load in the act3d data to compare with metria
@@ -227,6 +225,7 @@ for i=1:nimag % loop through time points
 end
 
 
+'done with Metria File Organization'
 
 %% Testing Forearm data and 3rd MCP position
 % 
