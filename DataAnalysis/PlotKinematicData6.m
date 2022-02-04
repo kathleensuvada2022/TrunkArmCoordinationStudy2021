@@ -63,6 +63,7 @@ for i=1: length(mtrials)% i = 3
     
     mfname
     
+
     %skipping trials that are missing data
     if strcmp(partid,'RTIS1004')
         if strcmp(mfname,'/trial21.mat')
@@ -146,8 +147,20 @@ for i=1: length(mtrials)% i = 3
     
     %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
     
+    % To dos for resampling/filling Feb 4 2022
+    
+    % have if and check to see if there are nans 
+    % Do fill missing spline 
+    % After filling plot original data and interpolated data and compare
+    % seems legitimate for x,y,z versus time for xhand, xjug, and xshldr
+    
+    % pause 
+    
+    
+    % then do resample function before feeding into the computereach start
+    % function
     
     %% Metria Trial by Trial Kinematic Data (computed BLS)
     
@@ -206,143 +219,148 @@ for i=1: length(mtrials)% i = 3
     
     [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector,xhand]= ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand);
     
-    continue
+    
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
     
     %Saves file for each trial
-    extention='.mat';
-    filepath_times=datafilepath;
-    name_times = ['Times_Trial' num2str(mtrials(i)) '.mat'];
-    matname = fullfile(filepath_times, [name_times extention]);
-    
+%     extention='.mat';
+%     filepath_times=datafilepath;
+%     name_times = ['Times_Trial' num2str(mtrials(i)) '.mat'];
+%     matname = fullfile(filepath_times, [name_times extention]);
+%     
     % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
     %% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
-    flag=0; %will not plot all Segment CSes
-    gh= zeros(4,length(metdata));
+% KCS uncomment this whole section for GH computation FEB 2022
+    %     flag=0; %will not plot all Segment CSes
+%    
+%     metdata =  x; % using resampled x
+%     
+%     gh= zeros(4,length(metdata));
+%     
+%     for k = 1:length(metdata) %looping through each frame to get GH
+%         gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
+%     end
+%     
+%     gh = gh';%Flipping so organized by columns (time = rows) like other variables
+%     
+%     if strcmp(hand,'Left')
+%         gh(:,1) = -gh(:,1);
+%         gh(:,2) = -gh(:,2);
+%     end
     
-    for k = 1:length(metdata) %looping through each frame to get GH
-        gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
-    end
-    
-    gh = gh';%Flipping so organized by columns (time = rows) like other variables
-    
-    if strcmp(hand,'Left')
-        gh(:,1) = -gh(:,1);
-        gh(:,2) = -gh(:,2);
-    end
-    
-    %% Checking to see if GH has NANs via missing shoulder marker
-    if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
-        'NAN SHLDR present Start/End Trial'
-      
-        num_real_sh = find(~isnan(gh(:,1))); %Finding indices where not NAN
-              
-        if isnan(gh(idx(1),1)) 
-        % for start index
-        Locs1_start= find(num_real_sh<idx(1));
-        Locs1_start = Locs1_start(length(Locs1_start));
-        
-        Locs2_start= find(num_real_sh>idx(1),1);
-        Locs2_start = num_real_sh(Locs2_start);
-
-        if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
-            [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-        else
-            if abs(Locs2_start-Locs2_start)-1  ==6 % allowing if it's just 1 over
-                [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-            else
-                'CHECK GH DATA- NUM_NANS CONSEC START >5'
-                %            abs(NANLocations_2-NANLocations_1)-1
-                %             mfname
-                pause
-                continue
-            end
-        end
-        
-        else
-             
-        % end index
-        Locs1_end= find(num_real_sh<idx(3));
-        Locs1_end = Locs1_end(length(Locs1_end));
-        
-        Locs2_end= find(num_real_sh>idx(3),1);
-        Locs2_end = num_real_sh(Locs2_end);
-        
-        if abs(Locs2_end-Locs1_end)-1  <=5 % seeing if NANs consecutive
-            [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-        else
-            if abs(Locs2_end-Locs2_end)-1  ==6 % allowing if it's just 1 over
-                [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-            else
-                'CHECK GH DATA- NUM_NANS CONSEC END >5'
-                %            abs(NANLocations_2-NANLocations_1)-1
-                %             mfname
-                pause
-                continue
-            end
-        end
-        
-       end  
-        
-    end
-    %% Checking to see where Trunk has NANs
-    if isnan(xjug(idx(1),1)) || isnan(xjug(idx(3),1))  %returns true now if any element is NAN
-        'NAN TRUNK present Start/End Trial'
-        num_real_tr = find(~isnan(xjug(:,1))); %Finding # of reals
-        
-        % for start index
-        if isnan(xjug(idx(1),1))
-        Locs1_start= find(num_real_tr<idx(1));
-        Locs1_start = Locs1_start(length(Locs1_start));
-        
-        Locs2_start= find(num_real_tr>idx(1),1);
-        Locs2_start = num_real_tr(Locs2_start);
-        
-        if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
-            %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
-            [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-        else
-            
-            if abs(Locs2_start-Locs2_start)-1 ==6 % allowing if it's just 1 over
-                [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-            else
-                'CHECK Trunk DATA- NUM_NANS CONSEC START >5'
-                % mfname
-                pause
-                continue
-            end
-        end
-        
-        else
-        % For end index
-        Locs1_end= find(num_real_tr <idx(3));
-        Locs1_end = Locs1_end(length(Locs1_end));
-        
-        Locs2_end= find(num_real_tr>idx(3),1);
-        Locs2_end = num_real_tr(Locs2_end);
-        
-        if abs(Locs2_end-Locs1_end)-1 <=5 % seeing if NANs consecutive
-            %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
-            [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-        else
-            
-            if abs(Locs2_end-Locs2_end)-1 ==6 % allowing if it's just 1 over
-                [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-            else
-                'CHECK Trunk DATA- NUM_NANS CONSEC END >5'
-                % mfname
-                pause
-                continue
-            end
-        end
-        end
-    end
+    %% Checking to see if GH has NANs via missing shoulder marker - uncomment all below FEB 2022
+%     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
+%         'NAN SHLDR present Start/End Trial'
+%       
+%         num_real_sh = find(~isnan(gh(:,1))); %Finding indices where not NAN
+%               
+%         if isnan(gh(idx(1),1)) 
+%         % for start index
+%         Locs1_start= find(num_real_sh<idx(1));
+%         Locs1_start = Locs1_start(length(Locs1_start));
+%         
+%         Locs2_start= find(num_real_sh>idx(1),1);
+%         Locs2_start = num_real_sh(Locs2_start);
+% 
+%         if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
+%             [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+%         else
+%             if abs(Locs2_start-Locs2_start)-1  ==6 % allowing if it's just 1 over
+%                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+%             else
+%                 'CHECK GH DATA- NUM_NANS CONSEC START >5'
+%                 %            abs(NANLocations_2-NANLocations_1)-1
+%                 %             mfname
+%                 pause
+%                 continue
+%             end
+%         end
+%         
+%         else
+%              
+%         % end index
+%         Locs1_end= find(num_real_sh<idx(3));
+%         Locs1_end = Locs1_end(length(Locs1_end));
+%         
+%         Locs2_end= find(num_real_sh>idx(3),1);
+%         Locs2_end = num_real_sh(Locs2_end);
+%         
+%         if abs(Locs2_end-Locs1_end)-1  <=5 % seeing if NANs consecutive
+%             [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+%         else
+%             if abs(Locs2_end-Locs2_end)-1  ==6 % allowing if it's just 1 over
+%                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
+%             else
+%                 'CHECK GH DATA- NUM_NANS CONSEC END >5'
+%                 %            abs(NANLocations_2-NANLocations_1)-1
+%                 %             mfname
+%                 pause
+%                 continue
+%             end
+%         end
+%         
+%        end  
+%         
+ %   end
+%     %% Checking to see where Trunk has NANs
+%     if isnan(xjug(idx(1),1)) || isnan(xjug(idx(3),1))  %returns true now if any element is NAN
+%         'NAN TRUNK present Start/End Trial'
+%         num_real_tr = find(~isnan(xjug(:,1))); %Finding # of reals
+%         
+%         % for start index
+%         if isnan(xjug(idx(1),1))
+%         Locs1_start= find(num_real_tr<idx(1));
+%         Locs1_start = Locs1_start(length(Locs1_start));
+%         
+%         Locs2_start= find(num_real_tr>idx(1),1);
+%         Locs2_start = num_real_tr(Locs2_start);
+%         
+%         if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
+%             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
+%             [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+%         else
+%             
+%             if abs(Locs2_start-Locs2_start)-1 ==6 % allowing if it's just 1 over
+%                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+%             else
+%                 'CHECK Trunk DATA- NUM_NANS CONSEC START >5'
+%                 % mfname
+%                 pause
+%                 continue
+%             end
+%         end
+%         
+%         else
+%         % For end index
+%         Locs1_end= find(num_real_tr <idx(3));
+%         Locs1_end = Locs1_end(length(Locs1_end));
+%         
+%         Locs2_end= find(num_real_tr>idx(3),1);
+%         Locs2_end = num_real_tr(Locs2_end);
+%         
+%         if abs(Locs2_end-Locs1_end)-1 <=5 % seeing if NANs consecutive
+%             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
+%             [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+%         else
+%             
+%             if abs(Locs2_end-Locs2_end)-1 ==6 % allowing if it's just 1 over
+%                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+%             else
+%                 'CHECK Trunk DATA- NUM_NANS CONSEC END >5'
+%                 % mfname
+%                 pause
+%                 continue
+%             end
+%         end
+%         end
+%     end
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     %Updating Definition using Computed GH
-    maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
+   
+    %maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
     
     %% Max Hand Excursion
     
@@ -356,19 +374,19 @@ for i=1: length(mtrials)% i = 3
     %% Compute shoulder and trunk displacement at maximum reach - using BLS
     
     %Changed to be based on GH
-    sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
+  %  sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
     
     %Based on jugular notch
-    trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
+  %  trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
     
     %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
     
-    maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+%     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
     
-    shex_current_trial(i) = sh_exc;
+ %   shex_current_trial(i) = sh_exc;
     
-    trex_current_trial(i) = trunk_exc;
+%    trex_current_trial(i) = trunk_exc;
     
     
     %% Plotting EMGS
@@ -552,33 +570,33 @@ end
 
 for k = 1:length(maxreach_current_trial)
     
-    if maxreach_current_trial(k)== 0
-        maxreach_current_trial(k) = nan;
-    end
+%     if maxreach_current_trial(k)== 0
+%         maxreach_current_trial(k) = nan;
+%     end
     if maxhandexcrsn_current_trial(k) ==0
         maxhandexcrsn_current_trial(k) = nan;
     end
-    if shex_current_trial(k) ==0
-        shex_current_trial(k) = nan;
-    end
-    
-    if trex_current_trial(k) ==0
-        trex_current_trial(k) = nan;
-    end
+%     if shex_current_trial(k) ==0
+%         shex_current_trial(k) = nan;
+%     end
+%     
+%     if trex_current_trial(k) ==0
+%         trex_current_trial(k) = nan;
+%     end
 end
 
-avgmaxreach =nanmean(maxreach_current_trial)
-std_maxreach = nanstd(maxreach_current_trial)
+% avgmaxreach =nanmean(maxreach_current_trial)
+% std_maxreach = nanstd(maxreach_current_trial)
 
 avgmaxhand = nanmean(maxhandexcrsn_current_trial)
 std_maxhand= nanstd(maxhandexcrsn_current_trial)
 
 %Updated based on GH computation
-avgshldr = nanmean(shex_current_trial)
-stdshldr = nanstd(shex_current_trial)
+% avgshldr = nanmean(shex_current_trial)
+% stdshldr = nanstd(shex_current_trial)
 
-avgtrunk = nanmean(trex_current_trial)
-stdtrunk = nanstd(trex_current_trial)
+% avgtrunk = nanmean(trex_current_trial)
+% stdtrunk = nanstd(trex_current_trial)
 
 %  avgemg_vel = mean(emgvel_trial)
 %  avgemg_start = mean(emgstart_trial)

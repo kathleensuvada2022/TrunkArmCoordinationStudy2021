@@ -27,6 +27,7 @@
 function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data
 
+[xhand,t]=resampledata(xhand,t,89,100); %250x3 X,Y,Z across time
 
 %using original data
 Xo= nanmean(xhand(1:5,1));

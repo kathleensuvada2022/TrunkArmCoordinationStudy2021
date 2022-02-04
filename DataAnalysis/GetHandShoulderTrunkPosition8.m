@@ -1,4 +1,4 @@
- function [t,xhand,xshoulder,xtrunk,xshldr,xjug]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
+ function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
 % Function to compute the hand and shoulder 3D position based on the Metria
 % data. Have ACT3D Data as well. Currently does not plot anything- just
 % computes marker positions. Plotted in 'PlotKinematicData6.'
@@ -33,7 +33,7 @@ t = (data.met(:,2)-data.met(1,2))/89;
 %samples long but changes trial to trial. Makes sample 101 -1 second
 
 % [y,ty]=resampledata(x,t,fs,fsnew)
-[x,t]=resampledata(x,t,89,100); %250x3 X,Y,Z across time
+%[x,t]=resampledata(x,t,89,100); %250x3 X,Y,Z across time
 
 % Needed to move this so correct frames
 [nimag,nmark]=size(x); 
