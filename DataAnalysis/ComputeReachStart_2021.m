@@ -24,10 +24,9 @@
 % K.SUVADA 2021-2022
 %%
 
-function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=ComputeReachStart_2021(t,xhand,xshldr,xjug,setup,expcond,partid,mfname,hand)
+function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t,xhand]=ComputeReachStart_2021(t,xhand,xjug,setup,expcond,partid,mfname,hand)
 %% Finding Distance and Vel -- Updated May 2021 for Metria Data
 
-[xhand,t]=resampledata(xhand,t,89,100); %250x3 X,Y,Z across time
 
 %using original data
 Xo= nanmean(xhand(1:5,1));
@@ -81,6 +80,7 @@ end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
     idx(3) = end_reach(length(end_reach));
     idx(1) = find(dist>=.02*max(dist),1)-1;
     
+    %resampling: switch 75 to 501
     
     if expcond==1
         velcond = find(vel(1:501)>=.10*max(vel(1:501)));
