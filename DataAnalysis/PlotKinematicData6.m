@@ -157,14 +157,14 @@ for i=1: length(mtrials)% i = 3
         if sum(sum(isnan(xhand)))>0 %checking if  xhand has NANs
             
             'NANS PRESENT IN XHAND'
-            filled_data =   find(isnan(xhand),1);
+            filled_data =   find(isnan(xhand(1:250)));
             
             [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
             figure(9)
             clf
             %Plotting the Original Data then the Filled Samples
             subplot(3,1,1)
-            plot(t(filled_data),xhandnew(filled_data,1),'--ro')
+            plot(t(filled_data),xhandnew(filled_data,1),'ro')
             hold on
             plot(t,xhand(:,1),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -173,7 +173,7 @@ for i=1: length(mtrials)% i = 3
             ylabel('X Position (mm)','FontSize',14)
             
             subplot(3,1,2)
-            plot(t(filled_data),xhandnew(filled_data,2),'--ro')
+            plot(t(filled_data),xhandnew(filled_data,2),'ro')
             hold on
             plot(t,xhand(:,2),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -181,7 +181,7 @@ for i=1: length(mtrials)% i = 3
             ylabel('Y Position (mm)','FontSize',14)
             
             subplot(3,1,3)
-            plot(t(filled_data),xhandnew(filled_data,3),'--ro')
+            plot(t(filled_data),xhandnew(filled_data,3),'ro')
             hold on
             plot(t,xhand(:,3),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -197,7 +197,7 @@ for i=1: length(mtrials)% i = 3
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
             'NANS PRESENT in XJUG'
-            filled_data =   find(isnan(xjug),1);
+            filled_data =   find(isnan(xjug(1:250)));
             
             [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
             
@@ -205,7 +205,7 @@ for i=1: length(mtrials)% i = 3
             clf
             %Plotting the Original Data then the Filled Samples
             subplot(3,1,1)
-            plot(t(filled_data),xjugnew(filled_data,1),'--ro')
+            plot(t(filled_data),xjugnew(filled_data,1),'ro')
             hold on
             plot(t,xjug(:,1),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -214,7 +214,7 @@ for i=1: length(mtrials)% i = 3
             ylabel('X Position (mm)','FontSize',14)
             
             subplot(3,1,2)
-            plot(t(filled_data),xjugnew(filled_data,2),'--ro')
+            plot(t(filled_data),xjugnew(filled_data,2),'ro')
             hold on
             plot(t,xjug(:,2),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -222,7 +222,7 @@ for i=1: length(mtrials)% i = 3
             ylabel('Y Position (mm)','FontSize',14)
             
             subplot(3,1,3)
-            plot(t(filled_data),xjugnew(filled_data,3),'--ro')
+            plot(t(filled_data),xjugnew(filled_data,3),'ro')
             hold on
             plot(t,xjug(:,3),'b','Linewidth',1)
             legend('Interpolated Data','Original Data','FontSize',13)
@@ -239,25 +239,50 @@ for i=1: length(mtrials)% i = 3
         end
         
     end
-
     
     
-   % Kacey's Notes Friday Feb 4th 
+    
+    % Kacey's Notes Friday Feb 4th
     % have if and check to see if there are nans
     % Do fill missing spline
     % After filling plot original data and interpolated data and compare
     % seems legitimate for x,y,z versus time for xhand, xjug,  (xshldr do
     % after compute GH).
     
-
+    %% Computing Dist/Vel/Angles With Original Data
+    Xo= nanmean(xhand(1:5,1));
+    Yo = nanmean(xhand(1:5,2));
+    Zo = nanmean(xhand(1:5,3));
+    
+    %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+    dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
+    
+    % Computing Velocity and resampling
+    vel = ddt(smo(dist,3),1/89);
+    
+    velx= ddt(smo(xhand(:,1),3),1/89);
+    vely= ddt(smo(xhand(:,2),3),1/89);
+    
+    
+    theta_vel2 = atan2(vely,velx);
+    theta_vel2 = rad2deg(theta_vel2);
     
     %% RESAMPLE
-    % then do resample function before feeding into the computereach start
-    % function
-       [xhand2,t2]=resampledata(xhand,t,89,100); %250x3 X,Y,Z across time
-       [xjug,t2]=resampledata(xjug,t,89,100); %250x3 X,Y,Z across time
+    % Resample variables before feeding into the ComputeReachStart
     
-       t = t2;
+    
+    [xhand,t2]=resampledata(xhand,t,89,100);
+    [xjug,t2]=resampledata(xjug,t,89,100);
+    [dist,t2]=resampledata(dist,t,89,100);
+
+    
+    [vel,t2]=resampledata(vel,t,89,100);
+    [velx,t2]=resampledata(velx,t,89,100);
+    [vely,t2]=resampledata(vely,t,89,100);
+    
+    [theta_vel2,t2]=resampledata(theta_vel2,t,89,100);
+    
+
     
     %% Metria Trial by Trial Kinematic Data (computed BLS)
     
@@ -314,7 +339,7 @@ for i=1: length(mtrials)% i = 3
     %% Computing the start of the reach
     
     
-    [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,t_vector,xhand]= ComputeReachStart_2021(t,xhand,xjug,setup,expcond,partid,mfname,hand);
+    [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,xhand]= ComputeReachStart_2021(t2,xhand,xjug,dist,vel,velx,vely,setup,expcond,partid,mfname,hand);
     
     
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
@@ -345,9 +370,61 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
         gh(:,2) = -gh(:,2);
     end
+
     
     
+    % Interpolation of GH
+     if sum(sum(isnan(gh)))>0  % Checking if Trunk has NANS
+            'NANS PRESENT in GH'
+            filled_data =   find(isnan(gh(1:250))); %rows of NANs
+            
+            [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
+            
+            figure(11)
+            clf
+            %Plotting the Original Data then the Filled Samples
+            subplot(3,1,1)
+            plot(t(filled_data),ghNew(filled_data,1),'ro')
+            hold on
+            plot(t,gh(:,1),'b','Linewidth',1)
+            legend('Interpolated Data','Original Data','FontSize',13)
+            title('3D GH Position','FontSize',18)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('X Position (mm)','FontSize',14)
+            
+            subplot(3,1,2)
+            plot(t(filled_data),ghNew(filled_data,2),'ro')
+            hold on
+            plot(t,gh(:,2),'b','Linewidth',1)
+            legend('Interpolated Data','Original Data','FontSize',13)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('Y Position (mm)','FontSize',14)
+            
+            subplot(3,1,3)
+            plot(t(filled_data),ghNew(filled_data,3),'ro')
+            hold on
+            plot(t,gh(:,3),'b','Linewidth',1)
+            legend('Interpolated Data','Original Data','FontSize',13)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('Z Position (mm)','FontSize',14)
+            
+            
+            'User Check Interpolation Accuracy'
+            
+            
+            pause
+            
+            gh= ghNew;
+            
+        end
     
+
+    
+    % Resampling GH
+    [gh,t2]=resampledata(gh,t,89,100);
+
+        
+    t = t2;
     
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
@@ -474,10 +551,10 @@ for i=1: length(mtrials)% i = 3
     %% Compute shoulder and trunk displacement at maximum reach - using BLS
     
     %Changed to be based on GH
-     sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
+    sh_exc=sqrt(sum((gh(idx(3),1:2)-nanmean(gh(1:5,1:2))).^2,2))';
     
     %Based on jugular notch
-     trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
+    trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
     
     %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
@@ -657,7 +734,7 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
     
-    pause
+     pause
 end
 
 
@@ -670,19 +747,19 @@ end
 
 for k = 1:length(maxreach_current_trial)
     
-        if maxreach_current_trial(k)== 0
-            maxreach_current_trial(k) = nan;
-        end
+    if maxreach_current_trial(k)== 0
+        maxreach_current_trial(k) = nan;
+    end
     if maxhandexcrsn_current_trial(k) ==0
         maxhandexcrsn_current_trial(k) = nan;
     end
-        if shex_current_trial(k) ==0
-            shex_current_trial(k) = nan;
-        end
+    if shex_current_trial(k) ==0
+        shex_current_trial(k) = nan;
+    end
     
-        if trex_current_trial(k) ==0
-            trex_current_trial(k) = nan;
-        end
+    if trex_current_trial(k) ==0
+        trex_current_trial(k) = nan;
+    end
 end
 
 avgmaxreach =nanmean(maxreach_current_trial)
