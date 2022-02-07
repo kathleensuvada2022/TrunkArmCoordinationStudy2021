@@ -65,16 +65,43 @@ if  strcmp(partid,'RTIS1004')
         velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
+        
+        
+        
         %Finding where distance and vel threshold apply
         vUd = intersect (velcond,distcond);
         idx(3) = vUd(length(vUd));
+        
+        
+        if strcmp(mfname,'/trial1.mat')
+            idx(1) = idx(1) +45;
+            idx(3) = idx(3) -70;
+        end
+        
+        if strcmp(mfname,'/trial2.mat')
+            idx(1) = idx(1) +25;
+            idx(3) = idx(3) -25;
+        end
+        
+                
+        if strcmp(mfname,'/trial3.mat')
+            idx(1) = idx(1) +35;
+            idx(3) = idx(3) -35;
+        end
+        
+        if strcmp(mfname,'/trial4.mat')
+            idx(1) = idx(1) +15;
+            idx(3) = idx(3) -35;
+        end
         
         if strcmp(mfname,'/trial6.mat')
             idx(1) = idx(1) -1;
         end
         
+        
+        
         if strcmp(mfname,'/trial7.mat')
-            idx(1) = idx(1) +4;
+            idx(1) = idx(1) +34;
         end
         
         if strcmp(mfname,'/trial10.mat')
@@ -3051,7 +3078,7 @@ ylabel('Velocity (mm/s)')
 
 y1=ylim;
 
-title('Distance and Velocity','FontSize',24)
+title(['Distance and Velocity' mfname],'FontSize',24)
 p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
 % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
 p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
