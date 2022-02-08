@@ -167,7 +167,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xhandnew(filled_data,1),'ro')
             hold on
             plot(t,xhand(:,1),'b','Linewidth',1)
-           % legend('Interpolated Data','Original Data','Location','northwest','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             title('3D 3rd MCP Position','FontSize',18)
             xlabel('Time (s)','FontSize',14)
             ylabel('X Position (mm)','FontSize',14)
@@ -176,7 +176,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xhandnew(filled_data,2),'ro')
             hold on
             plot(t,xhand(:,2),'b','Linewidth',1)
-%             legend('Interpolated Data','Original Data','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             xlabel('Time (s)','FontSize',14)
             ylabel('Y Position (mm)','FontSize',14)
             xlim([0 5])
@@ -184,7 +184,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xhandnew(filled_data,3),'ro')
             hold on
             plot(t,xhand(:,3),'b','Linewidth',1)
-%             legend('Interpolated Data','Original Data','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             xlabel('Time (s)','FontSize',14)
             ylabel('Z Position (mm)','FontSize',14)
             xlim([0 5])
@@ -208,7 +208,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xjugnew(filled_data,1),'ro')
             hold on
             plot(t,xjug(:,1),'b','Linewidth',1)
-          %  legend('Interpolated Data','Original Data','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             title(['3D Trunk Position' mfname],'FontSize',18)
             xlabel('Time (s)','FontSize',14)
             ylabel('X Position (mm)','FontSize',14)
@@ -217,7 +217,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xjugnew(filled_data,2),'ro')
             hold on
             plot(t,xjug(:,2),'b','Linewidth',1)
-%             legend('Interpolated Data','Original Data','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             xlabel('Time (s)','FontSize',14)
             ylabel('Y Position (mm)','FontSize',14)
             xlim([0 5])
@@ -225,7 +225,7 @@ for i=1: length(mtrials)% i = 3
             plot(t(filled_data),xjugnew(filled_data,3),'ro')
             hold on
             plot(t,xjug(:,3),'b','Linewidth',1)
-%             legend('Interpolated Data','Original Data','FontSize',13)
+            legend('Interpolated Data','Original Data','FontSize',13)
             xlabel('Time (s)','FontSize',14)
             ylabel('Z Position (mm)','FontSize',14)
             xlim([0 5])
@@ -339,7 +339,7 @@ for i=1: length(mtrials)% i = 3
     %% Computing the start of the reach
     
     
-    [dist,vel,idx,timestart, timedistmax,xhand]= ComputeReachStart_2021(t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+    [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,xhand]= ComputeReachStart_2021(t2,xhand,xjug,dist,vel,velx,vely,setup,expcond,partid,mfname,hand);
     
     
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
@@ -380,14 +380,8 @@ for i=1: length(mtrials)% i = 3
         
         [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         
-        if strcmp(partid,'RTIS1004') % Trial 26 weird interp so just use constant
-            if strcmp(mfname,'/trial26.mat')
-                
-                ghNew = fillmissing(gh,'linear','EndValues','nearest');
-                
-            end
-            
-        end
+        
+        if 
         
         figure(11)
         clf
@@ -396,7 +390,7 @@ for i=1: length(mtrials)% i = 3
         plot(t(filled_data),ghNew(filled_data,1),'ro')
         hold on
         plot(t,gh(:,1),'b','Linewidth',1)
-     %   legend('Interpolated Data','Original Data','FontSize',13)
+        legend('Interpolated Data','Original Data','FontSize',13)
         title(['3D GH Position' mfname],'FontSize',18)
         xlabel('Time (s)','FontSize',14)
         ylabel('X Position (mm)','FontSize',14)
@@ -405,7 +399,7 @@ for i=1: length(mtrials)% i = 3
         plot(t(filled_data),ghNew(filled_data,2),'ro')
         hold on
         plot(t,gh(:,2),'b','Linewidth',1)
-%         legend('Interpolated Data','Original Data','FontSize',13)
+        legend('Interpolated Data','Original Data','FontSize',13)
         xlabel('Time (s)','FontSize',14)
         ylabel('Y Position (mm)','FontSize',14)
         xlim([0 5])
@@ -413,7 +407,7 @@ for i=1: length(mtrials)% i = 3
         plot(t(filled_data),ghNew(filled_data,3),'ro')
         hold on
         plot(t,gh(:,3),'b','Linewidth',1)
-%         legend('Interpolated Data','Original Data','FontSize',13)
+        legend('Interpolated Data','Original Data','FontSize',13)
         xlabel('Time (s)','FontSize',14)
         ylabel('Z Position (mm)','FontSize',14)
         xlim([0 5])
@@ -422,7 +416,6 @@ for i=1: length(mtrials)% i = 3
         
         
         pause
-        
         
         gh= ghNew;
         

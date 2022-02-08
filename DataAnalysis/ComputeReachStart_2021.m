@@ -24,20 +24,20 @@
 % K.SUVADA 2021-2022
 %%
 
-function [dist,vel,distmax,idx,timestart,timevelmax, timedistmax,xhand]= ComputeReachStart_2021(t,xhand,xjug,dist,vel,velx,vely,setup,expcond,partid,mfname,hand);
+function [dist,vel,idx,timestart, timedistmax,xhand]= ComputeReachStart_2021(t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
 %% Finding Time Points
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
-% Max distance
-distmax = max(dist(1:70));
-idx(3)= find(dist==distmax,1);
-distmax = distmax+abs(min(dist));
-
-% Finding Max Vel
-maxvel =max(vel(10:idx(3)));
-idx(2)= find(vel==maxvel) ;
-% Start Reach
-idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+% % Max distance
+% distmax = max(dist(1:70));
+% idx(3)= find(dist==distmax,1);
+% distmax = distmax+abs(min(dist));
+% 
+% % Finding Max Vel
+% maxvel =max(vel(10:idx(3)));
+% idx(2)= find(vel==maxvel) ;
+% % Start Reach
+% idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
 
 
 %% Correcting if issues with reach start
@@ -65,9 +65,6 @@ if  strcmp(partid,'RTIS1004')
         velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist>=.2*max(dist));
         
-        
-        
-        
         %Finding where distance and vel threshold apply
         vUd = intersect (velcond,distcond);
         idx(3) = vUd(length(vUd));
@@ -79,25 +76,23 @@ if  strcmp(partid,'RTIS1004')
         end
         
         if strcmp(mfname,'/trial2.mat')
-            idx(1) = idx(1) +25;
+            idx(1) = idx(1) +15;
             idx(3) = idx(3) -25;
-        end
-        
+        end    
                 
         if strcmp(mfname,'/trial3.mat')
-            idx(1) = idx(1) +35;
-            idx(3) = idx(3) -35;
+            idx(1) = idx(1) +15;
+            idx(3) = idx(3) -15;
         end
         
         if strcmp(mfname,'/trial4.mat')
             idx(1) = idx(1) +15;
-            idx(3) = idx(3) -35;
+            idx(3) = idx(3) -25;
         end
         
         if strcmp(mfname,'/trial6.mat')
             idx(1) = idx(1) -1;
         end
-        
         
         
         if strcmp(mfname,'/trial7.mat')
@@ -117,28 +112,49 @@ if  strcmp(partid,'RTIS1004')
         vUd = intersect (velcond,distcond);
         idx(1) = vUd(1);
         
+        
+        if strcmp(mfname,'/trial23.mat')
+            idx(1) = idx(1) +3;
+            %idx(3) = idx(3) -6;
+        end
         if strcmp(mfname,'/trial24.mat')
             idx(1) = idx(1) +10;
+            idx(3) = idx(3) -6;
+        end
+        
+        if strcmp(mfname,'/trial25.mat')
+            idx(1) = idx(1) +10;
+            idx(3) = idx(3) -8;
         end
         
         if strcmp(mfname,'/trial26.mat')
-            idx(1) = idx(1) +9;
+            idx(1) = idx(1) +60;
+            idx(3) = idx(3) -8;
         end
         
         if strcmp(mfname,'/trial27.mat')
-            idx(1) = idx(1) +10;
+            idx(1) = idx(1) +75;
+            idx(3) = idx(3) -15;
         end
         
         if strcmp(mfname,'/trial28.mat')
-            idx(1) = idx(1) +10;
+            idx(1) = idx(1) +85;
+            idx(3) = idx(3) -40;
         end
         
         if strcmp(mfname,'/trial30.mat')
-            idx(1) = idx(1) +14;
+            idx(1) = idx(1) +14+7;
         end
         
         if strcmp(mfname,'/trial33.mat')
-            idx(1) = idx(1) +12;
+            idx(1) = idx(1) +82;
+            idx(3) = idx(3) -20;
+        end
+        
+                
+        if strcmp(mfname,'/trial34.mat')
+            %idx(1) = idx(1) +42;
+            idx(3) = idx(3) -20;
         end
         
     end
@@ -151,8 +167,21 @@ if  strcmp(partid,'RTIS1004')
         vUd = intersect (velcond,distcond);
         idx(1) = vUd(1)+5;
         
+        if strcmp(mfname,'/trial12.mat')
+            idx(1) = idx(1) +39;
+            idx(3) = idx(3) -30;
+        end
+        
+        if strcmp(mfname,'/trial13.mat')
+            idx(1) = idx(1) +30;
+            idx(3) = idx(3) -20;
+        end
         if strcmp(mfname,'/trial14.mat')
             idx(1) = idx(1) -7;
+        end
+        if strcmp(mfname,'/trial15.mat')
+            idx(1) = idx(1) +15+25;
+            idx(3) = idx(3)-15;
         end
         
         if strcmp(mfname,'/trial16.mat')
@@ -201,48 +230,54 @@ if  strcmp(partid,'RTIS1004')
         
         %%
         if strcmp(mfname,'/trial35.mat')
-            idx(3) = idx(3) -3;
+            idx(3) = idx(3) -15;
+            idx(1) = idx(1) +15;
         end
         
         if strcmp(mfname,'/trial36.mat')
-            idx(3) = idx(3) -3;
+            idx(3) = idx(3) -15;
+            idx(1) = idx(1) +5;
         end
         
         
         if strcmp(mfname,'/trial37.mat')
-            idx(3) = idx(3) -1;
-            %idx(1) = idx(1) -1;
+            idx(3) = idx(3) -15;
+            idx(1) = idx(1) +5;
         end
         
         if strcmp(mfname,'/trial38.mat')
             idx(3) = idx(3) -3;
-            % idx(1) = idx(1) -1;
+             idx(1) = idx(1) +25;
         end
         
         if strcmp(mfname,'/trial39.mat')
-            idx(3) = idx(3) -4;
+            idx(3) = idx(3) -24;
+            idx(1) = idx(1) +20;
         end
         
         if strcmp(mfname,'/trial40.mat')
-            idx(3) = idx(3) -4;
-            idx(1) = idx(1) +3;
+            idx(3) = idx(3) -24;
+            idx(1) = idx(1) +13;
         end
         
         if strcmp(mfname,'/trial41.mat')
             idx(3) = idx(3) -3;
-            idx(1) = idx(1) +1;
+            idx(1) = idx(1) +20;
         end
         
         if strcmp(mfname,'/trial42.mat')
-            idx(3) = idx(3) -2;
+            idx(3) = idx(3) -12;
+            idx(1) = idx(1) +20;
         end
         
         if strcmp(mfname,'/trial43.mat')
-            idx(3) = idx(3) -3;
+            idx(3) = idx(3) -23;
+            idx(1) = idx(1) +20;
         end
         
         if strcmp(mfname,'/trial44.mat')
             idx(3) = idx(3) -2;
+            idx(1) = idx(1) +25;
         end
     end
     
@@ -3043,7 +3078,7 @@ end
 %%
 idx;
 timestart = t(idx(1));
-timevelmax = t(idx(2));
+%timevelmax = t(idx(2));
 timedistmax = t(idx(3));
 
 % Start Time
