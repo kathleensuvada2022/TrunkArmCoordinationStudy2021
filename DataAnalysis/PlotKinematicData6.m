@@ -63,8 +63,16 @@ for i=1: length(mtrials)% i = 3
     
     mfname
     
+        %skipping trials that are missing data
+    if strcmp(partid,'RTIS1003')
+        if strcmp(mfname,'/trials6.mat')
+            continue
+        end
+        
+    end
     
-    %skipping trials that are missing data
+    
+   
     if strcmp(partid,'RTIS1004')
         if strcmp(mfname,'/trial21.mat')
             continue
