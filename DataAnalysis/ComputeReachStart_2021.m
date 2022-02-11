@@ -514,15 +514,33 @@ if strcmp(partid,'RTIS1005')
             idx(1) = idx(1)+1;
         end
         
+                
+        if strcmp(mfname,'/trial17.mat')
+            idx(3) = idx(3)-5;
+        end
+        
+                
+        if strcmp(mfname,'/trial18.mat')
+            idx(1) = idx(1)-20;
+            idx(3) = idx(3) -6;
+        end
+        
+        if strcmp(mfname,'/trial19.mat')
+            idx(1) = idx(1)-20;
+          %  idx(3) = idx(3) -6;
+        end
+        
         if strcmp(mfname,'/trial20.mat')
-            idx(1) = idx(1)+4;
+            idx(1) = idx(1)+24;
+%             idx(3) = idx(3)-20;
         end
         
         if strcmp(mfname,'/trial26.mat')
             idx(3) = idx(3)+3;
         end
         if strcmp(mfname,'/trial27.mat')
-            idx(1) = idx(1)+4;
+            idx(1) = idx(1)+14;
+            idx(3) = idx(3) -15;
         end
         
         if strcmp(mfname,'/trial28.mat')
@@ -535,20 +553,28 @@ if strcmp(partid,'RTIS1005')
             end_reach = find(vel(1:501)>=.10*max(vel));
             idx(3) = end_reach(length(end_reach));
             idx(3) = idx(3)+4;
+            idx(3) = idx(3) -15;
         end
     end
     
     if expcond ==4
         if strcmp(mfname,'/trial32.mat')
-            idx(1)=idx(1)-4;
+            idx(1)=idx(1)+5;
+%             idx(3) = idx(3) -20;
         end
+        
         
         if strcmp(mfname,'/trial35.mat')
             idx(3)=idx(3)-3;
+            idx(1) = idx(1) +15;
         end
-        
+                
+        if strcmp(mfname,'/trial38.mat')
+            idx(1)=idx(1)+15;
+          
+        end
         if strcmp(mfname,'/trial40.mat')
-            idx(3)=idx(3)-2;
+            idx(3)=idx(3)-20;
         end
         
     end
@@ -605,7 +631,13 @@ if strcmp(partid,'RTIS1005')
         
         if strcmp(mfname,'/trial43.mat')
             idx(3)=idx(3)+4;
-            idx(1)=idx(1)+2;
+            idx(1)=idx(1)-15;
+        end
+        
+                
+        if strcmp(mfname,'/trial45.mat')
+           % idx(3)=idx(3)+4;
+            idx(1)=idx(1)-15;
         end
         
         if strcmp(mfname,'/trial46.mat')
