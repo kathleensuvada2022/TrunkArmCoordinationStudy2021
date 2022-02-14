@@ -226,6 +226,30 @@ if  strcmp(partid,'RTIS1003')
         end
     end
     
+    if expcond ==6
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1)+5;
+        
+        
+        if strcmp(mfname,'/trials23.mat')
+            idx(3) = idx(3) -112;
+            %                     idx(1) = idx(1) +15;
+        end
+        if strcmp(mfname,'/trials26.mat')
+            idx(3) = idx(3) -25;
+            %                     idx(1) = idx(1) +15;
+        end
+        if strcmp(mfname,'/trials27.mat')
+            idx(3) = idx(3) -290;
+            idx(1) = idx(1) +15;
+        end
+        
+    end
+    
     
     
     
@@ -916,27 +940,28 @@ if strcmp(partid,'RTIS1006')
         idx(3) = idx(3)+3;
         
         if strcmp(mfname,'/trial53.mat')
-            idx(3) = idx(3)-2;
+            idx(3) = idx(3)-10;
+            idx(1) = idx(1) +20;
         end
         
         if strcmp(mfname,'/trial54.mat')
-            idx(1) = idx(1)-1;
+            idx(1) = idx(1)+30;
             idx(3) = idx(3)-1;
         end
         
         if strcmp(mfname,'/trial55.mat')
-            idx(1) = idx(1)-2;
+            idx(1) = idx(1)+30;
             idx(3) = idx(3)-3;
         end
         
         if strcmp(mfname,'/trial56.mat')
-            idx(1) = idx(1)-3;
+            idx(1) = idx(1)+30;
             idx(3) = idx(3)-2;
         end
         
         
         if strcmp(mfname,'/trial57.mat')
-            idx(1) = idx(1)+3;
+            idx(1) = idx(1)+50;
             %            idx(3) = idx(3)-6;
         end
         
@@ -947,25 +972,27 @@ if strcmp(partid,'RTIS1006')
         
         
         if strcmp(mfname,'/trial59.mat')
-            idx(1) = idx(1)+2;
+            idx(1) = idx(1)+40;
             %            idx(3) = idx(3)-6;
         end
         
         if strcmp(mfname,'/trial60.mat')
-            idx(1) = idx(1)+5;
+            idx(1) = idx(1)+60;
             idx(3) = idx(3)-1;
         end
         
         if strcmp(mfname,'/trial61.mat')
             idx(3) = idx(3)-2;
+            idx(1) = idx(1) +30;
         end
         
         if strcmp(mfname,'/trial62.mat')
-            idx(1) = idx(1)+2;
+            idx(1) = idx(1)+30;
         end
         
         if strcmp(mfname,'/trial63.mat')
             idx(3) = idx(3)-3;
+            idx(1) = idx(1) +55;
         end
         
     end
@@ -3342,7 +3369,7 @@ hold on
 yyaxis right
 %  plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-plot(t,vely,'LineWidth',1)
+plot(t,vel,'LineWidth',1)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -3360,7 +3387,7 @@ xlim([0.25 5])
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Z Displacement', 'Vel y','Time Start','Time End','Location','northwest','FontSize',16)
+legend('Distance','Z Displacement', 'Vel','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

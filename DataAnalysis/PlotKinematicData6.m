@@ -65,6 +65,12 @@ for i=1: length(mtrials)% i = 3
     
         %skipping trials that are missing data
     if strcmp(partid,'RTIS1003')
+        if strcmp(mfname,'/trials14.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials1.mat')
+            continue
+        end
         if strcmp(mfname,'/trials6.mat')
             continue
         end
@@ -88,6 +94,18 @@ for i=1: length(mtrials)% i = 3
             continue
         end
         if strcmp(mfname,'/trials36.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials24.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials25.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials28.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials29.mat')
             continue
         end
     end
@@ -116,6 +134,13 @@ for i=1: length(mtrials)% i = 3
         end
         
         if strcmp(mfname,'/trial36.mat')
+            continue
+        end
+        
+    end
+    
+    if strcmp(partid,'RTIS1006')
+        if strcmp(mfname,'/trial58.mat')
             continue
         end
         
