@@ -176,7 +176,55 @@ if  strcmp(partid,'RTIS1003')
 %             idx(1) = idx(1) +43;
             idx(3) = idx(3) -9;
         end
-    end     
+    end
+    
+    if expcond ==5
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1)+5;
+        %
+        if strcmp(mfname,'/trials30.mat')
+            idx(1) = idx(1) +20;
+            idx(3) = idx(3) -10;
+        end
+        
+        if strcmp(mfname,'/trials31.mat')
+            idx(3) = idx(3) -20;
+            %             idx(3) = idx(3) -9;
+        end
+        
+                
+        if strcmp(mfname,'/trials32.mat')
+            idx(1) = idx(1) +30;
+            %             idx(3) = idx(3) -9;
+        end
+                
+        if strcmp(mfname,'/trials33.mat')
+            idx(3) = idx(3) -180;
+            %             idx(3) = idx(3) -9;
+        end
+        
+                        
+        if strcmp(mfname,'/trials34.mat')
+            idx(3) = idx(3) -2;
+            idx(1) = idx(1) +15;
+        end
+        
+                                
+        if strcmp(mfname,'/trials35.mat')
+            idx(3) = idx(3) -265;
+             idx(1) = idx(1) +17;
+        end
+        
+                                        
+        if strcmp(mfname,'/trials36.mat')
+            idx(3) = idx(3) -45;
+            idx(1) = idx(1) +15;
+        end
+    end
     
     
     
