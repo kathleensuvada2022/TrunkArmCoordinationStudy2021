@@ -31,6 +31,37 @@ t = (data.met(:,2)-data.met(1,2))/89;
 %Note: for this participant, the RAW time data had huge number for one
 %sample with NAN marker data. Filled and Compared
 if strcmp(partid,'RTIS1006')
+    if strcmp(filename,'/trial83.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+        
+    end
+    
+    if strcmp(filename,'/trial84.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+        
+    end
+    
+    
+    if strcmp(filename,'/trial85.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+        
+    end
+    
+    if strcmp(filename,'/trial86.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+        
+    end
+    
+    
+    
     if strcmp(filename,'/trial87.mat')
         t(10) = nan;
         filled_t = fillmissing(t,'linear');
