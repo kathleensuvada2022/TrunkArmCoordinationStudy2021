@@ -217,9 +217,19 @@ for i=1: length(mtrials)% i = 3
         if sum(sum(isnan(xhand)))>0 %checking if  xhand has NANs
             
             'NANS PRESENT IN XHAND'
+            
             filled_data =   find(isnan(xhand(1:250)));
             
-            [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+            if strcmp(partid,'RTIS1006') &&  expcond >3
+                
+                [xhandnew,TF] = fillmissing(xhand,'nearest');
+                
+            else
+                
+                [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+                
+            end
+            
             figure(9)
             clf
             %Plotting the Original Data then the Filled Samples
@@ -259,7 +269,13 @@ for i=1: length(mtrials)% i = 3
             'NANS PRESENT in XJUG'
             filled_data =   find(isnan(xjug(1:250)));
             
-            [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+            if strcmp(partid,'RTIS1006') &&  expcond >3
+                [xjugnew,TF] = fillmissing(xjug,'spline');
+                
+            else
+                [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+            end
+            
             
             figure(10)
             clf
@@ -433,22 +449,32 @@ for i=1: length(mtrials)% i = 3
     
     
     
-    % Interpolation of GH
+    % Interpolation of GH- accounting for trials with issues and need
+    % alternative interpolation method.
+    
     if sum(sum(isnan(gh)))>0  % Checking if Trunk has NANS
         'NANS PRESENT in GH'
+        
         filled_data =   find(isnan(gh(1:250))); %rows of NANs
         
-        [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         
-        if strcmp(partid,'RTIS1004') % Trial 26 weird interp so just use constant
+        if strcmp(partid,'RTIS1006') &&  expcond >3
+            [ghNew,TF] = fillmissing(gh,'spline');
+     
+        
+        elseif strcmp(partid,'RTIS1004') % Trial 26 weird interp so just use constant
+            
             if strcmp(mfname,'/trial26.mat')
                 
                 ghNew = fillmissing(gh,'linear','EndValues','nearest');
                 
             end
             
+        else
+            [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         end
-        
+            
+
         figure(11)
         clf
         %Plotting the Original Data then the Filled Samples
@@ -485,6 +511,8 @@ for i=1: length(mtrials)% i = 3
         
         
         gh= ghNew;
+        
+        
         
     end
     
