@@ -242,6 +242,13 @@ for i=1: length(mtrials)% i = 3
     
     
     %% Checking NANS and Interpolating Prior to Resampling
+    if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
+        
+        xhandfix(:,1) = xhand(:,2);
+        xhand(:,2) = -xhand(:,1);
+        
+        xhand(:,1) =  xhandfix(:,1);
+    end
     
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %Check shoulder after GH computation
         
@@ -261,13 +268,6 @@ for i=1: length(mtrials)% i = 3
                 
             end
             
-            if strcmp(partid,'RTIS1006')
-                xhand(:,1) = xhand(:,2);
-                xhand(:,2) = -xhand(:,1);
-                
-                xhandnew(:,1) = xhandnew(:,2);
-                xhandnew(:,2) = -xhandnew(:,1);
-            end
             figure(9)
             clf
             %Plotting the Original Data then the Filled Samples
@@ -302,6 +302,13 @@ for i=1: length(mtrials)% i = 3
             
         end
         
+        if strcmp(partid,'RTIS1006')
+            
+            xjugfix(:,1) = xjug(:,2);
+            xjug(:,2) = -xjug(:,1);
+            
+            xjug(:,1) =  xjugfix(:,1);
+        end
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
             'NANS PRESENT in XJUG'
@@ -494,6 +501,15 @@ for i=1: length(mtrials)% i = 3
     end
     
     
+    
+    
+    if strcmp(partid,'RTIS1006')
+        
+        ghfix(:,1) = gh(:,2);
+        gh(:,2) = -gh(:,1);
+        
+        gh(:,1) =  ghfix(:,1);
+    end
     
     % Interpolation of GH- accounting for trials with issues and need
     % alternative interpolation method.
