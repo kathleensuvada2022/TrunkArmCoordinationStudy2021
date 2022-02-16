@@ -1,8 +1,29 @@
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
-% Function to compute the hand and shoulder 3D position based on the Metria
-% data. Have ACT3D Data as well. Currently does not plot anything- just
-% computes marker positions. Plotted in 'PlotKinematicData6.'
+%% Processing of Metria Raw Data.
 
+% Function that sorts Metria data and creates time vector, and respective
+% variables for the hand, shoulder, trunk, humerus marker. 
+
+% Inputs:
+% - partid: string participant ID
+% - filename: Metria file name as string
+% - filepath: filepath of the trial
+% - setup: setup file for a given trial
+
+
+% Outputs:
+% - t: time vector 
+% - xhand: XYZ of 3rd MCP computed via BL digit file. 
+% - xshoulder: XYZ of shoulder MARKER not BL
+% - xtrunk: XYZ of trunk MARKER
+% - xshldr: XYZ of acromion digitized via BL file.
+% - xjug: XYZ of jugular notch digitized via BL file.
+% - x: whole organized data file with all marker data. HT matrices.
+
+
+% K.SUVADA 2019-2022
+
+%%
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
 load([filepath '/BL.mat'])
 % load([filepath '/' partid,'_',setup])
 %% Load marker data
@@ -35,6 +56,7 @@ if strcmp(partid,'RTIS1006')
         t(10) = nan;
         filled_t = fillmissing(t,'linear');
         t=filled_t;
+        
         
     end
     

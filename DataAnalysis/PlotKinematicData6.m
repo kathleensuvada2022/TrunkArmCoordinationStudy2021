@@ -261,6 +261,13 @@ for i=1: length(mtrials)% i = 3
                 
             end
             
+            if strcmp(partid,'RTIS1006')
+                xhand(:,1) = xhand(:,2);
+                xhand(:,2) = -xhand(:,1);
+                
+                xhandnew(:,1) = xhandnew(:,2);
+                xhandnew(:,2) = -xhandnew(:,1);
+            end
             figure(9)
             clf
             %Plotting the Original Data then the Filled Samples
@@ -305,6 +312,14 @@ for i=1: length(mtrials)% i = 3
                 
             else
                 [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
+            end
+            
+            if strcmp(partid,'RTIS1006')
+                xjug(:,1) = xjug(:,2);
+                xjug(:,2) = -xjug(:,1);
+                xjugnew(:,1) = xjugnew(:,2);
+                xjugnew(:,2) = -xjugnew(:,1);
+      
             end
             
             
@@ -506,6 +521,17 @@ for i=1: length(mtrials)% i = 3
         end
         
         
+        %% For RTIS1006- Kacey switched x and y during creating GCS
+        if strcmp(partid,'RTIS1006')
+            gh(:,1) = gh(:,2);
+            gh(:,2) = -gh(:,1);
+            
+            ghNew(:,1) = ghNew(:,2);
+            ghNew(:,2) = -ghNew(:,1);
+        end
+        
+        
+        
         figure(11)
         clf
         %Plotting the Original Data then the Filled Samples
@@ -662,6 +688,9 @@ for i=1: length(mtrials)% i = 3
     %         end
     %         end
     %     end
+    
+    
+    
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     %Updating Definition using Computed GH
@@ -722,11 +751,11 @@ for i=1: length(mtrials)% i = 3
     % ******RTIS1006******
     % because created room coordinate system and flipped x and y (may
     % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        p1=plot([xhand(:,2) gh(:,2) xjug(:,2)],-[xhand(:,1) gh(:,1) xjug(:,1)],'LineWidth',3);% not subtracting trunk
-        
-    end
-    
+    %     if strcmp(partid,'RTIS1006')
+    %         p1=plot([xhand(:,2) gh(:,2) xjug(:,2)],-[xhand(:,1) gh(:,1) xjug(:,1)],'LineWidth',3);% not subtracting trunk
+    %
+    %     end
+    %
     
     %%
     %p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
@@ -753,14 +782,14 @@ for i=1: length(mtrials)% i = 3
     % ******RTIS1006******
     % because created room coordinate system and flipped x and y (may
     % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
-        c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
-    else
-        c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-        c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-        
-    end
+    %     if strcmp(partid,'RTIS1006')
+    %         c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
+    %         c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
+    %     else
+    c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+    c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+    
+    %     end
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -779,24 +808,24 @@ for i=1: length(mtrials)% i = 3
     % ******RTIS1006******
     % because created room coordinate system and flipped x and y (may
     % have to deal with this more later down the line
-    if strcmp(partid,'RTIS1006')
-        plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-        plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-        
-        
-        plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    else
-        % Not minus trunk
-        plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-        plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-        
-        
-        plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-        plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-        
-        
-    end
+    %      if strcmp(partid,'RTIS1006')
+    %         plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+    %         plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+    %
+    
+    %         plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    %         plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    %     else
+    % Not minus trunk
+    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+    
+    
+    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    
+    
+    %     end
     
     
     %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
