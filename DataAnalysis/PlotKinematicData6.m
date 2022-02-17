@@ -517,9 +517,11 @@ for i=1: length(mtrials)% i = 3
             if strcmp(mfname,'/trial26.mat')
                 
                 ghNew = fillmissing(gh,'linear','EndValues','nearest');
-                
+            else
+                [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
             end
-            
+                        
+
         else
             [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         end
