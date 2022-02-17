@@ -27,13 +27,13 @@
 %%
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
-datafilepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',hand];
-load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
+ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+ load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 
 %% Loading in Max EMGS
 
-load([datafilepath '/Maxes/maxEMG.mat']);
+% load([datafilepath '/Maxes/maxEMG.mat']);
 %% Loading and setting file name and condition
 expcondname={'RT','R25','R50','UT','U25','U50'};
 
@@ -42,8 +42,8 @@ afilepath = datafilepath;
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 
-
-%updated for new data structure 1.28.21
+% 
+% %updated for new data structure 1.28.21
 mtrials=setup.trial{expcond};
 atrials=setup.trial{expcond};
 ntrials=length(mtrials);
@@ -308,6 +308,9 @@ for i=1: length(mtrials)% i = 3
             xjug(:,2) = -xjug(:,1);
             
             xjug(:,1) =  xjugfix(:,1);
+            
+            
+            xjug(:,1) = -xjug(:,1);
         end
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
@@ -319,14 +322,6 @@ for i=1: length(mtrials)% i = 3
                 
             else
                 [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-            end
-            
-            if strcmp(partid,'RTIS1006')
-                xjug(:,1) = xjug(:,2);
-                xjug(:,2) = -xjug(:,1);
-                xjugnew(:,1) = xjugnew(:,2);
-                xjugnew(:,2) = -xjugnew(:,1);
-      
             end
             
             
@@ -370,13 +365,6 @@ for i=1: length(mtrials)% i = 3
     end
     
     
-    
-    % Kacey's Notes Friday Feb 4th
-    % have if and check to see if there are nans
-    % Do fill missing spline
-    % After filling plot original data and interpolated data and compare
-    % seems legitimate for x,y,z versus time for xhand, xjug,  (xshldr do
-    % after compute GH).
     
     %% Computing Dist/Vel/Angles With Original Data
     Xo= nanmean(xhand(1:5,1));
@@ -461,10 +449,10 @@ for i=1: length(mtrials)% i = 3
     %% Loading in EMGS
     
     % Normalized EMGS
-    load([afilepath afname])
-    emg= data.daq{1,2};
-    emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
-    
+%     load([afilepath afname])
+%     emg= data.daq{1,2};
+%     emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
+%     
     %% Computing the start of the reach
     
     
@@ -501,14 +489,14 @@ for i=1: length(mtrials)% i = 3
     end
     
     
-    
-    
-    if strcmp(partid,'RTIS1006')
+    if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
         
         ghfix(:,1) = gh(:,2);
         gh(:,2) = -gh(:,1);
         
         gh(:,1) =  ghfix(:,1);
+        
+        gh(:,1) = -gh(:,1);
     end
     
     % Interpolation of GH- accounting for trials with issues and need
@@ -534,16 +522,6 @@ for i=1: length(mtrials)% i = 3
             
         else
             [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
-        end
-        
-        
-        %% For RTIS1006- Kacey switched x and y during creating GCS
-        if strcmp(partid,'RTIS1006')
-            gh(:,1) = gh(:,2);
-            gh(:,2) = -gh(:,1);
-            
-            ghNew(:,1) = ghNew(:,2);
-            ghNew(:,2) = -ghNew(:,1);
         end
         
         
@@ -760,18 +738,12 @@ for i=1: length(mtrials)% i = 3
     %          p1= plot([(xhand(idx(1):idx(3),1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
     %% Plotting whole trial with GH - UN COMMENT JAN 2022
     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
+ 
+
+    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+%     p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
     
-    %     p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
-    p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
-    
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    %     if strcmp(partid,'RTIS1006')
-    %         p1=plot([xhand(:,2) gh(:,2) xjug(:,2)],-[xhand(:,1) gh(:,1) xjug(:,1)],'LineWidth',3);% not subtracting trunk
-    %
-    %     end
-    %
+
     
     %%
     %p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
@@ -795,17 +767,10 @@ for i=1: length(mtrials)% i = 3
     %% Jan 2022 marking start and end hand trace
     %c1= plot(xhand(idx(1),1)-xjug(idx(1),1),xhand(idx(1),2)-xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); % minus trunk
     
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    %     if strcmp(partid,'RTIS1006')
-    %         c1= plot(xhand(idx(1),2),-xhand(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10);
-    %         c3= plot(xhand(idx(3),2),-xhand(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10);
-    %     else
+
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
     
-    %     end
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -821,17 +786,7 @@ for i=1: length(mtrials)% i = 3
     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
     
     
-    % ******RTIS1006******
-    % because created room coordinate system and flipped x and y (may
-    % have to deal with this more later down the line
-    %      if strcmp(partid,'RTIS1006')
-    %         plot(gh(idx(1),2),-gh(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    %         plot(gh(idx(3),2),-gh(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    %
-    
-    %         plot(xjug(idx(1),2),-xjug(idx(1),1),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    %         plot(xjug(idx(3),2),-xjug(idx(3),1),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    %     else
+
     % Not minus trunk
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
@@ -839,13 +794,11 @@ for i=1: length(mtrials)% i = 3
     
     plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    
-    
-    %     end
+   
     
     
     %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
-    %         c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+    %        c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
     
     %%
     %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
@@ -869,7 +822,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-    % legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+     legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)

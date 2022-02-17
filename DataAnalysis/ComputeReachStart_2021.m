@@ -38,6 +38,22 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 % idx(2)= find(vel==maxvel) ;
 % % Start Reach
 % idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+%% RTIS1002 - testing may not work
+if  strcmp(partid,'RTIS1002')
+    end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+    idx(3) = end_reach(length(end_reach));
+    idx(1) = find(dist>=.02*max(dist),1)-1;
+    
+    if expcond==1
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist>=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(3) = vUd(length(vUd));
+        
+    end
+end
 
 %% RTIS 1003 
 if  strcmp(partid,'RTIS1003')
