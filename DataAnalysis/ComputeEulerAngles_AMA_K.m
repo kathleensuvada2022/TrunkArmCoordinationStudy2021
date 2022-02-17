@@ -70,8 +70,8 @@ function GH_G_comp_s = ComputeEulerAngles_AMA_K(filename,arm,partid,flag,k)
 
 %if nargin<3, reffr='trunk'; end
 %% Loading in the BL data (Digitization) and the BLs Names
-
-datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/'];
+datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/Anamaria Acosta - TACS/Data','/'];
+% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/'];
 % datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
 % datafilepath = ['D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data','\',partid,'\',arm];
 %datafilepath = 'D:\usr\Ana Maria Acosta\Documents\Research\Projects\Stroke Trunk Arm Interaction\Code\TrunkArmCoordinationStudy2021';

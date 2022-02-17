@@ -27,7 +27,7 @@
 %%
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
- datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/Anamaria Acosta - TACS/Data','/',partid,'/',hand];
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 
