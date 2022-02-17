@@ -91,20 +91,6 @@ for i=1: length(mtrials)% i = 3
     mfname
     
     %skipping trials that are missing data
-    if strcmp(partid,'RTIS1002')
-        if strcmp(mfname,'/trials1.mat')
-            continue
-        end
-        
-        if strcmp(mfname,'/trials4.mat')
-            continue
-        end
-        
-    end
-    
-    
-    
-    
     if strcmp(partid,'RTIS1003')
         if strcmp(mfname,'/trials14.mat')
             continue
@@ -266,25 +252,7 @@ for i=1: length(mtrials)% i = 3
     
     if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
        xhand(:,2) = -xhand(:,2); 
-       xhand(:,1) = -xhand(:,1);
-
-    end
-
-    if strcmp(partid,'RTIS1006')
-        
-        xjugfix(:,1) = xjug(:,2);
-        xjug(:,2) = -xjug(:,1);
-        
-        xjug(:,1) =  xjugfix(:,1);
-        
-        
-        xjug(:,1) = -xjug(:,1);
-    end
-    
-    if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
-        xjug(:,2) = -xjug(:,2);
-        xjug(:,1) = -xjug(:,1);
-
+   
     end
     
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %Check shoulder after GH computation
@@ -339,7 +307,21 @@ for i=1: length(mtrials)% i = 3
             
         end
         
-
+        if strcmp(partid,'RTIS1006')
+            
+            xjugfix(:,1) = xjug(:,2);
+            xjug(:,2) = -xjug(:,1);
+            
+            xjug(:,1) =  xjugfix(:,1);
+            
+            
+            xjug(:,1) = -xjug(:,1);
+        end
+        
+        if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
+            xjug(:,2) = -xjug(:,2);
+            
+        end
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
             'NANS PRESENT in XJUG'
@@ -528,8 +510,8 @@ for i=1: length(mtrials)% i = 3
     end
     
     if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
-        gh(:,2) = -gh(:,2);
-        gh(:,1) = -gh(:,1);
+        xjug(:,2) = -xjug(:,2);
+        
     end
     
     % Interpolation of GH- accounting for trials with issues and need
@@ -539,9 +521,12 @@ for i=1: length(mtrials)% i = 3
         'NANS PRESENT in GH'
         
         filled_data =   find(isnan(gh(1:250))); %rows of NANs
+        
+        
         if strcmp(partid,'RTIS1006') &&  expcond >3
             [ghNew,TF] = fillmissing(gh,'spline');
-    
+            
+            
         elseif strcmp(partid,'RTIS1004') % Trial 26 weird interp so just use constant
             
             if strcmp(mfname,'/trial26.mat')
@@ -550,19 +535,8 @@ for i=1: length(mtrials)% i = 3
             else
                  [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
             end
-            
-        elseif strcmp(partid,'RTIS1002')
-            if strcmp(mfname,'/trials4.mat')
-                ghNew = fillmissing(gh,'linear','EndValues','nearest');
-            end
-            
-            if strcmp(mfname,'/trials5.mat')
-                ghNew = fillmissing(gh,'linear','EndValues','nearest');
-            else
-                [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
-                
-            end
-            
+                        
+
         else
             [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         end
