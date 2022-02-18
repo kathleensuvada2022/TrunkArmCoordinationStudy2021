@@ -171,12 +171,29 @@ if  strcmp(partid,'RTIS1002')
     
     
     if expcond ==6
-               velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
         distcond = find(dist<=.2*max(dist));
         
         %Finding where distance and vel threshold apply
         vUd = intersect (velcond,distcond);
-        idx(1) = vUd(1); 
+        idx(1) = vUd(1);
+                        
+        if strcmp(mfname,'/trials21.mat')
+            idx(1) = idx(1)+85;
+            idx(3) = idx(3)-15;
+        end
+        
+                                
+        if strcmp(mfname,'/trials36.mat')
+            idx(1) = idx(1)+90;
+            idx(3) = idx(3)-20;
+        end
+        
+                                        
+        if strcmp(mfname,'/trials37.mat')
+            idx(1) = idx(1)+30;
+            idx(3) = idx(3)-25;
+        end
     end
 end
 

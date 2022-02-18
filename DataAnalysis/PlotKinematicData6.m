@@ -167,6 +167,19 @@ for i=1: length(mtrials)% i = 3
         if strcmp(mfname,'/trials47.mat')
             continue
         end
+        
+        if strcmp(mfname,'/trials22.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials23.mat')
+            continue
+        end
+        
+                
+        if strcmp(mfname,'/trials24.mat')
+            continue
+        end
     end
     
     
@@ -372,8 +385,19 @@ for i=1: length(mtrials)% i = 3
                 end
                 if strcmp(mfname,'/trials9.mat')
                     [xhandnew,TF] = fillmissing(xhand,'linear');
+                end
+                if strcmp(mfname,'/trials22.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'linear');
+                end
+                if strcmp(mfname,'/trials23.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'linear');
+                end
+                if strcmp(mfname,'/trials24.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'nearest');
+                end
+                if strcmp(mfname,'/trials37.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'linear');
                     
-        
                 else
                     [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
                 end
