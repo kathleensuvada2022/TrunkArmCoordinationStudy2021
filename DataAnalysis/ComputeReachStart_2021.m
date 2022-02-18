@@ -32,13 +32,13 @@ idx=zeros(1,4); % creating variable with the indices of vel and distance
 % distmax = max(dist(1:70));
 % idx(3)= find(dist==distmax,1);
 % distmax = distmax+abs(min(dist));
-% 
+%
 % % Finding Max Vel
 % maxvel =max(vel(10:idx(3)));
 % idx(2)= find(vel==maxvel) ;
 % % Start Reach
 % idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
-%% RTIS1002 
+%% RTIS1002
 if  strcmp(partid,'RTIS1002')
     end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
     idx(3) = end_reach(length(end_reach));
@@ -52,6 +52,131 @@ if  strcmp(partid,'RTIS1002')
         vUd = intersect (velcond,distcond);
         idx(3) = vUd(length(vUd));
         
+        
+        if strcmp(mfname,'/trials2.mat')
+            idx(3) = idx(3) -4;
+        end
+        
+        
+        if strcmp(mfname,'/trials3.mat')
+            idx(3) = idx(3) -2;
+        end
+        
+        
+        if strcmp(mfname,'/trials5.mat')
+            idx(3) = idx(3) -10;
+        end
+        
+        
+        if strcmp(mfname,'/trials7.mat')
+            idx(1) = idx(1)+85;
+        end
+    end
+    
+    
+    if expcond ==2
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1);
+        
+        if strcmp(mfname,'/trials14.mat')
+            idx(3) = idx(3)-150;
+        end
+    end
+    
+    
+    if expcond ==3
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1);
+%                 
+        if strcmp(mfname,'/trials8.mat')
+            idx(1) = idx(1)+160;
+        end
+        
+        if strcmp(mfname,'/trials9.mat')
+            idx(1) = idx(1)+60;
+        end
+        
+    end
+    
+    
+    
+    
+    if expcond ==4
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1);
+        %
+        if strcmp(mfname,'/trials25.mat')
+            idx(3) = idx(3)-220;
+        end
+        
+        if strcmp(mfname,'/trials28.mat')
+            idx(3) = idx(3)-85;
+        end
+        
+        if strcmp(mfname,'/trials32.mat')
+            idx(1) = idx(1)+30;
+        end
+        
+        if strcmp(mfname,'/trials35.mat')
+            idx(1) = idx(1)+45;
+            idx(3) = idx(3) -152;
+        end
+    end
+    
+    
+    if expcond ==5
+        velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1);
+                
+        if strcmp(mfname,'/trials16.mat')
+%             idx(1) = idx(1)+45;
+            idx(3) = idx(3) -3;
+        end
+        
+        if strcmp(mfname,'/trials38.mat')
+            idx(1) = idx(1)+97;
+%             idx(3) = idx(3) -3;
+        end
+        
+        if strcmp(mfname,'/trials39.mat')
+            %             idx(1) = idx(1)+55;
+            idx(3) = idx(3) -15;
+        end
+        
+        if strcmp(mfname,'/trials40.mat')
+            idx(1) = idx(1)+205;
+        end
+        
+                
+        if strcmp(mfname,'/trials42.mat')
+            idx(1) = idx(1)+15;
+        end
+    end
+    
+    
+    if expcond ==6
+               velcond = find(vel(1:501)>=.10*max(vel(1:501)));
+        distcond = find(dist<=.2*max(dist));
+        
+        %Finding where distance and vel threshold apply
+        vUd = intersect (velcond,distcond);
+        idx(1) = vUd(1); 
     end
 end
 

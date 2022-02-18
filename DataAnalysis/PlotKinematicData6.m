@@ -100,6 +100,73 @@ for i=1: length(mtrials)% i = 3
             continue
         end
         
+        if strcmp(mfname,'/trials13.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials15.mat')
+            continue
+        end
+%         
+        if strcmp(mfname,'/trials10.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials11.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials26.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials29.mat')
+            continue
+        end
+        
+%                 
+        if strcmp(mfname,'/trials31.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials34.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials30.mat')
+            continue
+        end
+       
+        if strcmp(mfname,'/trials16.mat')
+            continue
+        end
+        if strcmp(mfname,'/trials17.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials18.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials19.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials20.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials41.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials43.mat')
+            continue
+        end
+        
+        if strcmp(mfname,'/trials47.mat')
+            continue
+        end
     end
     
     
@@ -287,7 +354,7 @@ for i=1: length(mtrials)% i = 3
 
     end
     
-    if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %Check shoulder after GH computation
+    if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %
         
         if sum(sum(isnan(xhand)))>0 %checking if  xhand has NANs
             
@@ -299,6 +366,18 @@ for i=1: length(mtrials)% i = 3
                 
                 [xhandnew,TF] = fillmissing(xhand,'nearest');
                 
+            elseif strcmp(partid,'RTIS1002')
+                if strcmp(mfname,'/trials10.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'linear');
+                end
+                if strcmp(mfname,'/trials9.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'linear');
+                    
+        
+                else
+                    [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
+                end
+
             else
                 
                 [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
@@ -783,8 +862,8 @@ for i=1: length(mtrials)% i = 3
     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
  
 
-    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
-%     p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
+%     p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+    p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
     
 
     
