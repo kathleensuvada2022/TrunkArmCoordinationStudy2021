@@ -1324,18 +1324,25 @@ if strcmp(partid,'RTIS1006')
 end
 %% RTIS 2001 Paretic
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+    end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+    idx(3) = end_reach(length(end_reach));
+    idx(1) = find(dist>=.02*max(dist),1)-1;
     
     if expcond ==1
-        
+        if strcmp(mfname,'/trial1.mat')
+            idx(1)= idx(1)-2;
+            idx(3)= idx(3)-25+8;
+            
+        end
         if strcmp(mfname,'/trial2.mat')
             idx(1)= idx(1)-2;
-            idx(3)= idx(3)-1;
+            idx(3)= idx(3)-225+20;
             
         end
         
         if strcmp(mfname,'/trial3.mat')
             idx(1)= idx(1)-3;
-            idx(3)= idx(3)-5;
+            idx(3)= idx(3)-180;
         end
         
         if strcmp(mfname,'/trial4.mat')
@@ -1345,17 +1352,17 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial5.mat')
             idx(1)= idx(1)-2;
-            idx(3)= idx(3)-1;
+            idx(3)= idx(3)-10;
         end
         
         if strcmp(mfname,'/trial6.mat')
             idx(1)= idx(1)-4;
-            idx(3)= idx(3)-1;
+            idx(3)= idx(3)-4;
         end
         
         if strcmp(mfname,'/trial7.mat')
             idx(1)= idx(1)-2;
-            %             idx(3)= idx(3)-1;
+            idx(3)= idx(3)-12;
         end
         
         if strcmp(mfname,'/trial8.mat')
@@ -1380,52 +1387,81 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         zdisp = xhand(:,3)-xhand(1,3);
         indxZDisp =  find(zdisp>= .2*max(zdisp));
         idx(1) = indxZDisp(1);
+        %
+        end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+        idx(3) = end_reach(length(end_reach))-70;
         
         if strcmp(mfname,'/trial11.mat')
-            idx(1)= idx(1)+1;
-            %             idx(3)= idx(3)-1;
+            idx(1)= idx(1)+20;
+            idx(3)= idx(3)-20;
+        end
+        
+        if strcmp(mfname,'/trial12.mat')
+            idx(1)= idx(1)+35;
+            idx(3)= idx(3)-60;
         end
         
         
+        
         if strcmp(mfname,'/trial13.mat')
-            idx(1)= idx(1)+1;
-            idx(3)= idx(3)-6;
+            idx(1)= idx(1)+11;
+            idx(3)= idx(3)-121;
         end
         
         
         if strcmp(mfname,'/trial14.mat')
-            idx(1)= idx(1)+4;
-            %            idx(3)= idx(3)-5;
+            idx(1)= idx(1)+25;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            idx(3)= idx(3)+5;
+            
         end
         
         if strcmp(mfname,'/trial15.mat')
-            idx(1)= idx(1)+3;
-            idx(3)= idx(3)-1;
+            idx(1)= idx(1)+21;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            
+%             idx(3)= idx(3)-35;
         end
         
         
         if strcmp(mfname,'/trial16.mat')
-            idx(1)= idx(1)+1;
-            idx(3)= idx(3)-7;
+            idx(1)= idx(1)+21;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+%             idx(3)= idx(3)+35;
         end
         
         if strcmp(mfname,'/trial17.mat')
-            idx(1)= idx(1)+2;
-            idx(3)= idx(3)+6;
+            idx(1)= idx(1)+40;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            %             idx(3)= idx(3)-35;
         end
         
         
         if strcmp(mfname,'/trial18.mat')
-            idx(1)= idx(1)+1;
-            %    idx(3)= idx(3)+6;
+            idx(1)= idx(1)+10;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            idx(3)= idx(3)+10;
         end
         
         
         if strcmp(mfname,'/trial19.mat')
-            %             idx(1)= idx(1)-5;
-            idx(3)= idx(3)-6;
-            idx(1) = idx(3);
-            idx(3) = idx(3)+5;
+            idx(1) = idx(1) -35;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            idx(3) = idx(3)-35;
+        end
+        
+        
+        if strcmp(mfname,'/trial20.mat')
+            idx(1) = idx(1) +3;
+            vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+            idx(3) = vely_threshold(length(vely_threshold))+1;
+            idx(3) = idx(3)-7;
         end
         
         
@@ -1435,7 +1471,9 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         zdisp = xhand(:,3)-xhand(1,3);
         indxZDisp =  find(zdisp>= .2*max(zdisp));
         idx(1) = indxZDisp(1);
-        
+                  
+        vely_threshold= find(vely(1:501) > .15*max(vely(1:501)));
+        idx(3) = vely_threshold(length(vely_threshold))+1;
         
         if strcmp(mfname,'/trial21.mat')
             idx(3)= idx(3)-1;
