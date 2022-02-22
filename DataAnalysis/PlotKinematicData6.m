@@ -890,7 +890,7 @@ for i=1: length(mtrials)% i = 3
     
     shex_current_trial(i) = sh_exc;
     
-    trex_current_trial(i) = trunk_exc
+    trex_current_trial(i) = trunk_exc;
     
     
     %% Plotting EMGS
