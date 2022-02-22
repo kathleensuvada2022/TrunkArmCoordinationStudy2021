@@ -296,6 +296,31 @@ for i=1: length(mtrials)% i = 3
             continue
         end
         
+        if strcmp(mfname,'/trial24.mat')
+
+            continue
+        end
+        
+        if strcmp(mfname,'/trial50.mat')
+            
+            continue
+        end
+        if strcmp(mfname,'/trial51.mat')
+            
+            continue
+        end
+        if strcmp(mfname,'/trial34.mat')
+            
+            continue
+        end
+        if strcmp(mfname,'/trial35.mat')
+            
+            continue
+        end
+        if strcmp(mfname,'/trial33.mat')
+            
+            continue
+        end
     end
     
     if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
@@ -861,7 +886,7 @@ for i=1: length(mtrials)% i = 3
     
     shex_current_trial(i) = sh_exc;
     
-    trex_current_trial(i) = trunk_exc;
+    trex_current_trial(i) = trunk_exc
     
     
     %% Plotting EMGS
