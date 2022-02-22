@@ -5,13 +5,13 @@
 
 
 
-partid = 'RTIS1002';
-arm='Right';
-trial ='trials4';
+partid = 'RTIS2001';
+arm='Left';
+trial ='trial4';
 %
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)
 
-filepath = ['/Users/kcs762/OneDrive - Northwestern University/TACS/Data','/',partid,'/',arm];
+filepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/Anamaria Acosta - TACS/Data','/',partid,'/',arm];
 
 %loading in metria data 
 trialdata = load([filepath '/' trial]);
