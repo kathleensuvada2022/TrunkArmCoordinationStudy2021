@@ -1948,11 +1948,16 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial41.mat')
             % idx(1) = idx(1) -2;
-            idx(3) = idx(3) -1;
+            idx(3) = idx(3) -13;
             
         end
         
-        
+               
+        if strcmp(mfname,'/trial44.mat')
+            % idx(1) = idx(1) -2;
+            idx(1) = idx(1) +25;
+         
+        end 
         if strcmp(mfname,'/trial55.mat')
             idx(1) = idx(1) +5;
             % idx(3) = idx(3) -1;
@@ -2000,8 +2005,11 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
     
     
     if expcond ==6
-        indx =  find(abs(vely(10:501))>.2*max(abs(vely(10:501))));
-        idx(1) =indx(1)+10-1;
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .3*max(zdisp));
+        
+        yvelcond = find(vely(indxZDisp) > .2*max(vely));
+        idx(1) = indxZDisp(yvelcond(1));
         
         idx(3)= find(dist(1:501)==max(dist(1:501)));
         
@@ -2015,10 +2023,15 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial46.mat')
-            idx(1) = idx(1) +1;
+            idx(1) = idx(1) +10;
             % idx(3) = idx(3) -1;
         end
         
+                
+        if strcmp(mfname,'/trial64.mat')
+            idx(1) = idx(1) +6;
+            % idx(3) = idx(3) -1;
+        end
         
         
         if strcmp(mfname,'/trial65.mat')

@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup,flag)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup)
 load([filepath '/BL.mat'])
 % load([filepath '/' partid,'_',setup])
 %% Load marker data

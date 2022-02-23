@@ -361,7 +361,7 @@ for i=1: length(mtrials)% i = 3
     
     %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup,flag);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup);
     
     
     %% Checking NANS and Interpolating Prior to Resampling
@@ -437,36 +437,39 @@ for i=1: length(mtrials)% i = 3
                 
             end
             
-            figure(9)
-            clf
-            %Plotting the Original Data then the Filled Samples
-            subplot(3,1,1)
-            plot(t(filled_data),xhandnew(filled_data,1),'ro')
-            hold on
-            plot(t,xhand(:,1),'b','Linewidth',1)
-            % legend('Interpolated Data','Original Data','Location','northwest','FontSize',13)
-            title('3D 3rd MCP Position','FontSize',18)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('X Position (mm)','FontSize',14)
-            xlim([0 5])
-            subplot(3,1,2)
-            plot(t(filled_data),xhandnew(filled_data,2),'ro')
-            hold on
-            plot(t,xhand(:,2),'b','Linewidth',1)
-            %             legend('Interpolated Data','Original Data','FontSize',13)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('Y Position (mm)','FontSize',14)
-            xlim([0 5])
-            subplot(3,1,3)
-            plot(t(filled_data),xhandnew(filled_data,3),'ro')
-            hold on
-            plot(t,xhand(:,3),'b','Linewidth',1)
-            %             legend('Interpolated Data','Original Data','FontSize',13)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('Z Position (mm)','FontSize',14)
-            xlim([0 5])
-            'User Check Interpolation Accuracy'
-            pause
+            if flag == 1
+                figure(9)
+                clf
+                %Plotting the Original Data then the Filled Samples
+                subplot(3,1,1)
+                plot(t(filled_data),xhandnew(filled_data,1),'ro')
+                hold on
+                plot(t,xhand(:,1),'b','Linewidth',1)
+                % legend('Interpolated Data','Original Data','Location','northwest','FontSize',13)
+                title('3D 3rd MCP Position','FontSize',18)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('X Position (mm)','FontSize',14)
+                xlim([0 5])
+                subplot(3,1,2)
+                plot(t(filled_data),xhandnew(filled_data,2),'ro')
+                hold on
+                plot(t,xhand(:,2),'b','Linewidth',1)
+                %             legend('Interpolated Data','Original Data','FontSize',13)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('Y Position (mm)','FontSize',14)
+                xlim([0 5])
+                subplot(3,1,3)
+                plot(t(filled_data),xhandnew(filled_data,3),'ro')
+                hold on
+                plot(t,xhand(:,3),'b','Linewidth',1)
+                %             legend('Interpolated Data','Original Data','FontSize',13)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('Z Position (mm)','FontSize',14)
+                xlim([0 5])
+                'User Check Interpolation Accuracy'
+                pause
+                
+            end
             xhand = xhandnew; %Replacing with interpolated data
             
         end
@@ -484,40 +487,40 @@ for i=1: length(mtrials)% i = 3
                 [xjugnew,TF] = fillmissing(xjug,'spline','SamplePoints',t);
             end
             
-            
-            figure(10)
-            clf
-            %Plotting the Original Data then the Filled Samples
-            subplot(3,1,1)
-            plot(t(filled_data),xjugnew(filled_data,1),'ro')
-            hold on
-            plot(t,xjug(:,1),'b','Linewidth',1)
-            %  legend('Interpolated Data','Original Data','FontSize',13)
-            title(['3D Trunk Position' mfname],'FontSize',18)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('X Position (mm)','FontSize',14)
-            xlim([0 5])
-            subplot(3,1,2)
-            plot(t(filled_data),xjugnew(filled_data,2),'ro')
-            hold on
-            plot(t,xjug(:,2),'b','Linewidth',1)
-            %             legend('Interpolated Data','Original Data','FontSize',13)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('Y Position (mm)','FontSize',14)
-            xlim([0 5])
-            subplot(3,1,3)
-            plot(t(filled_data),xjugnew(filled_data,3),'ro')
-            hold on
-            plot(t,xjug(:,3),'b','Linewidth',1)
-            %             legend('Interpolated Data','Original Data','FontSize',13)
-            xlabel('Time (s)','FontSize',14)
-            ylabel('Z Position (mm)','FontSize',14)
-            xlim([0 5])
-            
-            'User Check Interpolation Accuracy'
-            
-            pause
-            
+            if flag ==1
+                figure(10)
+                clf
+                %Plotting the Original Data then the Filled Samples
+                subplot(3,1,1)
+                plot(t(filled_data),xjugnew(filled_data,1),'ro')
+                hold on
+                plot(t,xjug(:,1),'b','Linewidth',1)
+                %  legend('Interpolated Data','Original Data','FontSize',13)
+                title(['3D Trunk Position' mfname],'FontSize',18)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('X Position (mm)','FontSize',14)
+                xlim([0 5])
+                subplot(3,1,2)
+                plot(t(filled_data),xjugnew(filled_data,2),'ro')
+                hold on
+                plot(t,xjug(:,2),'b','Linewidth',1)
+                %             legend('Interpolated Data','Original Data','FontSize',13)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('Y Position (mm)','FontSize',14)
+                xlim([0 5])
+                subplot(3,1,3)
+                plot(t(filled_data),xjugnew(filled_data,3),'ro')
+                hold on
+                plot(t,xjug(:,3),'b','Linewidth',1)
+                %             legend('Interpolated Data','Original Data','FontSize',13)
+                xlabel('Time (s)','FontSize',14)
+                ylabel('Z Position (mm)','FontSize',14)
+                xlim([0 5])
+                
+                'User Check Interpolation Accuracy'
+                
+                pause
+            end
             xjug= xjugnew;
             
         end
@@ -563,47 +566,47 @@ for i=1: length(mtrials)% i = 3
     
     %% Metria Trial by Trial Kinematic Data (computed BLS)
     
-    if flag
-        figure(1),clf
-        subplot(2,1,1)
-        plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-        hold on
-        
-        plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
-        
-        % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
-        % hold on
-        % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-        % % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
-        % % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
-        % %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
-        % p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
-        %
-        %
-        % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
-        % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-        
-        % % phandles=[p1' p2 p3];
-        axis 'equal'
-        legend('Hand','Shoulder','Trunk')
-        xlabel('x (mm)')
-        ylabel('y (mm)')
-        title(mfname)
-        
-        %Metria Distance Plot with Max Distance Marked
-        subplot(2,1,2)
-        plot(t,rdist)
-        hold on
-        p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth',.5); % start reach
-        % co=get(lax1,'ColorOrder');
-        % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-        xlabel('Time')
-        ylabel('Distance')
-        % legend('Distance','Max Dist')
-        axis equal
-        %
-        pause
-    end
+%     if flag
+%         figure(1),clf
+%         subplot(2,1,1)
+%         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
+%         hold on
+%         
+%         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
+%         
+%         % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
+%         % hold on
+%         % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
+%         % % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
+%         % % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
+%         % %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
+%         % p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
+%         %
+%         %
+%         % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
+%         % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
+%         
+%         % % phandles=[p1' p2 p3];
+%         axis 'equal'
+%         legend('Hand','Shoulder','Trunk')
+%         xlabel('x (mm)')
+%         ylabel('y (mm)')
+%         title(mfname)
+%         
+%         %Metria Distance Plot with Max Distance Marked
+%         subplot(2,1,2)
+%         plot(t,rdist)
+%         hold on
+%         p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth',.5); % start reach
+%         % co=get(lax1,'ColorOrder');
+%         % set(lax1,'ColorOrder',co(end-1:-1:1,:))
+%         xlabel('Time')
+%         ylabel('Distance')
+%         % legend('Distance','Max Dist')
+%         axis equal
+%         %
+%         pause
+%     end
     
     
     %% Loading in EMGS
@@ -631,14 +634,14 @@ for i=1: length(mtrials)% i = 3
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
     %% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
-    flag=0; %will not plot all Segment CSes
+%     flag=0; %will not plot all Segment CSes
     
     metdata =  x; % using resampled x
     
     gh= zeros(4,length(metdata));
     
     for k = 1:length(metdata) %looping through each frame to get GH
-        gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,flag,k); %This gives computed GH converted to GCS
+        gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
     end
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables
@@ -700,7 +703,7 @@ for i=1: length(mtrials)% i = 3
         end
         
         
-        
+        if flag ==1
         figure(11)
         clf
         %Plotting the Original Data then the Filled Samples
@@ -731,7 +734,7 @@ for i=1: length(mtrials)% i = 3
         xlim([0 5])
         
         'User Check Interpolation Accuracy'
-        
+        end
         
         pause
         
