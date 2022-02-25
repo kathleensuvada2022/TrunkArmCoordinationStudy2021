@@ -2563,35 +2563,63 @@ end
 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
     if expcond==1
         
-        idx(1) = find(dist>=.02*max(dist),1)-1;
-        idx(3)= find(dist(1:501)==max(dist(1:501)));
+    end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+    idx(3) = end_reach(length(end_reach));
+    idx(1) = find(dist>=.02*max(dist),1)-1;
+    
+        
+            
+        if strcmp(mfname,'/trial1.mat')
+            idx(3)=idx(3)-100;
+            %idx(1) = idx(1) +100;
+        end
+        
+        if strcmp(mfname,'/trial2.mat')
+            idx(3)=idx(3)-120;
+            idx(1) = idx(1) +100;
+        end
         %
-        %         idx(1) = find(dist>=.02*max(dist),1);
+        
+        if strcmp(mfname,'/trial3.mat')
+            idx(3)=idx(3)-120;
+            idx(1) = idx(1) +100;
+        end
+        if strcmp(mfname,'/trial4.mat')
+            idx(3)=idx(3)-40;
+            idx(1) = idx(1) +30;
+        end
+        
+        if strcmp(mfname,'/trial5.mat')
+            idx(3)=idx(3)-120;
+        end
         %
-        %         if strcmp(mfname,'/trial2.mat')
-        %             idx(3)=idx(3)-15;
-        %         end
-        %
-        %         if strcmp(mfname,'/trial4.mat')
-        %             idx(3)=idx(3)-18;
-        %         end
-        %
-        %         if strcmp(mfname,'/trial5.mat')
-        %             idx(3)=idx(3)-20;
-        %         end
-        %
-        %         if strcmp(mfname,'/trial6.mat')
-        %             idx(3)=idx(3)-20;
-        %         end
-        %
-        %         if strcmp(mfname,'/trial7.mat')
-        %             idx(3)=idx(3)-20;
-        %         end
-        %
-        %
-        %         if strcmp(mfname,'/trial10.mat')
-        %             idx(3)=idx(3)-23;
-        %         end
+        if strcmp(mfname,'/trial6.mat')
+            idx(3)=idx(3)-120;
+        end
+        
+        if strcmp(mfname,'/trial7.mat')
+            idx(3)=idx(3)-120;
+        end
+                
+        if strcmp(mfname,'/trial7.mat')
+            idx(3)=idx(3)-120;
+        end
+        
+        if strcmp(mfname,'/trial8.mat')
+            idx(3)=idx(3)-120;
+            idx(1) = idx(1) +120;
+        end
+        
+        
+        if strcmp(mfname,'/trial9.mat')
+            idx(3)=idx(3)-120;
+        end
+        
+                
+        if strcmp(mfname,'/trial10.mat')
+            idx(3)=idx(3)-120;
+        end
+        
         
     end
     
@@ -3689,6 +3717,11 @@ p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'Lin
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
 xlim([0.25 5])
+
+if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+    xlim([0 10])
+end
+
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)

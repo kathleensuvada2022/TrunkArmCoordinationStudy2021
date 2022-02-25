@@ -27,7 +27,7 @@
 %%
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
- datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/Anamaria Acosta - TACS/Data','/',partid,'/',hand];
+ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 
@@ -466,6 +466,11 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 5])
+               if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                     xlim([0 10]) 
+               end 
+
+                    
                 'User Check Interpolation Accuracy'
                 pause
                 
@@ -516,6 +521,11 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 5])
+              
+                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
+
                 
                 'User Check Interpolation Accuracy'
                 
@@ -732,7 +742,10 @@ for i=1: length(mtrials)% i = 3
         xlabel('Time (s)','FontSize',14)
         ylabel('Z Position (mm)','FontSize',14)
         xlim([0 5])
-        
+        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            xlim([0 10])
+        end
+
         'User Check Interpolation Accuracy'
         end
         
