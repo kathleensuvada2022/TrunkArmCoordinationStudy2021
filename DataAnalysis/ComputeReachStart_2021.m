@@ -2582,15 +2582,15 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial3.mat')
             idx(3)=idx(3)-120;
-            idx(1) = idx(1) +100;
+            idx(1) = idx(1) +90;
         end
         if strcmp(mfname,'/trial4.mat')
-            idx(3)=idx(3)-40;
+            idx(3)=idx(3)-110;
             idx(1) = idx(1) +30;
         end
         
         if strcmp(mfname,'/trial5.mat')
-            idx(3)=idx(3)-120;
+            idx(3)=idx(3)-140;
         end
         %
         if strcmp(mfname,'/trial6.mat')
@@ -2598,21 +2598,21 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
         end
         
         if strcmp(mfname,'/trial7.mat')
-            idx(3)=idx(3)-120;
+            idx(3)=idx(3)-60;
         end
                 
         if strcmp(mfname,'/trial7.mat')
-            idx(3)=idx(3)-120;
+            idx(3)=idx(3)-80;
         end
         
         if strcmp(mfname,'/trial8.mat')
-            idx(3)=idx(3)-120;
+            idx(3)=idx(3)-140;
             idx(1) = idx(1) +120;
         end
         
         
         if strcmp(mfname,'/trial9.mat')
-            idx(3)=idx(3)-120;
+            idx(3)=idx(3)-150;
         end
         
                 
@@ -2624,36 +2624,64 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
     end
     
     if expcond ==2
-        idx(1)= find(dist>=.05*max(dist),1);
-        idx(1) =find(xhand(:,3)>=.65*max(xhand(:,3)),1);
-        idx(3) = find(vel(idx(2):end)<=0,1)+idx(2);
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .2*max(zdisp));
+        idx(1) = indxZDisp(1);
+        %
+        end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+        idx(3) = end_reach(length(end_reach))-70;
         
-        if strcmp(mfname,'/trial16.mat')
-            idx(1)=idx(1)+23;
+        %         if strcmp(mfname,'/trial16.mat')
+        %             idx(1)=idx(1)+23;
+        %         end
+        %
+        %
+        if strcmp(mfname,'/trial17.mat')
+            idx(1)=idx(1)+12;
+            idx(3) = idx(3) -10;
         end
-        
-        %
-        %        if strcmp(mfname,'/trial17.mat')
-        %            idx(1)=idx(1)+15;
-        %            idx(3) = idx(3) -10;
-        %        end
         %
         %
-        %        if strcmp(mfname,'/trial19.mat')
-        %            idx(1)=idx(1)+10;
-        %
-        %        end
-        %        if strcmp(mfname,'/trial20.mat')
-        %            idx(1)=idx(1)+10;
-        %
-        %        end
-        %
-        %
-        if strcmp(mfname,'/trial28.mat')
-            idx(1)=idx(1)+35;
+        if strcmp(mfname,'/trial18.mat')
+            idx(1)=idx(1)+50;
+            
+        end
+        if strcmp(mfname,'/trial19.mat')
+            idx(1)=idx(3);
+            idx(3) = idx(3) +60;
             
         end
         
+        if strcmp(mfname,'/trial20.mat')
+            %                    idx(1)=idx(3);
+            idx(3) = idx(3) +25;
+            
+        end
+        %
+        %
+        if strcmp(mfname,'/trial26.mat')
+             idx(1)=idx(1)-10;
+            idx(3) = idx(3) +55-10+30;
+            
+        end
+        
+        if strcmp(mfname,'/trial28.mat')
+            idx(1)=idx(1)-40+5;
+            idx(3) = idx(3) -90;
+            
+        end
+                
+        if strcmp(mfname,'/trial29.mat')
+            idx(1)=idx(1)+20;
+            idx(3) = idx(3) +10;
+            
+        end
+                        
+        if strcmp(mfname,'/trial30.mat')
+%             idx(1)=idx(1)+20;
+            idx(3) = idx(3) -20;
+            
+        end
     end
     
     
@@ -3702,7 +3730,7 @@ hold on
 yyaxis right
 %  plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-plot(t,vel,'LineWidth',1)
+plot(t,vely,'LineWidth',1)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -3725,7 +3753,7 @@ end
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Z Displacement', 'Vel','Time Start','Time End','Location','northwest','FontSize',16)
+legend('Distance','Z Displacement', 'Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

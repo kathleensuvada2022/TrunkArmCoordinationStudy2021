@@ -343,8 +343,14 @@ for i=1: length(mtrials)% i = 3
         
     end
     
-    
-    
+    if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+        if strcmp(mfname,'/trial27.mat')
+            
+            continue
+        end
+        
+        
+    end
     
     %
     % % Kacey added to call new function to plot in GCS
@@ -450,6 +456,9 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
                 xlim([0 5])
+                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -458,6 +467,9 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 5])
+                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
                 subplot(3,1,3)
                 plot(t(filled_data),xhandnew(filled_data,3),'ro')
                 hold on
@@ -505,6 +517,9 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
                 xlim([0 5])
+                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
                 hold on
@@ -513,6 +528,9 @@ for i=1: length(mtrials)% i = 3
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 5])
+                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
                 subplot(3,1,3)
                 plot(t(filled_data),xjugnew(filled_data,3),'ro')
                 hold on
@@ -726,6 +744,9 @@ for i=1: length(mtrials)% i = 3
         xlabel('Time (s)','FontSize',14)
         ylabel('X Position (mm)','FontSize',14)
         xlim([0 5])
+        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            xlim([0 10])
+        end
         subplot(3,1,2)
         plot(t(filled_data),ghNew(filled_data,2),'ro')
         hold on
@@ -734,6 +755,9 @@ for i=1: length(mtrials)% i = 3
         xlabel('Time (s)','FontSize',14)
         ylabel('Y Position (mm)','FontSize',14)
         xlim([0 5])
+        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            xlim([0 10])
+        end
         subplot(3,1,3)
         plot(t(filled_data),ghNew(filled_data,3),'ro')
         hold on
