@@ -363,7 +363,44 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end
+                        
+        if strcmp(mfname,'/trial44.mat')
+            
+            continue
+        end
         
+        if strcmp(mfname,'/trial45.mat')
+            
+            continue
+        end
+        
+        
+        if strcmp(mfname,'/trial58.mat')
+            
+            continue
+        end
+        
+                
+        if strcmp(mfname,'/trial49.mat')
+            
+            continue
+        end
+                        
+        if strcmp(mfname,'/trial52.mat')
+            
+            continue
+        end
+        
+                        
+        if strcmp(mfname,'/trial53.mat')
+            
+            continue
+        end
+                                
+        if strcmp(mfname,'/trial54.mat')
+            
+            continue
+        end
     end
     
     %
