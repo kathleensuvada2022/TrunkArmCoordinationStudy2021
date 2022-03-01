@@ -403,6 +403,27 @@ for i=1: length(mtrials)% i = 3
         end
     end
     
+    
+    if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
+        
+        
+        if strcmp(mfname,'/trial3.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial5.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial64.mat')
+            
+            continue
+        end
+        
+    end
+    
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -996,7 +1017,7 @@ for i=1: length(mtrials)% i = 3
     %% Main Cumulative Metria Figure
     figure(4)
     clf
-    %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
+%     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
     
     %     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
     
