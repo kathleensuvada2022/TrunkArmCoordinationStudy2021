@@ -2051,39 +2051,31 @@ end
 
 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
     if expcond ==1
-        idx(1) = find(dist>=.02*max(dist),1);
-        
-        idx(3) = find(vel(idx(2):end)<=0,1)+idx(2);
-        
-        
-        if strcmp(mfname,'/trial17.mat')
-            idx(1)= idx(1)-10;
-            idx(3) = idx(3)-8;
-        end
-        
+    end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+    idx(3) = end_reach(length(end_reach));
+    idx(1) = find(dist>=.02*max(dist),1)-1;
+
         if strcmp(mfname,'/trial18.mat')
             idx(1)= idx(1)-5;
+            idx(3) = idx(3) -5;
+%             length(dist)
         end
         
         if strcmp(mfname,'/trial19.mat')
             idx(1)= idx(1)-10;
-            idx(3) = idx(3)-3;
+            idx(3) = idx(3)-10;
         end
         
-        if strcmp(mfname,'/trial20.mat')
-            idx(1)= idx(1)-3;
+        if strcmp(mfname,'/trial34.mat')
+%             idx(1)= idx(1)-3;
+            idx(3) = idx(3)-5;
         end
-        
-        if strcmp(mfname,'/trial21.mat')
-            idx(1)= idx(1)-5;
+               
+        if strcmp(mfname,'/trial36.mat')
+%             idx(1)= idx(1)-3;
+            idx(3) = idx(3)-2;
         end
-        
-        
-        if strcmp(mfname,'/trial35.mat')
-            idx(3)= idx(3)-3;
-        end
-        
-        
+         
         if strcmp(mfname,'/trial37.mat')
             idx(1)= idx(1)-3;
             idx(3) = idx(3)-3;
@@ -2092,57 +2084,67 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial38.mat')
             idx(1)= idx(1)-3;
-        end
-        
-        
-        if strcmp(mfname,'/trial39.mat')
-            idx(1)= idx(1)-3;
+            idx(3) = idx(3) - 200;
         end
         
     end
     
     if expcond ==2
         
-        idx(1) =find(xhand(:,3)>=.4*max(xhand(:,3)),1);
-        idx(3) = find(vel(idx(2):end)<=0,1)+idx(2);
+        zdisp = xhand(:,3)-xhand(1,3);
+        indxZDisp =  find(zdisp>= .2*max(zdisp));
+        idx(1) = indxZDisp(1);
+        %
+        end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
+        idx(3) = end_reach(length(end_reach))-70;
         
         
-        %     if strcmp(mfname,'/trial23.mat')
-        %         idx(1)= idx(1)-3;
-        %     end
+            if strcmp(mfname,'/trial22.mat')
+                idx(3)= idx(3)-205;
+                idx(1) = idx(1) +20;
+            end
         %
         %
-        %     if strcmp(mfname,'/trial24.mat')
-        %         idx(1)= idx(1)-3;
-        %     end
+            if strcmp(mfname,'/trial23.mat')
+                idx(1)= idx(1)-15;
+                idx(3) = idx(3) -193;
+            end
+        %
+        
+            if strcmp(mfname,'/trial24.mat')
+                idx(1)= idx(1)-10;
+                idx(3) = idx(3) +65;
+            end
         %
         %
-        %     if strcmp(mfname,'/trial25.mat')
-        %         idx(1)= idx(1)-3;
-        %     end
-        %
-        %
+        if strcmp(mfname,'/trial26.mat')
+            idx(1)= idx(1)+5;
+            idx(3) = idx(3)+55;
+        end
+%         %
         if strcmp(mfname,'/trial27.mat')
-            idx(1)= idx(1)-2;
-            idx(3) = idx(3)-5;
+            idx(1)= idx(1)-10;
+            idx(3) = idx(3)+50;
+            
+        end
+%         
+        if strcmp(mfname,'/trial40.mat')
+            idx(3)= idx(3)-190;
         end
         %
-        if strcmp(mfname,'/trial40.mat')
-            idx(1)= idx(1)-5;
-            
-            idx(3) = idx(3)-3;
-            
+        %
+        if strcmp(mfname,'/trial41.mat')
+            idx(3)= idx(3)+55;
+        end
+        %
+        if strcmp(mfname,'/trial42.mat')
+            idx(3)= idx(3)-20;
         end
         
-        if strcmp(mfname,'/trial41.mat')
-            idx(3)= idx(3)-3;
+        if strcmp(mfname,'/trial43.mat')
+            idx(3)= idx(3)+75;
         end
-        %
-        %
-        %     if strcmp(mfname,'/trial43.mat')
-        %         idx(1)= idx(1)-3;
-        %     end
-        %
+                
         
     end
     

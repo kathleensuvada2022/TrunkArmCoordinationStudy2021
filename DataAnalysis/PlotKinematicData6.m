@@ -90,7 +90,6 @@ for i=1: length(mtrials)% i = 3
     
     mfname
     
-    %skipping trials that are missing data
     if strcmp(partid,'RTIS1002')
         if strcmp(mfname,'/trials1.mat')
             continue
@@ -423,6 +422,50 @@ for i=1: length(mtrials)% i = 3
         end
         
     end
+    
+    if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+        
+        if strcmp(mfname,'/trial17.mat')
+            
+            continue
+        end
+        
+                
+        if strcmp(mfname,'/trial20.mat')
+            
+            continue
+        end
+        
+                        
+        if strcmp(mfname,'/trial21.mat')
+            
+            continue
+        end
+        
+                                
+        if strcmp(mfname,'/trial35.mat')
+            
+            continue
+        end
+        
+                                        
+        if strcmp(mfname,'/trial39.mat')
+            
+            continue
+        end
+                                                
+        if strcmp(mfname,'/trial25.mat')
+            
+            continue
+        end
+        
+                                                        
+        if strcmp(mfname,'/trial44.mat')
+            
+            continue
+        end
+    end
+
     
     %
     % % Kacey added to call new function to plot in GCS
@@ -1027,11 +1070,11 @@ for i=1: length(mtrials)% i = 3
     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
  
 
-%     p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
-    p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
+    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+   % p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
     
 
-    
+%     length(xhand)
     %%
     %p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(idx(1):idx(3),1)-xjug(idx(1),1)) (xjug(idx(1):idx(3),1)-xjug(idx(1),1))],[(xhand(idx(1):idx(3),2)-xjug(idx(1),2)) (gh(idx(1):idx(3),2)-xjug(idx(1),2)) (xjug(idx(1):idx(3),2)-xjug(idx(1),2))],'LineWidth',3);
     
