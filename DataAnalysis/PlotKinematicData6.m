@@ -464,6 +464,81 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end
+        
+                                                                
+        if strcmp(mfname,'/trial31.mat')
+            
+            continue
+        end
+        
+                                                                        
+        if strcmp(mfname,'/trial46.mat')
+            
+            continue
+        end
+        
+                                                                                
+        if strcmp(mfname,'/trial47.mat')
+            
+            continue
+        end
+        
+                                                                                        
+        if strcmp(mfname,'/trial50.mat')
+            
+            continue
+        end
+                                                                                                
+        if strcmp(mfname,'/trial28.mat')
+            
+            continue
+        end
+        
+                                                                                                        
+        if strcmp(mfname,'/trial58.mat')
+            
+            continue
+        end
+        
+                                                                                                                
+        if strcmp(mfname,'/trial61.mat')
+            
+            continue
+        end
+        
+                                                                                                                        
+        if strcmp(mfname,'/trial74.mat')
+            
+            continue
+        end
+        
+                                                                                                                                
+        if strcmp(mfname,'/trial78.mat')
+            
+            continue
+        end
+        
+                                                                                                                                        
+        if strcmp(mfname,'/trial67.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                
+        if strcmp(mfname,'/trial71.mat')
+            
+            continue
+        end
+                                                                                                                                                        
+        if strcmp(mfname,'/trial82.mat')
+            
+            continue
+        end
+                                                                                                                                                                
+        if strcmp(mfname,'/trial85.mat')
+            
+            continue
+        end
     end
 
     
@@ -574,6 +649,10 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                    xlim([0 10])
+                end
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -583,6 +662,10 @@ for i=1: length(mtrials)% i = 3
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 5])
                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
+                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
                 subplot(3,1,3)
@@ -596,7 +679,10 @@ for i=1: length(mtrials)% i = 3
                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
                      xlim([0 10]) 
                end 
-
+                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                    xlim([0 10])
+                end
                     
                 'User Check Interpolation Accuracy'
                 pause
@@ -635,6 +721,10 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                    xlim([0 10])
+                end
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
                 hold on
@@ -644,6 +734,10 @@ for i=1: length(mtrials)% i = 3
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 5])
                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                    xlim([0 10])
+                end
+                                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
                 subplot(3,1,3)
@@ -658,7 +752,10 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
                     xlim([0 10])
                 end
-
+                
+                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                    xlim([0 10])
+                end
                 
                 'User Check Interpolation Accuracy'
                 
@@ -862,6 +959,10 @@ for i=1: length(mtrials)% i = 3
         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
             xlim([0 10])
         end
+        
+        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+            xlim([0 10])
+        end
         subplot(3,1,2)
         plot(t(filled_data),ghNew(filled_data,2),'ro')
         hold on
@@ -871,6 +972,10 @@ for i=1: length(mtrials)% i = 3
         ylabel('Y Position (mm)','FontSize',14)
         xlim([0 5])
         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            xlim([0 10])
+        end
+        
+        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
             xlim([0 10])
         end
         subplot(3,1,3)
@@ -884,7 +989,10 @@ for i=1: length(mtrials)% i = 3
         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
             xlim([0 10])
         end
-
+        
+        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+            xlim([0 10])
+        end
         'User Check Interpolation Accuracy'
         end
         
@@ -1070,8 +1178,8 @@ for i=1: length(mtrials)% i = 3
     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
  
 
-    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
-   % p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
+   % p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+    p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
     
 
 %     length(xhand)
@@ -1192,7 +1300,7 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
     
-    pause
+     pause
     close all
 end
 
