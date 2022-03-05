@@ -654,6 +654,85 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+        
+                                                                                                                                                                                                                                                                                                  
+        if strcmp(mfname,'/trial25.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                          
+        if strcmp(mfname,'/trial39.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                  
+        if strcmp(mfname,'/trial40.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                          
+        if strcmp(mfname,'/trial43.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial44.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                         
+        if strcmp(mfname,'/trial46.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial47.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                         
+        if strcmp(mfname,'/trial63.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial69.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                         
+        if strcmp(mfname,'/trial58.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial59.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                         
+        if strcmp(mfname,'/trial66.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial68.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                         
+        if strcmp(mfname,'/trial67.mat')
+            
+            continue
+        end
+    end
+
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
