@@ -844,7 +844,10 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
-
+    
+    if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
+        
+    end
 
     %
     % % Kacey added to call new function to plot in GCS

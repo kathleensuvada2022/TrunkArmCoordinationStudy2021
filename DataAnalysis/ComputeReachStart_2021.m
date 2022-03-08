@@ -3989,17 +3989,22 @@ end
 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     
     if expcond==1
-        if   strcmp(mfname,'/trial2.mat')
-            idx(1) = idx(2)-6;
-        end
-        
-        if   strcmp(mfname,'/trial3.mat')
-            idx(1) = idx(2)-6;
-        end
-        
-        if   strcmp(mfname,'/trial22.mat')
-            idx(1) = idx(2)-6;
-        end
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+% 
+%         if   strcmp(mfname,'/trial2.mat')
+%             idx(1) = idx(2)-6;
+%         end
+%         
+%         if   strcmp(mfname,'/trial3.mat')
+%             idx(1) = idx(2)-6;
+%         end
+%         
+%         if   strcmp(mfname,'/trial22.mat')
+%             idx(1) = idx(2)-6;
+%         end
     end
     
     if expcond==2
