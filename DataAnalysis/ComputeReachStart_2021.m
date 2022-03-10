@@ -3987,10 +3987,10 @@ end
 
 %% RTIS 2007 - Paretic
 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
-            max_dist = max(dist);
-        end_reach = find(dist==max_dist);
-        idx(3) = end_reach;
-        idx(1) = find(dist>=.05*max(dist),1);
+%             max_dist = max(dist);
+%         end_reach = find(dist==max_dist);
+%         idx(3) = end_reach;
+%         idx(1) = find(dist>=.05*max(dist),1);
     if expcond==1
         max_dist = max(dist);
         end_reach = find(dist==max_dist);
@@ -4040,11 +4040,23 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end
     
     if expcond==2
+    % KACEY created for participant that had difficulty reaching March 2022
+    % neg Y velocity
+    idx(1) = find(dist>=.05*max(dist),1);
+
+    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
+    maxdistnew = max(dist(testrangey(1):end));
+    endreachnew = find(dist==maxdistnew);
+    idx(3) = endreachnew;
+
+    %     for i= idx(1):length(xhand)
+%         if xhand(i,2)>xhand(idx(1),2)
+%             maxdist = max(dist(i:end));
+%             endreach = find(dist ==(maxdist),1);
+%         end
+%         
+%     end
     
-        max_dist = max(dist);
-        end_reach = find(dist==max_dist);
-        idx(3) = end_reach;
-        idx(1) = find(dist>=.05*max(dist),1);
 %      
 %         if   strcmp(mfname,'/trial8.mat')
 %             idx(1) = idx(1)+6;
