@@ -937,12 +937,12 @@ for i=1: length(mtrials)% i = 3
         xjug(:,1) = -xjug(:,1);
 
     end
-%     
+% %     
 %     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2
 %         xhand(:,2) = -xhand(:,2);
-%         xjug(:,2) = -xjug(:,2);
+%          xjug(:,2) = -xjug(:,2);
 %         xhand(:,1) = -xhand(:,1);
-%         xjug(:,1) = -xjug(:,1);
+% %          xjug(:,1) = -xjug(:,1);
 %     end
 
  
