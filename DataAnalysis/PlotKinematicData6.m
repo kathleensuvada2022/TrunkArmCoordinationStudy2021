@@ -886,6 +886,61 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        if strcmp(mfname,'/trial30.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        if strcmp(mfname,'/trial14.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial15.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial17.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial19.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial42.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial45.mat')
+            
+            continue
+        end
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial64.mat')
+            
+            continue
+        end
+                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial68.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial12.mat')
+            
+            continue
+        end
     end
 
     %
@@ -1008,6 +1063,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -1023,6 +1083,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                 subplot(3,1,3)
                 plot(t(filled_data),xhandnew(filled_data,3),'ro')
                 hold on
@@ -1038,6 +1103,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                     
                 'User Check Interpolation Accuracy'
                 pause
@@ -1080,6 +1150,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
                 hold on
@@ -1095,6 +1170,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                 subplot(3,1,3)
                 plot(t(filled_data),xjugnew(filled_data,3),'ro')
                 hold on
@@ -1111,6 +1191,11 @@ for i=1: length(mtrials)% i = 3
                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
                     xlim([0 10])
                 end
+                                
+                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                    xlim([0 t(end)])
+                end
+                
                 
                 'User Check Interpolation Accuracy'
                 
@@ -1326,6 +1411,11 @@ for i=1: length(mtrials)% i = 3
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
             xlim([0 10])
         end
+        
+        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            xlim([0 t(end)])
+        end
+        
         subplot(3,1,2)
         plot(t(filled_data),ghNew(filled_data,2),'ro')
         hold on
@@ -1341,6 +1431,11 @@ for i=1: length(mtrials)% i = 3
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
             xlim([0 10])
         end
+                        
+        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            xlim([0 t(end)])
+        end
+                
         subplot(3,1,3)
         plot(t(filled_data),ghNew(filled_data,3),'ro')
         hold on
@@ -1356,11 +1451,16 @@ for i=1: length(mtrials)% i = 3
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
             xlim([0 10])
         end
-        'User Check Interpolation Accuracy'
+        
+        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            xlim([0 t(end)])
         end
+                
+        'User Check Interpolation Accuracy'
+        
         
         pause
-        
+        end
         
         gh= ghNew;
         

@@ -4042,14 +4042,18 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     if expcond==2
     % KACEY created for participant that had difficulty reaching March 2022
     % neg Y velocity
-    idx(1) = find(dist>=.05*max(dist),1);
+    idx(1) = find(dist>=.1*max(dist),1);
 
-    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
-    maxdistnew = max(dist(testrangey(1):end));
+    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
+    liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
+    
+    YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
+    
+    maxdistnew = max(dist(YposULift(1):end)); %on that inter
     endreachnew = find(dist==maxdistnew);
     idx(3) = endreachnew;
 
-    %     for i= idx(1):length(xhand)
+%         for i= idx(1):length(xhand)
 %         if xhand(i,2)>xhand(idx(1),2)
 %             maxdist = max(dist(i:end));
 %             endreach = find(dist ==(maxdist),1);
@@ -4058,9 +4062,9 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
 %     end
     
 %      
-%         if   strcmp(mfname,'/trial8.mat')
-%             idx(1) = idx(1)+6;
-%         end
+        if   strcmp(mfname,'/trial26.mat')
+            idx(3) = idx(3)-440;
+        end
 %         
 %         
 %         if   strcmp(mfname,'/trial11.mat')
@@ -4074,51 +4078,34 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     
     
     if expcond ==3
+
+    % KACEY created for participant that had difficulty reaching March 2022
+    % neg Y velocity - ALERT: will not work if IDX1 is wrong
+   
+    idx(1) = find(dist>=.1*max(dist),1);
+
+    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
+    maxdistnew = max(dist(testrangey(1):end));
+    endreachnew = find(dist==maxdistnew);
+    idx(3) = endreachnew;
+    
+  
+    
+    if   strcmp(mfname,'/trial13.mat')
         
-        max_dist = max(dist);
-        end_reach = find(dist==max_dist);
-        idx(3) = end_reach;
-        idx(1) = find(dist>=.05*max(dist),1);        
-        if   strcmp(mfname,'/trial13.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        
-        if   strcmp(mfname,'/trial14.mat')
-            idx(1) = 15;
-            
-        end
-        
-        
-        if   strcmp(mfname,'/trial16.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        
-        if   strcmp(mfname,'/trial32.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        if   strcmp(mfname,'/trial33.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        
-        if   strcmp(mfname,'/trial34.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        if   strcmp(mfname,'/trial36.mat')
-            idx(1) = idx(1)-5;
-            
-        end
-        
-        
+        idx(3) = idx(3) -500;
+    end
+
+    if   strcmp(mfname,'/trial16.mat')
+        idx(3) = idx(3) +40;
+    end
+    
+    if   strcmp(mfname,'/trial32.mat')
+%         figure()
+%         plot(xhand(:,2))
+%         idx
+    end
+    
     end
     
     if expcond == 4
@@ -4173,45 +4160,53 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     
     if expcond ==5
         
-        if   strcmp(mfname,'/trial42.mat')
-            idx(1) = idx(1)+10;
-            
-        end
+        idx(1) = find(dist>=.1*max(dist),1);
         
-        if   strcmp(mfname,'/trial44.mat')
-            idx(1) = idx(1)+10;
-            
-        end
-        
-        if   strcmp(mfname,'/trial45.mat')
-            idx(1) = idx(1)+10;
-            
-        end
-        
-        if   strcmp(mfname,'/trial46.mat')
-            idx(1) = idx(1)+20;
-            
-        end
-        
-        if   strcmp(mfname,'/trial63.mat')
-            idx(1) = idx(1)+20;
-            
-        end
-        
-        if   strcmp(mfname,'/trial64.mat')
-            idx(1) = idx(1)+20;
-            
-        end
-        
-        if   strcmp(mfname,'/trial66.mat')
-            idx(1) = idx(1)+15;
-            
-        end
-        
-        if   strcmp(mfname,'/trial68.mat')
-            idx(1) = idx(1)+15;
-            
-        end
+        testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
+        maxdistnew = max(dist(testrangey(1):end));
+        endreachnew = find(dist==maxdistnew);
+        idx(3) = endreachnew;
+    
+%         
+%         if   strcmp(mfname,'/trial42.mat')
+%             idx(1) = idx(1)+10;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial44.mat')
+%             idx(1) = idx(1)+10;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial45.mat')
+%             idx(1) = idx(1)+10;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial46.mat')
+%             idx(1) = idx(1)+20;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial63.mat')
+%             idx(1) = idx(1)+20;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial64.mat')
+%             idx(1) = idx(1)+20;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial66.mat')
+%             idx(1) = idx(1)+15;
+%             
+%         end
+%         
+%         if   strcmp(mfname,'/trial68.mat')
+%             idx(1) = idx(1)+15;
+%             
+%         end
         
     end
     
@@ -4728,7 +4723,7 @@ yyaxis left
 
 plot(t,dist,'LineWidth',1)
 hold on
-
+plot(t,xhand(:,2),'LineWidth',1)
 plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
 ylabel('Distance (mm)')
 hold on
@@ -4741,9 +4736,14 @@ ylabel('Velocity (mm/s)')
 y1=ylim;
 
 title(['Distance and Velocity' mfname],'FontSize',24)
-p1 = line('Color','g','Xdata',[timestart timestart],'Ydata',[-5000 5000], 'LineWidth',1); % start reach
+% p1 = xline('Color','g','Xdata',[timestart timestart],'Ydata',[-10000 10000], 'LineWidth',1); % start reach
+
+p1 = xline(timestart,'g','Linewidth',1); %startreach
 % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
-p3= line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-5000 5000],'LineWidth',1); %max, dist
+
+%p3= xline('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-10000 10000],'LineWidth',1); %max, dist
+p3 = xline(timedistmax,'r','Linewidth',1); %maxdist
+
 %p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
 %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
 % ylim([-400 400])
@@ -4759,10 +4759,15 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
     xlim([0 10])
 end
 
+
+if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+    xlim([0 t(end)])
+end
+                
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Z Displacement', 'Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
+legend('Distance','Y Position','Z Displacement', 'Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf
