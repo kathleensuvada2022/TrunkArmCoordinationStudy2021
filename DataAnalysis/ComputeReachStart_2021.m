@@ -4041,114 +4041,213 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     
     if expcond==2
         % KACEY created for participant that had difficulty reaching March 2022
-        % neg Y velocity
+ 
         idx(1) = find(dist>=.2*max(dist),1);
-        
-%         testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
-%         liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
-%         
-%         YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
-%         
-%         maxdistnew = max(dist(YposULift(1):end)); %on that inter
-%         endreachnew = find(dist==maxdistnew);
-%         idx(3) = endreachnew;
         
 
         
         if   strcmp(mfname,'/trial8.mat')
+            idx(1) = idx(1)+25+8;
+            
+            %Finding where Y> Y start and Z>20% Z max
+            %         Z_lift= abs(xhand(:,3)-mean(xhand(1:20,3))); %Z value
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>1.25*mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx+60;
+
+        end
+        
+        if   strcmp(mfname,'/trial10.mat')
+            idx(1) = idx(1) + 35+19;
+                        
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3) -21+65;
           
-            idx(1) = idx(1)+5;
-            
-            %Finding where Y> Y start. On that interval what/where is max dist
-     
-            testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
          
-            maxdistnew = max(dist(testrangey(1:end))); %on interval Y>Ystart what is max dist
-            
-            idx3temp = find(dist==maxdistnew); %WHERE max dist is 
+        end
     
-            %Checking to see lifting 
-            Z_lift= abs(xhand(idx3temp,3)-mean(xhand(1:20,3))); %Z value
+           
+        if   strcmp(mfname,'/trial25.mat')
+            idx(1) = idx(1) + 76;
+                        
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
             
-            figure()
-            plot(dist,'Linewidth',1.5)
-            hold on
-            plot(xhand(:,2),'Linewidth',1.5)
-            plot(abs(xhand(:,3)-mean(xhand(1:20,3))),'Linewidth',1.5)
-            yline(xhand(idx(1),2),'m','Linewidth',1.5)
-            xline(idx3temp,'r','Linewidth',1.5)
-            xline(idx(1),'g','Linewidth',1.5)
-            legend('Dist','Ypos','Zpos','Ystart','FontSize',16)
-            
-            
-            if Z_lift>.05*max(Z_lift)
-                idx(3) = idx3temp;
-            else 
-                'Check Z Position'
-                pause
-                
-            end 
-        
-            % liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
-            
-            %   YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
-            
-            
-            
-            
-%             endreachnew = find(dist==maxdistnew);
-%             idx(3) = endreachnew;
-%             'Ypos at start'
-%             xhand(idx(1),2)
-%             'Z Pos at end relative to mean at start'
-%             abs(xhand(idx(3),3)-mean(xhand(1:20,3)))
-%             pause
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3) +49;
         end
         
+                   
         if   strcmp(mfname,'/trial26.mat')
-            idx(3) = idx(3)-440;
+            idx(1) = idx(1) +50;
+                        
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+45 ;
         end
-        %
-        %
-        %         if   strcmp(mfname,'/trial11.mat')
-        %             idx(1) = idx(1)+10;
-        %         end
-        %
-        %         if   strcmp(mfname,'/trial12.mat')
-        %             idx(1) = idx(1)+15;
-        %         end
+        
+                           
+        if   strcmp(mfname,'/trial28.mat')
+            idx(1) = idx(1) +90-7;
+                        
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+38;
+        end
+        
+                           
+        if   strcmp(mfname,'/trial29.mat')
+            idx(1) = idx(1) +60;
+                        
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+55-29+18 ;
+        end
+        
+        
+        
+        
+    
+            figure()
+            plot(t,dist,'Linewidth',1.5)
+            hold on
+            plot(t(rangeYandZ),dist(rangeYandZ),'ro')
+            plot(t(rangeYandZ),xhand(rangeYandZ,2),'ro')
+            plot(t(rangeYandZ),xhand(rangeYandZ,3),'ro')
+            xline(t(idx(1)),'g','Linewidth',1.5)
+            plot(t,xhand(:,2),'Linewidth',1.5)       
+            plot(t,xhand(:,3),'Linewidth',1.5)
+            yline(xhand(idx(1),2),'m','Linewidth',1.5)
+             xline(t(idx(3)),'r','Linewidth',1.5)
+            legend('Dist','Y and Z Range','Y and Z Range','Y and Z Range','START','YPos','ZPos','YStartValue','EndReach','FontSize',16)
+            title(mfname,'FontSize',24)
+
+        
+        
+        
+        
+        
     end
     
     
     if expcond ==3
-
-    % KACEY created for participant that had difficulty reaching March 2022
-    % neg Y velocity - ALERT: will not work if IDX1 is wrong
-   
-    idx(1) = find(dist>=.1*max(dist),1);
-
-    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
-    maxdistnew = max(dist(testrangey(1):end));
-    endreachnew = find(dist==maxdistnew);
-    idx(3) = endreachnew;
-    
-  
-    
-    if   strcmp(mfname,'/trial13.mat')
+        idx(1) = find(dist>=.2*max(dist),1);
         
-        idx(3) = idx(3) -500;
-    end
+        if   strcmp(mfname,'/trial13.mat')
+            idx(1) = idx(1)+217 ;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+150 ;
+        end
+        
+                
+        if   strcmp(mfname,'/trial16.mat')
+            idx(1) = idx(1)+217+21 ;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+70-20 ;
+        end
+        
+                
+        if   strcmp(mfname,'/trial18.mat')
+            idx(1) = idx(1)+60;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+50-18;
+        end
+                
+        if   strcmp(mfname,'/trial32.mat')
+            idx(1) = idx(1)+115;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)-28;
+        end
 
-    if   strcmp(mfname,'/trial16.mat')
-        idx(3) = idx(3) +40;
-    end
-    
-    if   strcmp(mfname,'/trial32.mat')
-%         figure()
-%         plot(xhand(:,2))
-%         idx
-    end
-    
+                
+        if   strcmp(mfname,'/trial33.mat')
+            idx(1) = idx(1)+60+15;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+50-18;
+        end
+
+                        
+        if   strcmp(mfname,'/trial34.mat')
+            idx(1) = idx(1)+50;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)+55-12;
+        end
+                        
+        if   strcmp(mfname,'/trial35.mat')
+            idx(1) = idx(1)+53;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)-70;
+        end
+                        
+        if   strcmp(mfname,'/trial36.mat')
+            idx(1) = idx(1)+52;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx;
+            idx(3) = idx(3)-105;
+        end
+
+
+
+        figure()
+        plot(t,dist,'Linewidth',1.5)
+        hold on
+        plot(t(rangeYandZ),dist(rangeYandZ),'ro')
+        plot(t(rangeYandZ),xhand(rangeYandZ,2),'ro')
+        plot(t(rangeYandZ),xhand(rangeYandZ,3),'ro')
+        xline(t(idx(1)),'g','Linewidth',1.5)
+        plot(t,xhand(:,2),'Linewidth',1.5)
+        plot(t,xhand(:,3),'Linewidth',1.5)
+        yline(xhand(idx(1),2),'m','Linewidth',1.5)
+        xline(t(idx(3)),'r','Linewidth',1.5)
+        legend('Dist','Y and Z Range','Y and Z Range','Y and Z Range','START','YPos','ZPos','YStartValue','EndReach','FontSize',16)
+        title(mfname,'FontSize',24)
+        
+        
+        
+        
+        
     end
     
     if expcond == 4
@@ -5160,7 +5259,7 @@ xlim([0 t(end)])
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
+legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northeast','FontSize',16)
 
 
 % figure (6),clf
