@@ -1,4 +1,4 @@
-%% NOV 2nd, 2021 - K. Suvada
+%% NOV 2021 - K. Suvada
 % Script to Get EM and EL in Forearm CS based on trial data and BL file.
 % Can be used then to created forearm CS and have the origin of the forearm
 % cs be at the midpoint between medial and lateral epicondyles. 
@@ -6,7 +6,7 @@
 
 
 partid = 'RTIS2007';
-arm='Right';
+arm='Left';
 trial ='trial4';
 %
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)

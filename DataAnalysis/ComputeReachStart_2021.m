@@ -3985,7 +3985,7 @@ end
 
 
 
-%% RTIS 2007 - Paretic
+%% RTIS 2007 - Paretic Right
 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
 %             max_dist = max(dist);
 %         end_reach = find(dist==max_dist);
@@ -4040,40 +4040,83 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end
     
     if expcond==2
-    % KACEY created for participant that had difficulty reaching March 2022
-    % neg Y velocity
-    idx(1) = find(dist>=.1*max(dist),1);
-
-    testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
-    liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
-    
-    YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
-    
-    maxdistnew = max(dist(YposULift(1):end)); %on that inter
-    endreachnew = find(dist==maxdistnew);
-    idx(3) = endreachnew;
-
-%         for i= idx(1):length(xhand)
-%         if xhand(i,2)>xhand(idx(1),2)
-%             maxdist = max(dist(i:end));
-%             endreach = find(dist ==(maxdist),1);
-%         end
+        % KACEY created for participant that had difficulty reaching March 2022
+        % neg Y velocity
+        idx(1) = find(dist>=.2*max(dist),1);
+        
+%         testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
+%         liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
 %         
-%     end
+%         YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
+%         
+%         maxdistnew = max(dist(YposULift(1):end)); %on that inter
+%         endreachnew = find(dist==maxdistnew);
+%         idx(3) = endreachnew;
+        
+
+        
+        if   strcmp(mfname,'/trial8.mat')
+          
+            idx(1) = idx(1)+5;
+            
+            %Finding where Y> Y start. On that interval what/where is max dist
+     
+            testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1; %FInding range where Y is postive > y at start - reaching forwards
+         
+            maxdistnew = max(dist(testrangey(1:end))); %on interval Y>Ystart what is max dist
+            
+            idx3temp = find(dist==maxdistnew); %WHERE max dist is 
     
-%      
+            %Checking to see lifting 
+            Z_lift= abs(xhand(idx3temp,3)-mean(xhand(1:20,3))); %Z value
+            
+            figure()
+            plot(dist,'Linewidth',1.5)
+            hold on
+            plot(xhand(:,2),'Linewidth',1.5)
+            plot(abs(xhand(:,3)-mean(xhand(1:20,3))),'Linewidth',1.5)
+            yline(xhand(idx(1),2),'m','Linewidth',1.5)
+            xline(idx3temp,'r','Linewidth',1.5)
+            xline(idx(1),'g','Linewidth',1.5)
+            legend('Dist','Ypos','Zpos','Ystart','FontSize',16)
+            
+            
+            if Z_lift>.05*max(Z_lift)
+                idx(3) = idx3temp;
+            else 
+                'Check Z Position'
+                pause
+                
+            end 
+        
+            % liftingrange= find(xhand(:,3)>.05*max(xhand(:,3)))+idx(1) -1; %Finding where lifting
+            
+            %   YposULift = intersect(testrangey,liftingrange); %finding where person is lifting AND reaching forwards
+            
+            
+            
+            
+%             endreachnew = find(dist==maxdistnew);
+%             idx(3) = endreachnew;
+%             'Ypos at start'
+%             xhand(idx(1),2)
+%             'Z Pos at end relative to mean at start'
+%             abs(xhand(idx(3),3)-mean(xhand(1:20,3)))
+%             pause
+        end
+        
         if   strcmp(mfname,'/trial26.mat')
             idx(3) = idx(3)-440;
         end
-%         
-%         
-%         if   strcmp(mfname,'/trial11.mat')
-%             idx(1) = idx(1)+10;
-%         end
-%         
-%         if   strcmp(mfname,'/trial12.mat')
-%             idx(1) = idx(1)+15;
-%         end
+        %
+        %
+        %         if   strcmp(mfname,'/trial11.mat')
+        %             idx(1) = idx(1)+10;
+        %         end
+        %
+        %         if   strcmp(mfname,'/trial12.mat')
+        %             idx(1) = idx(1)+15;
+        %         end
     end
     
     
@@ -4237,6 +4280,353 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end
     
 end
+
+%% RTIS2007 Non-Paretic Left
+if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+    if expcond ==1
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+        
+                           
+        if   strcmp(mfname,'/trial3.mat')
+            idx(3) = idx(3)-10;
+            
+        end     
+        if   strcmp(mfname,'/trial4.mat')
+            idx(3) = idx(3)-16;
+            
+        end
+        
+                        
+        if   strcmp(mfname,'/trial5.mat')
+            idx(1) = idx(1)-1;
+            
+        end
+        
+                                
+        if   strcmp(mfname,'/trial7.mat')
+            idx(3) = idx(3)-17;
+            
+        end
+                                
+        if   strcmp(mfname,'/trial10.mat')
+            idx(3) = idx(3)-6;
+            
+        end
+                                        
+        if   strcmp(mfname,'/trial11.mat')
+            idx(3) = idx(3)-15;
+            
+        end
+        
+                        
+                                
+        if   strcmp(mfname,'/trial12.mat')
+            idx(3) = idx(3)-10;
+            
+        end
+                
+                                
+        if   strcmp(mfname,'/trial13.mat')
+            idx(3) = idx(3)-20;
+            
+        end
+                                        
+        if   strcmp(mfname,'/trial14.mat')
+            idx(3) = idx(3)-20;
+            
+        end
+        
+    end
+    
+    if expcond ==2 
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+                                                
+        if   strcmp(mfname,'/trial15.mat')
+            idx(3) = idx(3)-15+7;
+            idx(1) = idx(1) +15;
+            
+        end
+        
+                                                        
+        if   strcmp(mfname,'/trial17.mat')
+            idx(3) = idx(3)-10;
+            idx(1) = idx(1) +15;
+            
+        end
+                                                                
+        if   strcmp(mfname,'/trial18.mat')
+            idx(3) = idx(3)-20;
+        end
+        
+                                                                        
+        if   strcmp(mfname,'/trial19.mat')
+            idx(3) = idx(3)-45;
+        end
+                                                                                
+        if   strcmp(mfname,'/trial30.mat')
+            idx(3) = idx(3)-15;
+            idx(1) = idx(1) +30;
+        end
+                                                                                        
+        if   strcmp(mfname,'/trial31.mat')
+%             idx(3) = idx(3)-15;
+            idx(1) = idx(1) +55;
+        end
+                                                                                                
+        if   strcmp(mfname,'/trial32.mat')
+             idx(3) = idx(3)-15;
+            idx(1) = idx(1) +55;
+        end
+        
+                                                                                                        
+        if   strcmp(mfname,'/trial33.mat')
+             idx(3) = idx(3)-5;
+            idx(1) = idx(1) +75;
+        end
+        
+                                                                                                                
+        if   strcmp(mfname,'/trial34.mat')
+             idx(3) = idx(3)-112;
+            idx(1) = idx(1) +80;
+        end
+                                                                                                                        
+        if   strcmp(mfname,'/trial35.mat')
+             idx(3) = idx(3)-70;
+            idx(1) = idx(1) +95;
+        end
+                                                                                                                                
+        if   strcmp(mfname,'/trial36.mat')
+             idx(3) = idx(3)-10;
+            idx(1) = idx(1) +10;
+        end
+    end
+    
+    if expcond ==3
+   
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+                                                                                                                                       
+        if   strcmp(mfname,'/trial22.mat')
+             idx(3) = idx(3)-25;
+            idx(1) = idx(1) +60;
+        end
+        
+                                                                                                                                               
+        if   strcmp(mfname,'/trial23.mat')
+             idx(3) = idx(3)-15;
+%             idx(1) = idx(1) +20;
+        end
+        
+                                                                                                                                               
+        if   strcmp(mfname,'/trial24.mat')
+%              idx(3) = idx(3)-15;
+            idx(1) = idx(1) +45+25;
+        end
+        
+                                                                                                                                                                         
+        if   strcmp(mfname,'/trial27.mat')
+              idx(3) = idx(3)-45;
+            idx(1) = idx(1) +45;
+        end                                                                                                                                     
+        if   strcmp(mfname,'/trial28.mat')
+              idx(3) = idx(3)-10;
+            idx(1) = idx(1) +45;
+        end
+                
+                                                                                                                                                       
+        if   strcmp(mfname,'/trial29.mat')
+              idx(3) = idx(3)-90;
+            idx(1) = idx(1) +130;
+        end
+    end
+    
+    if expcond ==4
+        
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+                                                                                                                                                               
+        if   strcmp(mfname,'/trial37.mat')
+              idx(3) = idx(3)-35;
+%             idx(1) = idx(1) +130;
+        end
+        
+                                                                                                                                                                       
+        if   strcmp(mfname,'/trial38.mat')
+              idx(3) = idx(3)-50;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                               
+        if   strcmp(mfname,'/trial39.mat')
+              idx(3) = idx(3)-15;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial41.mat')
+              idx(3) = idx(3)-10;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial42.mat')
+              idx(3) = idx(3)-10;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial43.mat')
+              idx(3) = idx(3)-10;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial44.mat')
+              idx(3) = idx(3)-10;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial45.mat')
+              idx(3) = idx(3)-25;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial46.mat')
+              idx(3) = idx(3)-10;
+%             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial47.mat')
+              idx(3) = idx(3)-16;
+%             idx(1) = idx(1) +130;
+        end
+    end
+    
+    if expcond ==5
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+        
+                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial48.mat')
+              idx(3) = idx(3)-20;
+             idx(1) = idx(1) +70;
+        end
+        
+                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial49.mat')
+              idx(3) = idx(3)-20;
+             idx(1) = idx(1) +40;
+        end
+                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial50.mat')
+              idx(3) = idx(3)-20;
+             idx(1) = idx(1) +60;
+        end
+                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial51.mat')
+              idx(3) = idx(3)-25;
+%              idx(1) = idx(1) +40;
+        end
+                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial52.mat')
+              idx(3) = idx(3)-5;
+%              idx(1) = idx(1) +40;
+        end
+                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial64.mat')
+              idx(3) = idx(3)-15;
+             idx(1) = idx(1) +130;
+        end
+                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial65.mat')
+              idx(3) = idx(3)-25;
+             idx(1) = idx(1) +65;
+        end
+                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial66.mat')
+              idx(3) = idx(3)-25;
+%              idx(1) = idx(1) +25;
+        end
+        
+                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial67.mat')
+              idx(3) = idx(3)-25;
+%              idx(1) = idx(1) +25;
+        end
+    end
+    
+    if expcond ==6
+        
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+                                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial53.mat')
+              idx(1) = idx(1)+65;
+              idx(3) = idx(3) -10;
+        end
+        
+                                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial54.mat')
+              idx(1) = idx(1)+60;
+              idx(3) = idx(3) -10;
+        end
+        
+                                                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial55.mat')
+              idx(1) = idx(1)+105;
+              idx(3) = idx(3) -5;
+        end
+                                                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial56.mat')
+              idx(1) = idx(1)+45;
+              idx(3) = idx(3) -20;
+        end
+                                                                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial57.mat')
+              idx(1) = idx(1)+90;
+              idx(3) = idx(3) -20;
+        end
+                                                                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial58.mat')
+              idx(1) = idx(1)+80;
+              idx(3) = idx(3) -15;
+        end
+                                                                                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial60.mat')
+              idx(1) = idx(1)+100;
+              idx(3) = idx(3) -20;
+        end
+                                                                                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial61.mat')
+              idx(1) = idx(1)+65+16;
+              idx(3) = idx(3) -15;
+        end
+                                                                                                                                                                                                                                                                                                                                                                                       
+        if   strcmp(mfname,'/trial62.mat')
+              idx(1) = idx(1)+190;
+              idx(3) = idx(3) -30;
+        end
+                                                                                                                                                                                                                                                                                                                                                                                               
+        if   strcmp(mfname,'/trial63.mat')
+              idx(1) = idx(1)+90;
+              idx(3) = idx(3) -25;
+        end
+    end
+    
+end
+
+
+
+
 %% RTIS 2008 Paretic
 if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
     idx(1) = find(dist>=.02*max(dist),1);
@@ -4719,18 +5109,20 @@ figure(2)
 clf
 %  subplot(5,1,1)
 %ax = axes('position',[0.12,0.75,0.75,0.22]);
-yyaxis left
+ yyaxis left
 
-plot(t,dist,'LineWidth',1)
+% plot(t,xhand(:,2),'LineWidth',1.5)
 hold on
-plot(t,xhand(:,2),'LineWidth',1)
-plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
-ylabel('Distance (mm)')
-hold on
-yyaxis right
+%plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
+plot(t,dist,'LineWidth',1.5)
+plot(t, abs(xhand(:,3)-mean(xhand(1:20,3))),'LineWidth',1.5)
+
+ylabel('Position (mm)')
+
+ yyaxis right
 %  plot(t,vel,'LineWidth',1)
 % plot(t,velx)
-plot(t,vely,'LineWidth',1)
+ plot(t,vely,'LineWidth',1.5)
 ylabel('Velocity (mm/s)')
 
 y1=ylim;
@@ -4749,25 +5141,26 @@ p3 = xline(timedistmax,'r','Linewidth',1); %maxdist
 % ylim([-400 400])
 % co=get(lax1,'ColorOrder');
 % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-xlim([0.25 5])
-
-if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-    xlim([0 10])
-end
-
-if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-    xlim([0 10])
-end
+xlim([0 t(end)])
 
 
-if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-    xlim([0 t(end)])
-end
+% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%     xlim([0 10])
+% end
+% 
+% if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%     xlim([0 10])
+% end
+% 
+% 
+% if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%     xlim([0 t(end)])
+% end
                 
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Y Position','Z Displacement', 'Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
+legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northwest','FontSize',16)
 
 
 % figure (6),clf

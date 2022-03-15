@@ -942,6 +942,33 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial8.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial9.mat')
+            
+            continue
+        end
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial26.mat')
+            
+            continue
+        end
+        
+                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial59.mat')
+            
+            continue
+        end
+    end
+
 
     %
     % % Kacey added to call new function to plot in GCS
@@ -1055,19 +1082,20 @@ for i=1: length(mtrials)% i = 3
                 title('3D 3rd MCP Position','FontSize',18)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
-                xlim([0 5])
-                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
-                
+                %                 xlim([0 5])
+                xlim([0 t(end)])
+                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %                     xlim([0 t(end)])
+                %                 end
+% %                 
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -1075,18 +1103,19 @@ for i=1: length(mtrials)% i = 3
                 %             legend('Interpolated Data','Original Data','FontSize',13)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
-                xlim([0 5])
-                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                    xlim([0 10])
-                end
-                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
+                xlim([0 t(end)])
+% 
+% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%     xlim([0 10])
+% end
+% 
+% if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%     xlim([0 10])
+% end
+% 
+% if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%     xlim([0 t(end)])
+% end
                 
                 subplot(3,1,3)
                 plot(t(filled_data),xhandnew(filled_data,3),'ro')
@@ -1095,19 +1124,19 @@ for i=1: length(mtrials)% i = 3
                 %             legend('Interpolated Data','Original Data','FontSize',13)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
-                xlim([0 5])
-               if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                     xlim([0 10]) 
-               end 
-                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
-                
+                xlim([0 t(end)])
+%                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%                      xlim([0 10]) 
+%                end 
+%                 
+%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%                     xlim([0 t(end)])
+%                 end
+%                 
                     
                 'User Check Interpolation Accuracy'
                 pause
@@ -1142,18 +1171,19 @@ for i=1: length(mtrials)% i = 3
                 title(['3D Trunk Position' mfname],'FontSize',18)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
-                xlim([0 5])
-                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
+                xlim([0 t(end)])
+% 
+%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%                     xlim([0 t(end)])
+%                 end
                 
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
@@ -1162,18 +1192,20 @@ for i=1: length(mtrials)% i = 3
                 %             legend('Interpolated Data','Original Data','FontSize',13)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
-                xlim([0 5])
-                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
+                xlim([0 t(end)])
+
+                
+%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%                     xlim([0 t(end)])
+%                 end
                 
                 subplot(3,1,3)
                 plot(t(filled_data),xjugnew(filled_data,3),'ro')
@@ -1182,19 +1214,19 @@ for i=1: length(mtrials)% i = 3
                 %             legend('Interpolated Data','Original Data','FontSize',13)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
-                xlim([0 5])
-              
-                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                    xlim([0 10])
-                end
-                
-                if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                    xlim([0 10])
-                end
-                                
-                if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                    xlim([0 t(end)])
-                end
+                xlim([0 t(end)])
+%               
+%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%                     xlim([0 10])
+%                 end
+%                 
+%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+%                     xlim([0 10])
+%                 end
+%                                 
+%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%                     xlim([0 t(end)])
+%                 end
                 
                 
                 'User Check Interpolation Accuracy'
@@ -1403,18 +1435,18 @@ for i=1: length(mtrials)% i = 3
         title(['3D GH Position' mfname],'FontSize',18)
         xlabel('Time (s)','FontSize',14)
         ylabel('X Position (mm)','FontSize',14)
-        xlim([0 5])
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            xlim([0 10])
-        end
-        
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            xlim([0 10])
-        end
-        
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            xlim([0 t(end)])
-        end
+        xlim([0 t(end)])
+%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%             xlim([0 10])
+%         end
+%         
+%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+%             xlim([0 10])
+%         end
+%         
+%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%             xlim([0 t(end)])
+%         end
         
         subplot(3,1,2)
         plot(t(filled_data),ghNew(filled_data,2),'ro')
@@ -1423,18 +1455,18 @@ for i=1: length(mtrials)% i = 3
         %         legend('Interpolated Data','Original Data','FontSize',13)
         xlabel('Time (s)','FontSize',14)
         ylabel('Y Position (mm)','FontSize',14)
-        xlim([0 5])
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            xlim([0 10])
-        end
-        
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            xlim([0 10])
-        end
-                        
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            xlim([0 t(end)])
-        end
+        xlim([0 t(end)])
+%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%             xlim([0 10])
+%         end
+%         
+%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+%             xlim([0 10])
+%         end
+%                         
+%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%             xlim([0 t(end)])
+%         end
                 
         subplot(3,1,3)
         plot(t(filled_data),ghNew(filled_data,3),'ro')
@@ -1443,18 +1475,18 @@ for i=1: length(mtrials)% i = 3
         %         legend('Interpolated Data','Original Data','FontSize',13)
         xlabel('Time (s)','FontSize',14)
         ylabel('Z Position (mm)','FontSize',14)
-        xlim([0 5])
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            xlim([0 10])
-        end
-        
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            xlim([0 10])
-        end
-        
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            xlim([0 t(end)])
-        end
+        xlim([0 t(end)])
+%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%             xlim([0 10])
+%         end
+%         
+%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+%             xlim([0 10])
+%         end
+%         
+%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+%             xlim([0 t(end)])
+%         end
                 
         'User Check Interpolation Accuracy'
         
