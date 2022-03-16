@@ -24,7 +24,7 @@
 % K.SUVADA 2021-2022
 %%
 
-function [dist,vel,idx,timestart, timedistmax,xhand]= ComputeReachStart_2021(t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+function [dist,vel,idx,timestart, timedistmax,xhand]= ComputeReachStart_2021(Zpos_act,Ypos_act,t_act_2,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
 %% Finding Time Points
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
