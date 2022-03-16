@@ -968,8 +968,64 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
-
-
+    
+    if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        if strcmp(mfname,'/trial3.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+        if strcmp(mfname,'/trial4.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        if strcmp(mfname,'/trial7.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        if strcmp(mfname,'/trial11.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial12.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial13.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial19.mat')
+            
+            continue
+        end
+                
+        if strcmp(mfname,'/trial21.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial22.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial23.mat')
+            
+            continue
+        end
+                
+        if strcmp(mfname,'/trial24.mat')
+            
+            continue
+        end
+    end
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -1288,7 +1344,7 @@ for i=1: length(mtrials)% i = 3
     
     [theta_vel2,t2]=resampledata(theta_vel2,t,89,100);
     
-    % Resampling ACT3D Data
+    % Resampling ACT3D Data - use time vector and the 89 HZ for metria. - not 50HZ  
     [Ypos_act,t_act_2]=resampledata(Ypos_act, t_act,50,100);
     [Zpos_act,t_act_2]=resampledata(Zpos_act, t_act,50,100);
 
