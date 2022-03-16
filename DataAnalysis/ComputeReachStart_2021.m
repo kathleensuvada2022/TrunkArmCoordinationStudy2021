@@ -4052,7 +4052,7 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             %Finding where Y> Y start and Z>20% Z max
             %         Z_lift= abs(xhand(:,3)-mean(xhand(1:20,3))); %Z value
             
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>1.25*mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            rangeYandZ= find(Ypos_act(:)>Ypos_act(idx(1)) & xhand(:,3)>1.25*mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
             
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx+60;
@@ -4122,14 +4122,14 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             figure()
             plot(t,dist,'Linewidth',1.5)
             hold on
-            plot(t(rangeYandZ),dist(rangeYandZ),'ro')
-            plot(t(rangeYandZ),xhand(rangeYandZ,2),'ro')
-            plot(t(rangeYandZ),xhand(rangeYandZ,3),'ro')
-            xline(t(idx(1)),'g','Linewidth',1.5)
+%             plot(t(rangeYandZ),dist(rangeYandZ),'ro')
+%             plot(t(rangeYandZ),xhand(rangeYandZ,2),'ro')
+%             plot(t(rangeYandZ),xhand(rangeYandZ,3),'ro')
+%             xline(t(idx(1)),'g','Linewidth',1.5)
             plot(t,xhand(:,2),'Linewidth',1.5)       
             plot(t,xhand(:,3),'Linewidth',1.5)
-            yline(xhand(idx(1),2),'m','Linewidth',1.5)
-             xline(t(idx(3)),'r','Linewidth',1.5)
+%             yline(xhand(idx(1),2),'m','Linewidth',1.5)
+%              xline(t(idx(3)),'r','Linewidth',1.5)
             legend('Dist','Y and Z Range','Y and Z Range','Y and Z Range','START','YPos','ZPos','YStartValue','EndReach','FontSize',16)
             title(mfname,'FontSize',24)
 

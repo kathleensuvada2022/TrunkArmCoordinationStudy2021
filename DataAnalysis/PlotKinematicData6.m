@@ -992,12 +992,14 @@ for i=1: length(mtrials)% i = 3
     %% Loading in ACT3D Data for Reach Start Thresholding
     act3d_data = data.act;
     
-    Ypos_act = act3d_data(:,3);
+    Xpos_act = -act3d_data(:,2);
+    
+    Ypos_act = -act3d_data(:,3);
     Zpos_act = act3d_data(:,4);
     
-    t_act = length(vel)/ 50; % time in seconds
+    t_act = length(Ypos_act)/ 50; % time in seconds
     t_act = 0:.02:5;
-    t_act = t(2:end);
+    t_act = t_act(2:end)';
 
     %% Checking NANS and Interpolating Prior to Resampling
     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
