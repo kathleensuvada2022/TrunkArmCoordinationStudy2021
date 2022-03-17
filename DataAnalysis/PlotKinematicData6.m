@@ -2,9 +2,9 @@
 
 % Main function that calls other functions for analysis. This function
 % calls 'ComputeReachStart2021', 'GetHandShoulderTrunkPosition8', EMG functions,
-% interpolates missing Metria data and then resamples so more in line with
-% EMG data. More samples per second. Ultimately plots filled data,
-% distance, velocity, and overhead plot.Use to confirm reach start/end
+% interpolates missing Metria data and then resamples Metria Data
+% More samples per second. Ultimately plots filled data,
+% distance, velocity, and overhead plot .Use to confirm reach start/end
 % times and interpolation is valid.
 
 % Inputs:
@@ -1052,10 +1052,12 @@ for i=1: length(mtrials)% i = 3
     
     Ypos_act = -act3d_data(:,3);
     Zpos_act = act3d_data(:,4);
-    
-    t_act = length(Ypos_act)/ 50; % time in seconds
-    t_act = 0:.02:5;
-    t_act = t_act(2:end)';
+   
+    % Kacey don't use t vector for ACT data... this is incorrect the METRIA
+    % time is correct
+%     t_act = length(Ypos_act)/ 50; % time in seconds
+%     t_act = 0:.02:5;
+%     t_act = t_act(2:end)';
 
     %% Checking NANS and Interpolating Prior to Resampling
     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
@@ -1345,8 +1347,8 @@ for i=1: length(mtrials)% i = 3
     [theta_vel2,t2]=resampledata(theta_vel2,t,89,100);
     
     % Resampling ACT3D Data - use time vector and the 89 HZ for metria. - not 50HZ  
-    [Ypos_act,t_act_2]=resampledata(Ypos_act, t_act,50,100);
-    [Zpos_act,t_act_2]=resampledata(Zpos_act, t_act,50,100);
+    [Ypos_act,t2]=resampledata(Ypos_act, t,89,100);
+    [Zpos_act,t2]=resampledata(Zpos_act, t,89,100);
 
     %% Metria Trial by Trial Kinematic Data (computed BLS)
     
@@ -1403,7 +1405,7 @@ for i=1: length(mtrials)% i = 3
     %% Computing the start of the reach
     
     
-    [dist,vel,idx,timestart, timedistmax,xhand]= ComputeReachStart_2021(Zpos_act,Ypos_act,t_act_2,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+    [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
     
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
@@ -1774,7 +1776,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    
+    c4 = plot(xhand(rangeYandZ,1),xhand(rangeYandZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -1826,7 +1828,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c3],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+     legend([p1' c1 c3 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','YandZRange','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
