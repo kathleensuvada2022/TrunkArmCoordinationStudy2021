@@ -4041,25 +4041,25 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         idx(1) = find(dist>=.2*max(dist),1);
 
         if   strcmp(mfname,'/trial8.mat')
-            idx(1) = idx(1)+20;
+            idx(1) = idx(1)+33;
             
           
           %Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004); 
             maxdistidx = find(dist==max(dist(rangeYandZ)));
-             idx(3) = maxdistidx+30;
+             idx(3) = maxdistidx+47;
 
         end
         
         if   strcmp(mfname,'/trial10.mat')
-            idx(1) = idx(1) + 35+19;
-                        
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            idx(1) = idx(1)+60;
             
+            
+            %Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find(Ypos_act> Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx;
-            idx(3) = idx(3) -21+65;
-          
+            idx(3) = maxdistidx-150;
+  
          
         end
     
@@ -4067,7 +4067,7 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         if   strcmp(mfname,'/trial25.mat')
             idx(1) = idx(1) + 76;
                         
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004); %Finding range where Y is postive > y at start - reaching forwards
             
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx;
@@ -4078,7 +4078,7 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         if   strcmp(mfname,'/trial26.mat')
             idx(1) = idx(1) +50;
                         
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004); %Finding range where Y is postive > y at start - reaching forwards
             
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx;
@@ -4087,24 +4087,24 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         
                            
         if   strcmp(mfname,'/trial28.mat')
-            idx(1) = idx(1) +90-7;
+            idx(1) = idx(1)+245;
                         
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004); %Finding range where Y is postive > y at start - reaching forwards
             
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx;
-            idx(3) = idx(3)+38;
+            idx(3) = idx(3)+43;
         end
         
                            
         if   strcmp(mfname,'/trial29.mat')
             idx(1) = idx(1) +60;
                         
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & xhand(:,3)>mean(xhand(1:10,3))); %Finding range where Y is postive > y at start - reaching forwards
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004); %Finding range where Y is postive > y at start - reaching forwards
             
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx;
-            idx(3) = idx(3)+55-29+18 ;
+            idx(3) = idx(3)-70;
         end
         
 
