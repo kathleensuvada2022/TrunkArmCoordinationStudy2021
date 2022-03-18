@@ -4152,7 +4152,7 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         %
         %
         if   strcmp(mfname,'/trial18.mat')
-            idx(1) = idx(1)+150;
+            idx(1) = idx(1)+140;
 
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
@@ -4160,51 +4160,51 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             idx(3) = maxdistidx+47;
         end
         %
-%         if   strcmp(mfname,'/trial32.mat')
-%             idx(1) = idx(1)+115;
-%             % Skip becaue was reaching more to side even though Y>Ystart
-% %             %             Using ACT3D Data to see when off table and Y>Ystart
-% %             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
-% %             maxdistidx = find(dist==max(dist(rangeYandZ)));
-% %             idx(3) = maxdistidx-16;
-%         end
-% 
-%                 
-        if   strcmp(mfname,'/trial33.mat')
-            idx(1) = idx(1)+75;
+        if   strcmp(mfname,'/trial32.mat')
+            idx(1) = idx(1)+33;
 
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx+27;
+            idx(3) = maxdistidx+47;
+        end
+% 
+%                 
+        if   strcmp(mfname,'/trial33.mat')
+            idx(1) = idx(1)+33;
+
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx+47;
         end
 
 %                         
         if   strcmp(mfname,'/trial34.mat')
-            idx(1) = idx(1)+33+18;
+            idx(1) = idx(1)+33;
 
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx-167;
+            idx(3) = maxdistidx+47;
         end
                         
         if   strcmp(mfname,'/trial35.mat')
-            idx(1) = idx(1)+53;
-
-            %             Using ACT3D Data to see when off table and Y>Ystart
-            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx-36;
-        end
-                        
-        if   strcmp(mfname,'/trial36.mat')
-            idx(1) = idx(1)+53;
+            idx(1) = idx(1)+33;
 
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx+50;
+            idx(3) = maxdistidx+47;
+        end
+                        
+        if   strcmp(mfname,'/trial36.mat')
+            idx(1) = idx(1)+33;
+
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find(Ypos_act>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx+47;
         end
 
 
