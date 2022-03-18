@@ -24,7 +24,7 @@
 % K.SUVADA 2021-2022
 %%
 
-function [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+function [dist,vel,idx,timestart, timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
 %% Finding Time Points
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
@@ -5015,9 +5015,13 @@ end
 
 %% RTIS 2008 Non-Paretic
 if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
-    idx(1) = find(dist>=.02*max(dist),1);
     
     if expcond ==1
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+
         
         if   strcmp(mfname,'/trial4.mat')
             idx(1) = idx(1)-5;
@@ -5043,6 +5047,15 @@ if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
         
     end
     
+        
+    if expcond ==2
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+
+    end
+    
     if expcond == 3
         
         if   strcmp(mfname,'/trial27.mat')
@@ -5052,6 +5065,22 @@ if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
         
         
     end
+    
+            
+%         rangeZ= find(Zpos_act>.00005);
+%         figure()
+%         plot(t,Zpos_act,'Linewidth',1.5)
+%         hold on
+%         plot(t,Ypos_act,'Linewidth',1.5)
+%         plot(t(rangeZ),Ypos_act(rangeZ),'ro')
+%         plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+%         yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%         title(mfname,'FontSize',24)
     
 end
 
@@ -5391,6 +5420,8 @@ end
 
 
 %%
+
+rangeZ= find(Zpos_act>.00005);
 idx;
 timestart = t(idx(1));
 %timevelmax = t(idx(2));
@@ -5419,13 +5450,13 @@ hold on
 %plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
 plot(t,dist,'LineWidth',1.5)
 plot(t, abs(xhand(:,3)-mean(xhand(1:20,3))),'LineWidth',1.5)
-plot(t(rangeYandZ),dist(rangeYandZ),'ro')
+plot(t(rangeZ),dist(rangeZ),'ro')
 ylabel('Position (mm)')
 
 yyaxis right
 
 plot(t,vely,'LineWidth',1.5)
-plot(t(rangeYandZ),vely(rangeYandZ),'ro')
+plot(t(rangeZ),vely(rangeZ),'ro')
 ylabel('Velocity (mm/s)')
 y1=ylim;
 
@@ -5448,7 +5479,7 @@ xlim([0 t(end)])
 xlabel('time in seconds')
 % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
 % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-legend('Distance','Z DISP','Range Y and Z','Vel Y','Range Y and Z','Time Start','Time End','Location','northeast','FontSize',16)
+legend('Distance','Z DISP','Range Z','Vel Y','Range Z','Time Start','Time End','Location','northeast','FontSize',16)
 
 
 % figure (6),clf

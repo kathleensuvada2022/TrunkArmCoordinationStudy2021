@@ -1435,7 +1435,7 @@ for i=1: length(mtrials)% i = 3
     %% Computing the start of the reach
     
     
-    [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+    [dist,vel,idx,timestart, timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
     
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
@@ -1858,7 +1858,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c3 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','YandZRange','Location','northeast','FontSize',16)
+     legend([p1' c1 c3 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','ZRange','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
