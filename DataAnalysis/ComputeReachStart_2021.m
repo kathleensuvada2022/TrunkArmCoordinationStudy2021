@@ -4277,55 +4277,79 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end       
     
     if expcond ==5
+        idx(1) = find(dist>=.2*max(dist),1);
+   
+            
+        %
+        if   strcmp(mfname,'/trial43.mat')
+            idx(1) = idx(1)+74;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx+37;
+            
+        end
+%         %
+        if   strcmp(mfname,'/trial44.mat')
+            idx(1) = idx(1)+110;
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx+68;
+        end
+
+        if   strcmp(mfname,'/trial46.mat')
+            idx(1) = idx(1)+198;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +44;
+        end
+%         %
+        if   strcmp(mfname,'/trial63.mat')
+            idx(1) = idx(1)+112;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +35;
+        end
+%         
+        if   strcmp(mfname,'/trial65.mat')
+            idx(1) = idx(1)+112+13;
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+
+            idx(3) = idx(1)+83;
+ 
+        end
+%         
+        if   strcmp(mfname,'/trial66.mat')
+            idx(1) = idx(1)+151;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +80;
+            
+        end
+
         
-        idx(1) = find(dist>=.1*max(dist),1);
-        
-        testrangey = find(xhand(idx(1):end,2)>xhand(idx(1),2))+idx(1)-1;
-        maxdistnew = max(dist(testrangey(1):end));
-        endreachnew = find(dist==maxdistnew);
-        idx(3) = endreachnew;
-    
-%         
-%         if   strcmp(mfname,'/trial42.mat')
-%             idx(1) = idx(1)+10;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial44.mat')
-%             idx(1) = idx(1)+10;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial45.mat')
-%             idx(1) = idx(1)+10;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial46.mat')
-%             idx(1) = idx(1)+20;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial63.mat')
-%             idx(1) = idx(1)+20;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial64.mat')
-%             idx(1) = idx(1)+20;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial66.mat')
-%             idx(1) = idx(1)+15;
-%             
-%         end
-%         
-%         if   strcmp(mfname,'/trial68.mat')
-%             idx(1) = idx(1)+15;
-%             
-%         end
-        
+        figure()
+        plot(t,Zpos_act,'Linewidth',1.5)
+        hold on
+        plot(t,Ypos_act,'Linewidth',1.5)
+        plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
+        plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
+        xline(t(idx(1)),'g','Linewidth',1.5)
+        xline(t(idx(3)),'r','Linewidth',1.5)
+        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+        xlabel('Time (s)')
+        ylabel('Position (m)')
+        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+        title(mfname,'FontSize',24)
     end
     
     if expcond ==6
