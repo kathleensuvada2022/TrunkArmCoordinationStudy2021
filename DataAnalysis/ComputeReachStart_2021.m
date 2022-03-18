@@ -24,7 +24,7 @@
 % K.SUVADA 2021-2022
 %%
 
-function [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+function [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
 %% Finding Time Points
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
@@ -4322,9 +4322,9 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
 
             idx(3) = idx(1)+83;
- 
+            
         end
-%         
+        %
         if   strcmp(mfname,'/trial66.mat')
             idx(1) = idx(1)+151;
             
@@ -4335,7 +4335,7 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             idx(3) = idx(1) +80;
             
         end
-
+        
         
         figure()
         plot(t,Zpos_act,'Linewidth',1.5)
@@ -4353,27 +4353,85 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end
     
     if expcond ==6
-        
-        if   strcmp(mfname,'/trial49.mat')
-            idx(1) = idx(1)+15;
+        idx(1) = find(dist>=.2*max(dist),1);
+        rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+
+        if   strcmp(mfname,'/trial47.mat')
+            idx(1) = idx(1)+150;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +60-18;
             
         end
         
-        if   strcmp(mfname,'/trial50.mat')
-            idx(1) = idx(1)+15;
+        if   strcmp(mfname,'/trial48.mat')
+            idx(1) = idx(1)+285+3;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +52;
             
         end
         
+        if   strcmp(mfname,'/trial51.mat')
+            idx(1) = idx(1)+270;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +20;
+            
+        end
+        
+        if   strcmp(mfname,'/trial52.mat')
+            idx(1) = idx(1)+50;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            idx(3) = idx(1) +30;
+            
+        end
         if   strcmp(mfname,'/trial53.mat')
-            idx(1) = idx(1)+15;
+            idx(1) = idx(1)+165;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +80+9;
             
         end
-        
         if   strcmp(mfname,'/trial56.mat')
-            idx(1) = idx(1)+15;
+            idx(1) = idx(1)+175;
+            
+            %             Using ACT3D Data to see when off table and Y>Ystart
+            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = maxdistidx-36;
+            idx(3) = idx(1) +53;
             
         end
         
+        rangeZ= find(Zpos_act>.00005);
+        figure()
+        plot(t,Zpos_act,'Linewidth',1.5)
+        hold on
+        plot(t,Ypos_act,'Linewidth',1.5)
+        plot(t(rangeZ),Ypos_act(rangeZ),'ro')
+        plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+        xline(t(idx(1)),'g','Linewidth',1.5)
+        xline(t(idx(3)),'r','Linewidth',1.5)
+        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+        xlabel('Time (s)')
+        ylabel('Position (m)')
+        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+        title(mfname,'FontSize',24)
         
         
     end

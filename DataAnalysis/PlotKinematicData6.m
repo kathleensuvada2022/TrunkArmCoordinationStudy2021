@@ -951,6 +951,26 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial49.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial50.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        if strcmp(mfname,'/trial54.mat')
+            
+            continue
+        end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        if strcmp(mfname,'/trial55.mat')
+            
+            continue
+        end
     end
     
     if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
@@ -1415,7 +1435,7 @@ for i=1: length(mtrials)% i = 3
     %% Computing the start of the reach
     
     
-    [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+    [dist,vel,idx,timestart, timedistmax,xhand,rangeYandZ,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
     
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
@@ -1786,7 +1806,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    c4 = plot(xhand(rangeYandZ,1),xhand(rangeYandZ,2),'ro');
+    c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
