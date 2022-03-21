@@ -1056,6 +1056,53 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
+        
+                        
+        if strcmp(mfname,'/trial13.mat')
+            
+            continue
+        end
+                                
+        if strcmp(mfname,'/trial15.mat')
+            
+            continue
+        end
+        
+                                        
+        if strcmp(mfname,'/trial27.mat')
+            
+            continue
+        end
+        
+                                                
+        if strcmp(mfname,'/trial28.mat')
+            
+            continue
+        end
+                                                        
+        if strcmp(mfname,'/trial37.mat')
+            
+            continue
+        end
+        
+                                                                
+        if strcmp(mfname,'/trial38.mat')
+            
+            continue
+        end
+                                                                        
+        if strcmp(mfname,'/trial39.mat')
+            
+            continue
+        end
+                                                                                
+        if strcmp(mfname,'/trial41.mat')
+            
+            continue
+        end
+    end
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -1119,6 +1166,11 @@ for i=1: length(mtrials)% i = 3
         xjug(:,2) = -xjug(:,2);
         xjug(:,1) = -xjug(:,1);
 
+    end
+    if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
+        xjug(:,1) = -xjug(:,1);
+%         xjug(:,1) = -xjug(:,1);
+        
     end
 % %     
 %     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2
@@ -1805,8 +1857,8 @@ for i=1: length(mtrials)% i = 3
     
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+    c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -1858,7 +1910,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c3 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','ZRange','Location','northeast','FontSize',16)
+     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
