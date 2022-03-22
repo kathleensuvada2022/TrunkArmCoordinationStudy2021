@@ -1123,7 +1123,36 @@ for i=1: length(mtrials)% i = 3
             continue
         end
         
-        
+                                
+        if strcmp(mfname,'/trial32.mat')
+            
+            continue
+        end
+                                        
+        if strcmp(mfname,'/trial33.mat')
+            
+            continue
+        end
+                                                
+        if strcmp(mfname,'/trial35.mat')
+            
+            continue
+        end
+                                                        
+        if strcmp(mfname,'/trial41.mat')
+            
+            continue
+        end
+                                                                
+        if strcmp(mfname,'/trial60.mat')
+            
+            continue
+        end
+                                                                        
+        if strcmp(mfname,'/trial61.mat')
+            
+            continue
+        end
     end
     %
     % % Kacey added to call new function to plot in GCS
