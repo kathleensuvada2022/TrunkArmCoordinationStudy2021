@@ -5,7 +5,7 @@
 
 
 
-partid = 'RTIS2008';
+partid = 'RTIS2009';
 arm='Left';
 trial ='trial4';
 %

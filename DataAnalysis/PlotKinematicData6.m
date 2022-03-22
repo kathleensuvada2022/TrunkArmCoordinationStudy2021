@@ -1103,6 +1103,28 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    
+    if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
+        
+        if strcmp(mfname,'/trial18.mat')
+            
+            continue
+        end
+        
+                
+        if strcmp(mfname,'/trial27.mat')
+            
+            continue
+        end
+                        
+        if strcmp(mfname,'/trial29.mat')
+            
+            continue
+        end
+        
+        
+    end
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
