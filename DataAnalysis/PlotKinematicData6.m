@@ -1154,6 +1154,58 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+                                                                      
+        if strcmp(mfname,'/trial6.mat')
+            
+            continue
+        end 
+                                                                              
+        if strcmp(mfname,'/trial7.mat')
+            
+            continue
+        end 
+        
+                                                                                      
+        if strcmp(mfname,'/trial10.mat')
+            
+            continue
+        end 
+                                                                                              
+        if strcmp(mfname,'/trial13.mat')
+            
+            continue
+        end
+                                                                                                      
+        if strcmp(mfname,'/trial14.mat')
+            
+            continue
+        end
+        
+                                                                                                              
+        if strcmp(mfname,'/trial38.mat')
+            
+            continue
+        end 
+                                                                                                                      
+                                                                                                                              
+        if strcmp(mfname,'/trial59.mat')
+            
+            continue
+        end 
+                                                                                                                                      
+        if strcmp(mfname,'/trial60.mat')
+            
+            continue
+        end 
+                                                                                                                                              
+        if strcmp(mfname,'/trial61.mat')
+            
+            continue
+        end
+    end
+
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -1170,7 +1222,44 @@ for i=1: length(mtrials)% i = 3
     %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup);
+ %%   
+    if strcmp(partid,'RTIS2009') 
+        if strcmp(hand,'Right')
+        % Rotating xhand by -50 deg
+        xhand_transp = xhand';
+        RotMat = rotz(-50);
+        xhand_Rot50 = RotMat*xhand_transp;
+        xhand_Rot50 =xhand_Rot50';
+        xhand_Rot50(:,1) = -xhand_Rot50(:,1);
+        
+        xhand = xhand_Rot50;
+        
+%         figure(12)
+%         plot(xhand(:,1),xhand(:,2),'LineWidth',1)
+%         hold on
+%         plot(xhand_Rot50(:,1),xhand_Rot50(:,2),'LineWidth',1)
+%         %         legend('Original Data','Rotated Data')
+%         axis equal
+        %         xhand = xhand_Rot45;
+        
+        % Rotating xjug by -50 deg
+        xjug_transp = xjug';
+        RotMat = rotz(-50);
+        xjug_Rot50 = RotMat*xjug_transp;
+        xjug_Rot50 =xjug_Rot50';
+        xjug_Rot50(:,1) = -xjug_Rot50(:,1);
+        
+%         figure(12)
+%         plot(xjug(:,1),xjug(:,2),'LineWidth',1)
+%         hold on
+%         plot(xjug_Rot50(:,1),xjug_Rot50(:,2),'LineWidth',1)
+%         legend('Original Data Hand','Rotated Data Hand','Original Data Trunk','Rotated Data Trunk','FontSize',16)
+%         %         axis equal
+        xjug = xjug_Rot50;
+        end
+    end
     
+ %%   
     load([mfilepath mfname]);
     
     %% Loading in ACT3D Data for Reach Start Thresholding
@@ -1586,13 +1675,29 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
     end
     
-%     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2
-%         gh(:,2) = -gh(:,2);
-%         gh(:,1) = -gh(:,1);
-%     end
-% 
-% 
-%     
+    if strcmp(partid,'RTIS2009') 
+        if strcmp(hand,'Right')
+        % Rotating GH by -50 deg
+        GH_transp = gh(:,1:3)';
+        RotMat = rotz(-50);
+        GH_Rot50 = RotMat* GH_transp;
+        GH_Rot50 =GH_Rot50';
+        GH_Rot50(:,1) = -GH_Rot50(:,1);
+        
+        gh(:,1:3) = GH_Rot50(:,1:3);
+        end
+    end
+    
+    if strcmp(partid,'RTIS2009')
+        if strcmp(hand,'Left')
+
+            gh(:,1) = -gh(:,1);
+            gh(:,2) = -gh(:,2);
+        end
+        
+    end
+      
+
     % Interpolation of GH- accounting for trials with issues and need
     % alternative interpolation method.
     
