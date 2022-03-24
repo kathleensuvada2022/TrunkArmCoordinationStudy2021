@@ -1215,6 +1215,38 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
+                                                                                                                                                                     
+        if strcmp(mfname,'/trial40.mat')
+            
+            continue
+        end
+                                                                                                                                                                             
+        if strcmp(mfname,'/trial41.mat')
+            
+            continue
+        end 
+        
+                                                                                                                                                                                     
+        if strcmp(mfname,'/trial42.mat')
+            
+            continue
+        end 
+        
+                                                                                                                                                                                             
+        if strcmp(mfname,'/trial44.mat')
+            
+            continue
+        end 
+                
+                                                                                                                                                                                             
+        if strcmp(mfname,'/trial45.mat')
+            
+            continue
+        end 
+        
+    end
 
     %
     % % Kacey added to call new function to plot in GCS
