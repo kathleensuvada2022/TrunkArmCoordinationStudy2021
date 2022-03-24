@@ -5746,7 +5746,52 @@ if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
             
         end
     end
-                                               
+    
+    if expcond ==6
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+                                                                                                                                                                        
+        if   strcmp(mfname,'/trial47.mat')
+             idx(3) = idx(3)-55;
+             idx(1) = idx(1)+6;
+
+        end
+        
+                                                                                                                                                                                
+        if   strcmp(mfname,'/trial48.mat')
+             idx(3) = idx(3)-35;
+             idx(1) = idx(1)+20;
+
+        end
+                                                                                                                                                                                        
+        if   strcmp(mfname,'/trial49.mat')
+             idx(3) = idx(3)-55;
+%              idx(1) = idx(1)+20;
+
+        end
+                                                                                                                                                                                                
+        if   strcmp(mfname,'/trial51.mat')
+             idx(3) = idx(3)-50;
+%              idx(1) = idx(1)+20;
+
+        end
+                                                                                                                                                                                                        
+        if   strcmp(mfname,'/trial63.mat')
+             idx(3) = idx(3)-50;
+%              idx(1) = idx(1)+20;
+
+        end
+        
+                                                                                                                                                                                                                
+        if   strcmp(mfname,'/trial64.mat')
+             idx(3) = idx(3)-73;
+%              idx(1) = idx(1)+20;
+
+        end
+        
+    end
     
     rangeZ= find(Zpos_act>.00005);
     figure()
@@ -5762,7 +5807,7 @@ if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
     ylabel('Position (m)')
     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
     title(mfname,'FontSize',24)
-    
+%     
     
 end
 
