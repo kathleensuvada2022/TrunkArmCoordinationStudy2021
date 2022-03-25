@@ -1245,7 +1245,41 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end 
+                                                                                                                                                                                                     
+        if strcmp(mfname,'/trial56.mat')
+            
+            continue
+        end 
+                                                                                                                                                                                                             
+        if strcmp(mfname,'/trial57.mat')
+            
+            continue
+        end
         
+        if strcmp(mfname,'/trial58.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial60.mat')
+            
+            continue
+        end
+        
+        if strcmp(mfname,'/trial61.mat')
+            
+            continue
+        end
+                
+        if strcmp(mfname,'/trial75.mat')
+            
+            continue
+        end
+                        
+        if strcmp(mfname,'/trial76.mat')
+            
+            continue
+        end
     end
 
     %
@@ -2056,7 +2090,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-%     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+    c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -2108,7 +2142,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+     legend([p1' c1 c2 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Z Lift','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)

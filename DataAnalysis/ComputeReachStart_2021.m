@@ -5876,35 +5876,123 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
         
                 %
         if   strcmp(mfname,'/trial37.mat')
-            idx(1) = idx(1)+22;
+            idx(1) = idx(1)+27;
         end
                         %
         if   strcmp(mfname,'/trial38.mat')
             idx(1) = idx(1)+6;
+            idx(3) = idx(3) -24;
         end
         
                                 %
         if   strcmp(mfname,'/trial51.mat')
-            idx(3) = idx(3)+75;
+            idx(3) = idx(3)+80;
+            idx(1) = idx(1) +18;
         end
         
                                 %
         if   strcmp(mfname,'/trial52.mat')
             idx(1) = idx(1)+6;
         end
+               
+                                %
+        if   strcmp(mfname,'/trial54.mat')
+            idx(3) = idx(3)-14;
+          
+            idx(1) = idx(1)+20;
+        end
+                       
+                                %
+        if   strcmp(mfname,'/trial55.mat')
+%             idx(3) = idx(3)-14;
+            idx(1) = idx(1)+20;
+        end
         
     end
     
     if expcond ==3
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
         
-        idx(1) = find(dist>=.2*max(dist),1);
+        zdisp = xhand(:,3)-xhand(1,3);
+        velyint= find(vely>0);
+        Zint = find(zdisp >= .2*max(zdisp));
+        Vely_Z_INT = intersect(velyint,Zint);
+        
+        idx(1) = Vely_Z_INT(1);
+                
+        if   strcmp(mfname,'/trial24.mat')
+            idx(3) = idx(3) +75;
+            idx(1) = idx(1) +15;
+        end
+                        
+        if   strcmp(mfname,'/trial25.mat')
+%             idx(3) = idx(3) +75;
+            idx(1) = idx(1) +35;
+        end
+                                
+        if   strcmp(mfname,'/trial26.mat')
+%             idx(3) = idx(3) +75;
+            idx(1) = idx(1) +12;
+        end
+                                        
+        if   strcmp(mfname,'/trial28.mat')
+%             idx(3) = idx(3) +75;
+            idx(1) = idx(1) +10;
+        end
+                                                
+        if   strcmp(mfname,'/trial29.mat')
+%             idx(3) = idx(3) +75;
+            idx(1) = idx(1) +17;
+        end
+                                                        
+        if   strcmp(mfname,'/trial30.mat')
+             idx(3) = idx(3) -11;
+            idx(1) = idx(1) +3;
+        end
+                                                                
+        if   strcmp(mfname,'/trial33.mat')
+%             idx(3) = idx(3) +75;
+            idx(1) = idx(1) +12;
+        end
+    end
+    
+    
+    if expcond ==4
+
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+        
+                                                                        
+        if   strcmp(mfname,'/trial66.mat')
+             idx(3) = idx(3) -1;
+%             idx(1) = idx(1) +12;
+        end
+        
         
     end
     
     if expcond==5
         
-        if   strcmp(mfname,'/trial74.mat')
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        
+        zdisp = xhand(:,3)-xhand(1,3);
+        velyint= find(vely>0);
+        Zint = find(zdisp >= .2*max(zdisp));
+        Vely_Z_INT = intersect(velyint,Zint);
+           
+        idx(1) = Vely_Z_INT(1);
+        
+        rangeZ= find(Zpos_act>.00005);
+        
+        if   strcmp(mfname,'/trial67.mat')
             idx(1) = idx(1) +15;
+            idx(3) = rangeZ(end);
         end
     end
     
@@ -5927,7 +6015,8 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
         end
     end
     rangeZ= find(Zpos_act>.00005);
-    figure()
+
+        figure()
     plot(t,Zpos_act,'Linewidth',1.5)
     hold on
     %             plot(t,-Ypos_act,'Linewidth',1.5)
@@ -5940,7 +6029,7 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
     ylabel('Position (m)')
     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
     title(mfname,'FontSize',24)
-%     
+    
     
     
 end
