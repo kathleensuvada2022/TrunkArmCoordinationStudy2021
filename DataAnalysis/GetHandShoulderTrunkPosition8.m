@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,setup)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup)
 load([filepath '/BL.mat'])
 % load([filepath '/' partid,'_',setup])
 %% Load marker data
@@ -200,6 +200,60 @@ if strcmp(partid,'RTIS1006')
     end
 end
 
+if strcmp(partid,'RTIS2010')
+    strcmp(hand,'Right')
+    if strcmp(filename,'/trial77.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial78.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial79.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial80.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial81.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial82.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial83.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial84.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial85.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+    if strcmp(filename,'/trial86.mat')
+        t(10) = nan;
+        filled_t = fillmissing(t,'linear');
+        t=filled_t;
+    end
+end
+        
 
 %% Resampling Metria Data So maps more directly to EMG data
 % KCS February 2022

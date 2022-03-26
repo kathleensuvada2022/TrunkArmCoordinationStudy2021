@@ -5992,26 +5992,101 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
         
         if   strcmp(mfname,'/trial67.mat')
             idx(1) = idx(1) +15;
+            idx(3) = rangeZ(end)+8;
+        end
+                
+        if   strcmp(mfname,'/trial68.mat')
+            idx(1) = idx(1) +1;
+            idx(3) = rangeZ(end)+1;
+        end
+                        
+        if   strcmp(mfname,'/trial69.mat')
+             idx(1) = idx(1) +18;
+            idx(3) = rangeZ(end)-22;
+        end
+                                
+        if   strcmp(mfname,'/trial70.mat')
+             idx(1) = idx(1) +15;
+            idx(3) = rangeZ(end)-22;
+        end
+                                        
+        if   strcmp(mfname,'/trial71.mat')
+            idx(1) = idx(1) +6;
+            idx(3) = rangeZ(end)-44;
+        end
+                                                
+        if   strcmp(mfname,'/trial72.mat')
+             idx(1) = idx(1) +13;
+            idx(3) = rangeZ(end)-8;
+        end
+                                                        
+        if   strcmp(mfname,'/trial73.mat')
+             idx(1) = idx(1) +10;
             idx(3) = rangeZ(end);
+        end
+                                                                
+        if   strcmp(mfname,'/trial74.mat')
+             idx(1) = idx(1) +16;
+            idx(3) = rangeZ(end)+8;
         end
     end
     
     if expcond==6
         
+
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+%         idx(1) = find(dist>=.05*max(dist),1);
+        
+        zdisp = xhand(:,3)-xhand(1,3);
+        velyint= find(vely>0);
+        Zint = find(zdisp >= .2*max(zdisp));
+        Vely_Z_INT = intersect(velyint,Zint);
+        
+        idx(1) = Vely_Z_INT(1);
+        
+        rangeZ= find(Zpos_act>.00005);
+        
         if   strcmp(mfname,'/trial78.mat')
             idx(1) = idx(1) +15;
         end
-        
+%         
         if   strcmp(mfname,'/trial79.mat')
-            idx(1) = idx(1) +5;
+            idx(1) = idx(1) +15;
         end
-        
+%         
+        if   strcmp(mfname,'/trial80.mat')
+            idx(3) = idx(3) -6;
+        end
+%         
+        if   strcmp(mfname,'/trial81.mat')
+            idx(1) = idx(1) +7;
+        end
+        %         
+        if   strcmp(mfname,'/trial82.mat')
+            idx(1) = idx(1) +15;
+        end
+                %         
+        if   strcmp(mfname,'/trial83.mat')
+            idx(1) = idx(1) +5;
+            idx(3) = idx(3) -6;
+        end
+                        %         
         if   strcmp(mfname,'/trial84.mat')
-            idx(1) = idx(1) +5;
+%             idx(1) = idx(1) +5;
+            idx(3) = idx(3) -18;
         end
         
+                                %         
+        if   strcmp(mfname,'/trial85.mat')
+             idx(1) = idx(1) +2;
+            idx(3) = idx(3) -12;
+        end
+                                        %         
         if   strcmp(mfname,'/trial86.mat')
-            idx(1) = idx(1) +10;
+             idx(1) = idx(1) +6;
+            idx(3) = idx(3) -12;
         end
     end
     rangeZ= find(Zpos_act>.00005);
@@ -6029,7 +6104,7 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
     ylabel('Position (m)')
     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
     title(mfname,'FontSize',24)
-    
+%     
     
     
 end

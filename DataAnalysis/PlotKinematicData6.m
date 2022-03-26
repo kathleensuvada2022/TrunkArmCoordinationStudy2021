@@ -1280,6 +1280,7 @@ for i=1: length(mtrials)% i = 3
             
             continue
         end
+
     end
 
     %
@@ -1297,7 +1298,7 @@ for i=1: length(mtrials)% i = 3
     
     %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,setup);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup);
  %%   
     if strcmp(partid,'RTIS2009') 
         if strcmp(hand,'Right')
@@ -1432,7 +1433,9 @@ for i=1: length(mtrials)% i = 3
                 else
                     [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
                 end
-
+                
+            elseif strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
+                      [xhandnew,TF] = fillmissing(xhand,'nearest');
             else
                 
                 [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
@@ -1522,6 +1525,8 @@ for i=1: length(mtrials)% i = 3
             filled_data =   find(isnan(xjug(1:250)));
             
             if strcmp(partid,'RTIS1006') &&  expcond >3
+                [xjugnew,TF] = fillmissing(xjug,'spline');
+            elseif strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
                 [xjugnew,TF] = fillmissing(xjug,'spline');
                 
             else
@@ -1634,7 +1639,15 @@ for i=1: length(mtrials)% i = 3
     
     
     [xhand,t2]=resampledata(xhand,t,89,100);
+%     if strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
+%     xhand(1:10,:) = xhand(11,:);
+%     end
     [xjug,t2]=resampledata(xjug,t,89,100);
+%     if strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
+%         
+%         xjug(1:10,:) = xjug(11,:);
+%     end
+    
     [dist,t2]=resampledata(dist,t,89,100);
     
     
@@ -1804,7 +1817,8 @@ for i=1: length(mtrials)% i = 3
                 [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
                 
             end
-            
+        elseif strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
+             ghNew = fillmissing(gh,'linear','EndValues','nearest');
         else
             [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         end
@@ -2090,7 +2104,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+%     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -2142,7 +2156,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c2 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Z Lift','Location','northeast','FontSize',16)
+     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
