@@ -6,7 +6,7 @@
 
 
 partid = 'RTIS2010';
-arm='Right';
+arm='Left';
 trial ='trial4';
 %
 function [EM_Fore,EL_Fore]= ComputeEMELinForearmCS(partid,arm,trial)

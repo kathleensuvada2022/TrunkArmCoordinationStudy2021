@@ -1282,6 +1282,69 @@ for i=1: length(mtrials)% i = 3
         end
 
     end
+    
+    if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+                               
+        if strcmp(mfname,'/trial26.mat')
+            
+            continue
+        end 
+                                       
+        if strcmp(mfname,'/trial29.mat')
+            
+            continue
+        end
+                                               
+        if strcmp(mfname,'/trial30.mat')
+            
+            continue
+        end
+                                                       
+        if strcmp(mfname,'/trial16.mat')
+            
+            continue
+        end
+                                                               
+        if strcmp(mfname,'/trial31.mat')
+            
+            continue
+        end
+                                                                       
+        if strcmp(mfname,'/trial33.mat')
+            
+            continue
+        end
+                                                                               
+        if strcmp(mfname,'/trial34.mat')
+            
+            continue
+        end
+                                                                                       
+        if strcmp(mfname,'/trial37.mat')
+            
+            continue
+        end
+                                                                                               
+        if strcmp(mfname,'/trial41.mat')
+            
+            continue
+        end
+                                                                                                       
+        if strcmp(mfname,'/trial42.mat')
+            
+            continue
+        end
+                                                                                                               
+        if strcmp(mfname,'/trial43.mat')
+            
+            continue
+        end
+                                                                                                                       
+        if strcmp(mfname,'/trial44.mat')
+            
+            continue
+        end
+    end
 
     %
     % % Kacey added to call new function to plot in GCS
@@ -1335,6 +1398,15 @@ for i=1: length(mtrials)% i = 3
         xjug = xjug_Rot50;
         end
     end
+    
+    %% 
+    if strcmp(partid,'RTIS2010') 
+        if strcmp(hand,'Left')
+            xjug(:,1) = -xjug(:,1);
+ 
+        end 
+    end
+     
     
  %%   
     load([mfilepath mfname]);
@@ -1747,6 +1819,14 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
         gh(:,2) = -gh(:,2);
     end
+    
+    if strcmp(partid,'RTIS2010')
+        if strcmp(hand,'Left')
+            gh(:,2) = -gh(:,2);
+            
+        end
+    end
+    
     
     
     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
