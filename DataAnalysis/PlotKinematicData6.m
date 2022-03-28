@@ -1345,6 +1345,49 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
+                                                                                                                               
+        if strcmp(mfname,'/trial15.mat')
+            
+            continue
+        end
+                                                                                                                                       
+        if strcmp(mfname,'/trial17.mat')
+            
+            continue
+        end
+                                                                                                                                               
+        if strcmp(mfname,'/trial18.mat')
+            
+            continue
+        end
+                                                                                                                                                       
+        if strcmp(mfname,'/trial38.mat')
+            
+            continue
+        end
+                                                                                                                                                               
+        if strcmp(mfname,'/trial50.mat')
+            
+            continue
+        end
+                                                                                                                                                                       
+        if strcmp(mfname,'/trial52.mat')
+            
+            continue
+        end
+                                                                                                                                                                               
+        if strcmp(mfname,'/trial55.mat')
+            
+            continue
+        end
+                                                                                                                                                                                       
+        if strcmp(mfname,'/trial58.mat')
+            
+            continue
+        end
+    end
 
     %
     % % Kacey added to call new function to plot in GCS
