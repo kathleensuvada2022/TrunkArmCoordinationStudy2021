@@ -6693,13 +6693,120 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = idx(1) +64;
         end
-
+                                                                                               
+        if   strcmp(mfname,'/trial53.mat')
+            idx(1) = idx(1) +175;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +64-20;
+        end
+                                                                                                       
+        if   strcmp(mfname,'/trial54.mat')
+            idx(1) = idx(1) +198-18;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +64+17;
+        end
+                                                                                                       
+        if   strcmp(mfname,'/trial55.mat')
+            idx(1) = idx(1) +198+12;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +80;
+        end
+                                                                                                       
+        if   strcmp(mfname,'/trial56.mat')
+            idx(1) = idx(1) +225;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +41;
+        end
+                                                                                                       
+        if   strcmp(mfname,'/trial57.mat')
+            idx(1) = idx(1) +203;
+            
+            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+            maxdistidx = find(dist==max(dist(rangeYandZ)));
+            idx(3) = idx(1) +43;
+        end
 
     end
 
     
-    rangeZ= find(Zpos_act>.00005);
-%       
+    if expcond ==6
+        
+        rangeZ= find(Zpos_act>.00005);
+        LocalMins = find(islocalmin(xhand(rangeZ(1:length(rangeZ)),2)));
+        
+        idx(1) =    LocalMins(2)+rangeZ(1);
+        idx(3) = idx(1) +75;
+        
+                                                                                                               
+        if   strcmp(mfname,'/trial43.mat')
+            idx(3) = rangeZ(end);
+        end
+        
+                                                                                                                       
+        if   strcmp(mfname,'/trial44.mat')
+            idx(1) = idx(1) +27;
+            idx(3) = idx(1) +35;
+        end
+        
+                
+                                                                                                                       
+        if   strcmp(mfname,'/trial45.mat')
+ 
+             idx(1) = LocalMins(8)+rangeZ(1);
+             idx(3) = rangeZ(end)-70;
+        end
+                                                                                                                               
+        if   strcmp(mfname,'/trial46.mat')
+ 
+             idx(1) = idx(1) +42;
+             idx(3) = idx(1) +25;
+        end
+                                                                                                                                       
+        if   strcmp(mfname,'/trial58.mat')
+ 
+             idx(1) = idx(1) +85;
+             idx(3) = idx(1) +55;
+        end
+                                                                                                                                               
+        if   strcmp(mfname,'/trial59.mat')
+ 
+%              idx(1) = idx(1) +50;
+             idx(3) = idx(3)-25;
+        end
+                                                                                                                                                       
+        if   strcmp(mfname,'/trial60.mat')
+               idx(1) = idx(1) -40;
+             idx(3) = idx(3)-36;
+        end
+                                                                                                                                                       
+        if   strcmp(mfname,'/trial61.mat')
+ 
+%              idx(1) = idx(1) +50;
+             idx(3) = idx(3)-48;
+        end
+                                                                                                                                                               
+        if   strcmp(mfname,'/trial62.mat')
+ 
+%              idx(1) = idx(1) +50;
+             idx(3) = idx(3)+55;
+        end
+                                                                                                                                                               
+        if   strcmp(mfname,'/trial63.mat')
+ 
+              idx(1) = idx(1) +15;
+             idx(3) = idx(3)-25;
+        end
+    end
+    
+
     figure()
         plot(t,Zpos_act*1000,'Linewidth',1.5)
         hold on
