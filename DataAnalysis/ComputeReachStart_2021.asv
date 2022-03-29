@@ -6652,67 +6652,30 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
     
     if expcond ==5
 
-                                                                                       
-        if   strcmp(mfname,'/trial48.mat')
-            idx(1) = idx(1) +190;
-            
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = idx(1) +70;
-        end
-                                                                                       
-        if   strcmp(mfname,'/trial49.mat')
-            idx(1) = idx(1) +214;
-            
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = idx(1) +56-19;
-        end
-                                                                                       
-        if   strcmp(mfname,'/trial50.mat')
-            idx(1) = idx(1) +190;
-            
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = idx(1) +34;
-        end
-
-                                                                                       
-        if   strcmp(mfname,'/trial51.mat')
-            idx(1) = idx(1) +190-15;
-            
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = idx(1) +48;
-        end
-                                                                                               
-        if   strcmp(mfname,'/trial52.mat')
-            idx(1) = idx(1) +198;
-            
-            rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = idx(1) +64;
-        end
-
+        idx(1) = idx(1) +220;
+        
+        rangeYandZ= find(xhand(:,2)>xhand(idx(1),2) & Zpos_act>.0004);
+        maxdistidx = find(dist==max(dist(rangeYandZ)));
+        idx(3) = idx(1) +50;
 
     end
 
     
     rangeZ= find(Zpos_act>.00005);
 %       
-    figure()
-        plot(t,Zpos_act*1000,'Linewidth',1.5)
-        hold on
-        plot(t,xhand(:,2),'Linewidth',1.5)
-        plot(t(rangeZ),xhand(rangeZ,2),'ro')
-%         plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(xhand(idx(1),2),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('Zpos','Ypos','Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
+%     figure()
+%         plot(t,Zpos_act*1000,'Linewidth',1.5)
+%         hold on
+%         plot(t,xhand(:,2),'Linewidth',1.5)
+%         plot(t(rangeZ),xhand(rangeZ,2),'ro')
+% %         plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+%         yline(xhand(idx(1),2),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('Zpos','Ypos','Z Range','START','STOP','YValue_start','FontSize',14)
+%         title(mfname,'FontSize',24)
         
     
     

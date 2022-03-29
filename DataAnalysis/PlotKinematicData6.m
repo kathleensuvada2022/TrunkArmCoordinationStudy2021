@@ -1388,6 +1388,34 @@ for i=1: length(mtrials)% i = 3
             continue
         end
     end
+    
+    if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+                                                                                                                                                                                             
+        if strcmp(mfname,'/trial27.mat')
+            
+            continue
+        end  
+                                                                                                                                                                                                     
+        if strcmp(mfname,'/trial31.mat')
+            
+            continue
+        end  
+                                                                                                                                                                                                             
+        if strcmp(mfname,'/trial35.mat')
+            
+            continue
+        end  
+                                                                                                                                                                                                                     
+        if strcmp(mfname,'/trial42.mat')
+            
+            continue
+        end 
+                                                                                                                                                                                                                             
+        if strcmp(mfname,'/trial66.mat')
+            
+            continue
+        end  
+    end
 
     %
     % % Kacey added to call new function to plot in GCS
@@ -1449,7 +1477,7 @@ for i=1: length(mtrials)% i = 3
  
         end 
     end
-     
+
     
  %%   
     load([mfilepath mfname]);
@@ -1869,6 +1897,15 @@ for i=1: length(mtrials)% i = 3
             
         end
     end
+    %%
+    if strcmp(partid,'RTIS2011') 
+        if strcmp(hand,'Left')
+            gh(:,1) = -gh(:,1);
+            gh(:,2) = -gh(:,2);
+ 
+        end 
+    end
+    %%
     
     
     
@@ -2227,7 +2264,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-%     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -2279,7 +2316,7 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
+     legend([p1' c1 c2 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Range Z','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
