@@ -94,7 +94,10 @@ for i=1: length(mtrials)% i = 3
         if strcmp(mfname,'/trials1.mat')
             continue
         end
-        
+                
+        if strcmp(mfname,'/trials3.mat')
+            continue
+        end
         if strcmp(mfname,'/trials4.mat')
             continue
         end
@@ -2223,7 +2226,7 @@ for i=1: length(mtrials)% i = 3
     
     %% Main Cumulative Metria Figure
     figure(4)
-    clf
+%     clf
 %     p1=plot([xhand(idx(1):idx(3),1) xshldr(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) xshldr(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',2);
     
     %     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);
@@ -2264,7 +2267,7 @@ for i=1: length(mtrials)% i = 3
 
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-     c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+%      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
     %%
     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -2305,7 +2308,7 @@ for i=1: length(mtrials)% i = 3
     
     
     
-    %     set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
     
     %     viscircles([nanmean(xhand(1:10,1)),nanmean(xhand(1:10,2))],10,'Color','g')
     
@@ -2316,14 +2319,17 @@ for i=1: length(mtrials)% i = 3
     %   end
     
     
-     legend([p1' c1 c2 c4],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Range Z','Location','northeast','FontSize',16)
+     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
     %axis 'equal'
     xlabel('X (mm)','FontSize',16)
     ylabel('Y (mm)','FontSize',16)
     %   axis equal
-    %   xlim([-250 50])
-    %   ylim([-100 600])
-    
+ 
+    if strcmp(partid,'RTIS1002')
+        xlim([-500 200])
+        ylim([-400 400])
+    end
+ 
     if expcond== 1
         title(['Restrained Table' mfname],'FontSize',24)
     end
@@ -2356,7 +2362,7 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
        pause
-    close all
+%     close all
 end
 
 
