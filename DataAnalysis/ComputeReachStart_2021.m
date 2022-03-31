@@ -100,8 +100,8 @@ if  strcmp(partid,'RTIS1002')
             idx(1) = idx(1)+160;
         end
         
-        if strcmp(mfname,'/trials9.mat')
-            idx(1) = idx(1)+60;
+        if strcmp(mfname,'/trials11.mat')
+            idx(1) = idx(1)+100;
         end
         
     end

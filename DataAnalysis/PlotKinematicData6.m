@@ -110,10 +110,10 @@ for i=1: length(mtrials)% i = 3
             continue
         end
 %         
-        if strcmp(mfname,'/trials10.mat')
+        if strcmp(mfname,'/trials9.mat')
             continue
         end
-        
+% %         
         if strcmp(mfname,'/trials11.mat')
             continue
         end
@@ -1507,10 +1507,16 @@ for i=1: length(mtrials)% i = 3
         
         xhand(:,1) =  xhandfix(:,1);
     end
-    
+%     
     if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
        xhand(:,2) = -xhand(:,2); 
        xhand(:,1) = -xhand(:,1);
+
+    end
+        
+    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
+%        xhand(:,2) = -xhand(:,2); 
+%        xhand(:,1) = -xhand(:,1);
 
     end
 
@@ -1528,6 +1534,12 @@ for i=1: length(mtrials)% i = 3
     if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
         xjug(:,2) = -xjug(:,2);
         xjug(:,1) = -xjug(:,1);
+
+    end
+        
+    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
+       % xjug(:,2) = -xjug(:,2);
+%         xjug(:,1) = -xjug(:,1);
 
     end
     if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
@@ -1558,11 +1570,17 @@ for i=1: length(mtrials)% i = 3
                 [xhandnew,TF] = fillmissing(xhand,'nearest');
                 
             elseif strcmp(partid,'RTIS1002')
-                if strcmp(mfname,'/trials10.mat')
-                    [xhandnew,TF] = fillmissing(xhand,'linear');
-                end
-                if strcmp(mfname,'/trials9.mat')
-                    [xhandnew,TF] = fillmissing(xhand,'linear');
+                %                 if strcmp(mfname,'/trials10.mat')
+                %                     [xhandnew,TF] = fillmissing(xhand,'linear');
+                %                 end
+                %                 if strcmp(mfname,'/trials9.mat')
+                %                     [xhandnew,TF] = fillmissing(xhand,'linear');
+                %                 end
+                %                 if strcmp(mfname,'/trials10.mat')
+                %                     [xhandnew,TF] = fillmissing(xhand,'nearest');
+                %                 end
+                if strcmp(mfname,'/trials11.mat')
+                    [xhandnew,TF] = fillmissing(xhand,'nearest','SamplePoints',t);
                 end
                 if strcmp(mfname,'/trials22.mat')
                     [xhandnew,TF] = fillmissing(xhand,'linear');
@@ -1927,6 +1945,16 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
     end
     
+        
+    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
+        gh(:,2) = -gh(:,2);
+%          gh(:,1) = -gh(:,1);
+    end
+            
+    if strcmp(partid,'RTIS1004') % fixing that kacey switched x and y in GCS creation
+        gh(:,2) = -gh(:,2);
+          gh(:,1) = -gh(:,1);
+    end
     if strcmp(partid,'RTIS2009') 
         if strcmp(hand,'Right')
         % Rotating GH by -50 deg
@@ -1945,6 +1973,15 @@ for i=1: length(mtrials)% i = 3
 
             gh(:,1) = -gh(:,1);
             gh(:,2) = -gh(:,2);
+        end
+        
+    end
+        
+    if strcmp(partid,'RTIS2001')
+        if strcmp(hand,'Right')
+
+            gh(:,1) = -gh(:,1);
+%             gh(:,2) = -gh(:,2);
         end
         
     end
@@ -2237,7 +2274,7 @@ for i=1: length(mtrials)% i = 3
     %  p1= plot([(xhand(:,1)-xjug(idx(1),1)) (gh(:,1)-xjug(idx(1),1)) (xjug(:,1)-xjug(idx(1),1))],[(xhand(:,2)-xjug(idx(1),2)) (gh(:,2)-xjug(idx(1),2)) (xjug(:,2)-xjug(idx(1),2))],'LineWidth',3); % - trunk
  
 
-    p1=plot([xhand(:,1) gh(:,1) xjug(:,1)],[xhand(:,2) gh(:,2) xjug(:,2)],'LineWidth',3);% not subtracting trunk
+    p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
 %     p1=plot([xhand(:,1)],[xhand(:,2)],'LineWidth',3);% not subtracting trunk
     
 
@@ -2326,32 +2363,81 @@ for i=1: length(mtrials)% i = 3
     %   axis equal
  
     if strcmp(partid,'RTIS1002')
-        xlim([-500 200])
+        xlim([-400 200])
         ylim([-400 400])
+        hold on
+         circle(-120,80,50)
+        hold on
+    end
+     
+    if strcmp(partid,'RTIS1003')
+        xlim([-400 500])
+        ylim([-300 500])
+        hold on
+          circle(1.37,120,50)
+         
+        hold on
+    end
+         
+    if strcmp(partid,'RTIS1004')
+        xlim([-300 500])
+        ylim([-500 400])
+        hold on
+          circle(134,40,50)
+         
+        hold on
+    end
+             
+    if strcmp(partid,'RTIS1005')
+        xlim([-500 500])
+        ylim([-500 500])
+        hold on
+          circle(43,87,50)
+         
+        hold on
+    end
+                 
+    if strcmp(partid,'RTIS1006')
+        xlim([-300 400])
+        ylim([-400 400])
+        hold on
+          circle(39,77,50)
+         
+        hold on
+    end
+                     
+    if strcmp(partid,'RTIS2001')
+        xlim([-500 400])
+        ylim([-400 450])
+        hold on
+          circle(11,48,50)
+         
+        hold on
     end
  
+ 
     if expcond== 1
-        title(['Restrained Table' mfname],'FontSize',24)
+        title(['Restrained Table' '-' partid],'FontSize',24)
     end
     
     if expcond== 2
-        title(['Restrained 25%' mfname],'FontSize',24)
+        title(['Restrained 25%' '-' partid],'FontSize',24)
     end
     
     if expcond== 3
-        title(['Restrained 50%' mfname],'FontSize',24)
+        title(['Restrained 50%' '-' partid],'FontSize',24)
     end
     
     if expcond== 4
-        title(['Unrestrained Table' mfname],'FontSize',24)
+        title(['Unrestrained Table' '-' partid],'FontSize',24)
     end
     
     if expcond== 5
-        title(['Unrestrained 25%' mfname],'FontSize',24)
+        title(['Unrestrained 25%' '-' partid],'FontSize',24)
     end
     
     if expcond== 6
-        title(['Unrestrained 50%' mfname],'FontSize',24)
+        title(['Unrestrained 50%' '-' partid],'FontSize',24)
     end
     axis equal
     
@@ -2361,8 +2447,8 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
-       pause
-%     close all
+   %       pause
+%      close all
 end
 
 
