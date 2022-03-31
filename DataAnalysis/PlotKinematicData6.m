@@ -83,6 +83,10 @@ trex_current_trial=zeros(ntrials,1);
 %% Main loop that grabs Metria data and plots
 for i=1: length(mtrials)% i = 3
     
+    if i==1
+        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+    end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
     afname =  mfname;
@@ -1907,11 +1911,11 @@ for i=1: length(mtrials)% i = 3
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables
     
-    if strcmp(hand,'Left')
-        gh(:,1) = -gh(:,1);
-        gh(:,2) = -gh(:,2);
-    end
-    
+%     if strcmp(hand,'Left')
+%         gh(:,1) = -gh(:,1);
+%         gh(:,2) = -gh(:,2);
+%     end
+%     
     if strcmp(partid,'RTIS2010')
         if strcmp(hand,'Left')
             gh(:,2) = -gh(:,2);
@@ -1945,11 +1949,12 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
     end
     
-        
-    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
-        gh(:,2) = -gh(:,2);
-%          gh(:,1) = -gh(:,1);
-    end
+%         
+%     if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
+%         gh(:,2) = -gh(:,2);
+%         %          gh(:,1) = -gh(:,1);
+
+%     end
             
     if strcmp(partid,'RTIS1004') % fixing that kacey switched x and y in GCS creation
         gh(:,2) = -gh(:,2);
@@ -2221,8 +2226,7 @@ for i=1: length(mtrials)% i = 3
    gh = gh(:,1:3)-xjug;
    xjug_origin = xjug-xjug;
    
-   
-    
+
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     %Updating Definition using Computed GH
@@ -2407,10 +2411,8 @@ for i=1: length(mtrials)% i = 3
    %       pause
 %      close all
 
-%% Loading in Large Data matrix 
-if i==1
-load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-end
+%% Saving Data to matrix 
+
 
    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
 

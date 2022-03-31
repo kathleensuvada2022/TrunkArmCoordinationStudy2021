@@ -1,4 +1,4 @@
-  function [Ry]=roty(th)
+  function [Ry]=roty_Dutch(th)
 % vormen van een rotatiematrix voor rotaties rond de y-as
 Ry(1,1)=cos(th);
 Ry(1,3)=sin(th);
