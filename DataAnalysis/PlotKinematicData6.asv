@@ -2432,7 +2432,7 @@ end
 
 figure(4)
 hold on
-circle(xhand(idx(1),1),xhand(idx(1),2),50)
+circle(39,77,50)
 hold on
 
 % DataMatrix = AllData;
