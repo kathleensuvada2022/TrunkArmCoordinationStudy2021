@@ -85,9 +85,9 @@ for i=1: length(mtrials)% i = 3
     
     % For mass data sheet saving data
     if i==1
-         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-       % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-   
+        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -1915,13 +1915,13 @@ for i=1: length(mtrials)% i = 3
         end
     end
     %%
-    if strcmp(partid,'RTIS2011') 
-        if strcmp(hand,'Left')
-            gh(:,1) = -gh(:,1);
-            gh(:,2) = -gh(:,2);
- 
-        end 
-    end
+%     if strcmp(partid,'RTIS2011') 
+%         if strcmp(hand,'Left')
+%             gh(:,1) = -gh(:,1);
+%             gh(:,2) = -gh(:,2);
+%  
+%         end 
+%     end
     %%
     
     
@@ -1965,14 +1965,14 @@ for i=1: length(mtrials)% i = 3
         end
     end
     
-    if strcmp(partid,'RTIS2009')
-        if strcmp(hand,'Left')
-
-            gh(:,1) = -gh(:,1);
-            gh(:,2) = -gh(:,2);
-        end
-        
-    end
+%     if strcmp(partid,'RTIS2009')
+%         if strcmp(hand,'Left')
+% 
+%             gh(:,1) = -gh(:,1);
+%             gh(:,2) = -gh(:,2);
+%         end
+%         
+%     end
         
     if strcmp(partid,'RTIS2001')
         if strcmp(hand,'Right')
@@ -2217,8 +2217,7 @@ for i=1: length(mtrials)% i = 3
    xhand = xhand-xjug;
    gh = gh(:,1:3)-xjug;
    xjug_origin = xjug-xjug;
-  
- %xjug_origin= xjug;
+ % xjug_origin= xjug;
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     %Updating Definition using Computed GH
@@ -2263,7 +2262,7 @@ for i=1: length(mtrials)% i = 3
 %     clf
 
     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
-
+ %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
     hold on
     
     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
@@ -2400,8 +2399,8 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
-   %       pause
-%      close all
+    %pause
+   %close all
 
 %% Saving Data to matrix 
 
@@ -2426,8 +2425,8 @@ end
 
 figure(4)
 hold on
-  circle(xhand(idx(1),1),xhand(idx(1),2),50)
- %  circle(-149,278,50)
+     %circle(xhand(idx(1),1),xhand(idx(1),2),50)
+    circle(-200,283,50)
 hold on
 
 % DataMatrix = AllData;

@@ -4109,19 +4109,19 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         
         
         
-        figure()
-        plot(t,Zpos_act,'Linewidth',1.5)
-        hold on
-        plot(t,Ypos_act,'Linewidth',1.5)
-        plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
-        plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
+%         figure()
+%         plot(t,Zpos_act,'Linewidth',1.5)
+%         hold on
+%         plot(t,Ypos_act,'Linewidth',1.5)
+%         plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
+%         plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+%         yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%         title(mfname,'FontSize',24)
         
     end
     
@@ -4227,6 +4227,11 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
     end
     
     if expcond == 4
+        max_dist = max(dist);
+        end_reach = find(dist==max_dist);
+        idx(3) = end_reach;
+        idx(1) = find(dist>=.05*max(dist),1);
+        
         if   strcmp(mfname,'/trial38.mat')
             idx(1) = idx(1)+15;
             idx(3) = idx(3) -150;
@@ -4327,54 +4332,65 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         %
         if   strcmp(mfname,'/trial66.mat')
             idx(1) = idx(1)+151;
+            idx(1) = idx(1) +23;
             
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx-36;
-            idx(3) = idx(1) +80;
+            idx(3) = idx(1) +80-26;
             
         end
         
         
-        figure()
-        plot(t,Zpos_act,'Linewidth',1.5)
-        hold on
-        plot(t,Ypos_act,'Linewidth',1.5)
-        plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
-        plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
+        
+        rangeZ= find(Zpos_act>.00005);
+%       
+%         figure()
+%         plot(t,Zpos_act*1000,'Linewidth',1.5)
+%         hold on
+%         plot(t,xhand(:,2),'Linewidth',1.5)
+%         plot(t(rangeZ),xhand(rangeZ,2),'ro')
+% %         plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+% %         yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('Zpos','Ypos','Z Range','Z Range','START','STOP','FontSize',14)
+%         title(mfname,'FontSize',24)
     end
     
     if expcond ==6
         idx(1) = find(dist>=.2*max(dist),1);
-        rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+%         rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
         
         if   strcmp(mfname,'/trial47.mat')
-            idx(1) = idx(1)+150;
-            
-            %             Using ACT3D Data to see when off table and Y>Ystart
-            rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
-            maxdistidx = find(dist==max(dist(rangeYandZ)));
-            idx(3) = maxdistidx-36;
-            idx(3) = idx(1) +60-18;
+%             idx(1) = idx(1)+150;
+%             
+%             %             Using ACT3D Data to see when off table and Y>Ystart
+%             rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
+%             maxdistidx = find(dist==max(dist(rangeYandZ)));
+%             idx(3) = idx(1) +60-18;
+% %             idx(1) = idx(3) +5;
+% %             idx(3) = idx(1) +54;
+            idx(1) = 458;
+            idx(3) = 483;
             
         end
         
         if   strcmp(mfname,'/trial48.mat')
-            idx(1) = idx(1)+285+3;
+            idx(1) = idx(1)+285+3+12;
+         
             
             %             Using ACT3D Data to see when off table and Y>Ystart
             rangeYandZ= find((Ypos_act)>Ypos_act(idx(1)) & Zpos_act>.0004);
             maxdistidx = find(dist==max(dist(rangeYandZ)));
             idx(3) = maxdistidx-36;
-            idx(3) = idx(1) +52;
+            idx(3) = idx(1) +52-12;
+%             
+%             idx(1) = idx(1)-200+20;
+%             idx(3) = idx(3) -200;
             
         end
         
@@ -4418,22 +4434,21 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             
         end
         
-        rangeZ= find(Zpos_act>.00005);
-        figure()
-        plot(t,Zpos_act,'Linewidth',1.5)
-        hold on
-        plot(t,Ypos_act,'Linewidth',1.5)
-        plot(t(rangeZ),Ypos_act(rangeZ),'ro')
-        plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
-        
-        
+%         rangeZ= find(Zpos_act>.00005);
+%         figure()
+%         plot(t,Zpos_act*1000,'Linewidth',1.5)
+%         hold on
+%         plot(t,xhand(:,2),'Linewidth',1.5)
+%         plot(t(rangeZ),xhand(rangeZ,2),'ro')
+% %         plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+% %         yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('Zpos','Ypos','Z Range','Z Range','START','STOP','FontSize',14)
+%         title(mfname,'FontSize',24)
+%         
     end
     
 end
@@ -5519,20 +5534,20 @@ if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
     end
 %     
     rangeZ= find(Zpos_act>.00005);
-    figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
-    
+%     figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
+% %     
     
 end
 
@@ -5992,7 +6007,7 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
         
         if   strcmp(mfname,'/trial67.mat')
             idx(1) = idx(1) +15;
-            idx(3) = rangeZ(end)+8;
+            idx(3) = rangeZ(end)+7;
         end
                 
         if   strcmp(mfname,'/trial68.mat')
@@ -6027,7 +6042,7 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
                                                                 
         if   strcmp(mfname,'/trial74.mat')
              idx(1) = idx(1) +16;
-            idx(3) = rangeZ(end)+8;
+            idx(3) = rangeZ(end);
         end
     end
     
@@ -6090,20 +6105,20 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
         end
     end
     rangeZ= find(Zpos_act>.00005);
-
-        figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
+% 
+%         figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
 %     
     
     
@@ -6807,21 +6822,6 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
     end
     
 
-    figure()
-        plot(t,Zpos_act*1000,'Linewidth',1.5)
-        hold on
-        plot(t,xhand(:,2),'Linewidth',1.5)
-        plot(t(rangeZ),xhand(rangeZ,2),'ro')
-%         plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(xhand(idx(1),2),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('Zpos','Ypos','Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
-        
-    
     
     
 end
@@ -7037,6 +7037,26 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
     title(mfname,'FontSize',24)
     
 end
+
+
+
+% %         
+rangeZ= find(Zpos_act>.00005);
+% 
+% figure()
+% plot(t,Zpos_act,'Linewidth',1.5)
+% hold on
+% %             plot(t,-Ypos_act,'Linewidth',1.5)
+% %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+% plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+% xline(t(idx(1)),'g','Linewidth',1.5)
+% xline(t(idx(3)),'r','Linewidth',1.5)
+% %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+% xlabel('Time (s)')
+% ylabel('Position (m)')
+% legend('ZposACT','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+% title(mfname,'FontSize',24)
+
 
 %% Testing to see if shoulder, trunk marker visible at indices
 %missing shoulder
