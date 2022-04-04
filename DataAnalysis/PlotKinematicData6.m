@@ -83,9 +83,11 @@ trex_current_trial=zeros(ntrials,1);
 %% Main loop that grabs Metria data and plots
 for i=1: length(mtrials)% i = 3
     
+    % For mass data sheet saving data
     if i==1
-        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+       % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+   
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -1518,11 +1520,6 @@ for i=1: length(mtrials)% i = 3
 
     end
         
-    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
-%        xhand(:,2) = -xhand(:,2); 
-%        xhand(:,1) = -xhand(:,1);
-
-    end
 
     if strcmp(partid,'RTIS1006')
         
@@ -1541,11 +1538,6 @@ for i=1: length(mtrials)% i = 3
 
     end
         
-    if strcmp(partid,'RTIS1003') % fixing that kacey switched x and y in GCS creation
-       % xjug(:,2) = -xjug(:,2);
-%         xjug(:,1) = -xjug(:,1);
-
-    end
     if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
         xjug(:,1) = -xjug(:,1);
 %         xjug(:,1) = -xjug(:,1);
@@ -1956,10 +1948,10 @@ for i=1: length(mtrials)% i = 3
 
 %     end
             
-    if strcmp(partid,'RTIS1004') % fixing that kacey switched x and y in GCS creation
-        gh(:,2) = -gh(:,2);
-          gh(:,1) = -gh(:,1);
-    end
+%     if strcmp(partid,'RTIS1004') % fixing that kacey switched x and y in GCS creation
+%         gh(:,2) = -gh(:,2);
+%           gh(:,1) = -gh(:,1);
+%     end
     if strcmp(partid,'RTIS2009') 
         if strcmp(hand,'Right')
         % Rotating GH by -50 deg
@@ -2225,8 +2217,8 @@ for i=1: length(mtrials)% i = 3
    xhand = xhand-xjug;
    gh = gh(:,1:3)-xjug;
    xjug_origin = xjug-xjug;
-   
-
+  
+ %xjug_origin= xjug;
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     %Updating Definition using Computed GH
@@ -2434,7 +2426,8 @@ end
 
 figure(4)
 hold on
-circle(xhand(idx(1),1),xhand(idx(1),2),50)
+  circle(xhand(idx(1),1),xhand(idx(1),2),50)
+ %  circle(-149,278,50)
 hold on
 
 % DataMatrix = AllData;
