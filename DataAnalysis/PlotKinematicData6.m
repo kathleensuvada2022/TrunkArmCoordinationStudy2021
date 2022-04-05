@@ -1908,12 +1908,12 @@ for i=1: length(mtrials)% i = 3
 %         gh(:,2) = -gh(:,2);
 %     end
 %     
-    if strcmp(partid,'RTIS2010')
-        if strcmp(hand,'Left')
-            gh(:,2) = -gh(:,2);
-            
-        end
-    end
+%     if strcmp(partid,'RTIS2010')
+%         if strcmp(hand,'Left')
+%             gh(:,2) = -gh(:,2);
+%             
+%         end
+%     end
     %%
 %     if strcmp(partid,'RTIS2011') 
 %         if strcmp(hand,'Left')
@@ -2399,8 +2399,8 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
- %  pause
-%   close all
+   %pause
+   %close all
 
 %% Saving Data to matrix 
 
@@ -2425,8 +2425,8 @@ end
 
 figure(4)
 hold on
-     circle(xhand(idx(1),1),xhand(idx(1),2),50)
-%     circle(-200,283,50)
+   %  circle(xhand(idx(1),1),xhand(idx(1),2),50)
+       circle(241,365,50)
 hold on
 
 % DataMatrix = AllData;

@@ -5272,22 +5272,22 @@ if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
     
     end
     
-    rangeZ= find(Zpos_act>.00005);
-    figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
-    
-    
+%     rangeZ= find(Zpos_act>.00005);
+%     figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
+%     
+%     
 end
 
 
