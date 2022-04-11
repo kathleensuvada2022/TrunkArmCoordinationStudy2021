@@ -1898,7 +1898,7 @@ for i=1: length(mtrials)% i = 3
     gh= zeros(4,length(metdata));
     
     for k = 1:length(metdata) %looping through each frame to get GH
-        gh(:,k) = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+        [gh(:,k) TrunkAng_GCS(:,k)] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
     end
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables

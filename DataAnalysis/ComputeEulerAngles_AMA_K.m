@@ -21,7 +21,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function GH_G_comp_s = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
+function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 %%
 % filename = 'trial5';
 % %arm = 'Left';
@@ -58,7 +58,7 @@ function GH_G_comp_s = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 % June 22, 2016 Allie Johnson - Modified GH calculation to match the Helical Axes method.
 % September 25, 2018 (v10) Ana Maria Acosta - added comments and cleaned up code
 % based on Sabeen Admani's additions to the code over 2017-18.
-% September 29, 2021 Kacey Suvada - edited code to match experimental
+% Fall/Winter 2021 Kacey Suvada - edited code to match experimental
 % protocol:
 % 1) Modifying inputs: BL and HT
 % 2) Modifying outputs: adding Pmcp in G, Trunk and Humerus CSs
@@ -227,7 +227,7 @@ Hum_Trunk_Ang= zeros(3,30);
 %%
 j=k; % a part of larger loop outside this function.
 
-% for j = 1 %:nimag %artibitrary choosing xtrunk just needs to go through all frames
+% for j = 1 %:nimag 
     % TRUNK SHOULDER HUMERUS FOREARM
     
     if strcmp(arm,'Left')
@@ -253,7 +253,7 @@ j=k; % a part of larger loop outside this function.
     gh =ghest_KS(BL_M_s,BoneCS{2},flag); % Computing GH at jth time point (in sh marker cs) via GH function
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
-    return 
+%     return 
     
     HtoG = TmarkertoGlob{3}*BoneCS{4}; % Humerus
     BL_G_h = TmarkertoGlob{3}*BLs{1,3};
@@ -347,9 +347,12 @@ j=k; % a part of larger loop outside this function.
 % Angles relative to global CS 
 %     [gANGLES(:,1,j)]=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',1); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 %     [gANGLES(:,2,j)]=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',1); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
-  
-gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3,j),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+ 
+
+%Trunk and Humerus angles in Global CS
+
+gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
