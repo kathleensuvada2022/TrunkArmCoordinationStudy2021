@@ -85,9 +85,9 @@ for i=1: length(mtrials)% i = 3
     
     % For mass data sheet saving data
     if i==1
-        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
         % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+      %  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -1893,13 +1893,34 @@ for i=1: length(mtrials)% i = 3
     %% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
 %     flag=0; %will not plot all Segment CSes
     
-    metdata =  x; % using resampled x
-    
+    metdata =  x; 
+%     
     gh= zeros(4,length(metdata));
+    TrunkAng_GCS= zeros(3,length(metdata));
     
     for k = 1:length(metdata) %looping through each frame to get GH
-        [gh(:,k) TrunkAng_GCS(:,k)] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+     [gh_frame TrunkAng_GCS_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+     gh(:,k) = gh_frame(1:4);
+     TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
     end
+    
+    %% Trunk Angle Interpolation / Resampling
+    
+    % April 2022 - K. Suvada
+    % No need to check interpolation (how many missing NaNs) bc will have checked in missing trunk data
+    % for displacement
+    if sum(sum(isnan(TrunkAng_GCS)))>0   
+        TrunkAng_GCS = TrunkAng_GCS';
+        [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
+        
+        TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+    end
+    
+    %Resampling Trunk Angle
+    
+    [TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
+
+    %%
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables
     
@@ -1923,9 +1944,7 @@ for i=1: length(mtrials)% i = 3
 %         end 
 %     end
     %%
-    
-    
-    
+
     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
         
         ghfix(:,1) = gh(:,2);
@@ -2238,6 +2257,8 @@ for i=1: length(mtrials)% i = 3
     %Based on jugular notch
     trunk_exc = sqrt((xjug(idx(3),1)-nanmean(xjug(1:5,1)))^2+(xjug(idx(3),2)-nanmean(xjug(1:5,2)))^2);
     
+    % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
+    TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
     %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
     
@@ -2247,6 +2268,7 @@ for i=1: length(mtrials)% i = 3
     
     trex_current_trial(i) = trunk_exc;
     
+    TrunkAng_current_trial(i) = abs(TrunkAng_GCS_Disp);
     
     %% Plotting EMGS
     %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
@@ -2259,7 +2281,9 @@ for i=1: length(mtrials)% i = 3
     
     %% Main Cumulative Metria Figure
     figure(4)
-%     clf
+     clf
+
+    ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
 
     p1=plot([xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
  %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
@@ -2309,65 +2333,17 @@ for i=1: length(mtrials)% i = 3
 
     
     
-    legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',16)
-    xlabel('X (mm)','FontSize',16)
-    ylabel('Y (mm)','FontSize',16)
-    %axis equal
- 
-%     if strcmp(partid,'RTIS1002')
-%         xlim([-400 200])
-%         ylim([-400 400])
-%         hold on
-%          circle(-120,80,50)
-%         hold on
-%     end
-%      
-%     if strcmp(partid,'RTIS1003')
-%         xlim([-400 500])
-%         ylim([-300 500])
-%         hold on
-%           circle(1.37,120,50)
-%          
-%         hold on
-%     end
-%          
-%     if strcmp(partid,'RTIS1004')
-%         xlim([-300 500])
-%         ylim([-500 400])
-%         hold on
-%           circle(134,40,50)
-%          
-%         hold on
-%     end
-%              
-%     if strcmp(partid,'RTIS1005')
-%         xlim([-500 500])
-%         ylim([-500 500])
-%         hold on
-%           circle(43,87,50)
-%          
-%         hold on
-%     end
-%                  
-%     if strcmp(partid,'RTIS1006')
-%         xlim([-300 400])
-%         ylim([-400 400])
-%         hold on
-%           circle(39,77,50)
-%          
-%         hold on
-%     end
-%                      
-%     if strcmp(partid,'RTIS2001')
-%         xlim([-500 400])
-%         ylim([-400 450])
-%         hold on
-%           circle(11,48,50)
-%          
-%         hold on
-%     end
- 
- 
+    legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',12)
+    xlabel('X (mm)','FontSize',14)
+    ylabel('Y (mm)','FontSize',14)
+    
+    hold on
+    circle(xhand(idx(1),1),xhand(idx(1),2),50)
+
+    hold on
+    axis equal
+    
+    
     if expcond== 1
         title(['Restrained Table' '-' partid],'FontSize',24)
     end
@@ -2391,43 +2367,112 @@ for i=1: length(mtrials)% i = 3
     if expcond== 6
         title(['Unrestrained 50%' '-' partid],'FontSize',24)
     end
-    axis equal
     
+    
+    % Plotting Trunk Angulation
+    figure(4)
+    
+    ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
+    hold on
+    
+    plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980])
+    plot(ax2,t(idx(1)),TrunkAng_GCS(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
+    plot(ax2,t(idx(3)),TrunkAng_GCS(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+    hold on
+    legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+    xlabel('Time (s)','FontSize',14)
+    ylabel('Flexion Angle (Deg)','FontSize',14)
+   
+  
+    ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
+  hold on
+ 
+    plot(ax3,xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980])
+    plot(ax3,xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    plot(ax3,xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    hold on
+    legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+    xlabel('X (mm)','FontSize',14)
+    ylabel('Y (mm)','FontSize',14)
+    
+
     %% Calling COP Function
     %   ppsdata =data.pps;
     %   tpps = data.pps{1,1};
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
-   %pause
-   %close all
+   pause
+   close all
 
 %% Saving Data to matrix 
 
 
    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
 
+% Lines below if adding a whole new participant to sheet
+%         nextrow = size(DataMatrix,1);
+%         DataMatrix{nextrow+1,1} = partid;
+%         DataMatrix{nextrow+1,2} = expcond;
+%         DataMatrix{nextrow+1,3} = mfname;
+%         DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
+%         DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
+%         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
+%         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+%         DataMatrix{nextrow+1,8} = trex_current_trial(i);
+%         DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
+%         DataMatrix{nextrow+1,10} = shex_current_trial(i);
+%         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
-        nextrow = size(DataMatrix,1);
-        DataMatrix{nextrow+1,1} = partid;
-        DataMatrix{nextrow+1,2} = expcond;
-        DataMatrix{nextrow+1,3} = mfname;
-        DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
-        DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
-        DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
-        DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-        DataMatrix{nextrow+1,8} = trex_current_trial(i);
-        DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
-        DataMatrix{nextrow+1,10} = shex_current_trial(i);
-        DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
+% Adding Column with trunk flexion angle
+%RTIS2001-Paretic 
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==1
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==1);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==2
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==2);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==3
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==3);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==4
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==4);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==5
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==5);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==6
+   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
+   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==6);
+   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
+   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+end
+
+
 
 end
 
-figure(4)
-hold on
-   %  circle(xhand(idx(1),1),xhand(idx(1),2),50)
-       circle(241,365,50)
-hold on
+
 
 % DataMatrix = AllData;
 save FullDataMatrix.mat DataMatrix
@@ -2452,6 +2497,10 @@ for k = 1:length(maxreach_current_trial)
     if trex_current_trial(k) ==0
         trex_current_trial(k) = nan;
     end
+    
+%     if TrunkAng_current_trial(k) ==0
+%         TrunkAng_current_trial(k)= nan;
+%     end 
 end
 
 
@@ -2465,10 +2514,13 @@ std_maxhand= nanstd(maxhandexcrsn_current_trial);
 avgshldr = nanmean(shex_current_trial);
 stdshldr = nanstd(shex_current_trial);
 
+%Trunk Displacement 
 avgtrunk = nanmean(trex_current_trial);
 stdtrunk = nanstd(trex_current_trial);
 
-
+%Trunk Angle
+% avgtrunk_ANG = nanmean(TrunkAng_current_trial);
+% stdtrunk_ANG = nanstd(TrunkAng_current_trial);
 
 
 end

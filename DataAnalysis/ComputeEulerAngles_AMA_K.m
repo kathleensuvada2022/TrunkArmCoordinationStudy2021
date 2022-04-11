@@ -215,17 +215,14 @@ TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ****
 
 %% Looping through all frames in trial for each HT (marker in global)
 
-Trunk_Globe_ANG = zeros(3,30);
-Hum_Globe_ANG = zeros(3,30);
-Fore_Hum_Ang = zeros(3,30);
-Hum_Trunk_Ang= zeros(3,30);
-
 % flag =1; % SET TO 1 if want plots to show
 
 %return
 
 %%
 j=k; % a part of larger loop outside this function.
+
+
 
 % for j = 1 %:nimag 
     % TRUNK SHOULDER HUMERUS FOREARM
@@ -351,8 +348,8 @@ j=k; % a part of larger loop outside this function.
 
 %Trunk and Humerus angles in Global CS
 
-gTRUNK(:,j)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
+gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+gHUM(:)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 % Hum_Globe_ANG(1,j)=Hum_Globe_ANG(1,j)+180;
@@ -360,8 +357,8 @@ gHUM(:,j)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of cr
 % % Euler Ang Function
 
 % % Only compatible with ROTZYZ no XZY
-rotm=HtoG(1:3,1:3,j);
-Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
+rotm=HtoG(1:3,1:3);
+Hum_Globe_ANG(:)= rad2deg(rotm2eul(rotm,'ZYZ'));
 
 %
 %      jR = rotjoint(AS); %relative angles
@@ -375,21 +372,24 @@ Hum_Globe_ANG(:,j)= rad2deg(rotm2eul(rotm,'ZYZ'));
 % Kacey removed rotjoint function and placed code here Nov 2021
 %  Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
 %    jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
-  jR(1:3,1:3)=HtoG(1:3,1:3,j)'*FtoG(1:3,1:3,j);
+  jR(1:3,1:3)=HtoG(1:3,1:3)'*FtoG(1:3,1:3);
     
    % To get humerus (columns 7:9) in trunk (columns 1:3) cs 
-   jR(1:3,4:6)=TtoG(1:3,1:3,j)'*HtoG(1:3,1:3,j);  
+   jR(1:3,4:6)=TtoG(1:3,1:3)'*HtoG(1:3,1:3);  
 
 % Local angles relative to proximal segment
-Fore_Hum_Ang(:,j)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row is elbow angle
+Fore_Hum_Ang(:)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row is elbow angle
 % Hum_Trunk_Ang(:,j)=CalcEulerAng(jR(:,4:6),'ZYZ',0);   % XY% Humerus in Trunk 1) angle (angle about local Z) 2)elevation ( will be negative) 3) internal (+)/external(-) rotation 
 % Hum_Trunk_Ang(1,j) = Hum_Trunk_Ang(1,j)+180;
 % Hum_Trunk_Ang(3,j) = Hum_Trunk_Ang(3,j)-180;
 % % Computing Euler Angles with matlab function 
 rotm2=jR(:,4:6);
-Hum_Trunk_Ang(:,j) = rad2deg(rotm2eul(rotm2,'ZYZ'));
+Hum_Trunk_Ang(:) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
 % return
+
+gTRUNK = gTRUNK';
+gTRUNK = [gTRUNK;1];
  end
 %% For Computing Elbow Angle based on bony landmarks 
 % % With midpoints 
