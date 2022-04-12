@@ -58,6 +58,8 @@ shex_current_trial=zeros(ntrials,1);
 
 trex_current_trial=zeros(ntrials,1);
 
+TrunkAng_current_trial=zeros(ntrials,1);
+
 % NOT SURE ABOUT ONES BELOW
 % maxreach=zeros(ntrials,1);
 % emgstart = zeros(ntrials,15);
@@ -1905,6 +1907,8 @@ for i=1: length(mtrials)% i = 3
     end
     
     %% Trunk Angle Interpolation / Resampling
+ 
+
     
     % April 2022 - K. Suvada
     % No need to check interpolation (how many missing NaNs) bc will have checked in missing trunk data
@@ -1914,6 +1918,17 @@ for i=1: length(mtrials)% i = 3
         [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
         
         TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+    else 
+        TrunkAng_GCS = TrunkAng_GCS';
+    end
+    
+    if strcmp(hand,'Left')
+        if (TrunkAng_GCS(:,1) <0)
+            TrunkAng_GCS(:,1) = TrunkAng_GCS(:,1)+180;
+        end
+        if (TrunkAng_GCS(:,1) >0)
+            TrunkAng_GCS(:,1) = TrunkAng_GCS(:,1)-180;
+        end
     end
     
     %Resampling Trunk Angle
@@ -2268,7 +2283,7 @@ for i=1: length(mtrials)% i = 3
     
     trex_current_trial(i) = trunk_exc;
     
-    TrunkAng_current_trial(i) = abs(TrunkAng_GCS_Disp);
+    TrunkAng_current_trial(i) = TrunkAng_GCS_Disp;
     
     %% Plotting EMGS
     %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
@@ -2425,48 +2440,58 @@ for i=1: length(mtrials)% i = 3
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
 % Adding Column with trunk flexion angle
+
+
+trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
+FinalRow = trialrow(Currentrow);
+DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+
+
 %RTIS2001-Paretic 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==1
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==1);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==2
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==2);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==3
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==3);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==4
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==4);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==5
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==5);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
 
 if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==6
-   Currentrow =  find(strcmp(DataMatrix(:,1),'RTIS2001')); %Partid condition
-   IDandCond = find(cell2mat(DataMatrix(Currentrow,2)) ==6);
-   Currentrow_final = Currentrow(IDandCond); %Rows where expcond 1
-   DataMatrix{Currentrow_final(i),12} = TrunkAng_current_trial(i);
+  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+  FinalRow = trialrow(Currentrow);
+  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 end
+
+
 
 
 

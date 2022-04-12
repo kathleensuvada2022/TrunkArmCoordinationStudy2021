@@ -277,32 +277,33 @@ j=k; % a part of larger loop outside this function.
     FtoG_frame = FtoG; %Fore CS in global at given frame of trial
     HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS
     
+  
     if flag ==1
         figure(1)
-        plot3(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),'*')
-        if j == 1 hold on; end
-        plot3(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),'*')
-        plot3(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'*') %kacey adding computed GH
-        plot3(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),'*')
-        plot3(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'*');
-        plot3([GH(1) H_Mid_H(1,j)],[GH(2) H_Mid_H(2,j)],[GH(3) H_Mid_H(3,j)])
-        plot3(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),'*')
-        plot3([H_Mid_F(1) H_Mid_H(1,j)],[H_Mid_F(2) H_Mid_H(2,j)],[H_Mid_F(3) H_Mid_H(3,j)])
+        plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+      hold on
+        plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
+        plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'*') %kacey adding computed GH
+        plot3(BL_G_h(1,:),BL_G_h(2,:,j),BL_G_h(3,:),'*')
+        plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
+        plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
+        plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
+        plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
         
         if j==1
-            text(BL_G_t(1,:,j),BL_G_t(2,:,j),BL_G_t(3,:,j),BLnames_t)
-            text(BL_G_s(1,:,j),BL_G_s(2,:,j),BL_G_s(3,:,j),BLnames_s)
-            text(GH_G_comp_s(1,1,j),GH_G_comp_s(2,1,j),GH_G_comp_s(3,1,j),'GH Computed') %Kacey adding label for computed GH
-            text(BL_G_h(1,:,j),BL_G_h(2,:,j),BL_G_h(3,:,j),BLnames_h)
-            text(H_Mid_H(1,j),H_Mid_H(2,j),H_Mid_H(3,j),'MID_E_M_E_L');
-            text(BL_G_f(1,:,j),BL_G_f(2,:,j),BL_G_f(3,:,j),BLnames_f)
-            
+            text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
+%             text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
+%             text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
+            text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
+            text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
+            text(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),BLnames_f)
+        end 
             quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
             text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
             
-            quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
-            text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
-            
+%             quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
+%             text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
+%             
             quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
             text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
             
@@ -329,7 +330,7 @@ j=k; % a part of larger loop outside this function.
 %              
             
         end
-    end
+  
 
 % GH_G_comp_s = squeeze(GH_G_comp_s); % now 4X nimag 
 % Computing Euler Angles Frame by Frame
