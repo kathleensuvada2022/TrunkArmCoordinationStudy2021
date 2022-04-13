@@ -21,12 +21,9 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
+function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k,idx)
 %%
-% filename = 'trial5';
-% %arm = 'Left';
-% arm = 'Right';
-% partid = 'RTIS2011';
+
  flag =0;
 
 %%
@@ -271,13 +268,73 @@ j=k; % a part of larger loop outside this function.
     [OL,RS,US] = deal(BL_G_f(:,OL_IDX),BL_G_f(:,RS_IDX),BL_G_f(:,US_IDX));
     H_Mid_F =(RS(1:3)+US(1:3))'/2; % midpoint between styloids
     
+
+    if strcmp(partid,'RTIS2003')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(-90)*TtoG(1:3,1:3);
+        end
+    end
+    
+    
+    if strcmp(partid,'RTIS2007')
+        if strcmp(arm,'Right')
+            TtoG(1:3,1:3) = rotz(-180)*TtoG(1:3,1:3);
+        end
+    end
+        
+    if strcmp(partid,'RTIS2008')
+        if strcmp(arm,'Right')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
+    if strcmp(partid,'RTIS2009')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
+        
+    if strcmp(partid,'RTIS2010')
+        if strcmp(arm,'Right')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
+            
+    if strcmp(partid,'RTIS2011')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
     TtoG_frame = TtoG; %trunk CS in global at given frame of trial
     StoG_frame = StoG; %SH CS in global at given frame of trial
     HtoG_frame = HtoG; %Hum CS in global at given frame of trial
     FtoG_frame = FtoG; %Fore CS in global at given frame of trial
     HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS
     
-  
+%     %Testing Trunk Angle
+%     figure(13)
+%     if j ==1
+%     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+%     hold on
+%     quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+%     text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+%    
+%     quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+%     text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+%     hold on
+%     %Line from GH to MidPnt between Epicondyles
+%     % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+%     xlabel('x (mm)')
+%     ylabel('y (mm)')
+%     zlabel('z (mm)')
+%     axis 'equal'
+%     end
+%     
+%     
+    
     if flag ==1
         figure(1)
         plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
@@ -348,6 +405,7 @@ j=k; % a part of larger loop outside this function.
  
 
 %Trunk and Humerus angles in Global CS
+
 
 gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
 gHUM(:)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  

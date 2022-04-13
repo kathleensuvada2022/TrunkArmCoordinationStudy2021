@@ -1901,7 +1901,7 @@ for i=1: length(mtrials)% i = 3
     TrunkAng_GCS= zeros(3,length(metdata));
     
     for k = 1:length(metdata) %looping through each frame to get GH
-     [gh_frame TrunkAng_GCS_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+     [gh_frame TrunkAng_GCS_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k,idx); %This gives computed GH converted to GCS
      gh(:,k) = gh_frame(1:4);
      TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
     end
@@ -1922,14 +1922,21 @@ for i=1: length(mtrials)% i = 3
         TrunkAng_GCS = TrunkAng_GCS';
     end
     
-    if strcmp(hand,'Left')
-        if (TrunkAng_GCS(:,1) <0)
-            TrunkAng_GCS(:,1) = TrunkAng_GCS(:,1)+180;
-        end
-        if (TrunkAng_GCS(:,1) >0)
-            TrunkAng_GCS(:,1) = TrunkAng_GCS(:,1)-180;
+
+    if strcmp(partid,'RTIS2002')
+        if strcmp(hand,'Left')
+            for m = 1:length(TrunkAng_GCS)
+                if (TrunkAng_GCS(m,1) <0)
+                    TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
+                elseif (TrunkAng_GCS(m,1) >0)
+                    TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
+                end
+            end
         end
     end
+    
+    % !!!!!Convention for both arms now + angle means back extension - angle
+    % means forward flexion!!!!
     
     %Resampling Trunk Angle
     
@@ -2417,7 +2424,7 @@ for i=1: length(mtrials)% i = 3
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
     %  [CoP2]= ComputeCOP(ppsdata,tpps);
-   pause
+  % pause
    close all
 
 %% Saving Data to matrix 
@@ -2439,57 +2446,55 @@ for i=1: length(mtrials)% i = 3
 %         DataMatrix{nextrow+1,10} = shex_current_trial(i);
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
-% Adding Column with trunk flexion angle
-
-
+% Adding Column with trunk flexion angle-saving to data matrix 
 trialrow =   find(strcmp(DataMatrix(:,3),mfname));
 Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
 FinalRow = trialrow(Currentrow);
 DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
 
-
-%RTIS2001-Paretic 
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==1
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
-
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==2
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
-
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==3
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
-
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==4
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
-
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==5
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
-
-if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==6
-  trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-  Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-  FinalRow = trialrow(Currentrow);
-  DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-end
+% 
+% %RTIS2001-Paretic 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==1
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
+% 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==2
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
+% 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==3
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
+% 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==4
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
+% 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==5
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
+% 
+% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==6
+%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
+%   FinalRow = trialrow(Currentrow);
+%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% end
 
 
 
