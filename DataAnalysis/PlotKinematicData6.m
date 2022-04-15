@@ -2307,7 +2307,7 @@ for i=1: length(mtrials)% i = 3
   
   if i ==1
       
-       %  ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+         % ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
       
       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
           xlim(ax1,[-500 600])
@@ -2336,6 +2336,31 @@ for i=1: length(mtrials)% i = 3
           ylim(ax1,[-50 600])
           axis equal
       end
+                  
+      if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-200 600])
+          axis equal
+      end
+      
+                        
+      if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-150 650])
+          axis equal
+      end
+      
+                              
+      if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-300 300])
+          ylim(ax1,[-100 400])
+          axis equal
+      end
+%       
+%       
 %       
 %       
 
@@ -2426,7 +2451,7 @@ for i=1: length(mtrials)% i = 3
     
     if i ==1
     circle(xhand(idx(1),1),xhand(idx(1),2),50)
-    %circle(211,377,50)
+    %circle(-142,226,50)
     end
     axis equal
     
