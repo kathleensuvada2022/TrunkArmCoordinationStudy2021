@@ -2310,258 +2310,258 @@ for i=1: length(mtrials)% i = 3
     
     
     %% Main Cumulative Metria Figure
-    figure(4)
-  %   clf
-  
-  if i ==1
-      
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-      
-      if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-          xlim(ax1,[-500 600])
-          ylim(ax1,[-100 700])
-          axis equal
-      end
-      
-      if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-          xlim(ax1,[-400 300])
-          ylim(ax1,[-70 500])
-          axis equal
-      end
-      
-      
-      if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-100 650])
-          axis equal
-      end
-      
-            
-      if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-50 600])
-          axis equal
-      end
-                  
-      if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-200 600])
-          axis equal
-      end
-      
-                        
-      if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-150 650])
-          axis equal
-      end
-      
-                              
-      if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-300 300])
-          ylim(ax1,[-100 400])
-          axis equal
-      end
-%       
-%       
-%       
-%       
-
-  end
-  
-%   
+%     figure(4)
+%   %   clf
 %   
 %   if i ==1
-%       if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') 
+%       
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%       
+%       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+%           xlim(ax1,[-500 600])
+%           ylim(ax1,[-100 700])
+%           axis equal
+%       end
+%       
+%       if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%           xlim(ax1,[-400 300])
+%           ylim(ax1,[-70 500])
+%           axis equal
+%       end
+%       
+%       
+%       if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%           xlim(ax1,[-400 400])
+%           ylim(ax1,[-100 650])
+%           axis equal
+%       end
+%       
+%             
+%       if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%           xlim(ax1,[-400 400])
+%           ylim(ax1,[-50 600])
+%           axis equal
+%       end
+%                   
+%       if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%           xlim(ax1,[-400 400])
+%           ylim(ax1,[-200 600])
+%           axis equal
+%       end
+%       
+%                         
+%       if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%           xlim(ax1,[-400 400])
+%           ylim(ax1,[-150 650])
+%           axis equal
+%       end
+%       
+%                               
+%       if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%           xlim(ax1,[-300 300])
+%           ylim(ax1,[-100 400])
+%           axis equal
+%       end
+% %       
+% %       
+% %       
+% %       
+% 
+%   end
+%   
+% %   
+% %   
+% %   if i ==1
+% %       if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') 
+% %           
+% %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+% %           xlim(ax1,[-400 400])
+% %           ylim(ax1,[-220 500])
+% %           axis equal
+% %       end
+% %       
+% %       
+% %   end
+%   
+%     
+%   if i ==1
+%       if strcmp(partid,'RTIS2008') && strcmp(hand,'Right') 
 %           
 %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
 %           xlim(ax1,[-400 400])
-%           ylim(ax1,[-220 500])
+%           ylim(ax1,[-220 700])
 %           axis equal
 %       end
 %       
 %       
 %   end
-  
-    
-  if i ==1
-      if strcmp(partid,'RTIS2008') && strcmp(hand,'Right') 
-          
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-220 700])
-          axis equal
-      end
-      
-      
-  end
+% %   
 %   
-  
-  hold(ax1,'on')
-    p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
- %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
-    hold(ax1,'on')
-    
-    c1= plot(ax1,xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    c2= plot(ax1,xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-%      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
-    %%
-    %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    
-    %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
-    %%
-    %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    %
-    %
-    %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-
-    plot(ax1,gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    plot(ax1,gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    
-    
-    plot(ax1,xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    plot(ax1,xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-   
-    
-    
-    %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
-    %        c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
-    
-    %%
-    %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
-    %         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    
-    
-    %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-    %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
-    %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
-    
-    
-    
-         set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
-
-    
-    
-    legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',12)
-    xlabel('X (mm)','FontSize',14)
-    ylabel('Y (mm)','FontSize',14)
-    
- 
-    
-    if i ==1
-    circle(xhand(idx(1),1),xhand(idx(1),2),50)
-    %circle(-142,226,50)
-    end
-    axis equal
-    
-    
-%     if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==1||3||6
-%         
-%         if i ==2
-%             circle(xhand(idx(1),1),xhand(idx(1),2),50)
-%         end
-%         axis equal
-%         
-%     end
+%   hold(ax1,'on')
+%     p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
+%  %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
+%     hold(ax1,'on')
 %     
-    if i ==1
-    
-    if expcond== 1
-        title(['Restrained Table' '-' partid],'FontSize',24)
-    end
-    
-    if expcond== 2
-        title(['Restrained 25%' '-' partid],'FontSize',24)
-    end
-    
-    if expcond== 3
-        title(['Restrained 50%' '-' partid],'FontSize',24)
-    end
-    
-    if expcond== 4
-        title(['Unrestrained Table' '-' partid],'FontSize',24)
-    end
-    
-    if expcond== 5
-        title(['Unrestrained 25%' '-' partid],'FontSize',24)
-    end
-    
-    if expcond== 6
-        title(['Unrestrained 50%' '-' partid],'FontSize',24)
-    end
-    end
-    
-    % Plotting Trunk Angulation
-    figure(4)
+%     c1= plot(ax1,xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%     c2= plot(ax1,xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+% %      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+%     %%
+%     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+%     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%     
+%     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+%     %%
+%     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%     %
+%     %
+%     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+% 
+%     plot(ax1,gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%     plot(ax1,gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%     
+%     
+%     plot(ax1,xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%     plot(ax1,xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%    
+%     
+%     
+%     %        c3= viscircles([Newreachx(idx(3)),Newreachy(idx(3))],5,'Color','r','MarkerSize',10);
+%     %        c3= plot(Newreachx(idx(3)),Newreachy(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+%     
+%     %%
+%     %         c3= viscircles([xhand(idx(3),1),xhand(idx(3),2)],5,'Color','r');
+%     %         c3= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%     
+%     
+%     %    p2=plot(nanmean([xhand(1:10,1) xshldr(1:10,1) xjug(1:10,1)]),nanmean([xhand(1:10,2) xshldr(1:10,2) xjug(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%     %       p2=plot([xhand(10,2) xshoulder(10,2) xtrunk(10,2)],[xhand(10,2) xshoulder(10,2) xtrunk(10,2)],'o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor','g');
+%     %     p3=plot([xhand(end,1) xshldr(end,1) xjug(end,1)],[xhand(end,2) xshldr(end,2) xjug(end,2)],'s','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor','r');
+%     
+%     
+%     
+%          set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+% 
+%     
+%     
+%     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Location','northeast','FontSize',12)
+%     xlabel('X (mm)','FontSize',14)
+%     ylabel('Y (mm)','FontSize',14)
+%     
+%  
 %     
 %     if i ==1
-%         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
-%         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-%             ylim(ax2,[-5 15])
-%             xlim(ax2,[0 5])
-%         end
+%     circle(xhand(idx(1),1),xhand(idx(1),2),50)
+%     %circle(-142,226,50)
 %     end
+%     axis equal
+%     
+%     
+% %     if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==1||3||6
+% %         
+% %         if i ==2
+% %             circle(xhand(idx(1),1),xhand(idx(1),2),50)
+% %         end
+% %         axis equal
+% %         
+% %     end
 % %     
-%       
- % if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
-      if i ==1
-        ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
-
-      end
-      
- % end
-   
-    hold(ax2,'on')
-    p2 = plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
-      hold(ax2,'on')
-      
-    c3 =plot(ax2,t(idx(1)),TrunkAng_GCS(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
-    c4 = plot(ax2,t(idx(3)),TrunkAng_GCS(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
-    legend([p2 c3 c4],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
-
-    xlabel('Time (s)','FontSize',14)
-    ylabel('Trunk Angle (Deg)','FontSize',14)
-    legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-
-    
-    if i ==1
-        ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
-%         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-%             ylim(ax3,[-310 260])
-%             xlim(ax3,[-150 -80])
-%         end
-    end
-    
-          
-%   if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') 
-%       if i ==2
-%         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
+%     if i ==1
+%     
+%     if expcond== 1
+%         title(['Restrained Table' '-' partid],'FontSize',24)
+%     end
+%     
+%     if expcond== 2
+%         title(['Restrained 25%' '-' partid],'FontSize',24)
+%     end
+%     
+%     if expcond== 3
+%         title(['Restrained 50%' '-' partid],'FontSize',24)
+%     end
+%     
+%     if expcond== 4
+%         title(['Unrestrained Table' '-' partid],'FontSize',24)
+%     end
+%     
+%     if expcond== 5
+%         title(['Unrestrained 25%' '-' partid],'FontSize',24)
+%     end
+%     
+%     if expcond== 6
+%         title(['Unrestrained 50%' '-' partid],'FontSize',24)
+%     end
+%     end
+%     
+%     % Plotting Trunk Angulation
+%     figure(4)
+% %     
+% %     if i ==1
+% %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
+% %         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+% %             ylim(ax2,[-5 15])
+% %             xlim(ax2,[0 5])
+% %         end
+% %     end
+% % %     
+% %       
+%  % if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
+%       if i ==1
+%         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
 % 
 %       end
 %       
-%   end
+%  % end
+%    
+%     hold(ax2,'on')
+%     p2 = plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
+%       hold(ax2,'on')
+%       
+%     c3 =plot(ax2,t(idx(1)),TrunkAng_GCS(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
+%     c4 = plot(ax2,t(idx(3)),TrunkAng_GCS(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+%     legend([p2 c3 c4],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
+% 
+%     xlabel('Time (s)','FontSize',14)
+%     ylabel('Trunk Angle (Deg)','FontSize',14)
+%     legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+% 
 %     
-    hold(ax3,'on')
-   p3 =  plot(ax3,xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
-     hold(ax3,'on')
-    c5 = plot(ax3,xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    c6 = plot(ax3,xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    hold on
-    
-        legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
-
-    legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-    xlabel('X (mm)','FontSize',14)
-    ylabel('Y (mm)','FontSize',14)
+%     if i ==1
+%         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
+% %         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+% %             ylim(ax3,[-310 260])
+% %             xlim(ax3,[-150 -80])
+% %         end
+%     end
+%     
+%           
+% %   if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') 
+% %       if i ==2
+% %         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
+% % 
+% %       end
+% %       
+% %   end
+% %     
+%     hold(ax3,'on')
+%    p3 =  plot(ax3,xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
+%      hold(ax3,'on')
+%     c5 = plot(ax3,xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%     c6 = plot(ax3,xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%     hold on
+%     
+%         legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
+% 
+%     legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+%     xlabel('X (mm)','FontSize',14)
+%     ylabel('Y (mm)','FontSize',14)
     
 
     %% Calling COP Function
@@ -2585,64 +2585,29 @@ for i=1: length(mtrials)% i = 3
 %         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
 %         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
  %        DataMatrix{nextrow+1,8} =  trex_current_trial(i);
-         trex_current_trial(i)
 %         DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
 %         DataMatrix{nextrow+1,10} = shex_current_trial(i);
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
-% Adding Column with trunk flexion angle-saving to data matrix 
+% Adding Outcome Measures to Data Matrix
 trialrow =   find(strcmp(DataMatrix(:,3),mfname));
 Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
 FinalRow = trialrow(Currentrow);
+
 DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-
-% 
-% %RTIS2001-Paretic 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==1
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==2
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==3
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==4
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==5
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') &&  expcond ==6
-%   trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-%   Currentrow =  find(strcmp(DataMatrix(trialrow,1),'RTIS2001'));
-%   FinalRow = trialrow(Currentrow);
-%   DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% end
+DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,10} = shex_current_trial(i);
+DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,8} =  trex_current_trial(i);
+DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+DataMatrix{FinalRow,2} = expcond;
 
 
-   pause
- %  close all
+ %  pause
+   close all
 
 
 
