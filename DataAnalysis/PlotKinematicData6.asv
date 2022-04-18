@@ -2263,29 +2263,22 @@ for i=1: length(mtrials)% i = 3
     
     % Def: Distance between hand and shoulder at end of reach - idx(3)
     
-    maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
+    maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2)
     
     %% Max Hand Excursion
    
-    % Def: difference in hand final - initial. xhand(idx3) - xhand(idx1)
+    % Def: difference in
     
     maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
     
     
     %% Compute shoulder and trunk displacement at maximum reach - using BLS
     
-    % Shoulder 
-    %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
-    %sh_exc=sqrt(sum((gh(idx(3),1:2)-(gh((idx(1)),1:2))).^2,2))';
+    %Changed to be based on GH
+    sh_exc=sqrt(sum((gh(idx(3),1:2)-(gh((idx(1)),1:2))).^2,2))';
     
-    sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
-   
-    % Trunk
     %Based on jugular notch
-    
-   % trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
- 
-   trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
+    trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
