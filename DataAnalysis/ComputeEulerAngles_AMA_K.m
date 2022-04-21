@@ -21,7 +21,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k,idx)
+function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 %%
 
  flag =0;
