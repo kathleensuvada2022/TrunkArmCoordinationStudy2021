@@ -1,4 +1,4 @@
-  function [Rx]=rotx(th)
+  function [Rx]=rotx_DUTCH(th)
 % vormen van een rotatiematrix voor rotaties rond de x-as
 Rx(1,1)=1;
 Rx(2,2)=cos(th);

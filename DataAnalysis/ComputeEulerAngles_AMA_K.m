@@ -126,6 +126,10 @@ xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
+% if strcmp(partid,'RTIS2008') && strcmp(arm,'Left') % fixing that kacey switched x and y in GCS creation
+%  xtrunk(:,1) = -xtrunk(:,1);   
+% end
+
 Tftom = zeros(4,4,length(xfore)); %Forearm
 Tstom= zeros(4,4,length(xshoulder)); %Shoulder
 Tttom=zeros(4,4,length(xtrunk)); %Trunk
@@ -268,7 +272,6 @@ j=k; % a part of larger loop outside this function.
     [OL,RS,US] = deal(BL_G_f(:,OL_IDX),BL_G_f(:,RS_IDX),BL_G_f(:,US_IDX));
     H_Mid_F =(RS(1:3)+US(1:3))'/2; % midpoint between styloids
     
-
     if strcmp(partid,'RTIS2003')
         if strcmp(arm,'Left')
             TtoG(1:3,1:3) = rotz(-90)*TtoG(1:3,1:3);
@@ -277,7 +280,7 @@ j=k; % a part of larger loop outside this function.
     
     
     if strcmp(partid,'RTIS2007')
-        if strcmp(arm,'Right')
+        if strcmp(arm,'Left')
             TtoG(1:3,1:3) = rotz(-180)*TtoG(1:3,1:3);
         end
     end
@@ -285,6 +288,12 @@ j=k; % a part of larger loop outside this function.
     if strcmp(partid,'RTIS2008')
         if strcmp(arm,'Right')
             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+            
+    if strcmp(partid,'RTIS2008')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotx(180)*TtoG(1:3,1:3);
         end
     end
     
@@ -300,6 +309,8 @@ j=k; % a part of larger loop outside this function.
             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
     end
+%             
+
     
             
     if strcmp(partid,'RTIS2011')
@@ -308,13 +319,30 @@ j=k; % a part of larger loop outside this function.
         end
     end
     
+                
+    if strcmp(partid,'RTIS2001')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+                    
+    if strcmp(partid,'RTIS2006')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
+    
     TtoG_frame = TtoG; %trunk CS in global at given frame of trial
     StoG_frame = StoG; %SH CS in global at given frame of trial
     HtoG_frame = HtoG; %Hum CS in global at given frame of trial
     FtoG_frame = FtoG; %Fore CS in global at given frame of trial
     HT_G_G_frame = FtoG_frame*inv(FtoG_frame);% global coordinate system in it's own CS
     
-%     %Testing Trunk Angle
+
+%     
+    
+    %Testing Trunk Angle
 %     figure(13)
 %     if j ==1
 %     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
@@ -333,7 +361,7 @@ j=k; % a part of larger loop outside this function.
 %     axis 'equal'
 %     end
 %     
-%     
+    
     
     if flag ==1
         figure(1)

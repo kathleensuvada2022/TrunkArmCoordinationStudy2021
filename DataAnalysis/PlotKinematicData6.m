@@ -2313,16 +2313,25 @@ for i=1: length(mtrials)% i = 3
      figure(4)
 % %   %   clf
 % %   
-  if i ==1
+
+StartingTrial =1;
+  if i ==StartingTrial
       
-          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-      
+       
+     % ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
           xlim(ax1,[-500 600])
           ylim(ax1,[-100 700])
           axis equal
       end
-      
+            
+      if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
+            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-600 200])
+          ylim(ax1,[-100 800])
+          axis equal
+      end
             
       if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
           xlim(ax1,[-150 400])
@@ -2331,25 +2340,25 @@ for i=1: length(mtrials)% i = 3
       end
       
       
-      if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-          xlim(ax1,[-400 300])
-          ylim(ax1,[-70 500])
+      if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
+          xlim(ax1,[-200 500])
+          ylim(ax1,[-200 650])
           axis equal
       end
       
       
-      if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+      if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-          xlim(ax1,[-400 400])
-          ylim(ax1,[-100 650])
+          xlim(ax1,[-200 400])
+          ylim(ax1,[-200 650])
           axis equal
       end
       
             
-      if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+      if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
           xlim(ax1,[-400 400])
-          ylim(ax1,[-50 600])
+          ylim(ax1,[-100 700])
           axis equal
       end
                   
@@ -2359,7 +2368,13 @@ for i=1: length(mtrials)% i = 3
           ylim(ax1,[-200 600])
           axis equal
       end
-      
+                              
+      if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-150 700])
+          axis equal
+      end
                         
       if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
@@ -2367,7 +2382,13 @@ for i=1: length(mtrials)% i = 3
           ylim(ax1,[-150 650])
           axis equal
       end
-      
+                                    
+      if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-200 700])
+          axis equal
+      end
                               
       if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
@@ -2450,9 +2471,9 @@ for i=1: length(mtrials)% i = 3
     
  
 %     
-    if i ==1
-    circle(xhand(idx(1),1),xhand(idx(1),2),50)
-    %circle(-165,384,50)
+    if i ==StartingTrial
+   circle(xhand(idx(1),1),xhand(idx(1),2),50)
+  % circle(-238,356,50)
     end
     axis equal
     
@@ -2466,7 +2487,7 @@ for i=1: length(mtrials)% i = 3
 % %         
 % %     end
 % %     
-    if i ==1
+    if i ==StartingTrial
     
     if expcond== 1
         title(['Restrained Table' '-' partid],'FontSize',24)
@@ -2505,7 +2526,7 @@ for i=1: length(mtrials)% i = 3
 % %     end
 % % %     
 %       
-      if i ==1
+      if i ==StartingTrial
         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
 
       end
@@ -2524,7 +2545,7 @@ for i=1: length(mtrials)% i = 3
     legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
 
 %     
-    if i ==1
+    if i ==StartingTrial
         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
 %       
     end
