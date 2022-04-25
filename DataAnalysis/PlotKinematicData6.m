@@ -2318,7 +2318,7 @@ StartingTrial =1;
   if i ==StartingTrial
       
        
-     % ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %  ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
 
       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
           xlim(ax1,[-500 600])
@@ -2382,6 +2382,13 @@ StartingTrial =1;
           ylim(ax1,[-150 650])
           axis equal
       end
+                              
+      if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-200 650])
+          axis equal
+      end
                                     
       if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
@@ -2394,6 +2401,13 @@ StartingTrial =1;
           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
           xlim(ax1,[-300 300])
           ylim(ax1,[-100 400])
+          axis equal
+      end
+                                    
+      if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+          xlim(ax1,[-400 600])
+          ylim(ax1,[-200 800])
           axis equal
       end
   end

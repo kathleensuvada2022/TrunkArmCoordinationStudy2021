@@ -308,6 +308,9 @@ j=k; % a part of larger loop outside this function.
         if strcmp(arm,'Right')
             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = roty(180)*TtoG(1:3,1:3);
+        end
     end
 %             
 
@@ -342,7 +345,7 @@ j=k; % a part of larger loop outside this function.
 
 %     
     
-    %Testing Trunk Angle
+%     %Testing Trunk Angle
 %     figure(13)
 %     if j ==1
 %     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
@@ -360,7 +363,7 @@ j=k; % a part of larger loop outside this function.
 %     zlabel('z (mm)')
 %     axis 'equal'
 %     end
-%     
+    
     
     
     if flag ==1
