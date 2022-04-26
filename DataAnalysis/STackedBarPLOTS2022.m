@@ -1,8 +1,6 @@
-%% Stacked Bar plots 
+%% Stacked Bar Plots / Composition of Reach: Stroke
 
 % K. SUVADA April 2022
-
-% Playing with idea of composition of reach. PARETIC LIMB
 
 %% RTIS 2001 - PARETIC
 
@@ -366,3 +364,248 @@ ylabel('% Limb Length','FontSize',14)
 title('Composition of Reach: RTIS2011-Paretic Limb','FontSize',24)
 xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
 ylim([0 60])
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RTIS2001 NonParetic
+
+
+RT = [38.71 2.18 5.56]; % Hand Trunk Shoulder
+R25 = [41.94 1.25 6];
+R50  =[41.52 1.33 6.10];
+
+
+UT = [41.43 3.23 6.70]; 
+U25 = [46.15 2.64 9.31];
+U50 = [45.70 3.53 8.86];
+
+RTRD =93.42;
+R25RD =95.73  ;
+R50RD =95.37;
+UTRD =91.72;
+U25RD = 89.09 ;
+U50RD = 88.46 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2001:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 100])
+%% RTIS 2002 NonParetic
+
+RT = [25.43 1.52 6.93]; % Hand Trunk Shoulder
+R25 = [24.61 .63 4.89];
+R50  =[24.40 .57 4.47];
+
+
+UT = [19.76 3.13 9.35]; 
+U25 = [24.39 2.78 11.55];
+U50 = [23.33 2.43 11.44];
+
+RTRD =94.15;
+R25RD =94.94  ;
+R50RD =93.50;
+UTRD =93.08;
+U25RD = 94.84 ;
+U50RD =95.01 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2002:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 100])
+
+%% RTIS 2003 Non-Paretic
+RT = [43.64 1.93 13.53]; % Hand Trunk Shoulder
+R25 = [44.70 1.54 11.59];
+R50  =[41.85 1.61 10.46];
+
+
+UT = [36.18 2.65 10.64]; 
+U25 = [37.47 3.16 8.69];
+U50 = [34.82 3.17 8.43];
+
+RTRD =97.39;
+R25RD = 98.69 ;
+R50RD =96.85;
+UTRD =96.03;
+U25RD = 97.29 ;
+U50RD =96.45 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2003:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 100])
+
+%% RTIS2006 Non-Paretic
+RT = [59.22 2.18 9.64]; % Hand Trunk Shoulder
+R25 = [48.83 1.66 7.23];
+R50  =[52.45 1.59 7.51];
+
+
+UT = [64.79 1.03 8.55]; 
+U25 = [54.05 1.53 5.08];
+U50 = [54.74 1.73 5.29];
+
+RTRD =100.64;
+R25RD = 100.61 ;
+R50RD =99.85;
+UTRD =100.36;
+U25RD =99.20  ;
+U50RD =99.72 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2006:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
+
+%% RTIS2007 Non-Paretic
+RT = [40.18 1.51 8.52]; % Hand Trunk Shoulder
+R25 = [34.81 .79 5.13];
+R50  =[35.54 .98 5.51];
+
+
+UT = [38.18 1.61 5.90]; 
+U25 = [32.50 3.11 6.25];
+U50 = [33.69 3.61 6.50];
+
+RTRD =90.28;
+R25RD = 88.26  ;
+R50RD =88.88;
+UTRD =89.04;
+U25RD = 88.40;
+U50RD =88.28 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2007:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
+
+%% RTIS2008 Non-Paretic
+RT = [33.28 1.43 4.76]; % Hand Trunk Shoulder
+R25 = [40.42 2.56 5.11];
+R50  =[35.16 1.70 3.18];
+
+
+UT = [33.66 .88 2.21]; 
+U25 = [37.64 3.76 2.42];
+U50 = [43.52 3.72 2.49];
+
+RTRD =97.25;
+R25RD = 100.08 ;
+R50RD =99.63;
+UTRD =93.04;
+U25RD =97.98 ;
+U50RD =96.47 ;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2008:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
