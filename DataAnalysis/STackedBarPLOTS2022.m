@@ -609,3 +609,120 @@ ylabel('% Limb Length','FontSize',14)
 title('Composition of Reach: RTIS2008:Non-Paretic Limb','FontSize',24)
 xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
 ylim([0 105])
+%% RTIS2009 Non-Paretic
+RT = [33.17 2.00 10.41]; % Hand Trunk Shoulder
+R25 = [36.18 1.48 7.69];
+R50  =[34.46 2.04 5.35];
+
+
+UT = [43.42 2.20 8.62]; 
+U25 = [42.59 2.23 4.99];
+U50 = [44.26 2.01 4.16];
+
+RTRD =94.97;
+R25RD = 98.13 ;
+R50RD =97.28;
+UTRD =94.24;
+U25RD = 96.78;
+U50RD = 96.58;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2009:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
+%% RTIS2010 Non-Paretic
+RT = [42.00 .83 6.70]; % Hand Trunk Shoulder
+R25 = [48.03 2.54 8.61];
+R50  =[48.14 1.06 8.52];
+
+
+UT = [47.93 4.71 9.25]; 
+U25 = [39.85 4.15 5.34];
+U50 = [36.62 2.47 7.17];
+
+RTRD =95.18;
+R25RD = 95.76 ;
+R50RD =94.35;
+UTRD =93.79;
+U25RD = 94.13;
+U50RD =93.24;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2010:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
+%% RTIS2011 Non-Paretic
+RT = [36.61 .85 8.56]; % Hand Trunk Shoulder
+R25 = [39.15 .65 7.55];
+R50  =[36.97 1.50 5.95];
+
+
+UT = [39.23 1.39 7.52]; 
+U25 = [36.66 1.09 5.26];
+U50 = [35.11 3.02 5.30];
+
+RTRD =93.90;
+R25RD =92.79  ;
+R50RD =91.74;
+UTRD =90.61;
+U25RD = 88.81;
+U50RD =87.64;
+
+
+y = [RT; UT; R25; U25;R50;U50];
+b1 = bar(y,'stacked')
+hold on
+yline(50,'--')
+
+plot(1,RTRD,'ro-')
+plot(2,UTRD,'ro-')
+p1 = plot([1 2],[RTRD,UTRD],'m','LineWidth',2)
+plot(3,R25RD,'ro-')
+plot(4,U25RD,'ro-')
+p2= plot([3 4],[R25RD,U25RD],'c','LineWidth',2)
+plot(5,R50RD,'ro-')
+plot(6,U50RD,'ro-')
+p3= plot([5 6],[R50RD,U50RD],'g','LineWidth',2)
+
+%legend('Hand Contribution','Trunk Contribution','Shoulder Contribution',[p1 p2 p3], 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+legend( [p1 p2 p3 b1],'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','Hand Contribution','Trunk Contribution','Shoulder Contribution','50% Limb Length','FontSize',16)
+ylabel('% Limb Length','FontSize',14)
+title('Composition of Reach: RTIS2011:Non-Paretic Limb','FontSize',24)
+xticklabels({'Table- Restrained','Table- Unrestrained','25%- Restrained','25%- Unrestrained','50%- Restrained','50%- Unrestrained','FontSize',16})
+ylim([0 105])
