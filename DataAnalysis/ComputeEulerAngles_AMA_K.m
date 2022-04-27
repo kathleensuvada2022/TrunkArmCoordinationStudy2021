@@ -335,6 +335,20 @@ j=k; % a part of larger loop outside this function.
         end
     end
     
+                        
+    if strcmp(partid,'RTIS1003')
+        if strcmp(arm,'Left')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+        end
+    end
+    
+    
+    if strcmp(partid,'RTIS1006')
+        
+        TtoG(1:3,1:3) = roty(180)*TtoG(1:3,1:3);
+        TtoG(1:3,1:3) = rotz(45)*TtoG(1:3,1:3);
+
+    end
     
     TtoG_frame = TtoG; %trunk CS in global at given frame of trial
     StoG_frame = StoG; %SH CS in global at given frame of trial
@@ -345,7 +359,7 @@ j=k; % a part of larger loop outside this function.
 
 %     
     
-%     %Testing Trunk Angle
+% %     %Testing Trunk Angle
 %     figure(13)
 %     if j ==1
 %     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
@@ -363,7 +377,7 @@ j=k; % a part of larger loop outside this function.
 %     zlabel('z (mm)')
 %     axis 'equal'
 %     end
-    
+%     
     
     
     if flag ==1

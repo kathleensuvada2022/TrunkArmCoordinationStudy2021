@@ -88,8 +88,8 @@ for i=1: length(mtrials)% i = 3
     % For mass data sheet saving data
     if i==1
         % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+       % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -2314,17 +2314,51 @@ for i=1: length(mtrials)% i = 3
 % %   %   clf
 % %   
 
-StartingTrial =1;
+StartingTrial = 1;
   if i ==StartingTrial
       
        
-    %  ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+      %ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
+      if strcmp(partid,'RTIS1003') 
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
+          xlim(ax1,[-400 400])
+          ylim(ax1,[-50 800])
+          axis equal
+      end
+      
+      if strcmp(partid,'RTIS1004') 
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
+          xlim(ax1,[-600 300])
+          ylim(ax1,[-100 700])
+          axis equal
+      end
+            
+      if strcmp(partid,'RTIS1005') 
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
+          xlim(ax1,[-400 600])
+          ylim(ax1,[-200 800])
+          axis equal
+      end
+                  
+      if strcmp(partid,'RTIS1006') 
+          ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+
+          xlim(ax1,[-300 300])
+          ylim(ax1,[-100 700])
+          axis equal
+      end
 
       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
           xlim(ax1,[-500 600])
           ylim(ax1,[-100 700])
           axis equal
       end
+      
+
             
       if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
@@ -2487,7 +2521,7 @@ StartingTrial =1;
 %     
     if i ==StartingTrial
    circle(xhand(idx(1),1),xhand(idx(1),2),50)
-  % circle(-238,356,50)
+ %  circle(-209,344,50)
     end
     axis equal
     
