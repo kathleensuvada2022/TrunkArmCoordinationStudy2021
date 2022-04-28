@@ -2614,11 +2614,14 @@ StartingTrial = 1;
 %     
 
     %% Calling COP Function
-    %   ppsdata =data.pps;
+       ppsdata =data.pps;
     %   tpps = data.pps{1,1};
     %   ppsdata= ppsdata{1,2};
     %   ppsdata = ppsdata(1:mridx,:); % cutting off at max reach
-    %  [CoP2]= ComputeCOP(ppsdata,tpps);
+      [CoP2]= ComputeCOP(ppsdata,tpps);
+    
+    
+    return
 %% Saving Data to matrix 
 
 
