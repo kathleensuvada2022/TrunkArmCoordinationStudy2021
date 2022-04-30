@@ -2646,24 +2646,24 @@ for i=1: length(mtrials)% i = 3
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
 % Adding Outcome Measures to Data Matrix
-trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
-FinalRow = trialrow(Currentrow);
+% trialrow =   find(strcmp(DataMatrix(:,3),mfname));
+% Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
+% FinalRow = trialrow(Currentrow);
+% 
+% DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,10} = shex_current_trial(i);
+% DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,8} =  trex_current_trial(i);
+% DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+% DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+% DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+% DataMatrix{FinalRow,2} = expcond;
+% 
 
-DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,10} = shex_current_trial(i);
-DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,8} =  trex_current_trial(i);
-DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-DataMatrix{FinalRow,2} = expcond;
-
-
- %  pause
-  % close all
+   pause
+   close all
 
 
 

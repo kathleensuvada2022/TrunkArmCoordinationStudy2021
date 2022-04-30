@@ -25,6 +25,12 @@ end_samp_M1= round(t_end*13.5);
 start_samp_M2= round(t_start*14);
 end_samp_M2= round(t_end*14);
 
+ %% Kacey playing with baseline subtraction
+% avgbaseline = mean(baseline);
+% 
+% for i = 1:size(trialdata,1)
+% SubBaseline(i,i) = trialdata(i,i) - avgbaseline(i);
+% end
 
 %%  Making the pps data matrix have all positive values
 
@@ -75,41 +81,43 @@ CoP2(:,2) = 16- CoP2(:,2);
 
 
 
-deltax = CoP2(end,1)-CoP2(1,1) % change in x in cm
+deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
 
-deltay =CoP2(end,2)-CoP2(1,2) % change in y in cm
+deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 
-%% Normal Scaling For Loop Plotting Pressure Data Mat 1
+%% Normal Scaling For Loop Plotting Pressure Data Mat 1 and 2 
 %
 % %For video uncomment if needed
 %    %     v = VideoWriter('pps.avi');
 %   %      open(v);
 % figure(3), clf
-%     for i =1:nframes
-%
-%
-% %          %Mat 1
-% %          imagesc(.5,.5,Pressuremat1_frame(:,:,i))
-% %         hold on
-% %          plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-% %
-% %
-%          %Mat 2
-%          imagesc(.5,.5,Pressuremat2_frame(:,:,i),[5 8])
-%          hold on
-%          plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-%
-%
-%          %colormap(hot)
-%          %colormap(turbo)
-%          colorbar
-%
-%    %     frame = getframe(gcf);% for video uncomment if want
-%    %     writeVideo(v,frame);% for video uncomment if want
-%           pause(.1)
-%
-%        end
-%    %      close(v); %for video uncomment if want
+% for i =1:nframes
+%     %
+%     subplot(2,1,1)
+%     %Mat 1
+%     imagesc(.5,.5,Pressuremat1_frame(:,:,i),[0 3])
+%     hold on
+%     plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+%     title('Mat 1')
+%     colorbar
+%     % % %
+%     subplot(2,1,2)
+%     %Mat 2
+%     imagesc(.5,.5,Pressuremat2_frame(:,:,i),[0 3])
+%     hold on
+%     plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+%     title('Mat 2')
+%     %
+% %               colormap(hot)
+%               colormap(turbo)
+%     colorbar
+%     %
+%     %    %     frame = getframe(gcf);% for video uncomment if want
+%     %    %     writeVideo(v,frame);% for video uncomment if want
+%     %           pause(.1)
+%     %
+% end
+% %    %      close(v); %for video uncomment if want
 %
 %
 
@@ -117,8 +125,9 @@ deltay =CoP2(end,2)-CoP2(1,2) % change in y in cm
 %% Plotting the Center of Pressure Changes
 
 figure(6)
-
-h1 = plot(CoP2(:,1)*10,-CoP2(:,2)*10,'LineWidth',2);
+subplot(2,1,1)
+h1 = plot(CoP1(:,1)*10,-CoP1(:,2)*10,'LineWidth',2);
+hold on
 xlabel('Postion in X (mm)','FontSize',16)
 ylabel('Position in Y (mm)','FontSize',16)
 yl = ylim;
@@ -127,12 +136,29 @@ rangex = (xl(2)-xl(1));
 rangey = (yl(2)-yl(1));
 % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP2(1,1)*10,-CoP2(1,2)*10],.01,'Color','g');
-c2= viscircles([CoP2(end,1)*10,-CoP2(end,2)*10],.01,'Color','r');
+c1= viscircles([CoP1(1,1)*10,-CoP1(1,2)*10],.01,'Color','g');
+c2= viscircles([CoP1(end,1)*10,-CoP1(end,2)*10],.01,'Color','r');
 set(h1,'Color',[0 0.4470 0.7410]);
-
+title('COP shifts for Mat1 ')
 axis equal
-%pause
+
+subplot(2,1,2)
+h1 = plot(CoP2(:,1)*10,-CoP2(:,2)*10,'LineWidth',2);
+hold on
+xlabel('Postion in X (mm)','FontSize',16)
+ylabel('Position in Y (mm)','FontSize',16)
+yl = ylim;
+xl= xlim;
+rangex = (xl(2)-xl(1));
+rangey = (yl(2)-yl(1));
+% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+hold on
+c1= viscircles([CoP2(1,1)*10,CoP2(1,2)*10],.01,'Color','g');
+c2= viscircles([CoP2(end,1)*10,CoP2(end,2)*10],.01,'Color','r');
+set(h1,'Color',[0 0.4470 0.7410]);
+title('COP shifts for Mat 2')
+axis equal
+
 %% Plotting COP and Pressure for Mat 2- smaller scaling
 
 %Location in x and y where the COP is for all frames of the trial
@@ -142,90 +168,116 @@ element_idx= round([CoP2(:,1) CoP2(:,2)]);
 scalingsize = 64;
 scalingfactor =4 ;
 
-% I new data matrix (64x64xnimages) - increase resolution
-I = zeros(scalingsize,scalingsize,nframes);
+% I1 (mat 1) new data matrix (64x64xnimages) - increase resolution
+I1 = zeros(scalingsize,scalingsize,nframes);
 for i = 1:nframes
-I(:,:,i) = imresize(Pressuremat2_frame(:,:,i),scalingfactor); 
+I1(:,:,i) = imresize(Pressuremat1_frame(:,:,i),scalingfactor); 
 end
+
+% I2 (mat 2) new data matrix (64x64xnimages) - increase resolution
+I2 = zeros(scalingsize,scalingsize,nframes);
+for i = 1:nframes
+I2(:,:,i) = imresize(Pressuremat2_frame(:,:,i),scalingfactor); 
+end
+
+
+
+
+
 %%
 
+% Mat 1
 % Finding the minimum for each frame of new data martrix I
 for h = 1:nframes
-min_I = min(I(:,:,h));
-min_I(h) = min(min_I);
+min_I1 = min(I1(:,:,h));
+min_I1(h) = min(min_I1);
 end
 
 %using the absolute minimum from all frames because then it resets the colormap basically for each frame (flashing)
 
-min_I = min(min_I);
+min_I1 = min(min_I1);
 
-%%
-for i =start_samp_M2:end_samp_M2
+
+% Mat 2
+% Finding the minimum for each frame of new data martrix I
+for h = 1:nframes
+min_I2 = min(I2(:,:,h));
+min_I2(h) = min(min_I2);
+end
+
+%using the absolute minimum from all frames because then it resets the colormap basically for each frame (flashing)
+
+min_I2 = min(min_I2);
+
+
+%% Plotting Higher Resolution
+for i =1: size(I1,3)
+    figure(16)
     clf
     
     % creating where the COP is multiply by 4 (scaling factor)
-    I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15;
+%     I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15;
     
-    
+    subplot(2,1,1)
     % Needed to add min to adjust colormap issues
-    imagesc(I(:,:,i)+abs(min_I),[0 2.95])
+    imagesc(flipud(I1(:,:,i)+abs(min_I1)),[0 2.8])
+  
+   % imagesc(I(:,:,i))
+    title('Pressure Mat 1 Pressure Values')
+    xlabel('X position')
+    ylabel('Y position')
+    colorbar
+  
+    subplot(2,1,2)
+    % Needed to add min to adjust colormap issues
+    imagesc(flipud(I2(:,:,i)+abs(min_I2)),[0 2.8])
   
    % imagesc(I(:,:,i))
     title('Pressure Mat 2 Pressure Values')
     xlabel('X position')
     ylabel('Y position')
     colorbar
-    %         hold on
-    %         plot(CoP1(i,1),CoP1(i,2),'*')
-    pause(.1)
+
     
+
+    
+    
+    pause(.0001)
+    
+ 
 end
 
 
 
 %% Video way  with smaller pixels
-%
-element_idx = round([CoP1(i,1) CoP1(i,2)]); % don't think need .5 since used above to calculate it?
-Pressuremat1_frame(element_idx(1),element_idx(2),i) = -15;
-
-% Just using IMAGESC will plot through all the frames pressure data
-I = zeros(64,64,nframes);
-for i = 1:nframes
-I(:,:,i) = imresize(Pressuremat1_frame(:,:,i),4); %use to alter resolution: bigger number smaller pixels
-end
 
 
 
-        v = VideoWriter('pps.avi');
-        open(v);
 
-%    get max across all frames and min to set colorbar range
-   % want colorbar to stay the same across frames... need to find the max and min ofwhole trial all frames
-%
-%imagesc(___,clims) specifies the data values that map to the first and last elements of the colormap. Specify clims as a two-element vector of the form [cmin cmax],
-
-
-%         ppsmaxreachindx = maxreach_seconds*39.5;  %scan rate of pressure mats is 13.5 HZ
-        for i=1:nframes
-
-%          imagesc(I(:,:,i),[-15 -2])
-
-          imagesc(I(:,:,i)+abs(min_I),[0 3])
-
-         title('Pressure Mat Pressure Values with COP')
-         xlabel('X position')
-         ylabel('Y position')
-         colorbar
-%             colormap(hot)
-          %    colormap(turbo)
-
-
-           frame = getframe(gcf);
-             writeVideo(v,frame);
-             pause(.1)
-
-        end
-        close(v);
+% v = VideoWriter('pps.avi');
+% open(v);
+% 
+% 
+% for i=1:nframes
+%     
+%     
+%     imagesc(I1(:,:,i)+abs(min_I1),[0 3])
+%     
+%     title('Pressure Mat 1 Pressure Values with COP')
+%     xlabel('X position')
+%     ylabel('Y position')
+%     colorbar
+%     %             colormap(hot)
+%     %    colormap(turbo)
+%     
+%     
+%     frame = getframe(gcf);
+%     writeVideo(v,frame);
+%     pause(.1)
+%     
+% %     i
+% end
+% close(v);
 
 
 %% Testing COP calculation
