@@ -143,18 +143,20 @@ title('COP shifts for Mat1 ')
 axis equal
 
 subplot(2,1,2)
-h1 = plot(CoP2(:,1)*10,-CoP2(:,2)*10,'LineWidth',2);
 hold on
+h1 = plot(CoP2(:,1)*10,-CoP2(:,2)*10,'LineWidth',2);
 xlabel('Postion in X (mm)','FontSize',16)
 ylabel('Position in Y (mm)','FontSize',16)
+yl = ylim;
+xl= xlim;
 yl = ylim;
 xl= xlim;
 rangex = (xl(2)-xl(1));
 rangey = (yl(2)-yl(1));
 % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP2(1,1)*10,CoP2(1,2)*10],.01,'Color','g');
-c2= viscircles([CoP2(end,1)*10,CoP2(end,2)*10],.01,'Color','r');
+c1= viscircles([CoP2(1,1)*10,-CoP2(1,2)*10],.01,'Color','g');
+c2= viscircles([CoP2(end,1)*10,-CoP2(end,2)*10],.01,'Color','r');
 set(h1,'Color',[0 0.4470 0.7410]);
 title('COP shifts for Mat 2')
 axis equal
@@ -209,6 +211,7 @@ end
 
 min_I2 = min(min_I2);
 
+return
 
 %% Plotting Higher Resolution
 for i =1: size(I1,3)
