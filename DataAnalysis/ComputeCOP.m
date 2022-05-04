@@ -13,7 +13,7 @@
 %OUTPUTS:
 
 
-function ComputeCOP(ppsdata,tpps,t_start,t_end);
+function ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
 close all 
 
 %Finding start/stop samples for each mat
@@ -85,41 +85,61 @@ deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
 
 deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 
+%% Filtering out artifact bands- May 2022
+
+% RTIS2003- Paretic
+if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+   for p = 1: nframes
+    % Pressure mat 1
+    avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+    Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+   
+    % Pressure mat 2
+    avg_mat2(p,:) = mean(Pressuremat2_frame(:,:,p)); % Average of each column
+%     Abs_avg_mat2 = mean(avg_mat2);
+   end
+
+end
+
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1 and 2 
 %
 % %For video uncomment if needed
 %    %     v = VideoWriter('pps.avi');
 %   %      open(v);
-% figure(3), clf
-% for i =1:nframes
-%     %
-%     subplot(2,1,1)
-%     %Mat 1
-%     imagesc(.5,.5,Pressuremat1_frame(:,:,i),[0 3])
-%     hold on
+figure(3), clf
+for i =1:nframes
+    %
+    subplot(2,1,1)
+    %Mat 1
+    imagesc(.5,.5,Pressuremat1_frame(:,:,i))
+    hold on
 %     plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-%     title('Mat 1')
-%     colorbar
-%     % % %
-%     subplot(2,1,2)
-%     %Mat 2
-%     imagesc(.5,.5,Pressuremat2_frame(:,:,i),[0 3])
-%     hold on
-%     plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
-%     title('Mat 2')
-%     %
-% %               colormap(hot)
+    title('Mat 1')
+    colorbar
+    % % %
+    subplot(2,1,2)
+    %Mat 2
+    imagesc(.5,.5,Pressuremat2_frame(:,:,i),[0 3])
+    hold on
+    plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+    title('Mat 2')
+    %
+%               colormap(hot)
 %               colormap(turbo)
-%     colorbar
-%     %
-%     %    %     frame = getframe(gcf);% for video uncomment if want
-%     %    %     writeVideo(v,frame);% for video uncomment if want
-%     %           pause(.1)
-%     %
-% end
+    colorbar
+    %
+    %    %     frame = getframe(gcf);% for video uncomment if want
+    %    %     writeVideo(v,frame);% for video uncomment if want
+    %           pause(.1)
+    %
+end
 % %    %      close(v); %for video uncomment if want
 %
 %
+
+
 
 
 %% Plotting the Center of Pressure Changes

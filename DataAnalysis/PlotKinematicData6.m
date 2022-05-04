@@ -2632,7 +2632,7 @@ for i=1: length(mtrials)% i = 3
        t_start = t(idx(1));
        t_end = t(idx(3));
        
-       ComputeCOP(ppsdata,tpps,t_start,t_end);
+       ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
     
     
     
