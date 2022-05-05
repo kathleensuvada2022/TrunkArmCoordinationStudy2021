@@ -15,7 +15,41 @@
 
 function ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
 close all 
+%% Plotting Raw Data and Baseline File
 
+%Loading in PPS baseline file 
+
+datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
+load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+
+baseline_mat1 = data(:,1:256);
+baseline_mat2 = data(:,257:end);
+baseline_t = t;
+
+figure(15)
+clf
+subplot(2,1,1)
+plot(t,baseline_mat1)
+title('Mat 1 Element Values during PPS Initialization')
+
+subplot(2,1,2)
+plot(t,baseline_mat2)
+title('Mat 2 Element Values during PPS Initialization')
+
+
+figure(16)
+clf
+subplot(2,1,1)
+plot(tpps,ppsdata(:,1:256))
+title('Mat 1 Element Values during Trial')
+subplot(2,1,2)
+plot(tpps,ppsdata(:,257:end))
+title('Mat 2 Element Values during Trial')
+
+pause
+
+return
+%%
 %Finding start/stop samples for each mat
 % Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
 
@@ -25,12 +59,6 @@ end_samp_M1= round(t_end*13.5);
 start_samp_M2= round(t_start*14);
 end_samp_M2= round(t_end*14);
 
- %% Kacey playing with baseline subtraction
-% avgbaseline = mean(baseline);
-% 
-% for i = 1:size(trialdata,1)
-% SubBaseline(i,i) = trialdata(i,i) - avgbaseline(i);
-% end
 
 %%  Making the pps data matrix have all positive values
 
@@ -103,7 +131,7 @@ deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 
         if isempty(Artifact_Cols)
         else
-            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+            Pressuremat1_frame(:,Artifact_Cols,p) =nan;
         end
 
         % Pressure mat 2
@@ -115,7 +143,7 @@ deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
         if isempty(Artifact_Cols)
 
         else
-            Pressuremat2_frame(:,Artifact_Cols,p) =0;
+            Pressuremat2_frame(:,Artifact_Cols,p) =nan;
 
         end
     end
@@ -136,13 +164,13 @@ deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 
         if isempty(Artifact_Cols)
         else
-            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+            Pressuremat1_frame(:,Artifact_Cols,p) =nan;
         end
     end 
     % Pressure mat 2
 
 
-    Pressuremat2_frame(:,6,:) =0;
+    Pressuremat2_frame(:,6,:) =nan;
 
 end
 
@@ -163,7 +191,7 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
 
         if isempty(Artifact_Cols)
         else
-            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+            Pressuremat1_frame(:,Artifact_Cols,p) =nan;
         end
 
         % Pressure mat 2
@@ -175,15 +203,111 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         if isempty(Artifact_Cols)
 
         else
-            Pressuremat2_frame(:,Artifact_Cols,p) =0;
+            Pressuremat2_frame(:,Artifact_Cols,p) =nan;
+
+        end
+    end
+end
+
+if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+    for p = 1: nframes
+
+        % Pressure mat 1
+        avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+        Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+
+        Artifact_Cols = find (avg_mat1(p,:) > 2*Abs_avg_mat1(p));
+
+        if isempty(Artifact_Cols)
+        else
+            Pressuremat1_frame(:,Artifact_Cols,p) =nan;
+        end
+
+        % Pressure mat 2
+        avg_mat2(p,:) = mean(Pressuremat2_frame(:,:,p)); % Average of each column
+        Abs_avg_mat2(p) = mean(avg_mat2(p,:));
+
+        Artifact_Cols = find (avg_mat2(p,:) > 2*Abs_avg_mat2(p));
+
+        if isempty(Artifact_Cols)
+
+        else
+            Pressuremat2_frame(:,Artifact_Cols,p) =nan;
+
+        end
+    end
+end
+ if strcmp(partid,'RTIS2009') && strcmp(hand,'Left') %Horizontal Bar Artifacts
+%     avg_mat1 = zeros(16,nframes);
+%     avg_mat2 = zeros(16,nframes);
+    for p = 1: nframes
+
+        % Pressure mat 1
+%         avg_mat1(:,p) = mean(Pressuremat1_frame(:,:,p),2); % Average of each column across all time nframes X 16 cols
+%         Abs_avg_mat1(p) = mean(avg_mat1(:,p));
+% 
+%         Artifact_Cols = find (avg_mat1(:,p) > 2*Abs_avg_mat1(p));
+
+%         if isempty(Artifact_Cols)
+%         else
+            Pressuremat1_frame(9,:,p) =nan; % Needed to manually do 
+            Pressuremat1_frame(4,:,p) =nan; % Needed to manually do
+%         end
+
+%         % Pressure mat 2
+%         avg_mat2(:,p) = mean(Pressuremat2_frame(:,:,p),2); % Average of each column
+%         Abs_avg_mat2(p) = mean(avg_mat2(:,p));
+% 
+%         Artifact_Cols = find (avg_mat2(:,p) > 2*Abs_avg_mat2(p));
+% 
+%         if isempty(Artifact_Cols)
+% 
+%         else
+%             Pressuremat2_frame(Artifact_Cols,:,p) =0;
+% 
+%         end
+    end
+%    Pressuremat1_frame(:,:,:) = - Pressuremat1_frame(:,:,:);
+
+end
+   
+if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+    for p = 1: nframes
+
+        % Pressure mat 1
+        avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+        Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+
+        Artifact_Cols = find (avg_mat1(p,:) > 2*Abs_avg_mat1(p));
+
+        if isempty(Artifact_Cols)
+        else
+            Pressuremat1_frame(:,Artifact_Cols,p) =nan;
+        end
+
+        % Pressure mat 2
+        avg_mat2(p,:) = mean(Pressuremat2_frame(:,:,p)); % Average of each column
+        Abs_avg_mat2(p) = mean(avg_mat2(p,:));
+
+        Artifact_Cols = find (avg_mat2(p,:) > 2*Abs_avg_mat2(p));
+
+        if isempty(Artifact_Cols)
+
+        else
+            Pressuremat2_frame(:,Artifact_Cols,p) =nan;
 
         end
     end
 end
 
 
-   
-
+if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+    Pressuremat2_frame(4,:,:) =nan;
+end
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1 and 2 
 %
 % %For video uncomment if needed
@@ -194,7 +318,7 @@ end
 %     %
 %     subplot(2,1,1)
 %     %Mat 1
-%      imagesc(.5,.5,Pressuremat1_frame(:,:,i))
+%        imagesc(.5,.5,Pressuremat1_frame(:,:,i))
 %     hold on
 % %     plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
 %     title('Mat 1')
@@ -202,7 +326,7 @@ end
 %     % % %
 %     subplot(2,1,2)
 %     %Mat 2
-%      imagesc(.5,.5,Pressuremat2_frame(:,:,i))
+%       imagesc(.5,.5,Pressuremat2_frame(:,:,i))
 %     hold on
 %     plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
 %     title('Mat 2')
