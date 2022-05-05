@@ -13,7 +13,7 @@
 %OUTPUTS:
 
 
-function ComputeCOP(ppsdata,tpps,t_start,t_end);
+function ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
 close all 
 
 %Finding start/stop samples for each mat
@@ -85,31 +85,130 @@ deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
 
 deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 
+%% Filtering out artifact bands- May 2022
+
+% RTIS2003- Paretic : artifacts in columns. Finds columns where 2x average and sets
+% to 0.
+ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+%if strcmp(partid,'RTIS2003')
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+    for p = 1: nframes
+
+        % Pressure mat 1
+        avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+        Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+
+        Artifact_Cols = find (avg_mat1(p,:) > 2*Abs_avg_mat1(p));
+
+        if isempty(Artifact_Cols)
+        else
+            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+        end
+
+        % Pressure mat 2
+        avg_mat2(p,:) = mean(Pressuremat2_frame(:,:,p)); % Average of each column
+        Abs_avg_mat2(p) = mean(avg_mat2(p,:));
+
+        Artifact_Cols = find (avg_mat2(p,:) > 2*Abs_avg_mat2(p));
+
+        if isempty(Artifact_Cols)
+
+        else
+            Pressuremat2_frame(:,Artifact_Cols,p) =0;
+
+        end
+    end
+
+ end
+ 
+ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
+
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+    for p = 1: nframes
+
+        % Pressure mat 1
+        avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+        Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+
+        Artifact_Cols = find (avg_mat1(p,:) > 2*Abs_avg_mat1(p));
+
+        if isempty(Artifact_Cols)
+        else
+            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+        end
+    end 
+    % Pressure mat 2
+
+
+    Pressuremat2_frame(:,6,:) =0;
+
+end
+
+
+
+
+
+if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+    avg_mat1 = zeros(nframes,16);
+    avg_mat2 = zeros(nframes,16);
+    for p = 1: nframes
+
+        % Pressure mat 1
+        avg_mat1(p,:) = mean(Pressuremat1_frame(:,:,p)); % Average of each column across all time nframes X 16 cols
+        Abs_avg_mat1(p) = mean(avg_mat1(p,:));
+
+        Artifact_Cols = find (avg_mat1(p,:) > 2*Abs_avg_mat1(p));
+
+        if isempty(Artifact_Cols)
+        else
+            Pressuremat1_frame(:,Artifact_Cols,p) =0;
+        end
+
+        % Pressure mat 2
+        avg_mat2(p,:) = mean(Pressuremat2_frame(:,:,p)); % Average of each column
+        Abs_avg_mat2(p) = mean(avg_mat2(p,:));
+
+        Artifact_Cols = find (avg_mat2(p,:) > 2*Abs_avg_mat2(p));
+
+        if isempty(Artifact_Cols)
+
+        else
+            Pressuremat2_frame(:,Artifact_Cols,p) =0;
+
+        end
+    end
+end
+
+
+   
+
 %% Normal Scaling For Loop Plotting Pressure Data Mat 1 and 2 
 %
 % %For video uncomment if needed
 %    %     v = VideoWriter('pps.avi');
 %   %      open(v);
 % figure(3), clf
-% for i =1:nframes
+% % for i =1:nframes
 %     %
 %     subplot(2,1,1)
 %     %Mat 1
-%     imagesc(.5,.5,Pressuremat1_frame(:,:,i),[0 3])
+%      imagesc(.5,.5,Pressuremat1_frame(:,:,i))
 %     hold on
-%     plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
+% %     plot(CoP1(i,1),CoP1(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
 %     title('Mat 1')
 %     colorbar
 %     % % %
 %     subplot(2,1,2)
 %     %Mat 2
-%     imagesc(.5,.5,Pressuremat2_frame(:,:,i),[0 3])
+%      imagesc(.5,.5,Pressuremat2_frame(:,:,i))
 %     hold on
 %     plot(CoP2(i,1),CoP2(i,2),'s','MarkerFaceColor','k','MarkerSize',16)
 %     title('Mat 2')
-%     %
+% %     %
 % %               colormap(hot)
-%               colormap(turbo)
+% %               colormap(turbo)
 %     colorbar
 %     %
 %     %    %     frame = getframe(gcf);% for video uncomment if want
@@ -117,16 +216,58 @@ deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
 %     %           pause(.1)
 %     %
 % end
-% %    %      close(v); %for video uncomment if want
-%
-%
+% % %    %      close(v); %for video uncomment if want
+% %
+% %
+% 
+% 
 
 
 %% Plotting the Center of Pressure Changes
 
+% Whole trial
+% figure(6)
+% subplot(2,1,1)
+% h1 = plot(CoP1(:,1)*10,CoP1(:,2)*10,'LineWidth',2);
+% hold on
+% xlabel('Postion in X (mm)','FontSize',16)
+% ylabel('Position in Y (mm)','FontSize',16)
+% yl = ylim;
+% xl= xlim;
+% rangex = (xl(2)-xl(1));
+% rangey = (yl(2)-yl(1));
+% % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+% hold on
+% c1= viscircles([CoP1(1,1)*10,CoP1(1,2)*10],.01,'Color','g');
+% c2= viscircles([CoP1(end,1)*10,CoP1(end,2)*10],.01,'Color','r');
+% set(h1,'Color',[0 0.4470 0.7410]);
+% title('COP shifts for Mat1 ')
+% axis equal
+% 
+% subplot(2,1,2)
+% hold on
+% h1 = plot(CoP2(:,1)*10,CoP2(:,2)*10,'LineWidth',2);
+% xlabel('Postion in X (mm)','FontSize',16)
+% ylabel('Position in Y (mm)','FontSize',16)
+% yl = ylim;
+% xl= xlim;
+% yl = ylim;
+% xl= xlim;
+% rangex = (xl(2)-xl(1));
+% rangey = (yl(2)-yl(1));
+% % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+% hold on
+% c1= viscircles([CoP2(1,1)*10,CoP2(1,2)*10],.01,'Color','g');
+% c2= viscircles([CoP2(end,1)*10,CoP2(end,2)*10],.01,'Color','r');
+% set(h1,'Color',[0 0.4470 0.7410]);
+% title('COP shifts for Mat 2')
+% axis equal
+
+
+% Cut 
 figure(6)
 subplot(2,1,1)
-h1 = plot(CoP1(:,1)*10,-CoP1(:,2)*10,'LineWidth',2);
+h1 = plot(CoP1(start_samp_M1: end_samp_M2,1)*10,CoP1(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
 hold on
 xlabel('Postion in X (mm)','FontSize',16)
 ylabel('Position in Y (mm)','FontSize',16)
@@ -136,30 +277,34 @@ rangex = (xl(2)-xl(1));
 rangey = (yl(2)-yl(1));
 % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP1(1,1)*10,-CoP1(1,2)*10],.01,'Color','g');
-c2= viscircles([CoP1(end,1)*10,-CoP1(end,2)*10],.01,'Color','r');
+c1= viscircles([CoP1(start_samp_M1,1)*10,CoP1(start_samp_M1,2)*10],.01,'Color','g');
+c2= viscircles([CoP1(end_samp_M2,1)*10,CoP1(end_samp_M2,2)*10],.01,'Color','r');
 set(h1,'Color',[0 0.4470 0.7410]);
 title('COP shifts for Mat1 ')
 axis equal
 
+
 subplot(2,1,2)
-h1 = plot(CoP2(:,1)*10,-CoP2(:,2)*10,'LineWidth',2);
 hold on
+h1 = plot(CoP2(start_samp_M1: end_samp_M2,1)*10,CoP2(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
 xlabel('Postion in X (mm)','FontSize',16)
 ylabel('Position in Y (mm)','FontSize',16)
+yl = ylim;
+xl= xlim;
 yl = ylim;
 xl= xlim;
 rangex = (xl(2)-xl(1));
 rangey = (yl(2)-yl(1));
 % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP2(1,1)*10,CoP2(1,2)*10],.01,'Color','g');
-c2= viscircles([CoP2(end,1)*10,CoP2(end,2)*10],.01,'Color','r');
+c1= viscircles([CoP2(start_samp_M1,1)*10,CoP2(start_samp_M1,2)*10],.01,'Color','g');
+c2= viscircles([CoP2( end_samp_M2,1)*10,CoP2( end_samp_M2,2)*10],.01,'Color','r');
 set(h1,'Color',[0 0.4470 0.7410]);
 title('COP shifts for Mat 2')
 axis equal
 
-%% Plotting COP and Pressure for Mat 2- smaller scaling
+
+%% Creating Greater Resolution 
 
 %Location in x and y where the COP is for all frames of the trial
 element_idx= round([CoP2(:,1) CoP2(:,2)]); 
@@ -186,6 +331,9 @@ end
 
 %%
 
+% April 2022- Kacey not sure what need this for?? commented out for
+% plotting
+
 % Mat 1
 % Finding the minimum for each frame of new data martrix I
 for h = 1:nframes
@@ -209,18 +357,29 @@ end
 
 min_I2 = min(min_I2);
 
+% return
 
 %% Plotting Higher Resolution
-for i =1: size(I1,3)
+for i =start_samp_M1: end_samp_M2
     figure(16)
     clf
     
-    % creating where the COP is multiply by 4 (scaling factor)
-%     I(element_idx(i,2)*4,element_idx(i,1)*4,i) = -15;
-    
     subplot(2,1,1)
+
+    %     if i == start_samp_M1
+%         max_press1 = max(max(I1(:,:,i)+abs(min_I1)));
+%         min_press1 = min(min(I1(:,:,i)+abs(min_I1)));
+%     end
+
+    if i == start_samp_M1 % for colorbar
+        max_press1 = max(max(I1(:,:,i)));
+        min_press1 = min(min(I1(:,:,i)));
+    end
+
+
     % Needed to add min to adjust colormap issues
-    imagesc(flipud(I1(:,:,i)+abs(min_I1)),[0 2.8])
+  %   imagesc(I1(:,:,i)+abs(min_I1),[min_press1 max_press1])
+    imagesc(I1(:,:,i),[min_press1 max_press1])
   
    % imagesc(I(:,:,i))
     title('Pressure Mat 1 Pressure Values')
@@ -229,8 +388,21 @@ for i =1: size(I1,3)
     colorbar
   
     subplot(2,1,2)
-    % Needed to add min to adjust colormap issues
-    imagesc(flipud(I2(:,:,i)+abs(min_I2)),[0 2.8])
+%     if i == start_samp_M1
+%         max_press2 = max(max(I2(:,:,i)+abs(min_I2)));
+%         min_press2 = min(min(I2(:,:,i)+abs(min_I2)));
+% 
+%     end
+
+    if i == start_samp_M1  % for colorbar range
+        max_press2 = max(max(I2(:,:,i)));
+        min_press2 = min(min(I2(:,:,i)));
+
+    end
+
+    % Needed to add min to adjust colormap issues 2021
+%     imagesc(I2(:,:,i)+abs(min_I2),[ min_press2  max_press2])
+     imagesc(I2(:,:,i),[ min_press2  max_press2]) %looks fine on own now April 2022 KCS adjusted color bar mins/maxes
   
    % imagesc(I(:,:,i))
     title('Pressure Mat 2 Pressure Values')
@@ -238,11 +410,9 @@ for i =1: size(I1,3)
     ylabel('Y position')
     colorbar
 
-    
 
-    
-    
-    pause(.0001)
+
+    pause(.5)
     
  
 end

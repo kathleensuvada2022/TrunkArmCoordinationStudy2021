@@ -27,7 +27,8 @@
 %%
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
- datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+%  datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
  load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 
@@ -87,9 +88,18 @@ for i=1: length(mtrials)% i = 3
     
     % For mass data sheet saving data
     if i==1
+
+    %    for mac 
         % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+      %   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+
+% for pc
+%        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
+         load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Controls.mat')
+    %    load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_NonParetic.mat')
+
+
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -2622,7 +2632,7 @@ for i=1: length(mtrials)% i = 3
        t_start = t(idx(1));
        t_end = t(idx(3));
        
-       ComputeCOP(ppsdata,tpps,t_start,t_end);
+       ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
     
     
     
@@ -2662,7 +2672,7 @@ for i=1: length(mtrials)% i = 3
 % DataMatrix{FinalRow,2} = expcond;
 % 
 
-   pause
+%    pause
    close all
 
 
