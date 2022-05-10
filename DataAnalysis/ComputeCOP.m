@@ -1,4 +1,4 @@
-% April 2022 K. Suvada
+% May 2022 K. Suvada
 
 % Function used to visualize pressure mat data. PlotKinematicdata6 calls
 % this function so can plot with main analysis code. For stroke
@@ -19,32 +19,70 @@ close all
 
 %Loading in PPS baseline file 
 
-datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
+%For PC
+%datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
+
+%For MAC
+datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
 
 baseline_mat1 = data(:,1:256);
 baseline_mat2 = data(:,257:end);
 baseline_t = t;
 
+%Averaging Across the Interval
+avg_interval = size(baseline_mat1,1)/2;
+avg_interval = round(avg_interval);
+
+baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
+baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+%%
+
+% Figure 15 shows average value for each element during baseline (this is prior to
+% Mat being zeroed bc it is read before calling library 'SetBaseline'.
+
 figure(15)
 clf
 subplot(2,1,1)
-plot(t,baseline_mat1)
-title('Mat 1 Element Values during PPS Initialization')
+plot(baseline_mat1_corrected,'o')
+title('Mat 1 Baseline- averaged')
+xlabel('Element')
+ylabel('Value in Volts')
 
 subplot(2,1,2)
-plot(t,baseline_mat2)
-title('Mat 2 Element Values during PPS Initialization')
-
+plot(baseline_mat2_corrected,'o')
+title('Mat 2 Baseline- averaged')
+xlabel('Element')
+ylabel('Value in Volts')
 
 figure(16)
 clf
 subplot(2,1,1)
+plot(t,baseline_mat1)
+title('Mat 1 Element Values during PPS Initialization')
+xlabel('Time')
+ylabel('Volts')
+
+subplot(2,1,2)
+plot(t,baseline_mat2)
+title('Mat 2 Element Values during PPS Initialization')
+xlabel('Time')
+ylabel('Volts')
+%%
+
+
+figure(17)
+clf
+subplot(2,1,1)
 plot(tpps,ppsdata(:,1:256))
 title('Mat 1 Element Values during Trial')
+xlabel('Time')
+ylabel('Volts')
 subplot(2,1,2)
 plot(tpps,ppsdata(:,257:end))
 title('Mat 2 Element Values during Trial')
+xlabel('Time')
+ylabel('Volts')
 
 pause
 

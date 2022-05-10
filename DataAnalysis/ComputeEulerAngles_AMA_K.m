@@ -67,8 +67,8 @@ function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 
 %if nargin<3, reffr='trunk'; end
 %% Loading in the BL data (Digitization) and the BLs Names
-% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/']; % KACEY MAC APRIL 2022
-datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\']; % KACEY PC APRIL 2022
+ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/']; % KACEY MAC APRIL 2022
+% datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\']; % KACEY PC APRIL 2022
 
 % datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/'];
 % datafilepath = ['/Users/kcs762/Documents/GitHub/TrunkArmCoordinationStudy2021','/',partid,'/',arm];
