@@ -88,10 +88,15 @@ for i=1: length(mtrials)% i = 3
     
     % For mass data sheet saving data
     if i==1
+<<<<<<< Updated upstream
 
     %    for mac 
         % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
       %   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+=======
+         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+     %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+>>>>>>> Stashed changes
        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
 
 % for pc
