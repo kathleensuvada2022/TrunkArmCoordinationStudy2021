@@ -13,8 +13,8 @@
 %OUTPUTS:
 
 
-function ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
-close all 
+function sm = ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,sm);
+% close all 
 %% Plotting Raw Data and Baseline File
 
 %Loading in PPS baseline file 
@@ -86,9 +86,48 @@ baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
 %     
 % end
 
-%% Mat 1- 
+%% Mat 1- Small Mulitples Plot
 
-%%
+% K. Suvada. May 2022 - This way of plotting minimizes the white space around the figures. Works
+% much better than the subplot command. 
+
+% Mat 1 (Backrest)
+pps_mat1 = ppsdata(:,1:256)- ppsdata(1,1:256);
+
+figure(17)
+for i = 1:256
+    
+    if mtrial_Num ==1
+        sm(i) = smplot(16,16,i,'axis','on');
+        axis tight
+        set(gca,'xticklabel',[])
+        plot(sm(i),tpps,pps_mat1(:,i))
+        hold on
+        
+    else
+        plot(sm(i),tpps,pps_mat1(:,i))
+        hold on
+    end
+    
+end
+
+
+
+
+% pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
+% 
+% %Mat 2 (Seat)
+% figure(18)
+% for i = 1:255
+%     smplot(16,16,i,'axis','on');
+%     plot(tpps,pps_mat2(:,i))
+%     hold on
+%     
+%     axis tight
+%     set(gca,'xticklabel',[])
+%     
+% end
+
 pause
 
 return

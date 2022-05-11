@@ -2639,9 +2639,12 @@ for i=1: length(mtrials)% i = 3
        t_start = t(idx(1));
        t_end = t(idx(3));
        
-       ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid);
-    
-    
+       if mtrials(i) ==1
+           sm= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrials(i));
+       else
+           sm= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrials(i),sm);
+       end
+
     
 %% Saving Data to matrix 
 
@@ -2680,7 +2683,7 @@ for i=1: length(mtrials)% i = 3
 % 
 
 %    pause
-   close all
+   %close all
 
 
 
