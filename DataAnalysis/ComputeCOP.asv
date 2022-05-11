@@ -25,7 +25,7 @@ close all
 %For MAC
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
-%%
+
 baseline_mat1 = data(:,1:256);
 baseline_mat2 = data(:,257:end);
 baseline_t = t;
@@ -37,6 +37,7 @@ avg_interval = round(avg_interval);
 baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
 baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
 %%
+
 % Figure 15 shows average value for each element during baseline (this is prior to
 % Mat being zeroed bc it is read before calling library 'SetBaseline'.
 
@@ -69,26 +70,28 @@ baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
 % ylabel('Volts')
 %% 
 
-%% MAT 1 - tiled layout
-% figure(17)
-% clf
-% t = tiledlayout(16,16);
-% nexttile
-% 
-% for i = 1:256
-%     plot(tpps,ppsdata(:,i))
-%     % xlabel('Time')
-%     % ylabel('Volts')
-%     title(i)
-%     if i<256
-%         nexttile
-%     end
-%     
-% end
 
-%% Mat 1- 
+figure(17)
+clf
+% MAT 1
+ 
+t = tiledlayout(8,8);
+nexttile
 
-%%
+for i = 1:64
+% subplot(8,8,i)
+plot(tpps,ppsdata(:,i))
+% xlabel('Time')
+% ylabel('Volts')
+ title(i)
+%pause
+if i<64
+    nexttile
+end
+
+end
+
+
 pause
 
 return
