@@ -2690,7 +2690,7 @@ end
 
 
 % DataMatrix = AllData;
-save FullDataMatrix.mat DataMatrix
+%save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
