@@ -13,7 +13,7 @@
 %OUTPUTS:
 
 
-function sm = ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,sm);
+function [sm sm2] = ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,sm,sm2);
 % close all 
 %% Plotting Raw Data and Baseline File
 
@@ -100,33 +100,49 @@ for i = 1:256
     if mtrial_Num ==1
         sm(i) = smplot(16,16,i,'axis','on');
         axis tight
-        set(gca,'xticklabel',[])
         plot(sm(i),tpps,pps_mat1(:,i))
+        title(['Element' ' ' num2str(i)])
+        set(gca,'xticklabel',[])
+
         hold on
         
     else
         plot(sm(i),tpps,pps_mat1(:,i))
+        set(gca,'xticklabel',[])
+        title(['Element' ' ' num2str(i)])
+
+
         hold on
     end
     
 end
 
 
+pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
+
+%Mat 2 (Seat)
+figure(18)
+for i = 1:256
+    
+    if mtrial_Num ==1
+        sm2(i) = smplot(16,16,i,'axis','on');
+        axis tight
+        plot(sm2(i),tpps,pps_mat2(:,i))
+        title(['Element' ' ' num2str(i+256)])
+        set(gca,'xticklabel',[])
+
+        hold on
+        
+    else
+        plot(sm2(i),tpps,pps_mat2(:,i))
+        set(gca,'xticklabel',[])
+        title(['Element' ' ' num2str(i+256)])
 
 
-% pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
-% 
-% %Mat 2 (Seat)
-% figure(18)
-% for i = 1:255
-%     smplot(16,16,i,'axis','on');
-%     plot(tpps,pps_mat2(:,i))
-%     hold on
-%     
-%     axis tight
-%     set(gca,'xticklabel',[])
-%     
-% end
+        hold on
+    end
+    
+end
 
 pause
 
