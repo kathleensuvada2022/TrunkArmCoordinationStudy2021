@@ -107,92 +107,29 @@ classdef PPS < handle
         function obj = Initialize(obj,datadir)
             % Added by NH 5/22/18
             if ~obj.isInitialized, calllib('PPSDaqAPI','ppsInitialize',obj.cfgFile,0); end
+           
             msgbox('\fontsize{12}PPS System Initializing','ACT3D-TACS',obj.CreateStruct)
-            disp('PPS system Initialized'); %uncommented KCS 5.5.21
             
-            calllib('PPSDaqAPI','ppsStart');
+            disp('PPS system Initialized');
+            
+            calllib('PPSDaqAPI','ppsStart'); %Starting PPS
+            
             tic
             while toc<=3, end
-           [~,t,data]=obj.ReadData; % remove first few frames because will have the odd behavior Baseline file
-           
-         %  pause
-           
-           calllib('PPSDaqAPI','ppsSetBaseline') %uncommented KCS 5.5.21 TARE
-
+            [~,t,data]=obj.ReadData; % read baseline after system initializes
             
-            calllib('PPSDaqAPI','ppsStop');
-%             calllib('PPSDaqAPI','ppsSetBaseline') % If the readings show drift at the beginning, reset baseline
-%             t=double(data_out)';
-%             time_out=double(time_out(:));
-%             t=double(t(:));
-%             data=double(data)';
-            save(fullfile(datadir,'pps_baseline'),'t','data')
-%             msgbox('\fontsize{12}Data recording stopped','ACT3D-TACS',obj.CreateStruct)
-%            disp('Data recording stopped.')
+            
+            
+            calllib('PPSDaqAPI','ppsSetBaseline') % TARE
+            
+            
+            calllib('PPSDaqAPI','ppsStop'); %Stopping PPS
+            
+            save(fullfile(datadir,'pps_baseline'),'t','data') %Saving Baseline File
+            
             msgbox('\fontsize{12}Baseline correction complete','ACT3D-TACS',obj.CreateStruct)
-%            disp('Baseline correction complete.');
-%             msgbox({'\fontsize{12}Start data recording'},'ACT3D-TACS',obj.CreateStruct)
-%             disp('Start data recording.')
             
-%             n = obj.ReadDuration / obj.ReadInterval;
-%             for i = 1:n
-%                 if (ceil(n / 2) == i) %<= Resets baseline halfway through initial data collection
-% %                     msgbox({'\fontsize{12}Resetting baseline with current values'},'ACT3D-TACS',obj.CreateStruct)
-% %                     disp('Resetting baseline with current values.');
-%                   
-                  %line from Gordon
-%                   calllib('PPSDaqAPI', 'ppsSetBaseline')
-%                 end
-%                 pause(obj.ReadInterval/1000);
-%                 
-%                 nReady = calllib('PPSDaqAPI', 'ppsFramesReady');
-% %                 if  (nReady < 0)
-% %                     exit;
-% %                 end
-% %                  if(mod(i,2) ~= 0)
-% %                     nRead = nReady;
-% %                 else
-% %                     nRead = obj.BufferSize;
-% %                 end
-%                 
-%                 if nReady < 0
-%                     exit;
-% %                 elseif nReady < obj.BufferSize
-% % %                     str = sprintf('Trying to read %d frames', nReady);
-% % %                     msgbox({'\fontsize{12}Trying to read %d frame',nReady},'ACT3D-TACS',obj.CreateStruct)
-% %                     
-% % %                     disp(str);
-% %                     [nRead, obj.time_out, temp] = calllib('PPSDaqAPI', 'ppsGetData', nRead, obj.time, obj.data);
-%                 else
-% %                       msgbox({'\fontsize{12}Oversized Data'},'ACT3D-TACS',obj.CreateStruct)
-% %                     disp('Oversized Data');
-%                 obj.time = libpointer('ulongPtr', zeros(nReady, 1));
-%                 obj.data = libpointer('singlePtr', zeros(obj.FrameSize, nReady));
-%                 obj.time_out = libpointer('ulongPtr', zeros(nReady, 1));
-%                 obj.data_out = libpointer('singlePtr', zeros(nReady, obj.FrameSize));
-% 
-% %                 [nRead, obj.time_out, temp] = calllib('PPSDaqAPI', 'ppsGetData', obj.BufferSize, obj.time, obj.data);
-%                 [nRead, obj.time_out, temp] = calllib('PPSDaqAPI', 'ppsGetData', nReady, obj.time, obj.data);
-%                 obj.data_out = temp';
-%                 end
-%                 
-%                 obj.data_out = temp';
-%                 
-% %                 msgbox(['\fontsize{12}Saving ', num2str(nRead), ' frames to file...'],'ACT3D-TACS',obj.CreateStruct)
-% %               disp(['Saving ', num2str(nRead), ' frames to file...']);
-%                 rawData = obj.data.Value(1:nRead*obj.FrameSize);
-%                 toWrite = [single(obj.time.Value(1:nRead)')' reshape(rawData,obj.FrameSize,nRead)'];
-% %                 folder = pwd;
-%                 OutputFile = [obj.datafpath,'\pps_baseline.csv']; % <= saves file from baseline correction
-%                 if i == 1
-%                     dlmwrite(OutputFile, toWrite);
-%                 else
-%                     dlmwrite(OutputFile, toWrite, '-append');
-%                 end
-% %                 msgbox({'\fontsize{12}DONE'},'ACT3D-TACS',obj.CreateStruct) 
-% %                 disp('done.');
-%             end
-         end
+        end
         
         function obj = StartPPS(obj)
             % start data acquisition
