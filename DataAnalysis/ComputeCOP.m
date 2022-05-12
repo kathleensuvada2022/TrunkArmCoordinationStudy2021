@@ -36,6 +36,17 @@ avg_interval = round(avg_interval);
 
 baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
 baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+
+
+%% Finding start/stop samples for each mat
+% Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
+
+start_samp_M1= round(t_start*13.5);
+end_samp_M1= round(t_end*13.5);
+
+start_samp_M2= round(t_start*14);
+end_samp_M2= round(t_end*14);
+
 %%
 % Figure 15 shows average value for each element during baseline (this is prior to
 % Mat being zeroed bc it is read before calling library 'SetBaseline'.
@@ -100,41 +111,40 @@ for i = 1:256
     if mtrial_Num ==1
         sm(i) = smplot(16,16,i,'axis','on');
         axis tight
-        plot(sm(i),tpps,pps_mat1(:,i))
+        plot(sm(i),tpps(start_samp_M1:end_samp_M1),pps_mat1(start_samp_M1:end_samp_M1,i))
         title(['Element' ' ' num2str(i)])
         set(gca,'xticklabel',[])
 
         hold on
         
     else
-        plot(sm(i),tpps,pps_mat1(:,i))
+        plot(sm(i),tpps(start_samp_M1:end_samp_M1),pps_mat1(start_samp_M1:end_samp_M1,i))
         set(gca,'xticklabel',[])
         title(['Element' ' ' num2str(i)])
-
-
         hold on
     end
     
 end
 
 
+%Mat 2 (Seat)
+
 pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
 
-%Mat 2 (Seat)
 figure(18)
 for i = 1:256
     
     if mtrial_Num ==1
         sm2(i) = smplot(16,16,i,'axis','on');
         axis tight
-        plot(sm2(i),tpps,pps_mat2(:,i))
+        plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
         title(['Element' ' ' num2str(i+256)])
         set(gca,'xticklabel',[])
 
         hold on
         
     else
-        plot(sm2(i),tpps,pps_mat2(:,i))
+        plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
         set(gca,'xticklabel',[])
         title(['Element' ' ' num2str(i+256)])
 
@@ -144,18 +154,10 @@ for i = 1:256
     
 end
 
-pause
+% pause
 
 return
 %%
-%Finding start/stop samples for each mat
-% Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
-
-start_samp_M1= round(t_start*13.5);
-end_samp_M1= round(t_end*13.5);
-
-start_samp_M2= round(t_start*14);
-end_samp_M2= round(t_end*14);
 
 
 %%  Making the pps data matrix have all positive values
