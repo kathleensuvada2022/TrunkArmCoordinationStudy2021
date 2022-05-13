@@ -26,17 +26,17 @@ function [sm sm2] = ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
 %%
-baseline_mat1 = data(:,1:256);
-baseline_mat2 = data(:,257:end);
-baseline_t = t;
-
-%Averaging Across the Interval
-avg_interval = size(baseline_mat1,1)/2;
-avg_interval = round(avg_interval);
-
-baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
-baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
-
+% baseline_mat1 = data(:,1:256);
+% baseline_mat2 = data(:,257:end);
+% baseline_t = t;
+% 
+% %Averaging Across the Interval
+% avg_interval = size(baseline_mat1,1)/2;
+% avg_interval = round(avg_interval);
+% 
+% baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
+% baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+% 
 
 %% Finding start/stop samples for each mat
 % Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
@@ -109,7 +109,88 @@ figure(17)
 for i = 1:256
     
     if mtrial_Num ==1
-        sm(i) = smplot(16,16,i,'axis','on');
+        if i <=16
+            sm(i) = smplot(16,16,i+240,'axis','on');
+        end
+        
+        if 16 < i && i <33
+            sm(i) = smplot(16,16,i+208,'axis','on');
+            
+        end
+              
+        if 32 < i && i <49
+            sm(i) = smplot(16,16,i+176,'axis','on');
+            
+        end
+   
+        if 48 < i && i <65
+            sm(i) = smplot(16,16,i+144,'axis','on');
+            
+        end
+           
+        if 64 < i && i <81
+            sm(i) = smplot(16,16,i+112,'axis','on');
+            
+        end
+                   
+        if 80 < i && i <97
+            sm(i) = smplot(16,16,i+80,'axis','on');
+            
+        end
+                           
+        if 96 < i && i <113
+            sm(i) = smplot(16,16,i+48,'axis','on');
+            
+        end
+                                   
+        if 112 < i && i <129
+            sm(i) = smplot(16,16,i+16,'axis','on');
+            
+        end
+        
+                                           
+        if 128 < i && i <145
+            sm(i) = smplot(16,16,i-16,'axis','on');
+            
+        end
+                                                   
+        if 144 < i && i <161
+            sm(i) = smplot(16,16,i-48,'axis','on');
+            
+        end
+                                                           
+        if 160 < i && i <177
+            sm(i) = smplot(16,16,i-80,'axis','on');
+            
+        end
+                                                                   
+        if 176 < i && i <193
+            sm(i) = smplot(16,16,i-112,'axis','on');
+            
+        end
+                                                                           
+        if 192 < i && i <209
+            sm(i) = smplot(16,16,i-144,'axis','on');
+            
+        end
+        
+                                                                                   
+        if 208 < i && i <225
+            sm(i) = smplot(16,16,i-176,'axis','on');
+            
+        end
+        
+                                                                                   
+        if 224 < i && i <241
+            sm(i) = smplot(16,16,i-208,'axis','on');
+            
+        end
+                                                                                           
+        if 240 < i && i <257
+            sm(i) = smplot(16,16,i-240,'axis','on');
+            
+        end
+        
         axis tight
         plot(sm(i),tpps(start_samp_M1:end_samp_M1),pps_mat1(start_samp_M1:end_samp_M1,i))
         title(['Element' ' ' num2str(i)])
@@ -135,26 +216,107 @@ figure(18)
 for i = 1:256
     
     if mtrial_Num ==1
-        sm2(i) = smplot(16,16,i,'axis','on');
+        if i <=16
+            sm2(i) = smplot(16,16,i+240,'axis','on');
+        end
+        
+        if 16 < i && i <33
+            sm2(i) = smplot(16,16,i+208,'axis','on');
+            
+        end
+        
+        if 32 < i && i <49
+            sm2(i) = smplot(16,16,i+176,'axis','on');
+            
+        end
+        
+        if 48 < i && i <65
+            sm2(i) = smplot(16,16,i+144,'axis','on');
+            
+        end
+        
+        if 64 < i && i <81
+            sm2(i) = smplot(16,16,i+112,'axis','on');
+            
+        end
+        
+        if 80 < i && i <97
+            sm2(i) = smplot(16,16,i+80,'axis','on');
+            
+        end
+        
+        if 96 < i && i <113
+            sm2(i) = smplot(16,16,i+48,'axis','on');
+            
+        end
+        
+        if 112 < i && i <129
+            sm2(i) = smplot(16,16,i+16,'axis','on');
+            
+        end
+        
+        
+        if 128 < i && i <145
+            sm2(i) = smplot(16,16,i-16,'axis','on');
+            
+        end
+        
+        if 144 < i && i <161
+            sm2(i) = smplot(16,16,i-48,'axis','on');
+            
+        end
+        
+        if 160 < i && i <177
+            sm2(i) = smplot(16,16,i-80,'axis','on');
+            
+        end
+        
+        if 176 < i && i <193
+            sm2(i) = smplot(16,16,i-112,'axis','on');
+            
+        end
+        
+        if 192 < i && i <209
+            sm2(i) = smplot(16,16,i-144,'axis','on');
+            
+        end
+        
+        
+        if 208 < i && i <225
+            sm2(i) = smplot(16,16,i-176,'axis','on');
+            
+        end
+        
+        
+        if 224 < i && i <241
+            sm2(i) = smplot(16,16,i-208,'axis','on');
+            
+        end
+        
+        if 240 < i && i <257
+            sm2(i) = smplot(16,16,i-240,'axis','on');
+            
+        end
+        
+        
         axis tight
         plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
-        title(['Element' ' ' num2str(i+256)])
         set(gca,'xticklabel',[])
-
+        title(['Element' ' ' num2str(i+256)])
         hold on
         
     else
         plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
         set(gca,'xticklabel',[])
         title(['Element' ' ' num2str(i+256)])
-
-
+       
+        
         hold on
     end
     
 end
 
-% pause
+%  pause
 
 return
 %%

@@ -2639,10 +2639,10 @@ for i=1: length(mtrials)% i = 3
        t_start = t(idx(1));
        t_end = t(idx(3));
        
-       if mtrials(i) ==1
-           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrials(i));
+       if i ==1
+           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i);
        else
-           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrials(i),sm,sm2);
+           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i,sm,sm2);
        end
 
     
