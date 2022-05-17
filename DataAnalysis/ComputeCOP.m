@@ -316,17 +316,18 @@ for i = 1:256
     
 end
 
-%  pause
+close all
+  pause
 
-return
+%return
 %%
 
 
 %%  Making the pps data matrix have all positive values
-
-min_ppsdata = min(min(ppsdata));
-
-ppsdata = ppsdata+abs(min_ppsdata);
+% 
+% min_ppsdata = min(min(ppsdata));
+% 
+% ppsdata = ppsdata+abs(min_ppsdata);
 
 % ppsdata : 290 rows (samples) x 512 columns (elements on mats)
 %%
@@ -336,10 +337,10 @@ nframes=size(ppsdata,1);
 
 %Finding the total pressure for each mat 
 
-% Total pressure for all elements for Mat 1
+% Total pressure for all elements for Mat 1 per each frame
 TotalPressure1 = sum(ppsdata(:,1:256),2); 
 
-% Total pressure for all elements for Mat 2
+% Total pressure for all elements for Mat 2 per each frame
 TotalPressure2 = sum(ppsdata(:,257:end),2);
 
 Pressuremat1 = ppsdata(:,1:256);
@@ -348,32 +349,80 @@ Pressuremat2 = ppsdata(:,257:end);
 %% Reorganizing data Matrix to Create Orientation of both Mats
 
 % need to reshape to be a 16x16 where we have Nframes matrices
-Pressuremat1_frame= zeros(16,16,nframes);
-Pressuremat2_frame= zeros(16,16,nframes);
+% Pressuremat1_frame= zeros(16,16,nframes);
+% Pressuremat2_frame= zeros(16,16,nframes);
+% 
+% for i=1:nframes
+%     Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
+%     Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
+% end
 
-for i=1:nframes
-    Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
-    Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
-end
-
-% Calculating COP for Both Mats
+%% Calculating COP for Both Mats
 % elements 1" apart
-rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
-CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
-CoP1(:,2) = 16- CoP1(:,2);
-
-% CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2];
+% rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
+% CoP1=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+% CoP1(:,2) = 16- CoP1(:,2);
+% 
+% CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
 % CoP2(:,2) = 16- CoP2(:,2);
+% 
+% 
+% 
+% deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
+% 
+% deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
+%% Calculating COP for each half of Mat 1 - May 2022 K. Suvada
+
+% Creating half of mat matrix 
+Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 87:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 
 
-CoP2=[sum(ppsdata(:,257:end).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure2 sum(ppsdata(:,257:end).*repmat(rm',nframes,1),2)./TotalPressure2]; % mat 2
-CoP2(:,2) = 16- CoP2(:,2);
+
+rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % changing from 16 to 8 - should be total number of elements in matrix (now 128 not 256)
+CoP1a=[sum(ppsdata(:,1:256).*repmat((0:15)+0.5,nframes,16),2)./TotalPressure1 sum(ppsdata(:,1:256).*repmat(rm',nframes,1),2)./TotalPressure1]; % mat 1
+CoP1a(:,2) = 16- CoP1(:,2);
+
+%% Plotting COP Changes 
+figure(6)
+subplot(2,1,1)
+h1 = plot(CoP1(start_samp_M1: end_samp_M2,1)*10,CoP1(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
+hold on
+xlabel('Postion in X (mm)','FontSize',16)
+ylabel('Position in Y (mm)','FontSize',16)
+yl = ylim;
+xl= xlim;
+rangex = (xl(2)-xl(1));
+rangey = (yl(2)-yl(1));
+% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+hold on
+c1= viscircles([CoP1(start_samp_M1,1)*10,CoP1(start_samp_M1,2)*10],.01,'Color','g');
+c2= viscircles([CoP1(end_samp_M2,1)*10,CoP1(end_samp_M2,2)*10],.01,'Color','r');
+set(h1,'Color',[0 0.4470 0.7410]);
+title('COP shifts for Mat1 ')
+axis equal
 
 
+subplot(2,1,2)
+hold on
+h1 = plot(CoP2(start_samp_M1: end_samp_M2,1)*10,CoP2(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
+xlabel('Postion in X (mm)','FontSize',16)
+ylabel('Position in Y (mm)','FontSize',16)
+yl = ylim;
+xl= xlim;
+yl = ylim;
+xl= xlim;
+rangex = (xl(2)-xl(1));
+rangey = (yl(2)-yl(1));
+% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+hold on
+c1= viscircles([CoP2(start_samp_M1,1)*10,CoP2(start_samp_M1,2)*10],.01,'Color','g');
+c2= viscircles([CoP2( end_samp_M2,1)*10,CoP2( end_samp_M2,2)*10],.01,'Color','r');
+set(h1,'Color',[0 0.4470 0.7410]);
+title('COP shifts for Mat 2')
+axis equal
 
-deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
 
-deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
+return
 
 %% Filtering out artifact bands- May 2022
 
