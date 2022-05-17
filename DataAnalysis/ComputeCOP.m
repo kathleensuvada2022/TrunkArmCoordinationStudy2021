@@ -320,7 +320,7 @@ for i = 1:256
     
 end
 
-%close all
+close all
 %   pause
 
 %return
@@ -384,7 +384,20 @@ nframes=size(ppsdata,1);
 Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat1_LeftHalf= pps_mat1(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
 
-% Finding Total Pressure on each half of Mat 1
+%% Adding Constant so all values positive 
+
+% Finding minimum for right half of mat 1
+Min_Mat1_Right = min(min(Mat1_RightHalf));
+
+% Finding minimum for left half of mat 1
+Min_Mat1_Left = min(min(Mat1_LeftHalf));
+
+% Adding the abs of the min of each each half (no negatives)
+Mat1_RightHalf = Mat1_RightHalf + abs(Min_Mat1_Right);
+Mat1_LeftHalf = Mat1_LeftHalf+ abs(Min_Mat1_Left);
+
+
+%% Finding Total Pressure on each half of Mat 1
 TotalPressure1_right= sum(Mat1_RightHalf ,2); % Total pressure of right half at every frame (nframes rows)
 TotalPressure1_left = sum(Mat1_LeftHalf ,2); % Total pressure of left half at every frame (nframes rows)
 %% Computing COP for the Right half of Mat 1
@@ -414,8 +427,19 @@ CoP1_left(:,2) = 16- CoP1_left(:,2); % so oriented with mat?
 
 Mat2_RightHalf = pps_mat2(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat2_LeftHalf= pps_mat2(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
+%% Adding Constant so all values positive 
 
-% Finding Total Pressure on each half of Mat 2
+% Finding minimum for right half of mat 1
+Min_Mat2_Right = min(min(Mat2_RightHalf));
+
+% Finding minimum for left half of mat 1
+Min_Mat2_Left = min(min(Mat2_LeftHalf));
+
+% Adding the abs of the min of each each half (no negatives)
+Mat2_RightHalf = Mat2_RightHalf + abs(Min_Mat2_Right);
+Mat2_LeftHalf = Mat2_LeftHalf+ abs(Min_Mat2_Left);
+
+%% Finding Total Pressure on each half of Mat 2
 TotalPressure2_right= sum(Mat2_RightHalf ,2); % Total pressure of right half at every frame (nframes rows)
 TotalPressure2_left = sum(Mat2_LeftHalf ,2); % Total pressure of left half at every frame (nframes rows)
 %% Computing COP for the Right half of Mat 2
