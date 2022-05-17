@@ -214,6 +214,8 @@ end
 
 pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
 
+
+% Uncomment for all plots using small multiples plot 
 figure(18)
 for i = 1:256
     
@@ -318,8 +320,8 @@ for i = 1:256
     
 end
 
-close all
-  pause
+%close all
+%   pause
 
 %return
 %%
@@ -373,22 +375,22 @@ nframes=size(ppsdata,1);
 % deltax = CoP2(end,1)-CoP2(1,1); % change in x in cm
 % 
 % deltay =CoP2(end,2)-CoP2(1,2); % change in y in cm
-
+%%
 %%%%%%%%%% Mat 1%%%%%%%%%%% - back of seat
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Creating Matrices for Left and Right Half of Mat
+%% Creating Matrices for Left and Right Half of Mat 1
 % *Note: Left/Right is PARTICIPANT'S left and right. 
 
 Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat1_LeftHalf= pps_mat1(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
 
-% Finding Total Pressure on each half of Mat 
+% Finding Total Pressure on each half of Mat 1
 TotalPressure1_right= sum(Mat1_RightHalf ,2); % Total pressure of right half at every frame (nframes rows)
 TotalPressure1_left = sum(Mat1_LeftHalf ,2); % Total pressure of left half at every frame (nframes rows)
 %% Computing COP for the Right half of Mat 1
 rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % changing from 16 to 8 - should be total number of elements in matrix (now 128 not 256)
 
-% Computing COP for right half of Mat (x and y)
+% Computing COP for right half of Mat (x and y) where elements 1" apart
 CoP1_right=[sum(Mat1_RightHalf(:,1:128).*repmat((0:7)+0.5,nframes,16),2)./TotalPressure1_right sum(Mat1_RightHalf(:,1:128).*repmat(rm',nframes,1),2)./TotalPressure1_right];
 
 CoP1_right(:,2) = 16- CoP1_right(:,2); % so oriented with mat? 
@@ -404,52 +406,101 @@ CoP1_left(:,2) = 16- CoP1_left(:,2); % so oriented with mat?
 
 
 
+%%
+%%%%%%%%%% Mat 2%%%%%%%%%%% - seat of chair (butt)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Creating Matrices for Left and Right Half of Mat 2
+% *Note: Left/Right is PARTICIPANT'S left and right. 
+
+Mat2_RightHalf = pps_mat2(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
+Mat2_LeftHalf= pps_mat2(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
+
+% Finding Total Pressure on each half of Mat 2
+TotalPressure2_right= sum(Mat2_RightHalf ,2); % Total pressure of right half at every frame (nframes rows)
+TotalPressure2_left = sum(Mat2_LeftHalf ,2); % Total pressure of left half at every frame (nframes rows)
+%% Computing COP for the Right half of Mat 2
+rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % changing from 16 to 8 - should be total number of elements in matrix (now 128 not 256)
+
+% Computing COP for right half of Mat (x and y) where elements 1" apart
+CoP2_right=[sum(Mat2_RightHalf(:,1:128).*repmat((0:7)+0.5,nframes,16),2)./TotalPressure2_right sum(Mat2_RightHalf(:,1:128).*repmat(rm',nframes,1),2)./TotalPressure2_right];
+
+CoP2_right(:,2) = 16- CoP2_right(:,2); % so oriented with mat? 
+
+
+%% Computing COP for the Left half of Mat 2
+rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % changing from 16 to 8 - should be total number of elements in matrix (now 128 not 256)
+
+% Computing COP for left half of Mat (x and y)
+CoP2_left=[sum(Mat2_LeftHalf(:,1:128).*repmat((0:7)+0.5,nframes,16),2)./TotalPressure2_left sum(Mat2_LeftHalf(:,1:128).*repmat(rm',nframes,1),2)./TotalPressure2_left];
+
+CoP2_left(:,2) = 16- CoP2_left(:,2); % so oriented with mat? 
 
 
 
+%%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-%% Trajectory of COP - Mat 1 (Backmat)
-
+%% Trajectory of COP Mats 1 and 2
+% Mat 1
 figure(6)
-subplot(1,2,1)
-h1 = plot(CoP1_right(start_samp_M1: end_samp_M2,1)*10,CoP1_right(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
+h1 = plot(CoP1_right(start_samp_M1: end_samp_M2,1),CoP1_right(start_samp_M1: end_samp_M2,2),'LineWidth',2);
 hold on
-xlabel('Postion in X (mm)','FontSize',14)
-ylabel('Position in Y (mm)','FontSize',14)
-yl = ylim;
-xl= xlim;
-rangex = (xl(2)-xl(1));
-rangey = (yl(2)-yl(1));
-% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
+xlabel('Postion in X','FontSize',14)
+ylabel('Position in Y','FontSize',14)
+% yl = ylim;
+% xl= xlim;
+% rangex = (xl(2)-xl(1));
+% rangey = (yl(2)-yl(1));
+% % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP1_right(start_samp_M1,1)*10,CoP1_right(start_samp_M1,2)*10],.05,'Color','g');
-c2= viscircles([CoP1_right(end_samp_M2,1)*10,CoP1_right(end_samp_M2,2)*10],.05,'Color','r');
-set(h1,'Color',[0 0.4470 0.7410]);
-title('COP Tracking Mat 1 (Right Side)','Fontsize',14)
-axis equal
+c1= viscircles([CoP1_right(start_samp_M1,1),CoP1_right(start_samp_M1,2)],.05,'Color','g');
+c2= viscircles([CoP1_right(end_samp_M2,1),CoP1_right(end_samp_M2,2)],.05,'Color','r');
+set(h1,'Color',[0.4660 0.6740 0.1880]);
+title('COP Tracking Mat 1-Back of Chair','Fontsize',16)
 
+h2 = plot(CoP1_left(start_samp_M1: end_samp_M2,1)+8,CoP1_left(start_samp_M1: end_samp_M2,2),'LineWidth',2);
+xlabel('Postion in X','FontSize',14)
+ylabel('Position in Y','FontSize',14)
 
-subplot(1,2,2)
 hold on
-h1 = plot(CoP1_left(start_samp_M1: end_samp_M2,1)*10,CoP1_left(start_samp_M1: end_samp_M2,2)*10,'LineWidth',2);
-xlabel('Postion in X (mm)','FontSize',14)
-ylabel('Position in Y (mm)','FontSize',14)
-yl = ylim;
-xl= xlim;
-yl = ylim;
-xl= xlim;
-rangex = (xl(2)-xl(1));
-rangey = (yl(2)-yl(1));
-% text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
-hold on
-c1= viscircles([CoP1_left(start_samp_M1,1)*10,CoP1_left(start_samp_M1,2)*10],.05,'Color','g');
-c2= viscircles([CoP1_left( end_samp_M2,1)*10,CoP1_left( end_samp_M2,2)*10],.05,'Color','r');
-set(h1,'Color',[0 0.4470 0.7410]);
-title('COP Tracking Mat 1 (Left Side)','Fontsize',14)
-axis equal
+c1= viscircles([CoP1_left(start_samp_M1,1)+8,CoP1_left(start_samp_M1,2)],.05,'Color','g');
+c2= viscircles([CoP1_left( end_samp_M2,1)+8,CoP1_left( end_samp_M2,2)],.05,'Color','r');
+set(h2,'Color',[0.4940 0.1840 0.5560]);
 
+legend('Right Side COP','Left Side COP','Fontsize',14)
+
+xlim([0 16])
+ylim([0 16])
+
+% Mat 2
+figure(7)
+h3 = plot(CoP2_right(start_samp_M1: end_samp_M2,1),CoP2_right(start_samp_M1: end_samp_M2,2),'LineWidth',2);
+hold on
+xlabel('Postion in X','FontSize',14)
+ylabel('Position in Y','FontSize',14)
+
+hold on
+c1= viscircles([CoP2_right(start_samp_M1,1),CoP2_right(start_samp_M1,2)],.05,'Color','g');
+c2= viscircles([CoP2_right(end_samp_M2,1),CoP2_right(end_samp_M2,2)],.05,'Color','r');
+set(h3,'Color',[0.4660 0.6740 0.1880]);
+title('COP Tracking Mat 2-Seat of Chair','Fontsize',16)
+
+h4 = plot(CoP2_left(start_samp_M1: end_samp_M2,1)+8,CoP2_left(start_samp_M1: end_samp_M2,2),'LineWidth',2);
+xlabel('Postion in X','FontSize',14)
+ylabel('Position in Y','FontSize',14)
+
+hold on
+c1= viscircles([CoP2_left(start_samp_M1,1)+8,CoP2_left(start_samp_M1,2)],.05,'Color','g');
+c2= viscircles([CoP2_left( end_samp_M2,1)+8,CoP2_left( end_samp_M2,2)],.05,'Color','r');
+set(h4,'Color',[0.4940 0.1840 0.5560]);
+
+legend('Right Side COP','Left Side COP','Fontsize',14)
+
+xlim([0 16])
+ylim([0 16])
+
+pause
 
 return
 
