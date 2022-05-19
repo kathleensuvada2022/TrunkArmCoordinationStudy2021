@@ -23,8 +23,8 @@ function [sm sm2] = ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 
 %For MAC
-datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
-load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+% load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
 %%
 % baseline_mat1 = data(:,1:256);
 % baseline_mat2 = data(:,257:end);
@@ -103,9 +103,10 @@ end_samp_M2= round(t_end*14);
 % much better than the subplot command. 
 
 % Mat 1 (Backrest)
-pps_mat1 = ppsdata(:,1:256)- ppsdata(1,1:256);
-
-figure(17)
+  pps_mat1 = ppsdata(:,1:256)- mean(ppsdata(1:5,1:256)); %Subtracting baseline
+ % pps_mat1 = ppsdata(:,1:256); %just the raw data
+ 
+ figure(17)
 for i = 1:256
     
     % All if statements to manually occupy figure such that layout matches
@@ -212,11 +213,12 @@ end
 
 %Mat 2 (Seat)
 
-pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512);
+ pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512); % subtracting baseline
 
+%pps_mat2 = ppsdata(:,257:512); % Just the raw data
 
-% Uncomment for all plots using small multiples plot 
-figure(18)
+% Plots using small multiples plot 
+ figure(18)
 for i = 1:256
     
     if mtrial_Num ==1
@@ -320,8 +322,8 @@ for i = 1:256
     
 end
 
-close all
-%   pause
+%close all
+   pause
 
 %return
 %%
@@ -350,17 +352,6 @@ nframes=size(ppsdata,1);
 % Pressuremat1 = ppsdata(:,1:256);
 % Pressuremat2 = ppsdata(:,257:end);
 
-%% Reorganizing data Matrix to Create Orientation of both Mats
-
-% need to reshape to be a 16x16 where we have Nframes matrices
-% Pressuremat1_frame= zeros(16,16,nframes);
-% Pressuremat2_frame= zeros(16,16,nframes);
-% 
-% for i=1:nframes
-%     Pressuremat1_frame(:,:,i) =flipud(reshape(Pressuremat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
-%     Pressuremat2_frame(:,:,i) =flipud(reshape(Pressuremat2(i,:),[16,16])');
-% end
-
 %% Calculating COP for Both Mats
 % elements 1" apart
 % rm=repmat((0:15)'+0.5,1,16); rm=rm'; rm=rm(:);
@@ -384,17 +375,17 @@ nframes=size(ppsdata,1);
 Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat1_LeftHalf= pps_mat1(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
 
-%% Adding Constant so all values positive 
-
-% Finding minimum for right half of mat 1
-Min_Mat1_Right = min(min(Mat1_RightHalf));
-
-% Finding minimum for left half of mat 1
-Min_Mat1_Left = min(min(Mat1_LeftHalf));
-
-% Adding the abs of the min of each each half (no negatives)
-Mat1_RightHalf = Mat1_RightHalf + abs(Min_Mat1_Right);
-Mat1_LeftHalf = Mat1_LeftHalf+ abs(Min_Mat1_Left);
+%% Adding Constant so all values positive - don't use altering COP
+% 
+% % Finding minimum for right half of mat 1
+% Min_Mat1_Right = min(min(Mat1_RightHalf));
+% 
+% % Finding minimum for left half of mat 1
+% Min_Mat1_Left = min(min(Mat1_LeftHalf));
+% 
+% % Adding the abs of the min of each each half (no negatives)
+% Mat1_RightHalf = Mat1_RightHalf + abs(Min_Mat1_Right);
+% Mat1_LeftHalf = Mat1_LeftHalf+ abs(Min_Mat1_Left);
 
 
 %% Finding Total Pressure on each half of Mat 1
@@ -427,17 +418,17 @@ CoP1_left(:,2) = 16- CoP1_left(:,2); % so oriented with mat?
 
 Mat2_RightHalf = pps_mat2(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat2_LeftHalf= pps_mat2(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
-%% Adding Constant so all values positive 
+%% Adding Constant so all values positive - Don't Use Alters COP
 
-% Finding minimum for right half of mat 1
-Min_Mat2_Right = min(min(Mat2_RightHalf));
-
-% Finding minimum for left half of mat 1
-Min_Mat2_Left = min(min(Mat2_LeftHalf));
-
-% Adding the abs of the min of each each half (no negatives)
-Mat2_RightHalf = Mat2_RightHalf + abs(Min_Mat2_Right);
-Mat2_LeftHalf = Mat2_LeftHalf+ abs(Min_Mat2_Left);
+% % Finding minimum for right half of mat 1
+% Min_Mat2_Right = min(min(Mat2_RightHalf));
+% 
+% % Finding minimum for left half of mat 1
+% Min_Mat2_Left = min(min(Mat2_LeftHalf));
+% 
+% % Adding the abs of the min of each each half (no negatives)
+% Mat2_RightHalf = Mat2_RightHalf + abs(Min_Mat2_Right);
+% Mat2_LeftHalf = Mat2_LeftHalf+ abs(Min_Mat2_Left);
 
 %% Finding Total Pressure on each half of Mat 2
 TotalPressure2_right= sum(Mat2_RightHalf ,2); % Total pressure of right half at every frame (nframes rows)
@@ -457,9 +448,51 @@ rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % changing from 16 to 8 - should b
 % Computing COP for left half of Mat (x and y)
 CoP2_left=[sum(Mat2_LeftHalf(:,1:128).*repmat((0:7)+0.5,nframes,16),2)./TotalPressure2_left sum(Mat2_LeftHalf(:,1:128).*repmat(rm',nframes,1),2)./TotalPressure2_left];
 
-CoP2_left(:,2) = 16- CoP2_left(:,2); % so oriented with mat? 
+CoP2_left(:,2) = 16- CoP2_left(:,2); 
 
 
+
+%% Reorganizing data Matrix to Create Orientation of both Mats - for HeatMap
+
+
+% Mat1 
+% need to reshape to be a 16x16 where we have Nframes matrices
+Pressuremat1R_frame= zeros(16,8,nframes);
+Pressuremat1L_frame= zeros(16,8,nframes);
+
+for i=1:nframes
+    Pressuremat1R_frame(:,:,i) =flipud(reshape(Mat1_RightHalf(i,:),[8,16])'); %corresponds to layout of mat (see figure from PPS)
+    Pressuremat1L_frame(:,:,i) =flipud(reshape(Mat1_LeftHalf(i,:),[8,16])');
+end
+
+% Full Mat
+Pressuremat1_frame= zeros(16,16,nframes);
+
+
+for i=1:nframes
+    Pressuremat1_frame(:,:,i) =flipud(reshape(pps_mat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
+
+end
+
+
+% Mat2
+% need to reshape to be a 16x16 where we have Nframes matrices
+Pressuremat2R_frame= zeros(16,8,nframes);
+Pressuremat2L_frame= zeros(16,8,nframes);
+
+for i=1:nframes
+    Pressuremat2R_frame(:,:,i) =flipud(reshape(Mat2_RightHalf(i,:),[8,16])'); %corresponds to layout of mat (see figure from PPS)
+    Pressuremat2L_frame(:,:,i) =flipud(reshape(Mat2_LeftHalf(i,:),[8,16])');
+end
+
+% Full Mat
+Pressuremat2_frame= zeros(16,16,nframes);
+
+
+for i=1:nframes
+    Pressuremat2_frame(:,:,i) =flipud(reshape(pps_mat2(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
+
+end
 
 %%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -468,6 +501,7 @@ CoP2_left(:,2) = 16- CoP2_left(:,2); % so oriented with mat?
 %% Trajectory of COP Mats 1 and 2
 % Mat 1
 figure(6)
+% subplot(1,3,1)
 h1 = plot(CoP1_right(start_samp_M1: end_samp_M2,1),CoP1_right(start_samp_M1: end_samp_M2,2),'LineWidth',2);
 hold on
 xlabel('Postion in X','FontSize',14)
@@ -481,7 +515,7 @@ hold on
 c1= viscircles([CoP1_right(start_samp_M1,1),CoP1_right(start_samp_M1,2)],.05,'Color','g');
 c2= viscircles([CoP1_right(end_samp_M2,1),CoP1_right(end_samp_M2,2)],.05,'Color','r');
 set(h1,'Color',[0.4660 0.6740 0.1880]);
-title('COP Tracking Mat 1-Back of Chair','Fontsize',16)
+title('COP Tracking Mat 1-Back of Chair (With BL removal)','Fontsize',16)
 
 h2 = plot(CoP1_left(start_samp_M1: end_samp_M2,1)+8,CoP1_left(start_samp_M1: end_samp_M2,2),'LineWidth',2);
 xlabel('Postion in X','FontSize',14)
@@ -497,8 +531,37 @@ legend('Right Side COP','Left Side COP','Fontsize',14)
 xlim([0 16])
 ylim([0 16])
 
+
+for p = start_samp_M1: end_samp_M2
+    figure(7)
+    clf
+%     subplot(1,2,1)
+    imagesc(Pressuremat1_frame(:,:,p))
+    set(gca,'yticklabel',[])
+
+%     title(['Right Half' ' ' 'frame' ' '  num2str(p) ' ' 'COPR' ' ' num2str(CoP1_right(p,:)) ])
+   
+    colorbar
+    caxis([min(min(pps_mat1)) max(max(pps_mat1))])
+     
+    
+%     subplot(1,2,2)
+%     imagesc(Pressuremat1L_frame(:,:,p))
+%     set(gca,'yticklabel',[])
+% 
+%     colorbar
+%     caxis([min(min(Mat1_LeftHalf)) max(max(Mat1_LeftHalf))])
+% 
+     title(['Back Mat' ' ' 'frame' ' '  num2str(p) ' ' 'COPL' ' ' num2str(CoP1_left(p,:)) ])
+% 
+%     
+    pause
+end
+
+
+
 % Mat 2
-figure(7)
+figure(8)
 h3 = plot(CoP2_right(start_samp_M1: end_samp_M2,1),CoP2_right(start_samp_M1: end_samp_M2,2),'LineWidth',2);
 hold on
 xlabel('Postion in X','FontSize',14)
@@ -508,7 +571,7 @@ hold on
 c1= viscircles([CoP2_right(start_samp_M1,1),CoP2_right(start_samp_M1,2)],.05,'Color','g');
 c2= viscircles([CoP2_right(end_samp_M2,1),CoP2_right(end_samp_M2,2)],.05,'Color','r');
 set(h3,'Color',[0.4660 0.6740 0.1880]);
-title('COP Tracking Mat 2-Seat of Chair','Fontsize',16)
+title('COP Tracking Mat 2-Seat of Chair (With BL removal)','Fontsize',16)
 
 h4 = plot(CoP2_left(start_samp_M1: end_samp_M2,1)+8,CoP2_left(start_samp_M1: end_samp_M2,2),'LineWidth',2);
 xlabel('Postion in X','FontSize',14)
@@ -524,7 +587,42 @@ legend('Right Side COP','Left Side COP','Fontsize',14)
 xlim([0 16])
 ylim([0 16])
 
+
+for p = start_samp_M1: end_samp_M2
+    
+    figure(9)
+    clf
+    
+%     subplot(1,2,1)
+    imagesc(Pressuremat2_frame(:,:,p),[min(min(pps_mat2(start_samp_M1: end_samp_M2))) max(max(pps_mat2(start_samp_M1: end_samp_M2)))])
+    set(gca,'yticklabel',[])
+  
+    colorbar
+    caxis([min(min(pps_mat2(start_samp_M1: end_samp_M2))) max(max(pps_mat2(start_samp_M1: end_samp_M2)))])
+    
+     title(['Seat Mat' ' ' 'frame' ' '  num2str(p) ' ' 'COPR' ' ' num2str(CoP2_right(p,:)) ])
+    
+    
+    
+%     subplot(1,2,2)
+%     imagesc(Pressuremat2L_frame(:,:,p))
+%     set(gca,'yticklabel',[])
+%     
+%     colorbar
+%     caxis([min(min(Mat2_LeftHalf)) max(max(Mat2_LeftHalf))])
+%     
+%     title(['Left Half' ' ' 'frame' ' '  num2str(p) ' ' 'COPL' ' ' num2str(CoP2_left(p,:)) ])
+%     
+    
+    pause
+    
+end
+
 pause
+
+%% Delta COP 
+
+
 
 return
 
