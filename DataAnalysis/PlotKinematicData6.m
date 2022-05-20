@@ -2642,11 +2642,11 @@ for i=1: length(mtrials)% i = 3
        
        % Use if plotting small multiples 
        if i ==1
-           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i);
+           [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i);
        else
-           [sm sm2]= ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i,sm,sm2);
+           [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,sm,sm2);
        end
-    
+       
 
 
 % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)

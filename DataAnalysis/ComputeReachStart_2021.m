@@ -7140,7 +7140,7 @@ xlabel('time in seconds')
 % legend('Distance','Z DISP','Range Z','Vel Y','Range Z','Time Start','Time End','Location','northeast','FontSize',16)
 legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northeast','FontSize',16)
 
-
+%close all
 % figure (6),clf
 %
 % plot(t,xhand(:,3))
