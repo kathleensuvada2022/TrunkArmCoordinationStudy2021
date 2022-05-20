@@ -179,9 +179,9 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 
 %% Omitting COP Data that Deviates too much from the first few samples - Mat2
 
-CoP_Mat2_RightHalf = CleanupCOP(CoP_Mat2_RightHalf,start_samp_M2);
-CoP_Mat2_LeftHalf = CleanupCOP(CoP_Mat2_LeftHalf,start_samp_M2);
-CoP_Mat2_Whole = CleanupCOP(CoP_Mat2_Whole,start_samp_M2); % Whole Mat
+% CoP_Mat2_RightHalf = CleanupCOP(CoP_Mat2_RightHalf,start_samp_M2);
+% CoP_Mat2_LeftHalf = CleanupCOP(CoP_Mat2_LeftHalf,start_samp_M2);
+% CoP_Mat2_Whole = CleanupCOP(CoP_Mat2_Whole,start_samp_M2); % Whole Mat
 
 
 %% Reorganizing data Matrix to Create Orientation of both Mats - for HeatMap
@@ -233,7 +233,7 @@ end
 % Mat 1
 figure(6)
 % subplot(1,3,1)
-% h1 = plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+ h1 = plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
 hold on
 xlabel('Postion in X','FontSize',14)
 ylabel('Position in Y','FontSize',14)
@@ -245,22 +245,22 @@ ylabel('Position in Y','FontSize',14)
 hold on
 c1= viscircles([CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2)],.05,'Color','g');
 c2= viscircles([CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2)],.05,'Color','r');
-% set(h1,'Color',[0.4660 0.6740 0.1880]);
+ set(h1,'Color',[0.4660 0.6740 0.1880]);
 title('COP Tracking Mat 1-Back of Chair','Fontsize',16)
 
-% h2 = plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+ h2 = plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
 xlabel('Postion in X','FontSize',14)
 ylabel('Position in Y','FontSize',14)
 
 hold on
 c1= viscircles([CoP_Mat1_LeftHalf(start_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1,2)],.05,'Color','g');
 c2= viscircles([CoP_Mat1_LeftHalf( end_samp_M1,1)+8,CoP_Mat1_LeftHalf( end_samp_M1,2)],.05,'Color','r');
-%set(h2,'Color',[0.4940 0.1840 0.5560]);
+set(h2,'Color',[0.4940 0.1840 0.5560]);
 
-%h5 = plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+h5 = plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'LineWidth',2);
 c1= viscircles([CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2)],.05,'Color','g');
 c2= viscircles([CoP_Mat1_Whole( end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2)],.05,'Color','r');
-%set(h5,'Color',[0.6350 0.0780 0.1840]);
+set(h5,'Color',[0.6350 0.0780 0.1840]);
 
 
 legend('Right COP','Left COP','Whole Mat COP','Fontsize',14)
