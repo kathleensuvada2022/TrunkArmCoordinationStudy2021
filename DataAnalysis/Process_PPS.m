@@ -27,7 +27,7 @@
 
 
 
-function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,sm,sm2);
+function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond, sm,sm2);
 %% Working with Baseline File - which isn't interpretable bc of memory of mats and need to 'ClearBaseline' for future use.
 
 %Loading in PPS baseline file
@@ -99,16 +99,27 @@ pps_mat1 = ppsdata(:,1:256)- mean(ppsdata(1:5,1:256)); %Subtracting baseline
 
 pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512); % subtracting baseline
 
+if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
+    % For the artifact along bottom of mat
+    pps_mat1(:,1:16) = 0;
+    
+end 
+if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+    % For the artifact along bottom of mat
+    pps_mat1(:,26) = 0;
+    
+end 
+
 %pps_mat2 = ppsdata(:,257:512); % Just the raw data
 
 
 %% Calling Small Multiples Function
 
-if mtrial_Num~= 1
-    [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num,sm,sm2);
-else
-    [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
-end
+% if mtrial_Num~= 1
+%     [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num,sm,sm2);
+% else
+%     [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+% end
 
 
 %% Number of Frames
@@ -147,12 +158,12 @@ rm_whole=repmat((0:15)'+0.5,1,16); rm_whole=rm_whole'; rm_whole=rm_whole(:); % U
 % Whole Mat COP
 CoP_Mat1_Whole = ComputeCoP(pps_mat1,repmat((0:15)+0.5,nframes,16),repmat(rm_whole',nframes,1),nframes,256);
 % 
-% %% Omitting COP Data that Deviates too much from the first few samples - Mat1
+%% Omitting COP Data that Deviates too much from the first few samples - Mat1
 % 
-% CoP_Mat1_RightHalf = CleanupCOP(CoP_Mat1_RightHalf,start_samp_M1); %Right Half
-% CoP_Mat1_LeftHalf = CleanupCOP(CoP_Mat1_LeftHalf,start_samp_M1); % Left Half
-% CoP_Mat1_Whole = CleanupCOP(CoP_Mat1_Whole,start_samp_M1); % Whole Mat
-
+% CoP_Mat1_RightHalf = CleanupCOP(CoP_Mat1_RightHalf,start_samp_M1,end_samp_M1,filename,partid,hand,expcond); %Right Half
+% CoP_Mat1_LeftHalf = CleanupCOP(CoP_Mat1_LeftHalf,start_samp_M1,end_samp_M1,filename,partid,hand,expcond); % Left Half
+% CoP_Mat1_Whole = CleanupCOP(CoP_Mat1_Whole,start_samp_M1,end_samp_M1,filename,partid,hand,expcond); % Whole Mat
+% 
 
 
 %%
@@ -204,7 +215,7 @@ for i=1:nframes
     Pressuremat1_frame(:,:,i) =flipud(reshape(pps_mat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
     
 end
-
+Pressuremat1_frame(15,7,:) = 0; 
 
 % Mat2
 % need to reshape to be a 16x16 where we have Nframes matrices
@@ -227,13 +238,64 @@ end
 
 %%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Print out Delta COP
+ DeltaCOP_right  = sqrt((CoP_Mat1_RightHalf(end_samp_M1,1)-CoP_Mat1_RightHalf(start_samp_M1,1))^2 +(CoP_Mat1_RightHalf(end_samp_M1,2)-CoP_Mat1_RightHalf(start_samp_M1,2))^2)             
+ DeltaCOP_left  = sqrt((CoP_Mat1_LeftHalf(end_samp_M1,1)-CoP_Mat1_LeftHalf(start_samp_M1,1))^2 +(CoP_Mat1_LeftHalf(end_samp_M1,2)-CoP_Mat1_LeftHalf(start_samp_M1,2))^2)          
+ DeltaCOP_whole = sqrt((CoP_Mat1_Whole(end_samp_M1,1)-CoP_Mat1_Whole(start_samp_M1,1))^2 +(CoP_Mat1_Whole(end_samp_M1,2)-CoP_Mat1_Whole(start_samp_M1,2))^2  )    
+% 
+
+if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') 
+    if strcmp(filename,'/trial5.mat') || strcmp(filename,'/trial13.mat') || strcmp(filename,'/trial14.mat') || strcmp(filename,'/trial25.mat')
+  
+    CoP_Mat1_RightHalf(end_samp_M1,1) = nan;
+    CoP_Mat1_RightHalf(end_samp_M1,2) = nan;
+    CoP_Mat1_RightHalf(start_samp_M1,1) = nan;
+    CoP_Mat1_RightHalf(start_samp_M1,2) = nan;
+      
+% elseif isnan(DeltaCOP_left) 
+    CoP_Mat1_LeftHalf(end_samp_M1,1) = nan;
+    CoP_Mat1_LeftHalf(end_samp_M1,2) = nan;
+    CoP_Mat1_LeftHalf(start_samp_M1,1) = nan;
+    CoP_Mat1_LeftHalf(start_samp_M1,2) = nan;
+       
+% elseif isnan(DeltaCOP_whole)
+    CoP_Mat1_Whole(start_samp_M1,1) = nan;
+    CoP_Mat1_Whole(start_samp_M1,2) = nan;
+    CoP_Mat1_Whole(end_samp_M1,1) = nan;
+    CoP_Mat1_Whole(end_samp_M1,2) = nan;
+    end
+end
+
+if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') 
+    if strcmp(filename,'/trial13.mat') ||strcmp(filename,'/trial1.mat') || strcmp(filename,'/trial2.mat') || strcmp(filename,'/trial4.mat') || strcmp(filename,'/trial6.mat') || strcmp(filename,'/trial7.mat') || strcmp(filename,'/trial9.mat')  || strcmp(filename,'/trial10.mat')
+  
+    CoP_Mat1_RightHalf(end_samp_M1,1) = nan;
+    CoP_Mat1_RightHalf(end_samp_M1,2) = nan;
+    CoP_Mat1_RightHalf(start_samp_M1,1) = nan;
+    CoP_Mat1_RightHalf(start_samp_M1,2) = nan;
+      
+% elseif isnan(DeltaCOP_left) 
+    CoP_Mat1_LeftHalf(end_samp_M1,1) = nan;
+    CoP_Mat1_LeftHalf(end_samp_M1,2) = nan;
+    CoP_Mat1_LeftHalf(start_samp_M1,1) = nan;
+    CoP_Mat1_LeftHalf(start_samp_M1,2) = nan;
+       
+% elseif isnan(DeltaCOP_whole)
+    CoP_Mat1_Whole(start_samp_M1,1) = nan;
+    CoP_Mat1_Whole(start_samp_M1,2) = nan;
+    CoP_Mat1_Whole(end_samp_M1,1) = nan;
+    CoP_Mat1_Whole(end_samp_M1,2) = nan;
+    end
+end
+
+pause
 
 
 %% Trajectory of COP Mats 1 and 2
 % Mat 1
 figure(6)
 % subplot(1,3,1)
- h1 = plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+%  h1 = plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
 hold on
 xlabel('Postion in X','FontSize',14)
 ylabel('Position in Y','FontSize',14)
@@ -243,27 +305,43 @@ ylabel('Position in Y','FontSize',14)
 % rangey = (yl(2)-yl(1));
 % % text(xl(1)+(rangex/2),yl(1)+(rangey/2), num2str([deltax deltay]) )
 hold on
-c1= viscircles([CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2)],.05,'Color','g');
-c2= viscircles([CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2)],.05,'Color','r');
- set(h1,'Color',[0.4660 0.6740 0.1880]);
-title('COP Tracking Mat 1-Back of Chair','Fontsize',16)
+c1= viscircles([CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2)],.08,'Color','g');
+c2= viscircles([CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2)],.08,'Color','r');
 
- h2 = plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+% p1 = [CoP_Mat1_RightHalf(start_samp_M1,1) CoP_Mat1_RightHalf(start_samp_M1,2)]
+% p2 = [CoP_Mat1_RightHalf(end_samp_M1,1) CoP_Mat1_RightHalf(end_samp_M1,2)]
+% h1 = plot([ p1(1) p2(1)], [p1(2) p2(2)],'LineWidth',2);
+%  
+% set(h1,'Color',[0.4660 0.6740 0.1880]);
+title('RTIS2002(P): Back of Chair-COP Tracking','Fontsize',16)
+
+%  h2 = plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'LineWidth',2);
 xlabel('Postion in X','FontSize',14)
 ylabel('Position in Y','FontSize',14)
 
 hold on
-c1= viscircles([CoP_Mat1_LeftHalf(start_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1,2)],.05,'Color','g');
-c2= viscircles([CoP_Mat1_LeftHalf( end_samp_M1,1)+8,CoP_Mat1_LeftHalf( end_samp_M1,2)],.05,'Color','r');
-set(h2,'Color',[0.4940 0.1840 0.5560]);
-
-h5 = plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'LineWidth',2);
-c1= viscircles([CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2)],.05,'Color','g');
-c2= viscircles([CoP_Mat1_Whole( end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2)],.05,'Color','r');
-set(h5,'Color',[0.6350 0.0780 0.1840]);
+c1= viscircles([CoP_Mat1_LeftHalf(start_samp_M1,1)+8,CoP_Mat1_LeftHalf(start_samp_M1,2)],.08,'Color','g');
+c2= viscircles([CoP_Mat1_LeftHalf( end_samp_M1,1)+8,CoP_Mat1_LeftHalf( end_samp_M1,2)],.08,'Color','r');
 
 
-legend('Right COP','Left COP','Whole Mat COP','Fontsize',14)
+% p1 = [CoP_Mat1_LeftHalf(start_samp_M1,1)+8 CoP_Mat1_LeftHalf(start_samp_M1,2)]
+% p2 = [CoP_Mat1_LeftHalf(end_samp_M1,1)+8 CoP_Mat1_LeftHalf(end_samp_M1,2)]
+% h2 = plot([ p1(1) p2(1)], [p1(2) p2(2)],'LineWidth',2);set(h2,'Color',[0.4940 0.1840 0.5560]);
+
+% h5 = plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'LineWidth',2);
+c1= viscircles([CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2)],.08,'Color','g');
+c2= viscircles([CoP_Mat1_Whole( end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2)],.08,'Color','r');
+
+% p1 = [CoP_Mat1_Whole(start_samp_M1,1) CoP_Mat1_Whole(start_samp_M1,2)]
+% p2 = [CoP_Mat1_Whole(end_samp_M1,1) CoP_Mat1_Whole(end_samp_M1,2)]
+% h5 = plot([ p1(1) p2(1)], [p1(2) p2(2)],'LineWidth',2);
+% 
+%
+% set(h5,'Color','c');
+
+xline(5);
+xline(10);
+% legend('Right COP','Left COP','Whole Mat COP','Fontsize',14)
 
 xlim([0 16])
 ylim([0 16])
@@ -272,30 +350,29 @@ ylim([0 16])
 for p = start_samp_M1: end_samp_M2
     figure(7)
     clf
-    %     subplot(1,2,1)
-    imagesc(Pressuremat1_frame(:,:,p))
+
+    imagesc(Pressuremat1_frame(:,:,p),[min(min(pps_mat1(start_samp_M1: end_samp_M1,:))) max(max(pps_mat1(start_samp_M1: end_samp_M1,:)))])
+
     set(gca,'yticklabel',[])
     
-    %     title(['Right Half' ' ' 'frame' ' '  num2str(p) ' ' 'COPR' ' ' num2str(CoP1_right(p,:)) ])
     
     colorbar
-    caxis([min(min(pps_mat1)) max(max(pps_mat1))])
+    caxis([min(min(pps_mat1(start_samp_M1: end_samp_M1,:))) max(max(pps_mat1(start_samp_M1: end_samp_M1,:)))])
+
     
-    
-    %     subplot(1,2,2)
-    %     imagesc(Pressuremat1L_frame(:,:,p))
-    %     set(gca,'yticklabel',[])
-    %
-    %     colorbar
-    %     caxis([min(min(Mat1_LeftHalf)) max(max(Mat1_LeftHalf))])
-    %
+
     title(['Back Mat' ' ' 'frame' ' '  num2str(p)])
-    %
-    %
-    pause(1)
+
+    pause(.25)
 end
 
 
+
+
+
+%Skipping mat 2 bc noise
+
+return
 
 % Mat 2
 figure(8)
