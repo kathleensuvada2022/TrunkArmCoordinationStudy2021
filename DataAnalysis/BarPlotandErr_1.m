@@ -29,9 +29,9 @@ xticklabels({' ', 'Table- Restrained', 'Table- Unrestrained','25%- Restrained','
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 15;
 ylim([0 105])
-title('REACHING DISTANCE: N = 9 Stroke (Paretic)','FontSize',20)
+title('REACHING DISTANCE: N = 4 Controls','FontSize',20)
 ylabel('Reaching Distance (%LL)','FontSize',16)
-legend( 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
+% legend( 'Reaching Distance Table','Reaching Distance 25%','Reaching Distance 50%','FontSize',16)
 %%
 
 

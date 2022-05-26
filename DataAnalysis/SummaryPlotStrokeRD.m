@@ -36,23 +36,50 @@ U25RD_total_err = std(U25RD_total);
 U50RD_total = [U50RD_01 U50RD_02 U50RD_03 U50RD_06 U50RD_07 U50RD_08 U50RD_09 U50RD_10 U50RD_11];
 U50RD_total_mean = mean(U50RD_total);
 U50RD_total_err = std(U50RD_total);
-%%
+%% Trunk Displacement
 
-% TD
-RTTD_total = [RTTD_01 RTTD_02
-R25TD_total = [R25TD_01 R25TD_02
-R50TD_total= [R50TD_01 R50TD_02
-UTTD_total= [UTTD_01 UTTD_02
-U25TD_total= [U25TD_01 U25TD_02
-U50TD_total= [U50TD_01 U50TD_02
 
-%T_Angle
+%RT
+RTTD_total = [RTTD_01 RTTD_02 RTTD_03 RTTD_06 RTTD_07 RTTD_08 RTTD_09 RTTD_10 RTTD_11];
+RTTD_total_mean   = mean(RTTD_total);
+
+
+%R25
+R25TD_total = [R25TD_01 R25TD_02 R25TD_03 R25TD_06 R25TD_07 R25TD_08 R25TD_09 R25TD_10 R25TD_11];
+R25TD_total_mean = mean(R25TD_total);
+R25TD_total_err = std(R25TD_total);
+
+%R50
+R50TD_total= [R50TD_01 R50TD_02 R50TD_03 R50TD_06 R50TD_07 R50TD_08 R50TD_09 R50TD_10 R50TD_10];
+R50TD_total_mean = mean(R50TD_total);
+R50TD_total_err = std(R50TD_total);
+
+%UT
+UTTD_total= [UTTD_01 UTTD_02 UTTD_03 UTTD_06 UTTD_07 UTTD_08 UTTD_01 UTTD_09 UTTD_01 UTTD_10 UTTD_11];
+UTTD_total_mean = mean(UTTD_total);
+UTTD_total_err = std(UTTD_total);
+
+%U25
+U25TD_total= [U25TD_01 U25TD_02 U25TD_03 U25TD_06 U25TD_07 U25TD_08 U25TD_09 U25TD_10 U25TD_11];
+U25TD_total_mean = mean(U25TD_total);
+U25TD_total_err = std(U25TD_total); 
+
+%U50
+U50TD_total= [U50TD_01 U50TD_02 U50TD_03 U50TD_06 U50TD_07 U50TD_08 U50TD_09 U50TD_10 U50TD_11];
+U50TD_total_mean = mean(U50TD_total);
+U50TD_total_err = std(U50TD_total);
+
+
+
+%% T_Angle
 RTANG_total = [RTANG_01 RTANG_02
 R25ANG_total = [R25ANG_01 R25ANG_02
 R50ANG_total = [R50ANG_01 R50ANG_02
 UTANG_total = [UTANG_01  UTANG_02
 U25ANG_total = [U25ANG_01 U25ANG_02
 U50ANG_total = [U50ANG_01 U50ANG_02
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% RTIS2001
