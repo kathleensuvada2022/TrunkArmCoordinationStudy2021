@@ -35,7 +35,7 @@ ax.YAxis.FontSize = 15;
 xline(0,'k','Linewidth',1.5)
 xlabel('Forward Flexion (deg)                          Back Extension (deg)')
 
- title('Trunk Sagittal Plane Angle: N = 9 Stroke Participants','FontSize',20)
+ title('Trunk Sagittal Plane Angle: N = 4 Control Participants','FontSize',20)
 
  % ylabel('Trunk Displacement (%LL)','FontSize',16)
  legend( [p1 p2 p3],'Table','25%','50%','FontSize',16)

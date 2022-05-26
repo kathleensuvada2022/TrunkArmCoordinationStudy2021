@@ -14,7 +14,7 @@ xticklabels({' ', 'Table- Restrained', 'Table- Unrestrained','25%- Restrained','
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 15;
 ylim([-.2 35])
-title('Trunk Displacement: N = 9 Stroke Participants','FontSize',20)
+title('Trunk Displacement: N = 4 Control Participants','FontSize',20)
 ylabel('Trunk Displacement (%LL)','FontSize',16)
 legend( [p1 p2 p3],'Trunk Displacement Table','Trunk Displacement 25%','Trunk Displacement 50%','FontSize',16)
 %%
