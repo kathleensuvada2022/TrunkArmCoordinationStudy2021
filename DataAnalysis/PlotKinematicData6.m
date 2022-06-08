@@ -1992,16 +1992,33 @@ axis equal
     
     %%  GH computed rotated 90 (Compared to Marker data) - June 2022
     if strcmp(partid,'RTIS2001')
-        if strcmp(hand,'Right')
-            
-            for l= 1: length(gh)
-            gh2(l,1:3) = rotz(-90)*gh(l,1:3)';
+        if strcmp(hand,'Right')    
+            if expcond==1
+                ghflipped = gh';
+                ghflipped = ghflipped (1:3,:);
+                
+                for l= 1: length(gh)
+                    gh2(:,l) = rotz(-45)*ghflipped(:,l);
+                end
+     
+                gh2 = gh2';
+     
+                meanx_gh = mean(gh(1:10,1));
+                meany_gh = mean(gh(1:10,2));
+                
+                meanx_gh_2 = mean(gh2(1:10,1));
+                meany_gh_2 = mean(gh2(1:10,2));
+                
+                x_transl =  meanx_gh - meanx_gh_2;
+                y_transl =  meany_gh - meany_gh_2;
+                
+                gh(:,1) = gh2(:,1)+x_transl;
+                gh(:,2) = gh2(:,2)+y_transl;
+    
+                
             end
-            
         end
     end
-    
-    
     % Adding Computed GH to the Plot
     figure(9)
     plot(gh(:,1),gh(:,2),'Linewidth',2) % Computed GH location
