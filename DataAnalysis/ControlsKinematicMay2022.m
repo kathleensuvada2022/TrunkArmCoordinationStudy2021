@@ -10,8 +10,9 @@
 
 %RTable
 RTRD_total = [RTRD_03 RTRD_04 RTRD_05 RTRD_06];
-RTRD_total_mean = mean(RTRD_total)
-RTRD_total_err = std(RTRD_total)
+RTRD_total_mean = mean(RTRD_total);
+RTRD_total_err = std(RTRD_total);
+
 
 %R25
 R25RD_total = [R25RD_03 R25RD_04 R25RD_05 R25RD_06 ];
@@ -40,37 +41,41 @@ U50RD_total_err = std(U50RD_total)
 
 %% Trunk Displacement
 
-
 %RT
 RTTD_total = [RTTD_03 RTTD_04 RTTD_05 RTTD_06];
-RTTD_total_mean   = mean(RTTD_total)
-RTTD_total_err = std(RTTD_total)
+RTTD_total_mean   = mean(RTTD_total);
+RTTD_total_err = std(RTTD_total);
+RTTD_total_SE = std(RTTD_total)/2
 
 %R25
 R25TD_total = [R25TD_03 R25TD_04 R25TD_05 R25TD_06 ];
-R25TD_total_mean = mean(R25TD_total)
-R25TD_total_err = std(R25TD_total)
+R25TD_total_mean = mean(R25TD_total);
+R25TD_total_err = std(R25TD_total);
+R25TD_total_SE = std(R25TD_total)/2
 
 %R50
 R50TD_total= [R50TD_03 R50TD_04 R50TD_05 R50TD_06];
-R50TD_total_mean = mean(R50TD_total)
-R50TD_total_err = std(R50TD_total)
+R50TD_total_mean = mean(R50TD_total);
+R50TD_total_err = std(R50TD_total);
+R50TD_total_SE = std(R50TD_total)/2
 
 %UT
 UTTD_total= [UTTD_03 UTTD_04 UTTD_05 UTTD_06 ];
-UTTD_total_mean = mean(UTTD_total)
-UTTD_total_err = std(UTTD_total)
+UTTD_total_mean = mean(UTTD_total);
+UTTD_total_err = std(UTTD_total);
+UTTD_total_SE = std(UTTD_total)/2
 
 %U25
 U25TD_total= [U25TD_03 U25TD_04 U25TD_05 U25TD_06];
-U25TD_total_mean = mean(U25TD_total)
-U25TD_total_err = std(U25TD_total)
+U25TD_total_mean = mean(U25TD_total);
+U25TD_total_err = std(U25TD_total);
+U25TD_total_SE = std(U25TD_total)/2
 
 %U50
 U50TD_total= [U50TD_03 U50TD_04 U50TD_05 U50TD_06 ];
-U50TD_total_mean = mean(U50TD_total)
-U50TD_total_err = std(U50TD_total)
-
+U50TD_total_mean = mean(U50TD_total);
+U50TD_total_err = std(U50TD_total);
+U50TD_total_SE = std(U50TD_total)/2
 %% ANGLE 
 %RT
 RTANG_total = [RTANG_03 RTANG_04 RTANG_05 RTANG_06];
