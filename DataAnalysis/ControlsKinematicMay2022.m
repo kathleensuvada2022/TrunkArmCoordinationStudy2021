@@ -79,34 +79,36 @@ U50TD_total_SE = std(U50TD_total)/2
 %% ANGLE 
 %RT
 RTANG_total = [RTANG_03 RTANG_04 RTANG_05 RTANG_06];
-RTANG_total_mean= mean(RTANG_total)
-RTANG_total_err = std(RTANG_total)
+RTANG_total_mean= mean(RTANG_total);
+RTANG_total_err = std(RTANG_total);
+RTANG_total_SE = std(RTANG_total)/2
 
 %R25
 R25ANG_total = [R25ANG_03 R25ANG_04 R25ANG_05 R25ANG_06 ];
-R25ANG_total_mean = mean(R25ANG_total)
-R25ANG_total_err = std(R25ANG_total)
-
+R25ANG_total_mean = mean(R25ANG_total);
+R25ANG_total_err = std(R25ANG_total);
+R25ANG_total_SE = std(R25ANG_total)/2
 %R50
 R50ANG_total = [R50ANG_03 R50ANG_04 R50ANG_05 R50ANG_06];
-R50ANG_total_mean = mean(R50ANG_total)
-R50ANG_total_err = std(R50ANG_total)
+R50ANG_total_mean = mean(R50ANG_total);
+R50ANG_total_err = std(R50ANG_total);
+R50ANG_total_SE = std(R50ANG_total)/2
 
 %UT
 UTANG_total = [UTANG_03  UTANG_04 UTANG_05 UTANG_06];
-UTANG_total_mean = mean(UTANG_total)
-UTANG_total_err = std(UTANG_total)
-
+UTANG_total_mean = mean(UTANG_total);
+UTANG_total_err = std(UTANG_total);
+UTANG_total_SE = std(UTANG_total)/2
 %U25
 U25ANG_total = [U25ANG_03 U25ANG_04 U25ANG_05 U25ANG_06];
-U25ANG_total_mean = mean(U25ANG_total)
-U25ANG_total_err  = std(U25ANG_total)
-
+U25ANG_total_mean = mean(U25ANG_total);
+U25ANG_total_err  = std(U25ANG_total);
+U25ANG_total_SE  = std(U25ANG_total)/2
 %U50
 U50ANG_total = [U50ANG_03 U50ANG_04 U50ANG_05 U50ANG_06];
-U50ANG_total_mean = mean(U50ANG_total)
-U50ANG_total_err = std(U50ANG_total)
-
+U50ANG_total_mean = mean(U50ANG_total);
+U50ANG_total_err = std(U50ANG_total);
+U50ANG_total_SE = std(U50ANG_total)/2
 
 
 
