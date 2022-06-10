@@ -1468,7 +1468,7 @@ for i=1: length(mtrials)% i = 3
 
 % Not Interpolated, not Resampled but verifying consistent with final
 % cleaned up plots
-
+% 
 figure(9)
 plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Raw Shoulder Marker
 hold on
@@ -1994,9 +1994,13 @@ axis equal
     if strcmp(partid,'RTIS2001')
         if strcmp(hand,'Right')    
             if expcond==1
+%                 if strcmp(mfname,'/trial1.mat')
+                
                 ghflipped = gh';
                 ghflipped = ghflipped (1:3,:);
                 
+                gh2 = zeros(3,length(gh));
+
                 for l= 1: length(gh)
                     gh2(:,l) = rotz(-45)*ghflipped(:,l);
                 end
@@ -2016,16 +2020,17 @@ axis equal
                 gh(:,2) = gh2(:,2)+y_transl;
     
                 
-            end
+%                 end
+            end 
         end
     end
     % Adding Computed GH to the Plot
-    figure(9)
-    plot(gh(:,1),gh(:,2),'Linewidth',2) % Computed GH location
-    legend('Shoulder Marker','Acromion','3rd MCP','Jug Notch','Computed GH','FontSize',16)
-    title(' Kinematic Data- Shoulder Data Comparison','FontSize',18)
-    pause
-    
+%     figure(9)
+%     plot(gh(:,1),gh(:,2),'Linewidth',2) % Computed GH location
+%     legend('Shoulder Marker','Acromion','3rd MCP','Jug Notch','Computed GH','FontSize',16)
+%     title(' Kinematic Data- Shoulder Data Comparison','FontSize',18)
+%     pause
+%     
     
 %     
 %     if strcmp(partid,'RTIS2010')
@@ -2746,6 +2751,9 @@ hold on
 %         DataMatrix{nextrow+1,3} = mfname;
 %         DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
 %         DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
+mfname
+maxreach_current_trial(i)
+maxreach_current_trial(i)/armlength*100
 %         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
 %         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
  %        DataMatrix{nextrow+1,8} =  trex_current_trial(i);
@@ -2770,7 +2778,7 @@ hold on
 % DataMatrix{FinalRow,2} = expcond;
 % 
 
-%     pause
+     pause
    %close all
 
 
