@@ -56,7 +56,7 @@ bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS
 % RotX_90 = cat(1, RotX_90,row0); %Adding a column of 0s and row of 1s st 4x4
 
 %Rotating BLS 90 about x so aligned with original system
-bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
+bl =[rotx(90) zeros(3,1); zeros(1,3) 1]*bl; % SKIP TO PLOT IN KACEYS CS
 
 %% 
 % Rotating 180 about Z 
@@ -96,6 +96,8 @@ bl =[rotx(pi/2) zeros(3,1); zeros(1,3) 1]*bl;
 % bl(1:3)=bl(1:3)-repmat(Osca,1,4); % for 4 Bls
 
 %%
+
+% ["AC","AA","TS","AI","PC"]; K.Suvada Order of BLS Scap
 lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa); % length from AC to AA
 lacts=norm(bl(:,1)-bl(:,3)); %lacts=norm(ac-ts); % length from AC to TS
 lacai=norm(bl(:,1)-bl(:,4)); %lacai=norm(ac-ai)  % length from AC to AI
@@ -118,15 +120,18 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
     [1       lacts lacai      ]*[ 10       -0.40  0.22      ]'; % Xcoord
     [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
     [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
+
 % Kacey: Write out matrix. GH regression paper to see where numbers from
 
 % 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) '
 %% 
 ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
  
-% Rotating 90 degrees to align with CS
-ScapCS_bone= [rotx(pi/2) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
-%% Kacey Testing and plotting computed GH 
+% Rotating 90 degrees to align with original Defintion of SCAP CS
+ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
+%% Testing and plotting computed GH 
+% Scapular Coordinate System with Respective BLs (AC and CS should be
+% centered at (0,0,0)
 if flag==1
 figure()
 quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
@@ -150,9 +155,9 @@ xlabel('x axis')
 ylabel('y axis')
 zlabel('z axis')
 
-plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+plot3(gh(1),gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
- text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+ text(gh(1),gh(2),gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 end 
 
 %%

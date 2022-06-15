@@ -1466,8 +1466,8 @@ for i=1: length(mtrials)% i = 3
 %% Checking Shoulder Position, Plotting Marker and Computed Acromion - June 2022
  
 
-% Not Interpolated, not Resampled but verifying consistent with final
-% cleaned up plots
+% Not Interpolated, not Resampled but verifying consistent with GH
+% Computation
 % 
 figure(9)
 plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Raw Shoulder Marker
@@ -1475,7 +1475,9 @@ hold on
 plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
 plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
 plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
 axis equal
+
 
  % Add in Computed GH to plot later 
     
@@ -2024,6 +2026,9 @@ axis equal
             end 
         end
     end
+    
+    
+    
     % Adding Computed GH to the Plot
 %     figure(9)
 %     plot(gh(:,1),gh(:,2),'Linewidth',2) % Computed GH location

@@ -1,9 +1,9 @@
 %% 2021  K. Suvada
 %%
 % Kacey's Bone CSs for the right arm are st: the Y is forwards, X is to the right and Z is up
-% ( from behind)
+% (from behind participant)
 
-% Function based off of "ComputeEulerAngles".  for
+% Function based off of "ComputeEulerAngles".
 % Kacey's Project. Used to get Metria Data into Local Coordinate systems of
 % markers and then to the global coordinate system. Creates bone coordinate
 % systems for the 1)trunk 2)shoulder 3) Forearm 4) Humerus.
@@ -55,7 +55,8 @@ function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 % June 22, 2016 Allie Johnson - Modified GH calculation to match the Helical Axes method.
 % September 25, 2018 (v10) Ana Maria Acosta - added comments and cleaned up code
 % based on Sabeen Admani's additions to the code over 2017-18.
-% Fall/Winter 2021 Kacey Suvada - edited code to match experimental
+
+% Fall/Winter 2021/2022 Kacey Suvada - edited code to match experimental
 % protocol:
 % 1) Modifying inputs: BL and HT
 % 2) Modifying outputs: adding Pmcp in G, Trunk and Humerus CSs
@@ -132,6 +133,8 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 %  xtrunk(:,1) = -xtrunk(:,1);   
 % end
 
+
+%%
 Tftom = zeros(4,4,length(xfore)); %Forearm
 Tstom= zeros(4,4,length(xshoulder)); %Shoulder
 Tttom=zeros(4,4,length(xtrunk)); %Trunk
@@ -151,6 +154,19 @@ i = k;
 
 %                TRUNK SHOULDER HUMERUS FOREARM
 TmarkertoGlob = {Tttom Tstom Thtom Tftom}; % HT(marker) in GCS during trial ******
+
+
+
+%% Plotting Raw Marker Data for Shoulder Use for Comparing GH- June 2022
+
+%
+% figure(11)
+% plot(Tstom(1,4),Tstom(2,4),'o','MarkerSize',12,'Color','m')
+% xlabel('X Position','FontSize',14)
+% ylabel('Y Position','FontSize',14)
+% title('Comparing Shoulder Marker and Computed GH','FontSize',16)
+
+
 %%
 %Swap out the definition for the GH joint center that we estimated earlier
 %for the one calculated using the helical axes method
@@ -231,10 +247,10 @@ j=k; % a part of larger loop outside this function.
     % TRUNK SHOULDER HUMERUS FOREARM
     
     if strcmp(arm,'Left')
-        TmarkertoGlob{1} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{1}; % Trunk
-        TmarkertoGlob{2} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{2}; % Shoulder
-        TmarkertoGlob{3} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{3}; % Humerus
-        TmarkertoGlob{4} =[rotz(pi) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{4}; % Forearm
+        TmarkertoGlob{1} =[rotz(180) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{1}; % Trunk
+        TmarkertoGlob{2} =[rotz(180) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{2}; % Shoulder
+        TmarkertoGlob{3} =[rotz(180) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{3}; % Humerus
+        TmarkertoGlob{4} =[rotz(180) zeros(3,1);zeros(1,3) 1]*TmarkertoGlob{4}; % Forearm
     end
 
     
@@ -250,7 +266,9 @@ j=k; % a part of larger loop outside this function.
 %     BL_G_s(:,:,j) = TmarkertoGlob{2}(:,:,j)*BLs{1,2};% Shoulder Bonylandmarks in GCS
     
     BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %Sh BLs in Sh marker CS
+    
     gh =ghest_KS(BL_M_s,BoneCS{2},flag); % Computing GH at jth time point (in sh marker cs) via GH function
+    
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
 %     return 
