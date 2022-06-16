@@ -1941,14 +1941,23 @@ axis equal
     TrunkAng_GCS= zeros(3,length(metdata));
     
     for k = 1:length(metdata) %looping through each frame to get GH
-     [gh_frame TrunkAng_GCS_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+     [gh_frame TrunkAng_GCS_frame, GH_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
      gh(:,k) = gh_frame(1:4);
      TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+     GH (:,k) = GH_frame(1:4);
     end
     
     
+% Adding GHs (Digitized and From reg model) to overhead plot
 
-    
+figure(9)
+hold on
+plot(GH(1,:),GH(2,:),'Linewidth',2) 
+plot(gh(1,:),gh(2,:),'Linewidth',2) 
+legend('SH Marker','Acromion','3rd MCP','Jug Notch','Digitized GH','Estimated GH')
+title('Overhead View of Reach with Various Shoulder Computations in GCS','FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
     %% Trunk Angle Interpolation / Resampling
 
     % April 2022 - K. Suvada

@@ -21,7 +21,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function [GH_G_comp_s gTRUNK] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
+function [GH_G_comp_s gTRUNK, GH] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 %%
 
  flag =0;
@@ -401,6 +401,7 @@ j=k; % a part of larger loop outside this function.
     
     
     if flag ==1
+        %%
         figure(1)
         plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
       hold on
@@ -414,8 +415,8 @@ j=k; % a part of larger loop outside this function.
         
         if j==1
             text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
-%             text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
-%             text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
+             text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
+             text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
             text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
             text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
             text(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),BLnames_f)
@@ -423,8 +424,8 @@ j=k; % a part of larger loop outside this function.
             quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
             text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
             
-%             quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
-%             text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
+             quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
+             text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
 %             
             quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
             text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
@@ -436,11 +437,13 @@ j=k; % a part of larger loop outside this function.
             text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
             
             %Line from GH to MidPnt between Epicondyles
-            % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
-            xlabel('x (mm)')
-            ylabel('y (mm)')
-            zlabel('z (mm)')
+             plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+            xlabel('x (mm)','FontSize',14)
+            ylabel('y (mm)','FontSize',14)
+            zlabel('z (mm)','FontSize',14)
             axis 'equal'
+            
+            title('Bony Landmarks and respective CS for Bones in GCS','FontSize',16)
 %             
 %             figure(2)
 %             quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
