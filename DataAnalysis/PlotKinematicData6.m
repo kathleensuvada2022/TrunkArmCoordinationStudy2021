@@ -1463,24 +1463,7 @@ for i=1: length(mtrials)% i = 3
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup);
  
     
-%% Checking Shoulder Position, Plotting Marker and Computed Acromion - June 2022
- 
 
-% Not Interpolated, not Resampled but verifying consistent with GH
-% Computation
-% 
-figure(9)
-plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Raw Shoulder Marker
-hold on
-plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
-axis equal
-
-
- % Add in Computed GH to plot later 
-    
     
     
     
@@ -1950,16 +1933,7 @@ axis equal
     
     
     
-% Adding GHs (Digitized and From reg model) to overhead plot
 
-figure(9)
-hold on
-plot(-GH(1,:),-GH(2,:),'Linewidth',2) 
-plot(-gh(1,:),-gh(2,:),'Linewidth',2) 
-legend('SH Marker','Acromion','3rd MCP','Jug Notch','Digitized GH','Estimated GH')
-title('Overhead View of Reach with Various Shoulder Computations in GCS','FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
     %% Trunk Angle Interpolation / Resampling
 
     % April 2022 - K. Suvada
@@ -2001,8 +1975,13 @@ ylabel('Y position (mm)','FontSize',14)
     if strcmp(hand,'Left')
         gh(:,1) = -gh(:,1);
         gh(:,2) = -gh(:,2);
+        
+%         GH(:,1) = -GH(:,1);
+%         GH(:,2) = -GH(:,2);
     end
     
+    
+
     %%  GH computed rotated 90 (Compared to Marker data) - June 2022
     if strcmp(partid,'RTIS2001')
         if strcmp(hand,'Right')    
@@ -2040,13 +2019,7 @@ ylabel('Y position (mm)','FontSize',14)
     
     
     
-    % Adding Computed GH to the Plot
-%     figure(9)
-%     plot(gh(:,1),gh(:,2),'Linewidth',2) % Computed GH location
-%     legend('Shoulder Marker','Acromion','3rd MCP','Jug Notch','Computed GH','FontSize',16)
-%     title(' Kinematic Data- Shoulder Data Comparison','FontSize',18)
-%     pause
-%     
+ 
     
 %     
 %     if strcmp(partid,'RTIS2010')
@@ -2352,11 +2325,47 @@ ylabel('Y position (mm)','FontSize',14)
     %         end
     %         end
     %     end
+    
+  %% Plotting Kinematic Data to Verify before outcome measures   
+    
+figure(9)
+plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Raw Shoulder Marker
+hold on
+plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+% legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
+axis equal
+
+plot(gh(:,1),gh(:,2),'Linewidth',2) 
+legend('SH Marker','Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+title('Overhead View of Reach- GCS' ,'FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+
+ % !!!!!!!! Kacey check: In trunk ref- right arm okay left something up June 2022
+    
 %% Subtracting Trunk From Hand, Arm Length, and Shoulder    
    xhand = xhand-xjug;
    gh = gh(:,1:3)-xjug;
    xjug_origin = xjug-xjug;
  % xjug_origin= xjug;
+ %% Confirming Plots Post Subtraction of Trunk
+ 
+ 
+figure()
+plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+hold on
+plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
+
+plot(gh(:,1),gh(:,2),'Linewidth',2) 
+axis equal
+legend('3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+
+ 
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     % Def: Distance between hand and shoulder at end of reach - idx(3)

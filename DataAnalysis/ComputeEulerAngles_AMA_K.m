@@ -399,7 +399,7 @@ j=k; % a part of larger loop outside this function.
 %     end
 %     
     
- if k ==1
+ if flag ==1
         %%
          figure(1)
 %         clf
