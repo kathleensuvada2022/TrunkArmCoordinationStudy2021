@@ -399,14 +399,14 @@ j=k; % a part of larger loop outside this function.
 %     end
 %     
     
-if flag ==1
+ if k ==1
         %%
          figure(1)
 %         clf
         plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
       hold on
         plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
-        plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'*') %kacey adding computed GH
+        plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') %kacey adding computed GH
         plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
         plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
         plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
@@ -455,7 +455,8 @@ if flag ==1
 %              
      
 pause
-end
+
+ end
   
 
 % GH_G_comp_s = squeeze(GH_G_comp_s); % now 4X nimag 
