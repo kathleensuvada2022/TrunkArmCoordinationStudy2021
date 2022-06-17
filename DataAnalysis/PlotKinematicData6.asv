@@ -1950,16 +1950,7 @@ axis equal
     
     
     
-% Adding GHs (Digitized and From reg model) to overhead plot
 
-figure(9)
-hold on
-plot(-GH(1,:),-GH(2,:),'Linewidth',2) 
-plot(-gh(1,:),-gh(2,:),'Linewidth',2) 
-legend('SH Marker','Acromion','3rd MCP','Jug Notch','Digitized GH','Estimated GH')
-title('Overhead View of Reach with Various Shoulder Computations in GCS','FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
     %% Trunk Angle Interpolation / Resampling
 
     % April 2022 - K. Suvada
@@ -2003,6 +1994,17 @@ ylabel('Y position (mm)','FontSize',14)
         gh(:,2) = -gh(:,2);
     end
     
+    % Adding GHs (Digitized and From reg model) to overhead plot
+
+figure(9)
+hold on
+plot(-GH(1,:),-GH(2,:),'Linewidth',2) 
+plot(gh(:,1),gh(:,2),'Linewidth',2) 
+legend('SH Marker','Acromion','3rd MCP','Jug Notch','Digitized GH','Estimated GH')
+title('Overhead View of Reach with Various Shoulder Computations in GCS','FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+
     %%  GH computed rotated 90 (Compared to Marker data) - June 2022
     if strcmp(partid,'RTIS2001')
         if strcmp(hand,'Right')    
