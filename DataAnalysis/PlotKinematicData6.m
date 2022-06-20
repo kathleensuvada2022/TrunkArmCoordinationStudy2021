@@ -1563,11 +1563,11 @@ for i=1: length(mtrials)% i = 3
 
     end
         
-    if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
-        xjug(:,1) = -xjug(:,1);
+%     if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
 %         xjug(:,1) = -xjug(:,1);
-        
-    end
+% %         xjug(:,1) = -xjug(:,1);
+%         
+%     end
 % %     
 %     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2
 %         xhand(:,2) = -xhand(:,2);
@@ -2338,18 +2338,19 @@ plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
 axis equal
 
 plot(gh(:,1),gh(:,2),'Linewidth',2) 
-legend('SH Marker','Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+legend('SH Marker','Acromion','3rd MCP','Jug Notch','Estimated GH','Trunk Marker','FontSize',14)
 title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
- % !!!!!!!! Kacey check: In trunk ref- right arm okay left something up June 2022
     
 %% Subtracting Trunk From Hand, Arm Length, and Shoulder    
    xhand = xhand-xjug;
    gh = gh(:,1:3)-xjug;
    xjug_origin = xjug-xjug;
  % xjug_origin= xjug;
+%  xshoulder2 = xshoulder-xjug;
  %% Confirming Plots Post Subtraction of Trunk
  
  
@@ -2359,6 +2360,7 @@ hold on
 plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
 
 plot(gh(:,1),gh(:,2),'Linewidth',2) 
+
 axis equal
 legend('3rd MCP','Jug Notch','Estimated GH','FontSize',14)
 title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
