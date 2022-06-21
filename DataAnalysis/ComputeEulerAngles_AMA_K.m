@@ -83,6 +83,7 @@ load(fullfile(datafilepath,[partid,'_','setup']));
 bonylmrks = ["SC" "IJ" "PX" "C7" "T8" "AC" "AA" "TS" "AI" "PC" "EM" "EL" "GH" "RS" "US" "OL" "MCP","EL","EM"]';  % IN THIS ORDER
 BLnames_t = ["SC","IJ","PX","C7","T8"];
 BLnames_s = ["AC","AA","TS","AI","PC"];
+
 BLnames_f = ["RS","US","OL","MCP3","EL","EM"];
 BLnames_h = ["EM","EL","GH"];
 BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
@@ -129,9 +130,6 @@ xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
-% if strcmp(partid,'RTIS2008') && strcmp(arm,'Left') % fixing that kacey switched x and y in GCS creation
-%  xtrunk(:,1) = -xtrunk(:,1);   
-% end
 
 
 %%
@@ -300,9 +298,9 @@ j=k; % a part of larger loop outside this function.
     
     
     if strcmp(partid,'RTIS2007')
-        if strcmp(arm,'Left')
+%         if strcmp(arm,'Left')
             TtoG(1:3,1:3) = rotz(-180)*TtoG(1:3,1:3);
-        end
+%         end
     end
         
     if strcmp(partid,'RTIS2008')
@@ -317,11 +315,11 @@ j=k; % a part of larger loop outside this function.
         end
     end
     
-    if strcmp(partid,'RTIS2009')
-        if strcmp(arm,'Left')
-            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
-        end
-    end
+%     if strcmp(partid,'RTIS2009')
+%         if strcmp(arm,'Left')
+%             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+%         end
+%     end
     
         
     if strcmp(partid,'RTIS2010')
@@ -343,11 +341,11 @@ j=k; % a part of larger loop outside this function.
     end
     
                 
-    if strcmp(partid,'RTIS2001')
-        if strcmp(arm,'Left')
-            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
-        end
-    end
+%     if strcmp(partid,'RTIS2001')
+%         if strcmp(arm,'Left')
+%             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+%         end
+%     end
                     
     if strcmp(partid,'RTIS2006')
         if strcmp(arm,'Left')
@@ -379,25 +377,29 @@ j=k; % a part of larger loop outside this function.
 
 %     
     
-% %     %Testing Trunk Angle
-%     figure(13)
-%     if j ==1
-%     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
-%     hold on
-%     quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-%     text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+%% Testing Trunk Angle
+    figure(13)
+    if j ==1
+    plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+    hold on
+    text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
+
+    quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+    text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+   
+    quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+    text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+    hold on
+    %Line from GH to MidPnt between Epicondyles
+    % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+    xlabel('x (mm)')
+    ylabel('y (mm)')
+    zlabel('z (mm)')
+    title('Trunk and Global Coord. System','Fontsize',16)
+    axis 'equal'
+    end
 %    
-%     quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
-%     text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
-%     hold on
-%     %Line from GH to MidPnt between Epicondyles
-%     % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
-%     xlabel('x (mm)')
-%     ylabel('y (mm)')
-%     zlabel('z (mm)')
-%     axis 'equal'
-%     end
-%     
+
     
  if flag ==1
         %%
@@ -454,7 +456,7 @@ j=k; % a part of larger loop outside this function.
 %             axis 'equal'
 %              
      
-pause
+
 
  end
   

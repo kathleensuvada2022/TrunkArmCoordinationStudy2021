@@ -1467,7 +1467,7 @@ for i=1: length(mtrials)% i = 3
     
     
     
-    %%   
+    %% If Coordinate System Off (couldn't REG to room) verify with BLs plot then modify for 2D trajectory    
     if strcmp(partid,'RTIS2009') 
         if strcmp(hand,'Right')
         % Rotating xhand by -50 deg
@@ -1479,58 +1479,32 @@ for i=1: length(mtrials)% i = 3
         
         xhand = xhand_Rot50;
         
-%         figure(12)
-%         plot(xhand(:,1),xhand(:,2),'LineWidth',1)
-%         hold on
-%         plot(xhand_Rot50(:,1),xhand_Rot50(:,2),'LineWidth',1)
-%         %         legend('Original Data','Rotated Data')
-%         axis equal
-        %         xhand = xhand_Rot45;
-        
+
         % Rotating xjug by -50 deg
         xjug_transp = xjug';
         RotMat = rotz(-50);
         xjug_Rot50 = RotMat*xjug_transp;
         xjug_Rot50 =xjug_Rot50';
         xjug_Rot50(:,1) = -xjug_Rot50(:,1);
-        
-%         figure(12)
-%         plot(xjug(:,1),xjug(:,2),'LineWidth',1)
-%         hold on
-%         plot(xjug_Rot50(:,1),xjug_Rot50(:,2),'LineWidth',1)
-%         legend('Original Data Hand','Rotated Data Hand','Original Data Trunk','Rotated Data Trunk','FontSize',16)
-%         %         axis equal
+  
         xjug = xjug_Rot50;
+        
+        % Rotating xjug by -50 deg
+        xshldr_transp = xshldr';
+        RotMat = rotz(-50);
+        xshldr_Rot50 = RotMat*xshldr_transp ;
+        xshldr_Rot50 =xshldr_Rot50';
+        xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
+  
+        xshldr = xshldr_Rot50;
+        
         end
     end
     
-    %% 
-    if strcmp(partid,'RTIS2010') 
-        if strcmp(hand,'Left')
-            xjug(:,1) = -xjug(:,1);
- 
-        end 
-    end
+  
 
-    
- %%   
-    load([mfilepath mfname]);
-    
-    %% Loading in ACT3D Data for Reach Start Thresholding
-    act3d_data = data.act;
-    
-    Xpos_act = -act3d_data(:,2);
-    
-    Ypos_act = -act3d_data(:,3);
-    Zpos_act = act3d_data(:,4);
-   
-    % Kacey don't use t vector for ACT data... this is incorrect the METRIA
-    % time is correct
-%     t_act = length(Ypos_act)/ 50; % time in seconds
-%     t_act = 0:.02:5;
-%     t_act = t_act(2:end)';
-
-    %% Checking NANS and Interpolating Prior to Resampling
+%     
+    %%
     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
         
         xhandfix(:,1) = xhand(:,2);
@@ -1563,11 +1537,7 @@ for i=1: length(mtrials)% i = 3
 
     end
         
-%     if strcmp(partid,'RTIS2008') && strcmp(hand,'Left') % fixing that kacey switched x and y in GCS creation
-%         xjug(:,1) = -xjug(:,1);
-% %         xjug(:,1) = -xjug(:,1);
-%         
-%     end
+
 % %     
 %     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2
 %         xhand(:,2) = -xhand(:,2);
@@ -1575,8 +1545,26 @@ for i=1: length(mtrials)% i = 3
 %         xhand(:,1) = -xhand(:,1);
 % %          xjug(:,1) = -xjug(:,1);
 %     end
+ %%   Not sure what this is
+    load([mfilepath mfname]);
+    
+    %% Loading in ACT3D Data for Reach Start Thresholding
+    act3d_data = data.act;
+    
+    Xpos_act = -act3d_data(:,2);
+    
+    Ypos_act = -act3d_data(:,3);
+    Zpos_act = act3d_data(:,4);
+  
+    % Kacey don't use t vector for ACT data... this is incorrect the METRIA
+    % time is correct
+%     t_act = length(Ypos_act)/ 50; % time in seconds
+%     t_act = 0:.02:5;
+%     t_act = t_act(2:end)';
 
- 
+
+    %% Checking NANS and Interpolating Prior to Resampling
+
     
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %
         
@@ -1824,15 +1812,9 @@ for i=1: length(mtrials)% i = 3
     
     
     [xhand,t2]=resampledata(xhand,t,89,100);
-%     if strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
-%     xhand(1:10,:) = xhand(11,:);
-%     end
+
     [xjug,t2]=resampledata(xjug,t,89,100);
-%     if strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
-%         
-%         xjug(1:10,:) = xjug(11,:);
-%     end
-    
+
     [dist,t2]=resampledata(dist,t,89,100);
     
     
@@ -2021,13 +2003,7 @@ for i=1: length(mtrials)% i = 3
     
  
     
-%     
-%     if strcmp(partid,'RTIS2010')
-%         if strcmp(hand,'Left')
-%             gh(:,2) = -gh(:,2);
-%             
-%         end
-%     end
+
     %%
 %     if strcmp(partid,'RTIS2011') 
 %         if strcmp(hand,'Left')
@@ -2086,15 +2062,7 @@ for i=1: length(mtrials)% i = 3
 %         
 %     end
         
-%     if strcmp(partid,'RTIS2001')
-%         if strcmp(hand,'Right')
-% 
-%             gh(:,1) = -gh(:,1);
-% %             gh(:,2) = -gh(:,2);
-%         end
-%         
-%     end
-      
+
 
     % Interpolation of GH- accounting for trials with issues and need
     % alternative interpolation method.
@@ -2328,21 +2296,21 @@ for i=1: length(mtrials)% i = 3
     
   %% Plotting Kinematic Data to Verify before outcome measures   
     
-figure(9)
-plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Raw Shoulder Marker
-hold on
-plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-% legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
-axis equal
-
-plot(gh(:,1),gh(:,2),'Linewidth',2) 
-plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-legend('SH Marker','Acromion','3rd MCP','Jug Notch','Estimated GH','Trunk Marker','FontSize',14)
-title('Overhead View of Reach- GCS' ,'FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
+% figure(9)
+% 
+% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+% hold on
+% plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+% plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+% % legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
+% axis equal
+% 
+% plot(gh(:,1),gh(:,2),'Linewidth',2) 
+% 
+% legend('Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+% title('Overhead View of Reach- GCS' ,'FontSize',16)
+% xlabel('X position (mm)','FontSize',14)
+% ylabel('Y position (mm)','FontSize',14)
 
     
 %% Subtracting Trunk From Hand, Arm Length, and Shoulder    
@@ -2351,6 +2319,42 @@ ylabel('Y position (mm)','FontSize',14)
    xjug_origin = xjug-xjug;
  % xjug_origin= xjug;
 %  xshoulder2 = xshoulder-xjug;
+
+
+%% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
+%RTIS 2008- Left 
+
+if strcmp(partid,'RTIS2008')
+    if strcmp(hand,'Left')
+       for p = 1:length(gh)
+        ghnew(:,p) = roty(pi)*gh(p,:)';
+        xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
+       end
+      
+       ghnew = ghnew';
+       xhandnew= xhandnew';
+       
+       gh = ghnew;
+       xhand = xhandnew;
+    end
+end
+%RTIS 2010- Left 
+
+if strcmp(partid,'RTIS2010')
+    if strcmp(hand,'Left')
+       for p = 1:length(gh)
+        ghnew(:,p) = roty(pi)*gh(p,:)';
+        xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
+       end
+      
+       ghnew = ghnew';
+       xhandnew= xhandnew';
+       
+       gh = ghnew;
+       xhand = xhandnew;
+    end
+end
+
  %% Confirming Plots Post Subtraction of Trunk
  
  

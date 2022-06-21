@@ -157,13 +157,13 @@ zlabel('z axis')
 
 plot3(gh(1),gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
- text(gh(1),gh(2),gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+ text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 end 
 
 %%
 %Based on figure - make y and z neg
-gh(2) = -gh(2);
-gh(3) = -gh(3);
+ gh(2) = -gh(2);
+ gh(3) = -gh(3);
 
 %% Rotate GH back to my Coordinate system definition
 
