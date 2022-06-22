@@ -1,4 +1,4 @@
-%% 2021  K. Suvada
+%% 2021-2022  K. Suvada
 %%
 % Kacey's Bone CSs for the right arm are st: the Y is forwards, X is to the right and Z is up
 % (from behind participant)
@@ -15,8 +15,6 @@
 
 
 % Order the Coord. Sys are Output in:  TRUNK SHOULDER  HUM  FORE
-%Use Below for Testing
-%[BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS('trial10','Right','RTIS1005',1)
 
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
@@ -384,27 +382,27 @@ j=k; % a part of larger loop outside this function.
 %     
     
 %% Testing Trunk Angle
-%     figure(13)
-%     if j ==1
-%     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
-%     hold on
-%     text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
-% 
-%     quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-%     text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+    figure(13)
+    if j ==1
+    plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+    hold on
+    text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
+
+    quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+    text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+   
+    quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+    text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+    hold on
+    %Line from GH to MidPnt between Epicondyles
+    % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+    xlabel('x (mm)')
+    ylabel('y (mm)')
+    zlabel('z (mm)')
+    title('Trunk and Global Coord. System','Fontsize',16)
+    axis 'equal'
+    end
 %    
-%     quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
-%     text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
-%     hold on
-%     %Line from GH to MidPnt between Epicondyles
-%     % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
-%     xlabel('x (mm)')
-%     ylabel('y (mm)')
-%     zlabel('z (mm)')
-%     title('Trunk and Global Coord. System','Fontsize',16)
-%     axis 'equal'
-%     end
-% %    
 
     
  if j ==1
@@ -485,7 +483,18 @@ j=k; % a part of larger loop outside this function.
 %Trunk and Humerus angles in Global CS
 
 
-gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
+
+gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
+
+if strcmp(partid,'RTIS1006')
+    %GCS creation did NOT work- therefore did the following:
+    % 1) Aligned TCS to GCS
+    % 2) Different axes indicate rotations in different planes. 
+    
+    
+gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'ZYX',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
+end
+
 gHUM(:)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  
 
 % Hum_Globe_ANG(:,j)=CalcEulerAng(HtoG(1:3,1:3,j),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  

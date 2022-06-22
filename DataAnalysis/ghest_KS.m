@@ -163,11 +163,14 @@ end
 %%
 %Based on figure - make y and z neg
 
-% if strcmp(partid,'RTIS1003')
-% else 
-%     gh(2) = -gh(2);
-%     gh(3) = -gh(3);
-% end
+if strcmp(partid,'RTIS1003')
+    
+%elseif strcmp(partid,'RTIS1004')  
+    
+else 
+    gh(2) = -gh(2);
+    gh(3) = -gh(3);
+end
 
 %% Rotate GH back to my Coordinate system definition
 

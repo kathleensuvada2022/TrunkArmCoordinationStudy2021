@@ -1937,7 +1937,7 @@ for i=1: length(mtrials)% i = 3
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables
     
-    if strcmp(hand,'Left')
+    if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles' 
         gh(:,1) = -gh(:,1);
         gh(:,2) = -gh(:,2);
         
@@ -2005,12 +2005,7 @@ for i=1: length(mtrials)% i = 3
         gh(:,1) = -gh(:,1);
     end
     
-%     if strcmp(partid,'RTIS1002') % fixing that kacey switched x and y in GCS creation
-%         gh(:,2) = -gh(:,2);
-%         gh(:,1) = -gh(:,1);
-%     end
-%     
-%         
+
 
             
 
@@ -2274,14 +2269,13 @@ for i=1: length(mtrials)% i = 3
 % 
  plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
  hold on
+  plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
  plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
  plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
- legend('SH Marker','Acromion','3rd MCP','Jug notch','FontSize',16)
- axis equal
-% 
+ 
 plot(gh(:,1),gh(:,2),'Linewidth',2) 
-% 
- legend('Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+ axis equal
+ legend('Acromion','SH Marker','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
  title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
