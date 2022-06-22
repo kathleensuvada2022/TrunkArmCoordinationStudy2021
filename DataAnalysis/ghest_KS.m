@@ -27,7 +27,7 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag,partid)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -155,15 +155,19 @@ xlabel('x axis')
 ylabel('y axis')
 zlabel('z axis')
 
-plot3(gh(1),gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
+plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
  text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
 end 
 
 %%
 %Based on figure - make y and z neg
- gh(2) = -gh(2);
- gh(3) = -gh(3);
+
+% if strcmp(partid,'RTIS1003')
+% else 
+%     gh(2) = -gh(2);
+%     gh(3) = -gh(3);
+% end
 
 %% Rotate GH back to my Coordinate system definition
 

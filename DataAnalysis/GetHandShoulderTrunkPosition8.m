@@ -456,7 +456,6 @@ for i=1:nimag % loop through time points
 end
 
 
-
 %% Testing Forearm data and 3rd MCP position
 %
 %

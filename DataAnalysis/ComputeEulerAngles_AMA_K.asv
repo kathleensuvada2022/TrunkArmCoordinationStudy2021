@@ -246,9 +246,7 @@ j=k; % a part of larger loop outside this function.
     % June 2022 *** NOTE TO KACEY***** 
     % This is NOT done in 'GetHandShoulderTrunk' so the BL figure in GCS
     % will not look the same as the final plotted figure - think that is
-    % why do -x -y later in code for GH computation. Don't be concerned
-    % that final figure axes don't match the ones in the GCS figure for
-    % LEFT hand. 
+    % why do -x -y later in code for GH computation.
        
     % TRUNK SHOULDER HUMERUS FOREARM
     if strcmp(arm,'Left')
