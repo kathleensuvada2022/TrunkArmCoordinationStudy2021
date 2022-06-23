@@ -27,7 +27,7 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag,partid)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag,partid,arm)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -165,10 +165,12 @@ end
 
 if strcmp(partid,'RTIS1003')
     
-%elseif strcmp(partid,'RTIS1004')  
-    
+elseif strcmp(partid,'RTIS2001') && strcmp(arm,'Left')   
+ 
+
 else 
-    gh(2) = -gh(2);
+    
+    gh(2) = -gh(2); % Based off of comment and plot above line 160--- works 
     gh(3) = -gh(3);
 end
 

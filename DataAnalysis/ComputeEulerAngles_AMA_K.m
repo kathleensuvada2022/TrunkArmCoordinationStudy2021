@@ -270,7 +270,7 @@ j=k; % a part of larger loop outside this function.
     
     BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %Sh BLs in Sh marker CS
     
-    gh =ghest_KS(BL_M_s,BoneCS{2},flag,partid); % Computing GH at jth time point (in sh marker cs) via GH function
+    gh =ghest_KS(BL_M_s,BoneCS{2},flag,partid,arm); % Computing GH at jth time point (in sh marker cs) via GH function
     
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
@@ -298,14 +298,15 @@ j=k; % a part of larger loop outside this function.
     if strcmp(partid,'RTIS2003')
         if strcmp(arm,'Left')
             TtoG(1:3,1:3) = rotz(-90)*TtoG(1:3,1:3);
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
     end
     
     
     if strcmp(partid,'RTIS2007')
-%         if strcmp(arm,'Left')
+         if strcmp(arm,'Right')
             TtoG(1:3,1:3) = rotz(-180)*TtoG(1:3,1:3);
-%         end
+         end
     end
         
     if strcmp(partid,'RTIS2008')
@@ -316,7 +317,7 @@ j=k; % a part of larger loop outside this function.
             
     if strcmp(partid,'RTIS2008')
         if strcmp(arm,'Left')
-            TtoG(1:3,1:3) = rotx(180)*TtoG(1:3,1:3);
+             TtoG(1:3,1:3) = roty(180)*TtoG(1:3,1:3);
         end
     end
     
@@ -354,7 +355,7 @@ j=k; % a part of larger loop outside this function.
                     
     if strcmp(partid,'RTIS2006')
         if strcmp(arm,'Left')
-            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+           % TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
     end
     
@@ -405,25 +406,25 @@ j=k; % a part of larger loop outside this function.
 %    
 
     
- if j ==1
+ if j ==2
         %%
          figure(1)
-%         clf
+        clf
         plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
       hold on
         plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
         plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') %kacey adding computed GH
-        plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
-        plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
-        plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
+         plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
+         plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
+         plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
         plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
-        plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
+         plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
         
-        if j==1
+        if j==2
             text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
              text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
              text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
-            text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
+          text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
             text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
             text(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),BLnames_f)
         end 
@@ -444,6 +445,9 @@ j=k; % a part of larger loop outside this function.
             
             %Line from GH to MidPnt between Epicondyles
              plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+             
+             
+             
             xlabel('x (mm)','FontSize',14)
             ylabel('y (mm)','FontSize',14)
             zlabel('z (mm)','FontSize',14)
@@ -486,6 +490,9 @@ j=k; % a part of larger loop outside this function.
 
 gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
 
+
+
+
 if strcmp(partid,'RTIS1006')
     %GCS creation did NOT work- therefore did the following:
     % 1) Aligned TCS to GCS
@@ -493,6 +500,13 @@ if strcmp(partid,'RTIS1006')
     
     
 gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'ZYX',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
+
+
+% elseif strcmp(partid,'RTIS2008') && strcmp(arm,'Left')
+  
+%     gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); - comparing trunk CS
+%     and GCS still using same order of rotations despite being in camera cs
+    
 end
 
 gHUM(:)=CalcEulerAng(HtoG(1:3,1:3),'ZYZ',0); % Humerus 1) about vertical of created coordinate 2) elevation (around y axis) 3) about humerus z axis internal/extermal rot  

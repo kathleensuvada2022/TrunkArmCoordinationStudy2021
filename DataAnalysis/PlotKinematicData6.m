@@ -1914,17 +1914,32 @@ for i=1: length(mtrials)% i = 3
     end
     
 
-    if strcmp(partid,'RTIS2002')
-        if strcmp(hand,'Left')
-            for m = 1:length(TrunkAng_GCS)
-                if (TrunkAng_GCS(m,1) <0)
-                    TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
-                elseif (TrunkAng_GCS(m,1) >0)
-                    TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
-                end
+%     if strcmp(partid,'RTIS2002')
+%         if strcmp(hand,'Left')
+%             for m = 1:length(TrunkAng_GCS)
+%                 if (TrunkAng_GCS(m,1) <0)
+%                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
+%                 elseif (TrunkAng_GCS(m,1) >0)
+%                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
+%                 end
+%             end
+%         end
+%     end
+    
+if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')
+    if strcmp(hand,'Left')
+        for m = 1:length(TrunkAng_GCS)
+            if (TrunkAng_GCS(m,1) <0)
+                TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+            elseif (TrunkAng_GCS(m,1) >0)
+                TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
             end
         end
     end
+end
+
+ TrunkAng_GCS(1,1)
+
     
     % !!!!!Convention for both arms now + angle means back extension - angle
     % means forward flexion!!!!
@@ -2269,13 +2284,13 @@ for i=1: length(mtrials)% i = 3
 % 
  plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
  hold on
-  plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
  plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
  plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
  
 plot(gh(:,1),gh(:,2),'Linewidth',2) 
  axis equal
- legend('Acromion','SH Marker','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+ legend('Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
  title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
@@ -2291,9 +2306,11 @@ ylabel('Y position (mm)','FontSize',14)
 
 %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
 %RTIS 2008- Left 
+xhandnew = zeros(3,length(xhand));
 
 if strcmp(partid,'RTIS2008')
     if strcmp(hand,'Left')
+        
        for p = 1:length(gh)
         ghnew(:,p) = roty(pi)*gh(p,:)';
         xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
