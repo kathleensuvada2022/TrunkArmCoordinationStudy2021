@@ -334,6 +334,7 @@ j=k; % a part of larger loop outside this function.
         end
         if strcmp(arm,'Left')
             TtoG(1:3,1:3) = roty(180)*TtoG(1:3,1:3);
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
     end
 %             
@@ -342,7 +343,7 @@ j=k; % a part of larger loop outside this function.
             
     if strcmp(partid,'RTIS2011')
         if strcmp(arm,'Left')
-            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+%             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
         end
     end
     

@@ -1926,7 +1926,7 @@ for i=1: length(mtrials)% i = 3
 %         end
 %     end
     
-if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')
+if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')
     if strcmp(hand,'Left')
         for m = 1:length(TrunkAng_GCS)
             if (TrunkAng_GCS(m,1) <0)
