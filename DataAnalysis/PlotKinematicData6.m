@@ -93,13 +93,13 @@ for i=1: length(mtrials)% i = 3
     if i==1
 
     %    for mac 
-        % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
 
 %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
      %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
 
-       % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
 
 % for pc
 %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -2307,10 +2307,10 @@ ylabel('Y position (mm)','FontSize',14)
 %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
 %RTIS 2008- Left 
 xhandnew = zeros(3,length(xhand));
-
+ghnew =zeros(3,length(xhand));
 if strcmp(partid,'RTIS2008')
     if strcmp(hand,'Left')
-        
+       
        for p = 1:length(gh)
         ghnew(:,p) = roty(pi)*gh(p,:)';
         xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
