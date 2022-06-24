@@ -94,7 +94,7 @@ for i=1: length(mtrials)% i = 3
 
     %    for mac 
         % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-      %   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
 
 %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
      %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
@@ -1926,7 +1926,7 @@ for i=1: length(mtrials)% i = 3
 %         end
 %     end
     
-if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')
+if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
     if strcmp(hand,'Left')
         for m = 1:length(TrunkAng_GCS)
             if (TrunkAng_GCS(m,1) <0)
@@ -2417,8 +2417,8 @@ ylabel('Y position (mm)','FontSize',14)
 % StartingTrial = 1;
 %   if i ==StartingTrial
 %       
-% %        subplot(1,2,1);
-% %       ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
+%        subplot(1,2,1);
+%       ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
 % 
 %       if strcmp(partid,'RTIS1003') 
 %           ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
@@ -2627,17 +2627,19 @@ ylabel('Y position (mm)','FontSize',14)
 % %           axis equal
 % % %       end
 % %     
-%      legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Home Target','Location','northeast','FontSize',12)
 % 
-% %     if i ==StartingTrial
-% %    circle(xhand(idx(1),1),xhand(idx(1),2),50)
-% %  %  circle(-209,344,50)
-% %  hold on
-% %     end
+% if i ==StartingTrial
+%     circle(xhand(idx(1),1),xhand(idx(1),2),50)
+%     %  circle(-209,344,50)
+%     hold on
+% end
 %     
 %      ylim([-100 700])
 %     axis equal
 %     
+%     
+%          legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Home Target','Location','northeast','FontSize',12)
+% 
 % %     
 % % %     if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==1||3||6
 % % %         
@@ -2686,12 +2688,12 @@ ylabel('Y position (mm)','FontSize',14)
 % % %         end
 % % %     end
 % % % %     
-% %       
+% % %       
 % %       if i ==StartingTrial
 % %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
 % % 
 % %       end
-% % 
+% 
 % % %    
 % %     hold(ax2,'on')
 % %     p2 = plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
@@ -2704,34 +2706,30 @@ ylabel('Y position (mm)','FontSize',14)
 % %     xlabel('Time (s)','FontSize',14)
 % %     ylabel('Trunk Angle (Deg)','FontSize',14)
 % %     legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-% 
-% %     
+% % 
+% % %     
 % %     if i ==StartingTrial
 % %         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
 % % %       
 % %     end
+% % %     
+% % figure(20)
+% % %     hold(ax3,'on')
+% %    p3 =  plot(xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
+% % %      hold(ax3,'on')
+% % hold on
+% %     c5 = plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+% %     c6 = plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+% %     hold on
 % %     
-% figure(20)
-% %     hold(ax3,'on')
-%    p3 =  plot(xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
-% %      hold(ax3,'on')
-% hold on
-%     c5 = plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-%     c6 = plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-%     hold on
-%     
-% %         legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
-% 
-%     legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-%     xlabel('X (mm)','FontSize',14)
-%     ylabel('Y (mm)','FontSize',14)
-    
-%     if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
-%  xlim ([-640.4399 373 ylim([-100 700])
-% .8750])
-% xlim([-420.0399 594.2750])
-% ylim([-100 700])
-%           axis equal
+% % %         legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
+% % 
+% %     legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+% %     xlabel('X (mm)','FontSize',14)
+% %     ylabel('Y (mm)','FontSize',14)
+% %     
+% % 
+% %           axis equal
 %     end
 
     %% Calling COP Function
@@ -2776,23 +2774,23 @@ ylabel('Y position (mm)','FontSize',14)
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
 % Adding Outcome Measures to Data Matrix
-% trialrow =   find(strcmp(DataMatrix(:,3),mfname));
-% Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid));
-% FinalRow = trialrow(Currentrow);
-% 
-% DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,10} = shex_current_trial(i);
-% DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,8} =  trex_current_trial(i);
-% DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-% DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-% DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-% DataMatrix{FinalRow,2} = expcond;
+trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+FinalRow = trialrow(Currentrow);
+
+DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,10} = shex_current_trial(i);
+DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,8} =  trex_current_trial(i);
+DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+DataMatrix{FinalRow,2} = expcond;
 % 
 
-     pause
+%       pause
 
 close all
 
@@ -2802,7 +2800,7 @@ end
 
 
 % DataMatrix = AllData;
-%save FullDataMatrix.mat DataMatrix
+save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
