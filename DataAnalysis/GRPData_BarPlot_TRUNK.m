@@ -6,24 +6,24 @@
 
 % Plot for one loading condition (stroke and controls)
 
+% Trunk Data
 
-
-function GRPData_BarPlot(Individ_Means_1,Individ_Means_2,Individ_Means_3,Individ_Means_4,Individ_Means_5,Individ_Means_6,RD_Cond1,SE_Cond1,RD_Cond2,SE_Cond2,RD_Cond3,SE_Cond3,RD_Cond4,SE_Cond4,RD_Cond5,SE_Cond5,RD_Cond6,SE_Cond6)
+function GRPData_BarPlot_TRUNK(Individ_Means_1,Individ_Means_2,Individ_Means_3,Individ_Means_4,Individ_Means_5,Individ_Means_6,TD_Cond1,SE_Cond1,TD_Cond2,SE_Cond2,TD_Cond3,SE_Cond3,TD_Cond4,SE_Cond4,TD_Cond5,SE_Cond5,TD_Cond6,SE_Cond6)
 
 figure(1)
 hold on
 
 NParticipants = length(Individ_Means_1); %Gives Number of Participants 
 %% Controls
-p1 =errorbar([5 6],[RD_Cond3 RD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
+p1 =errorbar([5 6],[TD_Cond3 TD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
 p2 = plot(5,Individ_Means_3,'s','Color','b','Linewidth',2);
 p3 = plot(6,Individ_Means_6,'s','Color','b','Linewidth',2);
 %% Stroke - Paretic
-p4 =errorbar([1 2],[RD_Cond3 RD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
+p4 =errorbar([1 2],[TD_Cond3 TD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
 p5 = plot(1,Individ_Means_3,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
 p6 = plot(2,Individ_Means_6,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
  %% Stroke - Non Paretic
-p7 =errorbar([3 4],[RD_Cond3 RD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
+p7 =errorbar([3 4],[TD_Cond3 TD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); % Table restrained vs unrestrained Controls
 p8 = plot(3,Individ_Means_3,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
 p9 = plot(4,Individ_Means_6,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
 
@@ -36,9 +36,9 @@ ax=gca;
 xticklabels({' ', 'Stroke (P)_R_e_s_t', 'Stroke (P)_U_n_r_e_s_t','Stroke (NP)_R_e_s_t', 'Stroke (NP)_U_n_r_e_s_t','Controls_R_e_s_t' ,'Controls_U_n_r_e_s_t'})
 ax.XAxis.FontSize = 16;
 ax.YAxis.FontSize = 15;
-ylim([0 105])
-title('Reaching Distance-50%','FontSize',20)
-ylabel('Reaching Distance (%LL)','FontSize',16)
+ylim([0 10])
+title('Trunk Displacement-50%','FontSize',20)
+ylabel('Trunk Displacement (%LL)','FontSize',16)
 
 
 

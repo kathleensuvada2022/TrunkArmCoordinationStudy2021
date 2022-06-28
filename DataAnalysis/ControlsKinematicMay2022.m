@@ -5,8 +5,15 @@
 %% Controls
 % June 2022
 % Want to Organize Data by condition (1-6) so that have all trials in given
-% condition for all participants. Load in Data matrix: 
+% condition for all participants. 
 
+% RTIS 1003-1006
+
+% Load in Data matrix: 
+
+load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+
+% Finding Rows for Each Condition 
 
 %% RTIS1003
 % Condition 1:
@@ -51,7 +58,7 @@ cond6_1003_final = find(cell2mat(DataMatrix(cond6_1003,2))== 6);
      
 cond6_1003 = cond6_1003(cond6_1003_final); % Rows of Matrix for 1003 condition 6
 
-%% RTIS1004
+% RTIS1004
 % Condition 1:
 cond1_1004 = find(strcmp(DataMatrix(:,1),'RTIS1004'));
 
@@ -95,7 +102,7 @@ cond6_1004_final = find(cell2mat(DataMatrix(cond6_1004,2))== 6);
 cond6_1004 = cond6_1004(cond6_1004_final); % Rows of Matrix for 1004 condition 6
 
 
-%% RTIS1005
+% RTIS1005
 % Condition 1:
 cond1_1005 = find(strcmp(DataMatrix(:,1),'RTIS1005'));
 
@@ -138,7 +145,7 @@ cond6_1005_final = find(cell2mat(DataMatrix(cond6_1005,2))== 6);
      
 cond6_1005 = cond6_1005(cond6_1005_final); % Rows of Matrix for 1005 condition 6
 
-%% RTIS1006
+% RTIS1006
 % Condition 1:
 cond1_1006 = find(strcmp(DataMatrix(:,1),'RTIS1006'));
 
@@ -181,63 +188,150 @@ cond6_1006_final = find(cell2mat(DataMatrix(cond6_1006,2))== 6);
      
 cond6_1006 = cond6_1006(cond6_1006_final); % Rows of Matrix for 1006 condition 6
 
-%% Averages -Reaching Distance - Normalized to Limb Length
+%% Participant Averages - - Normalized to Limb Length
 
 % RTIS1003
-Reaching_Dist_1003_1 = mean(cell2mat(DataMatrix(cond1_1003,5))); % Condition 1
-Reaching_Dist_1003_2 = mean(cell2mat(DataMatrix(cond2_1003,5))); % Condition 2
-Reaching_Dist_1003_3 = mean(cell2mat(DataMatrix(cond3_1003,5))); % Condition 3
-Reaching_Dist_1003_4 = mean(cell2mat(DataMatrix(cond4_1003,5))); % Condition 4
-Reaching_Dist_1003_5 = mean(cell2mat(DataMatrix(cond5_1003,5))); % Condition 5
-Reaching_Dist_1003_6 = mean(cell2mat(DataMatrix(cond6_1003,5))); % Condition 6
+Reaching_Dist_1003_1 = mean(cell2mat(DataMatrix(cond1_1003,5))); % Condition 1- RD
+Trunk_Dist_1003_1 = mean(cell2mat(DataMatrix(cond1_1003,9))); % Condition 1 - TD
+
+Reaching_Dist_1003_2 = mean(cell2mat(DataMatrix(cond2_1003,5))); % Condition 2 - RD
+Trunk_Dist_1003_2 = mean(cell2mat(DataMatrix(cond2_1003,9))); % Condition 2 - TD
+
+Reaching_Dist_1003_3 = mean(cell2mat(DataMatrix(cond3_1003,5))); % Condition 3 - RD
+Trunk_Dist_1003_3 = mean(cell2mat(DataMatrix(cond3_1003,9))); % Condition 3 - TD
+
+Reaching_Dist_1003_4 = mean(cell2mat(DataMatrix(cond4_1003,5))); % Condition 4 - RD
+Trunk_Dist_1003_4 = mean(cell2mat(DataMatrix(cond4_1003,9))); % Condition 4- TD
+
+Reaching_Dist_1003_5 = mean(cell2mat(DataMatrix(cond5_1003,5))); % Condition 5 - RD
+Trunk_Dist_1003_5 = mean(cell2mat(DataMatrix(cond5_1003,9))); % Condition 5 - TD
+
+Reaching_Dist_1003_6 = mean(cell2mat(DataMatrix(cond6_1003,5))); % Condition 6 - RD
+Trunk_Dist_1003_6 = mean(cell2mat(DataMatrix(cond6_1003,9))); % Condition 6 - TD
+
 % RTIS1004
 Reaching_Dist_1004_1 = mean(cell2mat(DataMatrix(cond1_1004,5))); % Condition 1
+Trunk_Dist_1004_1 = mean(cell2mat(DataMatrix(cond1_1004,9))); % Condition 1
+
 Reaching_Dist_1004_2 = mean(cell2mat(DataMatrix(cond2_1004,5))); % Condition 2
+Trunk_Dist_1004_2 = mean(cell2mat(DataMatrix(cond2_1004,9))); % Condition 2
+
 Reaching_Dist_1004_3 = mean(cell2mat(DataMatrix(cond3_1004,5))); % Condition 3
+Trunk_Dist_1004_3 = mean(cell2mat(DataMatrix(cond3_1004,9))); % Condition 3
+
 Reaching_Dist_1004_4 = mean(cell2mat(DataMatrix(cond4_1004,5))); % Condition 4
+Trunk_Dist_1004_4 = mean(cell2mat(DataMatrix(cond4_1004,9))); % Condition 4
+
 Reaching_Dist_1004_5 = mean(cell2mat(DataMatrix(cond5_1004,5))); % Condition 5
+Trunk_Dist_1004_5 = mean(cell2mat(DataMatrix(cond5_1004,9))); % Condition 5
+
 Reaching_Dist_1004_6 = mean(cell2mat(DataMatrix(cond6_1004,5))); % Condition 6
+Trunk_Dist_1004_6 = mean(cell2mat(DataMatrix(cond6_1004,9))); % Condition 6
+
 % RTIS1005
 Reaching_Dist_1005_1 = mean(cell2mat(DataMatrix(cond1_1005,5))); % Condition 1
+Trunk_Dist_1005_1 = mean(cell2mat(DataMatrix(cond1_1005,9))); % Condition 1
+
 Reaching_Dist_1005_2 = mean(cell2mat(DataMatrix(cond2_1005,5))); % Condition 2
+Trunk_Dist_1005_2 = mean(cell2mat(DataMatrix(cond2_1005,9))); % Condition 2
+
 Reaching_Dist_1005_3 = mean(cell2mat(DataMatrix(cond3_1005,5))); % Condition 3
+Trunk_Dist_1005_3 = mean(cell2mat(DataMatrix(cond3_1005,9))); % Condition 3
+
 Reaching_Dist_1005_4 = mean(cell2mat(DataMatrix(cond4_1005,5))); % Condition 4
+Trunk_Dist_1005_4 = mean(cell2mat(DataMatrix(cond4_1005,9))); % Condition 4
+
 Reaching_Dist_1005_5 = mean(cell2mat(DataMatrix(cond5_1005,5))); % Condition 5
+Trunk_Dist_1005_5 = mean(cell2mat(DataMatrix(cond5_1005,9))); % Condition 5
+
 Reaching_Dist_1005_6 = mean(cell2mat(DataMatrix(cond6_1005,5))); % Condition 6
+Trunk_Dist_1005_6 = mean(cell2mat(DataMatrix(cond6_1005,9))); % Condition 6
 % RTIS1006
 Reaching_Dist_1006_1 = mean(cell2mat(DataMatrix(cond1_1006,5))); % Condition 1
+Trunk_Dist_1006_1 = mean(cell2mat(DataMatrix(cond1_1006,9))); % Condition 1
+
 Reaching_Dist_1006_2 = mean(cell2mat(DataMatrix(cond2_1006,5))); % Condition 2
+Trunk_Dist_1006_2 = mean(cell2mat(DataMatrix(cond2_1006,9))); % Condition 2
+
 Reaching_Dist_1006_3 = mean(cell2mat(DataMatrix(cond3_1006,5))); % Condition 3
+Trunk_Dist_1006_3 = mean(cell2mat(DataMatrix(cond3_1006,9))); % Condition 3
+
 Reaching_Dist_1006_4 = mean(cell2mat(DataMatrix(cond4_1006,5))); % Condition 4
+Trunk_Dist_1006_4 = mean(cell2mat(DataMatrix(cond4_1006,9))); % Condition 4
+
 Reaching_Dist_1006_5 = mean(cell2mat(DataMatrix(cond5_1006,5))); % Condition 5
+Trunk_Dist_1006_5 = mean(cell2mat(DataMatrix(cond5_1006,9))); % Condition 5
+
 Reaching_Dist_1006_6 = mean(cell2mat(DataMatrix(cond6_1006,5))); % Condition 6
+Trunk_Dist_1006_6 = mean(cell2mat(DataMatrix(cond6_1006,9))); % Condition 6
 
+%% Group Means and Standard Error for Reaching Distance - Don't Run if doing trunk (redundancy in Variable Names)
 
-%% Group Means and Standard Error for Reaching Distance 
-
-%Condition 1 Average RD and Standard Error
+%Condition 1
+% Average RD and Standard Error
 RD_Cond1 = mean([Reaching_Dist_1003_1 Reaching_Dist_1004_1 Reaching_Dist_1005_1 Reaching_Dist_1006_1]);
+Individ_Means_1 = [Reaching_Dist_1003_1 Reaching_Dist_1004_1 Reaching_Dist_1005_1 Reaching_Dist_1006_1];
 SE_Cond1 = std([Reaching_Dist_1003_1 Reaching_Dist_1004_1 Reaching_Dist_1005_1 Reaching_Dist_1006_1])/2;
-%Condition 2 Average RD and Standard Error
+
+
+%Condition 2 
+% Average RD and Standard Error
 RD_Cond2 = mean([Reaching_Dist_1003_2 Reaching_Dist_1004_2 Reaching_Dist_1005_2 Reaching_Dist_1006_2]);
+Individ_Means_2 =[Reaching_Dist_1003_2 Reaching_Dist_1004_2 Reaching_Dist_1005_2 Reaching_Dist_1006_2];
 SE_Cond2 = std([Reaching_Dist_1003_2 Reaching_Dist_1004_2 Reaching_Dist_1005_2 Reaching_Dist_1006_2])/2;
+
+
 %Condition 3 Average RD and Standard Error
 RD_Cond3 = mean([Reaching_Dist_1003_3 Reaching_Dist_1004_3 Reaching_Dist_1005_3 Reaching_Dist_1006_3]);
+Individ_Means_3 =[Reaching_Dist_1003_3 Reaching_Dist_1004_3 Reaching_Dist_1005_3 Reaching_Dist_1006_3];
 SE_Cond3 = std([Reaching_Dist_1003_3 Reaching_Dist_1004_3 Reaching_Dist_1005_3 Reaching_Dist_1006_3])/2;
+
 %Condition 4 Average RD and Standard Error
 RD_Cond4 = mean([Reaching_Dist_1003_4 Reaching_Dist_1004_4 Reaching_Dist_1005_4 Reaching_Dist_1006_4]);
+Individ_Means_4 =[Reaching_Dist_1003_4 Reaching_Dist_1004_4 Reaching_Dist_1005_4 Reaching_Dist_1006_4];
 SE_Cond4 = std([Reaching_Dist_1003_4 Reaching_Dist_1004_4 Reaching_Dist_1005_4 Reaching_Dist_1006_4])/2;
+
 %Condition 5 Average RD and Standard Error
 RD_Cond5 = mean([Reaching_Dist_1003_5 Reaching_Dist_1004_5 Reaching_Dist_1005_5 Reaching_Dist_1006_5]);
+Individ_Means_5 = [Reaching_Dist_1003_5 Reaching_Dist_1004_5 Reaching_Dist_1005_5 Reaching_Dist_1006_5];
 SE_Cond5 = std([Reaching_Dist_1003_5 Reaching_Dist_1004_5 Reaching_Dist_1005_5 Reaching_Dist_1006_5])/2;
+
 %Condition 6 Average RD and Standard Error
 RD_Cond6 = mean([Reaching_Dist_1003_6 Reaching_Dist_1004_6 Reaching_Dist_1005_6 Reaching_Dist_1006_6]);
+Individ_Means_6 = [Reaching_Dist_1003_6 Reaching_Dist_1004_6 Reaching_Dist_1005_6 Reaching_Dist_1006_6];
 SE_Cond6 = std([Reaching_Dist_1003_6 Reaching_Dist_1004_6 Reaching_Dist_1005_6 Reaching_Dist_1006_6])/2;
 
+%% Individual Means, Group Means, and Standard Error for Trunk Displacement
 
+% Average TD and Standard Error- Condition 1
+TD_Cond1 = mean([Trunk_Dist_1003_1 Trunk_Dist_1004_1 Trunk_Dist_1005_1 Trunk_Dist_1006_1]);
+Individ_Means_1 = [Trunk_Dist_1003_1 Trunk_Dist_1004_1 Trunk_Dist_1005_1 Trunk_Dist_1006_1];
+SE_Cond1 = std([Trunk_Dist_1003_1 Trunk_Dist_1004_1 Trunk_Dist_1005_1 Trunk_Dist_1006_1])/2;
 
+% Average TD and Standard Error- Condition 2
+TD_Cond2 = mean([Trunk_Dist_1003_2 Trunk_Dist_1004_2 Trunk_Dist_1005_2 Trunk_Dist_1006_2]);
+Individ_Means_2 =[Trunk_Dist_1003_2 Trunk_Dist_1004_2 Trunk_Dist_1005_2 Trunk_Dist_1006_2];
+SE_Cond2 = std([Trunk_Dist_1003_2 Trunk_Dist_1004_2 Trunk_Dist_1005_2 Trunk_Dist_1006_2])/2;
 
+%Average TD and Standard Error- Condition 3
+TD_Cond3 = mean([Trunk_Dist_1003_3 Trunk_Dist_1004_3 Trunk_Dist_1005_3 Trunk_Dist_1006_3]);
+Individ_Means_3 =[Trunk_Dist_1003_3 Trunk_Dist_1004_3 Trunk_Dist_1005_3 Trunk_Dist_1006_3];
+SE_Cond3 = std([Trunk_Dist_1003_3 Trunk_Dist_1004_3 Trunk_Dist_1005_3 Trunk_Dist_1006_3])/2;
 
+%Average TD and Standard Error - Condition 4
+TD_Cond4 = mean([Trunk_Dist_1003_4 Trunk_Dist_1004_4 Trunk_Dist_1005_4 Trunk_Dist_1006_4]);
+Individ_Means_4 =[Trunk_Dist_1003_4 Trunk_Dist_1004_4 Trunk_Dist_1005_4 Trunk_Dist_1006_4];
+SE_Cond4 = std([Trunk_Dist_1003_4 Trunk_Dist_1004_4 Trunk_Dist_1005_4 Trunk_Dist_1006_4])/2;
+
+%Average TD and Standard Error- Condition 5
+TD_Cond5 = mean([Trunk_Dist_1003_5 Trunk_Dist_1004_5 Trunk_Dist_1005_5 Trunk_Dist_1006_5]);
+Individ_Means_5 = [Trunk_Dist_1003_5 Trunk_Dist_1004_5 Trunk_Dist_1005_5 Trunk_Dist_1006_5];
+SE_Cond5 = std([Trunk_Dist_1003_5 Trunk_Dist_1004_5 Trunk_Dist_1005_5 Trunk_Dist_1006_5])/2;
+
+%Average TD and Standard Error- Condition 6
+TD_Cond6 = mean([Trunk_Dist_1003_6 Trunk_Dist_1004_6 Trunk_Dist_1005_6 Trunk_Dist_1006_6]);
+Individ_Means_6 = [Trunk_Dist_1003_6 Trunk_Dist_1004_6 Trunk_Dist_1005_6 Trunk_Dist_1006_6];
+SE_Cond6 = std([Trunk_Dist_1003_6 Trunk_Dist_1004_6 Trunk_Dist_1005_6 Trunk_Dist_1006_6])/2;
 
 
 
