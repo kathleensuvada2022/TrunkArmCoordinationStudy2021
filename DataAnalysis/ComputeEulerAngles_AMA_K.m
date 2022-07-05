@@ -270,6 +270,7 @@ j=k; % a part of larger loop outside this function.
     
     BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %Sh BLs in Sh marker CS
     
+    
     gh =ghest_KS(BL_M_s,BoneCS{2},flag,partid,arm); % Computing GH at jth time point (in sh marker cs) via GH function
     
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
@@ -407,7 +408,7 @@ j=k; % a part of larger loop outside this function.
 %    
 
     
- if j ==2
+ if j ==1
         %%
          figure(1)
         clf
