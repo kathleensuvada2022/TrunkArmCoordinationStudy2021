@@ -271,7 +271,7 @@ j=k; % a part of larger loop outside this function.
     BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %Sh BLs in Sh marker CS
     
     
-    gh =ghest_KS(BL_M_s,BoneCS{2},flag,partid,arm); % Computing GH at jth time point (in sh marker cs) via GH function
+    gh =ghest_KS(BL_M_s,BoneCS{2},flag,partid,arm,j); % Computing GH at jth time point (in sh marker cs) via GH function
     
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH from Shoulder Marker Frame now in GCS
 
@@ -415,6 +415,13 @@ j=k; % a part of larger loop outside this function.
         plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
       hold on
         plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
+        
+        %Scapular Triangle
+        plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)]) % line between AI and TS
+        plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)]) % line between AI and AA
+        plot3([BL_G_s(1,3) BL_G_s(1,2)],[BL_G_s(2,3) BL_G_s(2,2)],[BL_G_s(3,3) BL_G_s(3,2)]) % line between TS and AA
+        %
+        
         plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') %kacey adding computed GH
          plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
          plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
@@ -422,7 +429,7 @@ j=k; % a part of larger loop outside this function.
         plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
          plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
         
-        if j==2
+        if j==1
             text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
              text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
              text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
@@ -466,7 +473,7 @@ j=k; % a part of larger loop outside this function.
 %             axis 'equal'
 %              
      
-
+pause
 
  end
   

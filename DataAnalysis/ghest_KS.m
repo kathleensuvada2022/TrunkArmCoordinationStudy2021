@@ -27,7 +27,7 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag,partid,arm)
+function gh_markr=ghest_KS(bl_mark,Rscap_mark,flag,partid,arm,j)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS
@@ -136,8 +136,8 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 flag = 1;
 
-if flag==1
-figure()
+if j==1
+figure(16)
 quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
 hold on
 text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
@@ -154,6 +154,9 @@ text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
 plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)]) % line between AI and TS
+plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)]) % line between AI and AA
+plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)]) % line between TS and AA
 axis equal
 xlabel('x axis')
 ylabel('y axis')
