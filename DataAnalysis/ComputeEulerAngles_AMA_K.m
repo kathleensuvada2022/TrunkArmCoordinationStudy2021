@@ -400,8 +400,7 @@ j=k; % a part of larger loop outside this function.
     quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
     text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
     hold on
-    %Line from GH to MidPnt between Epicondyles
-    % plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
+
     xlabel('x (mm)')
     ylabel('y (mm)')
     zlabel('z (mm)')
@@ -410,75 +409,64 @@ j=k; % a part of larger loop outside this function.
     end
 %    
 
-    
- if j ==1
-        %%
-         figure(1)
-        clf
-        plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
-      hold on
-        plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
-        
-        %Scapular Triangle
-        plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)]) % line between AI and TS
-        plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)]) % line between AI and AA
-        plot3([BL_G_s(1,3) BL_G_s(1,2)],[BL_G_s(2,3) BL_G_s(2,2)],[BL_G_s(3,3) BL_G_s(3,2)]) % line between TS and AA
-        %
-        
-        plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') %kacey adding computed GH
-         plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
-         plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
-         plot3([GH(1) H_Mid_H(1)],[GH(2) H_Mid_H(2)],[GH(3) H_Mid_H(3)])
-        plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
-         plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
-        
-        if j==1
-            text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
-             text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
-             text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH Computed') %Kacey adding label for computed GH
-          text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
-            text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
-            text(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),BLnames_f)
-        end 
-            quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
-            text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
-            
-             quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
-             text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
-%             
-            quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-            text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
-            
-            quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
-            text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
-            
-            quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-            text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
-            
-            %Line from GH to MidPnt between Epicondyles
-             plot3([GH(1) OL(1)],[GH(2) OL(2)],[GH(3) OL(3)])
-             
-             
-             
-            xlabel('x (mm)','FontSize',14)
-            ylabel('y (mm)','FontSize',14)
-            zlabel('z (mm)','FontSize',14)
-            axis 'equal'
-            
-            title('Bony Landmarks and respective CS for Bones in GCS','FontSize',16)
-%             
-%             figure(2)
-%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-%             text(100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3),{'Gx','Gy','Gz'})
-%             hold on
-%             quiver3([0 0 0],[0 0 0],[0 0 0],100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-%             text(100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3),{'Hx','Hy','Hz'})
-%             axis 'equal'
-%              
-     
-pause
 
- end
+if j ==1
+    %%
+    figure(1)
+    clf
+    plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+    hold on
+    plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
+    
+    %Scapular Triangle
+    plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)]) % line between AI and TS
+    plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)]) % line between AI and AA
+    plot3([BL_G_s(1,3) BL_G_s(1,2)],[BL_G_s(2,3) BL_G_s(2,2)],[BL_G_s(3,3) BL_G_s(3,2)]) % line between TS and AA
+    %
+    
+    plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') % computed GH from linear REG
+    plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
+    plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
+    plot3([GH_G_comp_s(1,1) H_Mid_H(1)],[GH_G_comp_s(2,1) H_Mid_H(2)],[GH_G_comp_s(3,1) H_Mid_H(3)]) % Line from computed GH to midpoint between EM and EL
+    plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
+    plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)]) % line between midpoint of forearm to midpoint of humerus.
+    
+    if j==1
+        text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
+        text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
+        text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH_C_o_m_p_u_t_e_d') %Kacey adding label for computed GH
+        BLnames_h(3) = 'GH_D_i_g';
+        text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
+        % text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
+        text(BL_G_f(1,1:4),BL_G_f(2,1:4),BL_G_f(3,1:4),BLnames_f(1:4))
+    end
+    quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+    text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+    
+    quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
+    text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
+    %
+    quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+    text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
+    
+    quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
+    text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
+    
+    quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+    text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+    
+    xlabel('x (mm)','FontSize',14)
+    ylabel('y (mm)','FontSize',14)
+    zlabel('z (mm)','FontSize',14)
+    axis 'equal'
+    
+    title('Bony Landmarks and CS for Segments in GCS','FontSize',16)
+    
+    
+    pause
+    
+end
+ 
   
 
 % GH_G_comp_s = squeeze(GH_G_comp_s); % now 4X nimag 

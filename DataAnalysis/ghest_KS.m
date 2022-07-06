@@ -162,45 +162,47 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 % end
 
 %% Testing and plotting computed GH - still in rotated CS 
-% Scapular Coordinate System in BONE frame with Respective BLs in BONE (AC and CS should be
-% centered at (0,0,0)
 
 %flag = 1;
 
-% if j==1
+ if j==1
 %     
-% % Plotting Scapular CS and BLS
-% 
-% figure(16)
-% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-% hold on
-% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
-% 
-% plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
-% plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
-% plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
-% plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
-% plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)]) % line between AI and TS
-% plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)]) % line between AI and AA
-% plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)]) % line between TS and AA
-% axis equal
-% xlabel('x axis')
-% ylabel('y axis')
-% zlabel('z axis')
-% 
-% title('Scapular CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
-% plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-%  text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
-%  
+% Plotting Scapular CS and BLS
+
+figure(25)
+quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+hold on
+text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
+
+plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)]) % line between AI and TS
+plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)]) % line between AI and AA
+plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)]) % line between TS and AA
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
+
+title('Scapular CS and BLs in BONE CS- Rotated 90','FontSize',16)
+plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+ text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+ 
 % % Plotting Trunk CS and BLS
 % 
 % %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
@@ -236,7 +238,7 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 % end 
 %  
 %  
-% end 
+ end 
 
 %%
 %Based on figure - make y and z neg
@@ -278,7 +280,7 @@ end
 
 %%
 
-%% Testing and plotting computed GH - still in rotated CS 
+%% Testing and plotting computed GH -Kacey's Orientation
 % Scapular Coordinate System in BONE frame with Respective BLs in BONE (AC and CS should be
 % centered at (0,0,0)
 
@@ -286,6 +288,9 @@ end
 if j==1
     
 % Plotting Scapular CS and BLS
+
+%BLnames_s = ["AC","AA","TS","AI","PC"];
+
 
 figure(16)
 quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
@@ -304,6 +309,12 @@ text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
 plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+
+plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
+
+
 plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)]) % line between AI and TS
 plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)]) % line between AI and AA
 plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)]) % line between TS and AA
@@ -312,10 +323,10 @@ xlabel('x axis')
 ylabel('y axis')
 zlabel('z axis')
 
-title('Scapular CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
-plot3(gh(1),-gh(2),-gh(3),'-o','Color','b','MarkerSize',10,...
+title('Scapular CS and BLs in BONE CS -Kacey Orientation','FontSize',16)
+plot3(gh_rot(1),gh_rot(2),gh_rot(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
- text(gh(1),-gh(2),-gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+ text(gh_rot(1),gh_rot(2),gh_rot(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
  
 % Plotting Trunk CS and BLS
 

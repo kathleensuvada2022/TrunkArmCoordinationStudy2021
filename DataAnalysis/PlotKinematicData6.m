@@ -1938,7 +1938,7 @@ if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS
     end
 end
 
- TrunkAng_GCS(1,1)
+
 
     
     % !!!!!Convention for both arms now + angle means back extension - angle
