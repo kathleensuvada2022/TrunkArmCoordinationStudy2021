@@ -108,7 +108,7 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 % Plotting Scapular BLs in Shoulder Marker CS 
 BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs')
 
-pause
+
 
 %% Loading in trial Data
 load([datafilepath,'/', filename]) %loading in trial data
