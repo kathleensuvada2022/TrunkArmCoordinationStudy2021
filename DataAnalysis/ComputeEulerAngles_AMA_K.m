@@ -106,9 +106,15 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 % myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 
 % Plotting Scapular BLs in Shoulder Marker CS 
-BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs')
 
-pause
+% if k ==1 
+ScapCoord_Marker = BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs');
+
+% pause
+% 
+% end
+
+BoneCS{1,2}  = ScapCoord_Marker; %Replacing with Correct Scap CS (Updated July 2022)- Incorrect in saved FILE!
 
 %% Loading in trial Data
 load([datafilepath,'/', filename]) %loading in trial data
