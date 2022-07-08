@@ -170,49 +170,49 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 %flag = 1;
 
-  if j==1
-%     
-% Plotting Scapular CS and BLS
+%   if j==1
+% %     
+% % Plotting Scapular CS and BLS
+% % 
+% figure(25)
+% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+% hold on
+% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
 % 
-figure(25)
-quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-hold on
-text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
-
-plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
-plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
-plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
-plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
-plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
-
-%Plotting the Scapular Polygon
-plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)],'r') % line between AI and TS
-plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)],'r') % line between AI and AA
-%plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)],'r') % line between TS and AA
-plot3([bl(1,3) bl(1,1)],[bl(2,3) bl(2,1)],[bl(3,3) bl(3,1)],'r') % line between TS and AC
-plot3([bl(1,1) bl(1,2)],[bl(2,1) bl(2,2)],[bl(3,1) bl(3,2)],'r') % line between AC and AA
-
-
-axis equal
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
+% plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+% plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+% plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+% plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+% plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
 % 
- title('Scapular CS and BLs in BONE CS- Rotated 90','FontSize',16)
-plot3(gh(1),-gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
- text(gh(1),-gh(2),gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
- 
+% %Plotting the Scapular Polygon
+% plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)],'r') % line between AI and TS
+% plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)],'r') % line between AI and AA
+% %plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)],'r') % line between TS and AA
+% plot3([bl(1,3) bl(1,1)],[bl(2,3) bl(2,1)],[bl(3,3) bl(3,1)],'r') % line between TS and AC
+% plot3([bl(1,1) bl(1,2)],[bl(2,1) bl(2,2)],[bl(3,1) bl(3,2)],'r') % line between AC and AA
+% 
+% 
+% axis equal
+% xlabel('x axis')
+% ylabel('y axis')
+% zlabel('z axis')
+% % 
+%  title('Scapular CS and BLs in BONE CS- Rotated 90','FontSize',16)
+% plot3(gh(1),-gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+%  text(gh(1),-gh(2),gh(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+%  
 % % Plotting Trunk CS and BLS
 % 
 % %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
@@ -248,7 +248,7 @@ plot3(gh(1),-gh(2),gh(3),'-o','Color','b','MarkerSize',10,...
 % end 
 %  
 %  
- end 
+%  end 
 
 %%
 
@@ -336,46 +336,46 @@ xlabel('x axis')
 ylabel('y axis')
 zlabel('z axis')
 
-title('Scapular CS and BLs in BONE CS -Kacey Orientation','FontSize',16)
-plot3(gh_rot(1),-gh_rot(2),gh_rot(3),'-o','Color','b','MarkerSize',10,...
+title('Scapular CS and BLs in BONE CS during trial -Kacey Orientation','FontSize',16)
+plot3(gh_rot(1),gh_rot(2),gh_rot(3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
- text(gh_rot(1),-gh_rot(2),gh_rot(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
+ text(gh_rot(1),gh_rot(2),gh_rot(3),'GHComputed','FontSize',14) %Kacey saw making y and z neg may be correct
  
 % % Plotting Trunk CS and BLS
 % 
 % %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
-% if bl_mark_t ~= 0
-% 
-% figure(17)
-% quiver3(TrunkCS_bone([1 1 1],4)',TrunkCS_bone([2 2 2],4)',TrunkCS_bone([3 3 3],4)',50*TrunkCS_bone(1,1:3),50*TrunkCS_bone(2,1:3),50*TrunkCS_bone(3,1:3))
-% hold on
-% text(TrunkCS_bone(1,4)+50*TrunkCS_bone(1,1:3),TrunkCS_bone(2,4)+50*TrunkCS_bone(2,1:3),TrunkCS_bone(3,4)+50*TrunkCS_bone(3,1:3),{'x','y','z'})
-% 
-% plot3(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'SC','FontSize',14)
-% plot3(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'IJ','FontSize',14)
-% plot3(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'PX','FontSize',14)
-% plot3(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'C7','FontSize',14)
-% plot3(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'T8','FontSize',14)
-% 
-% axis equal
-% xlabel('x axis')
-% ylabel('y axis')
-% zlabel('z axis')
-% title('Trunk CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
-% 
-% end 
-%  
-%  
+if bl_mark_t ~= 0
+
+figure(17)
+quiver3(TrunkCS_bone([1 1 1],4)',TrunkCS_bone([2 2 2],4)',TrunkCS_bone([3 3 3],4)',50*TrunkCS_bone(1,1:3),50*TrunkCS_bone(2,1:3),50*TrunkCS_bone(3,1:3))
+hold on
+text(TrunkCS_bone(1,4)+50*TrunkCS_bone(1,1:3),TrunkCS_bone(2,4)+50*TrunkCS_bone(2,1:3),TrunkCS_bone(3,4)+50*TrunkCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'SC','FontSize',14)
+plot3(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'IJ','FontSize',14)
+plot3(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'PX','FontSize',14)
+plot3(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'C7','FontSize',14)
+plot3(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'T8','FontSize',14)
+
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
+title('Trunk CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
+
+end 
+ 
+ 
 pause
  end 
 % 

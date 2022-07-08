@@ -96,10 +96,10 @@ for i=1: length(mtrials)% i = 3
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
 
-%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
      %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
 
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
 
 % for pc
 %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -1888,7 +1888,9 @@ for i=1: length(mtrials)% i = 3
     gh= zeros(4,length(metdata));
     TrunkAng_GCS= zeros(3,length(metdata));
     
-    for k = 1:length(metdata) %looping through each frame to get GH
+    for k = 1:length(metdata) %Computing GH at each Frame
+        % gh_frame is linear reg estimated gh
+        % GH_ frame is digitized GH at time of experiment
      [gh_frame TrunkAng_GCS_frame, GH_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
      gh(:,k) = gh_frame(1:4);
      TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
@@ -2287,11 +2289,12 @@ end
 %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
  plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
  plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+  plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
  
-plot(gh(:,1),gh(:,2),'Linewidth',2) 
+plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
  axis equal
- legend('Acromion','3rd MCP','Jug Notch','Estimated GH','FontSize',14)
- title('Overhead View of Reach- GCS' ,'FontSize',16)
+ legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+ title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
@@ -2343,7 +2346,7 @@ end
  %% Confirming Plots Post Subtraction of Trunk
  
  
-figure()
+figure(35)
 plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
 hold on
 plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
@@ -2355,7 +2358,7 @@ legend('3rd MCP','Jug Notch','Estimated GH','FontSize',14)
 title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
-
+ pause
  
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
