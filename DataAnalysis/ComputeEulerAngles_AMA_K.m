@@ -107,12 +107,12 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 
 % Plotting Scapular BLs in Shoulder Marker CS 
 
-% if k ==1 
-ScapCoord_Marker = BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs');
+%  if k ==1 
+ScapCoord_Marker = BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs',k);
 
-% pause
+%  pause
 % 
-% end
+%  end
 
 BoneCS{1,2}  = ScapCoord_Marker; %Replacing with Correct Scap CS (Updated July 2022)- Incorrect in saved FILE!
 

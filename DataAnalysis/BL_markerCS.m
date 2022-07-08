@@ -7,10 +7,11 @@
 % Inputs: 
 % - BLs_marker: 4x1 matrices of each Bony Landmark. X,Y,Z position
 
-function ScapCoord =  BL_markerCS(BLs_marker,BlNames,titleplot)
+function ScapCoord =  BL_markerCS(BLs_marker,BlNames,titleplot,k)
 
 
 %%%%%%%%%%%%%%%%%%%%% MARKER CS%%%%%%%%%%%%%%%%%%%%%%%%%%
+if k ==1 
 figure()
 
 %Plotting the BonyLandmarks and their Labels
@@ -34,9 +35,11 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title([titleplot  ' ' 'in Marker CS'],'FontSize',16)
+title([titleplot  ' ' 'Raw Data in Marker CS'],'FontSize',16)
 
+'Check raw Scapular BLS and created Scapular CS'
 
+end
 
 %% Scapula Coordinate system
 
