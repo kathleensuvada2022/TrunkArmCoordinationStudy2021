@@ -35,7 +35,7 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title([titleplot  ' ' 'Raw Data in Marker CS'],'FontSize',16)
+title([titleplot  ' ' 'Raw Data in Marker CS during digitization'],'FontSize',16)
 
 'Check raw Scapular BLS and created Scapular CS'
 

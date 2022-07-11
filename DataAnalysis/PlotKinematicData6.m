@@ -2347,14 +2347,19 @@ end
  
  
 figure(35)
-plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+plot(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),'Linewidth',3) % Computed 3rd MCP
 hold on
-plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
+plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
 
-plot(gh(:,1),gh(:,2),'Linewidth',2) 
+plot(xjug_origin(idx(1):idx(3),1),xjug_origin(idx(1):idx(3),3),'o','Linewidth',2) % Computed Jug Notch
+
+plot(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),'Linewidth',3) 
+plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
 
 axis equal
-legend('3rd MCP','Jug Notch','Estimated GH','FontSize',14)
+legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
 title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
@@ -2777,21 +2782,21 @@ ylabel('Y position (mm)','FontSize',14)
 %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 
 % Adding Outcome Measures to Data Matrix
-trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-FinalRow = trialrow(Currentrow);
-
-DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,10} = shex_current_trial(i);
-DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,8} =  trex_current_trial(i);
-DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-DataMatrix{FinalRow,2} = expcond;
+% trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+% Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+% FinalRow = trialrow(Currentrow);
 % 
+% DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+% DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,10} = shex_current_trial(i);
+% DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,8} =  trex_current_trial(i);
+% DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+% DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+% DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+% DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+% DataMatrix{FinalRow,2} = expcond;
+% % 
 
 %       pause
 
@@ -2803,7 +2808,7 @@ end
 
 
 % DataMatrix = AllData;
-save FullDataMatrix.mat DataMatrix
+% save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 

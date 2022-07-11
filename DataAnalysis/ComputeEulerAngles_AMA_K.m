@@ -481,7 +481,7 @@ if j ==1
     zlabel('z (mm)','FontSize',14)
     axis 'equal'
     
-    title('Bony Landmarks and CS for Segments in GCS','FontSize',16)
+    title('Bony Landmarks and CS for Segments in GCS - during trial','FontSize',16)
     
     
     pause
