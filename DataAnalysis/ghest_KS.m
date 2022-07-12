@@ -27,7 +27,7 @@
 % bl_mark = BLs_lcs_s;% in marker CS
 %%(BL_M_s,BoneCS{2},BL_M_t,BoneCS{1},flag,partid,arm,j);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function gh_markr=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,flag,partid,arm,j)
+function [TrunkCS_bone gh_markr]=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,flag,partid,arm,j)
               %          (BL_M_s,BoneCS{2},BL_M_t,BoneCS{1},flag,partid,arm,j);
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
@@ -218,33 +218,33 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 % %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
 % if bl_mark_t ~= 0
 % 
-% figure(17)
-% quiver3(TrunkCS_bone([1 1 1],4)',TrunkCS_bone([2 2 2],4)',TrunkCS_bone([3 3 3],4)',50*TrunkCS_bone(1,1:3),50*TrunkCS_bone(2,1:3),50*TrunkCS_bone(3,1:3))
-% hold on
-% text(TrunkCS_bone(1,4)+50*TrunkCS_bone(1,1:3),TrunkCS_bone(2,4)+50*TrunkCS_bone(2,1:3),TrunkCS_bone(3,4)+50*TrunkCS_bone(3,1:3),{'x','y','z'})
-% 
-% plot3(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'SC','FontSize',14)
-% plot3(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'IJ','FontSize',14)
-% plot3(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'PX','FontSize',14)
-% plot3(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'C7','FontSize',14)
-% plot3(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'T8','FontSize',14)
-% 
-% axis equal
-% xlabel('x axis')
-% ylabel('y axis')
-% zlabel('z axis')
-% title('Trunk CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
-% 
+figure(17)
+quiver3(TrunkCS_bone([1 1 1],4)',TrunkCS_bone([2 2 2],4)',TrunkCS_bone([3 3 3],4)',50*TrunkCS_bone(1,1:3),50*TrunkCS_bone(2,1:3),50*TrunkCS_bone(3,1:3))
+hold on
+text(TrunkCS_bone(1,4)+50*TrunkCS_bone(1,1:3),TrunkCS_bone(2,4)+50*TrunkCS_bone(2,1:3),TrunkCS_bone(3,4)+50*TrunkCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,1),bl_trunk(2,1),bl_trunk(3,1),'SC','FontSize',14)
+plot3(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,2),bl_trunk(2,2),bl_trunk(3,2),'IJ','FontSize',14)
+plot3(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,3),bl_trunk(2,3),bl_trunk(3,3),'PX','FontSize',14)
+plot3(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,4),bl_trunk(2,4),bl_trunk(3,4),'C7','FontSize',14)
+plot3(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl_trunk(1,5),bl_trunk(2,5),bl_trunk(3,5),'T8','FontSize',14)
+
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
+title('Trunk CS and BonyLandmarks in BONE Coordinate System','FontSize',16)
+
 % end 
 %  
 %  
@@ -348,6 +348,8 @@ plot3(gh_rot(1),gh_rot(2),gh_rot(3),'-o','Color','b','MarkerSize',10,...
 % 
 % %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
 if bl_mark_t ~= 0
+
+    
 
 figure(17)
 quiver3(TrunkCS_bone([1 1 1],4)',TrunkCS_bone([2 2 2],4)',TrunkCS_bone([3 3 3],4)',50*TrunkCS_bone(1,1:3),50*TrunkCS_bone(2,1:3),50*TrunkCS_bone(3,1:3))

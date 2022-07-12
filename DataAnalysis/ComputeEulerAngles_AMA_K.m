@@ -108,14 +108,16 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 % Plotting Scapular BLs in Shoulder Marker CS 
 
 %  if k ==1 
-ScapCoord_Marker = BL_markerCS(BLs{1,2},BLnames_s,'Shoulder BLs',k);
+[ScapCoord_Marker TrunkCS_marker] = BL_markerCS(BLs{1,2},BLnames_s,BLs{1,1},BLnames_t,'Shoulder BLs',k,partid,arm);
+
+
 
 %  pause
 % 
 %  end
 
 BoneCS{1,2}  = ScapCoord_Marker; %Replacing with Correct Scap CS (Updated July 2022)- Incorrect in saved FILE!
-
+BoneCS{1,2}  = TrunkCS_marker; 
 %% Loading in trial Data
 load([datafilepath,'/', filename]) %loading in trial data
 
@@ -289,12 +291,14 @@ j=k; % a part of larger loop outside this function.
     
     % Computing GH at jth time point (in sh marker cs) via GH function
     % Adding Trunk CS 
-    
+
+%     
     gh =ghest_KS(BL_M_s,BoneCS{2},BL_M_t,BoneCS{1},flag,partid,arm,j);
     
+  
+
     GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH in Shoulder Marker Frame now in GCS
 
-%     return 
     
     HtoG = TmarkertoGlob{3}*BoneCS{4}; % Humerus
     BL_G_h = TmarkertoGlob{3}*BLs{1,3};
@@ -323,11 +327,7 @@ j=k; % a part of larger loop outside this function.
     end
     
     
-    if strcmp(partid,'RTIS2007')
-         if strcmp(arm,'Right')
-            TtoG(1:3,1:3) = rotz(-180)*TtoG(1:3,1:3);
-         end
-    end
+
         
     if strcmp(partid,'RTIS2008')
         if strcmp(arm,'Right')

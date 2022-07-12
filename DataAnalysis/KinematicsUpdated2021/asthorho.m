@@ -28,8 +28,9 @@ xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
-yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+% yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
+yt = cross(zt(1:3),xhulp); %Kacey changed July 2022 (original line 31)
 % zt = cross(xhulp,yt);
 
 yt=yt/norm(yt);
