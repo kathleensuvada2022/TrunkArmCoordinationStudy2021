@@ -43,7 +43,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%Trunk BLs in MARKER CS%%%%%%%%%%%%%%%%%%%%%%%%%%
 if k ==1 
-figure()
+figure(30)
 
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames_t)
@@ -72,7 +72,7 @@ IJidx = find(BlNames_t=='IJ');
 BLnames_t = ["IJ","PX","C7","T8"];
 BLs_lcs_t ={IJ,PX,C7,T8};
 
-%%
+%% Trunk CS
 zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
 zt = zt/norm(zt);
 
@@ -90,26 +90,43 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]';
 
 
 %xhulp is vector normal to the plane
-xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
+xhulp = nvector  ;
+
+if xhulp(1) <0
+    if BLs_marker_t(1,1) <0
+    else
+        xhulp = -nvector;
+    end
+    
+elseif xhulp(1) >0
+    if BLs_marker_t(1,1)>0
+    else
+        xhulp = -nvector;
+    end
+    
+end
+% if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
+% Plotting Xhulp 
+figure(30)
+quiver3(xhulp(1),xhulp(2),xhulp(3),50*xhulp(1),50*xhulp(2),50*xhulp(3))
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
- yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
+%  yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
    
- if strcmp(partid,'RTIS2007')
-     if strcmp(arm,'Right')
-         yt = cross(zt(1:3),xhulp); %Kacey changed July 2022 (original line 31)
-     end
- end
+%  if strcmp(partid,'RTIS2007')
+%      if strcmp(arm,'Right')
+          yt = cross(zt(1:3),xhulp); % This should always be true for Right arm and left arm
+
 
 % zt = cross(xhulp,yt);
 
 yt=yt/norm(yt);
 
-if strcmp(arm,'Left')
-    
-yt = cross(zt(1:3),xhulp);  
-end
+% if strcmp(arm,'Left')
+%     
+% yt = cross(zt(1:3),xhulp);  
+% end
 
 %xt = cross(yt(1:3),zt);
 
@@ -159,21 +176,20 @@ Orig = AC(1:4);
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
 
-%% Trunk CS 
+
 
 %% Plotting Scap CS - in Marker CS
 
 %      quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
 %      text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
 % %     
-%     
-    
-%% Plotting Trunk CS - in Marker CS
 
+
+%% Plotting Trunk CS - in Marker CS
+figure(30)
      quiver3(TrunkCS([1 1 1],4)',TrunkCS([2 2 2],4)',TrunkCS([3 3 3],4)',50*TrunkCS(1,1:3),50*TrunkCS(2,1:3),50*TrunkCS(3,1:3))
      text(TrunkCS(1,4)+50*TrunkCS(1,1:3),TrunkCS(2,4)+50*TrunkCS(2,1:3),TrunkCS(3,4)+50*TrunkCS(3,1:3),{'X_t','Y_t','Z_t'})
      
-%      
 %      
 %      
 %     
