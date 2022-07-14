@@ -12,7 +12,7 @@ function [ScapCoord TrunkCS] =  BL_markerCS(BLs_marker,BlNames,BLs_marker_t, BlN
 
 %%%%%%%%%%%%%%%%%%%%%Scapula BLs in MARKER CS%%%%%%%%%%%%%%%%%%%%%%%%%%
 if k ==1 
-figure()
+figure(29)
 
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
@@ -159,19 +159,21 @@ ACidx = find(BlNames=='AC');
 [AC,AA,TS,AI]=deal(BLs_marker(:,ACidx),BLs_marker(:,ACidx+1),BLs_marker(:,ACidx+2),BLs_marker(:,ACidx+3));
 
 %% Creating X,Y,Z axes
-xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3)); 
-% ys = cross(xs,(AC(1:3)-AI(1:3)));
- ys = cross(xs,(AI(1:3)-AC(1:3)));
+%xs = (AC(1:3)-TS(1:3))/norm(AC(1:3)-TS(1:3));  For Centered at AC
+xs = (AA(1:3)-TS(1:3))/norm(AA(1:3)-TS(1:3)); 
+
+%ys = cross(xs,(AI(1:3)-AC(1:3))); For centered at AC
+ys = cross(xs,(AI(1:3)-AA(1:3)));
 ys = ys/norm(ys);
 
-% zs = cross(ys,xs);
 zs = cross(xs,ys);
 zs= zs/norm(zs);
 
 S = [xs ys zs];
 
 S = [S;0 0 0];
-Orig = AC(1:4);
+%Orig = AC(1:4); % For CS centered at AC
+Orig = AA(1:4);
 
 %Scapular CS in Marker Frame
 ScapCoord = [S Orig];
@@ -180,8 +182,9 @@ ScapCoord = [S Orig];
 
 %% Plotting Scap CS - in Marker CS
 
-%      quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
-%      text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
+figure(29)
+      quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
+      text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
 % %     
 
 

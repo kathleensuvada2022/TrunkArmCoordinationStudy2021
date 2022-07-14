@@ -48,10 +48,50 @@ function [TrunkCS_bone gh_markr]=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_
 
 
 
-%%
+%% BLS of Scapula and Convert to bone CS
+
+% Bony Landmarks in BONE cs 
 bl = bl_mark_s;
 bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS (BONE CS) 
 
+% Scapular CS in Bone 
+ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
+ 
+% Plotting BLS of Scapula and CS in BONE 
+figure(24)
+quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+hold on
+text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+
+plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+hold on
+text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
+
+%Plotting the Scapular Polygon
+plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)],'r') % line between AI and TS
+plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)],'r') % line between AI and AA
+%plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)],'r') % line between TS and AA
+plot3([bl(1,3) bl(1,1)],[bl(2,3) bl(2,1)],[bl(3,3) bl(3,1)],'r') % line between TS and AC
+plot3([bl(1,1) bl(1,2)],[bl(2,1) bl(2,2)],[bl(3,1) bl(3,2)],'r') % line between AC and AA
+
+title('Scapula CS and BLs in Bone CS')
+axis equal
+xlabel('x axis')
+ylabel('y axis')
+zlabel('z axis')
 %% Trunk CS and BLs
 
 %BLnames_t = ["SC","IJ","PX","C7","T8"]; Order of the trunk BLS
@@ -143,11 +183,9 @@ ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
 
 
 % 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) '
-%% Scapular CS in Bone 
-ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
- 
+
 % Rotating 90 degrees to align with original Defintion of SCAP CS
-ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
+ScapCS_bone= [rotx(-90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 
 %% Trunk CS in Bone
@@ -168,9 +206,9 @@ ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 % % Plotting Scapular CS and BLS
 % % 
 figure(25)
-quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-hold on
-text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+% hold on
+% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
 
 plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
@@ -248,25 +286,25 @@ zlabel('z axis')
 %%
 
 
-if strcmp(partid,'RTIS2002') && strcmp(arm,'Right')
-      gh(2) = -gh(2); %Based on figure make y neg
-elseif strcmp(partid,'RTIS2003') && strcmp(arm,'Right')   
-   gh(2) = -gh(2); %Based on figure make y neg
-elseif strcmp(partid,'RTIS2006') && strcmp(arm,'Right')   
-    gh(2) = -gh(2)/2; 
-    gh(1) = -gh(1); 
-%    
-
-else 
-    
-  
-end
+% if strcmp(partid,'RTIS2002') && strcmp(arm,'Right')
+%       gh(2) = -gh(2); %Based on figure make y neg
+% elseif strcmp(partid,'RTIS2003') && strcmp(arm,'Right')   
+%    gh(2) = -gh(2); %Based on figure make y neg
+% elseif strcmp(partid,'RTIS2006') && strcmp(arm,'Right')   
+%     gh(2) = -gh(2)/2; 
+%     gh(1) = -gh(1); 
+% %    
+% 
+% else 
+%     
+%   
+% end
 
 %% Rotate GH and BLs, and CS back to my Coordinate system definition
 
-gh_rot = rotx(-90)*gh; % Rotated GH back to Kacey's CS still in the Bone CS
-ScapCS_bone= [rotx(-90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
-bl =[rotx(-90) zeros(3,1); zeros(1,3) 1]*bl; %  - Shoulder 
+gh_rot = rotx(90)*gh; % Rotated GH back to Kacey's CS still in the Bone CS
+ScapCS_bone= [rotx(90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
+bl =[rotx(90) zeros(3,1); zeros(1,3) 1]*bl; %  - Shoulder 
 
 
 %Checking if trunk matrix empty and also rotating back to my

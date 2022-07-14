@@ -117,7 +117,7 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 %  end
 
 BoneCS{1,2}  = ScapCoord_Marker; %Replacing with Correct Scap CS (Updated July 2022)- Incorrect in saved FILE!
-BoneCS{1,2}  = TrunkCS_marker; 
+BoneCS{1,1}  = TrunkCS_marker; 
 %% Loading in trial Data
 load([datafilepath,'/', filename]) %loading in trial data
 
