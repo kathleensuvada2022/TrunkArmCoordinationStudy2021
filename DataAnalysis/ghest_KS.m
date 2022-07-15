@@ -107,15 +107,13 @@ else
    % bl_trunk = zeros(3,5);
 end 
 
-%%
-
-%Rotating BLS 90 about x so aligned with original system
-bl =[rotx(-90) zeros(3,1); zeros(1,3) 1]*bl; %  - Shoulder 
-
-if bl_mark_t ~= 0
-
-bl_trunk =[rotx(90) zeros(3,1); zeros(1,3) 1]*bl_trunk; % -Trunk
-end
+%% Rotating BLS 90 about x so aligned with original system
+% bl =[rotx(-90) zeros(3,1); zeros(1,3) 1]*bl; %  - Shoulder 
+% 
+% if bl_mark_t ~= 0
+% 
+% bl_trunk =[rotx(90) zeros(3,1); zeros(1,3) 1]*bl_trunk; % -Trunk
+% end
 
 %% 
 % Rotating 180 about Z 
@@ -165,16 +163,16 @@ lacai=norm(bl(:,1)-bl(:,4)); %lacai=norm(ac-ai)  % length from AC to AI
 ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
 
 %%
-% TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
-ghrel=[ ...
-  [  lacaa lacts       ltsai]*[     0.45 -0.28        0.18]';
-  [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
-  [        lacts lacai ltsai]*[          -0.51  0.42 -0.38]'];
-
-  ghrel=[ ...
-    [1       lacts lacai      ]*[  9.8       -0.399  0.223      ]';
-    [1       lacts lacai      ]*[-69.6        0.731 -0.277      ]';
-    [1       lacts lacai      ]*[ -2.7       -0.297  0.065      ]'];
+% % TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
+% ghrel=[ ...
+%   [  lacaa lacts       ltsai]*[     0.45 -0.28        0.18]';
+%   [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
+%   [        lacts lacai ltsai]*[          -0.51  0.42 -0.38]'];
+% 
+%   ghrel=[ ...
+%     [1       lacts lacai      ]*[  9.8       -0.399  0.223      ]';
+%     [1       lacts lacai      ]*[-69.6        0.731 -0.277      ]';
+%     [1       lacts lacai      ]*[ -2.7       -0.297  0.065      ]'];
 
 % AMA changed ghrel to gh since the last rotation is not needed.
   gh=[ ...
@@ -186,7 +184,7 @@ ghrel=[ ...
 % 1X3 * (1X3)' --> 1X3* 3X1 = 1X1 ( x coord) '
 
 % Rotating 90 degrees to align with original Defintion of SCAP CS
-ScapCS_bone= [rotx(-90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
+% ScapCS_bone= [rotx(-90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 
 %% Trunk CS in Bone
@@ -202,50 +200,61 @@ ScapCS_bone= [rotx(-90) zeros(3,1); zeros(1,3) 1]*ScapCS_bone;
 
 %flag = 1;
 
-%   if j==1
-% %     
-% % Plotting Scapular CS and BLS
-% % 
-figure(25)
-quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-hold on
-text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
-
-plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-hold on
-text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
-plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
-plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
-plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
-plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
-    'MarkerFaceColor','#D9FFFF')
-text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
-
-%Plotting the Scapular Polygon
-plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)],'r') % line between AI and TS
-plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)],'r') % line between AI and AA
-%plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)],'r') % line between TS and AA
-plot3([bl(1,3) bl(1,1)],[bl(2,3) bl(2,1)],[bl(3,3) bl(3,1)],'r') % line between TS and AC
-plot3([bl(1,1) bl(1,2)],[bl(2,1) bl(2,2)],[bl(3,1) bl(3,2)],'r') % line between AC and AA
-
-
-axis equal
-xlabel('x axis')
-ylabel('y axis')
-zlabel('z axis')
+% %   if j==1
+% % %     
+% % % Plotting Scapular CS and BLS
+% % % 
+% figure(25)
+% quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
+% hold on
+% text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
+% 
+% plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% hold on
+% text(bl(1,1),bl(2,1),bl(3,1),'AC','FontSize',14)
+% plot3(bl(1,2),bl(2,2),bl(3,2),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,2),bl(2,2),bl(3,2),'AA','FontSize',14)
+% plot3(bl(1,3),bl(2,3),bl(3,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,3),bl(2,3),bl(3,3),'TS','FontSize',14)
+% plot3(bl(1,4),bl(2,4),bl(3,4),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,4),bl(2,4),bl(3,4),'AI','FontSize',14)
+% plot3(bl(1,5),bl(2,5),bl(3,5),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(bl(1,5),bl(2,5),bl(3,5),'PC','FontSize',14)
+% 
+% %Plotting the Scapular Polygon
+% plot3([bl(1,4) bl(1,3)],[bl(2,4) bl(2,3)],[bl(3,4) bl(3,3)],'r') % line between AI and TS
+% plot3([bl(1,4) bl(1,2)],[bl(2,4) bl(2,2)],[bl(3,4) bl(3,2)],'r') % line between AI and AA
+% %plot3([bl(1,3) bl(1,2)],[bl(2,3) bl(2,2)],[bl(3,3) bl(3,2)],'r') % line between TS and AA
+% plot3([bl(1,3) bl(1,1)],[bl(2,3) bl(2,1)],[bl(3,3) bl(3,1)],'r') % line between TS and AC
+% plot3([bl(1,1) bl(1,2)],[bl(2,1) bl(2,2)],[bl(3,1) bl(3,2)],'r') % line between AC and AA
+% 
+% 
+% axis equal
+% xlabel('x axis')
+% ylabel('y axis')
+% zlabel('z axis')
 % % 
 %  title('Scapular CS and BLs in BONE CS- Rotated 90','FontSize',16)
+
+figure(29)
  plot3(gh(1),gh(2),gh(3),'-o','Color','c','MarkerSize',10,...
      'MarkerFaceColor','#D9FFFF')
-  text(gh(1),gh(2),gh(3),'GHComputed','FontSize',14)
+  text(gh(1),gh(2),gh(3),'GHComputed_M_a_r_k_e_r','FontSize',14) % ?????? seems like this computed GH is in marker 
   
+  
+  %% Kacey GH testing July 2022 - with old CS converting to Bone??? with original CS
+  
+  gh_bone = inv(Rscap_mark)*[gh;1];
+  figure(24)
+   plot3(gh_bone(1),gh_bone(2),gh_bone(3),'-o','Color','m','MarkerSize',10,...
+     'MarkerFaceColor','#D9FFFF')
+  text(gh_bone(1),gh_bone(2),gh_bone(3),'GHComputed_b_o_n_e','FontSize',14)
+  %%
 %  
 % % Plotting Trunk CS and BLS
 % 
@@ -300,7 +309,7 @@ zlabel('z axis')
 %     
 %   
 % end
-
+return
 %% Rotate GH and BLs, and CS back to my Coordinate system definition
 
 gh_rot = rotx(90)*gh; % Rotated GH back to Kacey's CS still in the Bone CS
