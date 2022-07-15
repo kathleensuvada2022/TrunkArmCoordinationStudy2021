@@ -100,11 +100,9 @@ BLs = setup.bl; % BLs in marker CS
 setup.BoneCSinMarker{1,2} = ScapCoord_Marker; %Replacing with Correct CS (Updated July 2022)- Incorrect in saved FILE!
 setup.BoneCSinMarker{1,1} = TrunkCS_marker; 
 
-BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
-
 
 %%  Computing GH based on Digitization File BLs
- [gh_markr]=ghest_KS(BLs{1,2},BoneCS{1,2},BLs{1,1},BoneCS{1,1},partid,hand)
+ [TrunkCS_bone gh_markr]=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,flag,partid,arm)
 
 %% Main loop that grabs Metria data and plots
 for i=1: length(mtrials)% i = 3

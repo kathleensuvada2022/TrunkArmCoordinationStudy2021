@@ -99,25 +99,7 @@ BL_names_all = {BLnames_t,BLnames_s,BLnames_h,BLnames_f};
 BLs = setup.bl; % BLs in marker CS
 BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 
-%% Calling Function to Plot Bony Landmarks in Respective Marker Coordinate System
 
-% From MetriaKinDaq- For order of Segments and BLs 
-% myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
-% myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
-
-% Plotting Scapular BLs in Shoulder Marker CS 
-
-%  if k ==1 
-[ScapCoord_Marker TrunkCS_marker] = BL_markerCS(BLs{1,2},BLnames_s,BLs{1,1},BLnames_t,'Shoulder BLs',k,partid,arm);
-
-
-
-%  pause
-% 
-%  end
-
-BoneCS{1,2}  = ScapCoord_Marker; %Replacing with Correct Scap CS (Updated July 2022)- Incorrect in saved FILE!
-BoneCS{1,1}  = TrunkCS_marker; 
 %% Loading in trial Data
 load([datafilepath,'/', filename]) %loading in trial data
 
