@@ -55,14 +55,8 @@ function gh_markr=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,partid,arm
 bl = bl_mark_s;
 bl(:,:) = inv(Rscap_mark)*bl; %BL's now in Scapular CS (BONE CS) 
 
-% Scapular CS in Bone 
-ScapCS_bone = inv(Rscap_mark)*Rscap_mark;
- 
 % Plotting BLS of Scapula and CS in BONE 
 figure(24)
-quiver3(ScapCS_bone([1 1 1],4)',ScapCS_bone([2 2 2],4)',ScapCS_bone([3 3 3],4)',50*ScapCS_bone(1,1:3),50*ScapCS_bone(2,1:3),50*ScapCS_bone(3,1:3))
-hold on
-text(ScapCS_bone(1,4)+50*ScapCS_bone(1,1:3),ScapCS_bone(2,4)+50*ScapCS_bone(2,1:3),ScapCS_bone(3,4)+50*ScapCS_bone(3,1:3),{'x','y','z'})
 
 plot3(bl(1,1),bl(2,1),bl(3,1),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
@@ -119,7 +113,7 @@ end
 % Rotating 180 about Z 
 % Rsca=Rsca*diag([-1 -1 1]); % Flips the x and y axes == 180 degree rotation about z % changing to that Scap Coord follows original definition
 
-%% %right arm only 
+%% 
 % Rscap =rotx(deg2rad(90))*Rscap_mark(1:3,1:3); % make sure consistent with paper description 
 % Scap_org = bl(:,1);
 % Rscap= cat(2, Rscap,Scap_org(1:3));

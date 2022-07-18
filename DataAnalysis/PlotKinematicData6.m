@@ -106,12 +106,18 @@ BoneCS = setup.BoneCSinMarker; %each bone CS created in marker CS
 %%  Computing GH based on Digitization File BLs
  %[gh_markr]=ghest_KS(BLs{1,2},BoneCS{1,2},BLs{1,1},BoneCS{1,1},partid,hand)
 ghest_KS(BLs{1,2},BoneCS{1,2},BLs{1,1},BoneCS{1,1},partid,hand)
+'NOTE: BLs DURING DIGITIZATION NOT TRIAL'
 
+return
 % !!!!!!!!! %%%%
 % Kacey Stop here and get help from AMA monday .... comparing and think GH
 % figured out??? but confused why it's giving it in marker and not Bone cs
-%% Main loop that grabs Metria data and plots
-for i=1: length(mtrials)% i = 3
+
+
+
+%% Main loop that grabs Metria data and plot
+
+for i=1: length(mtrials)
     
     % For mass data sheet saving data
     if i==1
