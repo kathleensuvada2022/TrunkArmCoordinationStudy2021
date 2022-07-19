@@ -151,11 +151,16 @@ end
 %%
 
 % ["AC","AA","TS","AI","PC"]; K.Suvada Order of BLS Scap
-lacaa=norm(bl(:,1)-bl(:,2)); %lacaa=norm(ac-aa); % length from AC to AA
-lacts=norm(bl(:,1)-bl(:,3)); %lacts=norm(ac-ts); % length from AC to TS
-lacai=norm(bl(:,1)-bl(:,4)); %lacai=norm(ac-ai)  % length from AC to AI
-ltsai=norm(bl(:,3)-bl(:,4)); %ltsai=norm(ts-ai); % length from TS to AI
+lacaa=norm(bl(:,1)-bl(:,2));
+lacts=norm(bl(:,1)-bl(:,3)); 
+lacai=norm(bl(:,1)-bl(:,4)); 
+ltsai=norm(bl(:,3)-bl(:,4)); 
 
+
+lacaa=norm(ac-aa); % length from AC to AA
+lacts=norm(ac-ts); % length from AC to TS
+lacai=norm(ac-ai);  % length from AC to AI
+ltsai=norm(ts-ai); % length from TS to AI
 %%
 % % TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
 % ghrel=[ ...
@@ -243,7 +248,7 @@ figure(29)
   
   %% Kacey GH testing July 2022 - with old CS converting to Bone??? with original CS
   
-  gh_bone = inv(Rscap_mark)*[gh;1];
+  gh_marker = (Rscap_mark)*[gh;1];
   figure(24)
    plot3(gh_bone(1),gh_bone(2),gh_bone(3),'-o','Color','m','MarkerSize',10,...
      'MarkerFaceColor','#D9FFFF')
