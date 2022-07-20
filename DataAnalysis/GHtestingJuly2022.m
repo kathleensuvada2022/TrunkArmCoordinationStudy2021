@@ -4,7 +4,7 @@
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'RTIS2002';
+partid = 'RTIS2006';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
 
@@ -75,54 +75,54 @@ Bls_bone_AC = inv(ScapCoord)* blmat;
 
 %% Plotting BLs With origin at AC 
 
-% figure(30)
-% %Plotting the BonyLandmarks and their Labels
-% for i = 1:length(BlNames)
-%     plot3(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     hold on
-%     text(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),BlNames(i),'FontSize',14)
-% end
-% 
-% %Plotting the Scapular Polygon
-% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],'r') % line between AI and TS
-% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],'r') % line between AI and AA
-% %plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,2)],[Bls_bone_AC(2,3) Bls_bone_AC(2,2)],[Bls_bone_AC(3,3) Bls_bone_AC(3,2)],'r') % line between TS and AA
-% plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],'r') % line between TS and AC
-% plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],'r') % line between AC and AA
-% 
-% 
-% axis equal
-% xlabel('X axis (mm)')
-% ylabel('Y axis (mm)')
-% zlabel('Z axis (mm)')
-% 
-% title('Bls in Bone CS during digitization- Origin AC','FontSize',16)
-%%
-figure(31)
+figure(30)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
-    plot3(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),'-o','Color','b','MarkerSize',10,...
+    plot3(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
-    text(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),BlNames(i),'FontSize',14)
+    text(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),BlNames(i),'FontSize',14)
 end
 
 %Plotting the Scapular Polygon
-plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],'r') % line between AI and TS
-plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],'r') % line between AI and AA
+plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],'r') % line between AI and TS
+plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],'r') % line between AI and AA
 %plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,2)],[Bls_bone_AC(2,3) Bls_bone_AC(2,2)],[Bls_bone_AC(3,3) Bls_bone_AC(3,2)],'r') % line between TS and AA
-plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],'r') % line between TS and AC
-plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],'r') % line between AC and AA
+plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],'r') % line between TS and AC
+plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],'r') % line between AC and AA
 
 
 axis equal
 xlabel('X axis (mm)')
-ylabel('Z axis (mm)')
-zlabel('Y axis (mm)')
+ylabel('Y axis (mm)')
+zlabel('Z axis (mm)')
 
 title('Bls in Bone CS during digitization- Origin AC','FontSize',16)
-
+%% Flipped Z and Y 
+% figure(31)
+% %Plotting the BonyLandmarks and their Labels
+% for i = 1:length(BlNames)
+%     plot3(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%     hold on
+%     text(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),BlNames(i),'FontSize',14)
+% end
+% 
+% %Plotting the Scapular Polygon
+% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],'r') % line between AI and TS
+% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],'r') % line between AI and AA
+% %plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,2)],[Bls_bone_AC(2,3) Bls_bone_AC(2,2)],[Bls_bone_AC(3,3) Bls_bone_AC(3,2)],'r') % line between TS and AA
+% plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],'r') % line between TS and AC
+% plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],'r') % line between AC and AA
+% 
+% 
+% axis equal
+% xlabel('X axis (mm)')
+% ylabel('Z axis (mm)')
+% zlabel('Y axis (mm)')
+% 
+% title('Bls in Bone CS during digitization- Origin AC','FontSize',16)
+% 
 
 %% BLS in Bone with center at AC
 
@@ -184,22 +184,20 @@ ltsai=norm(ts-ai); % length from TS to AI
 
 gh_b2 = gh;
 %% 
-%plotting respective GHs in bone and marker 
+%plotting respective GHs in bone CS 
 figure(30)
 plot3(gh_b(1), gh_b(2),gh_b(3),'*')
-text(gh_b(1), gh_b(2),gh_b(3),'GH comp')
+text(gh_b(1), gh_b(2),gh_b(3),'GH comp PC')
 
 
-plot3(gh_b(1), gh_b(3),gh_b(2),'*')
-text(gh_b(1), gh_b(3),gh_b(2),'GH comp')
+plot3(gh_b2(1), gh_b2(2),gh_b2(3),'*')
+text(gh_b2(1), gh_b2(2),gh_b2(3),'GH comp')
 
-plot3(gh_b2(1), gh_b2(3),gh_b2(2),'*')
-text(gh_b2(1), gh_b2(3),gh_b2(2),'GH2')
+% plot3(gh_b2(1), gh_b2(3),gh_b2(2),'*') % flipped y and z
+% text(gh_b2(1), gh_b2(3),gh_b2(2),'GH2')
+% 
 
 
-
-% plot3(gh_b(1), gh_b(2),-gh_b(3),'*')
-% text(gh_b(1), gh_b(2),-gh_b(3),'GH comp')
 %%
 gh_m=(ScapCoord*[gh_b;1]); %yields gh in marker
 
