@@ -23,8 +23,8 @@ ACidx = find(BlNames=='AC');
 
 %% Creating Scapular CS
 
-xs = (AA(1:3)-TS(1:3)) / norm(AA(1:3)-TS(1:3));
-zhulp = cross(xs,(AA(1:3)-AI(1:3)));
+xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
+zhulp = cross(xs,(AC(1:3)-AI(1:3)));
 zs = zhulp/norm(zhulp);
 ys = cross(zs,xs);
 s = [xs,ys,zs];
@@ -33,7 +33,7 @@ s = [s;0 0 0];
 
 Orig = AC(1:4);
 
-%Scapular CS in Marker Frame with origin at AA 
+%Scapular CS in Marker Frame with origin at AC
 ScapCoord = [s Orig];
 
 %% Plotting BLs and Scap CS
@@ -75,29 +75,54 @@ Bls_bone_AC = inv(ScapCoord)* blmat;
 
 %% Plotting BLs With origin at AC 
 
-figure(30)
+% figure(30)
+% %Plotting the BonyLandmarks and their Labels
+% for i = 1:length(BlNames)
+%     plot3(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%     hold on
+%     text(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),BlNames(i),'FontSize',14)
+% end
+% 
+% %Plotting the Scapular Polygon
+% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],'r') % line between AI and TS
+% plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],'r') % line between AI and AA
+% %plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,2)],[Bls_bone_AC(2,3) Bls_bone_AC(2,2)],[Bls_bone_AC(3,3) Bls_bone_AC(3,2)],'r') % line between TS and AA
+% plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],'r') % line between TS and AC
+% plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],'r') % line between AC and AA
+% 
+% 
+% axis equal
+% xlabel('X axis (mm)')
+% ylabel('Y axis (mm)')
+% zlabel('Z axis (mm)')
+% 
+% title('Bls in Bone CS during digitization- Origin AC','FontSize',16)
+%%
+figure(31)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
-    plot3(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),'-o','Color','b','MarkerSize',10,...
+    plot3(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
-    text(Bls_bone_AC(1,i),Bls_bone_AC(2,i),Bls_bone_AC(3,i),BlNames(i),'FontSize',14)
+    text(Bls_bone_AC(1,i),Bls_bone_AC(3,i),Bls_bone_AC(2,i),BlNames(i),'FontSize',14)
 end
 
 %Plotting the Scapular Polygon
-plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],'r') % line between AI and TS
-plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],'r') % line between AI and AA
+plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,3)],[Bls_bone_AC(3,4) Bls_bone_AC(3,3)],[Bls_bone_AC(2,4) Bls_bone_AC(2,3)],'r') % line between AI and TS
+plot3([Bls_bone_AC(1,4) Bls_bone_AC(1,2)],[Bls_bone_AC(3,4) Bls_bone_AC(3,2)],[Bls_bone_AC(2,4) Bls_bone_AC(2,2)],'r') % line between AI and AA
 %plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,2)],[Bls_bone_AC(2,3) Bls_bone_AC(2,2)],[Bls_bone_AC(3,3) Bls_bone_AC(3,2)],'r') % line between TS and AA
-plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],'r') % line between TS and AC
-plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],'r') % line between AC and AA
+plot3([Bls_bone_AC(1,3) Bls_bone_AC(1,1)],[Bls_bone_AC(3,3) Bls_bone_AC(3,1)],[Bls_bone_AC(2,3) Bls_bone_AC(2,1)],'r') % line between TS and AC
+plot3([Bls_bone_AC(1,1) Bls_bone_AC(1,2)],[Bls_bone_AC(3,1) Bls_bone_AC(3,2)],[Bls_bone_AC(2,1) Bls_bone_AC(2,2)],'r') % line between AC and AA
 
 
 axis equal
 xlabel('X axis (mm)')
-ylabel('Y axis (mm)')
-zlabel('Z axis (mm)')
+ylabel('Z axis (mm)')
+zlabel('Y axis (mm)')
 
 title('Bls in Bone CS during digitization- Origin AC','FontSize',16)
+
 
 %% BLS in Bone with center at AC
 
@@ -157,15 +182,24 @@ ltsai=norm(ts-ai); % length from TS to AI
     [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
     [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
 
-gh_b = gh;
+gh_b2 = gh;
 %% 
 %plotting respective GHs in bone and marker 
 figure(30)
 plot3(gh_b(1), gh_b(2),gh_b(3),'*')
 text(gh_b(1), gh_b(2),gh_b(3),'GH comp')
 
-plot3(gh_b(1), gh_b(2),-gh_b(3),'*')
-text(gh_b(1), gh_b(2),-gh_b(3),'GH comp')
+
+plot3(gh_b(1), gh_b(3),gh_b(2),'*')
+text(gh_b(1), gh_b(3),gh_b(2),'GH comp')
+
+plot3(gh_b2(1), gh_b2(3),gh_b2(2),'*')
+text(gh_b2(1), gh_b2(3),gh_b2(2),'GH2')
+
+
+
+% plot3(gh_b(1), gh_b(2),-gh_b(3),'*')
+% text(gh_b(1), gh_b(2),-gh_b(3),'GH comp')
 %%
 gh_m=(ScapCoord*[gh_b;1]); %yields gh in marker
 
