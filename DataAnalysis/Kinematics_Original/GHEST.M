@@ -33,4 +33,14 @@ ltsai=norm(ts-ai);
     [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
     [1       lacts lacai      ]*[ -3       -0.30  0.06      ]'];
 
-gh=Rsca*ghrel+Osca;
+gh=(Rsca*ghrel)+Osca;
+
+%% Kacey Added Below to convert BLS back - July 2022
+
+
+ac=(Rsca*ac)+Osca;
+aa=(Rsca*aa)+Osca;
+ts=(Rsca*ts)+Osca;
+ai=(Rsca*ai)+Osca;
+
+  

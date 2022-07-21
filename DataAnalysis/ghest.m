@@ -29,7 +29,8 @@ Rsca=Rsca*diag([-1 -1 1]); % Flips the x and y axes == 180 degree rotation about
 % Rotate 180 degrees about Y (Kacey)
 Rsca=Rsca*diag([-1 1 -1]);
 
-Osca=(bl(:,1)+bl(:,2))/2; % Osca=(ac+aa)/2; compute midpoint between AC and AA
+%Osca=(bl(:,1)+bl(:,2))/2;  
+Osca=(ac+aa)/2; % compute midpoint between AC and AA
 
 % ac=Rsca'*(ac-Osca); No necessary because BLs are already in scapular CS
 % aa=Rsca'*(aa-Osca);

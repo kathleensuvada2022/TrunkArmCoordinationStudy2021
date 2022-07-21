@@ -2,6 +2,8 @@
 
 % To help Kacey with Testing GH computation. 
 
+
+% https://www.yumpu.com/en/document/read/38187780/estimation-of-the-glenohumeral-joint-rotation-center-from-scapula-
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
 partid = 'RTIS2006';
@@ -19,8 +21,14 @@ BlNames = ["AC","AA","TS","AI","PC"];
 BLs_marker = blmat;
 
 ACidx = find(BlNames=='AC');
-[AC,AA,TS,AI]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3));
+[AC,AA,TS,AI,PC]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4));
 
+
+aa = AA(1:3);
+pc= PC(1:3);
+ai = AI(1:3);
+ts = TS(1:3);
+ac = AC(1:3);
 %% Creating Scapular CS
 
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
@@ -36,6 +44,7 @@ Orig = AC(1:4);
 %Scapular CS in Marker Frame with origin at AC
 ScapCoord = [s Orig];
 
+Rsca = ScapCoord(1:3,1:3);
 %% Plotting BLs and Scap CS
 
 figure(29)
@@ -160,10 +169,10 @@ gh_b=[GHx;GHy;GHz]; %gh in bone
 
 %%
 % way without PC
-lacaa=norm(ac-aa); % length from AC to AA
-lacts=norm(ac-ts); % length from AC to TS
-lacai=norm(ac-ai);  % length from AC to AI
-ltsai=norm(ts-ai); % length from TS to AI
+lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
+lacts=norm(ac(1:3)-ts(1:3)); % length from AC to TS
+lacai=norm(ac(1:3)-ai(1:3));  % length from AC to AI
+ltsai=norm(ts(1:3)-ai(1:3)); % length from TS to AI
 
 % % TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
 % ghrel=[ ...

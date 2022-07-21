@@ -32,3 +32,20 @@ for I=1:n
 
     [S]=[S;s];
 end
+
+
+
+%%
+S=[];
+    AC = ac(1:3,I);
+    TS = ts(1:3,I);
+    AI = ai(1:3,I);
+
+    xs = (AC-TS) / norm(AC-TS);
+    zhulp = cross(xs,(AC-AI));
+    zs = zhulp/norm(zhulp);
+    ys = cross(zs,xs);
+
+    s = [xs,ys,zs];
+
+    [S]=[S;s];
