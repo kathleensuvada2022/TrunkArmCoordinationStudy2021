@@ -6,7 +6,7 @@
 % https://www.yumpu.com/en/document/read/38187780/estimation-of-the-glenohumeral-joint-rotation-center-from-scapula-
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'RTIS2006';
+partid = 'RTIS2002';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
 
@@ -82,6 +82,13 @@ title('Scap CS Raw Data in Marker CS during digitization','FontSize',16)
 
 Bls_bone_AC = inv(ScapCoord)* blmat;
 
+
+%% For right hand making mimic left 
+
+
+Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
+
+Bls_bone_AC = Bls_bone_AC_new ;
 %% Plotting BLs With origin at AC 
 
 figure(30)
@@ -207,6 +214,15 @@ text(gh_b2(1), gh_b2(2),gh_b2(3),'GH comp')
 % 
 
 
+
+%% For right hand mimicking left rotating back
+
+
+Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
+
+Bls_bone_AC = Bls_bone_AC_new ;
+
+gh_b2 = roty(pi)*gh_b2;
 %%
 gh_m=(ScapCoord*[gh_b;1]); %yields gh in marker
 
