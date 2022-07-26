@@ -6,10 +6,10 @@
 % https://www.yumpu.com/en/document/read/38187780/estimation-of-the-glenohumeral-joint-rotation-center-from-scapula-
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'RTIS2002';
+partid = 'RTIS2001';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
-
+arm = 'Right';
 
 %% Load in BLS for participant- raw data
 
@@ -20,8 +20,28 @@ blmat= BLs{1,2}; %Scapular BLs in MARKER CS
 BlNames = ["AC","AA","TS","AI","PC"];
 BLs_marker = blmat;
 
+
+
 ACidx = find(BlNames=='AC');
 [AC,AA,TS,AI,PC]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4));
+
+% for RTIS2001- Right AC not in correct position
+if strcmp(partid,'RTIS2001')
+    
+    if strcmp(arm,'Right')
+        AC = PC;
+        
+    end
+end
+
+if strcmp(partid,'RTIS2001')
+    if strcmp(arm,'Right')
+        BlNames = ["AC","AA","TS","AI","AC"];
+        BLs_marker(:,1) =BLs_marker(:,5) ;
+        blmat(:,1) = blmat(:,5);
+    end
+end
+
 
 
 aa = AA(1:3);
@@ -85,10 +105,13 @@ Bls_bone_AC = inv(ScapCoord)* blmat;
 
 %% For right hand making mimic left 
 
-
+if strcmp(arm,'Right')
+    
 Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
 
 Bls_bone_AC = Bls_bone_AC_new ;
+
+end
 %% Plotting BLs With origin at AC 
 
 figure(30)
@@ -217,12 +240,16 @@ text(gh_b2(1), gh_b2(2),gh_b2(3),'GH comp')
 
 %% For right hand mimicking left rotating back
 
+if strcmp(arm,'Right')
 
 Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
 
 Bls_bone_AC = Bls_bone_AC_new ;
 
 gh_b2 = roty(pi)*gh_b2;
+
+end
+
 %%
 gh_m=(ScapCoord*[gh_b;1]); %yields gh in marker
 
