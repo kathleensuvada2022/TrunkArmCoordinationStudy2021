@@ -3,10 +3,9 @@
 % To help Kacey with Testing GH computation. 
 
 
-% https://www.yumpu.com/en/document/read/38187780/estimation-of-the-glenohumeral-joint-rotation-center-from-scapula-
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'RTIS2001';
+partid = 'RTIS1006';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
 arm = 'Right';
