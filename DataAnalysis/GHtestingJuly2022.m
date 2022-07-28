@@ -6,9 +6,9 @@
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
 partid = 'GHTEST722';
-load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
+load(fullfile(filepath,partid,'Left',[partid '_setup.mat'])); %load setup file 
 
-arm = 'Right';
+arm = 'Left';
 
 %% Load in BLS for participant- raw data
 
@@ -70,6 +70,8 @@ Orig = AC(1:4);
 ScapCoord = [s Orig];
 
 Rsca = ScapCoord(1:3,1:3);
+
+
 %% Plotting BLs and Scap CS
 
 figure(29)
@@ -181,7 +183,7 @@ pc = Bls_bone_AC(:,5);
 
 
 
-%% Feeding into Linear Regression
+%% Feeding into Linear Regression - WITH PC!!!
 
 
 % Original Way 'ComputeEulerAngles' --> 'CalculateGH'
@@ -206,8 +208,11 @@ GHz = thz*scz;
 
 gh_b=[GHx;GHy;GHz]; %gh in bone
 
-%%
-% way without PC
+%%  Linear Regression - NO PC!!
+Rsca=Rsca*diag([-1 -1 1]);
+Osca=(ac+aa)/2;
+
+
 lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
 lacts=norm(ac(1:3)-ts(1:3)); % length from AC to TS
 lacai=norm(ac(1:3)-ai(1:3));  % length from AC to AI
@@ -241,9 +246,6 @@ text(gh_b(1), gh_b(2),gh_b(3),'GH comp PC')
 plot3(gh_b2(1), gh_b2(2),gh_b2(3),'*')
 text(gh_b2(1), gh_b2(2),gh_b2(3),'GH comp')
 
-% plot3(gh_b2(1), gh_b2(3),gh_b2(2),'*') % flipped y and z
-% text(gh_b2(1), gh_b2(3),gh_b2(2),'GH2')
-% 
 
 
 

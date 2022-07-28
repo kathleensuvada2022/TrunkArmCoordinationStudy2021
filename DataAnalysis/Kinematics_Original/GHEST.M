@@ -5,7 +5,7 @@
 % door Leonard Rozendaal
 
 Rsca=asscap(ac,ts,ai);
-Rsca=Rsca*diag([-1 -1 1]);
+Rsca=Rsca*diag([-1 -1 1]);%Rotate 180 about Z axis
 Osca=(ac+aa)/2;
 
 ac=Rsca'*(ac-Osca);
