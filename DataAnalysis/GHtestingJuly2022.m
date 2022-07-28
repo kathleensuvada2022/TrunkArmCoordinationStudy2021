@@ -5,7 +5,7 @@
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'RTIS1006';
+partid = 'GHTEST722';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
 arm = 'Right';
@@ -48,6 +48,12 @@ pc= PC(1:3);
 ai = AI(1:3);
 ts = TS(1:3);
 ac = AC(1:3);
+
+
+%% Compute Distances - confirming PC 
+
+Dist_PC_AC = norm(pc-ac)
+Dist_PC_AA = norm(pc-aa)
 %% Creating Scapular CS
 
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
@@ -103,14 +109,14 @@ Bls_bone_AC = inv(ScapCoord)* blmat;
 
 
 %% For right hand making mimic left 
-
-if strcmp(arm,'Right')
-    
-Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
-
-Bls_bone_AC = Bls_bone_AC_new ;
-
-end
+% 
+% if strcmp(arm,'Right')
+%     
+% Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
+% 
+% Bls_bone_AC = Bls_bone_AC_new ;
+% 
+% end
 %% Plotting BLs With origin at AC 
 
 figure(30)
@@ -171,6 +177,10 @@ aa = Bls_bone_AC(:,2);
 ts = Bls_bone_AC(:,3);
 ai = Bls_bone_AC(:,4);
 pc = Bls_bone_AC(:,5);
+
+
+
+
 %% Feeding into Linear Regression
 
 
@@ -238,16 +248,16 @@ text(gh_b2(1), gh_b2(2),gh_b2(3),'GH comp')
 
 
 %% For right hand mimicking left rotating back
-
-if strcmp(arm,'Right')
-
-Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
-
-Bls_bone_AC = Bls_bone_AC_new ;
-
-gh_b2 = roty(pi)*gh_b2;
-
-end
+% 
+% if strcmp(arm,'Right')
+% 
+% Bls_bone_AC_new = roty(pi)*Bls_bone_AC(1:3,:);
+% 
+% Bls_bone_AC = Bls_bone_AC_new ;
+% 
+% gh_b2 = roty(pi)*gh_b2;
+% 
+% end
 
 %%
 gh_m=(ScapCoord*[gh_b;1]); %yields gh in marker
