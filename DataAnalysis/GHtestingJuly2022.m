@@ -1,11 +1,11 @@
-% July 2022 K.Suvada
+% August 2022 K.Suvada
 
 % To help Kacey with Testing GH computation. 
 
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'GHTEST722'; % Skeleton Data
+partid = 'GHTesting812022_dataset2'; % Skeleton Data
 % partid = 'RTIS2002';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
@@ -17,11 +17,11 @@ BLs = setup.bl; % BLs in marker CS
 
 blmat= BLs{1,2}; %Scapular BLs in MARKER CS
 
-BlNames = ["AC","AA","TS","AI","PC"];
+BlNames = ["AC","AA","TS","AI","PC","GH"];
 BLs_marker = blmat;
 
 ACidx = find(BlNames=='AC');
-[AC,AA,TS,AI,PC]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4));
+[AC,AA,TS,AI,PC,GH]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4),blmat(:,ACidx+5));
 
 % % for RTIS2001- Right AC not in correct position
 % if strcmp(partid,'RTIS2001')
@@ -47,6 +47,7 @@ pc= PC(1:3);
 ai = AI(1:3);
 ts = TS(1:3);
 ac = AC(1:3);
+gh = GH(1:3);
 
 
 %% Compute Distances - confirming PC 
@@ -104,8 +105,9 @@ plot3([BLs_marker(1,4) BLs_marker(1,2)],[BLs_marker(2,4) BLs_marker(2,2)],[BLs_m
 plot3([BLs_marker(1,3) BLs_marker(1,1)],[BLs_marker(2,3) BLs_marker(2,1)],[BLs_marker(3,3) BLs_marker(3,1)],'r') % line between TS and AC
 plot3([BLs_marker(1,1) BLs_marker(1,2)],[BLs_marker(2,1) BLs_marker(2,2)],[BLs_marker(3,1) BLs_marker(3,2)],'r') % line between AC and AA
 
-quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
-text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
+% Plotting Desired Scapular CS
+% quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
+% text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
 
 plot3(0,0,0,'o')
 text(0,0,0,'Marker','FontSize',14)
