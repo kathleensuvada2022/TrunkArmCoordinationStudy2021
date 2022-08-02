@@ -5,7 +5,9 @@
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'GHTesting812022_dataset2'; % Skeleton Data
+ partid = 'GHTesting812022'; % Skeleton Dataset 1
+%  partid = 'GHTesting812022_dataset2'; % Skeleton Dataset 2
+
 % partid = 'RTIS2002';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
 
@@ -23,38 +25,20 @@ BLs_marker = blmat;
 ACidx = find(BlNames=='AC');
 [AC,AA,TS,AI,PC,GH]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4),blmat(:,ACidx+5));
 
-% % for RTIS2001- Right AC not in correct position
-% if strcmp(partid,'RTIS2001')
-%     
-%     if strcmp(arm,'Right')
-%         AC = PC;
-%         
-%     end
-% end
-% 
-% if strcmp(partid,'RTIS2001')
-%     if strcmp(arm,'Right')
-%         BlNames = ["AC","AA","TS","AI","AC"];
-%         BLs_marker(:,1) =BLs_marker(:,5) ;
-%         blmat(:,1) = blmat(:,5);
-%     end
-% end
-
-
 
 aa = AA(1:3);
 pc= PC(1:3);
 ai = AI(1:3);
 ts = TS(1:3);
 ac = AC(1:3);
-gh = GH(1:3);
+gh_dig = GH(1:3);
 
 
 %% Compute Distances - confirming PC 
 
 Dist_PC_AC = norm(pc-ac)
 Dist_PC_AA = norm(pc-aa);
-%% Creating Scapular CS- with PC (Meskers)
+%% Creating Scapular CS -MESKERS
 
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
 zhulp = cross(xs,(AC(1:3)-AI(1:3)));
@@ -70,14 +54,11 @@ Orig = AC(1:4);
 ScapCoord = [s Orig];
 
 Rsca = ScapCoord(1:3,1:3);
-
-%% Creating Scapular CS - NON PC
-
+%% Creating Scapular CS - NON PC flipped 180 about Z
 xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
-zhulp = cross(xs,(AC(1:3)-AI(1:3)));
+zhulp = cross(xs,(AI(1:3)-AC(1:3)));
 zs = zhulp/norm(zhulp);
- ys = cross(zs,xs);
-
+ys = cross(zs,xs);
 s = [xs,ys,zs];
 
 s = [s;0 0 0];
@@ -106,8 +87,8 @@ plot3([BLs_marker(1,3) BLs_marker(1,1)],[BLs_marker(2,3) BLs_marker(2,1)],[BLs_m
 plot3([BLs_marker(1,1) BLs_marker(1,2)],[BLs_marker(2,1) BLs_marker(2,2)],[BLs_marker(3,1) BLs_marker(3,2)],'r') % line between AC and AA
 
 % Plotting Desired Scapular CS
-% quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
-% text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
+quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
+text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
 
 plot3(0,0,0,'o')
 text(0,0,0,'Marker','FontSize',14)
@@ -159,6 +140,7 @@ aa = Bls_bone_AC(:,2);
 ts = Bls_bone_AC(:,3);
 ai = Bls_bone_AC(:,4);
 pc = Bls_bone_AC(:,5);
+gh_dig = Bls_bone_AC(:,6);
 
 
 %% Linear Regression - MESKERS with PC!! 
@@ -184,13 +166,6 @@ GHz = thz*scz;
 gh_b=[GHx;GHy;GHz]; %gh in bone
 
 %% Linear Regression - NO PC!!
- Osca=(ac+aa)/2;
-
- aa= aa-Osca;
- ac = ac-Osca;
- ai = ai-Osca;
- ts = ts-Osca;
- pc = pc -Osca;
 
 lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
 lacts=norm(ac(1:3)-ts(1:3)); % length from AC to TS
@@ -222,7 +197,7 @@ plot3(gh_b(1), gh_b(2),gh_b(3),'*')
 text(gh_b(1), gh_b(2),gh_b(3),'GH PC')
 
 %% NON PC MODEL
-figure(32)
+figure(31)
 plot3(gh_b2(1), gh_b2(2),gh_b2(3),'*')
 text(gh_b2(1), gh_b2(2),gh_b2(3),'GH NOPC')
 hold on 
@@ -259,8 +234,33 @@ pc=(Rsca*pc(1:3))+Osca(1:3);
   
 
 %%  GH in Shoulder marker
-gh_m=(ScapCoord*[gh_b;1]); 
-
+% gh_m=(ScapCoord*[gh_b;1]); 
+gh_m=(ScapCoord*[gh_b2;1]); 
 figure(29)
  plot3(gh_m(1),gh_m(2),gh_m(3),'o')
-  text(gh_m(1),gh_m(2),gh_m(3),'GH_Meskers')
+  text(gh_m(1),gh_m(2),gh_m(3),'GHNoPC')
+%     text(gh_m(1),gh_m(2),gh_m(3),'GHMeskers')
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Creating Scapular CS - NON PC (OLD DON'T USE)
+% 
+% xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
+% zhulp = cross(xs,(AC(1:3)-AI(1:3)));
+% zs = zhulp/norm(zhulp);
+%  ys = cross(zs,xs);
+% 
+% s = [xs,ys,zs];
+% 
+% s = [s;0 0 0];
+% 
+% Orig = AC(1:4);
+% 
+% %Scapular CS in Marker Frame with origin at AC
+% ScapCoord = [s Orig];
+% 
+% Rsca = ScapCoord(1:3,1:3);
