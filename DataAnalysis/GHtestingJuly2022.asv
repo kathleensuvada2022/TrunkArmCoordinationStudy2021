@@ -1,12 +1,27 @@
-% August 2022 K.Suvada
+% Glenohumeral Joint Rotation Center Estimation -RIGHT ARM
 
-% To help Kacey with Testing GH computation. 
+% 3 linear regression models. All use same scapular CS where x is to the
+% right, y is up, and z is back. (RIGHT ARM)
 
+% Method 1: Meskers 1998. Assumes and estimates GH with center at AC and
+% uses sphere fitting technique (Glenoid and Humeral Head from cadeavers) 
+% to come up with linear regression equation based on 5 bony landmarks of 
+% the shoulder: PC,AA,AC,TS,AI.
+
+% Method 2: Abridged equation from (1). Less BLs therefore less chances for
+% error. Campell 2005 MRI comparision study showed this abridged version 
+% more accurate (all saying GH in center of humerus head). Find equation in
+% Campell 2005 but the source with the paper itself is outdated and did not
+% work. However, cites Meskers with new equation anyways.
+
+% Method 3: Unknown source but does NOT require PC for estimation. 
+
+% July/August 2022
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
- partid = 'GHTesting812022'; % Skeleton Dataset 1
-%  partid = 'GHTesting812022_dataset2'; % Skeleton Dataset 2
+  partid = 'GHTesting812022'; % Skeleton Dataset 1
+%   partid = 'GHTesting812022_dataset2'; % Skeleton Dataset 2
 
 % partid = 'RTIS2002';
 load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
@@ -212,7 +227,7 @@ gh_b2 = gh;
 %
 figure(31)
 plot3(gh_b(1), gh_b(2),gh_b(3),'*')
-text(gh_b(1), gh_b(2),gh_b(3),'GH PC')
+text(gh_b(1), gh_b(2),gh_b(3),'GH PC_MOD')
 
 %% NON PC MODEL
 figure(31)
@@ -252,11 +267,11 @@ pc=(Rsca*pc(1:3))+Osca(1:3);
   
 
 %%  GH in Shoulder marker
-% gh_m=(ScapCoord*[gh_b;1]); 
+ gh_m=(ScapCoord*[gh_b;1]); 
 %gh_m=(ScapCoord*[gh_b2;1]); 
 figure(29)
  plot3(gh_m(1),gh_m(2),gh_m(3),'o')
-  text(gh_m(1),gh_m(2),gh_m(3),'GHNoPC')
+  text(gh_m(1),gh_m(2),gh_m(3),'GHPC MOD')
 %     text(gh_m(1),gh_m(2),gh_m(3),'GHMeskers')
 
 

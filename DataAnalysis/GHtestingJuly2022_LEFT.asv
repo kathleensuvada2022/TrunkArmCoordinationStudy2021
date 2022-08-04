@@ -1,7 +1,9 @@
-% Glenohumeral Joint Rotation Center Estimation -RIGHT ARM
+% Glenohumeral Joint Rotation Center Estimation -Left ARM
 
 % 3 linear regression models. All use same scapular CS where x is to the
-% right, y is up, and z is back. (RIGHT ARM)
+% left (towards AA), y is up (away from AI), and z is away from PC. The
+% directions are all such that they point in same direction as given BLS as
+% for right hand. So works for linear regression model.
 
 % Method 1: Meskers 1998. Assumes and estimates GH with center at AC and
 % uses sphere fitting technique (Glenoid and Humeral Head from cadeavers) 
@@ -25,13 +27,11 @@
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-  partid = 'GHTesting812022'; % Skeleton Dataset 1
-%   partid = 'GHTesting812022_dataset2'; % Skeleton Dataset 2
+partid = 'GHTesting812022'; % Skeleton Dataset 1
 
-% partid = 'RTIS2002';
-load(fullfile(filepath,partid,'Right',[partid '_setup.mat'])); %load setup file 
+load(fullfile(filepath,partid,'Left',[partid '_setup.mat'])); %load setup file 
 
-arm = 'Right';
+arm = 'Left';
 
 %% Load in BLS for participant- raw data
 
@@ -54,16 +54,15 @@ ac = AC(1:3);
 gh_dig = GH(1:3);
 
 
-%% Compute Distances - confirming PC 
-
-Dist_PC_AC = norm(pc-ac)
-Dist_PC_AA = norm(pc-aa);
-%% Creating Scapular CS -MESKERS
+%% Creating Scapular CS -MESKERS -MODIFIED FOR LEFT
 
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
-zhulp = cross(xs,(AC(1:3)-AI(1:3)));
+%zhulp = cross(xs,(AC(1:3)-AI(1:3)));
+zhulp = cross((AC(1:3)-AI(1:3)),xs);
 zs = zhulp/norm(zhulp);
-ys = cross(zs,xs);
+
+%ys = cross(zs,xs);
+ys = cross(xs,zs);
 s = [xs,ys,zs];
 
 s = [s;0 0 0];
@@ -74,21 +73,7 @@ Orig = AC(1:4);
 ScapCoord = [s Orig];
 
 Rsca = ScapCoord(1:3,1:3);
-%% Creating Scapular CS - NON PC flipped 180 about Z
-% xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
-% zhulp = cross(xs,(AI(1:3)-AC(1:3)));
-% zs = zhulp/norm(zhulp);
-% ys = cross(zs,xs);
-% s = [xs,ys,zs];
-% 
-% s = [s;0 0 0];
-% 
-% Orig = AC(1:4);
-% 
-% %Scapular CS in Marker Frame with origin at AC
-% ScapCoord = [s Orig];
-% 
-% Rsca = ScapCoord(1:3,1:3);
+
 %% Plotting BLs and Scap CS
 
 figure(29)
@@ -123,6 +108,8 @@ title('Scap CS Raw Data in Marker CS','FontSize',16)
 %% Converting BLS to Bone CS 
 
 Bls_bone_AC = inv(ScapCoord)* blmat;
+
+
 
 %% Plotting BLs With origin at AC 
 
