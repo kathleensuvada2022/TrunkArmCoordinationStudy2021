@@ -55,20 +55,20 @@ ScapCoord = [s Orig];
 
 Rsca = ScapCoord(1:3,1:3);
 %% Creating Scapular CS - NON PC flipped 180 about Z
-xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
-zhulp = cross(xs,(AI(1:3)-AC(1:3)));
-zs = zhulp/norm(zhulp);
-ys = cross(zs,xs);
-s = [xs,ys,zs];
-
-s = [s;0 0 0];
-
-Orig = AC(1:4);
-
-%Scapular CS in Marker Frame with origin at AC
-ScapCoord = [s Orig];
-
-Rsca = ScapCoord(1:3,1:3);
+% xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
+% zhulp = cross(xs,(AI(1:3)-AC(1:3)));
+% zs = zhulp/norm(zhulp);
+% ys = cross(zs,xs);
+% s = [xs,ys,zs];
+% 
+% s = [s;0 0 0];
+% 
+% Orig = AC(1:4);
+% 
+% %Scapular CS in Marker Frame with origin at AC
+% ScapCoord = [s Orig];
+% 
+% Rsca = ScapCoord(1:3,1:3);
 %% Plotting BLs and Scap CS
 
 figure(29)
@@ -164,7 +164,25 @@ GHy = thy*scy;
 GHz = thz*scz;
 
 gh_b=[GHx;GHy;GHz]; %gh in bone
+%% Linear Regression - Modified Meskers Model 
 
+laipc=norm(ai(1:3)-pc(1:3));
+laapc=norm(aa(1:3)-pc(1:3));
+  
+scx=[1 ts(1) laipc]';
+scy=[1 ac(2) pc(3)]';
+scz=[1 laapc ts(1)]';
+
+thx=[26.896 .61 .295];
+thy=[-16.307 .825 .293];
+thz=[-1.740 -.899 -.229];
+
+
+GHx = thx*scx;
+GHy = thy*scy;
+GHz = thz*scz;
+
+gh_b=[GHx;GHy;GHz]; %gh in bone
 %% Linear Regression - NO PC!!
 
 lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
@@ -194,7 +212,7 @@ gh_b2 = gh;
 %
 figure(31)
 plot3(gh_b(1), gh_b(2),gh_b(3),'*')
-text(gh_b(1), gh_b(2),gh_b(3),'GH PC')
+text(gh_b(1), gh_b(2),gh_b(3),'GH PC_Modified')
 
 %% NON PC MODEL
 figure(31)
@@ -234,11 +252,11 @@ pc=(Rsca*pc(1:3))+Osca(1:3);
   
 
 %%  GH in Shoulder marker
-% gh_m=(ScapCoord*[gh_b;1]); 
-gh_m=(ScapCoord*[gh_b2;1]); 
+ gh_m=(ScapCoord*[gh_b;1]); 
+%gh_m=(ScapCoord*[gh_b2;1]); 
 figure(29)
  plot3(gh_m(1),gh_m(2),gh_m(3),'o')
-  text(gh_m(1),gh_m(2),gh_m(3),'GHNoPC')
+  text(gh_m(1),gh_m(2),gh_m(3),'GHPC_original')
 %     text(gh_m(1),gh_m(2),gh_m(3),'GHMeskers')
 
 
