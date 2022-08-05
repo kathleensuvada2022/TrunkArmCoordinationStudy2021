@@ -1,6 +1,6 @@
 % Glenohumeral Joint Rotation Center Estimation -RIGHT ARM
 
-% 3 linear regression models. All use same scapular CS where x is to the
+% 3 linear regression models. All NEED same scapular CS where x is to the
 % right, y is up, and z is back. (RIGHT ARM)
 
 % Method 1: Meskers 1998. Assumes and estimates GH with center at AC and
@@ -53,30 +53,10 @@ ts = TS(1:3);
 ac = AC(1:3);
 gh_dig = GH(1:3);
 
-
-%% Compute Distances - confirming PC 
-
-Dist_PC_AC = norm(pc-ac)
-Dist_PC_AA = norm(pc-aa);
-%% Creating Scapular CS -MESKERS
-
-xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
-zhulp = cross(xs,(AC(1:3)-AI(1:3)));
-zs = zhulp/norm(zhulp);
-ys = cross(zs,xs);
-s = [xs,ys,zs];
-
-s = [s;0 0 0];
-
-Orig = AC(1:4);
-
-%Scapular CS in Marker Frame with origin at AC
-ScapCoord = [s Orig];
-
-Rsca = ScapCoord(1:3,1:3);
-%% Creating Scapular CS - NON PC flipped 180 about Z
-% xs = (TS(1:3)-AC(1:3)) / norm(TS(1:3)-AC(1:3));
-% zhulp = cross(xs,(AI(1:3)-AC(1:3)));
+ %% Creating Scapular CS -MESKERS Original CS definition WORKS
+% 
+% xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
+% zhulp = cross(xs,(AC(1:3)-AI(1:3)));
 % zs = zhulp/norm(zhulp);
 % ys = cross(zs,xs);
 % s = [xs,ys,zs];
@@ -89,6 +69,21 @@ Rsca = ScapCoord(1:3,1:3);
 % ScapCoord = [s Orig];
 % 
 % Rsca = ScapCoord(1:3,1:3);
+%% Creating Scapular CS -Kacey's Definition
+% 
+xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
+yhulp = cross((AC(1:3)-AI(1:3)),xs);
+ys = yhulp/norm(yhulp);
+zs = cross(xs,ys);
+s = [xs,ys,zs];
+
+s = [s;0 0 0];
+
+Orig = AC(1:4);
+
+%Scapular CS in Marker Frame with origin at AC
+ScapCoord = [s Orig];
+
 %% Plotting BLs and Scap CS
 
 figure(29)
@@ -120,9 +115,12 @@ zlabel('Z axis (mm)')
 title('Scap CS Raw Data in Marker CS','FontSize',16)
 
 
-%% Converting BLS to Bone CS 
+%% Converting BLS to Bone CS - Kacey's Definition
 
 Bls_bone_AC = inv(ScapCoord)* blmat;
+
+% Rotating to align BLs with Mesker's defintion 
+Bls_bone_AC(1:3,:) = rotx(-90)*Bls_bone_AC(1:3,:);
 
 %% Plotting BLs With origin at AC 
 
@@ -204,82 +202,83 @@ GHz = thz*scz;
 
 gh_b=[GHx;GHy;GHz]; %gh in bone
 %% Linear Regression - NO PC!!
-
-lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
-lacts=norm(ac(1:3)-ts(1:3)); % length from AC to TS
-lacai=norm(ac(1:3)-ai(1:3));  % length from AC to AI
-ltsai=norm(ts(1:3)-ai(1:3)); % length from TS to AI
-
-% % TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
-% ghrel=[ ...
-%   [  lacaa lacts       ltsai]*[     0.45 -0.28        0.18]';
-%   [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
-%   [        lacts lacai ltsai]*[          -0.51  0.42 -0.38]'];
 % 
-%   ghrel=[ ...
-%     [1       lacts lacai      ]*[  9.8       -0.399  0.223      ]';
-%     [1       lacts lacai      ]*[-69.6        0.731 -0.277      ]';
-%     [1       lacts lacai      ]*[ -2.7       -0.297  0.065      ]'];
-
-% AMA changed ghrel to gh since the last rotation is not needed.
-  gh=[ ...
-    [1       lacts lacai      ]*[ 10       -0.40  0.22      ]'; % Xcoord
-    [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
-    [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
-
-gh_b2 = gh;
+% lacaa=norm(ac(1:3)-aa(1:3)); % length from AC to AA
+% lacts=norm(ac(1:3)-ts(1:3)); % length from AC to TS
+% lacai=norm(ac(1:3)-ai(1:3));  % length from AC to AI
+% ltsai=norm(ts(1:3)-ai(1:3)); % length from TS to AI
+% 
+% % % TWO DIFFERENT REGRESSION EQUATIONS (2 AND 3 ARE THE SAME EXCEPT FOR THE NUMBER OF DECIMALS) WHICH ONE IS BEST????
+% % ghrel=[ ...
+% %   [  lacaa lacts       ltsai]*[     0.45 -0.28        0.18]';
+% %   [1       lacts lacai      ]*[-70        0.73 -0.28      ]';
+% %   [        lacts lacai ltsai]*[          -0.51  0.42 -0.38]'];
+% % 
+% %   ghrel=[ ...
+% %     [1       lacts lacai      ]*[  9.8       -0.399  0.223      ]';
+% %     [1       lacts lacai      ]*[-69.6        0.731 -0.277      ]';
+% %     [1       lacts lacai      ]*[ -2.7       -0.297  0.065      ]'];
+% 
+% % AMA changed ghrel to gh since the last rotation is not needed.
+%   gh=[ ...
+%     [1       lacts lacai      ]*[ 10       -0.40  0.22      ]'; % Xcoord
+%     [1       lacts lacai      ]*[-70        0.73 -0.28      ]';  % Y coord
+%     [1       lacts lacai      ]*[ -3       -0.30  0.06      ]']; % Z coord
+% 
+% gh_b2 = gh;
 %% MESKERS
 %
 figure(31)
 plot3(gh_b(1), gh_b(2),gh_b(3),'*')
 text(gh_b(1), gh_b(2),gh_b(3),'GH PC_MOD')
+ %% NON PC MODEL
+% figure(31)
+% plot3(gh_b2(1), gh_b2(2),gh_b2(3),'*')
+% text(gh_b2(1), gh_b2(2),gh_b2(3),'GH NOPC')
+% hold on 
+% plot3(pc(1),pc(2),pc(3),'o')
+% text(pc(1),pc(2),pc(3),'PC')
+% hold on
+% plot3(aa(1),aa(2),aa(3),'o')
+% text(aa(1),aa(2),aa(3),'AA')
+% plot3(ai(1),ai(2),ai(3),'o')
+% text(ai(1),ai(2),ai(3),'AI')
+% plot3(ac(1),ac(2),ac(3),'o')
+% text(ac(1),ac(2),ac(3),'AC')
+% plot3(ts(1),ts(2),ts(3),'o')
+% text(ts(1),ts(2),ts(3),'TS')
+% 
+% %Plotting the Scapular Polygon
+% plot3([ai(1) ts(1)],[ai(2) ts(2)],[ai(3) ts(3)],'r') % line between AI and TS
+% plot3([ai(1) aa(1)],[ai(2) aa(2)],[ai(3) aa(3)],'r') % line between AI and AA
+% plot3([ts(1) ac(1)],[ts(2) ac(2)],[ts(3) ac(3)],'r') % line between TS and AC
+% % plot3([ac(1) aa(1)],[ac(2) aa(2)],[aa(3) ac(3)],'r') % line between AC and AA
+% axis equal
+% xlabel('X axis (mm)')
+% ylabel('Y axis (mm)')
+% zlabel('Z axis (mm)')
+% Converting back to Marker CS
 
-%% NON PC MODEL
-figure(31)
-plot3(gh_b2(1), gh_b2(2),gh_b2(3),'*')
-text(gh_b2(1), gh_b2(2),gh_b2(3),'GH NOPC')
-hold on 
-plot3(pc(1),pc(2),pc(3),'o')
-text(pc(1),pc(2),pc(3),'PC')
-hold on
-plot3(aa(1),aa(2),aa(3),'o')
-text(aa(1),aa(2),aa(3),'AA')
-plot3(ai(1),ai(2),ai(3),'o')
-text(ai(1),ai(2),ai(3),'AI')
-plot3(ac(1),ac(2),ac(3),'o')
-text(ac(1),ac(2),ac(3),'AC')
-plot3(ts(1),ts(2),ts(3),'o')
-text(ts(1),ts(2),ts(3),'TS')
+% gh_b2=(Rsca*gh_b2(1:3))+Osca(1:3); 
+% ac=(Rsca*ac(1:3))+Osca(1:3); 
+% aa=(Rsca*aa(1:3))+Osca(1:3); 
+% ts=(Rsca*ts(1:3))+Osca(1:3); 
+% ai=(Rsca*ai(1:3))+Osca(1:3); 
+% pc=(Rsca*pc(1:3))+Osca(1:3);
+%   
 
-%Plotting the Scapular Polygon
-plot3([ai(1) ts(1)],[ai(2) ts(2)],[ai(3) ts(3)],'r') % line between AI and TS
-plot3([ai(1) aa(1)],[ai(2) aa(2)],[ai(3) aa(3)],'r') % line between AI and AA
-plot3([ts(1) ac(1)],[ts(2) ac(2)],[ts(3) ac(3)],'r') % line between TS and AC
-% plot3([ac(1) aa(1)],[ac(2) aa(2)],[aa(3) ac(3)],'r') % line between AC and AA
-axis equal
-xlabel('X axis (mm)')
-ylabel('Y axis (mm)')
-zlabel('Z axis (mm)')
+%% 
 
-%% Converting back to Marker CS
+% Rotating back to Kacey's Defintion of Scap CS 
+gh_b = rotx(90)*gh_b;
 
-gh_b2=(Rsca*gh_b2(1:3))+Osca(1:3); 
-ac=(Rsca*ac(1:3))+Osca(1:3); 
-aa=(Rsca*aa(1:3))+Osca(1:3); 
-ts=(Rsca*ts(1:3))+Osca(1:3); 
-ai=(Rsca*ai(1:3))+Osca(1:3); 
-pc=(Rsca*pc(1:3))+Osca(1:3);
-  
-
-%%  GH in Shoulder marker
- gh_m=(ScapCoord*[gh_b;1]); 
-%gh_m=(ScapCoord*[gh_b2;1]); 
+% Converting Back to Marker CS
+gh_m=(ScapCoord*[gh_b;1]); 
 figure(29)
  plot3(gh_m(1),gh_m(2),gh_m(3),'o')
   text(gh_m(1),gh_m(2),gh_m(3),'GHPC MOD')
-%     text(gh_m(1),gh_m(2),gh_m(3),'GHMeskers')
 
-
+%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
