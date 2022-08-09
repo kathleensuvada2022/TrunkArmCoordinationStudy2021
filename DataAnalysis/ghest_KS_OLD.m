@@ -23,9 +23,14 @@
 
 
 
+%Updates Summer 2022- this linear regression was not found in the
+%literature. Not sure where it came from. Benefit is that is does not use
+%Pc but can't find original source. If PC is good just use Meskers and the
+%Meskers Modified linear regression.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %function [TrunkCS_bone gh_markr]=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,flag,partid,arm,j)
-function gh_markr=ghest_KS(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,partid,arm)
+function gh_markr=ghest_KS_OLD(bl_mark_s,Rscap_mark,bl_mark_t,Rtrunk_mark,partid,arm)
 %% Rsca=asscap(ac,ts,ai); % No longer necessary, Rscap is an input
 
 %organizing BLS

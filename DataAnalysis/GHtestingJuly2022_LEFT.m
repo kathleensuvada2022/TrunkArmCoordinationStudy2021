@@ -27,8 +27,8 @@
 
 %% Loading in Setup file
 filepath = '/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data';
-partid = 'GHTesting812022'; % Skeleton Dataset 1
-
+%partid = 'GHTesting812022'; % Skeleton Dataset 1
+partid = 'RTIS2002'; % Skeleton Dataset 1
 load(fullfile(filepath,partid,'Left',[partid '_setup.mat'])); %load setup file 
 arm = 'Left';
 
@@ -38,11 +38,11 @@ BLs = setup.bl; % BLs in marker CS
 
 blmat= BLs{1,2}; %Scapular BLs in MARKER CS
 
-BlNames = ["AC","AA","TS","AI","PC","GH"];
+BlNames = ["AC","AA","TS","AI","PC"];
 BLs_marker = blmat;
 
 ACidx = find(BlNames=='AC');
-[AC,AA,TS,AI,PC,GH]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4),blmat(:,ACidx+5));
+[AC,AA,TS,AI,PC]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4));
 
 
 aa = AA(1:3);
@@ -50,7 +50,7 @@ pc= PC(1:3);
 ai = AI(1:3);
 ts = TS(1:3);
 ac = AC(1:3);
-gh_dig = GH(1:3);
+%gh_dig = GH(1:3);
 
 
 %% Creating Scapular CS -MESKERS -MODIFIED FOR LEFT
@@ -149,7 +149,7 @@ aa = Bls_bone_AC(:,2);
 ts = Bls_bone_AC(:,3);
 ai = Bls_bone_AC(:,4);
 pc = Bls_bone_AC(:,5);
-gh_dig = Bls_bone_AC(:,6);
+%gh_dig = Bls_bone_AC(:,6);
 
 
 %% Linear Regression - MESKERS with PC!! 
