@@ -32,7 +32,7 @@ function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgem
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 % For PC
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
- load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
+load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
 
 
 
@@ -44,7 +44,7 @@ afilepath = datafilepath;
 afilepath2 = afilepath;
 mfilepath = afilepath2;
 
-% 
+%
 % %updated for new data structure 1.28.21
 mtrials=setup.trial{expcond};
 atrials=setup.trial{expcond};
@@ -85,45 +85,45 @@ TrunkAng_current_trial=zeros(ntrials,1);
 % emgvel_trial= zeros(length(mtrials),15);
 % emgstart_trial= zeros(length(mtrials),15);
 
-%% Loading in BonyLandmark File 
+%% Loading in BonyLandmark File
 BLs = setup.bl; % BLs in marker CS
 
-%% Creating Scapular CS 
+%% Creating Scapular CS
 
-% From BL Digitization File- creating Scapular CS in MARKER frame. 
+% From BL Digitization File- creating Scapular CS in MARKER frame.
 ScapCoord = Asscap_K(BLs,hand,1);
 
-%%  Computing GH estimate 
+%%  Computing GH estimate
 gh_est = Ghest_2022(ScapCoord,BLs,1);
 
-% Saving Gh_est to BLs setup file creating new column  
+% Saving Gh_est to BLs setup file creating new column
 setup.bl{1,2}(:,length(setup.bl{1,2})+1) = gh_est;
 
 BLs = setup.bl; % BLs in marker CS now including GH estimate
 
 
-%% Main loop that grabs Metria data and plot
+%% Main loop 
 
 for i=1: length(mtrials)
     
     % For mass data sheet saving data
     if i==1
-
-    %    for mac 
-%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-
-          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-     %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-
-%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
-
-% for pc
-%        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
-%        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Controls.mat')
-    %    load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_NonParetic.mat')
-
-
+        
+        %    for mac
+        %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+        %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+        
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+        %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+        
+        %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+        
+        % for pc
+        %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
+        %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Controls.mat')
+        %    load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_NonParetic.mat')
+        
+        
     end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
@@ -136,7 +136,7 @@ for i=1: length(mtrials)
         if strcmp(mfname,'/trials1.mat')
             continue
         end
-                
+        
         if strcmp(mfname,'/trials3.mat')
             continue
         end
@@ -151,11 +151,11 @@ for i=1: length(mtrials)
         if strcmp(mfname,'/trials15.mat')
             continue
         end
-%         
+        %
         if strcmp(mfname,'/trials9.mat')
             continue
         end
-% %         
+        % %
         if strcmp(mfname,'/trials11.mat')
             continue
         end
@@ -168,7 +168,7 @@ for i=1: length(mtrials)
             continue
         end
         
-%                 
+        %
         if strcmp(mfname,'/trials31.mat')
             continue
         end
@@ -180,7 +180,7 @@ for i=1: length(mtrials)
         if strcmp(mfname,'/trials30.mat')
             continue
         end
-       
+        
         if strcmp(mfname,'/trials16.mat')
             continue
         end
@@ -220,7 +220,7 @@ for i=1: length(mtrials)
             continue
         end
         
-                
+        
         if strcmp(mfname,'/trials24.mat')
             continue
         end
@@ -341,7 +341,7 @@ for i=1: length(mtrials)
         end
         
         if strcmp(mfname,'/trial24.mat')
-
+            
             continue
         end
         
@@ -402,12 +402,12 @@ for i=1: length(mtrials)
             continue
         end
         
-                
+        
         if strcmp(mfname,'/trial62.mat')
             
             continue
         end
-                        
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
@@ -424,23 +424,23 @@ for i=1: length(mtrials)
             continue
         end
         
-                
+        
         if strcmp(mfname,'/trial49.mat')
             
             continue
         end
-                        
+        
         if strcmp(mfname,'/trial52.mat')
             
             continue
         end
         
-                        
+        
         if strcmp(mfname,'/trial53.mat')
             
             continue
         end
-                                
+        
         if strcmp(mfname,'/trial54.mat')
             
             continue
@@ -475,111 +475,111 @@ for i=1: length(mtrials)
             continue
         end
         
-                
+        
         if strcmp(mfname,'/trial20.mat')
             
             continue
         end
         
-                        
+        
         if strcmp(mfname,'/trial21.mat')
             
             continue
         end
         
-                                
+        
         if strcmp(mfname,'/trial35.mat')
             
             continue
         end
         
-                                        
+        
         if strcmp(mfname,'/trial39.mat')
             
             continue
         end
-                                                
+        
         if strcmp(mfname,'/trial25.mat')
             
             continue
         end
         
-                                                        
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
         end
         
-                                                                
+        
         if strcmp(mfname,'/trial31.mat')
             
             continue
         end
         
-                                                                        
+        
         if strcmp(mfname,'/trial46.mat')
             
             continue
         end
         
-                                                                                
+        
         if strcmp(mfname,'/trial47.mat')
             
             continue
         end
         
-                                                                                        
+        
         if strcmp(mfname,'/trial50.mat')
             
             continue
         end
-                                                                                                
+        
         if strcmp(mfname,'/trial28.mat')
             
             continue
         end
         
-                                                                                                        
+        
         if strcmp(mfname,'/trial58.mat')
             
             continue
         end
         
-                                                                                                                
+        
         if strcmp(mfname,'/trial61.mat')
             
             continue
         end
         
-                                                                                                                        
+        
         if strcmp(mfname,'/trial74.mat')
             
             continue
         end
         
-                                                                                                                                
+        
         if strcmp(mfname,'/trial78.mat')
             
             continue
         end
         
-                                                                                                                                        
+        
         if strcmp(mfname,'/trial67.mat')
             
             continue
         end
         
-                                                                                                                                                
+        
         if strcmp(mfname,'/trial71.mat')
             
             continue
         end
-                                                                                                                                                        
+        
         if strcmp(mfname,'/trial82.mat')
             
             continue
         end
-                                                                                                                                                                
+        
         if strcmp(mfname,'/trial85.mat')
             
             continue
@@ -587,113 +587,113 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
-                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial57.mat')
             
             continue
-        end  
-       
-                                                                                                                                                                              
+        end
+        
+        
         if strcmp(mfname,'/trial58.mat')
             
             continue
-        end  
-                                                                                                                                                                                      
+        end
+        
         if strcmp(mfname,'/trial60.mat')
             
             continue
-        end 
+        end
         
-                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial49.mat')
             
             continue
-        end  
+        end
         
-                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial61.mat')
             
             continue
-        end  
+        end
         
-                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial62.mat')
             
             continue
-        end  
+        end
         
-                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial70.mat')
             
             continue
-        end 
+        end
         
-                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial71.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial82.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                            
+        
         if strcmp(mfname,'/trial85.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                    
+        
         if strcmp(mfname,'/trial73.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                    
+        
         if strcmp(mfname,'/trial72.mat')
             
             continue
         end
         
-                
-                                                                                                                                                                                                                                                    
+        
+        
         if strcmp(mfname,'/trial76.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                           
+        
         if strcmp(mfname,'/trial87.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                   
-%         if strcmp(mfname,'/trial79.mat')
-%             
-%             continue
-%         end
-%         
-                                                                                                                                                                                                                                                                          
+        
+        %         if strcmp(mfname,'/trial79.mat')
+        %
+        %             continue
+        %         end
+        %
+        
         if strcmp(mfname,'/trial81.mat')
             
             continue
         end
-%                                                                                                                                                                                                                                                                           
+        %
         if strcmp(mfname,'/trial92.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                  
+        
         if strcmp(mfname,'/trial95.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                          
+        
         if strcmp(mfname,'/trial96.mat')
             
             continue
@@ -702,76 +702,76 @@ for i=1: length(mtrials)
     
     if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         
-                                                                                                                                                                                                                                                                                                  
+        
         if strcmp(mfname,'/trial25.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                          
+        
         if strcmp(mfname,'/trial39.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                  
+        
         if strcmp(mfname,'/trial40.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                          
+        
         if strcmp(mfname,'/trial43.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial46.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial47.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial63.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial69.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial58.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial59.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial66.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial68.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial67.mat')
             
             continue
@@ -779,111 +779,111 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
-                                                                                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial16.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                         
+        
         if strcmp(mfname,'/trial17.mat')
             
             continue
         end
-                
-                                                                                                                                                                                                                                                                                                                                                                                                                         
+        
+        
         if strcmp(mfname,'/trial18.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial23.mat')
             
             continue
         end
-                
-                                                                                                                                                                                                                                                                                                                                                                                                       
+        
+        
         if strcmp(mfname,'/trial24.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial12.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial13.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial36.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial38.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial42.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial43.mat')
             
             continue
         end
-                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
+        
         if strcmp(mfname,'/trial56.mat')
             
             continue
         end
-                        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
+        
         if strcmp(mfname,'/trial62.mat')
             
             continue
         end
-                                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
+        
         if strcmp(mfname,'/trial64.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial65.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial45.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial46.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial52.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial53.mat')
             
             continue
@@ -891,127 +891,127 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial1.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial7.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial9.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial11.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial27.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial37.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial41.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial62.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial30.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial32.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial14.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial15.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial17.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial19.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial42.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial45.mat')
             
             continue
         end
-                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
+        
         if strcmp(mfname,'/trial64.mat')
             
             continue
         end
-                                               
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
+        
         if strcmp(mfname,'/trial67.mat')
             
             continue
-        end 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        end
+        
         if strcmp(mfname,'/trial68.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial12.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial49.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial50.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial54.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial55.mat')
             
             continue
@@ -1019,25 +1019,25 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial8.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        
         if strcmp(mfname,'/trial9.mat')
             
             continue
         end
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
         if strcmp(mfname,'/trial26.mat')
             
             continue
         end
         
-                
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        
+        
         if strcmp(mfname,'/trial59.mat')
             
             continue
@@ -1045,22 +1045,22 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        
         if strcmp(mfname,'/trial3.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+        
         if strcmp(mfname,'/trial4.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        
         if strcmp(mfname,'/trial7.mat')
             
             continue
         end
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        
         if strcmp(mfname,'/trial11.mat')
             
             continue
@@ -1080,7 +1080,7 @@ for i=1: length(mtrials)
             
             continue
         end
-                
+        
         if strcmp(mfname,'/trial21.mat')
             
             continue
@@ -1095,7 +1095,7 @@ for i=1: length(mtrials)
             
             continue
         end
-                
+        
         if strcmp(mfname,'/trial24.mat')
             
             continue
@@ -1104,45 +1104,45 @@ for i=1: length(mtrials)
     
     if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
         
-                        
+        
         if strcmp(mfname,'/trial13.mat')
             
             continue
         end
-                                
+        
         if strcmp(mfname,'/trial15.mat')
             
             continue
         end
         
-                                        
+        
         if strcmp(mfname,'/trial27.mat')
             
             continue
         end
         
-                                                
+        
         if strcmp(mfname,'/trial28.mat')
             
             continue
         end
-                                                        
+        
         if strcmp(mfname,'/trial37.mat')
             
             continue
         end
         
-                                                                
+        
         if strcmp(mfname,'/trial38.mat')
             
             continue
         end
-                                                                        
+        
         if strcmp(mfname,'/trial39.mat')
             
             continue
         end
-                                                                                
+        
         if strcmp(mfname,'/trial41.mat')
             
             continue
@@ -1157,43 +1157,43 @@ for i=1: length(mtrials)
             continue
         end
         
-                
+        
         if strcmp(mfname,'/trial27.mat')
             
             continue
         end
-                        
+        
         if strcmp(mfname,'/trial29.mat')
             
             continue
         end
         
-                                
+        
         if strcmp(mfname,'/trial32.mat')
             
             continue
         end
-                                        
+        
         if strcmp(mfname,'/trial33.mat')
             
             continue
         end
-                                                
+        
         if strcmp(mfname,'/trial35.mat')
             
             continue
         end
-                                                        
+        
         if strcmp(mfname,'/trial41.mat')
             
             continue
         end
-                                                                
+        
         if strcmp(mfname,'/trial60.mat')
             
             continue
         end
-                                                                        
+        
         if strcmp(mfname,'/trial61.mat')
             
             continue
@@ -1201,60 +1201,60 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
-                                                                      
+        
         if strcmp(mfname,'/trial6.mat')
             
             continue
-        end 
-                                                                              
+        end
+        
         if strcmp(mfname,'/trial7.mat')
             
             continue
-        end 
+        end
         
-                                                                                      
+        
         if strcmp(mfname,'/trial10.mat')
             
             continue
-        end 
-                                                                                              
+        end
+        
         if strcmp(mfname,'/trial13.mat')
             
             continue
         end
-                                                                                                      
+        
         if strcmp(mfname,'/trial14.mat')
             
             continue
         end
         
-                                                                                                              
+        
         if strcmp(mfname,'/trial38.mat')
             
             continue
-        end 
-                                                                                                                      
-                                                                                                                              
+        end
+        
+        
         if strcmp(mfname,'/trial59.mat')
             
             continue
-        end 
-                                                                                                                                      
+        end
+        
         if strcmp(mfname,'/trial60.mat')
             
             continue
-        end 
-                                                                                                                                              
+        end
+        
         if strcmp(mfname,'/trial61.mat')
             
             continue
         end
-                                                                                                                                                      
+        
         if strcmp(mfname,'/trial62.mat')
             
             continue
         end
-                                                                                                                                                              
+        
         if strcmp(mfname,'/trial66.mat')
             
             continue
@@ -1262,40 +1262,40 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
-                                                                                                                                                                     
+        
         if strcmp(mfname,'/trial40.mat')
             
             continue
         end
-                                                                                                                                                                             
+        
         if strcmp(mfname,'/trial41.mat')
             
             continue
-        end 
+        end
         
-                                                                                                                                                                                     
+        
         if strcmp(mfname,'/trial42.mat')
             
             continue
-        end 
+        end
         
-                                                                                                                                                                                             
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
-        end 
-                
-                                                                                                                                                                                             
+        end
+        
+        
         if strcmp(mfname,'/trial45.mat')
             
             continue
-        end 
-                                                                                                                                                                                                     
+        end
+        
         if strcmp(mfname,'/trial56.mat')
             
             continue
-        end 
-                                                                                                                                                                                                             
+        end
+        
         if strcmp(mfname,'/trial57.mat')
             
             continue
@@ -1315,76 +1315,76 @@ for i=1: length(mtrials)
             
             continue
         end
-                
+        
         if strcmp(mfname,'/trial75.mat')
             
             continue
         end
-                        
+        
         if strcmp(mfname,'/trial76.mat')
             
             continue
         end
-
+        
     end
     
     if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
-                               
+        
         if strcmp(mfname,'/trial26.mat')
             
             continue
-        end 
-                                       
+        end
+        
         if strcmp(mfname,'/trial29.mat')
             
             continue
         end
-                                               
+        
         if strcmp(mfname,'/trial30.mat')
             
             continue
         end
-                                                       
+        
         if strcmp(mfname,'/trial16.mat')
             
             continue
         end
-                                                               
+        
         if strcmp(mfname,'/trial31.mat')
             
             continue
         end
-                                                                       
+        
         if strcmp(mfname,'/trial33.mat')
             
             continue
         end
-                                                                               
+        
         if strcmp(mfname,'/trial34.mat')
             
             continue
         end
-                                                                                       
+        
         if strcmp(mfname,'/trial37.mat')
             
             continue
         end
-                                                                                               
+        
         if strcmp(mfname,'/trial41.mat')
             
             continue
         end
-                                                                                                       
+        
         if strcmp(mfname,'/trial42.mat')
             
             continue
         end
-                                                                                                               
+        
         if strcmp(mfname,'/trial43.mat')
             
             continue
         end
-                                                                                                                       
+        
         if strcmp(mfname,'/trial44.mat')
             
             continue
@@ -1392,42 +1392,42 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
-                                                                                                                               
+        
         if strcmp(mfname,'/trial15.mat')
             
             continue
         end
-                                                                                                                                       
+        
         if strcmp(mfname,'/trial17.mat')
             
             continue
         end
-                                                                                                                                               
+        
         if strcmp(mfname,'/trial18.mat')
             
             continue
         end
-                                                                                                                                                       
+        
         if strcmp(mfname,'/trial38.mat')
             
             continue
         end
-                                                                                                                                                               
+        
         if strcmp(mfname,'/trial50.mat')
             
             continue
         end
-                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial52.mat')
             
             continue
         end
-                                                                                                                                                                               
+        
         if strcmp(mfname,'/trial55.mat')
             
             continue
         end
-                                                                                                                                                                                       
+        
         if strcmp(mfname,'/trial58.mat')
             
             continue
@@ -1435,33 +1435,33 @@ for i=1: length(mtrials)
     end
     
     if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
-                                                                                                                                                                                             
+        
         if strcmp(mfname,'/trial27.mat')
             
             continue
-        end  
-                                                                                                                                                                                                     
+        end
+        
         if strcmp(mfname,'/trial31.mat')
             
             continue
-        end  
-                                                                                                                                                                                                             
+        end
+        
         if strcmp(mfname,'/trial35.mat')
             
             continue
-        end  
-                                                                                                                                                                                                                     
+        end
+        
         if strcmp(mfname,'/trial42.mat')
             
             continue
-        end 
-                                                                                                                                                                                                                             
+        end
+        
         if strcmp(mfname,'/trial66.mat')
             
             continue
-        end  
+        end
     end
-
+    
     %
     % % Kacey added to call new function to plot in GCS
     % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
@@ -1477,47 +1477,50 @@ for i=1: length(mtrials)
     
     %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup);
- 
+    
+    % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial 
+    
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
     
     
-    %% If Coordinate System Off (couldn't REG to room) verify with BLs plot then modify for 2D trajectory    
-    if strcmp(partid,'RTIS2009') 
+    
+    %% If Coordinate System Off (couldn't REG to room) verify with BLs plot then modify for 2D trajectory
+    if strcmp(partid,'RTIS2009')
         if strcmp(hand,'Right')
-        % Rotating xhand by -50 deg
-        xhand_transp = xhand';
-        RotMat = rotz(-50);
-        xhand_Rot50 = RotMat*xhand_transp;
-        xhand_Rot50 =xhand_Rot50';
-        xhand_Rot50(:,1) = -xhand_Rot50(:,1);
-        
-        xhand = xhand_Rot50;
-        
-
-        % Rotating xjug by -50 deg
-        xjug_transp = xjug';
-        RotMat = rotz(-50);
-        xjug_Rot50 = RotMat*xjug_transp;
-        xjug_Rot50 =xjug_Rot50';
-        xjug_Rot50(:,1) = -xjug_Rot50(:,1);
-  
-        xjug = xjug_Rot50;
-        
-        % Rotating xjug by -50 deg
-        xshldr_transp = xshldr';
-        RotMat = rotz(-50);
-        xshldr_Rot50 = RotMat*xshldr_transp ;
-        xshldr_Rot50 =xshldr_Rot50';
-        xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
-  
-        xshldr = xshldr_Rot50;
-        
+            % Rotating xhand by -50 deg
+            xhand_transp = xhand';
+            RotMat = rotz(-50);
+            xhand_Rot50 = RotMat*xhand_transp;
+            xhand_Rot50 =xhand_Rot50';
+            xhand_Rot50(:,1) = -xhand_Rot50(:,1);
+            
+            xhand = xhand_Rot50;
+            
+            
+            % Rotating xjug by -50 deg
+            xjug_transp = xjug';
+            RotMat = rotz(-50);
+            xjug_Rot50 = RotMat*xjug_transp;
+            xjug_Rot50 =xjug_Rot50';
+            xjug_Rot50(:,1) = -xjug_Rot50(:,1);
+            
+            xjug = xjug_Rot50;
+            
+            % Rotating xjug by -50 deg
+            xshldr_transp = xshldr';
+            RotMat = rotz(-50);
+            xshldr_Rot50 = RotMat*xshldr_transp ;
+            xshldr_Rot50 =xshldr_Rot50';
+            xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
+            
+            xshldr = xshldr_Rot50;
+            
         end
     end
     
-  
-
-%     
+    
+    
+    %
     %%
     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
         
@@ -1526,9 +1529,9 @@ for i=1: length(mtrials)
         
         xhand(:,1) =  xhandfix(:,1);
     end
-%     
-
-
+    %
+    
+    
     if strcmp(partid,'RTIS1006')
         
         xjugfix(:,1) = xjug(:,2);
@@ -1539,10 +1542,10 @@ for i=1: length(mtrials)
         
         xjug(:,1) = -xjug(:,1);
     end
-
-
-
- %%   Not sure what this is
+    
+    
+    
+    %%   Not sure what this is
     load([mfilepath mfname]);
     
     %% Loading in ACT3D Data for Reach Start Thresholding
@@ -1552,16 +1555,16 @@ for i=1: length(mtrials)
     
     Ypos_act = -act3d_data(:,3);
     Zpos_act = act3d_data(:,4);
-  
+    
     % Kacey don't use t vector for ACT data... this is incorrect the METRIA
     % time is correct
-%     t_act = length(Ypos_act)/ 50; % time in seconds
-%     t_act = 0:.02:5;
-%     t_act = t_act(2:end)';
-
-
+    %     t_act = length(Ypos_act)/ 50; % time in seconds
+    %     t_act = 0:.02:5;
+    %     t_act = t_act(2:end)';
+    
+    
     %% Checking NANS and Interpolating Prior to Resampling
-
+    
     
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %
         
@@ -1605,7 +1608,7 @@ for i=1: length(mtrials)
                 end
                 
             elseif strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
-                      [xhandnew,TF] = fillmissing(xhand,'nearest');
+                [xhandnew,TF] = fillmissing(xhand,'nearest');
             else
                 
                 [xhandnew,TF] = fillmissing(xhand,'spline','SamplePoints',t);
@@ -1637,7 +1640,7 @@ for i=1: length(mtrials)
                 %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
                 %                     xlim([0 t(end)])
                 %                 end
-% %                 
+                % %
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -1646,18 +1649,18 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-% 
-% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%     xlim([0 10])
-% end
-% 
-% if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-%     xlim([0 10])
-% end
-% 
-% if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%     xlim([0 t(end)])
-% end
+                %
+                % if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %     xlim([0 10])
+                % end
+                %
+                % if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %     xlim([0 10])
+                % end
+                %
+                % if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %     xlim([0 t(end)])
+                % end
                 
                 subplot(3,1,3)
                 plot(t(filled_data),xhandnew(filled_data,3),'ro')
@@ -1667,19 +1670,19 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-%                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%                      xlim([0 10]) 
-%                end 
-%                 
-%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%                     xlim([0 t(end)])
-%                 end
-%                 
-                    
+                %                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %                      xlim([0 10])
+                %                end
+                %
+                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %                     xlim([0 t(end)])
+                %                 end
+                %
+                
                 'User Check Interpolation Accuracy'
                 pause
                 
@@ -1688,7 +1691,7 @@ for i=1: length(mtrials)
             
         end
         
-
+        
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
             'NANS PRESENT in XJUG'
@@ -1716,18 +1719,18 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-% 
-%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%                     xlim([0 t(end)])
-%                 end
+                %
+                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %                     xlim([0 t(end)])
+                %                 end
                 
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
@@ -1737,19 +1740,19 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-
                 
-%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%                     xlim([0 t(end)])
-%                 end
+                
+                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %                     xlim([0 t(end)])
+                %                 end
                 
                 subplot(3,1,3)
                 plot(t(filled_data),xjugnew(filled_data,3),'ro')
@@ -1759,18 +1762,18 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-%               
-%                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%                     xlim([0 10])
-%                 end
-%                 
-%                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-%                     xlim([0 10])
-%                 end
-%                                 
-%                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%                     xlim([0 t(end)])
-%                 end
+                %
+                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
+                %                     xlim([0 10])
+                %                 end
+                %
+                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+                %                     xlim([0 t(end)])
+                %                 end
                 
                 
                 'User Check Interpolation Accuracy'
@@ -1786,7 +1789,7 @@ for i=1: length(mtrials)
     
     
     %% Computing Dist/Vel/Angles With Original Data
-
+    
     Xo= nanmean(xhand(1:5,1));
     Yo = nanmean(xhand(1:5,2));
     Zo = nanmean(xhand(1:5,3));
@@ -1805,13 +1808,14 @@ for i=1: length(mtrials)
     theta_vel2 = rad2deg(theta_vel2);
     
     %% RESAMPLE
+    
     % Resample variables before feeding into the ComputeReachStart
     
     
     [xhand,t2]=resampledata(xhand,t,89,100);
-
+    
     [xjug,t2]=resampledata(xjug,t,89,100);
-
+    
     [dist,t2]=resampledata(dist,t,89,100);
     
     
@@ -1821,62 +1825,62 @@ for i=1: length(mtrials)
     
     [theta_vel2,t2]=resampledata(theta_vel2,t,89,100);
     
-    % Resampling ACT3D Data - use time vector and the 89 HZ for metria. - not 50HZ  
+    % Resampling ACT3D Data - use time vector and the 89 HZ for metria. - not 50HZ
     [Ypos_act,t2]=resampledata(Ypos_act, t,89,100);
     [Zpos_act,t2]=resampledata(Zpos_act, t,89,100);
-
+    
     %% Metria Trial by Trial Kinematic Data (computed BLS)
     
-%     if flag
-%         figure(1),clf
-%         subplot(2,1,1)
-%         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-%         hold on
-%         
-%         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
-%         
-%         % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
-%         % hold on
-%         % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-%         % % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
-%         % % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
-%         % %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
-%         % p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
-%         %
-%         %
-%         % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
-%         % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-%         
-%         % % phandles=[p1' p2 p3];
-%         axis 'equal'
-%         legend('Hand','Shoulder','Trunk')
-%         xlabel('x (mm)')
-%         ylabel('y (mm)')
-%         title(mfname)
-%         
-%         %Metria Distance Plot with Max Distance Marked
-%         subplot(2,1,2)
-%         plot(t,rdist)
-%         hold on
-%         p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth',.5); % start reach
-%         % co=get(lax1,'ColorOrder');
-%         % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-%         xlabel('Time')
-%         ylabel('Distance')
-%         % legend('Distance','Max Dist')
-%         axis equal
-%         %
-%         pause
-%     end
+    %     if flag
+    %         figure(1),clf
+    %         subplot(2,1,1)
+    %         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
+    %         hold on
+    %
+    %         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
+    %
+    %         % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
+    %         % hold on
+    %         % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
+    %         % % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
+    %         % % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
+    %         % %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
+    %         % p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
+    %         %
+    %         %
+    %         % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
+    %         % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
+    %
+    %         % % phandles=[p1' p2 p3];
+    %         axis 'equal'
+    %         legend('Hand','Shoulder','Trunk')
+    %         xlabel('x (mm)')
+    %         ylabel('y (mm)')
+    %         title(mfname)
+    %
+    %         %Metria Distance Plot with Max Distance Marked
+    %         subplot(2,1,2)
+    %         plot(t,rdist)
+    %         hold on
+    %         p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth',.5); % start reach
+    %         % co=get(lax1,'ColorOrder');
+    %         % set(lax1,'ColorOrder',co(end-1:-1:1,:))
+    %         xlabel('Time')
+    %         ylabel('Distance')
+    %         % legend('Distance','Max Dist')
+    %         axis equal
+    %         %
+    %         pause
+    %     end
     
     
     %% Loading in EMGS
     
     % Normalized EMGS
-%     load([afilepath afname])
-%     emg= data.daq{1,2};
-%     emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
-%     
+    %     load([afilepath afname])
+    %     emg= data.daq{1,2};
+    %     emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
+    %
     %% Computing the start of the reach
     
     
@@ -1894,68 +1898,68 @@ for i=1: length(mtrials)
     % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-    %% Getting Computed GH and Euler Angles via Updated Kinematic Analysis Nov/Dec 2021
-%     flag=0; %will not plot all Segment CSes
+   %%  Updated Summer 2022 K.Suvada
+   
+  
     
-    metdata =  x; 
-%     
-    gh= zeros(4,length(metdata));
+    metdata =  x;
+    %
     TrunkAng_GCS= zeros(3,length(metdata));
     
     for k = 1:length(metdata) %Computing GH at each Frame
         % gh_frame is linear reg estimated gh
         % GH_ frame is digitized GH at time of experiment
-     [gh_frame TrunkAng_GCS_frame, GH_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
-     gh(:,k) = gh_frame(1:4);
-     TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-     GH (:,k) = GH_frame(1:4);
+        [gh_frame TrunkAng_GCS_frame, GH_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+        gh(:,k) = gh_frame(1:4);
+        TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+        GH (:,k) = GH_frame(1:4);
     end
     
     
     
     
-
+    
     %% Trunk Angle Interpolation / Resampling
-
+    
     % April 2022 - K. Suvada
     % No need to check interpolation (how many missing NaNs) bc will have checked in missing trunk data
     % for displacement
-    if sum(sum(isnan(TrunkAng_GCS)))>0   
+    if sum(sum(isnan(TrunkAng_GCS)))>0
         TrunkAng_GCS = TrunkAng_GCS';
         [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
         
-        TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending 
-    else 
+        TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
+    else
         TrunkAng_GCS = TrunkAng_GCS';
     end
     
-
-%     if strcmp(partid,'RTIS2002')
-%         if strcmp(hand,'Left')
-%             for m = 1:length(TrunkAng_GCS)
-%                 if (TrunkAng_GCS(m,1) <0)
-%                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
-%                 elseif (TrunkAng_GCS(m,1) >0)
-%                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
-%                 end
-%             end
-%         end
-%     end
     
-if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
-    if strcmp(hand,'Left')
-        for m = 1:length(TrunkAng_GCS)
-            if (TrunkAng_GCS(m,1) <0)
-                TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
-            elseif (TrunkAng_GCS(m,1) >0)
-                TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+    %     if strcmp(partid,'RTIS2002')
+    %         if strcmp(hand,'Left')
+    %             for m = 1:length(TrunkAng_GCS)
+    %                 if (TrunkAng_GCS(m,1) <0)
+    %                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
+    %                 elseif (TrunkAng_GCS(m,1) >0)
+    %                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
+    %                 end
+    %             end
+    %         end
+    %     end
+    
+    if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
+        if strcmp(hand,'Left')
+            for m = 1:length(TrunkAng_GCS)
+                if (TrunkAng_GCS(m,1) <0)
+                    TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+                elseif (TrunkAng_GCS(m,1) >0)
+                    TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+                end
             end
         end
     end
-end
-
-
-
+    
+    
+    
     
     % !!!!!Convention for both arms now + angle means back extension - angle
     % means forward flexion!!!!
@@ -1963,36 +1967,36 @@ end
     %Resampling Trunk Angle
     
     [TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
-
+    
     %%
     
     gh = gh';%Flipping so organized by columns (time = rows) like other variables
     
-    if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles' 
+    if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles'
         gh(:,1) = -gh(:,1);
         gh(:,2) = -gh(:,2);
         
     end
-%     
+    %
     
-
+    
     %%  GH computed rotated 90 (Compared to Marker data) - June 2022
     if strcmp(partid,'RTIS2001')
-        if strcmp(hand,'Right')    
+        if strcmp(hand,'Right')
             if expcond==1
-%                 if strcmp(mfname,'/trial1.mat')
+                %                 if strcmp(mfname,'/trial1.mat')
                 
                 ghflipped = gh';
                 ghflipped = ghflipped (1:3,:);
                 
                 gh2 = zeros(3,length(gh));
-
+                
                 for l= 1: length(gh)
                     gh2(:,l) = rotz(-45)*ghflipped(:,l);
                 end
-     
+                
                 gh2 = gh2';
-     
+                
                 meanx_gh = mean(gh(1:10,1));
                 meany_gh = mean(gh(1:10,2));
                 
@@ -2004,28 +2008,28 @@ end
                 
                 gh(:,1) = gh2(:,1)+x_transl;
                 gh(:,2) = gh2(:,2)+y_transl;
-    
                 
-%                 end
-            end 
+                
+                %                 end
+            end
         end
     end
     
     
     
- 
     
-
+    
+    
     %%
-%     if strcmp(partid,'RTIS2011') 
-%         if strcmp(hand,'Left')
-%             gh(:,1) = -gh(:,1);
-%             gh(:,2) = -gh(:,2);
-%  
-%         end 
-%     end
+    %     if strcmp(partid,'RTIS2011')
+    %         if strcmp(hand,'Left')
+    %             gh(:,1) = -gh(:,1);
+    %             gh(:,2) = -gh(:,2);
+    %
+    %         end
+    %     end
     %%
-
+    
     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
         
         ghfix(:,1) = gh(:,2);
@@ -2036,34 +2040,34 @@ end
         gh(:,1) = -gh(:,1);
     end
     
-
-
-            
-
-    if strcmp(partid,'RTIS2009') 
+    
+    
+    
+    
+    if strcmp(partid,'RTIS2009')
         if strcmp(hand,'Right')
-        % Rotating GH by -50 deg
-        GH_transp = gh(:,1:3)';
-        RotMat = rotz(-50);
-        GH_Rot50 = RotMat* GH_transp;
-        GH_Rot50 =GH_Rot50';
-        GH_Rot50(:,1) = -GH_Rot50(:,1);
-        
-        gh(:,1:3) = GH_Rot50(:,1:3);
+            % Rotating GH by -50 deg
+            GH_transp = gh(:,1:3)';
+            RotMat = rotz(-50);
+            GH_Rot50 = RotMat* GH_transp;
+            GH_Rot50 =GH_Rot50';
+            GH_Rot50(:,1) = -GH_Rot50(:,1);
+            
+            gh(:,1:3) = GH_Rot50(:,1:3);
         end
     end
     
-%     if strcmp(partid,'RTIS2009')
-%         if strcmp(hand,'Left')
-% 
-%             gh(:,1) = -gh(:,1);
-%             gh(:,2) = -gh(:,2);
-%         end
-%         
-%     end
-        
-
-
+    %     if strcmp(partid,'RTIS2009')
+    %         if strcmp(hand,'Left')
+    %
+    %             gh(:,1) = -gh(:,1);
+    %             gh(:,2) = -gh(:,2);
+    %         end
+    %
+    %     end
+    
+    
+    
     % Interpolation of GH- accounting for trials with issues and need
     % alternative interpolation method.
     
@@ -2073,14 +2077,14 @@ end
         filled_data =   find(isnan(gh(1:250))); %rows of NANs
         if strcmp(partid,'RTIS1006') &&  expcond >3
             [ghNew,TF] = fillmissing(gh,'spline');
-    
+            
         elseif strcmp(partid,'RTIS1004') % Trial 26 weird interp so just use constant
             
             if strcmp(mfname,'/trial26.mat')
                 
                 ghNew = fillmissing(gh,'linear','EndValues','nearest');
             else
-                 [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
+                [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
             end
             
         elseif strcmp(partid,'RTIS1002')
@@ -2095,81 +2099,81 @@ end
                 
             end
         elseif strcmp(partid,'RTIS2010') && strcmp(hand,'Right') &&  expcond ==6
-             ghNew = fillmissing(gh,'linear','EndValues','nearest');
+            ghNew = fillmissing(gh,'linear','EndValues','nearest');
         else
             [ghNew,TF] = fillmissing(gh,'spline','SamplePoints',t);
         end
         
         
         if flag ==1
-        figure(11)
-        clf
-        %Plotting the Original Data then the Filled Samples
-        subplot(3,1,1)
-        plot(t(filled_data),ghNew(filled_data,1),'ro')
-        hold on
-        plot(t,gh(:,1),'b','Linewidth',1)
-        %   legend('Interpolated Data','Original Data','FontSize',13)
-        title(['3D GH Position' mfname],'FontSize',18)
-        xlabel('Time (s)','FontSize',14)
-        ylabel('X Position (mm)','FontSize',14)
-        xlim([0 t(end)])
-%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%             xlim([0 10])
-%         end
-%         
-%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-%             xlim([0 10])
-%         end
-%         
-%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%             xlim([0 t(end)])
-%         end
-        
-        subplot(3,1,2)
-        plot(t(filled_data),ghNew(filled_data,2),'ro')
-        hold on
-        plot(t,gh(:,2),'b','Linewidth',1)
-        %         legend('Interpolated Data','Original Data','FontSize',13)
-        xlabel('Time (s)','FontSize',14)
-        ylabel('Y Position (mm)','FontSize',14)
-        xlim([0 t(end)])
-%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%             xlim([0 10])
-%         end
-%         
-%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-%             xlim([0 10])
-%         end
-%                         
-%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%             xlim([0 t(end)])
-%         end
-                
-        subplot(3,1,3)
-        plot(t(filled_data),ghNew(filled_data,3),'ro')
-        hold on
-        plot(t,gh(:,3),'b','Linewidth',1)
-        %         legend('Interpolated Data','Original Data','FontSize',13)
-        xlabel('Time (s)','FontSize',14)
-        ylabel('Z Position (mm)','FontSize',14)
-        xlim([0 t(end)])
-%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-%             xlim([0 10])
-%         end
-%         
-%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-%             xlim([0 10])
-%         end
-%         
-%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-%             xlim([0 t(end)])
-%         end
-                
-        'User Check Interpolation Accuracy'
-        
-        
-        pause
+            figure(11)
+            clf
+            %Plotting the Original Data then the Filled Samples
+            subplot(3,1,1)
+            plot(t(filled_data),ghNew(filled_data,1),'ro')
+            hold on
+            plot(t,gh(:,1),'b','Linewidth',1)
+            %   legend('Interpolated Data','Original Data','FontSize',13)
+            title(['3D GH Position' mfname],'FontSize',18)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('X Position (mm)','FontSize',14)
+            xlim([0 t(end)])
+            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            %             xlim([0 t(end)])
+            %         end
+            
+            subplot(3,1,2)
+            plot(t(filled_data),ghNew(filled_data,2),'ro')
+            hold on
+            plot(t,gh(:,2),'b','Linewidth',1)
+            %         legend('Interpolated Data','Original Data','FontSize',13)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('Y Position (mm)','FontSize',14)
+            xlim([0 t(end)])
+            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            %             xlim([0 t(end)])
+            %         end
+            
+            subplot(3,1,3)
+            plot(t(filled_data),ghNew(filled_data,3),'ro')
+            hold on
+            plot(t,gh(:,3),'b','Linewidth',1)
+            %         legend('Interpolated Data','Original Data','FontSize',13)
+            xlabel('Time (s)','FontSize',14)
+            ylabel('Z Position (mm)','FontSize',14)
+            xlim([0 t(end)])
+            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
+            %             xlim([0 10])
+            %         end
+            %
+            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
+            %             xlim([0 t(end)])
+            %         end
+            
+            'User Check Interpolation Accuracy'
+            
+            
+            pause
         end
         
         gh= ghNew;
@@ -2294,91 +2298,91 @@ end
     %         end
     %     end
     
-  %% Plotting Kinematic Data to Verify before outcome measures   
+    %% Plotting Kinematic Data to Verify before outcome measures
     
- figure(9)
-% 
- plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
- hold on
-%   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
- plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
- plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-  plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
- 
-plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
- axis equal
- legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
- title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
-
+    figure(9)
+    %
+    plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+    hold on
+    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
     
-%% Subtracting Trunk From Hand, Arm Length, and Shoulder    
-   xhand = xhand-xjug;
-   gh = gh(:,1:3)-xjug;
-   xjug_origin = xjug-xjug;
- % xjug_origin= xjug;
-%  xshoulder2 = xshoulder-xjug;
-
-
-%% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
-%RTIS 2008- Left 
-xhandnew = zeros(3,length(xhand));
-ghnew =zeros(3,length(xhand));
-if strcmp(partid,'RTIS2008')
-    if strcmp(hand,'Left')
-       
-       for p = 1:length(gh)
-        ghnew(:,p) = roty(pi)*gh(p,:)';
-        xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
-       end
-      
-       ghnew = ghnew';
-       xhandnew= xhandnew';
-       
-       gh = ghnew;
-       xhand = xhandnew;
+    plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
+    axis equal
+    legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+    xlabel('X position (mm)','FontSize',14)
+    ylabel('Y position (mm)','FontSize',14)
+    
+    
+    %% Subtracting Trunk From Hand, Arm Length, and Shoulder
+    xhand = xhand-xjug;
+    gh = gh(:,1:3)-xjug;
+    xjug_origin = xjug-xjug;
+    % xjug_origin= xjug;
+    %  xshoulder2 = xshoulder-xjug;
+    
+    
+    %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
+    %RTIS 2008- Left
+    xhandnew = zeros(3,length(xhand));
+    ghnew =zeros(3,length(xhand));
+    if strcmp(partid,'RTIS2008')
+        if strcmp(hand,'Left')
+            
+            for p = 1:length(gh)
+                ghnew(:,p) = roty(pi)*gh(p,:)';
+                xhandnew(:,p) = roty(pi)*xhand(p,:)';
+            end
+            
+            ghnew = ghnew';
+            xhandnew= xhandnew';
+            
+            gh = ghnew;
+            xhand = xhandnew;
+        end
     end
-end
-%RTIS 2010- Left 
-
-if strcmp(partid,'RTIS2010')
-    if strcmp(hand,'Left')
-       for p = 1:length(gh)
-        ghnew(:,p) = roty(pi)*gh(p,:)';
-        xhandnew(:,p) = roty(pi)*xhand(p,:)'; 
-       end
-      
-       ghnew = ghnew';
-       xhandnew= xhandnew';
-       
-       gh = ghnew;
-       xhand = xhandnew;
+    %RTIS 2010- Left
+    
+    if strcmp(partid,'RTIS2010')
+        if strcmp(hand,'Left')
+            for p = 1:length(gh)
+                ghnew(:,p) = roty(pi)*gh(p,:)';
+                xhandnew(:,p) = roty(pi)*xhand(p,:)';
+            end
+            
+            ghnew = ghnew';
+            xhandnew= xhandnew';
+            
+            gh = ghnew;
+            xhand = xhandnew;
+        end
     end
-end
-
- %% Confirming Plots Post Subtraction of Trunk
- 
- 
-figure(35)
-plot(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),'Linewidth',3) % Computed 3rd MCP
-hold on
-plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-
-plot(xjug_origin(idx(1):idx(3),1),xjug_origin(idx(1):idx(3),3),'o','Linewidth',2) % Computed Jug Notch
-
-plot(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),'Linewidth',3) 
-plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-
-axis equal
-legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
-title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
- pause
- 
+    
+    %% Confirming Plots Post Subtraction of Trunk
+    
+    
+    figure(35)
+    plot(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),'Linewidth',3) % Computed 3rd MCP
+    hold on
+    plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+    
+    plot(xjug_origin(idx(1):idx(3),1),xjug_origin(idx(1):idx(3),3),'o','Linewidth',2) % Computed Jug Notch
+    
+    plot(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),'Linewidth',3)
+    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+    
+    axis equal
+    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
+    title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
+    xlabel('X position (mm)','FontSize',14)
+    ylabel('Y position (mm)','FontSize',14)
+    pause
+    
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
     % Def: Distance between hand and shoulder at end of reach - idx(3)
@@ -2386,7 +2390,7 @@ ylabel('Y position (mm)','FontSize',14)
     maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
     
     %% Max Hand Excursion
-   
+    
     % Def: difference in hand final - initial. xhand(idx3) - xhand(idx1)
     
     maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
@@ -2394,18 +2398,18 @@ ylabel('Y position (mm)','FontSize',14)
     
     %% Compute shoulder and trunk displacement at maximum reach - using BLS
     
-    % Shoulder 
+    % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
     %sh_exc=sqrt(sum((gh(idx(3),1:2)-(gh((idx(1)),1:2))).^2,2))';
     
     sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
-   
+    
     % Trunk
     %Based on jugular notch
     
-   % trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
- 
-   trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
+    % trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
+    
+    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
@@ -2430,393 +2434,393 @@ ylabel('Y position (mm)','FontSize',14)
     
     
     %% Main Cumulative Metria Figure
-  
-%     
-%     figure(4)
-%   %   clf
-%  
-% 
-% StartingTrial = 1;
-%   if i ==StartingTrial
-%       
-%        subplot(1,2,1);
-%       ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
-% 
-%       if strcmp(partid,'RTIS1003') 
-%           ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
-% 
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-50 800])
-%           axis equal
-%       end
-%       
-%       if strcmp(partid,'RTIS1004') 
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-% 
-%           xlim(ax1,[-600 300])
-%           ylim(ax1,[-100 700])
-%           axis equal
-%       end
-%             
-%       if strcmp(partid,'RTIS1005') 
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-% 
-%           xlim(ax1,[-400 600])
-%           ylim(ax1,[-200 800])
-%           axis equal
-%       end
-%                   
-%       if strcmp(partid,'RTIS1006') 
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-% 
-%           xlim(ax1,[-300 300])
-%           ylim(ax1,[-100 700])
-%           axis equal
-%       end
-% 
-% %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-% %           xlim([-500 600])
-% %           ylim([-100 700])
-% %           axis equal
-% %       end
-%       
-% 
-%             
-%       if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-600 200])
-%           ylim(ax1,[-100 800])
-%           axis equal
-%       end
-%             
-% %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
-% %           xlim(ax1,[-150 400])
-% %           ylim(ax1,[-100 750])
-% %           axis equal
-% %       end
-% %       
-% %       
-%       if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
-%           xlim(ax1,[-200 500])
-%           ylim(ax1,[-200 650])
-%           axis equal
-%       end
-%       
-%       
-%       if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-200 400])
-%           ylim(ax1,[-200 650])
-%           axis equal
-%       end
-%       
-%             
-%       if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-100 700])
-%           axis equal
-%       end
-%                   
-%       if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-200 600])
-%           axis equal
-%       end
-%                               
-%       if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-150 700])
-%           axis equal
-%       end
-%                         
-%       if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-150 650])
-%           axis equal
-%       end
-%                               
-%       if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-200 650])
-%           axis equal
-%       end
-%                                     
-%       if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 400])
-%           ylim(ax1,[-200 700])
-%           axis equal
-%       end
-%                               
-%       if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-300 300])
-%           ylim(ax1,[-100 400])
-%           axis equal
-%       end
-%                                     
-%       if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
-%           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%           xlim(ax1,[-400 600])
-%           ylim(ax1,[-200 800])
-%           axis equal
-%       end
-%   end
-% % % %       
-% % % %       
-% % % %       
-% % % %       
-% % % 
-% % %   end
-% % %   
-% % % %   
-% % % %   
-% % % %   if i ==1
-% % % %       if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') 
-% % % %           
-% % % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-% % % %           xlim(ax1,[-400 400])
-% % % %           ylim(ax1,[-220 500])
-% % % %           axis equal
-% % % %       end
-% % % %       
-% % % %       
-% % % %   end
-% % %   
-% % %     
-% % %   if i ==1
-% % %       if strcmp(partid,'RTIS2008') && strcmp(hand,'Right') 
-% % %           
-% % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-% % %           xlim(ax1,[-400 400])
-% % %           ylim(ax1,[-220 700])
-% % %           axis equal
-% % %       end
-% % %       
-% % %       
-% % %   end
-% % % %   
-% % %   
-% %  hold(ax1,'on')
-%    % p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
-%  %subplot(1,2,2)
-%    p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
-% % %  %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
-% %   hold(ax1,'on')
-% % %     
-% hold on
-%     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-%     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-% % % %      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
-% % %     %%
-% % %     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-% % %     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-% % %     
-% % %     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-% % %     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
-% % %     %%
-% % %     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-% % %     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-% % %     %
-% % %     %
-% % %     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-% % %     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-% % % 
-% 
-% 
-%     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-%     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-%     
-% %     
-%     plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-%     plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-%  
-%          set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
-% 
-%     
-%     
-%     xlabel('X (mm)','FontSize',14)
-%     ylabel('Y (mm)','FontSize',14)
-%     
-% % %        if strcmp(partid,'RTIS2001') 
-% %           xlim([-500 600])
-% %           ylim([-100 700])
-% %           axis equal
-% % %       end
-% %     
-% 
-% if i ==StartingTrial
-%     circle(xhand(idx(1),1),xhand(idx(1),2),50)
-%     %  circle(-209,344,50)
-%     hold on
-% end
-%     
-%      ylim([-100 700])
-%     axis equal
-%     
-%     
-%          legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Home Target','Location','northeast','FontSize',12)
-% 
-% %     
-% % %     if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==1||3||6
-% % %         
-% % %         if i ==2
-% % %             circle(xhand(idx(1),1),xhand(idx(1),2),50)
-% % %         end
-% % %         axis equal
-% % %         
-% % %     end
-% % %     
-%     if i ==StartingTrial
-%     
-%     if expcond== 1
-%         title(['Restrained Table' '-' partid],'FontSize',24)
-%     end
-%     
-%     if expcond== 2
-%         title(['Restrained 25%' '-' partid],'FontSize',24)
-%     end
-%     
-%     if expcond== 3
-%         title(['Restrained 50%' '-' partid],'FontSize',24)
-%     end
-%     
-%     if expcond== 4
-%         title(['Unrestrained Table' '-' partid],'FontSize',24)
-%     end
-%     
-%     if expcond== 5
-%         title(['Unrestrained 25%' '-' partid],'FontSize',24)
-%     end
-%     
-%     if expcond== 6
-%         title(['Unrestrained 50%' '-' partid],'FontSize',24)
-%     end
-%     end
-%     
-% %     % Plotting Trunk Angulation
-% %     figure(4)
-% % %     
-% % %     if i ==1
-% % %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
-% % %         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-% % %             ylim(ax2,[-5 15])
-% % %             xlim(ax2,[0 5])
-% % %         end
-% % %     end
-% % % %     
-% % %       
-% %       if i ==StartingTrial
-% %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
-% % 
-% %       end
-% 
-% % %    
-% %     hold(ax2,'on')
-% %     p2 = plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
-% %       hold(ax2,'on')
-% %       
-% %     c3 =plot(ax2,t(idx(1)),TrunkAng_GCS(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
-% %     c4 = plot(ax2,t(idx(3)),TrunkAng_GCS(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
-% %     legend([p2 c3 c4],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
-% % 
-% %     xlabel('Time (s)','FontSize',14)
-% %     ylabel('Trunk Angle (Deg)','FontSize',14)
-% %     legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-% % 
-% % %     
-% %     if i ==StartingTrial
-% %         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
-% % %       
-% %     end
-% % %     
-% % figure(20)
-% % %     hold(ax3,'on')
-% %    p3 =  plot(xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
-% % %      hold(ax3,'on')
-% % hold on
-% %     c5 = plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-% %     c6 = plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-% %     hold on
-% %     
-% % %         legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
-% % 
-% %     legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
-% %     xlabel('X (mm)','FontSize',14)
-% %     ylabel('Y (mm)','FontSize',14)
-% %     
-% % 
-% %           axis equal
-%     end
-
-    %% Calling COP Function
-%        ppsdata =data.pps;
-%        tpps = data.pps{1,1};
-%        ppsdata= ppsdata{1,2};
-%        
-%        %Getting start and end time in seconds 
-%        t_start = t(idx(1));
-%        t_end = t(idx(3));
-       
-       
-       % Use if plotting small multiples 
-%        if i ==1
-%            [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname);
-%        else
-%            [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,sm,sm2);
-%        end
-       
-
-%Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
-% ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
     
-%% Saving Data to matrix 
-
-
-   armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
-
-% Lines below if adding a whole new participant to sheet
-%         nextrow = size(DataMatrix,1);
-%         DataMatrix{nextrow+1,1} = partid;
-%         DataMatrix{nextrow+1,2} = expcond;
-%         DataMatrix{nextrow+1,3} = mfname;
-%         DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
-%         DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
-
-%         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
-%         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
- %        DataMatrix{nextrow+1,8} =  trex_current_trial(i);
-%         DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
-%         DataMatrix{nextrow+1,10} = shex_current_trial(i);
-%         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
-
-% Adding Outcome Measures to Data Matrix
-% trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-% Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-% FinalRow = trialrow(Currentrow);
-% 
-% DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-% DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,10} = shex_current_trial(i);
-% DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,8} =  trex_current_trial(i);
-% DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-% DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-% DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-% DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-% DataMatrix{FinalRow,2} = expcond;
-% % 
-
-%       pause
-
-close all
-
-
+    %
+    %     figure(4)
+    %   %   clf
+    %
+    %
+    % StartingTrial = 1;
+    %   if i ==StartingTrial
+    %
+    %        subplot(1,2,1);
+    %       ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
+    %
+    %       if strcmp(partid,'RTIS1003')
+    %           ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
+    %
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-50 800])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS1004')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %
+    %           xlim(ax1,[-600 300])
+    %           ylim(ax1,[-100 700])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS1005')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %
+    %           xlim(ax1,[-400 600])
+    %           ylim(ax1,[-200 800])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS1006')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %
+    %           xlim(ax1,[-300 300])
+    %           ylim(ax1,[-100 700])
+    %           axis equal
+    %       end
+    %
+    % %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+    % %           xlim([-500 600])
+    % %           ylim([-100 700])
+    % %           axis equal
+    % %       end
+    %
+    %
+    %
+    %       if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
+    %             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-600 200])
+    %           ylim(ax1,[-100 800])
+    %           axis equal
+    %       end
+    %
+    % %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
+    % %           xlim(ax1,[-150 400])
+    % %           ylim(ax1,[-100 750])
+    % %           axis equal
+    % %       end
+    % %
+    % %
+    %       if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
+    %           xlim(ax1,[-200 500])
+    %           ylim(ax1,[-200 650])
+    %           axis equal
+    %       end
+    %
+    %
+    %       if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-200 400])
+    %           ylim(ax1,[-200 650])
+    %           axis equal
+    %       end
+    %
+    %
+    %       if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-100 700])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-200 600])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-150 700])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-150 650])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-200 650])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 400])
+    %           ylim(ax1,[-200 700])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-300 300])
+    %           ylim(ax1,[-100 400])
+    %           axis equal
+    %       end
+    %
+    %       if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
+    %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    %           xlim(ax1,[-400 600])
+    %           ylim(ax1,[-200 800])
+    %           axis equal
+    %       end
+    %   end
+    % % % %
+    % % % %
+    % % % %
+    % % % %
+    % % %
+    % % %   end
+    % % %
+    % % % %
+    % % % %
+    % % % %   if i ==1
+    % % % %       if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
+    % % % %
+    % % % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    % % % %           xlim(ax1,[-400 400])
+    % % % %           ylim(ax1,[-220 500])
+    % % % %           axis equal
+    % % % %       end
+    % % % %
+    % % % %
+    % % % %   end
+    % % %
+    % % %
+    % % %   if i ==1
+    % % %       if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
+    % % %
+    % % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+    % % %           xlim(ax1,[-400 400])
+    % % %           ylim(ax1,[-220 700])
+    % % %           axis equal
+    % % %       end
+    % % %
+    % % %
+    % % %   end
+    % % % %
+    % % %
+    % %  hold(ax1,'on')
+    %    % p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
+    %  %subplot(1,2,2)
+    %    p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
+    % % %  %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
+    % %   hold(ax1,'on')
+    % % %
+    % hold on
+    %     c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+    %     c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+    % % % %      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+    % % %     %%
+    % % %     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+    % % %     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+    % % %
+    % % %     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    % % %     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+    % % %     %%
+    % % %     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+    % % %     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+    % % %     %
+    % % %     %
+    % % %     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    % % %     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    % % %
+    %
+    %
+    %     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+    %     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+    %
+    % %
+    %     plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    %     plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    %
+    %          set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+    %
+    %
+    %
+    %     xlabel('X (mm)','FontSize',14)
+    %     ylabel('Y (mm)','FontSize',14)
+    %
+    % % %        if strcmp(partid,'RTIS2001')
+    % %           xlim([-500 600])
+    % %           ylim([-100 700])
+    % %           axis equal
+    % % %       end
+    % %
+    %
+    % if i ==StartingTrial
+    %     circle(xhand(idx(1),1),xhand(idx(1),2),50)
+    %     %  circle(-209,344,50)
+    %     hold on
+    % end
+    %
+    %      ylim([-100 700])
+    %     axis equal
+    %
+    %
+    %          legend([p1' c1 c2],'Hand','Shoulder','Trunk','Reach Start','Max Distance','Home Target','Location','northeast','FontSize',12)
+    %
+    % %
+    % % %     if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==1||3||6
+    % % %
+    % % %         if i ==2
+    % % %             circle(xhand(idx(1),1),xhand(idx(1),2),50)
+    % % %         end
+    % % %         axis equal
+    % % %
+    % % %     end
+    % % %
+    %     if i ==StartingTrial
+    %
+    %     if expcond== 1
+    %         title(['Restrained Table' '-' partid],'FontSize',24)
+    %     end
+    %
+    %     if expcond== 2
+    %         title(['Restrained 25%' '-' partid],'FontSize',24)
+    %     end
+    %
+    %     if expcond== 3
+    %         title(['Restrained 50%' '-' partid],'FontSize',24)
+    %     end
+    %
+    %     if expcond== 4
+    %         title(['Unrestrained Table' '-' partid],'FontSize',24)
+    %     end
+    %
+    %     if expcond== 5
+    %         title(['Unrestrained 25%' '-' partid],'FontSize',24)
+    %     end
+    %
+    %     if expcond== 6
+    %         title(['Unrestrained 50%' '-' partid],'FontSize',24)
+    %     end
+    %     end
+    %
+    % %     % Plotting Trunk Angulation
+    % %     figure(4)
+    % % %
+    % % %     if i ==1
+    % % %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
+    % % %         if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
+    % % %             ylim(ax2,[-5 15])
+    % % %             xlim(ax2,[0 5])
+    % % %         end
+    % % %     end
+    % % % %
+    % % %
+    % %       if i ==StartingTrial
+    % %         ax2 = axes('Position',[0.05 0.04 0.4 0.20]);
+    % %
+    % %       end
+    %
+    % % %
+    % %     hold(ax2,'on')
+    % %     p2 = plot(ax2,t(idx(1):idx(3)),TrunkAng_GCS(idx(1):idx(3),1),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
+    % %       hold(ax2,'on')
+    % %
+    % %     c3 =plot(ax2,t(idx(1)),TrunkAng_GCS(idx(1)),'o','MarkerFaceColor','g','MarkerSize',10);
+    % %     c4 = plot(ax2,t(idx(3)),TrunkAng_GCS(idx(3)),'o','MarkerFaceColor','r','MarkerSize',10);
+    % %     legend([p2 c3 c4],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
+    % %
+    % %     xlabel('Time (s)','FontSize',14)
+    % %     ylabel('Trunk Angle (Deg)','FontSize',14)
+    % %     legend('Trunk Angle (Deg)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+    % %
+    % % %
+    % %     if i ==StartingTrial
+    % %         ax3 = axes('Position',[0.52 0.04 0.4 0.20]);
+    % % %
+    % %     end
+    % % %
+    % % figure(20)
+    % % %     hold(ax3,'on')
+    % %    p3 =  plot(xjug(idx(1):idx(3),1),xjug(idx(1):idx(3),2),'LineWidth',3,'Color',[0.8500 0.3250 0.0980]);
+    % % %      hold(ax3,'on')
+    % % hold on
+    % %     c5 = plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    % %     c6 = plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    % %     hold on
+    % %
+    % % %         legend([p3 c5 c6],'Trunk Angle (Deg)','Reach Start','Reach End','Location','northwest','FontSize',12)
+    % %
+    % %     legend('Trunk Position (mm)','Reach Start','Reach End','FontSize',12,'Location','NorthWest')
+    % %     xlabel('X (mm)','FontSize',14)
+    % %     ylabel('Y (mm)','FontSize',14)
+    % %
+    % %
+    % %           axis equal
+    %     end
+    
+    %% Calling COP Function
+    %        ppsdata =data.pps;
+    %        tpps = data.pps{1,1};
+    %        ppsdata= ppsdata{1,2};
+    %
+    %        %Getting start and end time in seconds
+    %        t_start = t(idx(1));
+    %        t_end = t(idx(3));
+    
+    
+    % Use if plotting small multiples
+    %        if i ==1
+    %            [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname);
+    %        else
+    %            [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,sm,sm2);
+    %        end
+    
+    
+    %Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+    % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
+    
+    %% Saving Data to matrix
+    
+    
+    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+    
+    % Lines below if adding a whole new participant to sheet
+    %         nextrow = size(DataMatrix,1);
+    %         DataMatrix{nextrow+1,1} = partid;
+    %         DataMatrix{nextrow+1,2} = expcond;
+    %         DataMatrix{nextrow+1,3} = mfname;
+    %         DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
+    %         DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
+    
+    %         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
+    %         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    %        DataMatrix{nextrow+1,8} =  trex_current_trial(i);
+    %         DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
+    %         DataMatrix{nextrow+1,10} = shex_current_trial(i);
+    %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
+    
+    % Adding Outcome Measures to Data Matrix
+    % trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    % Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    % FinalRow = trialrow(Currentrow);
+    %
+    % DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+    % DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    % DataMatrix{FinalRow,10} = shex_current_trial(i);
+    % DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    % DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    % DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    % DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+    % DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    % DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+    % DataMatrix{FinalRow,2} = expcond;
+    % %
+    
+    %       pause
+    
+    close all
+    
+    
 end
 
 
@@ -2845,9 +2849,9 @@ for k = 1:length(maxreach_current_trial)
         trex_current_trial(k) = nan;
     end
     
-%     if TrunkAng_current_trial(k) ==0
-%         TrunkAng_current_trial(k)= nan;
-%     end 
+    %     if TrunkAng_current_trial(k) ==0
+    %         TrunkAng_current_trial(k)= nan;
+    %     end
 end
 
 
@@ -2861,7 +2865,7 @@ std_maxhand= nanstd(maxhandexcrsn_current_trial);
 avgshldr = nanmean(shex_current_trial);
 stdshldr = nanstd(shex_current_trial);
 
-%Trunk Displacement 
+%Trunk Displacement
 avgtrunk = nanmean(trex_current_trial);
 stdtrunk = nanstd(trex_current_trial);
 
