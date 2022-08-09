@@ -19,7 +19,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function [GH_G_comp_s gTRUNK, GH] = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
+function gTRUNK = ComputeEulerAngles_AMA_K(filename,arm,partid,k)
 %%
 
  flag =0;
@@ -54,8 +54,9 @@ function [GH_G_comp_s gTRUNK, GH] = ComputeEulerAngles_AMA_K(filename,arm,partid
 % September 25, 2018 (v10) Ana Maria Acosta - added comments and cleaned up code
 % based on Sabeen Admani's additions to the code over 2017-18.
 
-% Fall/Winter 2021/2022 Kacey Suvada - edited code to match experimental
+% 2021-2022 Kacey Suvada - edited code to match experimental
 % protocol:
+
 % 1) Modifying inputs: BL and HT
 % 2) Modifying outputs: adding Pmcp in G, Trunk and Humerus CSs
 % 3) Modifying Global and Local CS so that x is to the right, y is anterior
@@ -271,15 +272,6 @@ j=k; % a part of larger loop outside this function.
     BL_M_s=inv(TmarkertoGlob{2})* BL_G_s; %SH BLs in Sh marker CS during trial
     BL_M_t = inv(TmarkertoGlob{1})* BL_G_t; % Trunk BLS in Trunk marker CS 
     
-    % Computing GH at jth time point (in sh marker cs) via GH function
-    % Adding Trunk CS 
-
-%     
-    gh =ghest_KS(BL_M_s,BoneCS{2},BL_M_t,BoneCS{1},flag,partid,arm,j);
-    
-  
-
-    GH_G_comp_s = TmarkertoGlob{2}*gh; %Computed GH in Shoulder Marker Frame now in GCS
 
     
     HtoG = TmarkertoGlob{3}*BoneCS{4}; % Humerus
@@ -288,7 +280,7 @@ j=k; % a part of larger loop outside this function.
     BL_G_f = TmarkertoGlob{4}*BLs{1,4};% Forearm Bonylandmarks in GCS
     
     %Finding indices of Humerus BLs
-    GH_IDX = find(BLnames_h=='GH');
+     GH_IDX = find(BLnames_h=='GH');
     EL_IDX=  find(BLnames_h=='EL');
     EM_IDX=  find(BLnames_h=='EM');
     [GH,EM,EL] = deal(BL_G_h(:,GH_IDX),BL_G_h(:,EM_IDX),BL_G_h(:,EL_IDX));
@@ -407,72 +399,67 @@ j=k; % a part of larger loop outside this function.
 %     end
 % %    
 %% Master BL figure in Global CS
-
-if j ==1
-    %%
-    figure(30)
-    clf
-    plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
-    hold on
-    plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
-    
-%     %Scapular Triangle
-%     plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)]) % line between AI and TS
-%     plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)]) % line between AI and AA
-%     plot3([BL_G_s(1,3) BL_G_s(1,2)],[BL_G_s(2,3) BL_G_s(2,2)],[BL_G_s(3,3) BL_G_s(3,2)]) % line between TS and AA
+% 
+% if j ==1
+%     %%
+%     figure(30)
+%     clf
+%     plot3(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),'*')
+%     hold on
+%     plot3(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),'*')
+%     
+% %     %Scapular Triangle
+% %     plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)]) % line between AI and TS
+% %     plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)]) % line between AI and AA
+% %     plot3([BL_G_s(1,3) BL_G_s(1,2)],[BL_G_s(2,3) BL_G_s(2,2)],[BL_G_s(3,3) BL_G_s(3,2)]) % line between TS and AA
+% %     %
+%     %Plotting the Scapular Polygon
+%     plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)],'b') % line between AI and TS
+%     plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)],'b') % line between AI and AA
+%     plot3([BL_G_s(1,3) BL_G_s(1,1)],[BL_G_s(2,3) BL_G_s(2,1)],[BL_G_s(3,3) BL_G_s(3,1)],'b') % line between TS and AC
+%     plot3([BL_G_s(1,1) BL_G_s(1,2)],[BL_G_s(2,1) BL_G_s(2,2)],[BL_G_s(3,1) BL_G_s(3,2)],'b') % line between AC and AA
+%     
+%     plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
+%     plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
+%     plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
+%     plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)]) % line between midpoint of forearm to midpoint of humerus.
+%     
+%     if j==1
+%         text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
+%         text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
+%         text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
+%         % text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
+%         text(BL_G_f(1,1:4),BL_G_f(2,1:4),BL_G_f(3,1:4),BLnames_f(1:4))
+%     end
+%     quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
+%     text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
+%     
+%     quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
+%     text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
 %     %
-    %Plotting the Scapular Polygon
-    plot3([BL_G_s(1,4) BL_G_s(1,3)],[BL_G_s(2,4) BL_G_s(2,3)],[BL_G_s(3,4) BL_G_s(3,3)],'b') % line between AI and TS
-    plot3([BL_G_s(1,4) BL_G_s(1,2)],[BL_G_s(2,4) BL_G_s(2,2)],[BL_G_s(3,4) BL_G_s(3,2)],'b') % line between AI and AA
-    plot3([BL_G_s(1,3) BL_G_s(1,1)],[BL_G_s(2,3) BL_G_s(2,1)],[BL_G_s(3,3) BL_G_s(3,1)],'b') % line between TS and AC
-    plot3([BL_G_s(1,1) BL_G_s(1,2)],[BL_G_s(2,1) BL_G_s(2,2)],[BL_G_s(3,1) BL_G_s(3,2)],'b') % line between AC and AA
-    
-    plot3(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'o','MarkerSize',10,'Color','m') % computed GH from linear REG
-    plot3(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),'*')
-    plot3(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'*');
-    plot3([GH_G_comp_s(1,1) H_Mid_H(1)],[GH_G_comp_s(2,1) H_Mid_H(2)],[GH_G_comp_s(3,1) H_Mid_H(3)]) % Line from computed GH to midpoint between EM and EL
-    plot3(BL_G_f(1,:),BL_G_f(2,:),BL_G_f(3,:),'*')
-    plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)]) % line between midpoint of forearm to midpoint of humerus.
-    
-    if j==1
-        text(BL_G_t(1,:),BL_G_t(2,:),BL_G_t(3,:),BLnames_t)
-        text(BL_G_s(1,:),BL_G_s(2,:),BL_G_s(3,:),BLnames_s)
-        text(GH_G_comp_s(1,1),GH_G_comp_s(2,1),GH_G_comp_s(3,1),'GH_C_o_m_p_u_t_e_d') %Kacey adding label for computed GH
-        BLnames_h(3) = 'GH_D_i_g';
-        text(BL_G_h(1,:),BL_G_h(2,:),BL_G_h(3,:),BLnames_h)
-        % text(H_Mid_H(1),H_Mid_H(2),H_Mid_H(3),'MID_E_M_E_L');
-        text(BL_G_f(1,1:4),BL_G_f(2,1:4),BL_G_f(3,1:4),BLnames_f(1:4))
-    end
-    quiver3(TtoG_frame([1 1 1],4)',TtoG_frame([2 2 2],4)',TtoG_frame([3 3 3],4)',100*TtoG_frame(1,1:3),100*TtoG_frame(2,1:3),100*TtoG_frame(3,1:3))
-    text(TtoG_frame(1,4)+100*TtoG_frame(1,1:3),TtoG_frame(2,4)+100*TtoG_frame(2,1:3),TtoG_frame(3,4)+100*TtoG_frame(3,1:3),{'x_t','y_t','z_t'})
-    
-    quiver3(StoG_frame([1 1 1],4)',StoG_frame([2 2 2],4)',StoG_frame([3 3 3],4)',100*StoG_frame(1,1:3),100*StoG_frame(2,1:3),100*StoG_frame(3,1:3))
-    text(StoG_frame(1,4)+100*StoG_frame(1,1:3),StoG_frame(2,4)+100*StoG_frame(2,1:3),StoG_frame(3,4)+100*StoG_frame(3,1:3),{'x_s','y_s','z_s'})
-    %
-    quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
-    text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
-    
-    quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
-    text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
-    
-    quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
-    text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
-    
-    xlabel('x (mm)','FontSize',14)
-    ylabel('y (mm)','FontSize',14)
-    zlabel('z (mm)','FontSize',14)
-    axis 'equal'
-    
-    title('Bony Landmarks and CS for Segments in GCS - during trial','FontSize',16)
-    
-    
-    pause
-    
-end
+%     quiver3(HtoG_frame([1 1 1],4)',HtoG_frame([2 2 2],4)',HtoG_frame([3 3 3],4)',100*HtoG_frame(1,1:3),100*HtoG_frame(2,1:3),100*HtoG_frame(3,1:3))
+%     text(HtoG_frame(1,4)+100*HtoG_frame(1,1:3),HtoG_frame(2,4)+100*HtoG_frame(2,1:3),HtoG_frame(3,4)+100*HtoG_frame(3,1:3),{'x_h','y_h','z_h'})
+%     
+%     quiver3(FtoG_frame([1 1 1],4)',FtoG_frame([2 2 2],4)',FtoG_frame([3 3 3],4)',100*FtoG_frame(1,1:3),100*FtoG_frame(2,1:3),100*FtoG_frame(3,1:3))
+%     text(FtoG_frame(1,4)+100*FtoG_frame(1,1:3),FtoG_frame(2,4)+100*FtoG_frame(2,1:3),FtoG_frame(3,4)+100*FtoG_frame(3,1:3),{'x_f','y_f','z_f'})
+%     
+%     quiver3(HT_G_G_frame([1 1 1],4)',HT_G_G_frame([2 2 2],4)',HT_G_G_frame([3 3 3],4)',100*HT_G_G_frame(1,1:3),100*HT_G_G_frame(2,1:3),100*HT_G_G_frame(3,1:3))
+%     text(HT_G_G_frame(1,4)+100*HT_G_G_frame(1,1:3),HT_G_G_frame(2,4)+100*HT_G_G_frame(2,1:3),HT_G_G_frame(3,4)+100*HT_G_G_frame(3,1:3),{'X_G','Y_G','Z_G'})
+%     
+%     xlabel('x (mm)','FontSize',14)
+%     ylabel('y (mm)','FontSize',14)
+%     zlabel('z (mm)','FontSize',14)
+%     axis 'equal'
+%     
+%     title('Bony Landmarks and CS for Segments in GCS - during trial','FontSize',16)
+%     
+%     
+%     pause
+%     
+% end
 %  
   %%
 
-% GH_G_comp_s = squeeze(GH_G_comp_s); % now 4X nimag 
 % Computing Euler Angles Frame by Frame
 
 % % Need 3x3 rotation matrix for the bones 
@@ -488,8 +475,6 @@ end
  
 
 %Trunk and Humerus angles in Global CS
-
-
 
 gTRUNK(:)=CalcEulerAng(TtoG(1:3,1:3),'XZY',0); % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
 
@@ -549,7 +534,6 @@ Fore_Hum_Ang(:)=CalcEulerAng(jR(:,1:3),'XZY',0);    % Forearm in Hum First row i
 rotm2=jR(:,4:6);
 Hum_Trunk_Ang(:) = rad2deg(rotm2eul(rotm2,'ZYZ'));
 
-% return
 
 gTRUNK = gTRUNK';
 gTRUNK = [gTRUNK;1];

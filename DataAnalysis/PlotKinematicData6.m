@@ -1898,21 +1898,16 @@ for i=1: length(mtrials)
     % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-   %%  Updated Summer 2022 K.Suvada
+   %%  Computing Trunk Angle in GCS
    
   
-    
-    metdata =  x;
+metdata =  x;
     %
     TrunkAng_GCS= zeros(3,length(metdata));
     
-    for k = 1:length(metdata) %Computing GH at each Frame
-        % gh_frame is linear reg estimated gh
-        % GH_ frame is digitized GH at time of experiment
-        [gh_frame TrunkAng_GCS_frame, GH_frame] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
-        gh(:,k) = gh_frame(1:4);
+    for k = 1:length(metdata) 
+        TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
         TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-        GH (:,k) = GH_frame(1:4);
     end
     
     
@@ -1968,94 +1963,88 @@ for i=1: length(mtrials)
     
     [TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
     
+    %% MISC GH Computations from OLD GH estimation
+    
+%     gh = gh';%Flipping so organized by columns (time = rows) like other variables
+%     
+%     if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles'
+%         gh(:,1) = -gh(:,1);
+%         gh(:,2) = -gh(:,2);
+%         
+%     end
+%     %
+    
+    
+%  GH computed rotated 90 (Compared to Marker data) - June 2022 -- WRONG 
+%     if strcmp(partid,'RTIS2001')
+%         if strcmp(hand,'Right')
+%             if expcond==1
+%                 %                 if strcmp(mfname,'/trial1.mat')
+%                 
+%                 ghflipped = gh';
+%                 ghflipped = ghflipped (1:3,:);
+%                 
+%                 gh2 = zeros(3,length(gh));
+%                 
+%                 for l= 1: length(gh)
+%                     gh2(:,l) = rotz(-45)*ghflipped(:,l);
+%                 end
+%                 
+%                 gh2 = gh2';
+%                 
+%                 meanx_gh = mean(gh(1:10,1));
+%                 meany_gh = mean(gh(1:10,2));
+%                 
+%                 meanx_gh_2 = mean(gh2(1:10,1));
+%                 meany_gh_2 = mean(gh2(1:10,2));
+%                 
+%                 x_transl =  meanx_gh - meanx_gh_2;
+%                 y_transl =  meany_gh - meany_gh_2;
+%                 
+%                 gh(:,1) = gh2(:,1)+x_transl;
+%                 gh(:,2) = gh2(:,2)+y_transl;
+%                 
+%                 
+%                 %                 end
+%             end
+%         end
+%     end
+%     
+%     
+%     
+    
+    
+    
+ 
     %%
-    
-    gh = gh';%Flipping so organized by columns (time = rows) like other variables
-    
-    if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles'
-        gh(:,1) = -gh(:,1);
-        gh(:,2) = -gh(:,2);
-        
-    end
-    %
-    
-    
-    %%  GH computed rotated 90 (Compared to Marker data) - June 2022
-    if strcmp(partid,'RTIS2001')
-        if strcmp(hand,'Right')
-            if expcond==1
-                %                 if strcmp(mfname,'/trial1.mat')
-                
-                ghflipped = gh';
-                ghflipped = ghflipped (1:3,:);
-                
-                gh2 = zeros(3,length(gh));
-                
-                for l= 1: length(gh)
-                    gh2(:,l) = rotz(-45)*ghflipped(:,l);
-                end
-                
-                gh2 = gh2';
-                
-                meanx_gh = mean(gh(1:10,1));
-                meany_gh = mean(gh(1:10,2));
-                
-                meanx_gh_2 = mean(gh2(1:10,1));
-                meany_gh_2 = mean(gh2(1:10,2));
-                
-                x_transl =  meanx_gh - meanx_gh_2;
-                y_transl =  meany_gh - meany_gh_2;
-                
-                gh(:,1) = gh2(:,1)+x_transl;
-                gh(:,2) = gh2(:,2)+y_transl;
-                
-                
-                %                 end
-            end
-        end
-    end
-    
-    
-    
-    
-    
-    
-    %%
-    %     if strcmp(partid,'RTIS2011')
-    %         if strcmp(hand,'Left')
-    %             gh(:,1) = -gh(:,1);
-    %             gh(:,2) = -gh(:,2);
-    %
-    %         end
-    %     end
-    %%
-    
-    if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
-        
-        ghfix(:,1) = gh(:,2);
-        gh(:,2) = -gh(:,1);
-        
-        gh(:,1) =  ghfix(:,1);
-        
-        gh(:,1) = -gh(:,1);
-    end
-    
-    
-    
-    
-    
-    if strcmp(partid,'RTIS2009')
-        if strcmp(hand,'Right')
-            % Rotating GH by -50 deg
-            GH_transp = gh(:,1:3)';
-            RotMat = rotz(-50);
-            GH_Rot50 = RotMat* GH_transp;
-            GH_Rot50 =GH_Rot50';
-            GH_Rot50(:,1) = -GH_Rot50(:,1);
-            
-            gh(:,1:3) = GH_Rot50(:,1:3);
-        end
-    end
+    % * NOTE all this GH stuff is wrong... Kacey Corrected GH Linear Reg so
+    % now don't need this ** 
+%     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
+%         
+%         ghfix(:,1) = gh(:,2);
+%         gh(:,2) = -gh(:,1);
+%         
+%         gh(:,1) =  ghfix(:,1);
+%         
+%         gh(:,1) = -gh(:,1);
+%     end
+%     
+%     
+%     
+%     
+%     
+%     if strcmp(partid,'RTIS2009')
+%         if strcmp(hand,'Right')
+%             % Rotating GH by -50 deg
+%             GH_transp = gh(:,1:3)';
+%             RotMat = rotz(-50);
+%             GH_Rot50 = RotMat* GH_transp;
+%             GH_Rot50 =GH_Rot50';
+%             GH_Rot50(:,1) = -GH_Rot50(:,1);
+%             
+%             gh(:,1:3) = GH_Rot50(:,1:3);
+%         end
+%     end
     
     %     if strcmp(partid,'RTIS2009')
     %         if strcmp(hand,'Left')
@@ -2068,8 +2057,16 @@ for i=1: length(mtrials)
     
     
     
-    % Interpolation of GH- accounting for trials with issues and need
+    %% Interpolation of GH- accounting for trials with issues and need
     % alternative interpolation method.
+    
+    
+    % Adding in August 2022 with new GHr linear regression Model 
+    % gh_est is from GetHandShoulderTrunkPosition8. Gh in global at all
+    % points of trial. 
+    
+    gh = xghest; 
+    
     
     if sum(sum(isnan(gh)))>0  % Checking if Trunk has NANS
         'NANS PRESENT in GH'
