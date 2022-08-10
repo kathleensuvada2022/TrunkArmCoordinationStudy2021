@@ -60,7 +60,8 @@ shex_current_trial=zeros(ntrials,1);
 
 trex_current_trial=zeros(ntrials,1);
 
-TrunkAng_current_trial=zeros(ntrials,1);
+% TrunkAng_current_trial=zeros(ntrials,1); % Commented out for Now until
+% adding back Kinematics 
 
 % NOT SURE ABOUT ONES BELOW
 % maxreach=zeros(ntrials,1);
@@ -91,10 +92,10 @@ BLs = setup.bl; % BLs in marker CS
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
-ScapCoord = Asscap_K(BLs,hand,1);
+ScapCoord = Asscap_K(BLs,hand,0);
 
 %%  Computing GH estimate
-gh_est = Ghest_2022(ScapCoord,BLs,1);
+gh_est = Ghest_2022(ScapCoord,BLs,0);
 
 % Saving Gh_est to BLs setup file creating new column
 setup.bl{1,2}(:,length(setup.bl{1,2})+1) = gh_est;
@@ -1898,36 +1899,39 @@ for i=1: length(mtrials)
     % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-   %%  Computing Trunk Angle in GCS
+
+ %%  Computing Trunk Angle in GCS - Add back in when want Kinematics 
    
+  % Uncomment everything below to add back Kinematics  - SUMMER 2022
   
-metdata =  x;
-    %
-    TrunkAng_GCS= zeros(3,length(metdata));
+  
+% metdata =  x;
+%     %
+%     TrunkAng_GCS= zeros(3,length(metdata));
+%     
+%     for k = 1:length(metdata) 
+%         TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
+%         TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+%     end
+%     
     
-    for k = 1:length(metdata) 
-        TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); %This gives computed GH converted to GCS
-        TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-    end
     
     
     
-    
-    
-    %% Trunk Angle Interpolation / Resampling
+    % Trunk Angle Interpolation / Resampling
     
     % April 2022 - K. Suvada
     % No need to check interpolation (how many missing NaNs) bc will have checked in missing trunk data
     % for displacement
-    if sum(sum(isnan(TrunkAng_GCS)))>0
-        TrunkAng_GCS = TrunkAng_GCS';
-        [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
-        
-        TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
-    else
-        TrunkAng_GCS = TrunkAng_GCS';
-    end
-    
+%     if sum(sum(isnan(TrunkAng_GCS)))>0
+%         TrunkAng_GCS = TrunkAng_GCS';
+%         [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
+%         
+%         TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
+%     else
+%         TrunkAng_GCS = TrunkAng_GCS';
+%     end
+%     
     
     %     if strcmp(partid,'RTIS2002')
     %         if strcmp(hand,'Left')
@@ -1941,18 +1945,18 @@ metdata =  x;
     %         end
     %     end
     
-    if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
-        if strcmp(hand,'Left')
-            for m = 1:length(TrunkAng_GCS)
-                if (TrunkAng_GCS(m,1) <0)
-                    TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
-                elseif (TrunkAng_GCS(m,1) >0)
-                    TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
-                end
-            end
-        end
-    end
-    
+%     if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
+%         if strcmp(hand,'Left')
+%             for m = 1:length(TrunkAng_GCS)
+%                 if (TrunkAng_GCS(m,1) <0)
+%                     TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+%                 elseif (TrunkAng_GCS(m,1) >0)
+%                     TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
+%                 end
+%             end
+%         end
+%     end
+%     
     
     
     
@@ -1961,8 +1965,8 @@ metdata =  x;
     
     %Resampling Trunk Angle
     
-    [TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
-    
+    %[TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
+%%    
     %% MISC GH Computations from OLD GH estimation
     
 %     gh = gh';%Flipping so organized by columns (time = rows) like other variables
@@ -2012,11 +2016,7 @@ metdata =  x;
 %     
 %     
 %     
-    
-    
-    
- 
-    %%
+
     % * NOTE all this GH stuff is wrong... Kacey Corrected GH Linear Reg so
     % now don't need this ** 
 %     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
@@ -2057,7 +2057,7 @@ metdata =  x;
     
     
     
-    %% Interpolation of GH- accounting for trials with issues and need
+    %% Interpolation/Resampling of GH- accounting for trials with issues and need
     % alternative interpolation method.
     
     
@@ -2066,7 +2066,6 @@ metdata =  x;
     % points of trial. 
     
     gh = xghest; 
-    
     
     if sum(sum(isnan(gh)))>0  % Checking if Trunk has NANS
         'NANS PRESENT in GH'
@@ -2318,10 +2317,7 @@ metdata =  x;
     xhand = xhand-xjug;
     gh = gh(:,1:3)-xjug;
     xjug_origin = xjug-xjug;
-    % xjug_origin= xjug;
-    %  xshoulder2 = xshoulder-xjug;
-    
-    
+       
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
     %RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));
@@ -2402,14 +2398,14 @@ metdata =  x;
     sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
     % Trunk
-    %Based on jugular notch
-    
+    % Based on jugular notch
+   
     % trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
     
     trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
-    TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
+    %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
     %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
     
@@ -2419,7 +2415,7 @@ metdata =  x;
     
     trex_current_trial(i) = trunk_exc;
     
-    TrunkAng_current_trial(i) = TrunkAng_GCS_Disp;
+   % TrunkAng_current_trial(i) = TrunkAng_GCS_Disp;
     
     %% Plotting EMGS
     %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
@@ -2776,12 +2772,12 @@ metdata =  x;
     %Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
     % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
     
-    %% Saving Data to matrix
+    %% Saving Kinematic Position Data to Large Matrix
     
     
     armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
     
-    % Lines below if adding a whole new participant to sheet
+    % Lines below if adding a new participant to sheet
     %         nextrow = size(DataMatrix,1);
     %         DataMatrix{nextrow+1,1} = partid;
     %         DataMatrix{nextrow+1,2} = expcond;
@@ -2796,24 +2792,30 @@ metdata =  x;
     %         DataMatrix{nextrow+1,10} = shex_current_trial(i);
     %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
     
-    % Adding Outcome Measures to Data Matrix
-    % trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    % Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    % FinalRow = trialrow(Currentrow);
-    %
-    % DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-    % DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-    % DataMatrix{FinalRow,10} = shex_current_trial(i);
-    % DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-    % DataMatrix{FinalRow,8} =  trex_current_trial(i);
-    % DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-    % DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-    % DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-    % DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-    % DataMatrix{FinalRow,2} = expcond;
-    % %
+    % Adding Outcome Measures to Data Matrix - USE if already have
+    % participant data and want to replace 
     
-    %       pause
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
+  
+    
+    'Check Data Matrix Repopulation' 
+    
+    
+%     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+    DataMatrix{FinalRow,2} = expcond;
+    %
+    
+          pause
     
     close all
     
