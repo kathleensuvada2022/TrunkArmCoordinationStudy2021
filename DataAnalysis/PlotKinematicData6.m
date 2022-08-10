@@ -2358,14 +2358,14 @@ for i=1: length(mtrials)
     
     
     figure(35)
-    plot(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),'Linewidth',3) % Computed 3rd MCP
+    plot(xhand(:,1),xhand(:,2),'Linewidth',3) % Computed 3rd MCP
     hold on
     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-    plot(xjug_origin(idx(1):idx(3),1),xjug_origin(idx(1):idx(3),3),'o','Linewidth',2) % Computed Jug Notch
+    plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
     
-    plot(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),'Linewidth',3)
+    plot(gh(:,1),gh(:,2),'Linewidth',3)
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
@@ -2815,7 +2815,7 @@ for i=1: length(mtrials)
     DataMatrix{FinalRow,2} = expcond;
     %
     
-          pause
+  %        pause
     
     close all
     
@@ -2824,8 +2824,8 @@ end
 
 
 
-% DataMatrix = AllData;
-% save FullDataMatrix.mat DataMatrix
+%  DataMatrix = AllData;
+ save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
