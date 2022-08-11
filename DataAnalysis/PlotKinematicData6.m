@@ -2372,7 +2372,7 @@ for i=1: length(mtrials)
         end
     end
     
-    %% Confirming Plots Post Subtraction of Trunk
+    %%  Plots Post Subtraction of Trunk
     
     
     figure(35)
