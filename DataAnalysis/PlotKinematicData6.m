@@ -2314,8 +2314,8 @@ for i=1: length(mtrials)
     
     
     %% Subtracting Trunk From Hand, Arm Length, and Shoulder
-    xhand2 = xhand-xjug;
-    gh2 = gh-xjug;
+    xhand = xhand-xjug;
+    gh = gh-xjug;
     xjug_origin = xjug-xjug;
        
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
@@ -2361,7 +2361,7 @@ for i=1: length(mtrials)
     plot(xhand(:,1),xhand(:,2),'Linewidth',3) % Computed 3rd MCP
     hold on
     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xhand2(idx(3),1),xhand2(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+    plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
     plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
     
