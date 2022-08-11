@@ -1483,8 +1483,26 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
     
+    %%
+%         
+%     figure(9)
+%     %
+%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%     hold on
+%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+%     
+%     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+%     axis equal
+%     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
+%     pause
     
-    
+ %%   
     %% If Coordinate System Off (couldn't REG to room) verify with BLs plot then modify for 2D trajectory
     if strcmp(partid,'RTIS2009')
         if strcmp(hand,'Right')
@@ -2295,24 +2313,24 @@ for i=1: length(mtrials)
     %     end
     
     %% Plotting Kinematic Data to Verify before outcome measures
-    
-    figure(9)
-    %
-    plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-    hold on
-    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-    
-    plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
-    axis equal
-    legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-    xlabel('X position (mm)','FontSize',14)
-    ylabel('Y position (mm)','FontSize',14)
-    
-    
+%     
+%     figure(9)
+%     %
+%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%     hold on
+%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+%     
+%     plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
+%     axis equal
+%     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
+%     
+%     
     %% Subtracting Trunk From Hand, Arm Length, and Shoulder
     xhand = xhand-xjug;
     gh = gh-xjug;
@@ -2374,7 +2392,7 @@ for i=1: length(mtrials)
     title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
-    pause
+  pause
     
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
