@@ -1482,11 +1482,10 @@ for i=1: length(mtrials)
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial 
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
-    
     %%
-%         
-%     figure(9)
-%     %
+         
+%     figure(19)
+% %     %
 %     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
 %     hold on
 %     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
@@ -1500,10 +1499,10 @@ for i=1: length(mtrials)
 %     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
 %     xlabel('X position (mm)','FontSize',14)
 %     ylabel('Y position (mm)','FontSize',14)
-%     pause
+
     
  %%   
-    %% If Coordinate System Off (couldn't REG to room) verify with BLs plot then modify for 2D trajectory
+    %% If Coordinate System Off (couldn't REG to room) 
     if strcmp(partid,'RTIS2009')
         if strcmp(hand,'Right')
             % Rotating xhand by -50 deg
@@ -1525,7 +1524,16 @@ for i=1: length(mtrials)
             
             xjug = xjug_Rot50;
             
-            % Rotating xjug by -50 deg
+            % Rotating xtrunk by -50 deg
+            xtrunk_transp = xtrunk(:,1:3)';
+            RotMat = rotz(-50);
+            xtrunk_Rot50 = RotMat*xtrunk_transp;
+            xtrunk_Rot50 =xtrunk_Rot50';
+            xtrunk_Rot50(:,1) = -xtrunk_Rot50(:,1);
+            
+            xjug = xjug_Rot50;
+            
+            % Rotating xshldr by -50 deg
             xshldr_transp = xshldr';
             RotMat = rotz(-50);
             xshldr_Rot50 = RotMat*xshldr_transp ;
@@ -1533,6 +1541,16 @@ for i=1: length(mtrials)
             xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
             
             xshldr = xshldr_Rot50;
+            
+            
+            % Rotating gh by -50 deg
+            xghest_transp = xghest';
+            RotMat = rotz(-50);
+            xghest_Rot50 = RotMat*xghest_transp ;
+            xghest_Rot50 =xghest_Rot50';
+            xghest_Rot50(:,1) = -xghest_Rot50(:,1);
+            
+            xghest = xghest_Rot50;
             
         end
     end
@@ -2314,22 +2332,22 @@ for i=1: length(mtrials)
     
     %% Plotting Kinematic Data to Verify before outcome measures
 %     
-%     figure(9)
-%     %
-%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-%     hold on
-%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-%     
-%     plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
-%     axis equal
-%     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%     xlabel('X position (mm)','FontSize',14)
-%     ylabel('Y position (mm)','FontSize',14)
-%     
+% figure(9)
+% %
+% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+% hold on
+% %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+% plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+% plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+% plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+% 
+% plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
+% axis equal
+% legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+% title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+% xlabel('X position (mm)','FontSize',14)
+% ylabel('Y position (mm)','FontSize',14)
+% pause
 %     
     %% Subtracting Trunk From Hand, Arm Length, and Shoulder
     xhand = xhand-xjug;
@@ -2355,7 +2373,8 @@ for i=1: length(mtrials)
             xhand = xhandnew;
         end
     end
-    %RTIS 2010- Left
+    
+%RTIS 2010- Left
     
     if strcmp(partid,'RTIS2010')
         if strcmp(hand,'Left')
