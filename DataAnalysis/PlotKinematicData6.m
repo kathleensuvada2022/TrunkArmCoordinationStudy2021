@@ -2392,7 +2392,7 @@ for i=1: length(mtrials)
     title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
-  pause
+ pause
     
     %% Compute reaching distance (between shoulder and hand from hand marker)
     
