@@ -2852,7 +2852,7 @@ for i=1: length(mtrials)
     DataMatrix{FinalRow,2} = expcond;
     %
     
-        pause
+  %      pause
     
     close all
     
