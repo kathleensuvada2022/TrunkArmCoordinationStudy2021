@@ -115,7 +115,7 @@ for i=1: length(mtrials)
         %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+  %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -1484,9 +1484,9 @@ for i=1: length(mtrials)
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
     %%
          
-%     figure(19)
-% %     %
-%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%      figure(19)
+% % %     %
+%      plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
 %     hold on
 %     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
 %     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
@@ -1565,6 +1565,15 @@ for i=1: length(mtrials)
         xhand(:,2) = -xhand(:,1);
         
         xhand(:,1) =  xhandfix(:,1);
+        
+            
+        xghestfix(:,1) = xghest(:,2);
+        xghest(:,2) = -xghest(:,1);
+        
+        xghest(:,1) =  -xghestfix(:,1);
+        
+        
+        
     end
     %
     
