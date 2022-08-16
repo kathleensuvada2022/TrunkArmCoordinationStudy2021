@@ -659,7 +659,6 @@ SE_Cond6 = std([Trunk_Dist_2002_6 Trunk_Dist_2003_6 Trunk_Dist_2006_6 Trunk_Dist
 
 %% Group Means and Standard Error for Trunk Distance
 
-%Including RTIS2001 
 %Condition 1 Average TD and Standard Error
 TD_Cond1 = mean([Trunk_Dist_2001_1 Trunk_Dist_2002_1 Trunk_Dist_2003_1 Trunk_Dist_2006_1 Trunk_Dist_2007_1 Trunk_Dist_2008_1 Trunk_Dist_2009_1 Trunk_Dist_2010_1 Trunk_Dist_2011_1]);
 Individ_Means_1 = [Trunk_Dist_2001_1 Trunk_Dist_2002_1 Trunk_Dist_2003_1 Trunk_Dist_2006_1 Trunk_Dist_2007_1 Trunk_Dist_2008_1 Trunk_Dist_2009_1 Trunk_Dist_2010_1 Trunk_Dist_2011_1];

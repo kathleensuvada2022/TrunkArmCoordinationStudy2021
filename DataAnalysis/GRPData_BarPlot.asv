@@ -20,12 +20,12 @@ p2 = plot(5,Individ_Means_3,'s','Color','b','Linewidth',2);
 p3 = plot(6,Individ_Means_6,'s','Color','b','Linewidth',2);
 %% Stroke - Paretic
 p4 =errorbar([1 2],[RD_Cond3 RD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); %  restrained vs unrestrained 
-p5 = plot(1,Individ_Means_3,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
-p6 = plot(2,Individ_Means_6,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
+p5 = plot(1,Individ_Means_2,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
+p6 = plot(2,Individ_Means_5,'s','Color',[0.4940 0.1840 0.5560],'Linewidth',2);
  %% Stroke - Non Paretic
-p7 =errorbar([3 4],[RD_Cond3 RD_Cond6],[SE_Cond3 SE_Cond6],'k','LineWidth',2); %  restrained vs unrestrained 
-p8 = plot(3,Individ_Means_3,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
-p9 = plot(4,Individ_Means_6,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
+p7 =errorbar([3 4],[RD_Cond2 RD_Cond5],[SE_Cond2 SE_Cond5],'k','LineWidth',2); %  restrained vs unrestrained 
+p8 = plot(3,Individ_Means_2,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
+p9 = plot(4,Individ_Means_5,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
 
 
 
@@ -37,7 +37,7 @@ xticklabels({' ', 'Stroke (P)-REST', 'Stroke (P)-UNREST','Stroke (NP)-REST', 'St
 ax.XAxis.FontSize = 20;
 ax.YAxis.FontSize = 20;
 ylim([0 105])
-title('Reaching Distance-50% ','FontSize',28)
+title('Reaching Distance-25% ','FontSize',28)
 ylabel('Reaching Distance (%LL)','FontSize',20)
 
 

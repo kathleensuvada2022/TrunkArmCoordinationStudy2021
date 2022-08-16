@@ -33,12 +33,12 @@ p9 = plot(4,Individ_Means_6,'s','Color',[0.9290 0.6940 0.1250],'Linewidth',2);
 %% Axis Setting 
 xlim([0 7])
 ax=gca;
-xticklabels({' ', 'Stroke (P)_R_e_s_t', 'Stroke (P)_U_n_r_e_s_t','Stroke (NP)_R_e_s_t', 'Stroke (NP)_U_n_r_e_s_t','Controls_R_e_s_t' ,'Controls_U_n_r_e_s_t'})
-ax.XAxis.FontSize = 16;
-ax.YAxis.FontSize = 15;
+xticklabels({' ', 'Stroke (P)-REST', 'Stroke (P)-UNREST','Stroke (NP)-REST', 'Stroke (NP)-UNREST','Controls-REST' ,'Controls-UNREST'})
+ax.XAxis.FontSize = 20;
+ax.YAxis.FontSize = 20;
 ylim([0 10])
-title('Trunk Displacement-50%','FontSize',20)
-ylabel('Trunk Displacement (%LL)','FontSize',16)
+title('Trunk Displacement-50%','FontSize',28)
+ylabel('Trunk Displacement (%LL)','FontSize',20)
 
 
 
