@@ -37,7 +37,7 @@ xticklabels({' ', 'Stroke (P)-REST', 'Stroke (P)-UNREST','Stroke (NP)-REST', 'St
 ax.XAxis.FontSize = 20;
 ax.YAxis.FontSize = 20;
 ylim([0 10])
-title('Trunk Displacement-50%','FontSize',28)
+title('Trunk Displacement-50 %','FontSize',28)
 ylabel('Trunk Displacement (%LL)','FontSize',20)
 
 
