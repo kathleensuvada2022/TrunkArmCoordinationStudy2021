@@ -27,6 +27,13 @@ one.way <- aov(yield ~ fertilizer, data = crop_data)
 # summary of ANOVA test
 summary(one.way)
 
+
+# Doing a two way ANOVA
+two.way <- aov(yield ~ fertilizer + density, data = crop_data)
+
+summary(two.way)
+# 2 way was better bc sum squares residuals was reduced from 36-31. 
+
 # The model summary first lists the independent variables being tested in the model 
 # (in this case we have only one, ‘fertilizer’) and the model residuals (‘Residual’). 
 # All of the variation that is not explained by the independent variables is called residual variance.
