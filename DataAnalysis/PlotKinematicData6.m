@@ -100,7 +100,7 @@ gh_est = Ghest_2022(ScapCoord,BLs,0);
 % Saving Gh_est to BLs setup file creating new column
 setup.bl{1,2}(:,length(setup.bl{1,2})+1) = gh_est;
 
-BLs = setup.bl; % BLs in marker CS now including GH estimate
+BLs = setup.bl; % BLs in marker CS now including GH estimate in LCS with Shoulder BLs
 
 
 %% Main loop 
@@ -115,7 +115,7 @@ for i=1: length(mtrials)
         %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-  %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -1572,6 +1572,11 @@ for i=1: length(mtrials)
         
         xghest(:,1) =  -xghestfix(:,1);
         
+        xshldrfix(:,1) = xshldr(:,2);
+        xshldr(:,2) = -xshldr(:,1);
+        
+        xshldr(:,1) =  -xshldrfix(:,1);
+        
         
         
     end
@@ -2228,8 +2233,9 @@ for i=1: length(mtrials)
     % Resampling GH
     [gh,t2]=resampledata(gh,t,89,100);
     
-    
-    t = t2;
+    [xshldr,t2]=resampledata(xshldr,t,89,100);
+
+    t = t2; 
     
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
@@ -2362,6 +2368,7 @@ for i=1: length(mtrials)
     xhand = xhand-xjug;
     gh = gh-xjug;
     xjug_origin = xjug-xjug;
+    xshldr = xshldr - xjug;
        
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
     %RTIS 2008- Left
@@ -2412,11 +2419,16 @@ for i=1: length(mtrials)
     plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
     
     plot(gh(:,1),gh(:,2),'Linewidth',3)
+    plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
+
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
+    plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+    
     axis equal
-    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
+    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','Digitzed Acromion','FontSize',14)
     title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
