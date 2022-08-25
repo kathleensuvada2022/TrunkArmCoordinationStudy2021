@@ -2233,11 +2233,10 @@ for i=1: length(mtrials)
     % Resampling GH
     [gh,t2]=resampledata(gh,t,89,100);
     
-    % Filling Missing Acromion Data - need this to resample it
-    [xshldrnew,TF] = fillmissing(xshldr,'previous','SamplePoints',t); 
+    
+    [xshldrnew,TF] = fillmissing(xshldr,'spline','SamplePoints',t);
 
     xshldr = xshldrnew; 
-    %Resampling Acromion Data for Comparison
     [xshldr,t2]=resampledata(xshldr,t,89,100);
 
     t = t2; 
