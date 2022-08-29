@@ -94,6 +94,7 @@ BLs = setup.bl; % BLs in marker CS
 % From BL Digitization File- creating Scapular CS in MARKER frame.
 ScapCoord = Asscap_K(BLs,hand,0);
 
+
 %%  Computing GH estimate
 gh_est = Ghest_2022(ScapCoord,BLs,0);
 
@@ -115,7 +116,7 @@ for i=1: length(mtrials)
         %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -1482,23 +1483,24 @@ for i=1: length(mtrials)
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial 
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
+   
     %%
          
-%      figure(19)
+      figure(19)
 % % %     %
-%      plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-%     hold on
-%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-%     
-%     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-%     axis equal
-%     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%     xlabel('X position (mm)','FontSize',14)
-%     ylabel('Y position (mm)','FontSize',14)
+      plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+    hold on
+    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+    
+    plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+    axis equal
+    legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+    xlabel('X position (mm)','FontSize',14)
+    ylabel('Y position (mm)','FontSize',14)
 
     
  %%   
@@ -2858,26 +2860,26 @@ for i=1: length(mtrials)
     % Adding Outcome Measures to Data Matrix - USE if already have
     % participant data and want to replace 
     
-    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    FinalRow = trialrow(Currentrow);
+%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+%     FinalRow = trialrow(Currentrow);
   
 %     
-    'Check Data Matrix Repopulation' 
+%     'Check Data Matrix Repopulation' 
     
     
 %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,10} = shex_current_trial(i);
-    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,8} =  trex_current_trial(i);
-    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-    DataMatrix{FinalRow,2} = expcond;
-    %
-    
+%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,10} = shex_current_trial(i);
+%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
+%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+%     DataMatrix{FinalRow,2} = expcond;
+%     %
+%     
   %      pause
     
     close all
@@ -2888,7 +2890,7 @@ end
 
 
 %  DataMatrix = AllData;
- save FullDataMatrix.mat DataMatrix
+%  save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
