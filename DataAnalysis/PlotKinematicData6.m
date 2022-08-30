@@ -98,6 +98,7 @@ ScapCoord = Asscap_K(BLs,hand,0);
 %%  Computing GH estimate
 gh_est = Ghest_2022(ScapCoord,BLs,0);
 
+
 % Saving Gh_est to BLs setup file creating new column
 setup.bl{1,2}(:,length(setup.bl{1,2})+1) = gh_est;
 
@@ -1484,23 +1485,23 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
    
-    %%
-         
-      figure(19)
-% % %     %
-      plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-    hold on
-    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
     
-    plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-    axis equal
-    legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-    xlabel('X position (mm)','FontSize',14)
-    ylabel('Y position (mm)','FontSize',14)
+         
+%       figure(19)
+% % % %     %
+%       plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%     hold on
+%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+%     
+%     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+%     axis equal
+%     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
 
     
  %%   
@@ -2354,23 +2355,35 @@ for i=1: length(mtrials)
     
     %% Plotting Kinematic Data to Verify before outcome measures
 %     
-% figure(9)
-% %
-% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-% hold on
-% %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-% plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-% plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-% plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-% 
-% plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
-% axis equal
-% legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-% title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-% xlabel('X position (mm)','FontSize',14)
-% ylabel('Y position (mm)','FontSize',14)
-% pause
-%     
+figure(9)
+%
+plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+hold on
+%   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+
+plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
+
+plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+
+plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+
+plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+
+plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+
+axis equal
+legend('Acromion','3rd MCP','Jug Notch','Estimated GH','Start','End','FontSize',14)
+title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+pause
+    
     %% Subtracting Trunk From Hand, Arm Length, and Shoulder
     xhand = xhand-xjug;
     gh = gh-xjug;
@@ -2378,22 +2391,27 @@ for i=1: length(mtrials)
     xshldr = xshldr - xjug;
        
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
-    %RTIS 2008- Left
+%     RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));
     ghnew =zeros(3,length(xhand));
+    xshldrnew =zeros(3,length(xshldr));
+
     if strcmp(partid,'RTIS2008')
         if strcmp(hand,'Left')
             
             for p = 1:length(gh)
                 ghnew(:,p) = roty(pi)*gh(p,:)';
                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
+                xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
             end
             
             ghnew = ghnew';
             xhandnew= xhandnew';
-            
+            xshldrnew= xshldrnew';
+         
             gh = ghnew;
             xhand = xhandnew;
+            xshldr = xshldrnew;
         end
     end
     
@@ -2404,13 +2422,19 @@ for i=1: length(mtrials)
             for p = 1:length(gh)
                 ghnew(:,p) = roty(pi)*gh(p,:)';
                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
+                xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
+
             end
             
             ghnew = ghnew';
             xhandnew= xhandnew';
+            xshldrnew= xshldrnew';
+
             
             gh = ghnew;
             xhand = xhandnew;
+            xshldr = xshldrnew;
+
         end
     end
     
