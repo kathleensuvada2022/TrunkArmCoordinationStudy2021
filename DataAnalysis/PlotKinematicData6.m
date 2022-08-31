@@ -119,7 +119,7 @@ for i=1: length(mtrials)
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -2386,10 +2386,15 @@ pause
     
     %% Subtracting Trunk at first frame From Hand, Arm Length, and Shoulder
     xhand = xhand-xjug(1,:);
-    gh = gh-xjug(1,:);
     xjug_origin = xjug-xjug(1,:);
     xshldr = xshldr - xjug(1,:);
        
+    % for GH need to also subtract at every point in time to account for
+    % trunk movement contributing to shoulder movement
+ 
+    gh = gh-xjug(1,:);
+    
+    gh = gh - xjug_origin;
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
 %     RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));
@@ -2442,14 +2447,14 @@ pause
     
     
     figure(35)
-    plot(xhand(:,1),xhand(:,2),'Linewidth',3) % Computed 3rd MCP
+    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
     hold on
     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-    plot(xjug_origin(:,1),xjug_origin(:,2),'Linewidth',3)  % Computed Jug Notch
+    plot(xjug_origin(:,1),xjug_origin(:,2),'Linewidth',2)  % Computed Jug Notch
     
-    plot(gh(:,1),gh(:,2),'Linewidth',3)
+    plot(gh(:,1),gh(:,2),'Linewidth',2)
    % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
 
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
@@ -2468,9 +2473,10 @@ pause
     ylabel('Y position (mm)','FontSize',14)
  pause
     
-    %% Compute reaching distance (between shoulder and hand from hand marker)
+    %% Compute reaching distance 
     
-    % Def: Distance between hand and shoulder at end of reach - idx(3)
+    % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
+    % of reach (timepoint idx(3)) 
     
     maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
     
@@ -2481,21 +2487,19 @@ pause
     maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
     
     
-    %% Compute shoulder and trunk displacement at maximum reach - using BLS
+    %% Compute shoulder and trunk displacement at maximum reach 
+    
+    % Trunk
+    % Based on jugular notch difference idx(3) - idx(1)
+   
+    trunk_exc =  sqrt((xjug_origin(idx(3),1)-xjug_origin(idx(1),1))^2 +(xjug_origin(idx(3),2)-xjug_origin(idx(1),2))^2);
     
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
-    %sh_exc=sqrt(sum((gh(idx(3),1:2)-(gh((idx(1)),1:2))).^2,2))';
     
     sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
-    % Trunk
-    % Based on jugular notch
-   
-    % trunk_exc = sqrt((xjug(idx(3),1)-(xjug(idx(1),1)))^2+(xjug(idx(3),2)-(xjug(idx(1)),2)))^2);
-    
-    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
-    
+
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
     %% Getting Trunk, Shoulder, Hand Excursion, and reaching distance for the current trial
@@ -2885,25 +2889,26 @@ pause
     %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
     
     % Adding Outcome Measures to Data Matrix - USE if already have
-    % participant data and want to replace 
+    % participant data matrix and want to update - MAKE SURE TO CHANGE AT
+    % START OF CODE WHICH DATA MATRIX LOADING IN --> PARETIC/NP/CONTROLS
     
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
   
 %     
 %     'Check Data Matrix Repopulation' 
     
     
 %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
-%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+     DataMatrix{FinalRow,10} = shex_current_trial(i);
+     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+     DataMatrix{FinalRow,8} =  trex_current_trial(i);
+     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
 %     DataMatrix{FinalRow,2} = expcond;
 %     %
 %     
@@ -2917,7 +2922,7 @@ end
 
 
 %  DataMatrix = AllData;
-%  save FullDataMatrix.mat DataMatrix
+  save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
