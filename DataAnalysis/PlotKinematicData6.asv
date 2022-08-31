@@ -2438,7 +2438,7 @@ pause
         end
     end
     
-    %%  Plots Post Subtraction of Initial Trunk Position
+    %%  Plots Post Subtraction of Trunk
     
     
     figure(35)
@@ -2447,22 +2447,19 @@ pause
     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-    plot(xjug_origin(:,1),xjug_origin(:,2),'Linewidth',3)  % Computed Jug Notch
+    plot(xjug_origin(:,1),xjug_origin(:,2),'o','Linewidth',2) % Computed Jug Notch
     
     plot(gh(:,1),gh(:,2),'Linewidth',3)
-   % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
+    plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
 
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-%     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-    plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+    plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
     axis equal
-    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
+    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','Digitzed Acromion','FontSize',14)
     title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
