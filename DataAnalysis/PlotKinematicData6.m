@@ -2531,7 +2531,7 @@ for i=1: length(mtrials)
     figure(4)
 %     subplot(1,4,2)
     %   clf
-    
+
     hold on
   
 %     StartingTrial = 2;
