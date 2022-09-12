@@ -24,6 +24,7 @@ ax5 = nexttile;
 % 6th Plot
 ax6 = nexttile;
 
+% Command that syncs up all the axes 
  linkaxes([ax1 ax2 ax3 ax4 ax5 ax6],'xy')
 
  

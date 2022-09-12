@@ -2469,7 +2469,7 @@ for i=1: length(mtrials)
     
     axis equal
     legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
-    title('Overhead View of Reach- TRUNK CS' ,'FontSize',16)
+    title('Overhead View of Reach- Subtracting Trunk Initial Position' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
     
