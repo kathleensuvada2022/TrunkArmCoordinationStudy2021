@@ -36,6 +36,6 @@ axis equal
 axis equal
 
  %RTIS1005
- axis([ax1 ax2],[-50 350 -100 1000])
+ axis([ax1 ax2],[- 300 -500 1400])
 axis equal
 

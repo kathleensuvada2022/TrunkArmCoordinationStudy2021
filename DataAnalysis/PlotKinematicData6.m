@@ -1486,7 +1486,7 @@ for i=1: length(mtrials)
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
     
     
-    
+%     
 %           figure(19)
 %     % % %     %
 %           plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
@@ -1498,7 +1498,7 @@ for i=1: length(mtrials)
 %     
 %         plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
 %         axis equal
-%         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+%         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
 %         title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
 %         xlabel('X position (mm)','FontSize',14)
 %         ylabel('Y position (mm)','FontSize',14)
@@ -2637,11 +2637,44 @@ for i=1: length(mtrials)
         end
         
         if strcmp(partid,'RTIS1005')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%             
+%             xlim(ax1,[-400 600])
+%             ylim(ax1,[-200 800])
+%             axis equal
+            if expcond ==1
+                circle(195,370,50)
+                hold on
+            end
+            if expcond ==2
+                circle(161,408,50)
+                hold on
+            end
             
-            xlim(ax1,[-400 600])
-            ylim(ax1,[-200 800])
-            axis equal
+            if expcond ==3
+                circle(156,408,50)
+                hold on
+            end
+            
+                        
+            if expcond ==4
+                circle(186,340,50)
+                hold on
+            end
+                 
+                                   
+            if expcond ==5
+                circle(144,360,50)
+                hold on
+            end
+                                              
+            if expcond ==6
+                circle(154,356,50)
+                hold on
+            end
+
+
+
         end
         
         if strcmp(partid,'RTIS1006')
@@ -2927,7 +2960,7 @@ for i=1: length(mtrials)
     % %
     % %           axis equal
     %          end
-    
+    %pause
     %% Calling COP Function
     %        ppsdata =data.pps;
     %        tpps = data.pps{1,1};
