@@ -1487,21 +1487,21 @@ for i=1: length(mtrials)
     
     
     
-    %       figure(19)
-    % % % %     %
-    %       plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-    %     hold on
-    %     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-    %     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    %     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-    %     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-    %
-    %     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-    %     axis equal
-    %     legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
-    %     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-    %     xlabel('X position (mm)','FontSize',14)
-    %     ylabel('Y position (mm)','FontSize',14)
+%           figure(19)
+%     % % %     %
+%           plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%         hold on
+%         %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%         plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%         plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%         plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+%     
+%         plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+%         axis equal
+%         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSize',14)
+%         title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%         xlabel('X position (mm)','FontSize',14)
+%         ylabel('Y position (mm)','FontSize',14)
     
     
     %%
@@ -2384,18 +2384,33 @@ for i=1: length(mtrials)
     ylabel('Y position (mm)','FontSize',14)
     % pause
     
-    %% Subtracting Trunk at first frame From Hand, Arm Length, and Shoulder
+    %% Subtracting Trunk at first frame of trial From Hand, Arm Length, and Shoulder
+%  
+%     %Centering at the Trunk CS (first time point)
+%     xhand = xhand-xjug(1,:);
+%     xjug_origin = xjug-xjug(1,:);
+%     xshldr = xshldr - xjug(1,:);
+%     
+%     % for GH need to also account for trunk contributing to shoulder 
+%   
+%     gh = gh-xjug(1,:); %Centering Sh at the Trunk CS (first time point)
+%     
+%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
+%     
+    %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
  
-    %Centering at the Trunk CS (first time point)
-    xhand = xhand-xjug(1,:);
-    xjug_origin = xjug-xjug(1,:);
-    xshldr = xshldr - xjug(1,:);
+    % Centering at the Trunk  (idx(1))
+    xhand = xhand-xjug(idx(1),:);
+    xjug_origin = xjug-xjug(idx(1),:);
+    xshldr = xshldr - xjug(idx(1),:);
     
     % for GH need to also account for trunk contributing to shoulder 
   
-    gh = gh-xjug(1,:); %Centering Sh at the Trunk CS (first time point)
+    gh = gh-xjug(idx(1),:);
     
     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
+       
+    
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
     %     RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));
@@ -2464,9 +2479,11 @@ for i=1: length(mtrials)
     %     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     %     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     %
-    plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
+    plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
+      
+    plot(0,0,'o','MarkerEdgeColor','g','MarkerSize',10); %trunk start which will always be at 0,0 --> centered at trunk start
+
     axis equal
     legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
     title('Overhead View of Reach- Subtracting Trunk Initial Position' ,'FontSize',16)

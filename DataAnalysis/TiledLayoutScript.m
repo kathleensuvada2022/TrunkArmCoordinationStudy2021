@@ -27,7 +27,10 @@ ax6 = nexttile;
 % Command that syncs up all the axes 
  linkaxes([ax1 ax2 ax3 ax4 ax5 ax6],'xy')
 
- 
+  %RTIS1003
+ axis([ax1 ax2 ax3 ax4 ax5 ax6],[-300 300 -300 1000])
+axis equal
+
  %RTIS1004
- axis([ax1 ax2],[-500 50 -200 700])
+ axis([ax1 ax2],[-200 50 -200 700])
 axis equal
