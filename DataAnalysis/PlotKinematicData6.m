@@ -2678,11 +2678,42 @@ for i=1: length(mtrials)
         end
         
         if strcmp(partid,'RTIS1006')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
+%             
+%             xlim(ax1,[-300 300])
+%             ylim(ax1,[-100 700])
+            if expcond ==1
+                circle(25,304,50)
+                hold on
+            end
             
-            xlim(ax1,[-300 300])
-            ylim(ax1,[-100 700])
-            axis equal
+            if expcond ==2
+                circle(62,301,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(50,292,50)
+                hold on
+            end
+            
+                        
+            if expcond ==4
+                circle(60,261,50)
+                hold on
+            end
+                 
+                                   
+            if expcond ==5
+                circle(95,253,50)
+                hold on
+            end
+                                              
+            if expcond ==6
+                circle(102,262,50)
+                hold on
+            end
+            
         end
         
         %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
