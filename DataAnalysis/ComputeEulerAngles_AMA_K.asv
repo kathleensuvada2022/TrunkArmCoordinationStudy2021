@@ -355,11 +355,11 @@ j=k; % a part of larger loop outside this function.
     end
     
                         
-%     if strcmp(partid,'RTIS1004')
-%             TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
-%       
-%     end
-%     
+    if strcmp(partid,'RTIS1004')
+            TtoG(1:3,1:3) = rotz(180)*TtoG(1:3,1:3);
+      
+    end
+    
     
     if strcmp(partid,'RTIS1006')
         
