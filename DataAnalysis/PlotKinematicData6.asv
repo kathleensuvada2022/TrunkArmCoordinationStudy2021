@@ -1485,7 +1485,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
     
     
 %     

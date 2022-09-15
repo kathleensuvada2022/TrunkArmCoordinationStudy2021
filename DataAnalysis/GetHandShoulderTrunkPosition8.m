@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -424,7 +424,7 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 
 
 
-%% Compute the BLs in global CS
+%% Compute the BLs and TRUNK CS in global CS
 %From MetriaKinDaq
 % dig.bl{dig.currentSEG}(dig.currentBL,:) =[Ptip_RB' quat_pointer PRB_RB' quat_RB];
 %Gives XYZ of pointer tool,quaterion of pointer marker in GCS, then the marker in LCS (this should always be about 001, then quaternion marker in GCS
@@ -447,21 +447,24 @@ for i=1:nimag % loop through time points
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
     Tstom(1:3,4) = xshoulder(i,1:3)'; %*************
     
-    BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point of the acromion in the LCS
+    BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time
     
     % for the jugular notch using the trunk marker
-    Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  *************
+    Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  ************* MARKER data during trial IE HT marker to global
     Tttom(1:3,4) = xtrunk(i,1:3)';% *************
     
-    BLg3=(Tttom) *[bl{1}(2,1:3) 1]';  %grabbing the XYZ point of the anterior acromion in the LCS
+    BLg3=(Tttom) *[bl{1}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
     xjug(i,:)=BLg3(1:3,1)'; % X Y Z of Jugular notch in the global frame and rows are time
+    
+    HTttoG = (Tttom) * TrunkCoord; % HT of trunk CS in GCS at all frames of trial.
+    
     
     % for the GH_estimated using the shoulder marker
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
     Tstom(1:3,4) = xshoulder(i,1:3)'; %*************
     
-    BLg4=(Tstom) *[bl{2}(6,1:3) 1]';  %grabbing the XYZ point of the acromion in the LCS
+    BLg4=(Tstom) *[bl{2}(6,1:3) 1]';  %grabbing the XYZ point in the LCS
     xghest(i,:)=BLg4(1:3,1)'; % X Y Z of GHr (estimated) in the global frame and rows are time
     
 end
