@@ -94,6 +94,8 @@ BLs = setup.bl; % BLs in marker CS
 % From BL Digitization File- creating Scapular CS in MARKER frame.
 ScapCoord = Asscap_K(BLs,hand,0);
 
+%% Creating Trunk CS
+TrunkCoord = asthorho_K2022(BLs,hand);
 
 %%  Computing GH estimate
 gh_est = Ghest_2022(ScapCoord,BLs,0);

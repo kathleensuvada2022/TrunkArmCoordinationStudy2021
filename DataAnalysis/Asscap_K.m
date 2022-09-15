@@ -15,7 +15,7 @@
 % - ScapCS: created CS of the scapula for the participant. This is in
 % MARKER frame. 
 
-% K. Suvada - August 2022.
+% K. Suvada - August/September 2022.
 
 function ScapCoord = Asscap_K(BLs,hand,flag)
 
