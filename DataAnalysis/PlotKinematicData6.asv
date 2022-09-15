@@ -1485,7 +1485,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
     
 %     
@@ -1837,6 +1837,12 @@ for i=1: length(mtrials)
                 pause
             end
             xjug= xjugnew;
+            
+            % Filling in HTttog Matrix and use method 'Nearest' so will
+            % duplicate whichever sample is closest and not NAN. Sept 2022.
+            
+           filled_data =   find(isnan(xjug(1:250)));
+            
             
         end
         

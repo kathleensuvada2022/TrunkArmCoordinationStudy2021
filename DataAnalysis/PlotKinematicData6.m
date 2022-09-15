@@ -1838,6 +1838,12 @@ for i=1: length(mtrials)
             end
             xjug= xjugnew;
             
+            % Filling in HTttog Matrix and use method 'Nearest' so will
+            % duplicate whichever sample is closest and not NAN. Sept 2022.
+            [HTttognew,TF] = fillmissing(HTttog,'nearest','SamplePoints',t);
+          
+            HTttog =HTttognew; 
+            
         end
         
     end
