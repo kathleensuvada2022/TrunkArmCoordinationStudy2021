@@ -1,3 +1,24 @@
+%% Trunk CS 2022
+
+% Function to create Trunk CS based on Kacey's Definition. 
+% For the right arm, x is to the right, z is up and y is forwards. Using
+% the Bls of the scapula in the marker cs, create a cs for the scapula in
+% the marker frame. 
+
+% Inputs: 
+% - blmat: full bonylandmark data from participant's setup file. These are
+% saved in the coordinate frame of the marker. 
+% - arm: CS has two different definitions depending on if we are
+% looking at the right or the left hand. Notice changed definition for left
+% hand to mimic right hand. 
+
+% Outputs:
+% - TrunkCS: created CS of the Trunk for the participant. This is in
+% MARKER frame or local CS.
+
+% K. Suvada - September 2022.
+
+
 function TrunkCS = asthorho_K2022(blmat,arm,flag)
 %% Edited based on shifted CS for K.Suvada's Experiments
 % Scapular BLS in Scapula Marker Frame
@@ -33,6 +54,12 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]';
 xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
+if strcmp(arm,'Left')
+    
+xhulp = -xhulp;
+
+end
+
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
@@ -41,10 +68,6 @@ yt = cross(zt(1:3),xhulp); %Kacey changed July 2022 (original line 31)
 
 yt=yt/norm(yt);
 
-if strcmp(arm,'Left')
-    
-yt = cross(zt(1:3),xhulp);  
-end
 
 %xt = cross(yt(1:3),zt);
 

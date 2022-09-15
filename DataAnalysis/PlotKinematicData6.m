@@ -1876,7 +1876,41 @@ for i=1: length(mtrials)
             [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
             
             
+             
+            % Concate Columns Now that no NANs and put HT back together
             
+            HTtognew(:,1,:) = HTttognewCol1';
+            HTtognew(:,2,:) = HTttognewCol2';
+            HTtognew(:,3,:) = HTttognewCol3';
+            HTtognew(:,4,:) = HTttognewCol4';
+            
+            % Now replace original HT matrix with filled Matrix - Resampled
+          
+            % HT Trunk to Global CS
+            HTttog = HTtognew;
+            
+           
+            % Need HT G to T for converting Xhand to Trunk CS 
+         
+            for w = 1:length(HTttog)
+                HTgtot(:,:,w) = inv(HTttog(:,:,w));
+            end
+            
+        else % If there are no NANs in TRUNK, still need to separate columns to resample
+            
+            HTttognewCol1 = squeeze(HTttog(:,1,:))';
+            HTttognewCol2 = squeeze(HTttog(:,2,:))';
+            HTttognewCol3 = squeeze(HTttog(:,3,:))';
+            HTttognewCol4 = squeeze(HTttog(:,4,:))';
+            
+            % Resampling
+            [HTttognewCol1,t2]=resampledata(HTttognewCol1,t,89,100);
+            % Resampling
+            [HTttognewCol2,t2]=resampledata(HTttognewCol2,t,89,100);
+            % Resampling
+            [HTttognewCol3,t2]=resampledata(HTttognewCol3,t,89,100);
+            % Resampling
+            [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
             
             % Concate Columns Now that no NANs and put HT back together
             
@@ -1885,13 +1919,59 @@ for i=1: length(mtrials)
             HTtognew(:,3,:) = HTttognewCol3';
             HTtognew(:,4,:) = HTttognewCol4';
             
-            % Now replace original HT matrix with filled Matrix 
+            % Now replace original HT matrix with filled Matrix - Resampled
+            
+            % HT Trunk to Global CS
             HTttog = HTtognew;
             
+            
+            % Need HT G to T for converting Xhand to Trunk CS
+            for w = 1:length(HTttog)
+                HTgtot(:,:,w) = inv(HTttog(:,:,w));
+            end
         end
+      
         
+        
+        
+    else % If there are no nans in trunk or hand, still need to do this step
+        
+        HTttognewCol1 = squeeze(HTttog(:,1,:))';
+        HTttognewCol2 = squeeze(HTttog(:,2,:))';
+        HTttognewCol3 = squeeze(HTttog(:,3,:))';
+        HTttognewCol4 = squeeze(HTttog(:,4,:))';
+        
+        % Resampling
+        [HTttognewCol1,t2]=resampledata(HTttognewCol1,t,89,100); 
+        % Resampling
+        [HTttognewCol2,t2]=resampledata(HTttognewCol2,t,89,100);
+        % Resampling
+        [HTttognewCol3,t2]=resampledata(HTttognewCol3,t,89,100);
+        % Resampling
+        [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
+        
+        % Concate Columns Now that no NANs and put HT back together
+        
+        HTtognew(:,1,:) = HTttognewCol1';
+        HTtognew(:,2,:) = HTttognewCol2';
+        HTtognew(:,3,:) = HTttognewCol3';
+        HTtognew(:,4,:) = HTttognewCol4';
+        
+        % Now replace original HT matrix with filled Matrix - Resampled
+        
+        % HT Trunk to Global CS
+        HTttog = HTtognew;
+        
+        
+        % Need HT G to T for converting Xhand to Trunk CS
+      
+        for w = 1:length(HTttog)
+        HTgtot(:,:,w) = inv(HTttog(:,:,w));
+        end 
     end
     
+    
+
     
     
     %% Computing Dist/Vel/Angles With Original Data
@@ -2435,6 +2515,46 @@ for i=1: length(mtrials)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
     % pause
+  
+    
+ % September 2022
+ 
+ % Below gives multiple ways to get data into trunk coordinate system. 
+ % Current Method uses the HT matrix of TRUNK to include not just translation but
+ % orientation ST data is in the frame of the TRUNK CS at the start of the
+ % reach idx(1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    %% September 2022 - Adding Trunk HT matrix to convert Hand, Shoulder, Trunk idx(1)- not just translation
+    
+    
+    % HAND
+    
+    xhand = [xhand repmat(1,length(xhand),1)]; 
+    xhand = xhand';
+  
+    xhand = HTgtot(:,:,idx(1))* xhand; %Getting Hand in Trunk Frame at idx(1)
+    
+    xhand = xhand';
+    
+    
+    % Shoulder 
+        
+    gh = [gh repmat(1,length(gh),1)]; 
+    gh = gh';
+  
+    gh = HTgtot(:,:,idx(1))* gh; %Getting Hand in Trunk Frame at idx(1)
+    
+    gh = gh';
+    
+    % Trunk 
+    
+    xjug = [xjug repmat(1,length(xjug),1)];
+    xjug = xjug';
+    
+    xjug = HTgtot(:,:,idx(1))* xjug; %Getting Hand in Trunk Frame at idx(1)
+    
+    xjug = xjug';
+    
     
     %% Subtracting Trunk at first frame of trial From Hand, Arm Length, and Shoulder
 %  
@@ -2450,19 +2570,20 @@ for i=1: length(mtrials)
 %     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
 %     
     %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
- 
-    % Centering at the Trunk  (idx(1))
-    xhand = xhand-xjug(idx(1),:);
-    xjug_origin = xjug-xjug(idx(1),:);
-    xshldr = xshldr - xjug(idx(1),:);
-    
-    % for GH need to also account for trunk contributing to shoulder 
-  
-    gh = gh-xjug(idx(1),:);
-    
-    gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
-       
-    
+%  
+%     % Centering at the Trunk  (idx(1))
+%     xhand = xhand-xjug(idx(1),:);
+%     xjug_origin = xjug-xjug(idx(1),:);
+%     xshldr = xshldr - xjug(idx(1),:);
+%     
+%     % for GH need to also account for trunk contributing to shoulder 
+%   
+%     gh = gh-xjug(idx(1),:);
+%     
+%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
+%        
+%     
+
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
     %     RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));
