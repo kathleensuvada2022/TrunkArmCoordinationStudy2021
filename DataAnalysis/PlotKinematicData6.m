@@ -95,7 +95,7 @@ BLs = setup.bl; % BLs in marker CS
 ScapCoord = Asscap_K(BLs,hand,0);
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand);
+TrunkCoord = asthorho_K2022(BLs,hand,1); %Returns Trunk CS in Marker CS HT from T to M during digitization
 
 %%  Computing GH estimate
 gh_est = Ghest_2022(ScapCoord,BLs,0);

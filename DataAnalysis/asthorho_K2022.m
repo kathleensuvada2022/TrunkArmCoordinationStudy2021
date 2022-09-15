@@ -1,5 +1,8 @@
 function TrunkCS = asthorho_K2022(blmat,arm,flag)
 %% Edited based on shifted CS for K.Suvada's Experiments
+% Scapular BLS in Scapula Marker Frame
+
+blmat= blmat{1,1}; %Grabbing just the trunk BLS from the BL file. 
 
 BLnames_t = ["SC","IJ","PX","C7","T8"];
 
@@ -27,7 +30,7 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]';
 
 
 %xhulp is vector normal to the plane
-xhulp = nvector; % if xhulp(1)<0 xhulp = -nvector;end
+xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
@@ -72,10 +75,10 @@ if flag ==1
   figure(29)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BLnames_t)
-    plot3(BLs_lcs_t(1,i),BLs_lcs_t(2,i),BLs_lcs_t(3,i),'-o','Color','b','MarkerSize',10,...
+    plot3(BLs_lcs_t{1,i}(1),BLs_lcs_t{1,i}(2),BLs_lcs_t{1,i}(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
-    text(BLnames_t(1,i),BLnames_t(2,i),BLnames_t(3,i),BLnames_t(i),'FontSize',14)
+    text(BLs_lcs_t{1,i}(1),BLs_lcs_t{1,i}(2),BLs_lcs_t{1,i}(3),BLnames_t(i),'FontSize',14)
 end
 
 % Plotting Trunk CS
