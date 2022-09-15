@@ -1839,10 +1839,43 @@ for i=1: length(mtrials)
             xjug= xjugnew;
             
             % Filling in HTttog Matrix and use method 'Nearest' so will
-            % duplicate whichever sample is closest and not NAN. Sept 2022.
+            % duplicate whichever sample is closest and not NAN. 
+           
             
-           filled_data =   find(isnan(xjug(1:250)));
+            % Interpolation function doesn't like HT with 4x4xN samples - break up
+            % each column then put back together. 
             
+            % Grabbing Closest non NAN sample 
+            
+            % Sept. 2022
+           
+            % Col 1 of HT
+            [HTttognewCol1,TF] = fillmissing(squeeze(HTttog(:,1,:))','nearest','SamplePoints',t); %First Column at every point in time
+           
+            % Resample 
+            [HTttognewCol1,t2]=resampledata(HTttognewCol1,t,89,100);
+            
+            % Col 2 of HT
+            [HTttognewCol2,TF] = fillmissing(squeeze(HTttog(:,2,:))','nearest','SamplePoints',t); %2nd Column at every point in time 
+            
+            % Col 3 of HT
+            [HTttognewCol3,TF] = fillmissing(squeeze(HTttog(:,3,:))','nearest','SamplePoints',t); %3rd Column at every point in time
+            
+            % Col 4 of HT
+            [HTttognewCol4,TF] = fillmissing(squeeze(HTttog(:,4,:))','nearest','SamplePoints',t); %4th Column at every point in time
+
+            
+            
+            
+            % Concate Columns Now that no NANs and put HT back together
+            
+            HTtognew(:,1,:) = HTttognewCol1';
+            HTtognew(:,2,:) = HTttognewCol2';
+            HTtognew(:,3,:) = HTttognewCol3';
+            HTtognew(:,4,:) = HTttognewCol4';
+            
+            % Now replace original HT matrix with filled Matrix 
+            HTttog = HTtognew;
             
         end
         
@@ -2243,7 +2276,7 @@ for i=1: length(mtrials)
     
     % Resampling GH
     [gh,t2]=resampledata(gh,t,89,100);
-    
+ 
     % Filling Missing Acromion Data - need this to resample it
     [xshldrnew,TF] = fillmissing(xshldr,'Nearest','SamplePoints',t);
     
