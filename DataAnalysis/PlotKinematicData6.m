@@ -1620,7 +1620,12 @@ for i=1: length(mtrials)
     
     
     %% Checking NANS and Interpolating Prior to Resampling
+    HTttognewCol1 = zeros(length(HTttog),4);
+    HTttognewCol2 =zeros(length(HTttog),4);
+    HTttognewCol3 =zeros(length(HTttog),4);
+    HTttognewCol4 =zeros(length(HTttog),4);
     
+ 
     
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %
         
@@ -1875,7 +1880,8 @@ for i=1: length(mtrials)
             % Resampling
             [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
             
-            
+            %Initializing 
+            HTtognew = zeros(4,4,length(HTttognewCol4));
              
             % Concate Columns Now that no NANs and put HT back together
             
@@ -1912,6 +1918,10 @@ for i=1: length(mtrials)
             % Resampling
             [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
             
+            
+            %Initializing
+            HTtognew = zeros(4,4,length(HTttognewCol4));
+             
             % Concate Columns Now that no NANs and put HT back together
             
             HTtognew(:,1,:) = HTttognewCol1';
@@ -1950,6 +1960,11 @@ for i=1: length(mtrials)
         % Resampling
         [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
         
+        
+        
+        %Initializing
+        HTtognew = zeros(4,4,length(HTttognewCol4));
+             
         % Concate Columns Now that no NANs and put HT back together
         
         HTtognew(:,1,:) = HTttognewCol1';
@@ -2524,7 +2539,7 @@ for i=1: length(mtrials)
  % orientation ST data is in the frame of the TRUNK CS at the start of the
  % reach idx(1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-    %% September 2022 - Adding Trunk HT matrix to convert Hand, Shoulder, Trunk idx(1)- not just translation
+    %% September 2022 - Using Trunk HT matrix to convert Hand, Shoulder, Trunk idx(1)- not just translation but rotation too
     
     
     % HAND
@@ -2641,7 +2656,7 @@ for i=1: length(mtrials)
     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-    plot(xjug_origin(:,1),xjug_origin(:,2),'Linewidth',2)  % Computed Jug Notch
+    plot(xjug(:,1),xjug(:,2),'Linewidth',2)  % Computed Jug Notch
     
     plot(gh(:,1),gh(:,2),'Linewidth',2)
     % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
@@ -2649,11 +2664,9 @@ for i=1: length(mtrials)
     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
     
-    %     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    %     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    %
-    plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
+
+    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
       
     plot(0,0,'o','MarkerEdgeColor','g','MarkerSize',10); %trunk start which will always be at 0,0 --> centered at trunk start
 
@@ -2686,7 +2699,7 @@ for i=1: length(mtrials)
     % Trunk
     % Based on jugular notch difference idx(3) - idx(1)
     
-    trunk_exc =  sqrt((xjug_origin(idx(3),1)-xjug_origin(idx(1),1))^2 +(xjug_origin(idx(3),2)-xjug_origin(idx(1),2))^2);
+    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
@@ -3020,7 +3033,7 @@ for i=1: length(mtrials)
     %  hold(ax1,'on')
     % p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
     %subplot(1,2,2)
-    p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
+    p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
     % %  %  p1=plot([xhand(:,1) gh(:,1) xjug_origin(:,1)],[xhand(:,2) gh(:,2) xjug_origin(:,2)],'LineWidth',3);
     %   hold(ax1,'on')
     % %
@@ -3048,8 +3061,8 @@ for i=1: length(mtrials)
     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
     
     %
-    plot(xjug_origin(idx(1),1),xjug_origin(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug_origin(idx(3),1),xjug_origin(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
     
     set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
     
