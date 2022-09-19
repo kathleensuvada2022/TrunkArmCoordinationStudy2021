@@ -2569,20 +2569,7 @@ for i=1: length(mtrials)
     
     xjug = xjug';
     
-    
-    %% Subtracting Trunk at first frame of trial From Hand, Arm Length, and Shoulder
-%  
-%     %Centering at the Trunk CS (first time point)
-%     xhand = xhand-xjug(1,:);
-%     xjug_origin = xjug-xjug(1,:);
-%     xshldr = xshldr - xjug(1,:);
-%     
-%     % for GH need to also account for trunk contributing to shoulder 
-%   
-%     gh = gh-xjug(1,:); %Centering Sh at the Trunk CS (first time point)
-%     
-%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
-%     
+
     %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
 %  
 %     % Centering at the Trunk  (idx(1))
@@ -2597,7 +2584,20 @@ for i=1: length(mtrials)
 %     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
 %        
 %     
-
+    
+    %% Subtracting Trunk at first frame of trial From Hand, Arm Length, and Shoulder
+%  
+%     %Centering at the Trunk CS (first time point)
+%     xhand = xhand-xjug(1,:);
+%     xjug_origin = xjug-xjug(1,:);
+%     xshldr = xshldr - xjug(1,:);
+%     
+%     % for GH need to also account for trunk contributing to shoulder 
+%   
+%     gh = gh-xjug(1,:); %Centering Sh at the Trunk CS (first time point)
+%     
+%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
+%     
     %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
     %     RTIS 2008- Left
     xhandnew = zeros(3,length(xhand));

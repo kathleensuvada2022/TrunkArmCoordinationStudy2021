@@ -1,45 +1,49 @@
 % Tiled Layout Script
+% September 2022
 
-    
-    tiledlayout(1,6)
+% Script to Create Plots that are synced
+% Can adjust axes manually and one axis changes them all. 
+    figure(4)
+tiledlayout(1,6)
 
 % First plot
 ax1 = nexttile;
 
 
-% Second plot
+%% Second plot
 ax2 = nexttile;
 
 
-% Third plot
+%% Third plot
 ax3 = nexttile;
 
    
-% 4th plot
+%% 4th plot
 ax4 = nexttile;
 
-% 5th Plot
+%% 5th Plot
 ax5 = nexttile;
 
-% 6th Plot
+%% 6th Plot
 ax6 = nexttile;
 
-% Command that syncs up all the axes 
+%% Command that syncs up all the axes 
 
 linkaxes([ax1 ax2 ax3 ax4 ax5 ax6],'xy')
 
+%%
 %RTIS1003
 axis([ax1 ax2 ax3 ax4 ax5 ax6],[-300 300 -300 1000])
 axis equal
 
-%RTIS1004
+%% RTIS1004
 axis([ax1 ax2],[-600 300 -500 1400])
 axis equal
 
- %RTIS1005
+ %% RTIS1005
  axis([ax1 ax2],[-50 350 -100 1000])
 axis equal
 
- %RTIS1006
+ %% RTIS1006
  axis([ax1 ax2],[-50 200 -100 700])
 axis equal
