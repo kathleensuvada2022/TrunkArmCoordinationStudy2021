@@ -1961,6 +1961,7 @@ for i=1: length(mtrials)
         [HTttognewCol4,t2]=resampledata(HTttognewCol4,t,89,100);
         
         
+        
         %Initializing
         HTtognew = zeros(4,4,length(HTttognewCol4));
              
