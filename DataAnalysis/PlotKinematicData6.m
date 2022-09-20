@@ -1564,41 +1564,44 @@ for i=1: length(mtrials)
     
     %
     %%
-    if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in GCS creation
-        
-        xhandfix(:,1) = xhand(:,2);
-        xhand(:,2) = -xhand(:,1);
-        
-        xhand(:,1) =  xhandfix(:,1);
-        
-        
-        xghestfix(:,1) = xghest(:,2);
-        xghest(:,2) = -xghest(:,1);
-        
-        xghest(:,1) =  -xghestfix(:,1);
-        
-        xshldrfix(:,1) = xshldr(:,2);
-        xshldr(:,2) = -xshldr(:,1);
-        
-        xshldr(:,1) =  -xshldrfix(:,1);
-        
-        
-        
-    end
-    %
+%     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in
+%     GCS creation -
+
+% no longer needed because now in trunk CS - SEPT 2022
+%         
+%         xhandfix(:,1) = xhand(:,2);
+%         xhand(:,2) = -xhand(:,1);
+%         
+%         xhand(:,1) =  xhandfix(:,1);
+%         
+%         
+%         xghestfix(:,1) = xghest(:,2);
+%         xghest(:,2) = -xghest(:,1);
+%         
+%         xghest(:,1) =  -xghestfix(:,1);
+%         
+%         xshldrfix(:,1) = xshldr(:,2);
+%         xshldr(:,2) = -xshldr(:,1);
+%         
+%         xshldr(:,1) =  -xshldrfix(:,1);
+%         
+%         
+%         
+%     end
+%     %
     
-    
-    if strcmp(partid,'RTIS1006')
-        
-        xjugfix(:,1) = xjug(:,2);
-        xjug(:,2) = -xjug(:,1);
-        
-        xjug(:,1) =  xjugfix(:,1);
-        
-        
-        xjug(:,1) = -xjug(:,1);
-    end
-    
+%     
+%     if strcmp(partid,'RTIS1006')
+%         
+%         xjugfix(:,1) = xjug(:,2);
+%         xjug(:,2) = -xjug(:,1);
+%         
+%         xjug(:,1) =  xjugfix(:,1);
+%         
+%         
+%         xjug(:,1) = -xjug(:,1);
+%     end
+%     
     
     
     %%   Not sure what this is
@@ -2868,23 +2871,23 @@ for i=1: length(mtrials)
 %             xlim(ax1,[-300 300])
 %             ylim(ax1,[-100 700])
             if expcond ==1
-                circle(25,304,50)
+                circle(109,280,50)
                 hold on
             end
             
             if expcond ==2
-                circle(62,301,50)
+                circle(87,287,50)
                 hold on
             end
             
             if expcond ==3
-                circle(50,292,50)
+                circle(95,274,50)
                 hold on
             end
             
                         
             if expcond ==4
-                circle(60,261,50)
+                circle(96,236,50)
                 hold on
             end
                  
@@ -2895,7 +2898,7 @@ for i=1: length(mtrials)
             end
                                               
             if expcond ==6
-                circle(102,262,50)
+                circle(71,250,50)
                 hold on
             end
             
