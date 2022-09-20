@@ -37,7 +37,7 @@ axis([ax1 ax2 ax3 ax4 ax5 ax6],[-300 300 -300 1000])
 axis equal
 
 %% RTIS1004
-axis([ax1 ax2],[-600 300 -500 1400])
+axis([ax1 ax2],[-400 300 -200 1000])
 axis equal
 
  %% RTIS1005

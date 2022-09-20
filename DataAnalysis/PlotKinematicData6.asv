@@ -2794,7 +2794,7 @@ for i=1: length(mtrials)
             end
             
             if expcond ==3
-                circle(-91,355,50)
+                circle(-97,317,50)
                 hold on
             end
             
@@ -2811,7 +2811,7 @@ for i=1: length(mtrials)
             end
                                               
             if expcond ==6
-                circle(-104,416,50)
+                circle(-201,350,50)
                 hold on
             end
                      
@@ -2828,7 +2828,7 @@ for i=1: length(mtrials)
 %             ylim(ax1,[-200 800])
 %             axis equal
             if expcond ==1
-                circle(162,315,50)
+                circle(195,370,50)
                 hold on
             end
             if expcond ==2

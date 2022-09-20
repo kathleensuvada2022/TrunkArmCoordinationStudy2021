@@ -19,7 +19,7 @@
 % K. Suvada - September 2022.
 
 
-function TrunkCS = asthorho_K2022(blmat,arm,flag)
+function TrunkCS = asthorho_K2022(blmat,arm,flag,partid)
 %% Edited based on shifted CS for K.Suvada's Experiments
 % Scapular BLS in Scapula Marker Frame
 
@@ -37,7 +37,7 @@ BLs_lcs_t ={SC,IJ,PX,C7,T8};
 zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
 zt = zt/norm(zt);
 
-blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]';
+blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]'; %For making a plane out of IJ,PX, C7,T8
 
 
 % [A,DATAa,nvector,e]=vlak(blmat);
@@ -54,7 +54,7 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]';
 xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
-if strcmp(arm,'Left')
+if strcmp(partid,'RTIS1003')
     
 xhulp = -xhulp;
 
@@ -77,11 +77,11 @@ xt = cross(yt,zt);
 % t = [xt,yt,zt];
 t = [xt,yt,zt]; 
 
+
 % yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
 % xt = cross(yt,T8-PX);  xt = xt/norm(xt);
 % zt = cross(xt,yt);
 
-t = [xt,yt,zt];
 
 diff=norm(t)-1>=10*eps;
 if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
