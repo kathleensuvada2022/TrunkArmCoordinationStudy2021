@@ -115,11 +115,11 @@ for i=1: length(mtrials)
     if i==1
         
         %    for mac
-        %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
         %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
         %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
         %               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -2931,6 +2931,43 @@ for i=1: length(mtrials)
             ylim(ax1,[-200 650])
             axis equal
         end
+        
+        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                circle(-179,290,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-77,307,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-70,285,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-145,291,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-111,298,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-108,309,50)
+                hold on
+            end
+            
+        end
+        
         
         
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
