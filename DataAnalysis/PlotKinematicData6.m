@@ -3004,6 +3004,78 @@ for i=1: length(mtrials)
             
         end
         
+                        
+        if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                circle(23,349,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(12,305,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(12,305,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-37,359,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-19,294,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-19,294,50)
+                hold on
+            end
+            
+        end
+                                
+        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                 circle(23,301,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-40,209,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-39,213,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(12,305,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-53,207,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-53,207,50)
+                hold on
+            end
+            
+        end
         
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);

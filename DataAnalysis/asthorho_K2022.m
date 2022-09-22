@@ -55,8 +55,8 @@ xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
 
-% Sometimes coming out of vlak function odd xhulps -Check BLS ok and if so, modify accordingly to
-% get pointing toward the right. 
+%% Sometimes coming out of vlak function odd xhulps -Check BLS ok and if ok, modify accordingly to
+% get xhulp pointing toward the right. 
 
 if strcmp(partid,'RTIS1003')
     
@@ -70,6 +70,24 @@ if strcmp(partid,'RTIS2003')
         xhulp = rotz(-90)*xhulp;
     end
 end
+
+
+if strcmp(partid,'RTIS2006')
+    if strcmp(arm,'Right')
+        
+        xhulp = -xhulp;
+    end
+end
+
+
+if strcmp(partid,'RTIS2007')
+    if strcmp(arm,'Right')
+        
+        xhulp = -xhulp;
+    end
+end
+
+%%
 
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 

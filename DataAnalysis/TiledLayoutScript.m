@@ -54,3 +54,9 @@ axis equal
 %% RTIS2003 - Left
   axis([ax1 ax2],[-300 300 -100 900])
 axis equal
+%% RTIS2006 - Right
+  axis([ax1 ax2],[-200 300 -100 800])
+axis equal
+%% RTIS2007 - Right
+   axis([ax1 ax2],[-200 200 -200 700])
+axis equal
