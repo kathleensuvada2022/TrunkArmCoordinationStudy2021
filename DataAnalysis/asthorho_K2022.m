@@ -87,6 +87,13 @@ if strcmp(partid,'RTIS2007')
     end
 end
 
+if strcmp(partid,'RTIS2008')
+    if strcmp(arm,'Right')
+        
+        xhulp = -xhulp;
+    end
+end
+
 %%
 
 %Kacey 10.4.21 flipping order of cross product for Y into the page 

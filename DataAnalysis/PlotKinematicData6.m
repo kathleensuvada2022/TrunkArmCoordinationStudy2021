@@ -2606,25 +2606,25 @@ for i=1: length(mtrials)
     xhandnew = zeros(3,length(xhand));
     ghnew =zeros(3,length(xhand));
     xshldrnew =zeros(3,length(xshldr));
-    
-    if strcmp(partid,'RTIS2008')
-        if strcmp(hand,'Left')
-            
-            for p = 1:length(gh)
-                ghnew(:,p) = roty(pi)*gh(p,:)';
-                xhandnew(:,p) = roty(pi)*xhand(p,:)';
-                xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
-            end
-            
-            ghnew = ghnew';
-            xhandnew= xhandnew';
-            xshldrnew= xshldrnew';
-            
-            gh = ghnew;
-            xhand = xhandnew;
-            xshldr = xshldrnew;
-        end
-    end
+%     
+%     if strcmp(partid,'RTIS2008')
+%         if strcmp(hand,'Left')
+%             
+%             for p = 1:length(gh)
+%                 ghnew(:,p) = roty(pi)*gh(p,:)';
+%                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
+%                 xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
+%             end
+%             
+%             ghnew = ghnew';
+%             xhandnew= xhandnew';
+%             xshldrnew= xshldrnew';
+%             
+%             gh = ghnew;
+%             xhand = xhandnew;
+%             xshldr = xshldrnew;
+%         end
+%     end
     
     %RTIS 2010- Left
     
@@ -3072,6 +3072,42 @@ for i=1: length(mtrials)
             
             if expcond ==6
                 circle(-53,207,50)
+                hold on
+            end
+            
+        end
+        
+        if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                  circle(227,356,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(227,356,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(273,332,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(227,356,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(225,304,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(225,304,50)
                 hold on
             end
             
