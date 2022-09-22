@@ -2674,7 +2674,7 @@ for i=1: length(mtrials)
 
     axis equal
     legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
-    title('Overhead View of Reach- Subtracting Trunk Initial Position' ,'FontSize',16)
+    title('Overhead View of Reach- HT Trunk Initial Position' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
     
@@ -2967,7 +2967,42 @@ for i=1: length(mtrials)
             end
             
         end
-        
+                
+        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                circle(-139,332,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-154,331,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-132,316,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-72,281,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-58,301,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-79,288,50)
+                hold on
+            end
+            
+        end
         
         
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')

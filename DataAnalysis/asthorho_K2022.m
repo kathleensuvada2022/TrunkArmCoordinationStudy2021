@@ -54,10 +54,21 @@ blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]'; %For making a plane out of IJ,PX, 
 xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
+
+% Sometimes coming out of vlak function odd xhulps -Check BLS ok and if so, modify accordingly to
+% get pointing toward the right. 
+
 if strcmp(partid,'RTIS1003')
     
 xhulp = -xhulp;
 
+end
+
+if strcmp(partid,'RTIS2003')
+    if strcmp(arm,'Left')
+        
+        xhulp = rotz(-90)*xhulp;
+    end
 end
 
 %Kacey 10.4.21 flipping order of cross product for Y into the page 
