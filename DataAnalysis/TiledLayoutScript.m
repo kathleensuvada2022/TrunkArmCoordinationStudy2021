@@ -48,6 +48,8 @@ axis equal
  axis([ax1 ax2],[-50 300 -100 700])
 axis equal
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stroke Paretic %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% RTIS2002 - Left
  axis([ax1 ax2],[-400 200 -100 800])
 axis equal
@@ -72,3 +74,31 @@ axis equal
 %% RTIS2011- Left
     axis([ax1 ax2],[-300 200 -200 625])
     axis equal
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stroke Non- Paretic %%%%%%%%%%%%%%%%%%%%%
+%% RTIS2001 - Left
+  axis([ax1 ax2],[-500 200 -100 800])
+axis equal
+%% RTIS2002 - Right
+  axis([ax1 ax2],[-100 300 -100 800])
+axis equal
+%% RTIS2003 - Right
+  axis([ax1 ax2],[-100 300 -100 800])
+axis equal
+%% RTIS2006 - Left
+  axis([ax1 ax2],[-100 300 -100 800])
+axis equal
+%% RTIS2007- Left
+  axis([ax1 ax2],[-400 100 -100 800])
+axis equal
+%% RTIS2008- Left
+  axis([ax1 ax2],[-300 100 -100 900])
+axis equal
+%% RTIS2009- Right
+  axis([ax1 ax2],[-100 450 -100 1000])
+axis equal
+%% RTIS2010- Left
+  axis([ax1 ax2],[-200 200 -100 900])
+axis equal
+%% RTIS2011- Right
+  axis([ax1 ax2],[-200 400 -100 1000])
+axis equal

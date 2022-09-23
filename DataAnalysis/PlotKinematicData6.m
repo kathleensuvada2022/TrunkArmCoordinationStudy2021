@@ -115,13 +115,13 @@ for i=1: length(mtrials)
     if i==1
         
         %    for mac
-                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
         %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
         %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-        %               load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+                      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -1508,57 +1508,57 @@ for i=1: length(mtrials)
     
     %%
     %% If Coordinate System Off (couldn't REG to room)
-    if strcmp(partid,'RTIS2009')
-        if strcmp(hand,'Right')
-            % Rotating xhand by -50 deg
-            xhand_transp = xhand';
-            RotMat = rotz(-50);
-            xhand_Rot50 = RotMat*xhand_transp;
-            xhand_Rot50 =xhand_Rot50';
-            xhand_Rot50(:,1) = -xhand_Rot50(:,1);
-            
-            xhand = xhand_Rot50;
-            
-            
-            % Rotating xjug by -50 deg
-            xjug_transp = xjug';
-            RotMat = rotz(-50);
-            xjug_Rot50 = RotMat*xjug_transp;
-            xjug_Rot50 =xjug_Rot50';
-            xjug_Rot50(:,1) = -xjug_Rot50(:,1);
-            
-            xjug = xjug_Rot50;
-            
-            % Rotating xtrunk by -50 deg
-            xtrunk_transp = xtrunk(:,1:3)';
-            RotMat = rotz(-50);
-            xtrunk_Rot50 = RotMat*xtrunk_transp;
-            xtrunk_Rot50 =xtrunk_Rot50';
-            xtrunk_Rot50(:,1) = -xtrunk_Rot50(:,1);
-            
-            xjug = xjug_Rot50;
-            
-            % Rotating xshldr by -50 deg
-            xshldr_transp = xshldr';
-            RotMat = rotz(-50);
-            xshldr_Rot50 = RotMat*xshldr_transp ;
-            xshldr_Rot50 =xshldr_Rot50';
-            xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
-            
-            xshldr = xshldr_Rot50;
-            
-            
-            % Rotating gh by -50 deg
-            xghest_transp = xghest';
-            RotMat = rotz(-50);
-            xghest_Rot50 = RotMat*xghest_transp ;
-            xghest_Rot50 =xghest_Rot50';
-            xghest_Rot50(:,1) = -xghest_Rot50(:,1);
-            
-            xghest = xghest_Rot50;
-            
-        end
-    end
+%     if strcmp(partid,'RTIS2009')
+%         if strcmp(hand,'Right')
+%             % Rotating xhand by -50 deg
+%             xhand_transp = xhand';
+%             RotMat = rotz(-50);
+%             xhand_Rot50 = RotMat*xhand_transp;
+%             xhand_Rot50 =xhand_Rot50';
+%             xhand_Rot50(:,1) = -xhand_Rot50(:,1);
+%             
+%             xhand = xhand_Rot50;
+%             
+%             
+%             % Rotating xjug by -50 deg
+%             xjug_transp = xjug';
+%             RotMat = rotz(-50);
+%             xjug_Rot50 = RotMat*xjug_transp;
+%             xjug_Rot50 =xjug_Rot50';
+%             xjug_Rot50(:,1) = -xjug_Rot50(:,1);
+%             
+%             xjug = xjug_Rot50;
+%             
+%             % Rotating xtrunk by -50 deg
+%             xtrunk_transp = xtrunk(:,1:3)';
+%             RotMat = rotz(-50);
+%             xtrunk_Rot50 = RotMat*xtrunk_transp;
+%             xtrunk_Rot50 =xtrunk_Rot50';
+%             xtrunk_Rot50(:,1) = -xtrunk_Rot50(:,1);
+%             
+%             xjug = xjug_Rot50;
+%             
+%             % Rotating xshldr by -50 deg
+%             xshldr_transp = xshldr';
+%             RotMat = rotz(-50);
+%             xshldr_Rot50 = RotMat*xshldr_transp ;
+%             xshldr_Rot50 =xshldr_Rot50';
+%             xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
+%             
+%             xshldr = xshldr_Rot50;
+%             
+%             
+%             % Rotating gh by -50 deg
+%             xghest_transp = xghest';
+%             RotMat = rotz(-50);
+%             xghest_Rot50 = RotMat*xghest_transp ;
+%             xghest_Rot50 =xghest_Rot50';
+%             xghest_Rot50(:,1) = -xghest_Rot50(:,1);
+%             
+%             xghest = xghest_Rot50;
+%             
+%         end
+%     end
     
     
     
@@ -2628,26 +2628,26 @@ for i=1: length(mtrials)
     
     %RTIS 2010- Left
     
-    if strcmp(partid,'RTIS2010')
-        if strcmp(hand,'Left')
-            for p = 1:length(gh)
-                ghnew(:,p) = roty(pi)*gh(p,:)';
-                xhandnew(:,p) = roty(pi)*xhand(p,:)';
-                xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
-                
-            end
-            
-            ghnew = ghnew';
-            xhandnew= xhandnew';
-            xshldrnew= xshldrnew';
-            
-            
-            gh = ghnew;
-            xhand = xhandnew;
-            xshldr = xshldrnew;
-            
-        end
-    end
+%     if strcmp(partid,'RTIS2010')
+%         if strcmp(hand,'Left')
+%             for p = 1:length(gh)
+%                 ghnew(:,p) = roty(pi)*gh(p,:)';
+%                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
+%                 xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
+%                 
+%             end
+%             
+%             ghnew = ghnew';
+%             xhandnew= xhandnew';
+%             xshldrnew= xshldrnew';
+%             
+%             
+%             gh = ghnew;
+%             xhand = xhandnew;
+%             xshldr = xshldrnew;
+%             
+%         end
+%     end
     
     %%  Plots Post Subtraction of Initial Trunk Position - final data for outcome measures
     
@@ -2746,7 +2746,6 @@ for i=1: length(mtrials)
         %           ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
         
         if strcmp(partid,'RTIS1003')
-            %                ax1 = axes('Position',[0.05 0.05 0.90 0.90]);
 %             
             if expcond ==1
                 circle(-136.867,374.745,50)
@@ -2778,14 +2777,10 @@ for i=1: length(mtrials)
                 hold on
             end
 
-%             
-%  ylim([-50 800])
-%  
-%  axis equal
+
         end
         
         if strcmp(partid,'RTIS1004')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
             %             
             if expcond ==1
                 circle(-139,341,50)
@@ -2818,18 +2813,11 @@ for i=1: length(mtrials)
                 hold on
             end
                      
-                     
-%             xlim([-500 100])
-%             ylim([-200 800])
-%             axis equal
+
         end
         
         if strcmp(partid,'RTIS1005')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%             
-%             xlim(ax1,[-400 600])
-%             ylim(ax1,[-200 800])
-%             axis equal
+
             if expcond ==1
                 circle(162,315,50)
                 hold on
@@ -2866,10 +2854,7 @@ for i=1: length(mtrials)
         end
         
         if strcmp(partid,'RTIS1006')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%             
-%             xlim(ax1,[-300 300])
-%             ylim(ax1,[-100 700])
+
             if expcond ==1
                 circle(109,280,50)
                 hold on
@@ -2904,34 +2889,44 @@ for i=1: length(mtrials)
             
         end
         
-        %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
-        %           xlim([-500 600])
-        %           ylim([-100 700])
-        %           axis equal
-        %       end
-        
-        
-        
-        if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-600 200])
-            ylim(ax1,[-100 800])
-            axis equal
-        end
-        
-        %       if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
-        %           xlim(ax1,[-150 400])
-        %           ylim(ax1,[-100 750])
-        %           axis equal
-        %       end
-        %
-        %
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
-            xlim(ax1,[-200 500])
-            ylim(ax1,[-200 650])
-            axis equal
-        end
-        
+
+     
+        if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                 circle(-234,331,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-282,312,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-282,312,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-234,331,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-232,265,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-232,265,50)
+                hold on
+            end
+            
+        end   
+
         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
             
             if expcond ==1
@@ -2967,6 +2962,44 @@ for i=1: length(mtrials)
             end
             
         end
+        
+        
+        if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                 circle(185,367,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(185,367,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(185,367,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(185,367,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(142,403,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(142,403,50)
+                hold on
+            end
+            
+        end
+              
                 
         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
             
@@ -2999,6 +3032,42 @@ for i=1: length(mtrials)
             
             if expcond ==6
                 circle(-79,288,50)
+                hold on
+            end
+            
+        end
+                        
+        if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                 circle(196,278,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(196,278,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(196,278,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(196,278,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(196,278,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(196,278,50)
                 hold on
             end
             
@@ -3040,6 +3109,43 @@ for i=1: length(mtrials)
             end
             
         end
+        
+                                
+        if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                circle(-83,259,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-59,296,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-59,296,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-71,212,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-91,270,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-91,270,50)
+                hold on
+            end
+            
+        end
                                 
         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
             
@@ -3076,6 +3182,43 @@ for i=1: length(mtrials)
             end
             
         end
+                                        
+        if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                  circle(-252,337,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-252,337,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-252,337,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-268,289,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-308,339,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-308,339,50)
+                hold on
+            end
+            
+        end
+        
         
         if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
             
@@ -3108,6 +3251,42 @@ for i=1: length(mtrials)
             
             if expcond ==6
                 circle(225,304,50)
+                hold on
+            end
+            
+        end
+                
+        if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                   circle(-123,441,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-128,394,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-128,394,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-122,370,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-122,370,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-122,370,50)
                 hold on
             end
             
@@ -3148,7 +3327,43 @@ for i=1: length(mtrials)
             end
             
         end
-        
+                       
+        if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+            
+            if expcond ==1
+                   circle(216,415,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(189,362,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(189,362,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(198,359,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(198,359,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(198,320,50)
+                hold on
+            end
+            
+        end
+         
                         
         if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
             
@@ -3186,7 +3401,44 @@ for i=1: length(mtrials)
             
         end
         
-                                
+                
+                        
+        if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+            
+            if expcond ==1
+                    circle(-68,340,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(-68,340,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(-68,340,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(-89,315,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(-65,368,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(-65,368,50)
+                hold on
+            end
+            
+        end
+                                 
         if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
             
             if expcond ==1
@@ -3223,106 +3475,47 @@ for i=1: length(mtrials)
             
         end
         
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-200 400])
-            ylim(ax1,[-200 650])
-            axis equal
-        end
-        
-        
-        if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-400 400])
-            ylim(ax1,[-100 700])
-            axis equal
-        end
-        
-%         if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%             xlim(ax1,[-400 400])
-%             ylim(ax1,[-200 600])
-%             axis equal
-%         end
-        
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-400 400])
-            ylim(ax1,[-150 700])
-            axis equal
-        end
-        
-%         if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%             xlim(ax1,[-400 400])
-%             ylim(ax1,[-150 650])
-%             axis equal
-%         end
-%         
-        if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-400 400])
-            ylim(ax1,[-200 650])
-            axis equal
-        end
-        
-        if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-400 400])
-            ylim(ax1,[-200 700])
-            axis equal
-        end
-        
-%         if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
-%             ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-%             xlim(ax1,[-300 300])
-%             ylim(ax1,[-100 400])
-%             axis equal
-%         end
-        
+                                         
         if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
-            ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-            xlim(ax1,[-400 600])
-            ylim(ax1,[-200 800])
-            axis equal
+            
+            if expcond ==1
+                     circle(182,415,50)
+                hold on
+            end
+            
+            if expcond ==2
+                circle(182,415,50)
+                hold on
+            end
+            
+            if expcond ==3
+                circle(182,415,50)
+                hold on
+            end
+            
+            
+            if expcond ==4
+                circle(218,380,50)
+                hold on
+            end
+            
+            
+            if expcond ==5
+                circle(218,380,50)
+                hold on
+            end
+            
+            if expcond ==6
+                circle(218,380,50)
+                hold on
+            end
+            
         end
-%     end
-    % % %
-    % % %
-    % % %
-    % % %
-    % %
-    % %   end
-    % %
-    % % %
-    % % %
-    % % %   if i ==1
-    % % %       if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
-    % % %
-    % % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-    % % %           xlim(ax1,[-400 400])
-    % % %           ylim(ax1,[-220 500])
-    % % %           axis equal
-    % % %       end
-    % % %
-    % % %
-    % % %   end
-    % %
-    % %
-    % %   if i ==1
-    % %       if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
-    % %
-    % %           ax1 = axes('Position',[0.05 0.29 0.90 0.65]);
-    % %           xlim(ax1,[-400 400])
-    % %           ylim(ax1,[-220 700])
-    % %           axis equal
-    % %       end
-    % %
-    % %
-    % %   end
-    % % %
-    % %
-    %  hold(ax1,'on')
+
+        
+
+ 
+
     % p1=plot(ax1, [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug_origin(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug_origin(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
     %subplot(1,2,2)
     p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk

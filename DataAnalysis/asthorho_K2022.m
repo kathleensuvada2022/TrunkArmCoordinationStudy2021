@@ -69,6 +69,12 @@ if strcmp(partid,'RTIS2003')
         
         xhulp = rotz(-90)*xhulp;
     end
+    
+    if strcmp(arm,'Right')
+        xhulp = -xhulp;
+        
+        
+    end
 end
 
 
