@@ -95,7 +95,7 @@ BLs = setup.bl; % BLs in marker CS
 ScapCoord = Asscap_K(BLs,hand,0);
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 
 %%  Computing GH estimate
  gh_est = Ghest_2022(ScapCoord,BLs,0);
@@ -1489,22 +1489,34 @@ for i=1: length(mtrials)
     
     
 %     
-%           figure(19)
-%     % % %     %
-%           plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-%         hold on
-%         %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%         plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%         plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-%         plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-%     
-%         plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-%         axis equal
+          figure(19)
+    % % %     %
+          plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+        hold on
+        %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+        plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+        plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+        plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+    
+        plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+        axis equal
 %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
-%         title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%         xlabel('X position (mm)','FontSize',14)
-%         ylabel('Y position (mm)','FontSize',14)
+        title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+        xlabel('X position (mm)','FontSize',14)
+        ylabel('Y position (mm)','FontSize',14)
 %     
+% Plotting TRUNK CS XY plane in GCS
+quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
+text(HTttog(1,4)+50*HTttog(1,1:2),HTttog(2,4)+50*HTttog(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
+
+for h = 1:250
+HT_trunkinG  = HTttog(:,:,h);
+quiver(HT_trunkinG([1 1],4)',HT_trunkinG([2 2],4)',50*HT_trunkinG(1,1:2),50*HT_trunkinG(2,1:2))
+if h ==1
+text(HT_trunkinG(1,4)+50*HT_trunkinG(1,1:2),HT_trunkinG(2,4)+50*HT_trunkinG(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
+end
+pause
+end
     
     %%
     %% If Coordinate System Off (couldn't REG to room)

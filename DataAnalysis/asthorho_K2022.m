@@ -137,7 +137,7 @@ TrunkCS = [t orign_trunk];
 
 %% Plotting Trunk CS and Bls in Marker Frame
 if flag ==1
-  figure(29)
+  figure(35)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BLnames_t)
     plot3(BLs_lcs_t{1,i}(1),BLs_lcs_t{1,i}(2),BLs_lcs_t{1,i}(3),'-o','Color','b','MarkerSize',10,...
