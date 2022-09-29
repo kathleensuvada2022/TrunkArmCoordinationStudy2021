@@ -116,12 +116,12 @@ for i=1: length(mtrials)
         
         %    for mac
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-        %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
         %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-                      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+%                       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -2516,36 +2516,36 @@ for i=1: length(mtrials)
     
     %% Plotting Kinematic Data to Verify before outcome measures
     %
-    figure(9)
-    %
-    plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-    hold on
-    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-    
-    plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
-    
-    plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-    plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-    axis equal
-    legend('Acromion','3rd MCP','Jug Notch','Estimated GH','Start','End','FontSize',14)
-    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-    xlabel('X position (mm)','FontSize',14)
-    ylabel('Y position (mm)','FontSize',14)
-    % pause
-  
-    
+%     figure(9)
+%     %
+%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%     hold on
+%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%     
+%     plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
+%     
+%     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+%     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+%     plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+%     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+%     axis equal
+%     legend('Acromion','3rd MCP','Jug Notch','Estimated GH','Start','End','FontSize',14)
+%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
+%     % pause
+%   
+%     
  % September 2022
  
  % Below gives multiple ways to get data into trunk coordinate system. 
@@ -2571,13 +2571,15 @@ for i=1: length(mtrials)
     gh = [gh repmat(1,length(gh),1)]; 
     gh = gh';
   
-    gh_start = HTgtot(:,:,idx(1))* gh; %Getting Hand in Trunk Frame at 1 at idx(1)
-    gh_end = HTgtot(:,:,idx(3))* gh; %Getting Hand in Trunk Frame at 1 at idx(3)
+    gh_start = HTgtot(:,:,idx(1))* gh; %Getting GH in Trunk Frame at 1 at idx(1)
+    gh_end = HTgtot(:,:,idx(3))* gh; %Getting GH in Trunk Frame at 1 at idx(3)
    
-    gh_start'; %Accounting for trunk rotation at the start 
-    gh_end'; % Accounting for trunk rotation at the end
+    gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
+
+    gh_start=  gh_start'; %Accounting for trunk rotation at the start 
+    gh_end = gh_end'; % Accounting for trunk rotation at the end
     
-    %gh = gh';
+    gh = gh';
     
     % Trunk 
     
@@ -2668,32 +2670,32 @@ for i=1: length(mtrials)
     %%  Plots Post Subtraction of Initial Trunk Position - final data for outcome measures
     
     
-    figure(35)
-    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    hold on
-    plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-    plot(xjug(:,1),xjug(:,2),'Linewidth',2)  % Computed Jug Notch
-    
-    plot(gh(:,1),gh(:,2),'Linewidth',2)
-    % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
-    
-    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-    
-
-    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
-      
-    plot(0,0,'o','MarkerEdgeColor','g','MarkerSize',10); %trunk start which will always be at 0,0 --> centered at trunk start
-
-    axis equal
-    legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
-    title('Overhead View of Reach- HT Trunk Initial Position' ,'FontSize',16)
-    xlabel('X position (mm)','FontSize',14)
-    ylabel('Y position (mm)','FontSize',14)
-    
+%     figure(35)
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     hold on
+%     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2)  % Computed Jug Notch
+%     
+%     plot(gh(:,1),gh(:,2),'Linewidth',2)
+%     % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
+%     
+%     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
+%     
+% 
+%     plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
+%     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
+%       
+%     plot(0,0,'o','MarkerEdgeColor','g','MarkerSize',10); %trunk start which will always be at 0,0 --> centered at trunk start
+% 
+%     axis equal
+%     legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
+%     title('Overhead View of Reach- HT Trunk Initial Position' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
+%     
 
     
     
@@ -2724,7 +2726,7 @@ for i=1: length(mtrials)
     
     %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
-    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2)
+    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2);
     
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
