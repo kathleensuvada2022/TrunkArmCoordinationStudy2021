@@ -4,7 +4,7 @@
 % Script to Create Plots that are synced
 % Can adjust axes manually and one axis changes them all. 
     figure(4)
-tiledlayout(1,6)
+tiledlayout(1,2)
 
 % First plot
 ax1 = nexttile;
@@ -29,7 +29,7 @@ ax6 = nexttile;
 
 %% Command that syncs up all the axes 
 
-linkaxes([ax1 ax2 ax3 ax4 ax5 ax6],'xy')
+linkaxes([ax1 ax2],'xy')
 
 %%
 %RTIS1003
