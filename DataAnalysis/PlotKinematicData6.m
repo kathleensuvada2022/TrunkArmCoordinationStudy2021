@@ -118,8 +118,8 @@ for i=1: length(mtrials)
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+               % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
                 %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -2772,847 +2772,847 @@ for i=1: length(mtrials)
   
     
 %     % Uncomment everything below once for plotting 
-    figure(4)
-
-
-        if strcmp(partid,'RTIS1003')
-             
-            if expcond ==1
-                circle(-136.867,374.745,50)
-                hold on
-            end
-                     
-            if expcond ==2
-                circle(-216.974,434.737,50)
-                hold on
-            end
-                     
-            if expcond ==3
-                circle(-211.473,419.337,50)
-                hold on
-            end
-                                 
-            if expcond ==4
-                 circle(-117,241,50)
-                hold on
-            end
-                                             
-            if expcond ==5
-                 circle(-209,342,50)
-                hold on
-            end
-                                            
-            if expcond ==6
-                  circle(-125,274,50)
-                hold on
-            end
-
-
-        end
+%     figure(4)
+% 
+% 
+%         if strcmp(partid,'RTIS1003')
+%              
+%             if expcond ==1
+%                 circle(-136.867,374.745,50)
+%                 hold on
+%             end
+%                      
+%             if expcond ==2
+%                 circle(-216.974,434.737,50)
+%                 hold on
+%             end
+%                      
+%             if expcond ==3
+%                 circle(-211.473,419.337,50)
+%                 hold on
+%             end
+%                                  
+%             if expcond ==4
+%                  circle(-117,241,50)
+%                 hold on
+%             end
+%                                              
+%             if expcond ==5
+%                  circle(-209,342,50)
+%                 hold on
+%             end
+%                                             
+%             if expcond ==6
+%                   circle(-125,274,50)
+%                 hold on
+%             end
+% 
+% 
+%         end
+% %         
+%         if strcmp(partid,'RTIS1004')
+%             %             
+%             if expcond ==1
+%                 circle(-139,341,50)
+%                 hold on
+%             end
+%             if expcond ==2
+%                 circle(-64,442,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-91,355,50)
+%                 hold on
+%             end
+%             
+%                         
+%             if expcond ==4
+%                 circle(-126,419,50)
+%                 hold on
+%             end
+%                  
+%                                    
+%             if expcond ==5
+%                 circle(-111,443,50)
+%                 hold on
+%             end
+%                                               
+%             if expcond ==6
+%                 circle(-104,416,50)
+%                 hold on
+%             end
+%                      
+% 
+%         end
 %         
-        if strcmp(partid,'RTIS1004')
-            %             
-            if expcond ==1
-                circle(-139,341,50)
-                hold on
-            end
-            if expcond ==2
-                circle(-64,442,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-91,355,50)
-                hold on
-            end
-            
-                        
-            if expcond ==4
-                circle(-126,419,50)
-                hold on
-            end
-                 
-                                   
-            if expcond ==5
-                circle(-111,443,50)
-                hold on
-            end
-                                              
-            if expcond ==6
-                circle(-104,416,50)
-                hold on
-            end
-                     
-
-        end
-        
-        if strcmp(partid,'RTIS1005')
-
-            if expcond ==1
-                circle(162,315,50)
-                hold on
-            end
-            if expcond ==2
-                circle(161,408,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(156,408,50)
-                hold on
-            end
-            
-                        
-            if expcond ==4
-                circle(186,340,50)
-                hold on
-            end
-                 
-                                   
-            if expcond ==5
-                circle(144,360,50)
-                hold on
-            end
-                                              
-            if expcond ==6
-                circle(154,356,50)
-                hold on
-            end
-
-
-
-        end
-        
-        if strcmp(partid,'RTIS1006')
-
-            if expcond ==1
-                circle(109,280,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(87,287,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(95,274,50)
-                hold on
-            end
-            
-                        
-            if expcond ==4
-                circle(96,236,50)
-                hold on
-            end
-                 
-                                   
-            if expcond ==5
-                circle(95,253,50)
-                hold on
-            end
-                                              
-            if expcond ==6
-                circle(71,250,50)
-                hold on
-            end
-            
-        end
-        
-
-     
-        if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                 circle(-234,331,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-282,312,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-282,312,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-234,331,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-232,265,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-232,265,50)
-                hold on
-            end
-            
-        end   
-
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                circle(-179,290,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-77,307,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-70,285,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-145,291,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-111,298,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-108,309,50)
-                hold on
-            end
-            
-        end
-        
-        
-        if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                 circle(185,367,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(185,367,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(185,367,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(185,367,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(142,403,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(142,403,50)
-                hold on
-            end
-            
-        end
-              
-                
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                circle(-139,332,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-154,331,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-132,316,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-72,281,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-58,301,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-79,288,50)
-                hold on
-            end
-            
-        end
-                        
-        if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                 circle(196,278,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(196,278,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(196,278,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(196,278,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(196,278,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(196,278,50)
-                hold on
-            end
-            
-        end
-        
-                        
-        if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                circle(23,349,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(12,305,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(12,305,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-37,359,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-19,294,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-19,294,50)
-                hold on
-            end
-            
-        end
-        
-                                
-        if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                circle(-83,259,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-59,296,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-59,296,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-71,212,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-91,270,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-91,270,50)
-                hold on
-            end
-            
-        end
-                                
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                 circle(23,301,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-40,209,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-39,213,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(12,305,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-53,207,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-53,207,50)
-                hold on
-            end
-            
-        end
-                                        
-        if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                  circle(-252,337,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-252,337,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-252,337,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-268,289,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-308,339,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-308,339,50)
-                hold on
-            end
-            
-        end
-        
-        
-        if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                  circle(227,356,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(227,356,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(273,332,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(227,356,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(225,304,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(225,304,50)
-                hold on
-            end
-            
-        end
-                
-        if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                   circle(-123,441,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-128,394,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-128,394,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-122,370,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-122,370,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-122,370,50)
-                hold on
-            end
-            
-        end
-                
-        if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                  circle(-100,305,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-100,305,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-100,305,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-60,266,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-60,266,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-55,315,50)
-                hold on
-            end
-            
-        end
-                       
-        if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                   circle(216,415,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(189,362,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(189,362,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(198,359,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(198,359,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(198,320,50)
-                hold on
-            end
-            
-        end
-         
-                        
-        if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                   circle(219,377,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(173,282,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(173,282,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(168,419,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(116,325,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(116,325,50)
-                hold on
-            end
-            
-        end
-        
-                
-                        
-        if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                    circle(-68,340,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-68,340,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-68,340,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-89,315,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-65,368,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(-65,368,50)
-                hold on
-            end
-            
-        end
-                                 
-        if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
-            
-            if expcond ==1
-                    circle(-49,320,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(-4,282,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(-4,232,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(-32,290,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(-22,252,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(5,241,50)
-                hold on
-            end
-            
-        end
-        
-                                         
-        if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
-            
-            if expcond ==1
-                     circle(182,415,50)
-                hold on
-            end
-            
-            if expcond ==2
-                circle(182,415,50)
-                hold on
-            end
-            
-            if expcond ==3
-                circle(182,415,50)
-                hold on
-            end
-            
-            
-            if expcond ==4
-                circle(218,380,50)
-                hold on
-            end
-            
-            
-            if expcond ==5
-                circle(218,380,50)
-                hold on
-            end
-            
-            if expcond ==6
-                circle(218,380,50)
-                hold on
-            end
-            
-        end
-
-        
-
- 
-
-
-   p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
-
-   hold on
-   c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-   c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
-    % %      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
-    %     %%
-    %     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
-    %     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
-    %
-    %     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-    %     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
-    %     %%
-    %     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-    %     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    %     %
-    %     %
-    %     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-    %     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    %
-    
-    
-   plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
-   plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
-    
-    
-   plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
-   plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
-    
-   set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
-    
-    
-    
-   xlabel('X (mm)','FontSize',16)
-   ylabel('Y (mm)','FontSize',16)
-    
-
-    
-if expcond== 1 || 3   
-    legend([p1' c1 c2],'Hand','Shoulder','Trunk','Start','End','Home Target','Location','northeast','FontSize',15)
- end  
-
-        
-        if expcond== 1
-            title(['Restrained Table' '-' partid],'FontSize',18)
-        end
-        
-        if expcond== 2
-            title(['Restrained 25% MVT' '-' partid],'FontSize',18)
-        end
-        
-        if expcond== 3
-            title(['Restrained 50% MVT' '-' partid],'FontSize',18)
-        end
-        
-        if expcond== 4
-            title(['Unrestrained Table' '-' partid],'FontSize',18)
-        end
-        
-        if expcond== 5
-            title(['Unrestrained 25% MVT' '-' partid],'FontSize',18)
-        end
-        
-        if expcond== 6
-            title(['Unrestrained 50% MVT' '-' partid],'FontSize',18)
-        end
+%         if strcmp(partid,'RTIS1005')
+% 
+%             if expcond ==1
+%                 circle(162,315,50)
+%                 hold on
+%             end
+%             if expcond ==2
+%                 circle(161,408,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(156,408,50)
+%                 hold on
+%             end
+%             
+%                         
+%             if expcond ==4
+%                 circle(186,340,50)
+%                 hold on
+%             end
+%                  
+%                                    
+%             if expcond ==5
+%                 circle(144,360,50)
+%                 hold on
+%             end
+%                                               
+%             if expcond ==6
+%                 circle(154,356,50)
+%                 hold on
+%             end
+% 
+% 
+% 
+%         end
+%         
+%         if strcmp(partid,'RTIS1006')
+% 
+%             if expcond ==1
+%                 circle(109,280,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(87,287,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(95,274,50)
+%                 hold on
+%             end
+%             
+%                         
+%             if expcond ==4
+%                 circle(96,236,50)
+%                 hold on
+%             end
+%                  
+%                                    
+%             if expcond ==5
+%                 circle(95,253,50)
+%                 hold on
+%             end
+%                                               
+%             if expcond ==6
+%                 circle(71,250,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+% 
+%      
+%         if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                  circle(-234,331,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-282,312,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-282,312,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-234,331,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-232,265,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-232,265,50)
+%                 hold on
+%             end
+%             
+%         end   
+% 
+%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                 circle(-179,290,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-77,307,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-70,285,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-145,291,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-111,298,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-108,309,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%         
+%         if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                  circle(185,367,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(185,367,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(185,367,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(185,367,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(142,403,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(142,403,50)
+%                 hold on
+%             end
+%             
+%         end
+%               
+%                 
+%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                 circle(-139,332,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-154,331,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-132,316,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-72,281,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-58,301,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-79,288,50)
+%                 hold on
+%             end
+%             
+%         end
+%                         
+%         if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                  circle(196,278,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(196,278,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(196,278,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(196,278,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(196,278,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(196,278,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%                         
+%         if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                 circle(23,349,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(12,305,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(12,305,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-37,359,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-19,294,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-19,294,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%                                 
+%         if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                 circle(-83,259,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-59,296,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-59,296,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-71,212,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-91,270,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-91,270,50)
+%                 hold on
+%             end
+%             
+%         end
+%                                 
+%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                  circle(23,301,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-40,209,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-39,213,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(12,305,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-53,207,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-53,207,50)
+%                 hold on
+%             end
+%             
+%         end
+%                                         
+%         if strcmp(partid,'RTIS2007') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                   circle(-252,337,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-252,337,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-252,337,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-268,289,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-308,339,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-308,339,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%         
+%         if strcmp(partid,'RTIS2008') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                   circle(227,356,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(227,356,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(273,332,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(227,356,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(225,304,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(225,304,50)
+%                 hold on
+%             end
+%             
+%         end
+%                 
+%         if strcmp(partid,'RTIS2008') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                    circle(-123,441,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-128,394,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-128,394,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-122,370,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-122,370,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-122,370,50)
+%                 hold on
+%             end
+%             
+%         end
+%                 
+%         if strcmp(partid,'RTIS2009') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                   circle(-100,305,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-100,305,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-100,305,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-60,266,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-60,266,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-55,315,50)
+%                 hold on
+%             end
+%             
+%         end
+%                        
+%         if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                    circle(216,415,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(189,362,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(189,362,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(198,359,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(198,359,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(198,320,50)
+%                 hold on
+%             end
+%             
+%         end
+%          
+%                         
+%         if strcmp(partid,'RTIS2010') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                    circle(219,377,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(173,282,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(173,282,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(168,419,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(116,325,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(116,325,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%                 
+%                         
+%         if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                     circle(-68,340,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-68,340,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-68,340,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-89,315,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-65,368,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(-65,368,50)
+%                 hold on
+%             end
+%             
+%         end
+%                                  
+%         if strcmp(partid,'RTIS2011') && strcmp(hand,'Left')
+%             
+%             if expcond ==1
+%                     circle(-49,320,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(-4,282,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(-4,232,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(-32,290,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(-22,252,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(5,241,50)
+%                 hold on
+%             end
+%             
+%         end
+%         
+%                                          
+%         if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
+%             
+%             if expcond ==1
+%                      circle(182,415,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==2
+%                 circle(182,415,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==3
+%                 circle(182,415,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==4
+%                 circle(218,380,50)
+%                 hold on
+%             end
+%             
+%             
+%             if expcond ==5
+%                 circle(218,380,50)
+%                 hold on
+%             end
+%             
+%             if expcond ==6
+%                 circle(218,380,50)
+%                 hold on
+%             end
+%             
+%         end
+% 
+%         
+% 
+%  
+% 
+% 
+%    p1=plot( [xhand(idx(1):idx(3),1) gh(idx(1):idx(3),1) xjug(idx(1):idx(3),1)],[xhand(idx(1):idx(3),2) gh(idx(1):idx(3),2) xjug(idx(1):idx(3),2)],'LineWidth',3);% not subtracting trunk
+% 
+%    hold on
+%    c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%    c2= plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10);
+%     % %      c4 = plot(xhand(rangeZ,1),xhand(rangeZ,2),'ro');
+%     %     %%
+%     %     %      c1= viscircles([xhand(idxreachstart,1),xhand(idxreachstart,2)],5,'Color','g');
+%     %     %          c1= plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10);
+%     %
+%     %     %         plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
+%     %     %         plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % marking shoulder end
+%     %     %%
+%     %     %          plot(gh(idx(1),1)-xjug(1,1),gh(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%     %     %          plot(gh(idx(3),1)-xjug(1,1),gh(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%     %     %
+%     %     %
+%     %     %         plot(xjug(idx(1),1)-xjug(1,1),xjug(idx(1),2)-xjug(1,2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%     %     %         plot(xjug(idx(3),1)-xjug(1,1),xjug(idx(3),2)-xjug(1,2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%     %
+%     
+%     
+%    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking shoulder start
+%    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking shoulder end
+%     
+%     
+%    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerFaceColor','g','MarkerSize',10); %marking trunk start
+%    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerFaceColor','r','MarkerSize',10); % marking trunk end
+%     
+%    set(p1(1),'Color',[0 0.4470 0.7410]); set(p1(2),'Color',[0.4940 0.1840 0.5560]); set(p1(3),'Color',[0.8500 0.3250 0.0980]);
+%     
+%     
+%     
+%    xlabel('X (mm)','FontSize',16)
+%    ylabel('Y (mm)','FontSize',16)
+%     
+% 
+%     
+% if expcond== 1 || 3   
+%     legend([p1' c1 c2],'Hand','Shoulder','Trunk','Start','End','Home Target','Location','northeast','FontSize',15)
+%  end  
+% 
+%         
+%         if expcond== 1
+%             title(['Restrained Table' '-' partid],'FontSize',18)
+%         end
+%         
+%         if expcond== 2
+%             title(['Restrained 25% MVT' '-' partid],'FontSize',18)
+%         end
+%         
+%         if expcond== 3
+%             title(['Restrained 50% MVT' '-' partid],'FontSize',18)
+%         end
+%         
+%         if expcond== 4
+%             title(['Unrestrained Table' '-' partid],'FontSize',18)
+%         end
+%         
+%         if expcond== 5
+%             title(['Unrestrained 25% MVT' '-' partid],'FontSize',18)
+%         end
+%         
+%         if expcond== 6
+%             title(['Unrestrained 50% MVT' '-' partid],'FontSize',18)
+%         end
 
         
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Not currently using%%%%%%%%
