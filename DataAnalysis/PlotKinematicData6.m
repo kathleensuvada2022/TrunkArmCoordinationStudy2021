@@ -2698,36 +2698,53 @@ for i=1: length(mtrials)
 %     
 
     
-    
+ %% OUTCOME MEASURES   
     %% Compute reaching distance
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
     % of reach (timepoint idx(3))
     
-    maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2);
-    
+    % XY Definition
+   % maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2); 
+   
+   % XYZ Definition
+   %                             X                              Y                              Z        
+     maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2);
     %% Max Hand Excursion
     
     % Def: difference in hand final - initial. xhand(idx3) - xhand(idx1)
     % 3rd MCP
     
-    maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
+    % XY Definition
+   % maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2);
     
+   % XYZ Definition
+   %                             X                                   Y                                      Z
+   maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
+
     
     %% Compute shoulder and trunk displacement at maximum reach
     
     % Trunk
     % Based on jugular notch difference idx(3) - idx(1)
     
-    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
+    % XY PLANE
+    %trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
+    % XYZ PLANE
+    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2);
+
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
     
     %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
-    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2);
-    
+   % XY PLANE
+   % sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2);
+
+   % XYZ PLANE
+   sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
+
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
