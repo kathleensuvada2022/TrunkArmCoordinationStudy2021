@@ -58,7 +58,11 @@ maxhandexcrsn_current_trial =zeros(ntrials,1);
 
 shex_current_trial=zeros(ntrials,1);
 
+sh_Z_ex_current_trial =zeros(ntrials,1);
+
 trex_current_trial=zeros(ntrials,1);
+
+
 
 % TrunkAng_current_trial=zeros(ntrials,1); % Commented out for Now until
 % adding back Kinematics
@@ -2745,6 +2749,9 @@ for i=1: length(mtrials)
    % XYZ PLANE
    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
 
+
+   % Z Shoulder Excursion
+   sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3);
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
@@ -2755,6 +2762,7 @@ for i=1: length(mtrials)
     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
     
     shex_current_trial(i) = sh_exc;
+    sh_Z_ex_current_trial(i) = sh_Z_ex;
     
     trex_current_trial(i) = trunk_exc;
     
@@ -3724,7 +3732,15 @@ for i=1: length(mtrials)
     %
     %     'Check Data Matrix Repopulation'
     
-    
+
+    % Updating the Data Matrix with Outcome Measures
+    DataMatrix{1,13}= 'SH Z Ex in mm'; %ONCE ALL  gone through can remove
+    DataMatrix{1,14}= 'SH Z Ex Norm LL'; %ONCE ALL  gone through can remove
+
+
+    DataMatrix{FinalRow,14} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+    DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
+
     %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
     DataMatrix{FinalRow,10} = shex_current_trial(i);
