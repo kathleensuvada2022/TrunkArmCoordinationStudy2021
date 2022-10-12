@@ -3734,8 +3734,8 @@ for i=1: length(mtrials)
     
 
     % Updating the Data Matrix with Outcome Measures
-    DataMatrix{1,13}= 'SH Z Ex in mm'; %ONCE ALL  gone through can remove
-    DataMatrix{1,14}= 'SH Z Ex Norm LL'; %ONCE ALL  gone through can remove
+    DataMatrix{1,13}= 'ShEx_Z mm'; %ONCE ALL  gone through can remove
+    DataMatrix{1,14}= 'ShEx_Z %LL'; %ONCE ALL  gone through can remove
 
 
     DataMatrix{FinalRow,14} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
