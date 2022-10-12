@@ -97,10 +97,11 @@ BLs = setup.bl; % BLs in marker CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
 ScapCoord = Asscap_K(BLs,hand,0);
+setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
 TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
-
+setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
  gh_est = Ghest_2022(ScapCoord,BLs,0);
 
@@ -2123,15 +2124,15 @@ for i=1: length(mtrials)
     % Uncomment everything below to add back Kinematics  - SUMMER 2022
     
     
-%     metdata =  x;
-%         %
-%         TrunkAng_GCS= zeros(3,length(metdata));
-%     
-%         for k = 1:length(metdata)
-%             TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); % Gives Trunk Angle in GCS
-%             TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-%         end
-%     
+    metdata =  x;
+        %
+        TrunkAng_GCS= zeros(3,length(metdata));
+    
+        for k = 1:length(metdata)
+            TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); % Gives Trunk Angle in GCS
+            TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+        end
+    
 %     
     
     
@@ -2751,7 +2752,7 @@ for i=1: length(mtrials)
 
 
    % Z Shoulder Excursion
-   sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3);
+   sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
