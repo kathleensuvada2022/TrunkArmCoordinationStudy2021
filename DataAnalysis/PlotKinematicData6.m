@@ -1490,25 +1490,28 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,BLs_Hum]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
     
 %     
-%           figure(19)
-%     % % %     %
-%           plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-%         hold on
-%         %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%         plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%         plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-%         plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-%     
-%         plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-%         axis equal
-% %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
-%         title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%         xlabel('X position (mm)','FontSize',14)
-%         ylabel('Y position (mm)','FontSize',14)
+    figure(19)
+    % % %     %
+    plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+    hold on
+    plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
+    plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % Computed EL
+    
+    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+    
+    plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+    axis equal
+    %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
+    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+    xlabel('X position (mm)','FontSize',14)
+    ylabel('Y position (mm)','FontSize',14)
 % %     
 % % Plotting TRUNK CS XY plane in GCS
 % quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))

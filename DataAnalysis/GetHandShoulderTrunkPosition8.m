@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG,BLs_Hum]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG,EM_GCS,EL_GCS,GH_Dig_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -431,7 +431,7 @@ xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=z
 
 % myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
 % myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
-
+BLs_Hum = zeros(3,3,nimag);
 lcsfore=zeros(2*nimag,2);
 for i=1:nimag % loop through time points
     
@@ -447,9 +447,12 @@ for i=1:nimag % loop through time points
     Thtom = quat2tform(circshift(xarm(i,4:7),1,2));  %***************** 
     Thtom(1:3,4) = xarm(i,1:3)';% Transformation matrix ************* HT of marker in GCS during trial;
     
-    BLg_h=Thtom *[bl{3}(4,1:3) 1]';
-    BLs_Hum(i,:)=BLg_h(1:3,1)'; % X Y Z of the Humerus BLs in global cs and rows are time
-    
+    BLg_h=Thtom *[bl{3}(:,1:3) repmat(1,3,1)]'; %computing Hum BLS in GCS
+   
+    EM_GCS(i,:)=BLg_h(1:3,1)'; % X Y Z of the EM in global cs and rows are time
+    EL_GCS(i,:)=BLg_h(1:3,2)'; % X Y Z of the EL in global cs and rows are time
+    GH_Dig_GCS(i,:)=BLg_h(1:3,3)'; % X Y Z of the EL in global cs and rows are time
+
 
     % for the acromion using the shoulder marker
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
