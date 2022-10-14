@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG,BLs_Hum]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -443,12 +443,12 @@ for i=1:nimag % loop through time points
     xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time
     lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); %what is this?
    
-    % For the Humerus BLs grabbing Humerus Marker and Computing Hum Bls GCS
-    Thtom = quat2tform(circshift(xarm(i,4:7),1,2));  %***************** 
-    Thtom(1:3,4) = xarm(i,1:3)';% Transformation matrix ************* HT of marker in GCS during trial;
+    % For the Humerus BLs grabbing Humerus Marker
+    Thtom = quat2tform(circshift(xarm(i,4:7),1,2));  %*****************
+    Thtom(1:3,4) = xarm(i,1:3)';% Transformation matrix *************
     
     BLg_h=Thtom *[bl{3}(4,1:3) 1]';
-    BLs_Hum(i,:)=BLg_h(1:3,1)'; % X Y Z of the Humerus BLs in global cs and rows are time
+    BLs_Hum(i,:)=BLg(1:3,1)'; % X Y Z of the Humerus BLs in global cs and rows are time
     
 
     % for the acromion using the shoulder marker

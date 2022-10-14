@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,BLs_Hum]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
     
 %     
@@ -2551,6 +2551,20 @@ for i=1: length(mtrials)
 %     % pause
 %   
 %     
+
+
+%% Creating Humerus CS - Oct 2022
+% Using Estimated GH to create humeral coordinate system at every point in
+% time. Using GH in Global Coordinate System and Compute Humeral BLs in
+% GCS.
+
+
+
+
+
+
+
+%%
  % September 2022
  
  % Below gives multiple ways to get data into trunk coordinate system. 
