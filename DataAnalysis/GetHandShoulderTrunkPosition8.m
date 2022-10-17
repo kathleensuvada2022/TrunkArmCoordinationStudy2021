@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG,EM_GCS,EL_GCS,GH_Dig_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -435,14 +435,27 @@ BLs_Hum = zeros(3,3,nimag);
 lcsfore=zeros(2*nimag,2);
 for i=1:nimag % loop through time points
     
+% Forearm 
+
     % For the 3rd metacarpal grabbing the forearm marker
     Tftom = quat2tform(circshift(xfore(i,4:7),1,2));  %*****************
     Tftom(1:3,4) = xfore(i,1:3)';% Transformation matrix *************
     
-    BLg=Tftom *[bl{4}(4,1:3) 1]';
+    BLg=Tftom *[bl{4}(4,1:3) 1]'; %Grabbing 3rd MCP
     xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time
     lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); %what is this?
-   
+
+    % For OL,RS,US for Forearm
+    BLg=Tftom *[bl{4}(1,1:3) 1]'; %Grabbing RS and computing in GCS
+    RS_GCS(i,:)=BLg(1:3,1)'; 
+
+    BLg=Tftom *[bl{4}(2,1:3) 1]'; %Grabbing US and computing in GCS
+    US_GCS(i,:)=BLg(1:3,1)'; 
+
+    BLg=Tftom *[bl{4}(3,1:3) 1]'; %Grabbing OL and computing in GCS
+    OL_GCS(i,:)=BLg(1:3,1)'; 
+
+% Humerus 
     % For the Humerus BLs grabbing Humerus Marker and Computing Hum Bls GCS
     Thtom = quat2tform(circshift(xarm(i,4:7),1,2));  %***************** 
     Thtom(1:3,4) = xarm(i,1:3)';% Transformation matrix ************* HT of marker in GCS during trial;
@@ -453,7 +466,7 @@ for i=1:nimag % loop through time points
     EL_GCS(i,:)=BLg_h(1:3,2)'; % X Y Z of the EL in global cs and rows are time
     GH_Dig_GCS(i,:)=BLg_h(1:3,3)'; % X Y Z of the EL in global cs and rows are time
 
-
+% Shoulder
     % for the acromion using the shoulder marker
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
     Tstom(1:3,4) = xshoulder(i,1:3)'; %*************
@@ -461,6 +474,7 @@ for i=1:nimag % loop through time points
     BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time
     
+% Trunk
     % for the jugular notch using the trunk marker
     Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  ************* MARKER data during trial IE HT marker to global
     Tttom(1:3,4) = xtrunk(i,1:3)';% *************
@@ -470,7 +484,7 @@ for i=1:nimag % loop through time points
     
     HTttoG(:,:,i) = (Tttom) * TrunkCoord; % HT of trunk CS in GCS at all frames of trial.
     
-    
+%Shoulder 
     % for the GH_estimated using the shoulder marker
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
     Tstom(1:3,4) = xshoulder(i,1:3)'; %*************

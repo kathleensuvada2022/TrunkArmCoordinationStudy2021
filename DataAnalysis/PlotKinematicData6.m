@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
     
 %     
@@ -1500,6 +1500,10 @@ for i=1: length(mtrials)
     hold on
     plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
     plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % Computed EL
+    
+    plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % Computed RS
+    plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % Computed US
+    plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % Computed OL
     
     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
@@ -1512,6 +1516,7 @@ for i=1: length(mtrials)
     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
+    legend('AA','EM','EL','RS','US','OL','3rdMCP','JUG','trunkMarker','estGH','FontSize',14)
 % %     
 % % Plotting TRUNK CS XY plane in GCS
 % quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
@@ -2438,6 +2443,84 @@ Hum_CS_G = zeros(4,4,length(gh));
 for h = 1:length(gh) 
 Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
 end
+
+
+%% Creating Forearm CS in GCS for every frame of trial
+
+%Filling in the NANS and resampling Forearm BLS
+
+%RS_GCS
+[RS_GCS,TF] = fillmissing(RS_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
+[RS_GCS,t2h]=resampledata(RS_GCS,t,89,100); % Resampling
+
+ %US_GCS
+[US_GCS,TF] = fillmissing(US_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
+[US_GCS,t2h]=resampledata(US_GCS,t,89,100); % Resampling
+
+ %OL_GCS
+[OL_GCS,TF] = fillmissing(OL_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
+[OL_GCS,t2h]=resampledata(OL_GCS,t,89,100); % Resampling
+
+% Creating Forearm CS
+Fore_CS_G= zeros(4,4,length(OL_GCS));
+
+for h = 1:length(OL_GCS) %samples
+Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
+end 
+
+
+%% Plotting Forearm and Humerus BLS with CS in GCS
+
+figure()
+
+%Plotting the BonyLandmarks and their Labels of Humerus
+b = 1 ; % frame 
+    plot3(EL_GCS(b,1),EL_GCS(b,2),EL_GCS(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_GCS(b,1),EL_GCS(b,2),EL_GCS(b,3),'EL','FontSize',14)
+
+
+    plot3(EM_GCS(b,1),EM_GCS(b,2),EM_GCS(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_GCS(b,1),EM_GCS(b,2),EM_GCS(b,3),'EM','FontSize',14)
+
+    plot3(gh(b,1),gh(b,2),gh(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(gh(b,1),gh(b,2),gh(b,3),'GH','FontSize',14)
+
+
+% Plotting HUM CS at given Frame
+quiver3(Hum_CS_G ([1 1 1],4)',Hum_CS_G ([2 2 2],4)',Hum_CS_G ([3 3 3],4)',50*Hum_CS_G (1,1:3),50*Hum_CS_G (2,1:3),50*Hum_CS_G (3,1:3))
+text(Hum_CS_G (1,4)+50*Hum_CS_G (1,1:3),Hum_CS_G (2,4)+50*Hum_CS_G (2,1:3),Hum_CS_G (3,4)+50*Hum_CS_G (3,1:3),{'X_H','Y_H','Z_H'})
+ 
+
+
+    plot3(US_GCS(b,1),US_GCS(b,2),US_GCS(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(US_GCS(b,1),US_GCS(b,2),US_GCS(b,3),'US','FontSize',14)
+
+    plot3(RS_GCS(b,1),RS_GCS(b,2),RS_GCS(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(RS_GCS(b,1),RS_GCS(b,2),RS_GCS(b,3),'RS','FontSize',14)
+
+    plot3(OL_GCS(b,1),OL_GCS(b,2),OL_GCS(b,3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(OL_GCS(b,1),OL_GCS(b,2),OL_GCS(b,3),'OL','FontSize',14)
+
+
+% Plotting FORE CS at given Frame
+quiver3(Fore_CS_G ([1 1 1],4)',Fore_CS_G ([2 2 2],4)',Fore_CS_G ([3 3 3],4)',50*Fore_CS_G (1,1:3),50*Fore_CS_G (2,1:3),50*Fore_CS_G (3,1:3))
+text(Fore_CS_G (1,4)+50*Fore_CS_G (1,1:3),Fore_CS_G (2,4)+50*Fore_CS_G (2,1:3),Fore_CS_G (3,4)+50*Fore_CS_G (3,1:3),{'X_F','Y_F','Z_F'})
+
+
+axis equal
+xlabel('X axis (mm)')
+ylabel('Y axis (mm)')
+zlabel('Z axis (mm)')
+
+% title(['Humerus CS and Respective BLS in GCS During Trial. FRAME:' num2str(frame)],'FontSize',16)  
+    
 
 %%
   % Now have recreated t for resampled data
