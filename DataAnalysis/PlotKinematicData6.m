@@ -1526,7 +1526,14 @@ for i=1: length(mtrials)
 % pause
 % end
     
-    %%
+
+%% Creating Humerus CS for every Frame of trial (for computed GH)
+
+for h = 1:length(xghest) %
+Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),xghest(h,:),hand)
+end
+
+
     %% If Coordinate System Off (couldn't REG to room)
 %     if strcmp(partid,'RTIS2009')
 %         if strcmp(hand,'Right')
@@ -2122,6 +2129,8 @@ for i=1: length(mtrials)
     
     %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
     
+
+
     %%  Computing Trunk Angle in GCS - Add back in when want Kinematics
     
     % Uncomment everything below to add back Kinematics  - SUMMER 2022

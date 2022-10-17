@@ -8,20 +8,23 @@
 % GH is determined using regression equations in GHEST.M
 
 % KACEY 10.4.21
+% KACEY 10.17.22 - adding updated GH estimate all coordinates in GCS
+
 % Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
 % Local Z-axis : line between GH and mid-point between epicondyles.
 % Local Y-axis : axis perpendicular to local X and Y-axis.
 % GH is determined using regression equations in GHEST.M
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum_K_2022(blmat,GH,bonylmrks)
+function [Hum_CS,BLs_lcs_h,BLnames_h] =  ashum_K_2022(EM_GCS,EL_GCS,xghest,hand)
 %Kacey 10.2021
 %Grabbing medial and laterial epi from matrix and matching to EM and EL
 %%
-Emidx = find(bonylmrks=='EM',1); %EM is at the end as well for Forearm CS
+EM = EM_GCS';
+EL = EL_GCS'; 
+GH = xghest';
 
-[EM,EL]=deal(blmat(:,Emidx),blmat(:,Emidx+1));
 BLnames_h = ["EM","EL","GH"];
-BLs_lcs_h ={EM,EL,GH};
+
 % Kacey Redefining X,Y,Z axes 10.4.21 
 %%
 H_mid=(EM(1:3)+EL(1:3))/2;
@@ -62,8 +65,8 @@ Origin = GH(1:3)';
 Origin =[Origin 1]';
 
 %%
-%T of Humerus in marker CS
-Hum_CS = [h Origin];
+%HT of Humerus in marker CS
+Hum_CS = [h Origin]; % Humerus Coordinate System in the Global CS at given frame
 %%
 
 % if strcmp(arm,'Left')
