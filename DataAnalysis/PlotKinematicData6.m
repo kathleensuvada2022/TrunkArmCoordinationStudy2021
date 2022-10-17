@@ -1527,11 +1527,6 @@ for i=1: length(mtrials)
 % end
     
 
-%% Creating Humerus CS for every Frame of trial (for computed GH)
-
-for h = 1:length(xghest) %
-Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),xghest(h,:),hand)
-end
 
 
     %% If Coordinate System Off (couldn't REG to room)
@@ -2136,17 +2131,17 @@ end
     % Uncomment everything below to add back Kinematics  - SUMMER 2022
     
     
-    metdata =  x;
-        %
-        TrunkAng_GCS= zeros(3,length(metdata));
-    
-        for k = 1:length(metdata)
-            TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); % Gives Trunk Angle in GCS
-            TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-        end
-    
+%     metdata =  x;
+%         %
+%         TrunkAng_GCS= zeros(3,length(metdata));
 %     
-    
+%         for k = 1:length(metdata)
+%             TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); % Gives Trunk Angle in GCS
+%             TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+%         end
+%     
+% %     
+%     
     
     
     % Trunk Angle Interpolation / Resampling
@@ -2420,9 +2415,33 @@ end
     xshldr = xshldrnew;
     %Resampling Acromion Data for Comparison
     [xshldr,t2]=resampledata(xshldr,t,89,100);
-    
+ 
+
+
+%% Creating Humerus CS for every Frame of trial (for computed GH)
+
+% Filling in the NANs and resampling Humerus BLS
+
+% EM_GCS
+ [EM_GCS,TF] = fillmissing(EM_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
+
+ [EM_GCS,t2h]=resampledata(EM_GCS,t,89,100); % Resampling
+
+% EL_GCS
+ [EL_GCS,TF] = fillmissing(EL_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
+ [EL_GCS,t2h]=resampledata(EL_GCS,t,89,100); % Resampling
+
+
+Hum_CS_G = zeros(4,4,length(gh));
+
+% Creating Humerus CS with interpolated and resampled data
+for h = 1:length(gh) 
+Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
+end
+
+%%
+  % Now have recreated t for resampled data
     t = t2;
-    
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
     %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end

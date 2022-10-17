@@ -8,8 +8,7 @@
 % GH is determined using regression equations in GHEST.M
 
 % KACEY 10.4.21
-% KACEY 10.17.22 - adding updated GH estimate all coordinates in GCS and
-% flipping for Left hand to mimic right hand
+% KACEY 10.17.22 - adding updated GH estimate all coordinates in GCS
 
 % Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
 % Local Z-axis : line between GH and mid-point between epicondyles.
@@ -34,9 +33,9 @@ zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
 %Yh: Need perpendicular to plane defined by z axis and line through em el
 x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
 
-if strcmp(hand,'Left') % Flipping so mimics right hand and TRUNK CS 
-x= (EM(1:3)-EL(1:3))/norm(EM(1:3)-EL(1:3)); %Vector through EL and EM
-end
+% if strcmp(arm,'Left')
+% x= (EM(1:3)-EL(1:3))/norm(EM(1:3)-EL(1:3)); %Vector through EL and EM
+% end
 
 yh =cross(zh,x); 
 yh=yh/norm(yh);
@@ -68,6 +67,11 @@ Origin =[Origin 1]';
 %%
 %HT of Humerus in marker CS
 Hum_CS = [h Origin]; % Humerus Coordinate System in the Global CS at given frame
+%%
+
+if strcmp(arm,'Left')
+
+end
 
 %% Plotting CS and BLS
 if flag ==1
