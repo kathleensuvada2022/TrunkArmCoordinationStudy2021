@@ -1492,12 +1492,7 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
-%     if strcmp (partid, 'RTIS1003') %Flipped EM AND EL 
-% 
-%         EM_GCS = EL_GCS;
-%         EL_GCS = EM_GCS;
-%     end
-%     
+
     figure(19)
     % % %     %
     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
@@ -2440,7 +2435,16 @@ for i=1: length(mtrials)
  [EL_GCS,TF] = fillmissing(EL_GCS,'nearest','SamplePoints',t); % Interpolation using nearest data point 
  [EL_GCS,t2h]=resampledata(EL_GCS,t,89,100); % Resampling
 
+    if strcmp (partid, 'RTIS1003') %Flipped EM AND EL 
 
+        EL_GCS2 = EM_GCS;
+
+        EM_GCS = EL_GCS;
+
+        EL_GCS = EL_GCS2;
+
+    end
+    
 Hum_CS_G = zeros(4,4,length(gh));
 
 % Creating Humerus CS with interpolated and resampled data
@@ -2529,6 +2533,9 @@ zlabel('Z axis (mm)')
 %%
   % Now have recreated t for resampled data
     t = t2;
+
+
+    
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
     %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
