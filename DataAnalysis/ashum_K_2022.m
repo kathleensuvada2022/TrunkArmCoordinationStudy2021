@@ -34,9 +34,9 @@ zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);
 %Yh: Need perpendicular to plane defined by z axis and line through em el
 x= (EL(1:3)-EM(1:3))/norm(EL(1:3)-EM(1:3)); %Vector through EL and EM
 
-if strcmp(hand,'Left') % Flipping so mimics right hand and TRUNK CS 
-x= (EM(1:3)-EL(1:3))/norm(EM(1:3)-EL(1:3)); %Vector through EL and EM
-end
+% if strcmp(hand,'Left') % Flipping so mimics right hand and TRUNK CS 
+% x= (EM(1:3)-EL(1:3))/norm(EM(1:3)-EL(1:3)); %Vector through EL and EM
+% end
 
 yh =cross(zh,x); 
 yh=yh/norm(yh);

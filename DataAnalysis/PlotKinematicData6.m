@@ -1492,7 +1492,11 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
-    
+%     if strcmp (partid, 'RTIS1003') %Flipped EM AND EL 
+% 
+%         EM_GCS = EL_GCS;
+%         EL_GCS = EM_GCS;
+%     end
 %     
     figure(19)
     % % %     %
