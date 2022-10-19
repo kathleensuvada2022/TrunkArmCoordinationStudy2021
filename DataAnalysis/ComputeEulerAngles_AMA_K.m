@@ -517,7 +517,8 @@ j=k; % a part of larger loop outside this function.
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% Compute Euler Angles 
+%% Compute Euler Angles ****USE THIS****
+
 % Updated 2022 K. Suvada
 
 % Elbow Angle- Joint Angle. Angle is using two segments relative to each
@@ -530,28 +531,6 @@ jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3);
 % X- elbow flexion/extension
 % Z - Pronation/Supination
 jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY'); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

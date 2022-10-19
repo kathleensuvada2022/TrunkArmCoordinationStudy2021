@@ -2539,8 +2539,10 @@ zlabel('Z axis (mm)')
 
 
 for k = 1:length(t)
-    [TrunkAng_GCS_frame ElbowAng] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k)); 
-    TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+ [ELB_ANG] = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,k);
+    
+    %   [TrunkAng_GCS_frame ElbowAng] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k)); 
+  %  TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
 end
 
 
