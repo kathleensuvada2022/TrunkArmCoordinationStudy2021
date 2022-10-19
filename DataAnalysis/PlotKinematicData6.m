@@ -2535,7 +2535,15 @@ zlabel('Z axis (mm)')
     t = t2;
 
 
-    
+%% Compute Elbow Flexion Angle
+
+
+for k = 1:length(t)
+    [TrunkAng_GCS_frame ElbowAng] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k)); 
+    TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+end
+
+
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
     %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
@@ -2676,12 +2684,6 @@ zlabel('Z axis (mm)')
 %     % pause
 %   
 %     
-
-
-%% Creating Humerus CS - Oct 2022
-% Using Estimated GH to create humeral coordinate system at every point in
-% time. Using GH in Global Coordinate System and Compute Humeral BLs in
-% GCS.
 
 
 
