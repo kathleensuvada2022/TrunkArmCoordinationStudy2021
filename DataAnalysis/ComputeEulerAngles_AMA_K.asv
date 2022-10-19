@@ -517,8 +517,46 @@ j=k; % a part of larger loop outside this function.
    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% Kacey removed rotjoint function and placed code here Nov 2021 - ELBOW ANGLE
+%% Compute Euler Angles 
+% Updated 2022 K. Suvada
 
+% Elbow Angle- Joint Angle. Angle is using two segments relative to each
+% other. HT of Forearm in GCS and HT of Humerus in GCS. 
+
+% Rotation matrix of forearm rel to humerus
+jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3);
+
+% Computing Elbow Angle 
+% X- elbow flexion/extension
+% Z - Pronation/Supination
+jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY'); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%  Kacey removed rotjoint function and placed code here Nov 2021 - ELBOW ANGLE
 %  Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
 %    jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
 %   jR(1:3,1:3)=HtoG(1:3,1:3)'*FtoG(1:3,1:3);
@@ -665,7 +703,7 @@ j=k; % a part of larger loop outside this function.
 %end
 
 
-
+end
 
                                 % FUNCTIONS BELOW
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
