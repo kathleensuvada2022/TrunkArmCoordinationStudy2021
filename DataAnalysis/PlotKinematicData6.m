@@ -2535,17 +2535,28 @@ zlabel('Z axis (mm)')
     t = t2;
 
 
-%% Compute Elbow Flexion Angle
+%% Compute Elbow Angles
 
+ELB_ANG = zeros (3,length(t)); % rows are angles (seq xzy) and cols are frames
 
 for k = 1:length(t)
- [ELB_ANG] = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,k);
-    
-    %   [TrunkAng_GCS_frame ElbowAng] = ComputeEulerAngles_AMA_K(mfname,hand,partid,k,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k)); 
-  %  TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
+ ELB_ANG(1:3,k) = ComputeEulerAngles_AMA_K(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),k);
+ % First row is elbow flex/ext
+ % Second row is pronation/supination
+
 end
 
+% Plotting Elbow Angles over time
+figure()
+plot(ELB_ANG(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
+hold on
+plot(ELB_ANG(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
+title ('Elbow Angle','Fontsize',24)
 
+test = 'test';
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
     %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end

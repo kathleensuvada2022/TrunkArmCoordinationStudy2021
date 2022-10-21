@@ -19,7 +19,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function [ELB_ANG] = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,k)
+function ELB_ANG = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,k)
 %%
 
  flag =0;
@@ -530,9 +530,9 @@ jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3);
 % Computing Elbow Angle 
 % X- elbow flexion/extension
 % Z - Pronation/Supination
-jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY'); 
+jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY',0); 
 
-
+ELB_ANG=jAngles_elbow ;% Output of Function
 
 
 %%  Kacey removed rotjoint function and placed code here Nov 2021 - ELBOW ANGLE
