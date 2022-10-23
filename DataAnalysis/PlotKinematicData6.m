@@ -2546,6 +2546,13 @@ for k = 1:length(t)
 
 end
 
+%% Angular Conventions - Oct 2022
+
+% First angle (about x axis): negative angles denote extension. Positive
+% angles denote flexion. More negative it gets- more extension. When gets
+% less negative- flexion. 
+
+
 % Plotting Elbow Angles over time
 figure()
 plot(ELB_ANG(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
