@@ -524,7 +524,7 @@ j=k; % a part of larger loop outside this function.
 % Elbow Angle- Joint Angle. Angle is using two segments relative to each
 % other. HT of Forearm in GCS and HT of Humerus in GCS. 
 
-% Rotation matrix of forearm rel to humerus
+% Rotation matrix of forearm rel to humerus (joint rotation matrix jR)
 jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3);
 
 % Computing Elbow Angle 

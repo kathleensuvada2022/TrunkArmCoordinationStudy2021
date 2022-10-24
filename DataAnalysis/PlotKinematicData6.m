@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
     
 
     figure(19)
@@ -1516,7 +1516,7 @@ for i=1: length(mtrials)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
     legend('AA','EM','EL','RS','US','OL','3rdMCP','JUG','trunkMarker','estGH','FontSize',14)
-% %     
+%     
 % % Plotting TRUNK CS XY plane in GCS
 % quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
 % text(HTttog(1,4)+50*HTttog(1,1:2),HTttog(2,4)+50*HTttog(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
@@ -2419,10 +2419,20 @@ for i=1: length(mtrials)
     xshldr = xshldrnew;
     %Resampling Acromion Data for Comparison
     [xshldr,t2]=resampledata(xshldr,t,89,100);
- 
+ %%
 
 
-%% Creating Humerus CS for every Frame of trial (for computed GH)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% ARM KINEMATICS
+% - Creation of Humerus and Forearm CS in the GCS. 
+% - Humerus Coordinate system updated to have GH est
+% - Computed Elbow angles (elbow extension/pronation/supination)
+
+%%  Humerus 
 
 % Filling in the NANs and resampling Humerus BLS
 
@@ -2450,10 +2460,11 @@ Hum_CS_G = zeros(4,4,length(gh));
 % Creating Humerus CS with interpolated and resampled data
 for h = 1:length(gh) 
 Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
+
 end
 
 
-%% Creating Forearm CS in GCS for every frame of trial
+%% Forearm
 
 %Filling in the NANS and resampling Forearm BLS
 
@@ -2477,7 +2488,7 @@ Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:
 end 
 
 
-%% Plotting Forearm and Humerus BLS with CS in GCS
+%% Forearm and Humerus BLS with Coordinate Systems in GCS
 
 figure()
 
@@ -2546,11 +2557,17 @@ for k = 1:length(t)
 
 end
 
-%% Angular Conventions - Oct 2022
+%% Plotting Elbow Angles - Oct 2022
 
-% First angle (about x axis): negative angles denote extension. Positive
-% angles denote flexion. More negative it gets- more extension. When gets
-% less negative- flexion. 
+
+% RIGHT ARM
+% First angle (about x axis): Extension: -  Flexion: + 
+% Second angle : pro/supination. Supination: -  Pronation:+
+
+
+%LEFT ARM
+% First angle (about x axis): Extension: + Flexion: - 
+% Second angle : pro/supination. Supination: -  Pronation:+ ? or flipped?
 
 
 % Plotting Elbow Angles over time
@@ -2563,7 +2580,13 @@ xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle','Fontsize',24)
 
-test = 'test';
+
+pause
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Checking to see if GH has NANs via missing shoulder marker
     %OLD way prior to resampling
     %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
