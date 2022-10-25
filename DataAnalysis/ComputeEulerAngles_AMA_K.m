@@ -19,7 +19,7 @@
 % For Humerus angle rel to trunk so then for ZYZa- it would be Z is polar angle, Y, is abduction, Za is internal external rotation
 
 %function [BLs_G,BL_names_all,CS_G,PMCP_G,jANGLES,elbowangle,gANGLES] = ComputeEulerAngles_KS(filename,arm,partid,flag)
-function ELB_ANG = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,k)
+ [ELB_ANG,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,Hum_Ang_T] = ComputeEulerAngles_AMA_K(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,k);
 %%
 
  flag =0;
@@ -514,14 +514,15 @@ j=k; % a part of larger loop outside this function.
     %     [gANGLES(4:6,:,i)]=CalcEulerAng(gR(:,4:6),'YZX',0);  % Clavicle
     %     [gANGLES(7:9,:,i)]=CalcEulerAng(gR(:,7:9),'YZX',0);  % Scapula
     %     [gANGLES(10:12,:,i)]=CalcEulerAng(gR(:,10:12),'YZY',0); % Humerus 
-   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% Compute Euler Angles ****USE THIS****
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Compute Euler Angles ****USE THIS****%%%%%%%%%%%%%%
 % Updated 2022 K. Suvada
 
-% Elbow Angle- Joint Angle. Angle is using two segments relative to each
+
+%% Elbow
+% Elbow Angles- Joint Angle. Angle is using two segments relative to each
 % other. HT of Forearm in GCS and HT of Humerus in GCS. 
 
 % Rotation matrix of forearm rel to humerus (joint rotation matrix jR)
@@ -534,8 +535,51 @@ jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY',0);
 
 ELB_ANG=jAngles_elbow ;% Output of Function
 
+%% Trunk
+% TRUNK Angles - Joint angle and Global Angle. Trunk rel to GCS and Trunk
+% rel to Trunk at start of reach. 
 
-%%  Kacey removed rotjoint function and placed code here Nov 2021 - ELBOW ANGLE
+% Angles
+% 1) Forward Flexion/Extension
+% 2) Lateral Bending
+
+% Global Angle
+Trunk_ANG_G = CalcEulerAng(gR_trunk,'XZY',0); 
+
+% TRUNK rel to Trunk Initial
+Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XZY',0); 
+ Humerus 
+
+%% Humerus 
+% Humerus Angles - Joint angles and Global Angles. Hum rel to GCS, Hum
+% rel to Trunk at start of reach, and Hum rel to Trunk.
+
+% Angles
+% 1) Pole angle
+% 2) SABD
+
+% Global Angle
+HumAng_G =  CalcEulerAng(gR_Hum,'ZYZ',0); 
+
+% Joint Angle - Ti
+HumAng_Ti =  CalcEulerAng(jr_Hum_ti,'ZYZ',0); 
+
+% Joint Angle - T
+HumAng_T =  CalcEulerAng(jr_Hum_T,'ZYZ',0); 
+
+ %% Scapula 
+
+
+
+
+
+
+ %%
+
+ 
+ 
+ 
+ %%  Kacey removed rotjoint function and placed code here Nov 2021 - ELBOW ANGLE
 %  Forearm (10:12) HUM (7:9) TO GET ELBOW ANGLE
 %    jR(1:3,1:3)=inv(HtoG(1:3,1:3,j))*FtoG(1:3,1:3,j);
 %   jR(1:3,1:3)=HtoG(1:3,1:3)'*FtoG(1:3,1:3);

@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
     
 
     figure(19)
@@ -2287,8 +2287,7 @@ for i=1: length(mtrials)
     
     
     
-    %% Interpolation/Resampling of GH- accounting for trials with issues and need
-    % alternative interpolation method.
+    %% Filling in Missing Data and Resampling of GH
     
     
     % Adding in August 2022 with new GHr linear regression Model
@@ -2297,7 +2296,7 @@ for i=1: length(mtrials)
     
     gh = xghest;
     
-    if sum(sum(isnan(gh)))>0  % Checking if Trunk has NANS
+    if sum(sum(isnan(gh)))>0  % Checking if GH has NANS
         'NANS PRESENT in GH'
         
         filled_data =   find(isnan(gh(1:250))); %rows of NANs
@@ -2403,11 +2402,97 @@ for i=1: length(mtrials)
         end
         
         gh= ghNew;
-        
-        
-        
+
+
+            % Filling in HTttog Matrix and use method 'Nearest' so will
+            % duplicate whichever sample is closest and not NAN. 
+           
+            
+            % Interpolation function doesn't like HT with 4x4xN samples - break up
+            % each column then put back together. 
+            
+            % Grabbing Closest non NAN sample 
+            
+            % Oct. 2022
+           
+            % Col 1 of HT
+            [HTstognewCol1,TF] = fillmissing(squeeze(HTstog(:,1,:))','nearest','SamplePoints',t); %First Column at every point in time
+           
+            % Resampling 
+            [HTstognewCol1,t2]=resampledata(HTstognewCol1,t,89,100);
+            
+            % Col 2 of HT
+            [HTstognewCol2,TF] = fillmissing(squeeze(HTstog(:,2,:))','nearest','SamplePoints',t); %2nd Column at every point in time 
+            
+            % Resampling
+            [HTstognewCol2,t2]=resampledata(HTstognewCol2,t,89,100);
+            
+           
+            % Col 3 of HT
+            [HTstognewCol3,TF] = fillmissing(squeeze(HTstog(:,3,:))','nearest','SamplePoints',t); %3rd Column at every point in time
+            
+            % Resampling
+            [HTstognewCol3,t2]=resampledata(HTstognewCol3,t,89,100);
+            
+            
+            % Col 4 of HT
+            [HTstognewCol4,TF] = fillmissing(squeeze(HTstog(:,4,:))','nearest','SamplePoints',t); %4th Column at every point in time
+            
+            % Resampling
+            [HTstognewCol4,t2]=resampledata(HTstognewCol4,t,89,100);
+            
+            %Initializing 
+            HTstognew = zeros(4,4,length(HTstognewCol4));
+             
+            % Concate Columns Now that no NANs and put HT back together
+            
+            HTstognew(:,1,:) = HTstognewCol1';
+            HTstognew(:,2,:) = HTstognewCol2';
+            HTstognew(:,3,:) = HTstognewCol3';
+            HTstognew(:,4,:) = HTstognewCol4';
+            
+            % Now replace original HT matrix with filled Matrix - Resampled
+          
+            % HT Scap to Global CS
+            HTstog = HTstognew;
+            
+           
+  
+            
+        else % If there are no NANs in Scap, still need to separate columns to resample
+            
+            HTstognewCol1 = squeeze(HTstog(:,1,:))';
+            HTstognewCol2 = squeeze(HTstog(:,2,:))';
+            HTstognewCol3 = squeeze(HTstog(:,3,:))';
+            HTstognewCol4 = squeeze(HTstog(:,4,:))';
+            
+            % Resampling
+            [HTstognewCol1,t2]=resampledata(HTstognewCol1,t,89,100);
+            % Resampling
+            [HTstognewCol2,t2]=resampledata(HTstognewCol2,t,89,100);
+            % Resampling
+            [HTstognewCol3,t2]=resampledata(HTstognewCol3,t,89,100);
+            % Resampling
+            [HTstognewCol4,t2]=resampledata(HTstognewCol4,t,89,100);
+            
+         
+            %Initializing
+            HTstognew = zeros(4,4,length(HTstognewCol4));
+             
+            % Concate Columns Now that no NANs and put HT back together
+            
+            HTstognew(:,1,:) = HTstognewCol1';
+            HTstognew(:,2,:) = HTstognewCol2';
+            HTstognew(:,3,:) = HTstognewCol3';
+            HTstognew(:,4,:) = HTstognewCol4';
+            
+            % Now replace original HT matrix with filled Matrix - Resampled
+            
+            % HT Scap to Global CS
+            HTstog = HTstognew;
+            
+       
     end
-    
     
     
     % Resampling GH
@@ -2426,7 +2511,7 @@ for i=1: length(mtrials)
 %%%%%%%%%%%%%% BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+%% 
 % ARM KINEMATICS
 % - Creation of Humerus and Forearm CS in the GCS. 
 % - Humerus Coordinate system updated to have GH est
@@ -2546,16 +2631,71 @@ zlabel('Z axis (mm)')
     t = t2;
 
 
-%% Compute Elbow Angles
 
-ELB_ANG = zeros (3,length(t)); % rows are angles (seq xzy) and cols are frames
+%% TRUNK KINEMATICS
+% - HTttog created earlier, resampled 
+% - HTgtot also created ,resampled
+% - First angle: forward flexion
+% - Second angle: Lateral Bending
+% - Third angle: Axial Twisting
+
+% Rot Mat for Trunk in GCS 
+gR_trunk = HTttog(1:3,1:3,:);
+
+
+% Rotmat for Trunk in Trunk Inital CS
+
+jR_trunk = zeros(1:3,1:3,length(t));
+
+
+%Rot Mat Trunk in Trunk Inital Position (at reach start)
+
+for b = 1:length(t)
+jR_trunk = HTgtot(1:3,1:3,idx(1))*HTttog(1:3,1:3,b);
+end
+
+
+%% HUMERUS KINEMATICS 
+% - HThtog created earlier, resampled 
+% - Hum in GCS, HUM in Trunk at start, Hum in Trunk
+
+% - First angle: Pole Angle 
+% - Second angle: SABD 
+
+% gR - Rotation Matrix for Hum CS in GCS for all time during trial 
+gR_Hum = Hum_CS_G(1:3,1:3,:);
+
+% jR - Rotation Matrix for Hum in Trunk_initial
+jr_Hum_ti = zeros(1:3,1:3,length(t));
+
+for b = 1:length(t)
+  jr_Hum_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*Hum_CS_G(1:3,1:3,b);
+end
+
+% jR - Rotation Matrix for Hum in Trunk
+jr_Hum_T = zeros(1:3,1:3,length(t));
+
+for b = 1:length(t)
+  jr_Hum_T(:,:,b)=  HTgtot(1:3,1:3,b)*Hum_CS_G(1:3,1:3,b);
+end
+
+%% Scapular Kinematics
+% - HTstoG computed during all frames of trial earlier
+
+%% Passing into ComputeEulerANgles
+
+Hum_Ang_T = zeros(3,length(t));
+HumAng_Ti=zeros(3,length(t)); 
+HumAng_G= zeros(3,length(t)); 
+Trunk_ANG_Ti = zeros(3,length(t)); 
+Trunk_ANG_G = zeros(3,length(t));
+ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
- ELB_ANG(1:3,k) = ComputeEulerAngles_AMA_K(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),k);
- % First row is elbow flex/ext
- % Second row is pronation/supination
+ [ELB_ANG(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k)] = ComputeEulerAngles_AMA_K(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),k);
 
 end
+
 
 %% Plotting Elbow Angles - Oct 2022
 
@@ -2581,7 +2721,7 @@ legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle','Fontsize',24)
 
 
-pause
+
 
 
 

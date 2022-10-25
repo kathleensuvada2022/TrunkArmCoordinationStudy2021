@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttoG,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord,ScapCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -474,6 +474,8 @@ for i=1:nimag % loop through time points
     BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time
     
+    HTstoG(:,:,i) = (Tstom) * ScapCoord; % HT of SCAP CS in GCS at all frames of trial.
+
 % Trunk
     % for the jugular notch using the trunk marker
     Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  ************* MARKER data during trial IE HT marker to global
