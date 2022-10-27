@@ -1490,11 +1490,10 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
     
 
     figure(19)
-    % % %     %
     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
     hold on
     plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
@@ -2645,7 +2644,7 @@ gR_trunk = HTttog(1:3,1:3,:);
 
 % Rotmat for Trunk in Trunk Inital CS
 
-jR_trunk = zeros(1:3,1:3,length(t));
+jR_trunk = zeros(3,3,length(t));
 
 
 %Rot Mat Trunk in Trunk Inital Position (at reach start)
@@ -2666,14 +2665,14 @@ end
 gR_Hum = Hum_CS_G(1:3,1:3,:);
 
 % jR - Rotation Matrix for Hum in Trunk_initial
-jr_Hum_ti = zeros(1:3,1:3,length(t));
+jr_Hum_ti = zeros(3,3,length(t));
 
 for b = 1:length(t)
   jr_Hum_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*Hum_CS_G(1:3,1:3,b);
 end
 
 % jR - Rotation Matrix for Hum in Trunk
-jr_Hum_T = zeros(1:3,1:3,length(t));
+jr_Hum_T = zeros(3,3,length(t));
 
 for b = 1:length(t)
   jr_Hum_T(:,:,b)=  HTgtot(1:3,1:3,b)*Hum_CS_G(1:3,1:3,b);
@@ -2687,14 +2686,14 @@ end
 gR_Scap =HTstog(1:3,1:3,:);
 
 % jR - Rotation Matrix for Scap in Trunk_initial
-jr_Scap_ti = zeros(1:3,1:3,length(t));
+jr_Scap_ti = zeros(3,3,length(t));
 
 for b = 1:length(t)
   jr_Scap_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*HTstog(1:3,1:3,b);
 end
 
 % jR - Rotation Matrix for Scap in Trunk (all frames)
-jr_Scap_T = zeros(1:3,1:3,length(t));
+jr_Scap_T = zeros(3,3,length(t));
 
 for b = 1:length(t)
   jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*HTstog(1:3,1:3,b);

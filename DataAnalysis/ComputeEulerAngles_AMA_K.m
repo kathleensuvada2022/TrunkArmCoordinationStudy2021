@@ -972,42 +972,42 @@ end
 % Based on rotbones.m, rotjoint.m and roteuler.m from the DESM.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % function abg = CalcEulerAng(A,B,Rorder)
-function ANGg = CalcEulerAng(R,Rorder,val)
-% R: rotations from B to A LCS
-%       B*R = A  -> R = B'*A
-% A
-% B
-% R = B'*A;  % B to A
-
-% Determine the Euler angles alpha, beta, gamma (abg).
-switch Rorder
-    case 'XYZ'
-        [a,b,g] = rotxyz(R);  % For KACEY NEED XYZ NOW Rorder='XYZ'
-    case 'XZY'
-        [a,b,g] = rotxzy(R);
-    case 'YZX'
-        [a,b,g] = rotyzx(R);
-    case 'ZYX'
-        [a,b,g] = rotzyx(R);
-    case 'ZXY'
-        [a,b,g] = rotzxy(R);
-    case 'YZY'
-        [a,b,g] = rotyzy(R);
-    case 'ZYZ'
-        [a,b,g] = rotzyz(R);
-end
-
-ANGr = [a,b,g];
-% ANGr = abg;
-ANGg = ANGr*(180/pi);
-ANGg = ANGg';
-
-if val == 1
-    disp('ANGg: ');
-    disp(ANGg);
-end
-
-end
+% function ANGg = CalcEulerAng(R,Rorder,val)
+% % R: rotations from B to A LCS
+% %       B*R = A  -> R = B'*A
+% % A
+% % B
+% % R = B'*A;  % B to A
+% 
+% % Determine the Euler angles alpha, beta, gamma (abg).
+% switch Rorder
+%     case 'XYZ'
+%         [a,b,g] = rotxyz(R);  % For KACEY NEED XYZ NOW Rorder='XYZ'
+%     case 'XZY'
+%         [a,b,g] = rotxzy(R);
+%     case 'YZX'
+%         [a,b,g] = rotyzx(R);
+%     case 'ZYX'
+%         [a,b,g] = rotzyx(R);
+%     case 'ZXY'
+%         [a,b,g] = rotzxy(R);
+%     case 'YZY'
+%         [a,b,g] = rotyzy(R);
+%     case 'ZYZ'
+%         [a,b,g] = rotzyz(R);
+% end
+% 
+% ANGr = [a,b,g];
+% % ANGr = abg;
+% ANGg = ANGr*(180/pi);
+% ANGg = ANGg';
+% 
+% if val == 1
+%     disp('ANGg: ');
+%     disp(ANGg);
+% end
+% 
+% end
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % Function to calculate the parameters of a plane in R3
@@ -1018,26 +1018,26 @@ end
 
 % n vector: vector normal to the plane and describes desired plane
 % KACEY 10.4.21 what is DATA? just desired BLS
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [A,DATAa,nvector,e]=vlak(DATA)
-% disp('just entered the vlak program');
-[m,n]      = size(DATA);
-[Ubef,Sbef,Vbef]    = svd(DATA);
-Ubef*Sbef*Vbef';
-DATA       = [DATA 1000000*ones(m,1)];
-[U,S,V]    = svd(DATA);
-S(n,n+1) = 0;
-% S(n+1,n+1) = 0; %SABEEN CHANGED FIRST ONE FROM N+1 TO N, ASK AMA
-
-DATAa = U*S*V';
-A          = V(:,n+1)/V(n+1,n+1);
-DATAa      = DATAa(:,1:3);
-DATA       = DATA(:,1:3);
-e          = sqrt(sum((DATA-DATAa)'.^2))';
-A          = [A(1:3)/1000000;1];
-nvector    = A(1:3)/norm(A(1:3));
-end
-
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% function [A,DATAa,nvector,e]=vlak(DATA)
+% % disp('just entered the vlak program');
+% [m,n]      = size(DATA);
+% [Ubef,Sbef,Vbef]    = svd(DATA);
+% Ubef*Sbef*Vbef';
+% DATA       = [DATA 1000000*ones(m,1)];
+% [U,S,V]    = svd(DATA);
+% S(n,n+1) = 0;
+% % S(n+1,n+1) = 0; %SABEEN CHANGED FIRST ONE FROM N+1 TO N, ASK AMA
+% 
+% DATAa = U*S*V';
+% A          = V(:,n+1)/V(n+1,n+1);
+% DATAa      = DATAa(:,1:3);
+% DATA       = DATA(:,1:3);
+% e          = sqrt(sum((DATA-DATAa)'.^2))';
+% A          = [A(1:3)/1000000;1];
+% nvector    = A(1:3)/norm(A(1:3));
+% end
+% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Function to calculate the relative bone rotation matrices with respect
