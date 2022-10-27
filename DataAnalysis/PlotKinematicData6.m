@@ -2717,7 +2717,7 @@ for k = 1:length(t)
 end
 
 
-%% Plotting Elbow Angles - Oct 2022
+%% Plotting Angles - Oct 2022
 
 
 % RIGHT ARM
@@ -2729,6 +2729,7 @@ end
 % First angle (about x axis): Extension: + Flexion: - 
 % Second angle : pro/supination. Supination: -  Pronation:+ ? or flipped?
 
+close all
 
 % Plotting Elbow Angles 
 figure()
@@ -2740,11 +2741,98 @@ xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle','Fontsize',24)
 
+% Trunk angles in GCS
+figure()
+plot(Trunk_ANG_G(1,:),'Linewidth',1.75) %Flexion
+hold on
+plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Lateral Bend
+plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Twist
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Flex/Ext','Lateral Bend','Twisting','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angle in GCS','Fontsize',24)
+
+% Trunk angles in Ti
+figure()
+plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
+hold on
+plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Lateral Bend
+plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % Twist
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Flex/Ext','Lateral Bend','Twisting','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angle in Ti','Fontsize',24)
 
 
+% Humerus angles in GCS
+figure()
+plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
+hold on
+plot(HumAng_G(2,:),'Linewidth',1.75) % SABD
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in GCS','Fontsize',24)
+
+% Humerus angles in TI
+figure()
+plot(HumAng_Ti(1,:),'Linewidth',1.75) %POLE
+hold on
+plot(HumAng_Ti(2,:),'Linewidth',1.75) % SABD
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in Ti','Fontsize',24)
+
+% Humerus angles in T
+figure()
+plot(HumAng_T(1,:),'Linewidth',1.75) %POLE
+hold on
+plot(HumAng_T(2,:),'Linewidth',1.75) % SABD
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in T','Fontsize',24)
 
 
+% Scap angles in GCS
+figure()
+plot(ScapAng_G(1,:),'Linewidth',1.75) %Lateral Rotation
+hold on
+plot(ScapAng_G(2,:),'Linewidth',1.75) % Forward backward tilt
+plot(ScapAng_G(3,:),'Linewidth',1.75) % Pro/Re Traction
 
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
+title ('Scap Angle in GCS','Fontsize',24)
+
+
+% Scap angles in TI
+figure()
+plot(ScapAng_Ti(1,:),'Linewidth',1.75) %Lateral Rotation
+hold on
+plot(ScapAng_Ti(2,:),'Linewidth',1.75) % Forward backward tilt
+plot(ScapAng_Ti(3,:),'Linewidth',1.75) % Pro/Re Traction
+
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
+title ('Scap Angle in Ti','Fontsize',24)
+
+% Scap angles in T
+figure()
+plot(ScapAng_T(1,:),'Linewidth',1.75) %Lateral Rotation
+hold on
+plot(ScapAng_T(2,:),'Linewidth',1.75) % Forward backward tilt
+plot(ScapAng_T(3,:),'Linewidth',1.75) % Pro/Re Traction
+
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
+title ('Scap Angle in T','Fontsize',24)
+
+pause
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Checking to see if GH has NANs via missing shoulder marker
@@ -4078,23 +4166,23 @@ title ('Elbow Angle','Fontsize',24)
     %     'Check Data Matrix Repopulation'
     
 
-    % Updating the Data Matrix with Outcome Measures
-    DataMatrix{1,13}= 'ShEx_Z mm'; %ONCE ALL  gone through can remove
-    DataMatrix{1,14}= 'ShEx_Z %LL'; %ONCE ALL  gone through can remove
-
-
-    DataMatrix{FinalRow,14} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
-    DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-
-    %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
-    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,10} = shex_current_trial(i);
-    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,8} =  trex_current_trial(i);
-    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+%     % Updating the Data Matrix with Outcome Measures
+%     DataMatrix{1,13}= 'ShEx_Z mm'; %ONCE ALL  gone through can remove
+%     DataMatrix{1,14}= 'ShEx_Z %LL'; %ONCE ALL  gone through can remove
+% 
+% 
+%     DataMatrix{FinalRow,14} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
+% 
+%     %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,10} = shex_current_trial(i);
+%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
+%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
     %     DataMatrix{FinalRow,2} = expcond;
     %     %
     %
@@ -4108,7 +4196,7 @@ end
 
 
 %  DataMatrix = AllData;
-save FullDataMatrix.mat DataMatrix
+%save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
