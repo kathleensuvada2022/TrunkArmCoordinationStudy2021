@@ -579,13 +579,14 @@ HumAng_T =  CalcEulerAng(jr_Hum_T,'ZYZ',0);
 ScapAng_G =  CalcEulerAng(gR_Scap,'YZX',0); 
 
 % Joint Angle - Ti
-ScapAng_Ti =  CalcEulerAng(jr_Scap_ti,'YZX',0); 
+ScapAng_Ti =  CalcEulerAng(jr_Hum_ti,'YZX',0); 
 
 % Joint Angle - T
-ScapAng_T =  CalcEulerAng(jr_Scap_T,'YZX',0); 
+ScapAng_T =  CalcEulerAng(jr_Hum_T,'YZX',0); 
 
 
 
+,jr_Scap_ti,jr_Scap_T
 
  %%
 

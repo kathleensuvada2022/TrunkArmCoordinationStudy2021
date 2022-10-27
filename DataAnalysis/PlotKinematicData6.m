@@ -2682,8 +2682,29 @@ end
 %% Scapular Kinematics
 % - HTstoG computed during all frames of trial earlier
 
-%% Passing into ComputeEulerANgles
+% gR - Rotation Matrix for Scap CS in GCS for all time during trial 
 
+gR_Scap =HTstog(1:3,1:3,:);
+
+% jR - Rotation Matrix for Scap in Trunk_initial
+jr_Scap_ti = zeros(1:3,1:3,length(t));
+
+for b = 1:length(t)
+  jr_Scap_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*HTstog(1:3,1:3,b);
+end
+
+% jR - Rotation Matrix for Scap in Trunk (all frames)
+jr_Scap_T = zeros(1:3,1:3,length(t));
+
+for b = 1:length(t)
+  jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*HTstog(1:3,1:3,b);
+end
+
+
+%% Passing into ComputeEulerANgles
+Scap_Ang_T = zeros(3,length(t));
+ScapAng_Ti=zeros(3,length(t)); 
+ScapAng_G= zeros(3,length(t)); 
 Hum_Ang_T = zeros(3,length(t));
 HumAng_Ti=zeros(3,length(t)); 
 HumAng_G= zeros(3,length(t)); 
@@ -2692,7 +2713,7 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
- [ELB_ANG(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k)] = ComputeEulerAngles_AMA_K(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),k);
+ [ELB_ANG(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_AMA_K(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
