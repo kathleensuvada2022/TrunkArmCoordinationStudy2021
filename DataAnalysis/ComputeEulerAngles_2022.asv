@@ -4,12 +4,10 @@
 % Function to compute Euler Angles based off inputs as rotation matrices. 
 % Angles are output in degrees. Feed in desired segments rotation matrices
 % for angles. K. Suvada's coordinate system convention is as follows: 
-
 % View from behind for right hand:
-
-% - X to the right
-% - Y forwards
-% - Z upwards
+% X to the right
+% Y forwards
+% Z upwards. 
 
 %Inputs
 % - Fore_CS_G: HT matrix for Forearm cs in GCS.
@@ -27,19 +25,15 @@
 % - ELB_ANG: Elbow angles Forearm rel to Humerus.
 % - Trunk_ANG_: Trunk angles in GCS. 
 % - Trunk_ANG_Ti: Trunk angles rel to Trunk inital. 
-% - HumAng_: Humerus angles in GCS. 
-% - HumAng_Ti: Humerus angles rel to Trunk inital. 
-% - Hum_Ang_T: Humerus angles rel to Trunk.
-% - ScapAng_G: Scap angles rel to GCS.
-% - ScapAng_Ti: Scap angles rel to Trunk initial.
-% - Scap_Ang_T: Scap angles rel to Trunk.
-%%
+% HumAng_G,HumAng_Ti,Hum_Ang_T,ScapAng_G,ScapAng_Ti,Scap_Ang_T
+
 
 function [ELB_ANG,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,Hum_Ang_T,ScapAng_G,ScapAng_Ti,Scap_Ang_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% Compute Euler Angles %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Updated 2022 K. Suvada %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %% Elbow
