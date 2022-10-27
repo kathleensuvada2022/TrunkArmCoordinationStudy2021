@@ -1,5 +1,6 @@
-%% 2022 
+%% ComputeEulerAngles_2022
 %  K. Suvada
+%  Fall 2022
 
 % Function to compute Euler Angles based off inputs as rotation matrices. 
 % Angles are output in degrees. Feed in desired segments rotation matrices
