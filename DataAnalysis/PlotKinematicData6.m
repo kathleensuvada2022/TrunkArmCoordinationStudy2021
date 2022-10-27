@@ -2650,7 +2650,7 @@ jR_trunk = zeros(3,3,length(t));
 %Rot Mat Trunk in Trunk Inital Position (at reach start)
 
 for b = 1:length(t)
-jR_trunk = HTgtot(1:3,1:3,idx(1))*HTttog(1:3,1:3,b);
+jR_trunk(:,:,b) = HTgtot(1:3,1:3,idx(1))*HTttog(1:3,1:3,b);
 end
 
 
@@ -2730,7 +2730,7 @@ end
 % Second angle : pro/supination. Supination: -  Pronation:+ ? or flipped?
 
 
-% Plotting Elbow Angles over time
+% Plotting Elbow Angles 
 figure()
 plot(ELB_ANG(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
 hold on
