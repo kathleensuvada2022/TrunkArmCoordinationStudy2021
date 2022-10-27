@@ -2786,9 +2786,9 @@ title ('Humerus Angle in Ti','Fontsize',24)
 
 % Humerus angles in T
 figure()
-plot(HumAng_T(1,:),'Linewidth',1.75) %POLE
+plot(Hum_Ang_T(1,:),'Linewidth',1.75) %POLE
 hold on
-plot(HumAng_T(2,:),'Linewidth',1.75) % SABD
+plot(Hum_Ang_T(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
@@ -2822,10 +2822,10 @@ title ('Scap Angle in Ti','Fontsize',24)
 
 % Scap angles in T
 figure()
-plot(ScapAng_T(1,:),'Linewidth',1.75) %Lateral Rotation
+plot(Scap_Ang_T(1,:),'Linewidth',1.75) %Lateral Rotation
 hold on
-plot(ScapAng_T(2,:),'Linewidth',1.75) % Forward backward tilt
-plot(ScapAng_T(3,:),'Linewidth',1.75) % Pro/Re Traction
+plot(Scap_Ang_T(2,:),'Linewidth',1.75) % Forward backward tilt
+plot(Scap_Ang_T(3,:),'Linewidth',1.75) % Pro/Re Traction
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
