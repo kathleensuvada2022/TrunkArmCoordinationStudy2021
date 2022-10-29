@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
     
 
     figure(19)
@@ -1929,6 +1929,9 @@ for i=1: length(mtrials)
             for w = 1:length(HTttog)
                 HTgtot(:,:,w) = inv(HTttog(:,:,w));
             end
+
+
+
             
         else % If there are no NANs in TRUNK, still need to separate columns to resample
             
@@ -2572,12 +2575,14 @@ Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:
 end 
 
 
-%% Forearm and Humerus BLS with Coordinate Systems in GCS
+%% BLS with Coordinate Systems in GCS
 
 figure()
 
-%Plotting the BonyLandmarks and their Labels of Humerus
-b = 1 ; % frame 
+
+b=1;
+
+
     plot3(EL_GCS(b,1),EL_GCS(b,2),EL_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
@@ -2597,6 +2602,8 @@ b = 1 ; % frame
 quiver3(Hum_CS_G ([1 1 1],4)',Hum_CS_G ([2 2 2],4)',Hum_CS_G ([3 3 3],4)',50*Hum_CS_G (1,1:3),50*Hum_CS_G (2,1:3),50*Hum_CS_G (3,1:3))
 text(Hum_CS_G (1,4)+50*Hum_CS_G (1,1:3),Hum_CS_G (2,4)+50*Hum_CS_G (2,1:3),Hum_CS_G (3,4)+50*Hum_CS_G (3,1:3),{'X_H','Y_H','Z_H'})
  
+H_Mid_H =(EM_GCS(b,1:3)+EL_GCS(b,1:3))/2;
+
 
 
     plot3(US_GCS(b,1),US_GCS(b,2),US_GCS(b,3),'-o','Color','b','MarkerSize',10,...
@@ -2611,10 +2618,20 @@ text(Hum_CS_G (1,4)+50*Hum_CS_G (1,1:3),Hum_CS_G (2,4)+50*Hum_CS_G (2,1:3),Hum_C
         'MarkerFaceColor','#D9FFFF')
     text(OL_GCS(b,1),OL_GCS(b,2),OL_GCS(b,3),'OL','FontSize',14)
 
+H_Mid_F =(RS_GCS(b,1:3)+US_GCS(b,1:3))/2;    
 
 % Plotting FORE CS at given Frame
 quiver3(Fore_CS_G ([1 1 1],4)',Fore_CS_G ([2 2 2],4)',Fore_CS_G ([3 3 3],4)',50*Fore_CS_G (1,1:3),50*Fore_CS_G (2,1:3),50*Fore_CS_G (3,1:3))
 text(Fore_CS_G (1,4)+50*Fore_CS_G (1,1:3),Fore_CS_G (2,4)+50*Fore_CS_G (2,1:3),Fore_CS_G (3,4)+50*Fore_CS_G (3,1:3),{'X_F','Y_F','Z_F'})
+ 
+% line between midpoint of forearm to midpoint of humerus.
+plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
+
+% line between GH midpoint of humerus.
+plot3([gh(b,1) H_Mid_H(1)],[gh(b,2) H_Mid_H(2)],[gh(b,3) H_Mid_H(3)])
+
+% Plotting Trunk BLs
+
 
 
 axis equal
@@ -2622,9 +2639,14 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-% title(['Humerus CS and Respective BLS in GCS During Trial. FRAME:' num2str(frame)],'FontSize',16)  
-    
+%title(['Humerus CS and Respective BLS in GCS During Trial. FRAME:' num2str(frame)],'FontSize',16)  
+   
+'Check Elbow Angle'
 
+%pause(.5) 
+%end
+
+pause
 %%
   % Now have recreated t for resampled data
     t = t2;
@@ -2729,7 +2751,7 @@ end
 % First angle (about x axis): Extension: + Flexion: - 
 % Second angle : pro/supination. Supination: -  Pronation:+ ? or flipped?
 
-close all
+%close all
 
 % Plotting Elbow Angles 
 figure()

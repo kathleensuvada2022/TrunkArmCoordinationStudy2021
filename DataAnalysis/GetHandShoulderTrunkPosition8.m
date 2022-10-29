@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,x,xghest,HTttoG,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord,ScapCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttoG,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord,ScapCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -480,9 +480,23 @@ for i=1:nimag % loop through time points
     % for the jugular notch using the trunk marker
     Tttom= quat2tform(circshift(xtrunk(i,4:7),1,2));%  ************* MARKER data during trial IE HT marker to global
     Tttom(1:3,4) = xtrunk(i,1:3)';% *************
-    
+   
+    %{'SC';'IJ';'PX';'C7';'T8'}
+
     BLg3=(Tttom) *[bl{1}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
     xjug(i,:)=BLg3(1:3,1)'; % X Y Z of Jugular notch in the global frame and rows are time
+    
+    BLg3a=(Tttom) *[bl{1}(1,1:3) 1]';  %grabbing the XYZ point in the LCS
+    xsc(i,:)=BLg3a(1:3,1)'; % X Y Z of sc in the global frame and rows are time
+    
+    BLg3b=(Tttom) *[bl{1}(3,1:3) 1]';  %grabbing the XYZ point in the LCS
+    xxp(i,:)=BLg3b(1:3,1)'; % X Y Z of XP in the global frame and rows are time
+    
+    BLg3c=(Tttom) *[bl{1}(4,1:3) 1]';  %grabbing the XYZ point in the LCS
+    xc7(i,:)=BLg3c(1:3,1)'; % X Y Z of C7 in the global frame and rows are time
+    
+    BLg3d=(Tttom) *[bl{1}(5,1:3) 1]';  %grabbing the XYZ point in the LCS
+    xt8(i,:)=BLg3d(1:3,1)'; % X Y Z of t8 in the global frame and rows are time
     
     HTttoG(:,:,i) = (Tttom) * TrunkCoord; % HT of trunk CS in GCS at all frames of trial.
     
