@@ -24,15 +24,20 @@ OL = OL';
 EM = EM';
 EL = EL';
 
+H_mid=(RS(1:3)+US(1:3))/2;
+H_mid_2=(EL(1:3)+EM(1:3))/2;
+
 
 %%
 % Kacey Redefining X,Y,Z axes 10.6.21
 
-H_mid=(RS(1:3)+US(1:3))/2;
-zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
-%zf = zf; % flipping so vector points cranially 
+% Changed from OL to Midpnt EM/EL
 
-%Yh: Need perpendicular to plane defined by z axis and line through em el
+zf = (H_mid_2-H_mid) / norm(H_mid_2-H_mid); %Replacing so mid
+%zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);
+
+
+
 x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
 yf =cross(zf,x); %flipped order because z in opposite direction
 yf=(yf/norm(yf));
@@ -56,8 +61,7 @@ f = [xf yf zf];
 f = [f;0 0 0];
 
 
-%Creating New Origin Midpoint Between Epicondyles not OL
-H_mid_2=(EL(1:3)+EM(1:3)).'/2;
+
 org_fore = [H_mid_2 1]';
 % %%
 % if strcmp(arm,'Left')
