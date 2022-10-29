@@ -1490,7 +1490,7 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
+    [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
     
 
     figure(19)
@@ -1930,9 +1930,19 @@ for i=1: length(mtrials)
                 HTgtot(:,:,w) = inv(HTttog(:,:,w));
             end
 
+% Adding other Trunk BLS / filling NANs and Resampling 
+   
+    [xsc,TF] = fillmissing(xsc,'nearest','SamplePoints',t); 
+    [xxp,TF] = fillmissing(xxp,'nearest','SamplePoints',t);
+    [xc7,TF] = fillmissing(xc7,'nearest','SamplePoints',t); 
+    [xt8,TF] = fillmissing(xt8,'nearest','SamplePoints',t); 
+
+    [xsc,t2]=resampledata(xsc,t,89,100);
+    [xxp,t2]=resampledata(xxp,t,89,100);
+    [xc7,t2]=resampledata(xc7,t,89,100);
+    [xt8,t2]=resampledata(xt8,t,89,100);
 
 
-            
         else % If there are no NANs in TRUNK, still need to separate columns to resample
             
             HTttognewCol1 = squeeze(HTttog(:,1,:))';
@@ -1970,6 +1980,15 @@ for i=1: length(mtrials)
             for w = 1:length(HTttog)
                 HTgtot(:,:,w) = inv(HTttog(:,:,w));
             end
+      
+            % Adding other Trunk BLS and Resampling 
+
+
+            [xsc,t2]=resampledata(xsc,t,89,100);
+            [xxp,t2]=resampledata(xxp,t,89,100);
+            [xc7,t2]=resampledata(xc7,t,89,100);
+            [xt8,t2]=resampledata(xt8,t,89,100);
+
         end
       
         
@@ -2013,9 +2032,18 @@ for i=1: length(mtrials)
         for w = 1:length(HTttog)
         HTgtot(:,:,w) = inv(HTttog(:,:,w));
         end 
+
+
+        % Adding other Trunk BLS and Resampling 
+            [xsc,t2]=resampledata(xsc,t,89,100);
+            [xxp,t2]=resampledata(xxp,t,89,100);
+            [xc7,t2]=resampledata(xc7,t,89,100);
+            [xt8,t2]=resampledata(xt8,t,89,100);
+
+
     end
     
-    
+    [xjug,t2]=resampledata(xjug,t,89,100); %needed? think missing 
 
     
     
@@ -2502,10 +2530,21 @@ for i=1: length(mtrials)
  
     % Filling Missing Acromion Data - need this to resample it
     [xshldrnew,TF] = fillmissing(xshldr,'Nearest','SamplePoints',t);
-    
+  
     xshldr = xshldrnew;
-    %Resampling Acromion Data for Comparison
+
+    %Filling other missing BLs of scapula
+    [xac,TF] = fillmissing(xac,'Nearest','SamplePoints',t);
+    [xts,TF] = fillmissing(xts,'Nearest','SamplePoints',t);
+    [xai,TF] = fillmissing(xai,'Nearest','SamplePoints',t);
+    [xpc,TF] = fillmissing(xpc,'Nearest','SamplePoints',t);
+
+    %Resampling Acromionand other BLs Data for Comparison
     [xshldr,t2]=resampledata(xshldr,t,89,100);
+    [xac,t2]=resampledata(xac,t,89,100);
+    [xts,t2]=resampledata(xts,t,89,100);
+    [xai,t2]=resampledata(xai,t,89,100);
+    [xpc,t2]=resampledata(xpc,t,89,100);
  %%
 
 

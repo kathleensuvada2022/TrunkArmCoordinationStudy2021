@@ -23,7 +23,7 @@
 % K.SUVADA 2019-2022
 
 %%
-function [t,xhand,xshoulder,xtrunk,xshldr,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttoG,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord,ScapCoord)
+function [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttoG,HTstoG,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(filepath,filename,partid,hand,setup,gh_est,TrunkCoord,ScapCoord)
 load([filepath '/BL.mat'])
 
 bl{1,2}(size(bl{1,2},1)+1,1:4)  = gh_est'; % adding estimated GH to BL file (in shoulder Marker CS)
@@ -470,10 +470,27 @@ for i=1:nimag % loop through time points
     % for the acromion using the shoulder marker
     Tstom= quat2tform(circshift(xshoulder(i,4:7),1,2));% *************
     Tstom(1:3,4) = xshoulder(i,1:3)'; %*************
-    
-    BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point in the LCS
+   
+%    {'AC';'AA';'TS';'AI';'PC'} 
+
+    BLg2=(Tstom) *[bl{2}(2,1:3) 1]';  %grabbing the XYZ point in the LCS    
     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time
     
+    BLg2a = (Tstom) *[bl{2}(1,1:3) 1]'; %AC
+    xac = BLg2a(1:3,1)';
+
+    BLg2b = (Tstom) *[bl{2}(3,1:3) 1]'; %TS
+    xts = BLg2b(1:3,1)';
+    
+    BLg2c = (Tstom) *[bl{2}(4,1:3) 1]'; %AI
+    xai = BLg2c(1:3,1)';
+    
+    BLg2d = (Tstom) *[bl{2}(5,1:3) 1]'; %PC
+    xpc = BLg2d(1:3,1)';
+    
+
+
+
     HTstoG(:,:,i) = (Tstom) * ScapCoord; % HT of SCAP CS in GCS at all frames of trial.
 
 % Trunk
