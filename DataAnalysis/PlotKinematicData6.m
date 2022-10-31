@@ -2043,7 +2043,6 @@ for i=1: length(mtrials)
 
     end
     
-    [xjug,t2]=resampledata(xjug,t,89,100); %needed? think missing 
 
     
     
@@ -2539,7 +2538,7 @@ for i=1: length(mtrials)
     [xai,TF] = fillmissing(xai,'Nearest','SamplePoints',t);
     [xpc,TF] = fillmissing(xpc,'Nearest','SamplePoints',t);
 
-    %Resampling Acromionand other BLs Data for Comparison
+    %Resampling Acromion and other BLs Data for Comparison
     [xshldr,t2]=resampledata(xshldr,t,89,100);
     [xac,t2]=resampledata(xac,t,89,100);
     [xts,t2]=resampledata(xts,t,89,100);
@@ -2610,7 +2609,12 @@ end
 Fore_CS_G= zeros(4,4,length(OL_GCS));
 
 for h = 1:length(OL_GCS) %samples
-Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
+if h ==1 
+    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,1);
+else
+    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
+
+end
 end 
 
 
@@ -2669,8 +2673,62 @@ plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
 % line between GH midpoint of humerus.
 plot3([gh(b,1) H_Mid_H(1)],[gh(b,2) H_Mid_H(2)],[gh(b,3) H_Mid_H(3)])
 
-% Plotting Trunk BLs
+%Line between styloids
+plot3([RS_GCS(b,1) US_GCS(b,1)],[RS_GCS(b,2) US_GCS(b,2)],[RS_GCS(b,3) US_GCS(b,3)])
 
+% Plotting Trunk BLs
+  
+% JUG Notch
+plot3(xjug(b,1),xjug(b,2),xjug(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xjug(b,1),xjug(b,2),xjug(b,3),'IJ','FontSize',14)
+
+% XP
+plot3(xxp(b,1),xxp(b,2),xxp(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xxp(b,1),xxp(b,2),xxp(b,3),'XP','FontSize',14)
+
+%SC
+plot3(xsc(b,1),xsc(b,2),xsc(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xsc(b,1),xsc(b,2),xsc(b,3),'SC','FontSize',14)
+
+%t8
+plot3(xt8(b,1),xt8(b,2),xt8(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xt8(b,1),xt8(b,2),xt8(b,3),'T8','FontSize',14)
+
+%c7
+plot3(xc7(b,1),xc7(b,2),xc7(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xc7(b,1),xc7(b,2),xc7(b,3),'C7','FontSize',14)
+
+% Shoulder BLs
+
+% AC
+plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xac(b,1),xac(b,2),xac(b,3),'AC','FontSize',14)
+
+% AI
+plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xai(b,1),xai(b,2),xai(b,3),'AI','FontSize',14)
+
+%PC
+plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xpc(b,1),xpc(b,2),xpc(b,3),'PC','FontSize',14)
+
+%TS
+plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xts(b,1),xts(b,2),xts(b,3),'TS','FontSize',14)
+
+%AA
+plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA','FontSize',14)
 
 
 axis equal

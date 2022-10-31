@@ -24,14 +24,14 @@ OL = OL';
 EM = EM';
 EL = EL';
 
-H_mid=(RS(1:3)+US(1:3))/2;
-H_mid_2=(EL(1:3)+EM(1:3))/2;
+H_mid=(RS(1:3)+US(1:3))/2; %midpnt between RS and US
+H_mid_2=(EL(1:3)+EM(1:3))/2; % midpnt between EM and EL
 
 
 %%
 % Kacey Redefining X,Y,Z axes 10.6.21
 
-% Changed from OL to Midpnt EM/EL
+% Changed from OL to Midpnt EM/EL 10.28.22
 zf = (H_mid_2-H_mid) / norm(H_mid_2-H_mid);
 
 %zf = (OL(1:3)-H_mid) / norm(OL(1:3)-H_mid);

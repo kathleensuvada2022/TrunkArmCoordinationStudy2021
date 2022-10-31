@@ -1,4 +1,4 @@
-%% Processing of Metria Raw Data.
+%% Processing of Metria Data
 
 % Function that sorts Metria data and creates time vector, and respective
 % variables for the hand, shoulder, trunk, humerus marker. 
@@ -477,16 +477,16 @@ for i=1:nimag % loop through time points
     xshldr(i,:)=BLg2(1:3,1)'; % X Y Z of Acromion in the global frame and rows are time
     
     BLg2a = (Tstom) *[bl{2}(1,1:3) 1]'; %AC
-    xac = BLg2a(1:3,1)';
+    xac(i,:) = BLg2a(1:3,1)';
 
     BLg2b = (Tstom) *[bl{2}(3,1:3) 1]'; %TS
-    xts = BLg2b(1:3,1)';
+    xts(i,:) = BLg2b(1:3,1)';
     
     BLg2c = (Tstom) *[bl{2}(4,1:3) 1]'; %AI
-    xai = BLg2c(1:3,1)';
+    xai(i,:) = BLg2c(1:3,1)';
     
     BLg2d = (Tstom) *[bl{2}(5,1:3) 1]'; %PC
-    xpc = BLg2d(1:3,1)';
+    xpc(i,:) = BLg2d(1:3,1)';
     
 
 
