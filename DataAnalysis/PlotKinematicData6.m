@@ -2697,10 +2697,12 @@ text(HTttog (1,4,b)+50*HTttog (1,1:3,b),HTttog (2,4,b)+50*HTttog (2,1:3,b),HTtto
  
 % Plotting Scapular CS
 
-
 quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
 text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X_S','Y_S','Z_S'})
  
+% Computing and Plotting GCS
+
+GCS_GCS = HTttog(:,:,b)*inv(HTttog(:,:,b));
 
 % Plotting Trunk BLs
   
