@@ -1,9 +1,13 @@
-%% Scapular CS 2022
+%% Scapular CS 2022 - for GH
 
 % Function to create Scapular CS based on Kacey's Definition. 
 % For the right arm, x is to the right, z is up and y is forwards. Using
 % the Bls of the scapula in the marker cs, create a cs for the scapula in
 % the marker frame. 
+
+% ****** NOTE******* : this function flips CS for left arm to mimic the right arm. This
+% allows computation of GH. Use other function to create and leave left arm
+% ScapCS
 
 % Inputs: 
 % - BLs: full bonylandmark data from participant's setup file. These are
@@ -36,11 +40,7 @@ ts = TS(1:3);
 ac = AC(1:3);
 
 %% Creating Scapular CS -Kacey's Definition
-% if strcmp(hand,'Right') 
-
-% Creating Scapular CS using Right arm definition- use for left and right
-% for consistency with Forearm, Humerus CS, and Trunk
-
+if strcmp(hand,'Right')
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
 yhulp = cross((AC(1:3)-AI(1:3)),xs);
 ys = yhulp/norm(yhulp);
@@ -55,23 +55,23 @@ Orig = AC(1:4);
 ScapCoord = [s Orig];
 
 
-% else 
-%     
-%     
-% xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
-% yhulp = cross(xs,(AC(1:3)-AI(1:3)));
-% ys = yhulp/norm(yhulp);
-% zs = cross(ys,xs);
-% s = [xs,ys,zs];
-% 
-% s = [s;0 0 0];
-% 
-% Orig = AC(1:4);
-% 
-% %Scapular CS in Marker Frame with origin at AC
-% ScapCoord = [s Orig];
-% 
-% end
+else 
+    
+    
+xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
+yhulp = cross(xs,(AC(1:3)-AI(1:3)));
+ys = yhulp/norm(yhulp);
+zs = cross(ys,xs);
+s = [xs,ys,zs];
+
+s = [s;0 0 0];
+
+Orig = AC(1:4);
+
+%Scapular CS in Marker Frame with origin at AC
+ScapCoord = [s Orig];
+
+end
 
 %% Plotting Scapular CS and Bls in Marker Frame
 if flag ==1

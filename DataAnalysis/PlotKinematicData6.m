@@ -96,14 +96,15 @@ BLs = setup.bl; % BLs in marker CS
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
-ScapCoord = Asscap_K(BLs,hand,0);
+ScapCoord_forGH = Asscap_K_GH(BLs,hand,0); % switching for left arm st Ghest works
+ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
 TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
- gh_est = Ghest_2022(ScapCoord,BLs,0);
+ gh_est = Ghest_2022(ScapCoord_forGH,BLs,0);
 
 
 % Saving Gh_est to BLs setup file creating new column
@@ -2609,41 +2610,49 @@ end
 Fore_CS_G= zeros(4,4,length(OL_GCS));
 
 for h = 1:length(OL_GCS) %samples
-if h ==1 
-    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,1);
-else
+
+
     Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
 
-end
+
 end 
 
 
-%% BLS with Coordinate Systems in GCS
+%% MASTER PLOT OF BLS CS in GCS
 
+% Plot goes through all frames showing all CS of segments (in gCS) and the
+% respective BLs in GCS.
+
+
+close all
 figure()
 
 
-b=1;
+for b = 1:50:length(EL_GCS)
 
 
     plot3(EL_GCS(b,1),EL_GCS(b,2),EL_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
+    if b==1
     text(EL_GCS(b,1),EL_GCS(b,2),EL_GCS(b,3),'EL','FontSize',14)
-
+    end
 
     plot3(EM_GCS(b,1),EM_GCS(b,2),EM_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
+    if b==1
     text(EM_GCS(b,1),EM_GCS(b,2),EM_GCS(b,3),'EM','FontSize',14)
+    end
 
     plot3(gh(b,1),gh(b,2),gh(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
+    if b==1
     text(gh(b,1),gh(b,2),gh(b,3),'GH','FontSize',14)
-
+    end
 
 % Plotting HUM CS at given Frame
-quiver3(Hum_CS_G ([1 1 1],4)',Hum_CS_G ([2 2 2],4)',Hum_CS_G ([3 3 3],4)',50*Hum_CS_G (1,1:3),50*Hum_CS_G (2,1:3),50*Hum_CS_G (3,1:3))
-text(Hum_CS_G (1,4)+50*Hum_CS_G (1,1:3),Hum_CS_G (2,4)+50*Hum_CS_G (2,1:3),Hum_CS_G (3,4)+50*Hum_CS_G (3,1:3),{'X_H','Y_H','Z_H'})
+quiver3(Hum_CS_G ([1 1 1],4,b)',Hum_CS_G ([2 2 2],4,b)',Hum_CS_G ([3 3 3],4,b)',50*Hum_CS_G (1,1:3,b),50*Hum_CS_G (2,1:3,b),50*Hum_CS_G (3,1:3,b))
+text(Hum_CS_G (1,4,b)+50*Hum_CS_G (1,1:3,b),Hum_CS_G (2,4,b)+50*Hum_CS_G (2,1:3,b),Hum_CS_G (3,4,b)+50*Hum_CS_G (3,1:3,b),{'X_H','Y_H','Z_H'})
  
 H_Mid_H =(EM_GCS(b,1:3)+EL_GCS(b,1:3))/2;
 
@@ -2651,21 +2660,26 @@ H_Mid_H =(EM_GCS(b,1:3)+EL_GCS(b,1:3))/2;
 
     plot3(US_GCS(b,1),US_GCS(b,2),US_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
+    if b==1
     text(US_GCS(b,1),US_GCS(b,2),US_GCS(b,3),'US','FontSize',14)
-
+    end
     plot3(RS_GCS(b,1),RS_GCS(b,2),RS_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
+    if b==1
     text(RS_GCS(b,1),RS_GCS(b,2),RS_GCS(b,3),'RS','FontSize',14)
+    end
 
     plot3(OL_GCS(b,1),OL_GCS(b,2),OL_GCS(b,3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
+    if b==1
     text(OL_GCS(b,1),OL_GCS(b,2),OL_GCS(b,3),'OL','FontSize',14)
+    end
 
 H_Mid_F =(RS_GCS(b,1:3)+US_GCS(b,1:3))/2;    
 
 % Plotting FORE CS at given Frame
-quiver3(Fore_CS_G ([1 1 1],4)',Fore_CS_G ([2 2 2],4)',Fore_CS_G ([3 3 3],4)',50*Fore_CS_G (1,1:3),50*Fore_CS_G (2,1:3),50*Fore_CS_G (3,1:3))
-text(Fore_CS_G (1,4)+50*Fore_CS_G (1,1:3),Fore_CS_G (2,4)+50*Fore_CS_G (2,1:3),Fore_CS_G (3,4)+50*Fore_CS_G (3,1:3),{'X_F','Y_F','Z_F'})
+quiver3(Fore_CS_G ([1 1 1],4,b)',Fore_CS_G ([2 2 2],4,b)',Fore_CS_G ([3 3 3],4,b)',50*Fore_CS_G (1,1:3,b),50*Fore_CS_G (2,1:3,b),50*Fore_CS_G (3,1:3,b))
+text(Fore_CS_G (1,4,b)+50*Fore_CS_G (1,1:3,b),Fore_CS_G (2,4,b)+50*Fore_CS_G (2,1:3,b),Fore_CS_G (3,4,b)+50*Fore_CS_G (3,1:3,b),{'X_F','Y_F','Z_F'})
  
 % line between midpoint of forearm to midpoint of humerus.
 plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)])
@@ -2676,60 +2690,90 @@ plot3([gh(b,1) H_Mid_H(1)],[gh(b,2) H_Mid_H(2)],[gh(b,3) H_Mid_H(3)])
 %Line between styloids
 plot3([RS_GCS(b,1) US_GCS(b,1)],[RS_GCS(b,2) US_GCS(b,2)],[RS_GCS(b,3) US_GCS(b,3)])
 
+
+% Plotting Trunk CS
+quiver3(HTttog ([1 1 1],4,b)',HTttog ([2 2 2],4,b)',HTttog ([3 3 3],4,b)',50*HTttog (1,1:3,b),50*HTttog (2,1:3,b),50*HTttog (3,1:3,b))
+text(HTttog (1,4,b)+50*HTttog (1,1:3,b),HTttog (2,4,b)+50*HTttog (2,1:3,b),HTttog (3,4,b)+50*HTttog (3,1:3,b),{'X_T','Y_T','Z_T'})
+ 
+% Plotting Scapular CS
+
+
+quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X_S','Y_S','Z_S'})
+ 
+
 % Plotting Trunk BLs
   
 % JUG Notch
 plot3(xjug(b,1),xjug(b,2),xjug(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(xjug(b,1),xjug(b,2),xjug(b,3),'IJ','FontSize',14)
 
+if b==1
+text(xjug(b,1),xjug(b,2),xjug(b,3),'IJ','FontSize',14)
+end
 % XP
 plot3(xxp(b,1),xxp(b,2),xxp(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xxp(b,1),xxp(b,2),xxp(b,3),'XP','FontSize',14)
+end
 
 %SC
 plot3(xsc(b,1),xsc(b,2),xsc(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xsc(b,1),xsc(b,2),xsc(b,3),'SC','FontSize',14)
+end
 
 %t8
 plot3(xt8(b,1),xt8(b,2),xt8(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xt8(b,1),xt8(b,2),xt8(b,3),'T8','FontSize',14)
+end
 
 %c7
 plot3(xc7(b,1),xc7(b,2),xc7(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xc7(b,1),xc7(b,2),xc7(b,3),'C7','FontSize',14)
-
+end
 % Shoulder BLs
 
 % AC
 plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xac(b,1),xac(b,2),xac(b,3),'AC','FontSize',14)
+end
 
 % AI
 plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xai(b,1),xai(b,2),xai(b,3),'AI','FontSize',14)
+end
 
 %PC
 plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xpc(b,1),xpc(b,2),xpc(b,3),'PC','FontSize',14)
+end 
 
 %TS
 plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xts(b,1),xts(b,2),xts(b,3),'TS','FontSize',14)
+end
 
 %AA
 plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
+if b==1
 text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA','FontSize',14)
-
+end
 
 axis equal
 xlabel('X axis (mm)')
@@ -2738,10 +2782,10 @@ zlabel('Z axis (mm)')
 
 %title(['Humerus CS and Respective BLS in GCS During Trial. FRAME:' num2str(frame)],'FontSize',16)  
    
-'Check Elbow Angle'
 
-%pause(.5) 
-%end
+
+pause(.005) 
+end
 
 pause
 %%
