@@ -2702,7 +2702,11 @@ text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTsto
  
 % Computing and Plotting GCS
 
-GCS_GCS = HTttog(:,:,b)*inv(HTttog(:,:,b));
+GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+ 
+
 
 % Plotting Trunk BLs
   
@@ -2914,8 +2918,8 @@ plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Lateral Bend
 plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Twist
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex/Ext','Lateral Bend','Twisting','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angle in GCS','Fontsize',24)
+legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angle in GCS ','Fontsize',24)
 
 % Trunk angles in Ti
 figure()
@@ -2925,7 +2929,7 @@ plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Lateral Bend
 plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % Twist
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex/Ext','Lateral Bend','Twisting','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in Ti','Fontsize',24)
 
 
