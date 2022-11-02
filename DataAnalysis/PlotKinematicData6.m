@@ -3014,7 +3014,7 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
- [ELB_ANG(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+ [ELB_ANG(1:3,k),ELB_ANG2(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
@@ -3033,7 +3033,7 @@ end
 
 %close all
 
-% Plotting Elbow Angles 
+% Plotting Elbow Angles :Fore in H
 figure()
 plot(ELB_ANG(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
 hold on
@@ -3042,6 +3042,16 @@ xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle','Fontsize',24)
+
+% Plotting Elbow Angles 2 : Hum in Fore
+figure()
+plot(ELB_ANG2(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
+hold on
+plot(ELB_ANG2(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
+title ('Elbow Angle 2','Fontsize',24)
 
 % Trunk angles in GCS
 figure()

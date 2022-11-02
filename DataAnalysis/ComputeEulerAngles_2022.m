@@ -36,7 +36,7 @@
 % - Scap_Ang_T: Scap angles rel to Trunk.
 %%
 
-function [ELB_ANG,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
+function [ELB_ANG,ELB_ANG2,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,12 +50,17 @@ function [ELB_ANG,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G
 % Rotation matrix of forearm rel to humerus (joint rotation matrix jR)
 jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3);
 
+jR_HuminFore = inv(jR_ForeinHum);
+
 % Computing Elbow Angle 
 % X- elbow flexion/extension
 % Z - Pronation/Supination
 jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY',0); 
+jAngles_elbow2 = CalcEulerAng(jR_HuminFore,'XZY',0); 
+
 
 ELB_ANG=jAngles_elbow ;% Output of Function
+ELB_ANG2=jAngles_elbow2 ;% Output of Function
 
 %% Trunk
 % TRUNK Angles - Joint angle and Global Angle. Trunk rel to GCS and Trunk
