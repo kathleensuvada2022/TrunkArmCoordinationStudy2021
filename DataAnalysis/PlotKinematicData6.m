@@ -2621,6 +2621,16 @@ close all
 H_Mid_F(:,1:3) =(RS_GCS(:,1:3)+US_GCS(:,1:3))/2;
 H_Mid_H(:,1:3) =(EM_GCS(:,1:3)+EL_GCS(:,1:3))/2;
 
+
+%% Law of Cosines Compute EE
+b = norm(H_Mid_F-H_Mid_H);
+a = norm(H_Mid_H- gh);
+c = norm(gh-H_Mid_F);
+
+AngC = rad2deg(acos((b^2+c^2)-a^2/(2*b*c)));
+
+
+
 figure() %Plotting Elbow Line Diagram Start and End
 % line between midpoint of forearm to midpoint of humerus.
 % subplot(1,2,1)
