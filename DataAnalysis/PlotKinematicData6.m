@@ -3043,31 +3043,23 @@ for k = 1:length(t)
 end
 
 
+% Elbow Angle - convention based on right or left arm
+
+if strcmp(hand,'Right')
+    ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
+
+else
+    ELB_ANG_MAT(1,:)= 180+ELB_ANG_MAT(1,:);
+
+end
+
 %% Plotting Angles - Oct 2022
 
 
-% RIGHT ARM
-% First angle (about x axis): Extension: -  Flexion: + 
-% Second angle : pro/supination. Supination: -  Pronation:+
-
-
-%LEFT ARM
-% First angle (about x axis): Extension: + Flexion: - 
-% Second angle : pro/supination. Supination: -  Pronation:+ ? or flipped?
-
 %close all
 
-% Plotting Elbow Angles :Fore in H
-figure()
-plot(ELB_ANG(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
-hold on
-plot(ELB_ANG(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
-title ('Elbow Angle','Fontsize',24)
-
-% Plotting Elbow Angles 2 : Hum in Fore
+% % Plotting Elbow Angles  : Internal matlab function **** THIS IS CORRECT
+% USE!!!! *******
 figure()
 plot(ELB_ANG_MAT(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
 hold on
@@ -3076,6 +3068,8 @@ xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle Matlab Built in XYZ Rotm2Euler','Fontsize',24)
+
+
 
 % Trunk angles in GCS
 figure()
