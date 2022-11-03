@@ -36,8 +36,11 @@
 % - Scap_Ang_T: Scap angles rel to Trunk.
 %%
 
-function [ELB_ANG,ELB_ANG2,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
+function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
 
+
+%    The following rotation sequences, SEQ, are supported: 'ZYX', 'ZYZ', and
+%     'XYZ'.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% Compute Euler Angles %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,10 +62,17 @@ jR_HuminFore = inv(jR_ForeinHum);
 % X- elbow flexion/extension
 % Z - Pronation/Supination
 jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY',0); 
+
+
+jAngles_elbow_mat = rotm2eul(jR_ForeinHum,'XYZ'); 
+
 jAngles_elbow2 = CalcEulerAng(jR_HuminFore,'XZY',0); 
 
 
 ELB_ANG=jAngles_elbow ;% Output of Function
+ELB_ANG_MAT=jAngles_elbow_mat ;% Output of Function
+
+ELB_ANG_MAT = rad2deg(ELB_ANG_MAT);
 ELB_ANG2=jAngles_elbow2 ;% Output of Function
 
 %% Trunk

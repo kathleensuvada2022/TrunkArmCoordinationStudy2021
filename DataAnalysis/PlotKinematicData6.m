@@ -2614,23 +2614,37 @@ for h = 1:length(OL_GCS) %samples
 
     Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
 
-
 end 
 %% Verification of Elbow Angle Plots
 close all
+H_Mid_F= zeros(length(RS_GCS),3);
+H_Mid_H= zeros(length(EM_GCS),3);
+
 H_Mid_F(:,1:3) =(RS_GCS(:,1:3)+US_GCS(:,1:3))/2;
 H_Mid_H(:,1:3) =(EM_GCS(:,1:3)+EL_GCS(:,1:3))/2;
 
 
 %% Law of Cosines Compute EE
-b = norm(H_Mid_F-H_Mid_H);
-a = norm(H_Mid_H- gh);
-c = norm(gh-H_Mid_F);
+s1_start = norm(H_Mid_F(idx(1),1:3)-H_Mid_H(idx(1),1:3));
+s2_start = norm(H_Mid_H(idx(1),1:3)- gh(idx(1),1:3));
+s3_start = norm(gh(idx(1),1:3)-H_Mid_F(idx(1),1:3));
 
-AngC = rad2deg(acos((b^2+c^2)-a^2/(2*b*c)));
+[ang1 ang2 ang3]=triangle(s1_start,s2_start,s3_start);
+
+'Elbow Angle at Start'
+ang3
+
+s1_end = norm(H_Mid_F(idx(3),1:3)-H_Mid_H(idx(3),1:3));
+s2_end = norm(H_Mid_H(idx(3),1:3)- gh(idx(3),1:3));
+s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
+
+[ang1 ang2 ang3]=triangle(s1_end,s2_end,s3_end);
+
+'Elbow Angle at End'
+ang3
 
 
-
+%%
 figure() %Plotting Elbow Line Diagram Start and End
 % line between midpoint of forearm to midpoint of humerus.
 % subplot(1,2,1)
@@ -2741,7 +2755,7 @@ xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
 
-pause
+
 %% MASTER PLOT OF BLS CS in GCS
 
 % Plot goes through all frames showing all CS of segments (in gCS) and the
@@ -3024,7 +3038,7 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
- [ELB_ANG(1:3,k),ELB_ANG2(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+ [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
@@ -3055,13 +3069,13 @@ title ('Elbow Angle','Fontsize',24)
 
 % Plotting Elbow Angles 2 : Hum in Fore
 figure()
-plot(ELB_ANG2(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
+plot(ELB_ANG_MAT(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
 hold on
-plot(ELB_ANG2(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
+plot(ELB_ANG_MAT(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
-title ('Elbow Angle 2','Fontsize',24)
+title ('Elbow Angle Matlab Built in XYZ Rotm2Euler','Fontsize',24)
 
 % Trunk angles in GCS
 figure()
