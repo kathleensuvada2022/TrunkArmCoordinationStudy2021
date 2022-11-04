@@ -3038,7 +3038,7 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
- [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)] = ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
@@ -3048,15 +3048,23 @@ end
 if strcmp(hand,'Right')
     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
 
-else
+else % For Left Arm
     ELB_ANG_MAT(1,:)= 180+ELB_ANG_MAT(1,:);
+ 
+    HumAng_G(1,:)= 180 -  HumAng_G(1,:);
+    HumAng_Ti(1,:)= 180 -  HumAng_Ti(1,:);
+    Hum_Ang_T(1,:)= 180 -  Hum_Ang_T(1,:);
+   
+    ScapAng_G(1,:) = 180- ScapAng_G(1,:);
+    ScapAng_Ti(1,:) =  180- ScapAng_Ti(1,:);
+    Scap_Ang_T(1,:) = 180-Scap_Ang_T(1,:);
 
 end
 
-%% Plotting Angles - Oct 2022
-
-
-%close all
+%%%%%%%%%%%%%%%%%%%%%% Plotting Angles - Fall 2022 %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Elbow
 
 % % Plotting Elbow Angles  : Internal matlab function **** THIS IS CORRECT
 % USE!!!! *******
@@ -3069,7 +3077,9 @@ xline(idx(3),'r','Linewidth',2)
 legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
 title ('Elbow Angle Matlab Built in XYZ Rotm2Euler','Fontsize',24)
 
+%% Trunk
 
+% Correct!!!! Consistent with internal matlab function
 
 % Trunk angles in GCS
 figure()
@@ -3081,6 +3091,8 @@ xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in GCS ','Fontsize',24)
+
+
 
 % Trunk angles in Ti
 figure()
@@ -3094,6 +3106,10 @@ legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fo
 title ('Trunk Angle in Ti','Fontsize',24)
 
 
+%% Humerus 
+
+% **** CORRECT!!!!! *******
+
 % Humerus angles in GCS
 figure()
 plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
@@ -3103,6 +3119,8 @@ xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
 title ('Humerus Angle in GCS','Fontsize',24)
+
+
 
 % Humerus angles in TI
 figure()
@@ -3124,6 +3142,9 @@ xline(idx(3),'r','Linewidth',2)
 legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
 title ('Humerus Angle in T','Fontsize',24)
 
+%% Scapula 
+
+% CONSISTENT WITH MATLAB FUNCTION (Interpretation Fuzzy) !!!!! CORRECT!!
 
 % Scap angles in GCS
 figure()
@@ -3136,7 +3157,6 @@ xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
 title ('Scap Angle in GCS','Fontsize',24)
-
 
 % Scap angles in TI
 figure()

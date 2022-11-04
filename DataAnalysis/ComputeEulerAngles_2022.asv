@@ -86,9 +86,12 @@ ELB_ANG_MAT = rad2deg(ELB_ANG_MAT);
 % Global Angle
 Trunk_ANG_G = CalcEulerAng(gR_trunk,'XZY',0); 
 
+Trunk_ANG_G_Mat = rad2deg(rotm2eul(gR_trunk,'XYZ')); 
+
 % TRUNK rel to Trunk Initial
 Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XZY',0); 
 
+Trunk_ANG_Ti_Mat = rad2deg(r(jR_trunk,'XZY',0); 
 %% Humerus 
 % Humerus Angles - Joint angles and Global Angles. Hum rel to GCS, Hum
 % rel to Trunk at start of reach, and Hum rel to Trunk.
