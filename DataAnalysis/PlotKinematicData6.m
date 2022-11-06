@@ -3262,11 +3262,11 @@ title ('Elbow Angle Matlab Built in XYZ Rotm2Euler','Fontsize',24)
 figure()
 plot(Trunk_ANG_G(1,:),'Linewidth',1.75) %Flexion
 hold on
-plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Lateral Bend
-plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Twist
+plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Twisting
+plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Lat Bend
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+','LatBendR+/L-','TwistingR-/L+','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+','TwistingR-/L+','LatBendR+/L-','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in GCS ','Fontsize',24)
 
 
@@ -3275,11 +3275,11 @@ title ('Trunk Angle in GCS ','Fontsize',24)
 figure()
 plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
 hold on
-plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Lateral Bend
-plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % Twist
+plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
+plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+','LatBendR+/L-','TwistingR-/L+','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+','TwistingR-/L+','LatBendR+/L-','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in Ti','Fontsize',24)
 
 
@@ -3503,11 +3503,24 @@ pause
 %   
 %     
 
+%% November 2022 
+
+% Getting 3rd MCP in Humeral CS (plane of the reach) for all points in time
+% during trial. For Reaching Distance now just dependant on MCP3 in Hum. in
+% YZ plane during reach. 
+
+% This is MCP3 in GCS
+xhand_Hum = zeros(4,length(xhand));
+xhand_forhumcalc = [xhand repmat(1,length(xhand),1)];
+xhand_forhumcalc = xhand_forhumcalc';
+
+for r = 1 :length(xhand)
+xhand_Hum(:,r) =  Hum_CS_G(:,:,r)*xhand_forhumcalc(:,r);
+end
 
 
-
-
-
+% Gives MCP3 in Humerus CS at all frames of trial
+xhand_Hum = xhand_Hum'; 
 
 %%
  % September 2022
@@ -3666,14 +3679,20 @@ pause
     %% Compute reaching distance
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
-    % of reach (timepoint idx(3))
+    % of reach (timepoint idx(3)) - 
     
     % XY Definition
    % maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2); 
    
-   % XYZ Definition
+   % XYZ Definition in TRUNK CS at idx1
    %                             X                              Y                              Z        
-     maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2);
+%      maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2);
+
+% In Plane of the Arm (Humerus) YZ 
+maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
+% GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
+
+
     %% Max Hand Excursion
     
     % Def: difference in hand final - initial. xhand(idx3) - xhand(idx1)
@@ -3684,9 +3703,12 @@ pause
     
    % XYZ Definition
    %                             X                                   Y                                      Z
-   maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
+%    maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
 
-    
+    % In Plane of Arm YZ
+
+    maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2);
+
     %% Compute shoulder and trunk displacement at maximum reach
     
     % Trunk
