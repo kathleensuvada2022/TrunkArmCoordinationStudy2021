@@ -3676,6 +3676,22 @@ xhand_Hum = xhand_Hum';
 
     
  %% OUTCOME MEASURES   
+% Computation of Angles 
+
+ ElbAng = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
+
+
+Trunk_Flex_Ext = Trunk_ANG_Ti(1,idx(3))-Trunk_ANG_Ti(1,idx(1));
+Trunk_Twist = Trunk_ANG_Ti(2,idx(3))-Trunk_ANG_Ti(2,idx(1));
+Trunk_LB = Trunk_ANG_Ti(3,idx(3))-Trunk_ANG_Ti(3,idx(1));
+
+Hum_Ang_Pole = Hum_Ang_T(1,idx(3))-Hum_Ang_T(1,idx(1));
+Hum_Ang_SABD = Hum_Ang_T(2,idx(3))-Hum_Ang_T(2,idx(1));
+
+Scap_Ang_Latrot = Scap_ANG_T(1,idx(3))-Scap_ANG_T(1,idx(1));
+Scap_Ang_fbtilt = Scap_ANG_T(2,idx(3))-Scap_ANG_T(2,idx(1));
+Scap_Ang_proretract = Scap_ANG_T(3,idx(3))-Scap_ANG_T(3,idx(1));
+
     %% Compute reaching distance
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
@@ -3748,8 +3764,21 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     
     trex_current_trial(i) = trunk_exc;
     
-    % TrunkAng_current_trial(i) = TrunkAng_GCS_Disp;
-    
+
+    %% Angles for current trial
+
+    ElbAng_current_trial(i) =ElbAng;
+    TrunkAng_FE_current_trial(i) = Trunk_Flex_Ext;
+    TrunkAng_Twist_current_trial(i) = Trunk_Twist;
+    TrunkAng_LB_current_trial(i) =  Trunk_LB;
+
+    HumAng_Pole_current_trial(i) =   Hum_Ang_Pole;
+    HumAng_SABD_current_trial(i) = Hum_Ang_SABD;
+
+
+    ScapAng_latrot_current_trial(i) =  Scap_Ang_Latrot;
+    ScapAng_fbtilt_current_trial(i) = Scap_Ang_fbtilt;
+   ScapAng_prtract_current_trial(i) = Scap_Ang_proretract;
     %% Plotting EMGS
     %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     %
@@ -4716,14 +4745,21 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     
 
 %     % Updating the Data Matrix with Outcome Measures
-%     DataMatrix{1,13}= 'ShEx_Z mm'; %ONCE ALL  gone through can remove
-%     DataMatrix{1,14}= 'ShEx_Z %LL'; %ONCE ALL  gone through can remove
-% 
-% 
-%     DataMatrix{FinalRow,14} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
-%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-% 
-%     %     DataMatrix{FinalRow,12} = TrunkAng_current_trial(i);
+
+%     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i)
+%     DataMatrix{FinalRow,21} = ScapAng_fbtilt_current_trial(i);
+%     DataMatrix{FinalRow,20} = ScapAng_latrot_current_trial(i)
+
+
+%     DataMatrix{FinalRow,19} = HumAng_SABD_current_trial(i);
+%     DataMatrix{FinalRow,18} = HumAng_Pole_current_trial(i);
+%     DataMatrix{FinalRow,17} = TrunkAng_LB_current_trial(i);
+%     DataMatrix{FinalRow,16} = TrunkAng_Twist_current_trial(i);
+%     DataMatrix{FinalRow,15} = TrunkAng_FE_current_trial(i);
+%     DataMatrix{FinalRow,14} = ElbAng(i);
+
+%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+%     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
 %     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
 %     DataMatrix{FinalRow,10} = shex_current_trial(i);
 %     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
