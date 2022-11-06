@@ -21,7 +21,7 @@
 
 function TrunkCS = asthorho_K2022(blmat,arm,flag,partid)
 %% Edited based on shifted CS for K.Suvada's Experiments
-% Scapular BLS in Scapula Marker Frame
+% Trunk BLS in Trunk Marker Frame
 
 blmat= blmat{1,1}; %Grabbing just the trunk BLS from the BL file. 
 

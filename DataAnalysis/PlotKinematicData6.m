@@ -102,6 +102,7 @@ setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
 TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
  gh_est = Ghest_2022(ScapCoord_forGH,BLs,0);
@@ -2754,6 +2755,182 @@ title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsiz
 xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
+%% Plotting TRUNK CS and BLs at Start and End of Reach
+
+figure()
+
+% Plotting Trunk CS at Start
+b = idx(1);
+ quiver3(HTttog ([1 1 1],4,b)',HTttog ([2 2 2],4,b)',HTttog ([3 3 3],4,b)',50*HTttog (1,1:3,b),50*HTttog (2,1:3,b),50*HTttog (3,1:3,b))
+ text(HTttog (1,4,b)+50*HTttog (1,1:3,b),HTttog (2,4,b)+50*HTttog (2,1:3,b),HTttog (3,4,b)+50*HTttog (3,1:3,b),{'X START','Y START','Z START'})
+ 
+ hold on
+ % Computing and Plotting GCS
+
+GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X GCS','Y GCS','Z GCS'})
+ 
+
+% Plotting Trunk CS at End
+b = idx(3);
+ quiver3(HTttog ([1 1 1],4,b)',HTttog ([2 2 2],4,b)',HTttog ([3 3 3],4,b)',50*HTttog (1,1:3,b),50*HTttog (2,1:3,b),50*HTttog (3,1:3,b))
+ text(HTttog (1,4,b)+50*HTttog (1,1:3,b),HTttog (2,4,b)+50*HTttog (2,1:3,b),HTttog (3,4,b)+50*HTttog (3,1:3,b),{'X END','Y END','Z END'})
+ 
+
+% Plotting Trunk BLs at Start
+b = idx(1);
+% JUG Notch
+plot3(xjug(b,1),xjug(b,2),xjug(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+ text(xjug(b,1),xjug(b,2),xjug(b,3),'IJ S','FontSize',14)
+% XP
+ plot3(xxp(b,1),xxp(b,2),xxp(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xxp(b,1),xxp(b,2),xxp(b,3),'XP S','FontSize',14)
+
+%SC
+plot3(xsc(b,1),xsc(b,2),xsc(b,3),'-o','Color','b','MarkerSize',10,...
+   'MarkerFaceColor','#D9FFFF')
+text(xsc(b,1),xsc(b,2),xsc(b,3),'SC S','FontSize',14)
+
+%t8
+plot3(xt8(b,1),xt8(b,2),xt8(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xt8(b,1),xt8(b,2),xt8(b,3),'T8 S','FontSize',14)
+
+%c7
+plot3(xc7(b,1),xc7(b,2),xc7(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xc7(b,1),xc7(b,2),xc7(b,3),'C7 S','FontSize',14)
+
+% Plotting Trunk BLs at End
+
+b = idx(3);
+% JUG Notch
+plot3(xjug(b,1),xjug(b,2),xjug(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+ text(xjug(b,1),xjug(b,2),xjug(b,3),'IJ E','FontSize',14)
+% XP
+ plot3(xxp(b,1),xxp(b,2),xxp(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xxp(b,1),xxp(b,2),xxp(b,3),'XP E','FontSize',14)
+
+%SC
+plot3(xsc(b,1),xsc(b,2),xsc(b,3),'-o','Color','b','MarkerSize',10,...
+   'MarkerFaceColor','#D9FFFF')
+text(xsc(b,1),xsc(b,2),xsc(b,3),'SC E','FontSize',14)
+
+%t8
+plot3(xt8(b,1),xt8(b,2),xt8(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xt8(b,1),xt8(b,2),xt8(b,3),'T8 E','FontSize',14)
+
+%c7
+plot3(xc7(b,1),xc7(b,2),xc7(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xc7(b,1),xc7(b,2),xc7(b,3),'C7 E','FontSize',14)
+axis equal
+title('Trunk Coordinate Systems and BLS at Start and End of Reach','FontSize',16.67)
+xlabel('X axis')
+ylabel('Y axis')
+zlabel('Z axis')
+
+%% Plotting Scapular CS and BLs at the Start and End of the Reach
+% figure()
+% 
+% % At start of reach
+% 
+% b= idx(1);
+% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
+%  hold on
+% % Computing and Plotting GCS
+% GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+% quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+% text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+%  
+% %BLS
+%  % Shoulder BLs
+% 
+% % AC
+% plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% 
+% text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
+% 
+% % AI
+% plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xai(b,1),xai(b,2),xai(b,3),'AI S','FontSize',14)
+% 
+% 
+% %PC
+% plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% 
+% text(xpc(b,1),xpc(b,2),xpc(b,3),'PC S','FontSize',14)
+% 
+% 
+% %TS
+% plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
+% 
+% 
+% %AA
+% plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
+% 
+% b= idx(3);
+% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X E','Y E','Z E'})
+%  
+% % Computing and Plotting GCS
+% GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+% quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+% text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+%  
+% %BLS
+%  % Shoulder BLs
+% 
+% % AC
+% plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% 
+% text(xac(b,1),xac(b,2),xac(b,3),'AC E','FontSize',14)
+% 
+% % AI
+% plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xai(b,1),xai(b,2),xai(b,3),'AI E','FontSize',14)
+% 
+% 
+% %PC
+% plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% 
+% text(xpc(b,1),xpc(b,2),xpc(b,3),'PC E','FontSize',14)
+% 
+% 
+% %TS
+% plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xts(b,1),xts(b,2),xts(b,3),'TS E','FontSize',14)
+% 
+% 
+% %AA
+% plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+%     'MarkerFaceColor','#D9FFFF')
+% text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA E','FontSize',14)
+% 
+% axis equal
+% 
+% title('Scapular BLs and Coordinate Systems at Start and End of Reach','FontSize',16)
+% xlabel('X Axis')
+% ylabel('Y Axis')
+% zlabel('Z Axis')
 
 
 %% MASTER PLOT OF BLS CS in GCS
@@ -3089,7 +3266,7 @@ plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Lateral Bend
 plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Twist
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+','LatBendR+/L-','TwistingR-/L+','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in GCS ','Fontsize',24)
 
 
@@ -3102,7 +3279,7 @@ plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Lateral Bend
 plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % Twist
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+','LatBendR+/L-','TwistingR+/L-','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+','LatBendR+/L-','TwistingR-/L+','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in Ti','Fontsize',24)
 
 
