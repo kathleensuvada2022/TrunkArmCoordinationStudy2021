@@ -122,11 +122,11 @@ for i=1: length(mtrials)
     if i==1
         
         %    for mac
-%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
                % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
                 %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
@@ -4746,31 +4746,31 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
 
 %     % Updating the Data Matrix with Outcome Measures
 
-%     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i)
-%     DataMatrix{FinalRow,21} = ScapAng_fbtilt_current_trial(i);
-%     DataMatrix{FinalRow,20} = ScapAng_latrot_current_trial(i)
+    DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
+    DataMatrix{FinalRow,21} = ScapAng_fbtilt_current_trial(i);
+    DataMatrix{FinalRow,20} = ScapAng_latrot_current_trial(i);
 
 
-%     DataMatrix{FinalRow,19} = HumAng_SABD_current_trial(i);
-%     DataMatrix{FinalRow,18} = HumAng_Pole_current_trial(i);
-%     DataMatrix{FinalRow,17} = TrunkAng_LB_current_trial(i);
-%     DataMatrix{FinalRow,16} = TrunkAng_Twist_current_trial(i);
-%     DataMatrix{FinalRow,15} = TrunkAng_FE_current_trial(i);
-%     DataMatrix{FinalRow,14} = ElbAng(i);
+    DataMatrix{FinalRow,19} = HumAng_SABD_current_trial(i);
+    DataMatrix{FinalRow,18} = HumAng_Pole_current_trial(i);
+    DataMatrix{FinalRow,17} = TrunkAng_LB_current_trial(i);
+    DataMatrix{FinalRow,16} = TrunkAng_Twist_current_trial(i);
+    DataMatrix{FinalRow,15} = TrunkAng_FE_current_trial(i);
+    DataMatrix{FinalRow,14} = ElbAng(i);
 
-%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
-%     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
-%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-    %     DataMatrix{FinalRow,2} = expcond;
-    %     %
-    %
+    DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+    DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+        DataMatrix{FinalRow,2} = expcond;
+        %
+    
     %      pause
     
     %     close all
