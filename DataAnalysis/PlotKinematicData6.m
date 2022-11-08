@@ -136,12 +136,12 @@ for i=1: length(mtrials)
         
         %    for mac
            %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
                % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+                     load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -3528,7 +3528,8 @@ xhand_forhumcalc = [xhand repmat(1,length(xhand),1)];
 xhand_forhumcalc = xhand_forhumcalc';
 
 for r = 1 :length(xhand)
-xhand_Hum(:,r) =  Hum_CS_G(:,:,r)*xhand_forhumcalc(:,r);
+    % 3rd MCP in Hum  = HT G to H * 3rd MCP in G
+xhand_Hum(:,r) =  inv(Hum_CS_G(:,:,r))*xhand_forhumcalc(:,r);
 end
 
 
