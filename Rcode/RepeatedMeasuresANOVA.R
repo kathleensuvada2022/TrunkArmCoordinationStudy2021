@@ -56,8 +56,9 @@ summary(model_example)
 #Loading Library and Importing Data
 library(readxl)
 
-AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic.xlsx")
+#AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic.xlsx")
 
+AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic NOV2022.xlsx")
 #Viewing Data 
 View(AllData_Stroke_Paretic)
  
@@ -76,33 +77,36 @@ Data_Paretic<-data.frame(AllData_Stroke_Paretic)
 # 'data' is the data frame you want R to look
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Trunk Displacement Normalized to Limb Length
-modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Load), data = Data_Paretic)
+modelTD <- aov(X.Trunk.Disp.~factor(Trunk.Restraint)+factor(Limb.Loading), data = Data_Paretic)
 
 # or alternatively adding participant as a repeated measure: repeated measure is same measure under different conditions
-modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Load)+Error(factor(Partid)), data = Data_Paretic)
+modelTD <- aov(Trunk.Restraint~factor(Trunk.Restraint)+factor(Limb.Loading)+Error(factor(X.Partid.)), data = Data_Paretic)
 
 
 #Summarizing Data 
 summary(modelTD)
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Reaching Distance Normalized to Limb Length
-modelRD <- aov(NormArm_RD~factor(Trunk.Restrained)+factor(Limb.Load), data = Data_Paretic)
+modelRD <- aov(RDLL~factor(Trunk.Restraint)+factor(Limb.Loading), data = Data_Paretic)
+
+modelRD2 <- aov(X.Reaching.Distance.~factor(Trunk.Restraint)+factor(Limb.Loading), data = Data_Paretic)
+
 
 # or alternatively adding participant as a repeated measure: repeated measure is same measure under different conditions
-modelRD <- aov(NormArm_RD~factor(Trunk.Restrained)+factor(Limb.Load)+Error(factor(Partid)), data = Data_Paretic)
+modelRD <- aov(RDLL~factor(Trunk.Restraint)+factor(Limb.Loading)+Error(factor(X.Partid.)), data = Data_Paretic)
 
 # or alternatively adding Limb Loading  as a repeated measure: repeated measure is same measure under different conditions
-modelRD <- aov(NormArm_RD~factor(Trunk.Restrained)+factor(Limb.Load)+Error(factor(Limb.Load)), data = Data_Paretic)
+modelRD <- aov(RDLL~factor(Trunk.Restraint)+factor(Limb.Loading)+Error(factor(Limb.Loading)), data = Data_Paretic)
 
 
 #Summarizing Data 
 summary(modelRD)
 
-
+summary(modelRD2)
 ################FOR NON PARETIC LIMB ################################################
 
 # Need to Convert to Data Frame before running through ANOVA
-Data_NonParetic<-data.frame(AllData_Stroke_NonParetic)
+Data_NonParetic<-data.frame(AllDataNonParetic)
 
 
 # The effect of limb loading Limb.Load and trunk restraint Trunk.Restrained (1 is restrained) on Trunk Displacement TR(normalized to limb length) 
@@ -110,7 +114,7 @@ Data_NonParetic<-data.frame(AllData_Stroke_NonParetic)
 # 'data' is the data frame you want R to look
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Trunk Displacement Normalized to Limb Length
-modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_NonParetic)
+modelTD <- aov(X.Trunk.Disp.~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_NonParetic)
 
 # or alternatively adding participant as a repeated measure: repeated measure is same measure under different conditions
 #modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Loading)+Error(factor(Partid)), data = Data_NonParetic)
@@ -120,7 +124,7 @@ modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Loading), d
 summary(modelTD)
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Reaching Distance Normalized to Limb Length
-modelRD <- aov(NormArmlength_RD~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_NonParetic)
+modelRD <- aov(X.Reaching.Distance.~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_NonParetic)
 
 # or alternatively adding participant as a repeated measure: repeated measure is same measure under different conditions
 #modelRD <- aov(NormArmlength_RD~factor(Trunk.Restrained)+factor(Limb.Loading)+Error(factor(Partid)), data = Data_NonParetic)
@@ -137,11 +141,11 @@ summary(modelRD)
 Data_Controls<-data.frame(AllData_Controls)
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Trunk Displacement Normalized to Limb Length
-modelTD <- aov(NormArmlength_TR~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_Controls)
+modelTD <- aov(TrunkDisp~factor(TrunkRestrained)+factor(Loading), data = Data_Controls)
 
 summary(modelTD)
 
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Reaching Distance Normalized to Limb Length
-modelRD <- aov(NormArmlength_RD~factor(Trunk.Restrained)+factor(Limb.Loading), data = Data_Controls)
+modelRD <- aov(Reaching.Distance~factor(TrunkRestrained)+factor(Loading), data = Data_Controls)
 
 summary(modelRD)
