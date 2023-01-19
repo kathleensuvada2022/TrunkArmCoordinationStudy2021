@@ -4,7 +4,7 @@
 % calls 'ComputeReachStart2021', 'GetHandShoulderTrunkPosition8', EMG functions,
 % interpolates missing Metria data and then resamples Metria Data
 % More samples per second. Ultimately plots filled data,
-% distance, velocity, and overhead plot .Use to confirm reach start/end
+% distance, velocity, and overhead plot. Use to confirm reach start/end
 % times and interpolation is valid.
 
 % Inputs:
@@ -2559,14 +2559,12 @@ for i=1: length(mtrials)
     [xts,t2]=resampledata(xts,t,89,100);
     [xai,t2]=resampledata(xai,t,89,100);
     [xpc,t2]=resampledata(xpc,t,89,100);
- %%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% 
 % ARM KINEMATICS
 % - Creation of Humerus and Forearm CS in the GCS. 
 % - Humerus Coordinate system updated to have GH est
