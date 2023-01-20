@@ -2561,6 +2561,9 @@ for i=1: length(mtrials)
     [xpc,t2]=resampledata(xpc,t,89,100);
 
 
+% close all plots from the distance outcome measures
+close all
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2628,7 +2631,7 @@ for h = 1:length(OL_GCS) %samples
 
 end 
 %% Verification of Elbow Angle Plots
-close all
+
 H_Mid_F= zeros(length(RS_GCS),3);
 H_Mid_H= zeros(length(EM_GCS),3);
 
@@ -2644,7 +2647,8 @@ s3_start = norm(gh(idx(1),1:3)-H_Mid_F(idx(1),1:3));
 [ang1 ang2 ang3]=triangle(s1_start,s2_start,s3_start);
 
 'Elbow Angle at Start'
-ang3
+
+
 
 s1_end = norm(H_Mid_F(idx(3),1:3)-H_Mid_H(idx(3),1:3));
 s2_end = norm(H_Mid_H(idx(3),1:3)- gh(idx(3),1:3));
@@ -2655,6 +2659,7 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 'Elbow Angle at End'
 ang3
 
+pause
 
 %%
 figure() %Plotting Elbow Line Diagram Start and End
@@ -2846,7 +2851,7 @@ title('Trunk Coordinate Systems and BLS at Start and End of Reach','FontSize',16
 xlabel('X axis')
 ylabel('Y axis')
 zlabel('Z axis')
-
+pause
 %% Plotting Scapular CS and BLs at the Start and End of the Reach
 figure()
 
@@ -2942,7 +2947,7 @@ title('Scapular BLs and Coordinate Systems at Start and End of Reach','FontSize'
 xlabel('X Axis')
 ylabel('Y Axis')
 zlabel('Z Axis')
-% pause
+ pause
 
 %% MASTER PLOT OF BLS CS in GCS
 
@@ -4784,9 +4789,9 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     DataMatrix{FinalRow,2} = expcond;
         %
     
-    %      pause
-    
-         close all
+         pause
+    close all
+        
     
     
 end
