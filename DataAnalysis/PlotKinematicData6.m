@@ -2565,7 +2565,7 @@ for i=1: length(mtrials)
 close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%% BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022%%%%%%%%%%%%%
+%%%%%BELOW SECTIONS ARE UPDATED KINEMATICS Fall 2022-Winter 2023%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ARM KINEMATICS
@@ -2646,8 +2646,8 @@ s3_start = norm(gh(idx(1),1:3)-H_Mid_F(idx(1),1:3));
 
 [ang1 ang2 ang3]=triangle(s1_start,s2_start,s3_start);
 
-'Elbow Angle at Start'
-
+'Elbow Angle at Start - Law of Cosines'
+ang3
 
 
 s1_end = norm(H_Mid_F(idx(3),1:3)-H_Mid_H(idx(3),1:3));
@@ -2656,10 +2656,9 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 [ang1 ang2 ang3]=triangle(s1_end,s2_end,s3_end);
 
-'Elbow Angle at End'
+'Elbow Angle at End-Law of Cosines'
 ang3
 
-pause
 
 %%
 figure() %Plotting Elbow Line Diagram Start and End
@@ -2771,6 +2770,8 @@ title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsiz
 xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
+
+pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 
 figure()
@@ -3234,6 +3235,7 @@ for k = 1:length(t)
 [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
+
 
 
 % Elbow Angle - convention based on right or left arm
