@@ -36,7 +36,7 @@
 % - Scap_Ang_T: Scap angles rel to Trunk.
 %%
 
-function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_Ti,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
+function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG_Ti_Mat,HumAng_G,HumAng_Ti,HumAng_T,ScapAng_G,ScapAng_Ti,ScapAng_T] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
 
 
 %    The following rotation sequences, SEQ, are supported: 'ZYX', 'ZYZ', and
@@ -81,14 +81,20 @@ ELB_ANG_MAT = rad2deg(ELB_ANG_MAT);
 
 % Angles
 % 1) Forward Flexion/Extension
-% 2) Lateral Bending
+% 2) Twisting
+% 3) Lateral Bending
 
 % Global Angle
-Trunk_ANG_G = CalcEulerAng(gR_trunk,'XZY',0); 
+Trunk_ANG_G = CalcEulerAng(gR_trunk,'XYZ',0); %Flipped bc XZY actually XYZ (based on matlab internal function)
+
+Trunk_ANG_G_Mat = rad2deg(rotm2eul(gR_trunk,'XYZ')); % Matlab function
+
+
 
 % TRUNK rel to Trunk Initial
-Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XZY',0); 
+Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XYZ',0);  %Flipped bc XZY actually XYZ (based on matlab internal function)
 
+Trunk_ANG_Ti_Mat = rad2deg(rotm2eul(jR_trunk,'XYZ')); %Matlab Function
 %% Humerus 
 % Humerus Angles - Joint angles and Global Angles. Hum rel to GCS, Hum
 % rel to Trunk at start of reach, and Hum rel to Trunk.

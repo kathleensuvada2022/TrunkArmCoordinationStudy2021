@@ -3232,14 +3232,74 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
-[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_Ti(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
 
+pause
 
+%% Plotting Elbow Angles
+figure()
+plot(ELB_ANG_MAT(1,:))
+hold on
+plot(ELB_ANG(1,:))
+plot(180-ELB_ANG_MAT(1,:))
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+
+plot(idx(1),ELB_ANG(1,idx(1)),'o')
+text(idx(1),ELB_ANG(1,idx(1)),num2str(ELB_ANG(1,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG(1,idx(3)),'o')
+text(idx(3),ELB_ANG(1,idx(3)),num2str(ELB_ANG(1,idx(3))),'FontSize',14)
+
+plot(idx(1),ELB_ANG_MAT(1,idx(1)),'o')
+text(idx(1),ELB_ANG_MAT(1,idx(1)),num2str(ELB_ANG_MAT(1,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG_MAT(1,idx(3)),'o')
+text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
+
+plot(idx(1),180-ELB_ANG_MAT(1,idx(1)),'o')
+text(idx(1),180-ELB_ANG_MAT(1,idx(1)),num2str(180-ELB_ANG_MAT(1,idx(1))),'FontSize',14)
+
+plot(idx(3),180-ELB_ANG_MAT(1,idx(3)),'o')
+text(idx(3),180-ELB_ANG_MAT(1,idx(3)),num2str(180-ELB_ANG_MAT(1,idx(3))),'FontSize',14)
+legend('Internal Matlab Function','CalcEulerFunc','180- Matlab Angle','Start','End','FontSize',16)
+title('Elbow Extension Angle via 3 Different Methods (Degrees)','FontSize',24)
+
+figure()
+plot(ELB_ANG_MAT(2,:))
+hold on
+plot(ELB_ANG(2,:))
+plot(180-ELB_ANG_MAT(2,:))
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+
+plot(idx(1),ELB_ANG(2,idx(1)),'o')
+text(idx(1),ELB_ANG(2,idx(1)),num2str(ELB_ANG(2,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG(2,idx(3)),'o')
+text(idx(3),ELB_ANG(2,idx(3)),num2str(ELB_ANG(2,idx(3))),'FontSize',14)
+
+plot(idx(1),ELB_ANG_MAT(2,idx(1)),'o')
+text(idx(1),ELB_ANG_MAT(2,idx(1)),num2str(ELB_ANG_MAT(2,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG_MAT(2,idx(3)),'o')
+text(idx(3),ELB_ANG_MAT(2,idx(3)),num2str(ELB_ANG_MAT(2,idx(3))),'FontSize',14)
+
+plot(idx(1),180-ELB_ANG_MAT(2,idx(1)),'o')
+text(idx(1),180-ELB_ANG_MAT(2,idx(1)),num2str(180-ELB_ANG_MAT(2,idx(1))),'FontSize',14)
+
+plot(idx(3),180-ELB_ANG_MAT(2,idx(3)),'o')
+text(idx(3),180-ELB_ANG_MAT(2,idx(3)),num2str(180-ELB_ANG_MAT(2,idx(3))),'FontSize',14)
+legend('Internal Matlab Function-Y','CalcEulerFunc-Z','180- Matlab Angle','Start','End','FontSize',16)
+title('Elbow Pronation Angle via 3 Different Methods (Degrees)','FontSize',24)
+
+
+
+pause
 % Elbow Angle - convention based on right or left arm
-
 if strcmp(hand,'Right')
     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
 
@@ -3256,50 +3316,55 @@ else % For Left Arm
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%% Plotting Angles - Fall/Winter 2022 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Elbow
 
-% % Plotting Elbow Angles  : Internal matlab function **** THIS IS CORRECT
-% USE!!!! *******
+
+%% Plotting Trunk Angles
+
+
+% Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
 figure()
-plot(ELB_ANG_MAT(1,:),'Linewidth',1.75) %Plotting Elbow Flex/Ext angle 
+%CalcEulerAng-XZY
+plot(Trunk_ANG_G(1,:),'Linewidth',1.75) %Flexion X
 hold on
-plot(ELB_ANG_MAT(2,:),'Linewidth',1.75) % Plotting Elbow Pronation/Supination angle
+plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Twisting Z
+plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Lat Bend Y
+ 
+%Internal Matlab Function- XYZ
+plot(Trunk_ANG_G_Mat(1,:),'Linewidth',1.75)%Flexion X
+plot(Trunk_ANG_G_Mat(2,:),'Linewidth',1.75) % Lat Bend Y
+plot(Trunk_ANG_G_Mat(3,:),'Linewidth',1.75) % Twisting Z
+
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex/Ext','Pro/Sup','Reach Start','Reach End','Fontsize',16)
-title ('Elbow Angle Matlab Built in XYZ Rotm2Euler','Fontsize',24)
 
-%% Trunk
 
-% Correct!!!! Consistent with internal matlab function
+legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','X Matlab','Y Matlab','Z -Matlab','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angle in GCS ','Fontsize',24)
 
-% Trunk angles in GCS
-% figure()
-% plot(Trunk_ANG_G(1,:),'Linewidth',1.75) %Flexion
-% hold on
-% plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Twisting
-% plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Lat Bend
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Flex-/Ext+','TwistingR-/L+','LatBendR+/L-','Reach Start','Reach End','Fontsize',16)
-% title ('Trunk Angle in GCS ','Fontsize',24)
-% 
 
 
 % Trunk angles in Ti
 figure()
+
+%CalcEulerAng
 plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
 hold on
 plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
 plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
+
+%Internal Matlab
+plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
+hold on
+plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
+plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
+
+
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+','TwistingR-/L+','LatBendR+/L-','Reach Start','Reach End','Fontsize',16)
+legend('Flex-/Ext+ CalcEulerAng','TwistingR-/L+ CalcEulerAng','LatBendR+/L-CalcEulerAng','Flex-/Ext+ Matlab','TwistingR-/L+ Matlab','LatBendR+/L-Matlab','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in Ti','Fontsize',24)
 
+pause
 
 %% Humerus 
 
