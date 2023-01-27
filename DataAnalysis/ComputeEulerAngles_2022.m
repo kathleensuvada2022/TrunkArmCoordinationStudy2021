@@ -1,6 +1,7 @@
 %% ComputeEulerAngles_2022
 %  K. Suvada
-%  Fall 2022
+%  Fall 2022 
+%  Winter 2023
 
 % Function to compute Euler Angles based off inputs as rotation matrices. 
 % Angles are output in degrees. Feed in desired segments rotation matrices
@@ -85,7 +86,7 @@ ELB_ANG_MAT = rad2deg(ELB_ANG_MAT);
 % 3) Lateral Bending
 
 % Global Angle
-Trunk_ANG_G = CalcEulerAng(gR_trunk,'XYZ',0); %Flipped bc XZY actually XYZ (based on matlab internal function)
+Trunk_ANG_G = CalcEulerAng(gR_trunk,'XZY',0); 
 
 Trunk_ANG_G_Mat = rad2deg(rotm2eul(gR_trunk,'XYZ')); % Matlab function
 

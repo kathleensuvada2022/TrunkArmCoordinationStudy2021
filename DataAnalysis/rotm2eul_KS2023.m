@@ -1,4 +1,4 @@
-function [eul, eulAlt] = rotm2eul_2023( R, varargin )
+function [eul, eulAlt] = rotm2eul_KS2023( R, varargin )
 
 %% January 2023
 
@@ -41,8 +41,8 @@ function [eul, eulAlt] = rotm2eul_2023( R, varargin )
 
 %#codegen
 
-robotics.internal.validation.validateRotationMatrix(R, 'rotm2eul', 'R');
-seq = robotics.internal.validation.validateEulerSequence(varargin{:});
+%robotics.internal.validation.validateRotationMatrix(R, 'rotm2eul', 'R');
+%seq = robotics.internal.validation.validateEulerSequence(varargin{:});
 
 % Pre-allocate output
 eul = zeros(size(R,3), 3 , 'like', R); %#ok<PREALL>
@@ -61,6 +61,10 @@ switch seq
     case 'XYZ'
         % Handle X-Y-Z rotation order
         eulShaped = calculateEulerAngles(R, 'XYZ');
+
+    case 'XZY'
+        % Handle X-Z-Y rotation order
+        eulShaped = calculateEulerAngles(R, 'XZY');
 end
 
 % Shape output as a series of row vectors
@@ -94,9 +98,11 @@ nextAxis = [2, 3, 1, 2];
 %   4. movingFrame : movingFrame = 1 if the rotations are with
 %      reference to a moving frame. Otherwise (in the case of a static
 %      frame), movingFrame = 0.
+
 seqSettings.ZYX = [1, 0, 0, 1];
 seqSettings.ZYZ = [3, 1, 1, 1];
 seqSettings.XYZ = [3, 0, 1, 1];
+seqSettings.XZY = [2, 0, 0, 1];
 
 % Retrieve the settings for a particular axis sequence
 setting = seqSettings.(seq);

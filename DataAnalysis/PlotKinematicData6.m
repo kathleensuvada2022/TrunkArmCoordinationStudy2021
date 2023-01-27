@@ -3293,9 +3293,31 @@ text(idx(1),180-ELB_ANG_MAT(2,idx(1)),num2str(180-ELB_ANG_MAT(2,idx(1))),'FontSi
 
 plot(idx(3),180-ELB_ANG_MAT(2,idx(3)),'o')
 text(idx(3),180-ELB_ANG_MAT(2,idx(3)),num2str(180-ELB_ANG_MAT(2,idx(3))),'FontSize',14)
-legend('Internal Matlab Function-Y','CalcEulerFunc-Z','180- Matlab Angle','Start','End','FontSize',16)
+legend('Internal Matlab Function','CalcEulerFunc','180- Matlab Angle','Start','End','FontSize',16)
 title('Elbow Pronation Angle via 3 Different Methods (Degrees)','FontSize',24)
 
+figure()
+plot(ELB_ANG_MAT(3,:))
+hold on
+plot(ELB_ANG(3,:))
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+
+plot(idx(1),ELB_ANG(3,idx(1)),'o')
+text(idx(1),ELB_ANG(3,idx(1)),num2str(ELB_ANG(3,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG(3,idx(3)),'o')
+text(idx(3),ELB_ANG(3,idx(3)),num2str(ELB_ANG(3,idx(3))),'FontSize',14)
+
+plot(idx(1),ELB_ANG_MAT(3,idx(1)),'o')
+text(idx(1),ELB_ANG_MAT(3,idx(1)),num2str(ELB_ANG_MAT(3,idx(1))),'FontSize',14)
+
+plot(idx(3),ELB_ANG_MAT(3,idx(3)),'o')
+text(idx(3),ELB_ANG_MAT(3,idx(3)),num2str(ELB_ANG_MAT(3,idx(3))),'FontSize',14)
+
+
+legend('Internal Matlab Function','CalcEulerFunc','Start','End','FontSize',16)
+title('Z axis rotations via 2 Different Methods (Degrees)','FontSize',24)
 
 
 pause
