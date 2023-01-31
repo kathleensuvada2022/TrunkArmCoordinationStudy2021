@@ -3383,8 +3383,8 @@ plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Flex-/Ext+ CalcEulerAng','TwistingR-/L+ CalcEulerAng','LatBendR+/L-CalcEulerAng','Flex-/Ext+ Matlab','TwistingR-/L+ Matlab','LatBendR+/L-Matlab','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angle in Ti','Fontsize',24)
+legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','X Matlab','Y Matlab','Z -Matlab','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angle','Fontsize',24)
 
 pause
 
@@ -3393,15 +3393,15 @@ pause
 % **** CORRECT!!!!! *******
 
 % % Humerus angles in GCS
-% figure()
-% plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
-% hold on
-% plot(HumAng_G(2,:),'Linewidth',1.75) % SABD
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
-% title ('Humerus Angle in GCS','Fontsize',24)
-% 
+figure()
+plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
+hold on
+plot(HumAng_G(2,:),'Linewidth',1.75) % SABD
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in GCS','Fontsize',24)
+
 % 
 % 
 % % Humerus angles in TI
@@ -3421,7 +3421,7 @@ hold on
 plot(Hum_Ang_T(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
+legend('Pole Angle- Z','SABD- Y','Reach Start','Reach End','Fontsize',16)
 title ('Humerus Angle in T','Fontsize',24)
 
 %% Scapula 
@@ -3461,7 +3461,7 @@ plot(Scap_Ang_T(3,:),'Linewidth',1.75) % Pro/Re Traction
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Forward backward tilt','Lateral rotation','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
+legend('Forward backward tilt- Z','Lateral rotation-Y','Pro/Retraction -X','Reach Start','Reach End','Fontsize',16)
 title ('Scap Angle in T','Fontsize',24)
 
 %   pause

@@ -62,10 +62,10 @@ jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3); %****
 % Computing Elbow Angle 
 % X- elbow flexion/extension
 % Z - Pronation/Supination
-jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XZY',0); 
+jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XYZ',0); 
 
 
-jAngles_elbow_mat = rotm2eul(jR_ForeinHum,'XYZ'); % Internal Matlab Function **** WORKS!!!*****
+jAngles_elbow_mat = rotm2eul(jR_ForeinHum,'XYZ'); % Internal Matlab Function 
 
 % jAngles_elbow2 = CalcEulerAng(jR_HuminFore,'XZY',0); 
 
@@ -93,7 +93,8 @@ Trunk_ANG_G_Mat = rad2deg(rotm2eul(gR_trunk,'XYZ')); % Matlab function
 
 
 % TRUNK rel to Trunk Initial
-Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XYZ',0);  %Flipped bc XZY actually XYZ (based on matlab internal function)
+Trunk_ANG_Ti = CalcEulerAng(jR_trunk,'XZY',0);  %Flipped bc XZY actually XYZ (based on matlab internal function)???
+% KACEY -> pls check  this logic as it does not hold 
 
 Trunk_ANG_Ti_Mat = rad2deg(rotm2eul(jR_trunk,'XYZ')); %Matlab Function
 %% Humerus 
