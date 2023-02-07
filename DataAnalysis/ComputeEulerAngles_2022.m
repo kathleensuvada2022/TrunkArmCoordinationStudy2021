@@ -51,17 +51,19 @@ function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG
 % Elbow Angles- Joint Angle. Angle is using two segments relative to each
 % other. HT of Forearm in GCS and HT of Humerus in GCS. 
 
+% From Original 'ComputeEulerAngles' :    
+% jR(:,13:15): rotations from humeral to forearm LCS
+% Hi*Rfi = Fi  -> Rfi = Hi'*Fi 
+
+
 % Rotation matrix of forearm rel to humerus (joint rotation matrix jR)
 jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3); %****
 
-% jR_HuminFore = inv(jR_ForeinHum);
 
-%     jR(:,13:15): rotations from humeral to forearm LCS
-%       Hi*Rfi = Fi  -> Rfi = Hi'*Fi
 
 % Computing Elbow Angle 
 % X- elbow flexion/extension
-% Z - Pronation/Supination
+% Y - Pronation/Supination -> Based off CalcInputKinem 'XZY'
 jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XYZ',0); 
 
 

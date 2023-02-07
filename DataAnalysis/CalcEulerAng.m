@@ -46,8 +46,8 @@ end
 
 ANGr = [a,b,g];
 % ANGr = abg;
-ANGg = ANGr*(180/pi);
-ANGg = ANGg';
+ANGg = ANGr*(180/pi); %Row Matrix: 1x3
+ANGg = ANGg'; % Column Matrix: 3x1
 
 if val == 1
     disp('ANGg: ');
