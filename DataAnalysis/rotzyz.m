@@ -10,6 +10,10 @@
 function [z,y,za]=rotzyz(r)
 % z1 = acos(r(2,2));
 
+% K. Suvada 2023: acos takes care of angles larger than 180. Gives 360-abs(Beta)
+
+% K. Suvada 2023: Most likely will NOT go into the if statement BC of this. 
+
 y1 = acos(r(3,3)); % Y1= Y Beta  Z gamma za gamma_prime
 
 % if (z1==0) then
@@ -37,7 +41,7 @@ cza = -r(3,1)/sin(y1);
 za1 = atan2(sza,cza);
 %z2 = -z1;
 
-y2 = -y1;
+y2 = -y1;% Moves to quadrants I or II 
 %sy = r(3,2)/sin(z2);
 sz = r(2,3)/sin(y2);
 %cy = -r(1,2)/sin(z2);
@@ -53,7 +57,7 @@ za2 = atan2(sza,cza);
 
 
 %if (0 <= z1 & z1 <= pi)
-if (0 <= y1 & y1 <= pi)
+if (0 <= y1 & y1 <= pi) 
 
   % y = y1;
   z = z1;
