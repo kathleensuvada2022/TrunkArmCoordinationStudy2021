@@ -1,11 +1,9 @@
-%% November 3rd, 2021 K. Suvada
-%  Function edited for Kacey's Kinematic Analysis. Need for rotations since
-%  coordinate system switched y and z. 
+%% K.Suvada 2021-2023
 
-%Updated November 17 2021- verified correct and works to compute Euler
-%Angles
+%  Edited original 'rotYZY' for Kacey's Analysis.
+%  Coordinate system definitions swapped y and z from original analysis. 
 
-% Testing 
+
 
 function [z,y,za]=rotzyz(r)
 % z1 = acos(r(2,2));

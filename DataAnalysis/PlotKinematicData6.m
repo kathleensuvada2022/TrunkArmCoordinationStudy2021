@@ -103,9 +103,72 @@ ScapAng_prtract_current_trial = zeros(ntrials,1);
 % emgvel_trial= zeros(length(mtrials),15);
 % emgstart_trial= zeros(length(mtrials),15);
 
+
+%myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
+%myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 %% Loading in BonyLandmark File
 BLs = setup.bl; % BLs in marker CS
 
+
+%% Plotting Humeral and Forearm BLs in Marker frame (without estimated GH)
+
+% To confirm Arm BLS were digitized correctly- this should've happened
+% during the experiment --> *plot pop up* 
+
+% Humerus% 
+%{'EM';'EL';'GH'}
+
+Hum_BLS_Marker =  BLs{1,3};
+
+figure()
+plot3(Hum_BLS_Marker(1,1),Hum_BLS_Marker(2,1),Hum_BLS_Marker(3,1),'o')
+text(Hum_BLS_Marker(1,1),Hum_BLS_Marker(2,1),Hum_BLS_Marker(3,1),'EM','FontSize',14)
+hold on
+
+plot3(Hum_BLS_Marker(1,2),Hum_BLS_Marker(2,2),Hum_BLS_Marker(3,2),'o')
+text(Hum_BLS_Marker(1,2),Hum_BLS_Marker(2,2),Hum_BLS_Marker(3,2),'EL','FontSize',14)
+
+plot3(Hum_BLS_Marker(1,3),Hum_BLS_Marker(2,3),Hum_BLS_Marker(3,3),'o')
+text(Hum_BLS_Marker(1,3),Hum_BLS_Marker(2,3),Hum_BLS_Marker(3,3),'GH_D_I_G','FontSize',14)
+
+plot3(0,0,0,'*')
+text(0,0,0,'Marker','FontSize',14)
+axis equal
+title('Humerus BLs in Humerus Marker Frame during Digitization','FontSize',20)
+xlabel('X axis','FontSize',14)
+ylabel('Y axis','FontSize',14)
+zlabel('Z axis','FontSize',14)
+
+% Forearm % 
+%{'RS';'US';'OL';'MCP3'}
+Fore_BLS_Marker =  BLs{1,4};
+figure()
+
+plot3(Fore_BLS_Marker(1,1),Fore_BLS_Marker(2,1),Fore_BLS_Marker(3,1),'o')
+text(Fore_BLS_Marker(1,1),Fore_BLS_Marker(2,1),Fore_BLS_Marker(3,1),'RS','FontSize',14)
+hold on
+
+plot3(Fore_BLS_Marker(1,2),Fore_BLS_Marker(2,2),Fore_BLS_Marker(3,2),'o')
+text(Fore_BLS_Marker(1,2),Fore_BLS_Marker(2,2),Fore_BLS_Marker(3,2),'US','FontSize',14)
+
+plot3(Fore_BLS_Marker(1,3),Fore_BLS_Marker(2,3),Fore_BLS_Marker(3,3),'o')
+text(Fore_BLS_Marker(1,3),Fore_BLS_Marker(2,3),Fore_BLS_Marker(3,3),'OL','FontSize',14)
+
+plot3(Fore_BLS_Marker(1,4),Fore_BLS_Marker(2,4),Fore_BLS_Marker(3,4),'o')
+text(Fore_BLS_Marker(1,4),Fore_BLS_Marker(2,4),Fore_BLS_Marker(3,4),'MCP3','FontSize',14)
+
+plot3(0,0,0,'*')
+text(0,0,0,'Marker','FontSize',14)
+axis equal
+title('Forearm BLs in Humerus Marker Frame during Digitization','FontSize',20)
+xlabel('X axis','FontSize',14)
+ylabel('Y axis','FontSize',14)
+zlabel('Z axis','FontSize',14)
+
+
+% pause
+
+close all
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
@@ -115,7 +178,7 @@ setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
 TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
-pause
+% pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
  gh_est = Ghest_2022(ScapCoord_forGH,BLs,0);
@@ -2772,7 +2835,7 @@ xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
 
-pause
+% pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 
 figure()
@@ -2854,7 +2917,7 @@ title('Trunk Coordinate Systems and BLS at Start of Reach','FontSize',16.67)
 xlabel('X axis')
 ylabel('Y axis')
 zlabel('Z axis')
-pause
+% pause
 %% Plotting Scapular CS and BLs at the Start and End of the Reach
 figure()
 
@@ -2950,7 +3013,7 @@ title('Scapular BLs and Coordinate Systems at Start of Reach','FontSize',16)
 xlabel('X Axis')
 ylabel('Y Axis')
 zlabel('Z Axis')
- pause
+%  pause
 
 %% MASTER PLOT OF BLS CS in GCS
 
@@ -3019,7 +3082,7 @@ if b==idx(3)
     %b ==295
         'at end of reach'
 
-    pause
+%     pause
 plot3([H_Mid_F(1) H_Mid_H(1)],[H_Mid_F(2) H_Mid_H(2)],[H_Mid_F(3) H_Mid_H(3)],'r','Linewidth',2)
 plot3([gh(b,1) H_Mid_H(1)],[gh(b,2) H_Mid_H(2)],[gh(b,3) H_Mid_H(3)],'r','Linewidth',2)
 
@@ -3144,12 +3207,16 @@ zlabel('Z axis (mm)')
 
 end
 
-pause
+% pause
 %%
   % Now have recreated t for resampled data
     t = t2;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Computing Rotation Matrices (jR and gR) %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Note: jR is used for computing angle relative to proximal segments and gR
 
 %% TRUNK KINEMATICS
 % - HTttog created earlier, resampled 
@@ -3160,7 +3227,6 @@ pause
 
 % Rot Mat for Trunk in GCS 
 gR_trunk = HTttog(1:3,1:3,:);
-
 
 % Rotmat for Trunk in Trunk Inital CS
 
@@ -3232,12 +3298,12 @@ Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 for k = 1:length(t)
-[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_Ti(1:3,k),Hum_Ang_T(1:3,k),ScapAng_G(1:3,k),ScapAng_Ti(1:3,k),Scap_Ang_T(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
 
-pause
+close all
 
 %% Plotting Elbow Angles
 figure()
@@ -3321,7 +3387,9 @@ title('Z axis rotations via 2 Different Methods (Degrees)','FontSize',24)
 
 
 pause
-% Elbow Angle - convention based on right or left arm
+% Elbow Angle - convention based on right or left arm % Need to check what
+% this is for Left arm
+
 if strcmp(hand,'Right')
     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
 
@@ -3351,18 +3419,18 @@ hold on
 plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Twisting Z
 plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Lat Bend Y
  
-%Internal Matlab Function- XYZ
-plot(Trunk_ANG_G_Mat(1,:),'Linewidth',1.75)%Flexion X
-plot(Trunk_ANG_G_Mat(2,:),'Linewidth',1.75) % Lat Bend Y
-plot(Trunk_ANG_G_Mat(3,:),'Linewidth',1.75) % Twisting Z
+% %Internal Matlab Function- XYZ
+% plot(Trunk_ANG_G_Mat(1,:),'Linewidth',1.75)%Flexion X
+% plot(Trunk_ANG_G_Mat(2,:),'Linewidth',1.75) % Lat Bend Y
+% plot(Trunk_ANG_G_Mat(3,:),'Linewidth',1.75) % Twisting Z
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 
 
-legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','X Matlab','Y Matlab','Z -Matlab','Reach Start','Reach End','Fontsize',16)
+legend('X:FF (-) BE (+)','Z:Twisting R (-) L (+)','Y:Lateral Bending R (+) L (-)','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angle in GCS ','Fontsize',24)
-
+ylabel('Angle (Deg)','FontSize',16)
 
 
 % Trunk angles in Ti
@@ -3374,33 +3442,63 @@ hold on
 plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
 plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
 
-%Internal Matlab
-plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
-hold on
-plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
-plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
+% %Internal Matlab
+% plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
+% hold on
+% plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
+% plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
 
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','X Matlab','Y Matlab','Z -Matlab','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angle','Fontsize',24)
+legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angles','Fontsize',24)
 
 pause
 
 %% Humerus 
 
-% **** CORRECT!!!!! *******
+
 
 % % Humerus angles in GCS
 figure()
 plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
 hold on
+plot(idx(1),HumAng_G(1,idx(1)),'o')
+text(idx(1),HumAng_G(1,idx(1)),num2str(HumAng_G(1,idx(1))),'FontSize',14)
+plot(idx(3),HumAng_G(1,idx(3)),'o')
+text(idx(3),HumAng_G(1,idx(3)),num2str(HumAng_G(1,idx(3))),'FontSize',14)
+
 plot(HumAng_G(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
-title ('Humerus Angle in GCS','Fontsize',24)
+plot(idx(1),HumAng_G(2,idx(1)),'o')
+text(idx(1),HumAng_G(2,idx(1)),num2str(HumAng_G(2,idx(1))),'FontSize',14)
+plot(idx(3),HumAng_G(2,idx(3)),'o')
+text(idx(3),HumAng_G(2,idx(3)),num2str(HumAng_G(2,idx(3))),'FontSize',14)
+
+legend('X: Pole Angle Forwards (+)','Y: SABD Lifting (+)','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in GCS - Matlab Function','Fontsize',24)
+
+figure()
+plot(HumAng_G_CalcEuler(1,:),'Linewidth',1.75) %POLE
+hold on
+plot(idx(1),HumAng_G_CalcEuler(1,idx(1)),'o')
+text(idx(1),HumAng_G_CalcEuler(1,idx(1)),num2str(HumAng_G_CalcEuler(1,idx(1))),'FontSize',14)
+plot(idx(3),HumAng_G_CalcEuler(1,idx(3)),'o')
+text(idx(3),HumAng_G_CalcEuler(1,idx(3)),num2str(HumAng_G_CalcEuler(1,idx(3))),'FontSize',14)
+
+
+plot(HumAng_G_CalcEuler(2,:),'Linewidth',1.75) % SABD
+plot(idx(1),HumAng_G_CalcEuler(2,idx(1)),'o')
+text(idx(1),HumAng_G_CalcEuler(2,idx(1)),num2str(HumAng_G_CalcEuler(2,idx(1))),'FontSize',14)
+plot(idx(3),HumAng_G_CalcEuler(2,idx(3)),'o')
+text(idx(3),HumAng_G_CalcEuler(2,idx(3)),num2str(HumAng_G_CalcEuler(2,idx(3))),'FontSize',14)
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('X: Pole Angle Forwards (+)','Y: SABD Lifting (+)','Reach Start','Reach End','Fontsize',16)
+title ('Humerus Angle in GCS - CalcEuler Function','Fontsize',24)
+
 
 % 
 % 
@@ -3456,12 +3554,32 @@ title ('Humerus Angle in T','Fontsize',24)
 figure()
 plot(Scap_Ang_T(1,:),'Linewidth',1.75) %about Z
 hold on
+% plot(Scap_Ang_T_CalcEul(1,:),'Linewidth',1.75) %about Z
+
 plot(Scap_Ang_T(2,:),'Linewidth',1.75) % Y
+%plot(Scap_Ang_T_CalcEul(2,:),'Linewidth',1.75) % Y
+
 plot(Scap_Ang_T(3,:),'Linewidth',1.75) % Pro/Re Traction
+% plot(Scap_Ang_T_CalcEul(3,:),'Linewidth',1.75) % Pro/Re Traction
 
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Forward backward tilt- Z','Lateral rotation-Y','Pro/Retraction -X','Reach Start','Reach End','Fontsize',16)
+plot(idx(1),Scap_Ang_T(1,idx(1)),'o')
+text(idx(1),Scap_Ang_T(1,idx(1)),num2str(Scap_Ang_T(1,idx(1))),'FontSize',14)
+plot(idx(3),Scap_Ang_T(1,idx(3)),'o')
+text(idx(3),Scap_Ang_T(1,idx(3)),num2str(Scap_Ang_T(1,idx(3))),'FontSize',14)
+
+plot(idx(1),Scap_Ang_T(2,idx(1)),'o')
+text(idx(1),Scap_Ang_T(2,idx(1)),num2str(Scap_Ang_T(2,idx(1))),'FontSize',14)
+plot(idx(3),Scap_Ang_T(2,idx(3)),'o')
+text(idx(3),Scap_Ang_T(2,idx(3)),num2str(Scap_Ang_T(2,idx(3))),'FontSize',14)
+
+plot(idx(1),Scap_Ang_T(3,idx(1)),'o')
+text(idx(1),Scap_Ang_T(3,idx(1)),num2str(Scap_Ang_T(3,idx(1))),'FontSize',14)
+plot(idx(3),Scap_Ang_T(3,idx(3)),'o')
+text(idx(3),Scap_Ang_T(3,idx(3)),num2str(Scap_Ang_T(3,idx(3))),'FontSize',14)
+
+legend('Forward backward tilt- Z ','Lateral rotation-Y','Pro/Retraction -X','Reach Start','Reach End','Fontsize',16)
 title ('Scap Angle in T','Fontsize',24)
 
 %   pause
