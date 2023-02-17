@@ -3386,7 +3386,7 @@ legend('Internal Matlab Function','CalcEulerFunc','Start','End','FontSize',16)
 title('Z axis rotations via 2 Different Methods (Degrees)','FontSize',24)
 
 
-pause
+% pause
 % Elbow Angle - convention based on right or left arm % Need to check what
 % this is for Left arm
 
@@ -3454,7 +3454,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
 title ('Trunk Angles','Fontsize',24)
 
-pause
+% pause
 
 %% Humerus 
 
