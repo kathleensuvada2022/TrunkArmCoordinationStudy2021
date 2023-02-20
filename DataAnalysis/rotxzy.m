@@ -31,6 +31,5 @@ else
   
 end
 
-% disp(rad2deg([x1 z1 y1;x2 z2 y2]));
   end
   

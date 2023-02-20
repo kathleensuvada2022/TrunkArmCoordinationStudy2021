@@ -3,39 +3,20 @@
 %  Edited original 'rotYZY' for Kacey's Analysis.
 %  Coordinate system definitions swapped y and z from original analysis. 
 
+%  Based on Craig Definitions and worked out Solution for 'ZYZ' sequence 
+%  of rotations (page 50).
+
+% Only works when 0=<Beta=<180
 
 
 function [z,y,za]=rotzyz2023(r)
 
 % Alpha corresponds to Z, Beta corresponds to Y, and Gamma corresponds to
 % Za. 
+y = atan2(sqrt(r(3,1)^2+r(3,2)^2),r(3,3)); % Beta
+z = atan2(r(2,3)/sin(y),r(1,3)/sin(y)); % Alpha 
+za = atan2(r(3,2)/sin(y),-r(3,1)/sin(y)); % Gamma
 
-z = atan2(r(2,3),r(1,3));
-y1 = acos(r(3,3))
-
-
-szsy1 = r(2,3);
-sy1= r(2,3)/sin(z);
-
-za = atan2(r(3,2),-r(3,1));
-
-if y1 >0 && y1<pi
-     y = y1;
-
-elseif y1 > pi && y1<2*pi
-    y = -y1;
-    z= pi+z;
-    za = pi+ za;
-end 
-
-% if sy1 >0 && y1<pi
-%      y = y1;
-% 
-% elseif y1 >pi && y1<2*pi
-%     y = -y1;
-%     z= pi+z;
-%     za = pi+ za;
-% end 
 
 
 end
