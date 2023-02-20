@@ -1,12 +1,13 @@
 %% K.Suvada 2023- redefined using ArcTan2 instead of Dutch Definitions
 
-%  Edited original 'rotYZY' for Kacey's Analysis.
-%  Coordinate system definitions swapped y and z from original analysis. 
+%  
+%  For Right Hand: X to the right, Y is forwards, and Z is upwards. 
+%  Flipped from original convention where Z is backwards and Y is upwards. 
 
-%  Based on Craig Definitions and worked out Solution for 'ZYZ' sequence 
+%  Based on Craig Book Definitions and worked out Solution for 'ZYZ' sequence 
 %  of rotations (page 50).
 
-% Only works when 0=<Beta=<180
+% Only works when 0=<Beta=<180. 
 
 
 function [z,y,za]=rotzyz2023(r)
