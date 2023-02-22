@@ -3389,22 +3389,24 @@ title('Z axis rotations via 2 Different Methods (Degrees)','FontSize',24)
 % pause
 % Elbow Angle - convention based on right or left arm % Need to check what
 % this is for Left arm
+% 
 
-if strcmp(hand,'Right')
-    ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
-
-else % For Left Arm
-    ELB_ANG_MAT(1,:)= 180+ELB_ANG_MAT(1,:);
- 
-    HumAng_G(1,:)= 180 -  HumAng_G(1,:);
-    HumAng_Ti(1,:)= 180 -  HumAng_Ti(1,:);
-    Hum_Ang_T(1,:)= 180 -  Hum_Ang_T(1,:);
-   
-    ScapAng_G(1,:) = 180- ScapAng_G(1,:);
-    ScapAng_Ti(1,:) =  180- ScapAng_Ti(1,:);
-    Scap_Ang_T(1,:) = 180-Scap_Ang_T(1,:);
-
-end
+%% NEED TO VERIFY IF BELOW CORRECT!! 2023
+% if strcmp(hand,'Right')
+%     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
+% 
+% else % For Left Arm
+%     ELB_ANG_MAT(1,:)= 180+ELB_ANG_MAT(1,:);
+%  
+%     HumAng_G(1,:)= 180 -  HumAng_G(1,:);
+%     HumAng_Ti(1,:)= 180 -  HumAng_Ti(1,:);
+%     Hum_Ang_T(1,:)= 180 -  Hum_Ang_T(1,:);
+%    
+%     ScapAng_G(1,:) = 180- ScapAng_G(1,:);
+%     ScapAng_Ti(1,:) =  180- ScapAng_Ti(1,:);
+%     Scap_Ang_T(1,:) = 180-Scap_Ang_T(1,:);
+% 
+% end
 
 
 
@@ -3429,30 +3431,30 @@ xline(idx(3),'r','Linewidth',2)
 
 
 legend('X:FF (-) BE (+)','Z:Twisting R (-) L (+)','Y:Lateral Bending R (+) L (-)','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angle in GCS ','Fontsize',24)
+title ('Trunk Angle in GCS - CalcEuler ','Fontsize',24)
 ylabel('Angle (Deg)','FontSize',16)
 
 
 % Trunk angles in Ti
-figure()
-
-%CalcEulerAng
-plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
-hold on
-plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
-plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
-
-% %Internal Matlab
-% plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
+% figure()
+% 
+% %CalcEulerAng
+% plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
 % hold on
-% plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
-% plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
-
-
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angles','Fontsize',24)
+% plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
+% plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
+% 
+% % %Internal Matlab
+% % plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
+% % hold on
+% % plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
+% % plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
+% 
+% 
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
+% title ('Trunk Angles','Fontsize',24)
 
 % pause
 
@@ -3514,13 +3516,13 @@ title ('Humerus Angle in GCS - CalcEuler Function','Fontsize',24)
 
 % Humerus angles in T
 figure()
-plot(Hum_Ang_T(1,:),'Linewidth',1.75) %POLE
+plot(Hum_Ang_T_CalcEuler(1,:),'Linewidth',1.75) %POLE
 hold on
-plot(Hum_Ang_T(2,:),'Linewidth',1.75) % SABD
+plot(Hum_Ang_T_CalcEuler(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 legend('Pole Angle- Z','SABD- Y','Reach Start','Reach End','Fontsize',16)
-title ('Humerus Angle in T','Fontsize',24)
+title ('Humerus Angle in T - CalcEuler','Fontsize',24)
 
 %% Scapula 
 
@@ -3580,9 +3582,11 @@ plot(idx(3),Scap_Ang_T(3,idx(3)),'o')
 text(idx(3),Scap_Ang_T(3,idx(3)),num2str(Scap_Ang_T(3,idx(3))),'FontSize',14)
 
 legend('Forward backward tilt- Z ','Lateral rotation-Y','Pro/Retraction -X','Reach Start','Reach End','Fontsize',16)
-title ('Scap Angle in T','Fontsize',24)
+title ('Scap Angle in T (CalcEuler)','Fontsize',24)
 
-%   pause
+'Check Plots of Angles'
+  pause
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Checking to see if GH has NANs via missing shoulder marker
