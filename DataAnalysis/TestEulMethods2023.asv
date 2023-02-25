@@ -4,11 +4,11 @@
 % works and how to modify st always yield proper angle.
 
 % HUMERUS:
-% Segment = 'Humerus'; *USE ROTM2EUL TO SATISFY ANGLE RANGES REQUIRED
+% Segment = 'Humerus';
 %%
-% AngRange1_H = -45:134;
-% AngRange2_H = -179:0;
-% AngRange3_H = -35:144;
+AngRange1_H = double(-45:134);
+AngRange2_H = -179:0;
+AngRange3_H = -35:144;
 %%
 
 function [outputArg1,outputArg2] = TestEulMethods2023(AngRange1_H,AngRange2_H,AngRange3_H,RZYZ,Segment)
@@ -45,9 +45,9 @@ if(strcmp(Segment,'Humerus'))
     y_2023 = rad2deg(y_2023);
     za_2023 = rad2deg(za_2023);
 
-    z_orig = rad2deg(z_orig);
-    y_orig = rad2deg(y_orig);
-    za_orig = rad2deg(za_orig);
+    z_2023 = rad2deg(z_orig);
+    y_2023 = rad2deg(y_orig);
+    za_2023 = rad2deg(za_orig);
 
     Angs_mat = rad2deg(Angs_mat);
 
@@ -55,34 +55,34 @@ if(strcmp(Segment,'Humerus'))
 
     % Craig Method Check %
     % Z
-    Check_CraigZ = AngRange1_H(:) == round(z_2023(:)); % off by pi
+    Check_CraigZ = AngRange1_H(:) == z_2023(:);
 
     % Y
-    Check_CraigY = AngRange2_H(:) == round(y_2023(:)); % gives negative version of true angle
+    Check_CraigY = AngRange2_H(:) == y_2023(:);
 
     % Za
-    Check_CraigZ2 = AngRange3_H(:) == round(za_2023(:)); %off by pi
+    Check_CraigZ2 = AngRange3_H(:) == za_2023(:);
 
     % Original Method Check %
 
     % Z
-    Check_OrigZ = AngRange1_H(:) == round(z_orig(:)); % off by pi
+    Check_OrigZ = AngRange1_H(:) == z_orig(:);
 
     % Y
-    Check_OrigY = AngRange2_H(:) == round(y_orig(:)); % gives negative version of true angle
+    Check_OrigY = AngRange2_H(:) == y_orig(:);
 
     % Za
-    Check_OrigZ2 = AngRange3_H(:) == round(za_orig(:)); % off by pi
+    Check_OrigZ2 = AngRange3_H(:) == za_orig(:);
 
     % Matlab Method Check
- 
+  
     % Z
-    Check_MatZ = AngRange1_H' == round(Angs_mat(:,1));  %fails at last index - rest correct
+    Check_MatZ = AngRange1_H' == round(Angs_mat(:,1)); 
 
     % Y
-    Check_MatY = AngRange2_H' == round(Angs_mat(:,2)); % all true
+    Check_MatY = AngRange2_H' == round(Angs_mat(:,2));
     % Za
-    Check_MatZ2 = AngRange3_H' == round(Angs_mat(:,3)); %fails at last index- rest correct
+    Check_MatZ2 = AngRange3_H' == round(Angs_mat(:,3));
 
 end
 

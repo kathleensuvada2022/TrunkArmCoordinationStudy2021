@@ -11,7 +11,7 @@
 % AngRange3_H = -35:144;
 %%
 
-function [outputArg1,outputArg2] = TestEulMethods2023(AngRange1_H,AngRange2_H,AngRange3_H,RZYZ,Segment)
+function [CraigCheck,OrigCheck,Check_Mat] = TestEulMethods2023_Hum(AngRange1_H,AngRange2_H,AngRange3_H,Segment)
 
 if(strcmp(Segment,'Humerus'))
 
@@ -63,8 +63,10 @@ if(strcmp(Segment,'Humerus'))
     % Za
     Check_CraigZ2 = AngRange3_H(:) == round(za_2023(:)); %off by pi
 
-    % Original Method Check %
-
+    CraigCheck = [Check_CraigZ,Check_CraigY,Check_CraigZ2];
+   
+    % Original Method Check % - From Calc Euler Angles
+    
     % Z
     Check_OrigZ = AngRange1_H(:) == round(z_orig(:)); % off by pi
 
@@ -73,6 +75,8 @@ if(strcmp(Segment,'Humerus'))
 
     % Za
     Check_OrigZ2 = AngRange3_H(:) == round(za_orig(:)); % off by pi
+
+    OrigCheck = [Check_OrigZ,Check_OrigY,Check_OrigZ2];
 
     % Matlab Method Check
  
@@ -84,6 +88,7 @@ if(strcmp(Segment,'Humerus'))
     % Za
     Check_MatZ2 = AngRange3_H' == round(Angs_mat(:,3)); %fails at last index- rest correct
 
+    Check_Mat = [Check_MatZ,Check_MatY,Check_MatZ2];
 end
 
 

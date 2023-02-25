@@ -11,7 +11,7 @@ function [z,y,za]=rotzyz(r)
 y1 = acos(r(3,3)); % Y1= Y Beta  Z gamma za gamma_prime
 
 % if (z1==0) then
-if (y1==0) then
+if (y1==0) 
    %y=acos(r(1,1));
     z=acos(r(1,1));
    %z=z1;
