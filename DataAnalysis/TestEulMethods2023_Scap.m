@@ -7,7 +7,7 @@
 % Segment = 'Scap'; 
 % *USE ROTM2EUL TO SATISFY ANGLE RANGES REQUIRED
 %%
-AngRange1_S = -30: 30;  
+AngRange1_S = -30:30;  
 AngRange2_S = -30:30;
 AngRange3_S = -30:30;
 %%

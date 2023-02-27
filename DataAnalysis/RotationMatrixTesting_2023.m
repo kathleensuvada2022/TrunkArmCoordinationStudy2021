@@ -7,9 +7,12 @@
 % Joint = 'Elbow'; *USE ROTM2EUL TO SATISFY ANGLE RANGES REQUIRED
 %%
 AngRange1_E = 0: 90;  %--> need 180 - angle for elbow flexion/extension
- AngRange2_E = -10:80;
- AngRange3_E = -15:75;%note this is not a real angle
- M = combvec(AngRange1_E,AngRange2_E,AngRange3_E);
+ 
+AngRange2_E = -10:80;
+ 
+AngRange3_E = -15:75; %note this is not a real angle
+
+M = combvec(AngRange1_E,AngRange2_E,AngRange3_E);
 
 %%
 
@@ -50,7 +53,7 @@ if(strcmp(Joint,'Elbow'))
     %% Checking Input with Computed Angles:
 
 
-    % Original Method Check %
+    % Dutch Method Check %
 
     % X
     Check_OrigX = M(1,:)' == round(x_orig(:)); 
@@ -76,6 +79,10 @@ if(strcmp(Joint,'Elbow'))
     Check_MatZ = M(3,:)' == round(Angs_mat(:,3)); 
    
     Check_Mat = [Check_MatX,Check_MatY,Check_MatZ];
+
+    % Matlab and Dutch Check 
+
+
 
 end
 
