@@ -4,43 +4,52 @@
 % works and how to modify st always yield proper angle.
 
 % HUMERUS:
-% Segment = 'Humerus'; *USE ROTM2EUL TO SATISFY ANGLE RANGES REQUIRED
+% Segment = 'Humerus'; 
 %%
-% AngRange1_H = -45:134;
+ %AngRange1_H = -45:134;
 % AngRange2_H = -179:0;
 % AngRange3_H = -35:144;
 %%
 
-function [CraigCheck,OrigCheck,Check_Mat] = TestEulMethods2023_Hum(AngRange1_H,AngRange2_H,AngRange3_H,Segment)
+function [CraigCheck,OrigCheck,Check_Mat,FinalCheck] = TestEulMethods2023_Hum(AngRange1_H,AngRange2_H,AngRange3_H)
+%% Initializing Variables 
 
-if(strcmp(Segment,'Humerus'))
-
+% Rotation matrix with all angle permutations
     RZYZ = zeros(3,3,length(AngRange1_H));
 
+    % Angles for Craig Method
     z_2023 = zeros(1,length(AngRange1_H));
     y_2023 = zeros(1,length(AngRange1_H));
     za_2023 = zeros(1,length(AngRange1_H));
 
+    % Angles for Dutch Method
     z_orig = zeros(1,length(AngRange1_H));
     y_orig = zeros(1,length(AngRange1_H));
     za_orig = zeros(1,length(AngRange1_H));
 
+    % Angles for Matlab Function
     Angs_mat = zeros(length(AngRange1_H),3);
+    %% Creating Matrix with all Permutations of 3 Angles
 
-    for i = 1:length(AngRange1_H)
-        RZYZ(:,:,i) = rotz(AngRange1_H(i))*roty(AngRange2_H(i))*rotz(AngRange3_H(i));
+    Perm_Mat = combvec(AngRange1_H,AngRange2_H,AngRange3_H);
 
+%% Creating Rotation Matrix with Known Angles and Computer Euler Angles 
+
+    for i = 1:length(Perm_Mat)
+        RZYZ = rotz(Perm_Mat(1,i))*roty(Perm_Mat(2,i))*rotz(Perm_Mat(3,i));
+i
         % Craig Method with ArcTan2
-        [z_2023(i),y_2023(i),za_2023(i)]=rotzyz2023(RZYZ(:,:,i));
+        [z_2023(i),y_2023(i),za_2023(i)]=rotzyz2023(RZYZ);
 
-        % Original Method
-        [z_orig(i),y_orig(i),za_orig(i)]=rotzyz(RZYZ(:,:,i));
+        % Original Dutch Method
+        [z_orig(i),y_orig(i),za_orig(i)]=rotzyz(RZYZ);
 
         %Internal Matlab Function - (only used with supported sequences)
-        [Angs_mat(i,1:3)]=rotm2eul(RZYZ(:,:,i),'ZYZ');
+        [Angs_mat(i,:)]=rotm2eul(RZYZ,'ZYZ');
 
     end
 
+    %Converting to Degrees
     z_2023 = rad2deg(z_2023);
     y_2023 = rad2deg(y_2023);
     za_2023 = rad2deg(za_2023);
@@ -55,41 +64,44 @@ if(strcmp(Segment,'Humerus'))
 
     % Craig Method Check %
     % Z
-    Check_CraigZ = AngRange1_H(:) == round(z_2023(:)); % off by pi
+    Check_CraigZ = Perm_Mat(1,:)' == round(z_2023(:));
 
     % Y
-    Check_CraigY = AngRange2_H(:) == round(y_2023(:)); % gives negative version of true angle
+    Check_CraigY = Perm_Mat(2,:)' == round(y_2023(:)); 
 
     % Za
-    Check_CraigZ2 = AngRange3_H(:) == round(za_2023(:)); %off by pi
+    Check_CraigZ2 = Perm_Mat(3,:)' == round(za_2023(:)); 
 
     CraigCheck = [Check_CraigZ,Check_CraigY,Check_CraigZ2];
    
-    % Original Method Check % - From Calc Euler Angles
+    Craig_Mat = [z_2023;y_2023;za_2023]';
+
+    % Dutch Method Check % - From Calc Euler Angles
     
     % Z
-    Check_OrigZ = AngRange1_H(:) == round(z_orig(:)); % off by pi
+    Check_OrigZ = Perm_Mat(1,:)' == round(z_orig(:));
 
     % Y
-    Check_OrigY = AngRange2_H(:) == round(y_orig(:)); % gives negative version of true angle
-
+    Check_OrigY = Perm_Mat(2,:)' == round(y_orig(:)); 
     % Za
-    Check_OrigZ2 = AngRange3_H(:) == round(za_orig(:)); % off by pi
+    Check_OrigZ2 = Perm_Mat(3,:)' == round(za_orig(:));
 
     OrigCheck = [Check_OrigZ,Check_OrigY,Check_OrigZ2];
+
+    Dutch_Mat = [z_orig;y_orig;za_orig]';
 
     % Matlab Method Check
  
     % Z
-    Check_MatZ = AngRange1_H' == round(Angs_mat(:,1));  %fails at last index - rest correct
-
+    Check_MatZ = Perm_Mat(1,:)' == round(Angs_mat(:,1));  
     % Y
-    Check_MatY = AngRange2_H' == round(Angs_mat(:,2)); % all true
+    Check_MatY = Perm_Mat(2,:)' == round(Angs_mat(:,2)); 
     % Za
-    Check_MatZ2 = AngRange3_H' == round(Angs_mat(:,3)); %fails at last index- rest correct
+    Check_MatZ2 = Perm_Mat(3,:)' == round(Angs_mat(:,3)); 
 
     Check_Mat = [Check_MatZ,Check_MatY,Check_MatZ2];
-end
+   
+    % Matlab = Dutch = Craig Check
 
-
+    FinalCheck = round(Angs_mat) == round(Dutch_Mat) & round(Dutch_Mat) == round(Craig_Mat); 
 end
