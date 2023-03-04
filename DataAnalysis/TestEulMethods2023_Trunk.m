@@ -7,27 +7,30 @@
 % Segment = 'Trunk'; 
 
 %%
-AngRange1_T = -45:45;  
-AngRange2_T = -30:60;
-AngRange3_T = -60:30;
+% AngRange1_T = -45:45;  
+% AngRange2_T = -30:60;
+% AngRange3_T = -60:30;
 %%
 
-function OrigCheck = TestEulMethods2023_Trunk(AngRange1_T,AngRange2_T,AngRange3_T,Segment)
+function [OrigCheck,DutchMat,Perm_Mat] = TestEulMethods2023_Trunk(AngRange1_T,AngRange2_T,AngRange3_T)
+%% Initializing Variables 
 
-if(strcmp(Segment,'Trunk'))
-
+% Rotation matrix with all angle permutations
     RXZY = zeros(3,3,length(AngRange1_T));
 
+    % Angles for Dutch Method
     x_orig = zeros(1,length(AngRange1_T));
     z_orig = zeros(1,length(AngRange1_T));
     y_orig = zeros(1,length(AngRange1_T));
+    %% Creating Matrix with all Permutations of 3 Angles
+Perm_Mat = combvec(AngRange1_T,AngRange2_T,AngRange3_T);
+%% Creating Rotation Matrix with Known Angles and Computer Euler Angles 
 
-
-    for i = 1:length(AngRange1_T)
-        RXZY(:,:,i) = rotx(AngRange1_T(i))*rotz(AngRange2_T(i))*roty(AngRange3_T(i));
-
+    for i = 1:length(Perm_Mat)
+        RXZY = rotx(Perm_Mat(1,i))*rotz(Perm_Mat(2,i))*roty(Perm_Mat(3,i));
+i
         % Original
-        [x_orig(i),z_orig(i),y_orig(i)]=rotxzy(RXZY(:,:,i)); 
+        [x_orig(i),z_orig(i),y_orig(i)]=rotxzy(RXZY); 
 
     end
 
@@ -44,19 +47,19 @@ if(strcmp(Segment,'Trunk'))
     % Original Method Check %
 
     % X
-    Check_OrigX = AngRange1_T(:) == round(x_orig(:)); 
+    Check_OrigX = Perm_Mat(1,:)' == round(x_orig(:)); 
 
     % Z
-    Check_OrigZ = AngRange2_T(:) == round(z_orig(:));
+    Check_OrigZ = Perm_Mat(2,:)' == round(z_orig(:));
 
     % Y
-    Check_OrigY = AngRange3_T(:) == round(y_orig(:)); 
+    Check_OrigY = Perm_Mat(3,:)' == round(y_orig(:)); 
     
-    OrigCheck = [Check_OrigX,Check_OrigZ,Check_OrigY]; %All correct
+    OrigCheck = [Check_OrigX,Check_OrigZ,Check_OrigY];
 
 
+    DutchMat = [x_orig;z_orig;y_orig]';
 
-end
 
 
 end

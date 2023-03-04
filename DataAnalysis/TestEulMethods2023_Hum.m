@@ -105,3 +105,18 @@ i
 
     FinalCheck = round(Angs_mat) == round(Dutch_Mat) & round(Dutch_Mat) == round(Craig_Mat); 
 end
+
+
+%% Finding Angle Values Matlab Function Fails 
+
+% Matlab Function is the Most Consistent
+
+% [Angs_Falserow,Angs_FalseCol] = find(Check_Mat ==0);
+% Angles_Fail_Matlab = Perm_Mat(:,Angs_Falserow);
+
+
+% Ploting Angle Ranges Fails 
+
+figure(1)
+plot(Angles_Fail_Matlab(1,:),'o')
+
