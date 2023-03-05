@@ -26,7 +26,7 @@ GH = xghest';
 
 BLnames_h = ["EM","EL","GH"];
 
-% Kacey Redefining X,Y,Z axes 10.4.21 
+% Kacey Redefining X,Y,Z axes 
 %%
 H_mid=(EM(1:3)+EL(1:3))/2;
 zh = (GH(1:3)-H_mid) / norm(GH(1:3)-H_mid);

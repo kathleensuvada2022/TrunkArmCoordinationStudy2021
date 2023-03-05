@@ -11,7 +11,7 @@
 % AngRange3_H = -35:144;
 %%
 
-function [CraigCheck,OrigCheck,Check_Mat,FinalCheck] = TestEulMethods2023_Hum(AngRange1_H,AngRange2_H,AngRange3_H)
+function [CraigCheck,OrigCheck,Check_Mat,FinalCheck,Angs_mat,Dutch_Mat,Craig_Mat] = TestEulMethods2023_Hum(AngRange1_H,AngRange2_H,AngRange3_H)
 %% Initializing Variables 
 
 % Rotation matrix with all angle permutations
@@ -117,6 +117,6 @@ end
 
 % Ploting Angle Ranges Fails 
 
-figure(1)
-plot(Angles_Fail_Matlab(1,:),'o')
+% figure(1)
+% plot(Angles_Fail_Matlab(1,:),'o')
 
