@@ -2835,7 +2835,7 @@ xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
 
- pause
+%  pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 
 figure()
@@ -3307,10 +3307,10 @@ close all
 
 %% Plotting Elbow Angles
 figure()
-plot(ELB_ANG_MAT(1,:))
+% plot(ELB_ANG_MAT(1,:))
 hold on
 % plot(ELB_ANG(1,:))
-plot(180-ELB_ANG_MAT(1,:))
+plot(180-ELB_ANG_MAT(1,:),'LineWidth',2.5)
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 
@@ -3320,19 +3320,20 @@ xline(idx(3),'r','Linewidth',2)
 % plot(idx(3),ELB_ANG(1,idx(3)),'o')
 % text(idx(3),ELB_ANG(1,idx(3)),num2str(ELB_ANG(1,idx(3))),'FontSize',14)
 
-plot(idx(1),ELB_ANG_MAT(1,idx(1)),'o')
-text(idx(1),ELB_ANG_MAT(1,idx(1)),num2str(ELB_ANG_MAT(1,idx(1))),'FontSize',14)
-
-plot(idx(3),ELB_ANG_MAT(1,idx(3)),'o')
-text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
+% plot(idx(1),ELB_ANG_MAT(1,idx(1)),'o')
+% text(idx(1),ELB_ANG_MAT(1,idx(1)),num2str(ELB_ANG_MAT(1,idx(1))),'FontSize',14)
+% 
+% plot(idx(3),ELB_ANG_MAT(1,idx(3)),'o')
+% text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
 
 plot(idx(1),180-ELB_ANG_MAT(1,idx(1)),'o')
 text(idx(1),180-ELB_ANG_MAT(1,idx(1)),num2str(180-ELB_ANG_MAT(1,idx(1))),'FontSize',14)
 
 plot(idx(3),180-ELB_ANG_MAT(1,idx(3)),'o')
 text(idx(3),180-ELB_ANG_MAT(1,idx(3)),num2str(180-ELB_ANG_MAT(1,idx(3))),'FontSize',14)
-legend('Internal Matlab Function','180- Matlab Angle','Start','End','FontSize',16)
-title('Elbow Extension Angle  (Degrees)','FontSize',24)
+legend('Elbow Angle','Start Reach','End Reach','FontSize',16)
+title('Elbow Extension Angle (Deg)','FontSize',24)
+ylabel('ELB FLEXION                               ELB EXTENSION','FontSize',24)
 
 figure()
 plot(ELB_ANG_MAT(2,:))
@@ -3348,7 +3349,6 @@ text(idx(3),ELB_ANG_MAT(2,idx(3)),num2str(ELB_ANG_MAT(2,idx(3))),'FontSize',14)
 
 legend('Internal Matlab Function','Start','End','FontSize',16)
 title('Elbow Pronation Angle (Degrees)','FontSize',24)
-
 
 figure()
 plot(ELB_ANG_MAT(3,:))
@@ -3395,47 +3395,73 @@ title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
 
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
+
+% About the X axis (forward flexion)
 figure()
 %CalcEulerAng-XZY
-plot(Trunk_ANG_G(1,:),'Linewidth',1.75) %Flexion X
+plot(Trunk_ANG_G(1,:),'Linewidth',2) %Flexion X
 hold on
-plot(Trunk_ANG_G(2,:),'Linewidth',1.75) % Twisting Z
-plot(Trunk_ANG_G(3,:),'Linewidth',1.75) % Lat Bend Y
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about X axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Sagittal Plane Angle in GCS ','Fontsize',24)
+ylabel('Forward Flexion            (Deg)              Back Extension ','FontSize',24)
+
+figure()
+plot(Trunk_ANG_G(2,:),'Linewidth',2) % Twisting Z
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Transverse Plane Angle in GCS ','Fontsize',24)
+ylabel('Twisting Right          (Deg)          Twisting Left','FontSize',24)
+
+
+figure()
+plot(Trunk_ANG_G(3,:),'Linewidth',2) % Lat Bend Y
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Coronal Plane Angle in GCS ','Fontsize',24)
+ylabel('Lateral Bend Left          (Deg)          Lateral Bend Right','FontSize',24)
+
  
-% %Internal Matlab Function- XYZ
+% %Internal Matlab Function- XYZ --> WRONG ORDER need XZY
 % plot(Trunk_ANG_G_Mat(1,:),'Linewidth',1.75)%Flexion X
 % plot(Trunk_ANG_G_Mat(2,:),'Linewidth',1.75) % Lat Bend Y
 % plot(Trunk_ANG_G_Mat(3,:),'Linewidth',1.75) % Twisting Z
 
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
 
 
-legend('X:FF (-) BE (+)','Z:Twisting R (-) L (+)','Y:Lateral Bending R (+) L (-)','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angle in GCS - CalcEuler ','Fontsize',24)
-ylabel('Angle (Deg)','FontSize',16)
 
 
 % Trunk angles in Ti
-% figure()
-% 
-% %CalcEulerAng
-% plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
+figure()
+
+%CalcEulerAng
+plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
+hold on
+plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
+plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
+
+% %Internal Matlab --> Incorrect sequence
+% plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
 % hold on
-% plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
-% plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
-% 
-% % %Internal Matlab
-% % plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
-% % hold on
-% % plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
-% % plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
-% 
-% 
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
-% title ('Trunk Angles','Fontsize',24)
+% plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
+% plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
+
+
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
+title ('Trunk Angles','Fontsize',24)
 
 % pause
 
