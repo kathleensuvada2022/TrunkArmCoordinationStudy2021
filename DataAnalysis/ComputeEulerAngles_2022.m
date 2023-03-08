@@ -128,10 +128,6 @@ HumAng_T_CalcEuler= CalcEulerAng(jr_Hum_T,'ZYZ',0);
 % Changed to internal function for consistency with humerus.
 
 
-% Angles
-% 1) Waving- laterl rotation (Y)
-% 2) Forward/Backward tilt (Z) (pole)
-% 3) Pro-retraction  (X)
 
 % Global Angle
  ScapAng_G_CalcEul =  CalcEulerAng(gR_Scap,'ZYX',0); 

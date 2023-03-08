@@ -177,7 +177,7 @@ ScapCoord = Asscap_K(BLs,hand,1); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -3305,7 +3305,7 @@ end
 
 close all
 
-%% Plotting Elbow Angles
+%% Elbow Angles - XYZ
 figure()
 % plot(ELB_ANG_MAT(1,:))
 hold on
@@ -3367,11 +3367,7 @@ legend('Internal Matlab Function','Start','End','FontSize',16)
 title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
 
 
- pause
-% Elbow Angle - convention based on right or left arm % Need to check what
-% this is for Left arm
-% 
-
+%  pause
 %% NEED TO VERIFY IF BELOW CORRECT!! 2023
 % if strcmp(hand,'Right')
 %     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
@@ -3391,7 +3387,7 @@ title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
 
 
 
-%% Plotting Trunk Angles
+%% Trunk Angles - XZY
 
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
@@ -3403,22 +3399,22 @@ plot(Trunk_ANG_G(1,:),'Linewidth',2) %Flexion X
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Angle about X axis','Reach Start','Reach End','Fontsize',16)
+legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Sagittal Plane Angle in GCS ','Fontsize',24)
-ylabel('Forward Flexion            (Deg)              Back Extension ','FontSize',24)
+title ('Trunk Sagittal Plane Angle-GCS ','Fontsize',24)
+ylabel('Flexion                       Extension ','FontSize',24)
 
 figure()
 plot(Trunk_ANG_G(2,:),'Linewidth',2) % Twisting Z
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Angle about Z axis','Reach Start','Reach End','Fontsize',16)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Transverse Plane Angle in GCS ','Fontsize',24)
-ylabel('Twisting Right          (Deg)          Twisting Left','FontSize',24)
+title ('Trunk Transverse Plane Angle-GCS ','Fontsize',24)
+ylabel('Right                  Left','FontSize',24)
 
 
 figure()
@@ -3426,173 +3422,281 @@ plot(Trunk_ANG_G(3,:),'Linewidth',2) % Lat Bend Y
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Angle about Y axis','Reach Start','Reach End','Fontsize',16)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Coronal Plane Angle in GCS ','Fontsize',24)
-ylabel('Lateral Bend Left          (Deg)          Lateral Bend Right','FontSize',24)
+title ('Trunk Coronal Plane Angle-GCS ','Fontsize',24)
+ylabel('Left                   Right','FontSize',24)
 
  
-% %Internal Matlab Function- XYZ --> WRONG ORDER need XZY
-% plot(Trunk_ANG_G_Mat(1,:),'Linewidth',1.75)%Flexion X
-% plot(Trunk_ANG_G_Mat(2,:),'Linewidth',1.75) % Lat Bend Y
-% plot(Trunk_ANG_G_Mat(3,:),'Linewidth',1.75) % Twisting Z
-
-
-
-
-
 % Trunk angles in Ti
 figure()
-
-%CalcEulerAng
-plot(Trunk_ANG_Ti(1,:),'Linewidth',1.75) %Flexion
+%CalcEulerAng-XZY
+plot(Trunk_ANG_Ti(1,:),'Linewidth',2) %Flexion X
 hold on
-plot(Trunk_ANG_Ti(2,:),'Linewidth',1.75) % Twisting
-plot(Trunk_ANG_Ti(3,:),'Linewidth',1.75) % lateral bending
-
-% %Internal Matlab --> Incorrect sequence
-% plot(Trunk_ANG_Ti_Mat(1,:),'Linewidth',1.75) %Flexion
-% hold on
-% plot(Trunk_ANG_Ti_Mat(2,:),'Linewidth',1.75) % Twisting
-% plot(Trunk_ANG_Ti_Mat(3,:),'Linewidth',1.75) % lateral bending
-
-
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('X CalcEulerAng','Z CalcEulerAng','Y CalcEulerAng','Reach Start','Reach End','Fontsize',16)
-title ('Trunk Angles','Fontsize',24)
+legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Sagittal Plane Angle-Ti ','Fontsize',24)
+ylabel('Flexion                     Extension ','FontSize',24)
+
+figure()
+plot(Trunk_ANG_Ti(2,:),'Linewidth',2) % Twisting Z
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Transverse Plane Angle-Ti ','Fontsize',24)
+ylabel('Right                  Left','FontSize',24)
+
+
+figure()
+plot(Trunk_ANG_Ti(3,:),'Linewidth',2) % Lat Bend Y
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Coronal Plane Angle-Ti ','Fontsize',24)
+ylabel('Left                      Right','FontSize',24)
+
 
 % pause
 
-%% Humerus 
+%% Humerus - ZYZ
 
-
-
-% % Humerus angles in GCS
+% In GCS
 figure()
-plot(HumAng_G(1,:),'Linewidth',1.75) %POLE
+plot(HumAng_G(1,:),'Linewidth',2) %Pole angle
 hold on
-plot(idx(1),HumAng_G(1,idx(1)),'o')
-text(idx(1),HumAng_G(1,idx(1)),num2str(HumAng_G(1,idx(1))),'FontSize',14)
-plot(idx(3),HumAng_G(1,idx(3)),'o')
-text(idx(3),HumAng_G(1,idx(3)),num2str(HumAng_G(1,idx(3))),'FontSize',14)
-
-plot(HumAng_G(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-plot(idx(1),HumAng_G(2,idx(1)),'o')
-text(idx(1),HumAng_G(2,idx(1)),num2str(HumAng_G(2,idx(1))),'FontSize',14)
-plot(idx(3),HumAng_G(2,idx(3)),'o')
-text(idx(3),HumAng_G(2,idx(3)),num2str(HumAng_G(2,idx(3))),'FontSize',14)
-
-legend('X: Pole Angle Forwards (+)','Y: SABD Lifting (+)','Reach Start','Reach End','Fontsize',16)
-title ('Humerus Angle in GCS - Matlab Function','Fontsize',24)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus Pole Angle-GCS ','Fontsize',24)
+ylabel('------------------------------>       Forwards ','FontSize',24)
 
 figure()
-plot(HumAng_G_CalcEuler(1,:),'Linewidth',1.75) %POLE
+plot(HumAng_G(2,:),'Linewidth',2)  % SABD
 hold on
-plot(idx(1),HumAng_G_CalcEuler(1,idx(1)),'o')
-text(idx(1),HumAng_G_CalcEuler(1,idx(1)),num2str(HumAng_G_CalcEuler(1,idx(1))),'FontSize',14)
-plot(idx(3),HumAng_G_CalcEuler(1,idx(3)),'o')
-text(idx(3),HumAng_G_CalcEuler(1,idx(3)),num2str(HumAng_G_CalcEuler(1,idx(3))),'FontSize',14)
-
-
-plot(HumAng_G_CalcEuler(2,:),'Linewidth',1.75) % SABD
-plot(idx(1),HumAng_G_CalcEuler(2,idx(1)),'o')
-text(idx(1),HumAng_G_CalcEuler(2,idx(1)),num2str(HumAng_G_CalcEuler(2,idx(1))),'FontSize',14)
-plot(idx(3),HumAng_G_CalcEuler(2,idx(3)),'o')
-text(idx(3),HumAng_G_CalcEuler(2,idx(3)),num2str(HumAng_G_CalcEuler(2,idx(3))),'FontSize',14)
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('X: Pole Angle Forwards (+)','Y: SABD Lifting (+)','Reach Start','Reach End','Fontsize',16)
-title ('Humerus Angle in GCS - CalcEuler Function','Fontsize',24)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus SABD Angle-GCS ','Fontsize',24)
+ylabel('SABD         <------------------- ','FontSize',24)
 
 
-% 
-% 
-% % Humerus angles in TI
-% figure()
-% plot(HumAng_Ti(1,:),'Linewidth',1.75) %POLE
-% hold on
-% plot(HumAng_Ti(2,:),'Linewidth',1.75) % SABD
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Pole Angle','SABD','Reach Start','Reach End','Fontsize',16)
-% title ('Humerus Angle in Ti','Fontsize',24)
-
-% Humerus angles in T
 figure()
-plot(Hum_Ang_T_CalcEuler(1,:),'Linewidth',1.75) %POLE
+plot(HumAng_G(3,:),'Linewidth',2) %Internal External Rotation
 hold on
-plot(Hum_Ang_T_CalcEuler(2,:),'Linewidth',1.75) % SABD
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-legend('Pole Angle- Z','SABD- Y','Reach Start','Reach End','Fontsize',16)
-title ('Humerus Angle in T - CalcEuler','Fontsize',24)
+legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Internal/External Rotation-GCS ','Fontsize',24)
+ylabel('Externtal                   Internal','FontSize',24)
 
-%% Scapula 
 
-% CONSISTENT WITH MATLAB FUNCTION (Interpretation Fuzzy) !!!!! CORRECT!!
 
-% Scap angles in GCS
-% figure()
-% plot(ScapAng_G(1,:),'Linewidth',1.75) %Lateral Rotation
-% hold on
-% plot(ScapAng_G(2,:),'Linewidth',1.75) % Forward backward tilt
-% plot(ScapAng_G(3,:),'Linewidth',1.75) % Pro/Re Traction
-% 
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
-% title ('Scap Angle in GCS','Fontsize',24)
-% 
-% % Scap angles in TI
-% figure()
-% plot(ScapAng_Ti(1,:),'Linewidth',1.75) %Lateral Rotation
-% hold on
-% plot(ScapAng_Ti(2,:),'Linewidth',1.75) % Forward backward tilt
-% plot(ScapAng_Ti(3,:),'Linewidth',1.75) % Pro/Re Traction
-% 
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Lateral Rotation','Forward backward tilt','Pro/Re Traction','Reach Start','Reach End','Fontsize',16)
-% title ('Scap Angle in Ti','Fontsize',24)
+% IN TI
+figure()
+plot(HumAng_Ti(1,:),'Linewidth',2) %Pole angle
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus Pole Angle-Ti ','Fontsize',24)
+ylabel('------------------------------>       Forwards ','FontSize',24)
+
+figure()
+plot(HumAng_Ti(2,:),'Linewidth',2)  % SABD
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus SABD Angle-Ti ','Fontsize',24)
+ylabel('SABD         <------------------- ','FontSize',24)
+
+
+figure()
+plot(HumAng_Ti(3,:),'Linewidth',2) %Internal External Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Internal/External Rotation-Ti ','Fontsize',24)
+ylabel('Externtal                   Internal','FontSize',24)
+
+
+
+% In T
+figure()
+plot(Hum_Ang_T(1,:),'Linewidth',2) %Pole angle
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus Pole Angle-T ','Fontsize',24)
+ylabel('------------------------------>       Forwards ','FontSize',24)
+
+figure()
+plot(Hum_Ang_T(2,:),'Linewidth',2)  % SABD
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Humerus SABD Angle-T ','Fontsize',24)
+ylabel('SABD         <------------------- ','FontSize',24)
+
+
+figure()
+plot(Hum_Ang_T(3,:),'Linewidth',2) %Internal External Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Internal/External Rotation-T ','Fontsize',24)
+ylabel('Externtal                   Internal','FontSize',24)
+
+
+close all
+
+
+%% Scapula - ZYX
+
+% GCS
+figure()
+plot(ScapAng_G(1,:),'Linewidth',2) %Pole angle
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Pole Angle-GCS ','Fontsize',24)
+ylabel('-------------> Forwards ','FontSize',24)
+
+figure()
+plot(ScapAng_G(2,:),'Linewidth',2)  % Waving
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Waving Angle-GCS ','Fontsize',24)
+ylabel('Left        Right','FontSize',24)
+
+
+figure()
+plot(ScapAng_G(3,:),'Linewidth',2) %Pro-Retraction
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Pro/Retraction -GCS ','Fontsize',24)
+ylabel('Protraction        Retraction','FontSize',24)
+
+
+
+% Scap angles in TI
+figure()
+plot(ScapAng_Ti(1,:),'Linewidth',2) %Pole angle
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Pole Angle-Ti ','Fontsize',24)
+ylabel('-------------> Forwards ','FontSize',24)
+
+figure()
+plot(ScapAng_Ti(2,:),'Linewidth',2)  % Waving
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Waving Angle-Ti ','Fontsize',24)
+ylabel('Left        Right','FontSize',24)
+
+
+figure()
+plot(ScapAng_Ti(3,:),'Linewidth',2) %Pro-Retraction
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Pro/Retraction-Ti ','Fontsize',24)
+ylabel('Protraction        Retraction','FontSize',24)
+
+
 
 % Scap angles in T
 figure()
-plot(Scap_Ang_T(1,:),'Linewidth',1.75) %about Z
+plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
 hold on
-% plot(Scap_Ang_T_CalcEul(1,:),'Linewidth',1.75) %about Z
-
-plot(Scap_Ang_T(2,:),'Linewidth',1.75) % Y
-%plot(Scap_Ang_T_CalcEul(2,:),'Linewidth',1.75) % Y
-
-plot(Scap_Ang_T(3,:),'Linewidth',1.75) % Pro/Re Traction
-% plot(Scap_Ang_T_CalcEul(3,:),'Linewidth',1.75) % Pro/Re Traction
-
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
-plot(idx(1),Scap_Ang_T(1,idx(1)),'o')
-text(idx(1),Scap_Ang_T(1,idx(1)),num2str(Scap_Ang_T(1,idx(1))),'FontSize',14)
-plot(idx(3),Scap_Ang_T(1,idx(3)),'o')
-text(idx(3),Scap_Ang_T(1,idx(3)),num2str(Scap_Ang_T(1,idx(3))),'FontSize',14)
+legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Pole Angle-T ','Fontsize',24)
+ylabel('-------------> Forwards ','FontSize',24)
 
-plot(idx(1),Scap_Ang_T(2,idx(1)),'o')
-text(idx(1),Scap_Ang_T(2,idx(1)),num2str(Scap_Ang_T(2,idx(1))),'FontSize',14)
-plot(idx(3),Scap_Ang_T(2,idx(3)),'o')
-text(idx(3),Scap_Ang_T(2,idx(3)),num2str(Scap_Ang_T(2,idx(3))),'FontSize',14)
+figure()
+plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Waving  Angle-T ','Fontsize',24)
+ylabel('Left        Right','FontSize',24)
 
-plot(idx(1),Scap_Ang_T(3,idx(1)),'o')
-text(idx(1),Scap_Ang_T(3,idx(1)),num2str(Scap_Ang_T(3,idx(1))),'FontSize',14)
-plot(idx(3),Scap_Ang_T(3,idx(3)),'o')
-text(idx(3),Scap_Ang_T(3,idx(3)),num2str(Scap_Ang_T(3,idx(3))),'FontSize',14)
 
-legend('Forward backward tilt- Z ','Lateral rotation-Y','Pro/Retraction -X','Reach Start','Reach End','Fontsize',16)
-title ('Scap Angle in T (CalcEuler)','Fontsize',24)
+figure()
+plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Pro/Retraction-T ','Fontsize',24)
+ylabel('Protraction        Retraction','FontSize',24)
 
-'Check Plots of Angles'
-  pause
+
+
+test
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
