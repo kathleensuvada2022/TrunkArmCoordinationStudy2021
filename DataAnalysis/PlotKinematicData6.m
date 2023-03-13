@@ -3388,7 +3388,8 @@ title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
 
 
 %% Trunk Angles - XZY
-
+close all
+test
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
 
