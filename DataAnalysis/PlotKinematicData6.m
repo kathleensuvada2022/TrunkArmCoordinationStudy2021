@@ -3306,6 +3306,8 @@ end
 close all
 
 %% Elbow Angles - XYZ
+
+% Elbow Flexion/Extension
 figure()
 % plot(ELB_ANG_MAT(1,:))
 hold on
@@ -3332,26 +3334,27 @@ text(idx(1),180-ELB_ANG_MAT(1,idx(1)),num2str(180-ELB_ANG_MAT(1,idx(1))),'FontSi
 plot(idx(3),180-ELB_ANG_MAT(1,idx(3)),'o')
 text(idx(3),180-ELB_ANG_MAT(1,idx(3)),num2str(180-ELB_ANG_MAT(1,idx(3))),'FontSize',14)
 legend('Elbow Angle','Start Reach','End Reach','FontSize',16)
-title('Elbow Extension Angle (Deg)','FontSize',24)
-ylabel('ELB FLEXION                               ELB EXTENSION','FontSize',24)
+title('Elbow Angle (Deg)','FontSize',24)
+% ylabel('ELB FLEXION                               ELB EXTENSION','FontSize',24)
+ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+% figure()
+% plot(ELB_ANG_MAT(2,:))
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% 
+% plot(idx(1),ELB_ANG_MAT(2,idx(1)),'o')
+% text(idx(1),ELB_ANG_MAT(2,idx(1)),num2str(ELB_ANG_MAT(2,idx(1))),'FontSize',14)
+% 
+% plot(idx(3),ELB_ANG_MAT(2,idx(3)),'o')
+% text(idx(3),ELB_ANG_MAT(2,idx(3)),num2str(ELB_ANG_MAT(2,idx(3))),'FontSize',14)
+% 
+% legend('Internal Matlab Function','Start','End','FontSize',16)
+% title('Not and ANGLE (Degrees)','FontSize',24)
 
 figure()
-plot(ELB_ANG_MAT(2,:))
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-
-plot(idx(1),ELB_ANG_MAT(2,idx(1)),'o')
-text(idx(1),ELB_ANG_MAT(2,idx(1)),num2str(ELB_ANG_MAT(2,idx(1))),'FontSize',14)
-
-plot(idx(3),ELB_ANG_MAT(2,idx(3)),'o')
-text(idx(3),ELB_ANG_MAT(2,idx(3)),num2str(ELB_ANG_MAT(2,idx(3))),'FontSize',14)
-
-legend('Internal Matlab Function','Start','End','FontSize',16)
-title('Elbow Pronation Angle (Degrees)','FontSize',24)
-
-figure()
-plot(ELB_ANG_MAT(3,:))
+plot(ELB_ANG_MAT(3,:),'Linewidth',2)
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3363,8 +3366,9 @@ plot(idx(3),ELB_ANG_MAT(3,idx(3)),'o')
 text(idx(3),ELB_ANG_MAT(3,idx(3)),num2str(ELB_ANG_MAT(3,idx(3))),'FontSize',14)
 
 
-legend('Internal Matlab Function','Start','End','FontSize',16)
-title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
+legend('Pro/Supination Angle','Start','End','FontSize',16)
+title('Pro/Supination Angle (Deg)','FontSize',24)
+ylabel('$\Longleftarrow$ Supination Pronation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 %  pause
@@ -3389,7 +3393,7 @@ title('Z axis rotations via Internal Matlab Function (Degrees)','FontSize',24)
 
 %% Trunk Angles - XZY
 close all
-test
+% test
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
 
@@ -3404,7 +3408,8 @@ legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Sagittal Plane Angle-GCS ','Fontsize',24)
-ylabel('Flexion                       Extension ','FontSize',24)
+%ylabel('Flexion                       Extension ','FontSize',24)
+ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
 plot(Trunk_ANG_G(2,:),'Linewidth',2) % Twisting Z
@@ -3415,7 +3420,8 @@ legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Transverse Plane Angle-GCS ','Fontsize',24)
-ylabel('Right                  Left','FontSize',24)
+% ylabel('Right                  Left','FontSize',24)
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3427,7 +3433,8 @@ legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Coronal Plane Angle-GCS ','Fontsize',24)
-ylabel('Left                   Right','FontSize',24)
+% ylabel('Left                   Right','FontSize',24)
+ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
  
 % Trunk angles in Ti
@@ -3441,7 +3448,8 @@ legend('Angle about X axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Sagittal Plane Angle-Ti ','Fontsize',24)
-ylabel('Flexion                     Extension ','FontSize',24)
+%ylabel('Flexion                     Extension ','FontSize',24)
+ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
 plot(Trunk_ANG_Ti(2,:),'Linewidth',2) % Twisting Z
@@ -3452,7 +3460,8 @@ legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Transverse Plane Angle-Ti ','Fontsize',24)
-ylabel('Right                  Left','FontSize',24)
+%ylabel('Right                  Left','FontSize',24)
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3464,7 +3473,8 @@ legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Trunk Coronal Plane Angle-Ti ','Fontsize',24)
-ylabel('Left                      Right','FontSize',24)
+%ylabel('Left                      Right','FontSize',24)
+ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 % pause
@@ -3481,7 +3491,8 @@ legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus Pole Angle-GCS ','Fontsize',24)
-ylabel('------------------------------>       Forwards ','FontSize',24)
+%ylabel('------------------------------>       Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
 plot(HumAng_G(2,:),'Linewidth',2)  % SABD
@@ -3492,7 +3503,8 @@ legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus SABD Angle-GCS ','Fontsize',24)
-ylabel('SABD         <------------------- ','FontSize',24)
+% ylabel('SABD         <------------------- ','FontSize',24)
+ylabel('$\Longleftarrow$ SABD','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3504,7 +3516,8 @@ legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Internal/External Rotation-GCS ','Fontsize',24)
-ylabel('Externtal                   Internal','FontSize',24)
+% ylabel('Externtal                   Internal','FontSize',24)
+ylabel('Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 
@@ -3518,7 +3531,9 @@ legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus Pole Angle-Ti ','Fontsize',24)
-ylabel('------------------------------>       Forwards ','FontSize',24)
+%ylabel('------------------------------>       Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
 
 figure()
 plot(HumAng_Ti(2,:),'Linewidth',2)  % SABD
@@ -3529,7 +3544,8 @@ legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus SABD Angle-Ti ','Fontsize',24)
-ylabel('SABD         <------------------- ','FontSize',24)
+%ylabel('SABD         <------------------- ','FontSize',24)
+ylabel('$\Longleftarrow$ SABD','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3541,7 +3557,8 @@ legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Internal/External Rotation-Ti ','Fontsize',24)
-ylabel('Externtal                   Internal','FontSize',24)
+% ylabel('Externtal                   Internal','FontSize',24)
+ylabel('Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 
@@ -3555,7 +3572,8 @@ legend('Angle about Z axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus Pole Angle-T ','Fontsize',24)
-ylabel('------------------------------>       Forwards ','FontSize',24)
+% ylabel('------------------------------>       Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
 plot(Hum_Ang_T(2,:),'Linewidth',2)  % SABD
@@ -3566,7 +3584,8 @@ legend('Angle about Y axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Humerus SABD Angle-T ','Fontsize',24)
-ylabel('SABD         <------------------- ','FontSize',24)
+%ylabel('SABD         <------------------- ','FontSize',24)
+ylabel('$\Longleftarrow$ SABD','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3578,7 +3597,8 @@ legend('Angle about Za axis (Deg)','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Internal/External Rotation-T ','Fontsize',24)
-ylabel('Externtal                   Internal','FontSize',24)
+%ylabel('Externtal                   Internal','FontSize',24)
+ylabel('Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 close all
