@@ -1569,31 +1569,79 @@ for i=1: length(mtrials)
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
     [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
-    
+test
+%% Plotting Scapula BLs and marker during trial
 
-    figure(19)
-    plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-    hold on
-    plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
-    plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % Computed EL
-    
-    plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % Computed RS
-    plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % Computed US
-    plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % Computed OL
-    
-    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-    plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-    plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-    
-    plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-    axis equal
-    %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
-    title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-    xlabel('X position (mm)','FontSize',14)
-    ylabel('Y position (mm)','FontSize',14)
-    legend('AA','EM','EL','RS','US','OL','3rdMCP','JUG','trunkMarker','estGH','FontSize',14)
+% b= idx(1);
+% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
+%  hold on
+% % Computing and Plotting GCS
+% GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+% quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+% text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+%  
+
+close all 
+
+b = 1:length(xac);
+
+figure()
+% AC
+plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+hold on 
+text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
+% AI
+plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xai(b,1),xai(b,2),xai(b,3),'AI S','FontSize',14)
+%PC
+plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xpc(b,1),xpc(b,2),xpc(b,3),'PC S','FontSize',14)
+%TS
+plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
+%AA
+plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
+xlabel('X Position','FontSize',16)
+ylabel('Y Position','FontSize',16)
+zlabel('Z Position','FontSize',16)
+title ('Scapular BLS in Global Coordinate System','FontSize',24)
+
+pause
+
+
+%     figure(19)
+%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+%     hold on
+%     plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
+%     plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % Computed EL
 %     
+%     plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % Computed RS
+%     plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % Computed US
+%     plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % Computed OL
+%     
+%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
+%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
+%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
+%     
+%     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
+%     axis equal
+%     %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
+%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
+%     xlabel('X position (mm)','FontSize',14)
+%     ylabel('Y position (mm)','FontSize',14)
+%     legend('AA','EM','EL','RS','US','OL','3rdMCP','JUG','trunkMarker','estGH','FontSize',14)
+
+
+
 % % Plotting TRUNK CS XY plane in GCS
 % quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
 % text(HTttog(1,4)+50*HTttog(1,1:2),HTttog(2,4)+50*HTttog(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
@@ -2689,7 +2737,6 @@ Fore_CS_G= zeros(4,4,length(OL_GCS));
 
 for h = 1:length(OL_GCS) %samples
 
-
     Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
 
 end 
@@ -2721,6 +2768,8 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 'Elbow Angle at End-Law of Cosines'
 ang3
+
+
 
 
 %%
@@ -2918,6 +2967,10 @@ xlabel('X axis')
 ylabel('Y axis')
 zlabel('Z axis')
 % pause
+
+pause 
+
+close all
 %% Plotting Scapular CS and BLs at the Start and End of the Reach
 figure()
 
