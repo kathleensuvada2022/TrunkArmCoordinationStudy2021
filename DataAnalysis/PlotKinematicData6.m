@@ -1615,6 +1615,14 @@ plot3(xshoulder(b,1),xshoulder(b,2),xshoulder(b,3),'-o','Color','b','MarkerSize'
     'MarkerFaceColor','#D9FFFF')
 text(xshoulder(1,1),xshoulder(1,2),xshoulder(1,3),'Marker','FontSize',26, 'Color','g')
 
+for s_idx = 1:length(xai)
+%Plotting Scapular Polygon for all frames 
+plot3([xai(s_idx,1) xts(s_idx,1)],[xai(s_idx,2) xts(s_idx,2)],[xai(s_idx,3) xts(s_idx,3)],'b','Linewidth',1) % line between AI and TS
+plot3([xai(s_idx,1) xshldr(s_idx,1)],[xai(s_idx,2) xshldr(s_idx,2)],[xai(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AI and AA
+plot3([xts(s_idx,1) xac(s_idx,1)],[xts(s_idx,2) xac(s_idx,2)],[xts(s_idx,3) xac(s_idx,3)],'b','Linewidth',1) % line between TS and AC
+plot3([xac(s_idx,1) xshldr(s_idx,1)],[xac(s_idx,2) xshldr(s_idx,2)],[xac(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AC and AA
+pause(.1)
+end
 
 xlabel('X Position (mm) ','FontSize',16)
 ylabel('Y Position (mm)','FontSize',16)
