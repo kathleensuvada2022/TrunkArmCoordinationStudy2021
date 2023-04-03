@@ -1569,7 +1569,7 @@ for i=1: length(mtrials)
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
     [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
-test
+
 %% Plotting Scapula BLs and marker during trial
 
 % b= idx(1);
@@ -1592,27 +1592,36 @@ plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 
 hold on 
-text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
+text(xac(1,1),xac(1,2),xac(1,3),'AC','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
 % AI
 plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(xai(b,1),xai(b,2),xai(b,3),'AI S','FontSize',14)
+text(xai(1,1),xai(1,2),xai(1,3),'AI','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
 %PC
 plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(xpc(b,1),xpc(b,2),xpc(b,3),'PC S','FontSize',14)
+text(xpc(1,1),xpc(1,2),xpc(1,3),'PC','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
 %TS
 plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
+text(xts(1,1),xts(1,2),xts(1,3),'TS','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
 %AA
 plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
-text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
-xlabel('X Position','FontSize',16)
-ylabel('Y Position','FontSize',16)
-zlabel('Z Position','FontSize',16)
+text(xshldr(1,1),xshldr(1,2),xshldr(1,3),'AA','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
+
+%Marker
+plot3(xshoulder(b,1),xshoulder(b,2),xshoulder(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xshoulder(1,1),xshoulder(1,2),xshoulder(1,3),'Marker','FontSize',26, 'Color','g')
+
+
+xlabel('X Position (mm) ','FontSize',16)
+ylabel('Y Position (mm)','FontSize',16)
+zlabel('Z Position (mm)','FontSize',16)
 title ('Scapular BLS in Global Coordinate System','FontSize',24)
+axis equal
+
 
 pause
 
@@ -2673,7 +2682,7 @@ pause
 
 
 % close all plots from the distance outcome measures
-close all
+% close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%BELOW SECTIONS ARE UPDATED KINEMATICS Fall/Winter 2022-Winter 2023%%%%%%%%
@@ -2970,7 +2979,7 @@ zlabel('Z axis')
 
 pause 
 
-close all
+% close all
 %% Plotting Scapular CS and BLs at the Start and End of the Reach
 figure()
 
@@ -3356,7 +3365,7 @@ for k = 1:length(t)
 end
 
 
-close all
+% close all
 
 %% Elbow Angles - XYZ
 
@@ -3445,7 +3454,7 @@ ylabel('$\Longleftarrow$ Supination Pronation $\Longrightarrow$','Interpreter','
 
 
 %% Trunk Angles - XZY
-close all
+% close all
 % test
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
@@ -3657,9 +3666,15 @@ title ('Internal/External Rotation (Deg)-T ','Fontsize',24)
 ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-close all
+% close all
 
 
+
+%% Closing all figures EXCEPT Scapular Figs March 2023
+
+close(2:6)
+
+close(7:23)
 %% Scapula - ZYX
 
 % GCS
@@ -3671,9 +3686,9 @@ xline(idx(3),'r','Linewidth',2)
 legend('Z axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Pole Angle (Deg) -GCS ','Fontsize',24)
+title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
 % ylabel('-------------> Forwards ','FontSize',24)
-ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
+ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
 plot(ScapAng_G(2,:),'Linewidth',2)  % Waving
@@ -3683,9 +3698,9 @@ xline(idx(3),'r','Linewidth',2)
 legend('Y axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Waving Angle (Deg)-GCS ','Fontsize',24)
+title ('Scapular Angle About Y (Deg)-GCS ','Fontsize',24)
 % ylabel('Left        Right','FontSize',24)
-ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
+ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 figure()
@@ -3696,93 +3711,93 @@ xline(idx(3),'r','Linewidth',2)
 legend('X axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Pro/Retraction (Deg)-GCS ','Fontsize',24)
+title ('Scapular Angle About X -GCS ','Fontsize',24)
 % ylabel('Protraction        Retraction','FontSize',24)
 
-ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
+ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 pause
+
 % Scap angles in TI
-figure()
-plot(ScapAng_Ti(1,:),'Linewidth',2) %Pole angle
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Z axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Pole Angle (Deg)-Ti ','Fontsize',24)
-%ylabel('-------------> Forwards ','FontSize',24)
-ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% figure()
+% plot(ScapAng_Ti(1,:),'Linewidth',2) %Pole angle
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Z axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Pole Angle (Deg)-Ti ','Fontsize',24)
+% %ylabel('-------------> Forwards ','FontSize',24)
+% ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-figure()
-plot(ScapAng_Ti(2,:),'Linewidth',2)  % Waving
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Y axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Waving Angle (Deg)-Ti ','Fontsize',24)
-%ylabel('Left        Right','FontSize',24)
-ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
-
-figure()
-plot(ScapAng_Ti(3,:),'Linewidth',2) %Pro-Retraction
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('X axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Pro/Retraction (Deg)-Ti ','Fontsize',24)
-%ylabel('Protraction        Retraction','FontSize',24)
-ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% figure()
+% plot(ScapAng_Ti(2,:),'Linewidth',2)  % Waving
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Y axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Waving Angle (Deg)-Ti ','Fontsize',24)
+% %ylabel('Left        Right','FontSize',24)
+% ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-pause
-% Scap angles in T
-figure()
-plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Z axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Pole Angle (Deg)-T ','Fontsize',24)
-%ylabel('-------------> Forwards ','FontSize',24)
-ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
-figure()
-plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Y axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Waving  Angle (Deg)-T ','Fontsize',24)
-%ylabel('Left        Right','FontSize',24)
-ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% figure()
+% plot(ScapAng_Ti(3,:),'Linewidth',2) %Pro-Retraction
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('X axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Pro/Retraction (Deg)-Ti ','Fontsize',24)
+% %ylabel('Protraction        Retraction','FontSize',24)
+% ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-figure()
-plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('X axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Pro/Retraction (Deg)-T ','Fontsize',24)
-%ylabel('Protraction        Retraction','FontSize',24)
-ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% pause
+% % Scap angles in T
+% figure()
+% plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Z axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Pole Angle (Deg)-T ','Fontsize',24)
+% %ylabel('-------------> Forwards ','FontSize',24)
+% ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% 
+% figure()
+% plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Y axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Waving  Angle (Deg)-T ','Fontsize',24)
+% %ylabel('Left        Right','FontSize',24)
+% ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% 
+% 
+% figure()
+% plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('X axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Pro/Retraction (Deg)-T ','Fontsize',24)
+% %ylabel('Protraction        Retraction','FontSize',24)
+% ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% 
 
 
-
-test
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
