@@ -177,7 +177,7 @@ ScapCoord = Asscap_K(BLs,hand,1); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -2754,7 +2754,7 @@ Fore_CS_G= zeros(4,4,length(OL_GCS));
 
 for h = 1:length(OL_GCS) %samples
 
-    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
+    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,1);
 
 end 
 %% Verification of Elbow Angle Plots

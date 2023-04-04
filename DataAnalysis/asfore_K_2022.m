@@ -38,7 +38,7 @@ zf = (H_mid_2-H_mid) / norm(H_mid_2-H_mid);
 
 
 
-x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); %Vector through EL and EM
+x= (RS(1:3)-US(1:3))/norm(RS(1:3)-US(1:3)); % from US to RS
 yf =cross(zf,x); %flipped order because z in opposite direction
 yf=(yf/norm(yf));
 
