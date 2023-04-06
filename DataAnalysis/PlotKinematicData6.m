@@ -2693,7 +2693,7 @@ pause
 % close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%BELOW SECTIONS ARE UPDATED KINEMATICS Fall/Winter 2022-Winter 2023%%%%%%%%
+%%%%%BELOW SECTIONS ARE UPDATED KINEMATICS 2022-2023%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ARM KINEMATICS
