@@ -7,9 +7,9 @@
 % Local Z-axis : axis perpendicular to local X and Y-axis.
 % GH is determined using regression equations in GHEST.M
 
-% KACEY 10.4.21
+
 % KACEY 10.17.22 - adding updated GH estimate all coordinates in GCS and
-% flipping for Left hand to mimic right hand
+%
 
 % Local X-axis : axis perpendicular to line between epicondyles epi_l -> epi_m
 % Local Z-axis : line between GH and mid-point between epicondyles.
