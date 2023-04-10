@@ -48,18 +48,20 @@ xf = xf/norm(xf);
 
 f = [xf yf zf];
 
-%%
-% if strcmp(arm,'Left')
-%  rot_180= rotz(180);
-%  
-%  f = f*rot_180;
-%    
-% end 
+%%  Flipping to mimic the right arm 
+
+
+if strcmp(hand,'Left')
+xf = -xf;
+yf = -yf;
+zf = cross(xf,yf);
+f = [xf,yf,zf];
+
+end
 
 
 %%
 f = [f;0 0 0];
-
 
 
 org_fore = [H_mid_2 ;1];

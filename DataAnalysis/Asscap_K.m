@@ -11,6 +11,10 @@
 % - Hand: Scapular CS has two different definitions depending on if we are
 % looking at the right or the left hand. 
 
+% April 2023
+% If left hand, flip definitions so that has the same convention as the
+% right arm. 
+
 % Outputs:
 % - ScapCS: created CS of the scapula for the participant. This is in
 % MARKER frame. 
@@ -45,8 +49,13 @@ zs = cross(xs,ys);
 
 s = [xs,ys,zs];
 
+
 if strcmp(hand,'Left')
-s = rotz(180)*s;
+xs = -xs;
+ys = -ys;
+zs = cross(xs,ys);
+s = [xs,ys,zs];
+
 end
 
 
@@ -104,7 +113,7 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title('Scap CS Raw Data in Marker CS','FontSize',16)  
+title('Scap CS Raw Data in Marker CS - For Kinematics','FontSize',16)  
     
 end
 

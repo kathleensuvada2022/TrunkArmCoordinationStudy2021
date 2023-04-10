@@ -21,7 +21,7 @@
 
 % K. Suvada - August/September 2022.
 
-function ScapCoord = Asscap_K(BLs,hand,flag)
+function ScapCoord = Asscap_K_GH(BLs,hand,flag)
 
 % Scapular BLS in Scapula Marker Frame
 blmat= BLs{1,2}; 
@@ -101,7 +101,7 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title('Scap CS Raw Data in Marker CS','FontSize',16)  
+title('Scap CS Raw Data in Marker CS - For Gh Estimation','FontSize',16)  
     
 end
 

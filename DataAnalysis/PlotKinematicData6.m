@@ -168,7 +168,7 @@ zlabel('Z axis','FontSize',14)
 
 % pause
 
-close all
+% close all
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.

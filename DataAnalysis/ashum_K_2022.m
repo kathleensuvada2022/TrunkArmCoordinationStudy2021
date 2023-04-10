@@ -46,14 +46,16 @@ xh = xh/norm(xh);
 
 
 h = [xh yh zh];
-%%
+%% Redefining for the Left arm so it mimics the right CS 
 
-% if strcmp(arm,'Left')
-%  rot_180= rotz(180);
-%  
-%  h = h*rot_180;
-%    
-% end 
+if strcmp(hand,'Left')
+xh = -xh;
+yh = -yh;
+zh = cross(xh,yh);
+h = [xh,yh,zh];
+
+end
+
 
 h = [h;0 0 0];
 %%
