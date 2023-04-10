@@ -1,7 +1,7 @@
 %% ComputeEulerAngles_2022
 %  K. Suvada
-%  Fall/Winter 2022 
-%  Winter 2023
+%  2022 
+%  2023
 
 % Function to compute Euler Angles and relative joint rotation matrices
 % based off inputs as rotation matrices. 

@@ -172,7 +172,7 @@ close all
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
-ScapCoord_forGH = Asscap_K_GH(BLs,hand,1); % switching for left arm st Ghest works
+ScapCoord_forGH = Asscap_K_GH(BLs,hand,0); % switching for left arm st Ghest works
 ScapCoord = Asscap_K(BLs,hand,1); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
@@ -2693,7 +2693,7 @@ pause
 % close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%BELOW SECTIONS ARE UPDATED KINEMATICS 2022-2023%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%BELOW SECTIONS ARE UPDATED 2022-2023%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % ARM KINEMATICS

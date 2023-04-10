@@ -75,7 +75,7 @@ end
 
 %% Plotting Scapular CS and Bls in Marker Frame
 if flag ==1
-  figure(29)
+  figure(36)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
     plot3(BLs_marker(1,i),BLs_marker(2,i),BLs_marker(3,i),'-o','Color','b','MarkerSize',10,...

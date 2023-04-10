@@ -36,16 +36,19 @@ ts = TS(1:3);
 ac = AC(1:3);
 
 %% Creating Scapular CS -Kacey's Definition
-% if strcmp(hand,'Right') 
 
-% Creating Scapular CS using Right arm definition- use for left and right
-% for consistency with Forearm, Humerus CS, and Trunk
 
 xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
 yhulp = cross((AC(1:3)-AI(1:3)),xs);
 ys = yhulp/norm(yhulp);
 zs = cross(xs,ys);
+
 s = [xs,ys,zs];
+
+if strcmp(hand,'Left')
+s = rotz(180)*s;
+end
+
 
 s = [s;0 0 0];
 
