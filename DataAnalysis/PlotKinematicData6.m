@@ -173,11 +173,11 @@ zlabel('Z axis','FontSize',14)
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
 ScapCoord_forGH = Asscap_K_GH(BLs,hand,0); % switching for left arm st Ghest works
-ScapCoord = Asscap_K(BLs,hand,1); % Not switching for left arm
+ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -1615,20 +1615,22 @@ plot3(xshoulder(b,1),xshoulder(b,2),xshoulder(b,3),'-o','Color','b','MarkerSize'
     'MarkerFaceColor','#D9FFFF')
 text(xshoulder(1,1),xshoulder(1,2),xshoulder(1,3),'Marker','FontSize',26, 'Color','g')
 
-for s_idx = 1:length(xai)
+for s_idx = 1:10:length(xai)
 %Plotting Scapular Polygon for all frames 
 plot3([xai(s_idx,1) xts(s_idx,1)],[xai(s_idx,2) xts(s_idx,2)],[xai(s_idx,3) xts(s_idx,3)],'b','Linewidth',1) % line between AI and TS
 plot3([xai(s_idx,1) xshldr(s_idx,1)],[xai(s_idx,2) xshldr(s_idx,2)],[xai(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AI and AA
 plot3([xts(s_idx,1) xac(s_idx,1)],[xts(s_idx,2) xac(s_idx,2)],[xts(s_idx,3) xac(s_idx,3)],'b','Linewidth',1) % line between TS and AC
 plot3([xac(s_idx,1) xshldr(s_idx,1)],[xac(s_idx,2) xshldr(s_idx,2)],[xac(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AC and AA
-pause(.1)
-end
-
 xlabel('X Position (mm) ','FontSize',16)
 ylabel('Y Position (mm)','FontSize',16)
 zlabel('Z Position (mm)','FontSize',16)
 title ('Scapular BLS in Global Coordinate System','FontSize',24)
 axis equal
+
+
+pause
+end
+
 
 
 pause
@@ -2754,7 +2756,7 @@ Fore_CS_G= zeros(4,4,length(OL_GCS));
 
 for h = 1:length(OL_GCS) %samples
 
-    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,1);
+    Fore_CS_G(:,:,h) =  asfore_K_2022(RS_GCS(h,:),US_GCS(h,:),OL_GCS(h,:),EM_GCS(h,:),EL_GCS(h,:),hand,h,0);
 
 end 
 %% Verification of Elbow Angle Plots
@@ -3372,8 +3374,7 @@ for k = 1:length(t)
 
 end
 
-
-% close all
+ %close all
 
 %% Elbow Angles - XYZ
 
@@ -3550,6 +3551,7 @@ ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','Fo
  pause
 
 %% Humerus - ZYZ
+% close all
 
 % In GCS
 figure()
