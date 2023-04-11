@@ -17,7 +17,7 @@
 % Outputs:
 %- avgshouldertrunk: Average shoulder and trunk position across all trials
 %- std_shldtr: std dev shoulder and trunk
-%- avgmaxreach: average reach across trials
+%- avgmaxreach: average reach across trialsa
 %- std_maxreach: std deviation of max reach.
 %- avgemg_vel: average emg at max vel (check this)
 %- avgemg_start: average EMG at the start of the reach. (check this)
@@ -2728,7 +2728,7 @@ Hum_CS_G = zeros(4,4,length(gh));
 
 % Creating Humerus CS with interpolated and resampled data
 for h = 1:length(gh) 
-Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,1);
+Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
 
 end
 

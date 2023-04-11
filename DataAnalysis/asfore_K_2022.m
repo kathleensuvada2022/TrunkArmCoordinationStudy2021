@@ -50,11 +50,10 @@ f = [xf yf zf];
 
 %%  Flipping to mimic the right arm 
 
-
 if strcmp(hand,'Left')
 xf = -xf;
 yf = -yf;
-zf = cross(xf,yf);
+% zf = cross(xf,yf);
 f = [xf,yf,zf];
 
 end
