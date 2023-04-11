@@ -1624,11 +1624,11 @@ plot3([xac(s_idx,1) xshldr(s_idx,1)],[xac(s_idx,2) xshldr(s_idx,2)],[xac(s_idx,3
 xlabel('X Position (mm) ','FontSize',16)
 ylabel('Y Position (mm)','FontSize',16)
 zlabel('Z Position (mm)','FontSize',16)
-title ('Scapular BLS in Global Coordinate System','FontSize',24)
+title ('Scapular BLS in Global Coordinate System- RAW','FontSize',24)
 axis equal
 
 
-pause
+pause(.1)
 end
 
 
@@ -2990,27 +2990,28 @@ zlabel('Z axis')
 pause 
 
 % close all
-%% Plotting Scapular CS and BLs at the Start and End of the Reach
+%% Plotting Scapular CS and BLs at the Start and End of the Reach !!!! 2023
 figure()
 
 % At start of reach
 
-b= idx(1);
-quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
-text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
- hold on
+% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
+%  hold on
+
 % Computing and Plotting GCS
-GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
-quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
-text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+%GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+%quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+%text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
  
 %BLS
  % Shoulder BLs
-
+b = idx(1);
 % AC
 plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 
+hold on
 text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
 
 % AI
@@ -3036,6 +3037,31 @@ text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
 plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
+
+axis equal
+
+title('Scapular BLs and Polygon (Resampled)','FontSize',16)
+xlabel('X Axis')
+ylabel('Y Axis')
+zlabel('Z Axis')
+
+%Looping through scapular polygon during reach
+for b= idx(1):10:idx(3)
+
+plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
+plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
+plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
+plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
+
+pause
+end
+
+
+
+pause
+
+
+
 % 
 % b= idx(3);
 % quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
@@ -3079,12 +3105,7 @@ text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
 %     'MarkerFaceColor','#D9FFFF')
 % text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA E','FontSize',14)
 
-axis equal
 
-title('Scapular BLs and Coordinate Systems at Start of Reach','FontSize',16)
-xlabel('X Axis')
-ylabel('Y Axis')
-zlabel('Z Axis')
 %  pause
 
 %% MASTER PLOT OF BLS CS in GCS
@@ -3682,7 +3703,8 @@ ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','lat
 
 %% Closing all figures EXCEPT Scapular Figs March 2023
 
-close(2:6)
+close(2:4)
+close(6)
 
 close(7:23)
 %% Scapula - ZYX
@@ -3726,7 +3748,7 @@ title ('Scapular Angle About X -GCS ','Fontsize',24)
 
 ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-pause
+
 
 % Scap angles in TI
 % figure()
@@ -3767,47 +3789,45 @@ pause
 % ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-% pause
-% % Scap angles in T
-% figure()
-% plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Z axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Pole Angle (Deg)-T ','Fontsize',24)
-% %ylabel('-------------> Forwards ','FontSize',24)
-% ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
-% figure()
-% plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Y axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Waving  Angle (Deg)-T ','Fontsize',24)
-% %ylabel('Left        Right','FontSize',24)
-% ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
-% 
-% figure()
-% plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('X axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Pro/Retraction (Deg)-T ','Fontsize',24)
-% %ylabel('Protraction        Retraction','FontSize',24)
-% ylabel('$\Longleftarrow$ Protraction Retraction $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
+
+% Scap angles in T
+figure()
+plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Z axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle about Z (Deg) -TCS ','Fontsize',24)
+%ylabel('-------------> Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+figure()
+plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Y axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About Y (Deg)-TCS ','Fontsize',24)
+%ylabel('Left        Right','FontSize',24)
+ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+figure()
+plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('X axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About X -TCS ','Fontsize',24)
+ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
+' STOP HERE!! '
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
