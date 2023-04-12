@@ -177,7 +177,7 @@ ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -1582,7 +1582,7 @@ for i=1: length(mtrials)
 % text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
 %  
 
-close all 
+%close all 
 
 b = 1:length(xac);
 
