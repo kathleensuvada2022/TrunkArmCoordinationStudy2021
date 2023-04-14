@@ -54,6 +54,8 @@ yh = -yh;
 zh = cross(xh,yh);
 h = [xh,yh,zh];
 
+% h = roty(180)*h;
+
 end
 
 
