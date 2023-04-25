@@ -3719,17 +3719,11 @@ title ('Internal/External Rotation (Deg)-T ','Fontsize',24)
 % ylabel('Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-test
+% test
 % close all
 
 
 
-%% Closing all figures EXCEPT Scapular Figs March 2023
-
-close(2:4)
-close(6)
-
-close(7:23)
 %% Scapula - ZYX
 
 % GCS
