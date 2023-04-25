@@ -1570,6 +1570,29 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
+
+
+%% For Left Arm Kinematics Testing Spring 2023
+
+%Getting Rotation Matrices Across time for Trunk CS in GCS
+ 
+if strcmp(hand,'Left')
+    TrunkinGCS_ROTMAT = HTttog(1:3,1:3,:);
+
+    % Will Yield 3x3x250 samples rotated Rotation Matrix for Trunk CS in GCS
+    
+    RotZTrunk_ROTMAT = zeros(3,3,length(HTttog(1:3,1:3,:)));
+  
+    for b = 1:length(TrunkinGCS_ROTMAT)
+        RotZTrunk_ROTMAT(1:3,1:3,b) = rotz(180)*TrunkinGCS_ROTMAT(:,:,b);
+    end
+
+    % Need to Put new 3x3x250 back into original HT so have position with new
+    % orientation
+
+    HTttog(1:3,1:3,:) = RotZTrunk_ROTMAT(1:3,1:3,:);
+
+end
 %% Plotting Scapula BLs and marker during trial
 
 % b= idx(1);
