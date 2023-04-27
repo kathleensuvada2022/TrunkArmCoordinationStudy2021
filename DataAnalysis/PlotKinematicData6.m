@@ -1576,23 +1576,23 @@ for i=1: length(mtrials)
 
 %Getting Rotation Matrices Across time for Trunk CS in GCS
  
-if strcmp(hand,'Left')
-    TrunkinGCS_ROTMAT = HTttog(1:3,1:3,:);
-
-    % Will Yield 3x3x250 samples rotated Rotation Matrix for Trunk CS in GCS
-    
-    RotZTrunk_ROTMAT = zeros(3,3,length(HTttog(1:3,1:3,:)));
-  
-    for b = 1:length(TrunkinGCS_ROTMAT)
-        RotZTrunk_ROTMAT(1:3,1:3,b) = rotz(180)*TrunkinGCS_ROTMAT(:,:,b);
-    end
-
-    % Need to Put new 3x3x250 back into original HT so have position with new
-    % orientation
-
-    HTttog(1:3,1:3,:) = RotZTrunk_ROTMAT(1:3,1:3,:);
-
-end
+% if strcmp(hand,'Left')
+%     TrunkinGCS_ROTMAT = HTttog(1:3,1:3,:);
+% 
+%     % Will Yield 3x3x250 samples rotated Rotation Matrix for Trunk CS in GCS
+%     
+%     RotZTrunk_ROTMAT = zeros(3,3,length(HTttog(1:3,1:3,:)));
+%   
+%     for b = 1:length(TrunkinGCS_ROTMAT)
+%         RotZTrunk_ROTMAT(1:3,1:3,b) = rotz(180)*TrunkinGCS_ROTMAT(:,:,b);
+%     end
+% 
+%     % Need to Put new 3x3x250 back into original HT so have position with new
+%     % orientation
+% 
+%     HTttog(1:3,1:3,:) = RotZTrunk_ROTMAT(1:3,1:3,:);
+% 
+% end
 %% Plotting Scapula BLs and marker during trial
 
 % b= idx(1);
@@ -3606,7 +3606,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Z axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Humerus Pole Angle (Deg)-GCS ','Fontsize',24)
+title ('Humerus Pole Angle (Deg)-GCS RAW ','Fontsize',24)
 %ylabel('------------------------------>       Forwards ','FontSize',24)
 ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
@@ -3618,7 +3618,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Y axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Humerus SABD Angle (Deg)-GCS ','Fontsize',24)
+title ('Humerus SABD Angle (Deg)-GCS RAW ','Fontsize',24)
 % ylabel('SABD         <------------------- ','FontSize',24)
 ylabel('$\Longleftarrow$ INCREASING SABD','Interpreter','latex','FontSize',26)
 
@@ -3631,7 +3631,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Za axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Internal/External Rotation (Deg)-GCS ','Fontsize',24)
+title ('Internal/External Rotation (Deg)-GCS RAW','Fontsize',24)
 % ylabel('Externtal                   Internal','FontSize',24)
 ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
