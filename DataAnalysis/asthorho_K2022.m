@@ -116,18 +116,24 @@ yt=yt/norm(yt);
 xt = cross(yt,zt);
 
 %% Flipping Trunk CS if Left Arm - May 2023
-
-if strcmp(arm,'Left')
-
-xt = -xt;
-yt = -yt;
-
-end
+% 
+% if strcmp(arm,'Left')
+% 
+% xt = -xt;
+% yt = -yt;
+% 
+% end
 
 %%
 % t = [xt,yt,zt];
-t = [xt,yt,zt]; 
+t = [xt,yt,zt];
 
+if strcmp(arm,'Left')
+%     t = rotz(180)*t'
+%     t= t'
+  t = t*rotz(180);
+
+end
 
 % yt = (IJ + C7)/2 - (T8 + PX)/2;  yt = yt/norm(yt);
 % xt = cross(yt,T8-PX);  xt = xt/norm(xt);

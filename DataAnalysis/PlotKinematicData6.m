@@ -177,7 +177,7 @@ ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -3353,7 +3353,7 @@ jR_trunk = zeros(3,3,length(t));
 
 for b = 1:length(t)
 jR_trunk(:,:,b) = HTgtot(1:3,1:3,idx(1))*HTttog(1:3,1:3,b);
-end
+end 
 
 
 %% HUMERUS KINEMATICS 
@@ -3364,7 +3364,18 @@ end
 % - Second angle: SABD 
 
 % gR - Rotation Matrix for Hum CS in GCS for all time during trial 
-gR_Hum = Hum_CS_G(1:3,1:3,:);
+gR_Hum = Hum_CS_G(1:3,1:3,:)
+
+if strcmp(hand,'Left') % NEED TO CHECK ORDER!!!! KACEY
+    
+    for g = 1:length(Hum_CS_G)
+    gR_Hum(:,:,g) = rotz(180)*Hum_CS_G(1:3,1:3,g);
+    % or is it 
+    
+    % gR_Hum = Hum_CS_G(1:3,1:3,:)*rotz(180);
+    end
+
+end
 
 % jR - Rotation Matrix for Hum in Trunk_initial
 jr_Hum_ti = zeros(3,3,length(t));
@@ -3487,7 +3498,7 @@ ylabel('$\Longleftarrow$ Supination Pronation $\Longrightarrow$','Interpreter','
 
 
  pause
-%% NEED TO VERIFY IF BELOW CORRECT!! 2023
+%% NEED TO VERIFY IF BELOW CORRECT!! - DON'T USE
 % if strcmp(hand,'Right')
 %     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
 % 
@@ -3595,8 +3606,25 @@ ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','Fo
  pause
 
 %% Humerus - ZYZ
-% close all
 
+
+%% If LEFT ARM, make pole and internal/external rotation negative
+
+if strcmp(hand,'Left')
+
+% % In GCS
+HumAng_G(1,:) = -HumAng_G(1,:);
+HumAng_G(3,:) = -HumAng_G(3,:);
+
+% In Ti
+HumAng_Ti(1,:) = -HumAng_Ti(1,:);
+HumAng_Ti(3,:) = -HumAng_Ti(3,:);
+
+% In T
+Hum_Ang_T(1,:) = -Hum_Ang_T(1,:);
+Hum_Ang_T(3,:) = -Hum_Ang_T(3,:);
+end
+%%
 % In GCS
 figure()
 plot(HumAng_G(1,:),'Linewidth',2) %Pole angle
