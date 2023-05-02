@@ -46,7 +46,7 @@ xh = xh/norm(xh);
 
 
 h = [xh yh zh];
-%% Redefining for the Left arm so it mimics the right CS 
+%% Redefining for the Left arm so it mimics the right CS - leave bc flipping GCS and TRUNK CS
 
 if strcmp(hand,'Left')
 % xh = -xh;

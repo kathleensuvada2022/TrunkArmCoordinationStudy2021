@@ -177,7 +177,7 @@ ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
 %% Creating Trunk CS
-TrunkCoord = asthorho_K2022(BLs,hand,1,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
+TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 % pause
 setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
 %%  Computing GH estimate
@@ -3676,7 +3676,7 @@ set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Internal/External Rotation (Deg)-Ti ','Fontsize',24)
 % ylabel('Externtal                   Internal','FontSize',24)
 ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
+ 
 pause
 
 % In T

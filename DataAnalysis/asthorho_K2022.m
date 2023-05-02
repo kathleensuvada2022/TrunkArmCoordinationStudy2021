@@ -1,4 +1,4 @@
-%% Trunk CS 2022
+%% Trunk CS
 
 % Function to create Trunk CS based on Kacey's Definition. 
 % For the right arm, x is to the right, z is up and y is forwards. Using
@@ -16,7 +16,7 @@
 % - TrunkCS: created CS of the Trunk for the participant. This is in
 % MARKER frame or local CS.
 
-% K. Suvada - September 2022.
+% K. Suvada - 2022-2023
 
 
 function TrunkCS = asthorho_K2022(blmat,arm,flag,partid)
@@ -55,8 +55,7 @@ xhulp = nvector;  if xhulp(1)<0 xhulp = -nvector;end
 % yt = cross(xhulp,zt(1:3)); %SABEEN CHANGE: NEED DIM OF 3 FOR CP???? 
 
 
-%% Sometimes coming out of vlak function odd xhulps -Check BLS ok and if ok, modify accordingly to
-% get xhulp pointing toward the right. 
+%% For some participants, XHULP not pointing towards right- flip 
 
 if strcmp(partid,'RTIS1003')
     
@@ -67,7 +66,7 @@ end
 if strcmp(partid,'RTIS2003')
     if strcmp(arm,'Left')
         
-        xhulp = rotz(-90)*xhulp;
+        xhulp = rotz(-90)*xhulp ; % KACEY- WHAT IS THIS?? PLS CHECK MAY 2023
     end
     
     if strcmp(arm,'Right')
@@ -116,6 +115,16 @@ yt=yt/norm(yt);
 %Redefined for Kacey 10.4.21
 xt = cross(yt,zt);
 
+%% Flipping Trunk CS if Left Arm - May 2023
+
+if strcmp(arm,'Left')
+
+xt = -xt;
+yt = -yt;
+
+end
+
+%%
 % t = [xt,yt,zt];
 t = [xt,yt,zt]; 
 
@@ -125,6 +134,7 @@ t = [xt,yt,zt];
 % zt = cross(xt,yt);
 
 
+%%
 diff=norm(t)-1>=10*eps;
 if diff>=10*eps, disp('WARNING ASTHOR: norm rotation matrix not equal to 1'), disp(diff), return; end
 
@@ -133,6 +143,7 @@ orign_trunk = [IJ(1:4)];
 
 %Trunk Coordinate System in Marker CS
 TrunkCS = [t orign_trunk];
+
 
 
 %% Plotting Trunk CS and Bls in Marker Frame
