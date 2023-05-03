@@ -3364,15 +3364,16 @@ end
 % - Second angle: SABD 
 
 % gR - Rotation Matrix for Hum CS in GCS for all time during trial 
-gR_Hum = Hum_CS_G(1:3,1:3,:)
+gR_Hum = Hum_CS_G(1:3,1:3,:);
 
-if strcmp(hand,'Left') % NEED TO CHECK ORDER!!!! KACEY
+% Printing out HT at first index 
+% gR_Hum = Hum_CS_G(1:3,1:3,1)
+
+if strcmp(hand,'Left') %flipping the GCS if left arm so that bone CS and GCS align
     
     for g = 1:length(Hum_CS_G)
-    gR_Hum(:,:,g) = rotz(180)*Hum_CS_G(1:3,1:3,g);
-    % or is it 
-    
-    % gR_Hum = Hum_CS_G(1:3,1:3,:)*rotz(180);
+      
+     gR_Hum = Hum_CS_G(1:3,1:3,g)*rotz(180); % Kacey checked output and makes X and Y Negative
     end
 
 end
