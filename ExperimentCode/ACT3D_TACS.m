@@ -1360,17 +1360,23 @@ if strcmp(myhandles.exp.arm,'right')
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[-cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[-(myhandles.exp.hometar(1:2)'-[0.05 0.05]) 0.1 0.1]); % home target
+    ylimit=larm+myhandles.exp.shpos(2);
 else
 %     cursorpos=myhandles.exp.hometar-myhandles.exp.origin;
 %     set(myhandles.exp.hLine(4),'Position',[cursorpos(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
     set(myhandles.exp.hLine(4),'Position',[myhandles.exp.hometar(1:2)'-[0.05 0.05] 0.1 0.1]); % home target
+    ylimit=larm-myhandles.exp.shpos(2);
 end
-ylimit=larm-myhandles.exp.origin(2);
+
+% ylimit=larm-myhandles.exp.origin(2);
+
+% Update the reach target and mid lines
 set(myhandles.exp.hLine(5),'Ydata',ylimit*[1 1]); % reach target line
 set(myhandles.exp.hLine(6),'Ydata',[-0.05 ylimit]); % Midline
 % disp([myhandles.exp.origin' larm ylimit])
 
-set(myhandles.exp.hAxis,'ylim',[-0.1 ylimit+0.1]);
+% Set the x and y limits for the display
+set(myhandles.exp.hAxis,'ylim',[-0.05 ylimit+0.05]); % Adjust the 0.05 to bring it closer or further away.
 set(myhandles.exp.hAxis,'xlim',[-0.3 0.3]);
 % Update trunk home position if Metria on
 if myhandles.met.on
