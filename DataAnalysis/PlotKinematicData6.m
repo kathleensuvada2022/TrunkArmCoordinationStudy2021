@@ -3076,12 +3076,12 @@ plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','
 plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
 plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
-pause
+% pause
 end
 
 
 
-pause
+% pause
 
 
 
@@ -3362,19 +3362,19 @@ end
 
 % - First angle: Pole Angle 
 % - Second angle: SABD 
+% - Third angle: Internal/External Rotation
 
-% gR - Rotation Matrix for Hum CS in GCS for all time during trial 
-gR_Hum = Hum_CS_G(1:3,1:3,:);
 
-% Printing out HT at first index 
-% gR_Hum = Hum_CS_G(1:3,1:3,1)
-
-if strcmp(hand,'Left') %flipping the GCS if left arm so that bone CS and GCS align
-    
-    for g = 1:length(Hum_CS_G)
-      
-     gR_Hum = Hum_CS_G(1:3,1:3,g)*rotz(180); % Kacey checked output and makes X and Y Negative
+% Left Arm 
+%Flipping the GCS if left arm so that bone CS and GCS align
+if strcmp(hand,'Left')  
+    for g = 1:length(Hum_CS_G) 
+     gR_Hum(1:3,1:3,g) = rotz(180)*Hum_CS_G(1:3,1:3,g); % Kacey checked output and makes X and Y Negative
     end
+
+else 
+% For Right Arm
+gR_Hum = Hum_CS_G(1:3,1:3,:);
 
 end
 
@@ -3424,6 +3424,8 @@ HumAng_G= zeros(3,length(t));
 Trunk_ANG_Ti = zeros(3,length(t)); 
 Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
+
+
 
 for k = 1:length(t)
 [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
@@ -3498,7 +3500,7 @@ title('Pro/Supination Angle (Deg)','FontSize',24)
 ylabel('$\Longleftarrow$ Supination Pronation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
- pause
+%  pause
 %% NEED TO VERIFY IF BELOW CORRECT!! - DON'T USE
 % if strcmp(hand,'Right')
 %     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
@@ -3604,18 +3606,16 @@ title ('Trunk Coronal Plane (Deg)-Ti ','Fontsize',24)
 ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
- pause
+%  pause
 
 %% Humerus - ZYZ
-
-
 %% If LEFT ARM, make pole and internal/external rotation negative
 
 if strcmp(hand,'Left')
 
-% % In GCS
-HumAng_G(1,:) = -HumAng_G(1,:);
-HumAng_G(3,:) = -HumAng_G(3,:);
+% In GCS
+% HumAng_G(1,:) = -HumAng_G(1,:);
+% HumAng_G(3,:) = -HumAng_G(3,:);
 
 % In Ti
 HumAng_Ti(1,:) = -HumAng_Ti(1,:);
@@ -3635,7 +3635,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Z axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Humerus Pole Angle (Deg)-GCS RAW ','Fontsize',24)
+title ('Humerus Pole Angle (Deg)-GCS  ','Fontsize',24)
 %ylabel('------------------------------>       Forwards ','FontSize',24)
 ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 

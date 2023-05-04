@@ -104,6 +104,7 @@ Trunk_ANG_Ti_Mat = rad2deg(rotm2eul(jR_trunk,'XYZ')); %Matlab Function
 % Angles
 % 1) Pole angle
 % 2) SABD
+% 3) Internal/ External Rotation
 
 % Global Angle
 HumAng_G =   rad2deg(rotm2eul(gR_Hum,'ZYZ'));  

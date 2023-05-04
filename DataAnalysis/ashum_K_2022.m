@@ -47,16 +47,12 @@ xh = xh/norm(xh);
 
 h = [xh yh zh];
 %% Redefining for the Left arm so it mimics the right CS - leave bc flipping GCS and TRUNK CS
-
-if strcmp(hand,'Left')
-% xh = -xh;
-% yh = -yh;
-% zh = cross(xh,yh);
-% h = [xh,yh,zh];
 % 
-% h = roty(180)*h;
+% if strcmp(hand,'Left')
 % 
-end
+% h = h*roty(180);
+% 
+% end
 
 
 h = [h;0 0 0];
