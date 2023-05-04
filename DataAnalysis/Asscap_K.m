@@ -1,4 +1,4 @@
-%% Scapular CS 2022
+%% Scapular CS Updated 2022-2023
 
 % Function to create Scapular CS based on Kacey's Definition. 
 % For the right arm, x is to the right, z is up and y is forwards. Using
@@ -11,15 +11,13 @@
 % - Hand: Scapular CS has two different definitions depending on if we are
 % looking at the right or the left hand. 
 
-% April 2023
-% If left hand, flip definitions so that has the same convention as the
-% right arm. 
+
 
 % Outputs:
 % - ScapCS: created CS of the scapula for the participant. This is in
 % MARKER frame. 
 
-% K. Suvada - August/September 2022.
+% K. Suvada - 2022.
 
 function ScapCoord = Asscap_K(BLs,hand,flag)
 
@@ -50,13 +48,13 @@ zs = cross(xs,ys);
 s = [xs,ys,zs];
 
 
-if strcmp(hand,'Left')
-xs = -xs;
-ys = -ys;
-zs = cross(xs,ys);
-s = [xs,ys,zs];
-
-end
+% if strcmp(hand,'Left')
+% xs = -xs;
+% ys = -ys;
+% zs = cross(xs,ys);
+% s = [xs,ys,zs];
+% 
+% end
 
 
 s = [s;0 0 0];

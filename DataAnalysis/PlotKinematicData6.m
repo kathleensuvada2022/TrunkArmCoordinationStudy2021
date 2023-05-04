@@ -3381,15 +3381,25 @@ end
 % jR - Rotation Matrix for Hum in Trunk_initial
 jr_Hum_ti = zeros(3,3,length(t));
 
+
 for b = 1:length(t)
+    if strcmp(hand,'Left')  
+  jr_Hum_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*rotz(180)*Hum_CS_G(1:3,1:3,b);
+    else 
   jr_Hum_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*Hum_CS_G(1:3,1:3,b);
+    end 
 end
 
 % jR - Rotation Matrix for Hum in Trunk
 jr_Hum_T = zeros(3,3,length(t));
 
 for b = 1:length(t)
-  jr_Hum_T(:,:,b)=  HTgtot(1:3,1:3,b)*Hum_CS_G(1:3,1:3,b);
+    if strcmp(hand,'Left')
+        jr_Hum_T(:,:,b)=  HTgtot(1:3,1:3,b)*rotz(180)*Hum_CS_G(1:3,1:3,b);
+    else
+        jr_Hum_T(:,:,b)=  HTgtot(1:3,1:3,b)*Hum_CS_G(1:3,1:3,b);
+
+    end
 end
 
 %% Scapular Kinematics
@@ -3432,16 +3442,31 @@ for k = 1:length(t)
 
 end
 
- %close all
+
+
 
 %% Elbow Angles - XYZ
+
+% May 2023 
+
+% Correcting the Elbow Angle Since the Euler Angle Computes the Supplement 
+if strcmp(hand,'Right')
+ELB_ANG_MAT(1,:) =  180- ELB_ANG_MAT(1,:);
+
+else 
+ELB_ANG_MAT(1,:) =  180- abs(ELB_ANG_MAT(1,:));
+ELB_ANG_MAT(3,:) =  -(ELB_ANG_MAT(3,:));
+
+end
+
+%%  
 
 % Elbow Flexion/Extension
 figure()
 % plot(ELB_ANG_MAT(1,:))
 hold on
 % plot(ELB_ANG(1,:))
-plot(180-ELB_ANG_MAT(1,:),'LineWidth',2.5)
+plot(ELB_ANG_MAT(1,:),'LineWidth',2.5)
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
 
@@ -3457,11 +3482,11 @@ xline(idx(3),'r','Linewidth',2)
 % plot(idx(3),ELB_ANG_MAT(1,idx(3)),'o')
 % text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
 
-plot(idx(1),180-ELB_ANG_MAT(1,idx(1)),'o')
-text(idx(1),180-ELB_ANG_MAT(1,idx(1)),num2str(180-ELB_ANG_MAT(1,idx(1))),'FontSize',14)
+plot(idx(1),ELB_ANG_MAT(1,idx(1)),'o')
+text(idx(1),ELB_ANG_MAT(1,idx(1)),num2str(ELB_ANG_MAT(1,idx(1))),'FontSize',14)
 
-plot(idx(3),180-ELB_ANG_MAT(1,idx(3)),'o')
-text(idx(3),180-ELB_ANG_MAT(1,idx(3)),num2str(180-ELB_ANG_MAT(1,idx(3))),'FontSize',14)
+plot(idx(3),ELB_ANG_MAT(1,idx(3)),'o')
+text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
 legend('Elbow Angle','Start Reach','End Reach','FontSize',16)
 title('Elbow Angle (Deg)','FontSize',24)
 % ylabel('ELB FLEXION                               ELB EXTENSION','FontSize',24)
@@ -3500,29 +3525,9 @@ title('Pro/Supination Angle (Deg)','FontSize',24)
 ylabel('$\Longleftarrow$ Supination Pronation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-%  pause
-%% NEED TO VERIFY IF BELOW CORRECT!! - DON'T USE
-% if strcmp(hand,'Right')
-%     ELB_ANG_MAT(1,:)= 180-ELB_ANG_MAT(1,:);
-% 
-% else % For Left Arm
-%     ELB_ANG_MAT(1,:)= 180+ELB_ANG_MAT(1,:);
-%  
-%     HumAng_G(1,:)= 180 -  HumAng_G(1,:);
-%     HumAng_Ti(1,:)= 180 -  HumAng_Ti(1,:);
-%     Hum_Ang_T(1,:)= 180 -  Hum_Ang_T(1,:);
-%    
-%     ScapAng_G(1,:) = 180- ScapAng_G(1,:);
-%     ScapAng_Ti(1,:) =  180- ScapAng_Ti(1,:);
-%     Scap_Ang_T(1,:) = 180-Scap_Ang_T(1,:);
-% 
-% end
-
-
 
 %% Trunk Angles - XZY
-% close all
-% test
+
 
 % Trunk angles in GCS - Matlab Function and Created CalcEulerAng.m
 
@@ -3565,7 +3570,6 @@ title ('Trunk Coronal Plane (Deg)-GCS ','Fontsize',24)
 % ylabel('Left                   Right','FontSize',24)
 ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
- pause
 % Trunk angles in Ti
 figure()
 %CalcEulerAng-XZY
@@ -3614,14 +3618,14 @@ ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','Fo
 if strcmp(hand,'Left')
 
 % In GCS
-% HumAng_G(1,:) = -HumAng_G(1,:);
-% HumAng_G(3,:) = -HumAng_G(3,:);
+HumAng_G(1,:) = -HumAng_G(1,:);
+HumAng_G(3,:) = -HumAng_G(3,:);
 
 % In Ti
 HumAng_Ti(1,:) = -HumAng_Ti(1,:);
 HumAng_Ti(3,:) = -HumAng_Ti(3,:);
-
-% In T
+% 
+% % In T
 Hum_Ang_T(1,:) = -Hum_Ang_T(1,:);
 Hum_Ang_T(3,:) = -Hum_Ang_T(3,:);
 end
@@ -3635,7 +3639,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Z axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Humerus Pole Angle (Deg)-GCS  ','Fontsize',24)
+title ('Humerus Pole Angle (Deg)-GCS','Fontsize',24)
 %ylabel('------------------------------>       Forwards ','FontSize',24)
 ylabel('$\Longleftarrow$ Backwards Forwards $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
@@ -3647,7 +3651,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Y axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Humerus SABD Angle (Deg)-GCS RAW ','Fontsize',24)
+title ('Humerus SABD Angle (Deg)-GCS','Fontsize',24)
 % ylabel('SABD         <------------------- ','FontSize',24)
 ylabel('$\Longleftarrow$ INCREASING SABD','Interpreter','latex','FontSize',26)
 
@@ -3660,7 +3664,7 @@ xline(idx(3),'r','Linewidth',2)
 legend('Za axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Internal/External Rotation (Deg)-GCS RAW','Fontsize',24)
+title ('Internal/External Rotation (Deg)-GCS','Fontsize',24)
 % ylabel('Externtal                   Internal','FontSize',24)
 ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','latex','FontSize',26)
 

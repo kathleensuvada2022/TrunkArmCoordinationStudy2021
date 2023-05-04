@@ -70,7 +70,6 @@ jAngles_elbow = CalcEulerAng(jR_ForeinHum,'XYZ',0);
 jAngles_elbow_mat = rotm2eul(jR_ForeinHum,'XYZ'); % Internal Matlab Function 
 
 
-
 ELB_ANG=jAngles_elbow ;% from CalcEulerAng
 ELB_ANG_MAT=jAngles_elbow_mat ;% from internal Matlab Function
 
