@@ -3405,22 +3405,53 @@ end
 %% Scapular Kinematics
 % - HTstoG computed during all frames of trial earlier
 
-% gR - Rotation Matrix for Scap CS in GCS for all time during trial 
 
-gR_Scap =HTstog(1:3,1:3,:);
+% Left Arm 
+%Flipping the GCS if left arm so that bone CS and GCS align
+if strcmp(hand,'Left')  
+    for g = 1:length(HTstog) 
+     gR_Scap(1:3,1:3,g) = rotz(180)*HTstog(1:3,1:3,g); 
+    end
+
+else 
+% For Right Arm
+gR_Hum = HTstog(1:3,1:3,:);
+
+end
+
 
 % jR - Rotation Matrix for Scap in Trunk_initial
 jr_Scap_ti = zeros(3,3,length(t));
 
+% for b = 1:length(t)
+%   jr_Scap_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*HTstog(1:3,1:3,b);
+% end
+
+% Accounting for Left and Right Arm 
 for b = 1:length(t)
+    if strcmp(hand,'Left')  
+  jr_Scap_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*rotz(180)*HTstog(1:3,1:3,b);
+    else 
   jr_Scap_ti(:,:,b)=  HTgtot(1:3,1:3,idx(1))*HTstog(1:3,1:3,b);
+    end 
 end
+
 
 % jR - Rotation Matrix for Scap in Trunk (all frames)
 jr_Scap_T = zeros(3,3,length(t));
 
+% for b = 1:length(t)
+%   jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*HTstog(1:3,1:3,b);
+% end
+
+
 for b = 1:length(t)
-  jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*HTstog(1:3,1:3,b);
+    if strcmp(hand,'Left')
+        jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*rotz(180)*HTstog(1:3,1:3,b);
+    else
+        jr_Scap_T(:,:,b)=  HTgtot(1:3,1:3,b)*HTstog(1:3,1:3,b);
+
+    end
 end
 
 
