@@ -3415,7 +3415,7 @@ if strcmp(hand,'Left')
 
 else 
 % For Right Arm
-gR_Hum = HTstog(1:3,1:3,:);
+gR_Scap = HTstog(1:3,1:3,:);
 
 end
 
@@ -3790,9 +3790,27 @@ ylabel('$\Longleftarrow$ External Internal $\Longrightarrow$','Interpreter','lat
 
 %% Scapula - ZYX
 
+%% If LEFT ARM, make Internal/External Rotation and Anterior/Posterior Tilt Negative
+
+if strcmp(hand,'Left')
+
+% In GCS
+ScapAng_G(1,:) = -ScapAng_G(1,:);
+ScapAng_G(3,:) = -ScapAng_G(3,:);
+
+% In Ti
+ScapAng_Ti(1,:) = -ScapAng_Ti(1,:);
+ScapAng_Ti(3,:) = -ScapAng_Ti(3,:);
+% 
+% % In T
+Scap_Ang_T(1,:) = -Scap_Ang_T(1,:);
+Scap_Ang_T(3,:) = -Scap_Ang_T(3,:);
+end
+
+%%
 % GCS
 figure()
-plot(ScapAng_G(1,:),'Linewidth',2) %Pole angle
+plot(ScapAng_G(1,:),'Linewidth',2) %Internal/ External Rotation
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3804,7 +3822,7 @@ title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
-plot(ScapAng_G(2,:),'Linewidth',2)  % Waving
+plot(ScapAng_G(2,:),'Linewidth',2)  % Upward and Downward Rotation
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3817,7 +3835,7 @@ ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$'
 
 
 figure()
-plot(ScapAng_G(3,:),'Linewidth',2) %Pro-Retraction
+plot(ScapAng_G(3,:),'Linewidth',2) % Anterior/Posterior Tilt
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3873,7 +3891,7 @@ ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrig
 
 % Scap angles in T
 figure()
-plot(Scap_Ang_T(1,:),'Linewidth',2) %Pole angle
+plot(Scap_Ang_T(1,:),'Linewidth',2) %Internal/External Rotation
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3885,7 +3903,7 @@ title ('Scapular Angle about Z (Deg) -TCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
-plot(Scap_Ang_T(2,:),'Linewidth',2)  % Waving
+plot(Scap_Ang_T(2,:),'Linewidth',2)  % Upward/Downward Rotation
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3897,7 +3915,7 @@ title ('Scapular Angle About Y (Deg)-TCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 figure()
-plot(Scap_Ang_T(3,:),'Linewidth',2) %Pro-Retraction
+plot(Scap_Ang_T(3,:),'Linewidth',2) %Anterior/Posterior Tilt
 hold on
 xline(idx(1),'g','Linewidth',2)
 xline(idx(3),'r','Linewidth',2)
@@ -3907,8 +3925,6 @@ set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Scapular Angle About X -TCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-
-' STOP HERE!! '
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
