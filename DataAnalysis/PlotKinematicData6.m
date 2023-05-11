@@ -1651,12 +1651,12 @@ title ('Scapular BLS in Global Coordinate System- RAW','FontSize',24)
 axis equal
 
 
-pause(.1)
+% pause(.1)
 end
 
 
 
-pause
+% pause
 
 
 %     figure(19)
