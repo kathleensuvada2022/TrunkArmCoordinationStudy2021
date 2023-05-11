@@ -3469,7 +3469,7 @@ ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
 
 
 for k = 1:length(t)
-[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
+[ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(hand,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 
 end
 
@@ -3480,13 +3480,11 @@ end
 
 % May 2023 
 
-% Correcting the Elbow Angle Since the Euler Angle Computes the Supplement 
 if strcmp(hand,'Right')
 ELB_ANG_MAT(1,:) =  180- ELB_ANG_MAT(1,:);
 
 else 
-ELB_ANG_MAT(1,:) =  180- abs(ELB_ANG_MAT(1,:));
-ELB_ANG_MAT(3,:) =  -(ELB_ANG_MAT(3,:));
+  ELB_ANG_MAT(3,:) = -ELB_ANG_MAT(3,:);
 
 end
 

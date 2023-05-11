@@ -38,7 +38,7 @@
 % - Scap_Ang_T: Scap angles rel to Trunk.
 %%
 
-function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG_Ti_Mat,HumAng_G,HumAng_G_CalcEuler,HumAng_Ti,HumAng_Ti_CalcEuler,HumAng_T,HumAng_T_CalcEuler,ScapAng_G,ScapAng_G_CalcEul,ScapAng_Ti,ScapAng_Ti_CalcEul,ScapAng_T,ScapAng_T_CalcEul] = ComputeEulerAngles_2022(Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
+function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG_Ti_Mat,HumAng_G,HumAng_G_CalcEuler,HumAng_Ti,HumAng_Ti_CalcEuler,HumAng_T,HumAng_T_CalcEuler,ScapAng_G,ScapAng_G_CalcEul,ScapAng_Ti,ScapAng_Ti_CalcEul,ScapAng_T,ScapAng_T_CalcEul] = ComputeEulerAngles_2022(hand,Fore_CS_G,Hum_CS_G,gR_trunk,jR_trunk,gR_Hum,jr_Hum_ti,jr_Hum_T,gR_Scap,jr_Scap_ti,jr_Scap_T,k);
 
 
 %    The following rotation sequences, SEQ, are supported: 'ZYX', 'ZYZ', and
@@ -57,8 +57,15 @@ function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG
 % Hi*Rfi = Fi  -> Rfi = Hi'*Fi 
 
 
-% Rotation matrix of forearm rel to humerus (joint rotation matrix jR)
+% if strcmp(hand,'Left')
+% jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*rotz(180)*Fore_CS_G(1:3,1:3)*rotz(180); 
+
+% else 
 jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3); 
+
+% end 
+
+
 
 
 % Computing Elbow Angle 
