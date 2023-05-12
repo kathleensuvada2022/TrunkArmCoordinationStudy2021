@@ -1651,7 +1651,7 @@ title ('Scapular BLS in Global Coordinate System- RAW','FontSize',24)
 axis equal
 
 
-% pause(.1)
+%   pause
 end
 
 
@@ -3481,11 +3481,11 @@ end
 % May 2023 
 
 if strcmp(hand,'Right')
-ELB_ANG_MAT(1,:) =  180- ELB_ANG_MAT(1,:);
+% ELB_ANG_MAT(1,:) =  180- ELB_ANG_MAT(1,:);
 
 else 
   ELB_ANG_MAT(3,:) = -ELB_ANG_MAT(3,:);
-
+  ELB_ANG_MAT(1,:) = -ELB_ANG_MAT(1,:);
 end
 
 %%  
@@ -3519,7 +3519,8 @@ text(idx(3),ELB_ANG_MAT(1,idx(3)),num2str(ELB_ANG_MAT(1,idx(3))),'FontSize',14)
 legend('Elbow Angle','Start Reach','End Reach','FontSize',16)
 title('Elbow Angle (Deg)','FontSize',24)
 % ylabel('ELB FLEXION                               ELB EXTENSION','FontSize',24)
-ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
 
 % figure()
 % plot(ELB_ANG_MAT(2,:))

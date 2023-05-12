@@ -57,13 +57,16 @@ function [ELB_ANG,ELB_ANG_MAT,Trunk_ANG_G,Trunk_ANG_G_Mat,Trunk_ANG_Ti,Trunk_ANG
 % Hi*Rfi = Fi  -> Rfi = Hi'*Fi 
 
 
-% if strcmp(hand,'Left')
-% jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*rotz(180)*Fore_CS_G(1:3,1:3)*rotz(180); 
+%  if strcmp(hand,'Left')
 
-% else 
+%  Try Line below 
+% jR_ForeinHum = inv(rotz(180)*Hum_CS_G(1:3,1:3))*rotz(180)*Fore_CS_G(1:3,1:3); 
+% jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3); 
+
+%  else 
 jR_ForeinHum = inv(Hum_CS_G(1:3,1:3))*Fore_CS_G(1:3,1:3); 
 
-% end 
+%  end 
 
 
 
