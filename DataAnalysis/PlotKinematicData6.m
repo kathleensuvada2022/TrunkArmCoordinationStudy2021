@@ -5358,43 +5358,43 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     xlabel('Reaching Distance (% LL)','Fontsize',24)
     ylabel('Elbow Angle (Deg)','Fontsize',24)
     title('Elbow Angle vs Reaching Distance: Red Restrained')
-    xlim([50 100])
-    ylim([40 110])
+%     xlim([85 105])
+%     ylim([20 70])
 
     if expcond == 1
-    p1 =  plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor','r','MarkerSize',14)
+    p1 =  plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','r','MarkerSize',14)
 %          legend(p1,'Trunk Restrained- Table','FontSize',16)
 
     end
 
 
     if expcond == 2
-       p2= plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
+       p2= plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
 %         legend(p2,'Trunk Restrained- 25%','FontSize',16)
 
     end
 
 
     if expcond == 3
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
+        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
 %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
 
     end
 
     if expcond == 4
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor','b','MarkerSize',14)
+        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','b','MarkerSize',14)
 %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
 
     end
 
     if expcond == 5
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
+        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
 %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
 
     end
 
     if expcond == 6
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"square",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
+        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
 %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
 
     end
