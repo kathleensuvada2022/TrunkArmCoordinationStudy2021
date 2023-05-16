@@ -4209,20 +4209,20 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         
         
         
-        figure()
-        plot(t,Zpos_act,'Linewidth',1.5)
-        hold on
-        plot(t,Ypos_act,'Linewidth',1.5)
-        plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
-        plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
-        xline(t(idx(1)),'g','Linewidth',1.5)
-        xline(t(idx(3)),'r','Linewidth',1.5)
-        yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
-        xlabel('Time (s)')
-        ylabel('Position (m)')
-        legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-        title(mfname,'FontSize',24)
-        
+%         figure()
+%         plot(t,Zpos_act,'Linewidth',1.5)
+%         hold on
+%         plot(t,Ypos_act,'Linewidth',1.5)
+%         plot(t(rangeYandZ),Ypos_act(rangeYandZ),'ro')
+%         plot(t(rangeYandZ),Zpos_act(rangeYandZ),'ro')
+%         xline(t(idx(1)),'g','Linewidth',1.5)
+%         xline(t(idx(3)),'r','Linewidth',1.5)
+%         yline(Ypos_act(idx(1)),'m','Linewidth',1.5)
+%         xlabel('Time (s)')
+%         ylabel('Position (m)')
+%         legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%         title(mfname,'FontSize',24)
+%         
         
     end
     
@@ -5809,19 +5809,19 @@ if strcmp(partid,'RTIS2009') && strcmp(hand,'Right')
     end
     
     rangeZ= find(Zpos_act>.00005);
-    figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
+%     figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
 %     
     
 end
@@ -6385,19 +6385,19 @@ if strcmp(partid,'RTIS2010') && strcmp(hand,'Left')
     
     rangeZ= find(Zpos_act>.00005);
 %     
-    figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
+%     figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
 end
 
 
@@ -7022,20 +7022,20 @@ if strcmp(partid,'RTIS2011') && strcmp(hand,'Right')
         
     rangeZ= find(Zpos_act>.00005);
     
-    figure()
-    plot(t,Zpos_act,'Linewidth',1.5)
-    hold on
-    %             plot(t,-Ypos_act,'Linewidth',1.5)
-    %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
-    plot(t(rangeZ),Zpos_act(rangeZ),'ro')
-    xline(t(idx(1)),'g','Linewidth',1.5)
-    xline(t(idx(3)),'r','Linewidth',1.5)
-    %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
-    xlabel('Time (s)')
-    ylabel('Position (m)')
-    legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
-    title(mfname,'FontSize',24)
-    
+%     figure()
+%     plot(t,Zpos_act,'Linewidth',1.5)
+%     hold on
+%     %             plot(t,-Ypos_act,'Linewidth',1.5)
+%     %             plot(t(rangeZ),-Ypos_act(rangeZ),'ro')
+%     plot(t(rangeZ),Zpos_act(rangeZ),'ro')
+%     xline(t(idx(1)),'g','Linewidth',1.5)
+%     xline(t(idx(3)),'r','Linewidth',1.5)
+%     %             yline(-Ypos_act(idx(1)),'m','Linewidth',1.5)
+%     xlabel('Time (s)')
+%     ylabel('Position (m)')
+%     legend('ZposACT','YposACT','Y and Z Range','Y and Z Range','START','STOP','YValue_start','FontSize',14)
+%     title(mfname,'FontSize',24)
+%     
 end
 
 
@@ -7094,51 +7094,73 @@ timebefore = timestart-.05; %time 50 ms prior to start of reach
 timeend = timedistmax+2;
 %ibefore = ceil(timebefore*50);
 
+%% USE THIS PLOT FOR VERIFICATION OF REACH START 2023!!!!!! UNCOMMENT BELOW
+% figure(2)
+% clf
+% yyaxis left
+% hold on
+% plot(t,dist,'LineWidth',1.5)
+% plot(t, abs(xhand(:,3)-mean(xhand(1:20,3))),'LineWidth',1.5)
+% ylabel('Position (mm)')
+% yyaxis right
+% plot(t,vely,'LineWidth',1.5)
+% ylabel('Velocity (mm/s)')
+% y1=ylim;
+% title(['Distance and Velocity' mfname],'FontSize',24)
+% p1 = xline(timestart,'g','Linewidth',1); %startreach
+% p3 = xline(timedistmax,'r','Linewidth',1); %maxdist
+% xlim([0 t(end)])
+% xlabel('time in seconds')
+% legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northeast','FontSize',16)
 
+%%
 %% Plotting Data
-
-figure(2)
-clf
-%  subplot(5,1,1)
-%ax = axes('position',[0.12,0.75,0.75,0.22]);
-yyaxis left
-
-% plot(t,xhand(:,2),'LineWidth',1.5)
-hold on
-%plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
-plot(t,dist,'LineWidth',1.5)
-plot(t, abs(xhand(:,3)-mean(xhand(1:20,3))),'LineWidth',1.5)
-% plot(t(rangeZ),dist(rangeZ),'ro')
-ylabel('Position (mm)')
-
-yyaxis right
-
-plot(t,vely,'LineWidth',1.5)
-% plot(t(rangeZ),vely(rangeZ),'ro')
-ylabel('Velocity (mm/s)')
-y1=ylim;
-
-title(['Distance and Velocity' mfname],'FontSize',24)
-% p1 = xline('Color','g','Xdata',[timestart timestart],'Ydata',[-10000 10000], 'LineWidth',1); % start reach
-
-p1 = xline(timestart,'g','Linewidth',1); %startreach
-% p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
-
-%p3= xline('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-10000 10000],'LineWidth',1); %max, dist
-p3 = xline(timedistmax,'r','Linewidth',1); %maxdist
-
-%p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
-%p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
-% ylim([-400 400])
-% co=get(lax1,'ColorOrder');
-% set(lax1,'ColorOrder',co(end-1:-1:1,:))
-xlim([0 t(end)])
-
-xlabel('time in seconds')
-% legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
-% legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
-% legend('Distance','Z DISP','Range Z','Vel Y','Range Z','Time Start','Time End','Location','northeast','FontSize',16)
-legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northeast','FontSize',16)
+% 
+% figure(2)
+% clf
+% %  subplot(5,1,1)
+% %ax = axes('position',[0.12,0.75,0.75,0.22]);
+% yyaxis left
+% 
+% % plot(t,xhand(:,2),'LineWidth',1.5)
+% hold on
+% %plot(t,abs(xhand(:,3)-xhand(1,3)),'LineWidth',1)
+% plot(t,dist,'LineWidth',1.5)
+% plot(t, abs(xhand(:,3)-mean(xhand(1:20,3))),'LineWidth',1.5)
+% % plot(t(rangeZ),dist(rangeZ),'ro')
+% ylabel('Position (mm)')
+% 
+% yyaxis right
+% 
+% plot(t,vely,'LineWidth',1.5)
+% % plot(t(rangeZ),vely(rangeZ),'ro')
+% ylabel('Velocity (mm/s)')
+% y1=ylim;
+% 
+% title(['Distance and Velocity' mfname],'FontSize',24)
+% % p1 = xline('Color','g','Xdata',[timestart timestart],'Ydata',[-10000 10000], 'LineWidth',1); % start reach
+% 
+% p1 = xline(timestart,'g','Linewidth',1); %startreach
+% % p2= line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[-5000 5000],'LineWidth',1); % max vel
+% 
+% %p3= xline('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[-10000 10000],'LineWidth',1); %max, dist
+% p3 = xline(timedistmax,'r','Linewidth',1); %maxdist
+% 
+% %p4= line('Color','b','Ydata',[0 0],'Xdata',[-5000 5000],'LineWidth',2); %time prior
+% %p5= line('Color','r','Xdata',[timeend timeend],'Ydata',[-500 500],'LineWidth',.5);
+% % ylim([-400 400])
+% % co=get(lax1,'ColorOrder');
+% % set(lax1,'ColorOrder',co(end-1:-1:1,:))
+% xlim([0 t(end)])
+% 
+% xlabel('time in seconds')
+% % legend('Distance', 'Velocity','Time Start','Time End','Location','northeast','FontSize',16)
+% % legend('Z displacement','Vel y','Time Start','Time End','vel=0','Location','northwest','FontSize',16)
+% % legend('Distance','Z DISP','Range Z','Vel Y','Range Z','Time Start','Time End','Location','northeast','FontSize',16)
+% 
+% 
+% 
+% legend('Distance','Z DISP','Vel Y','Time Start','Time End','Location','northeast','FontSize',16)
 
 %close all
 % figure (6),clf
