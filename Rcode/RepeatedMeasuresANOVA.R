@@ -58,7 +58,7 @@ library(readxl)
 
 #AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic.xlsx")
 
-AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic NOV2022.xlsx")
+AllData_Stroke_Paretic <- read_excel("Desktop/Stroke/Paretic/AllData_Stroke_Paretic.xlsx")
 #Viewing Data 
 View(AllData_Stroke_Paretic)
  
