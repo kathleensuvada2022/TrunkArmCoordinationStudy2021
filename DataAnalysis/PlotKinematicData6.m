@@ -3926,6 +3926,22 @@ end
 % title ('Scapular Angle About X -TCS ','Fontsize',24)
 % ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
+%%%%%%%%%%%%%%%%%%%%%%ANGLE ANGLE PLOTS - July 2023 %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 
+figure()
+plot(Hum_Ang_T(1,:),180-ELB_ANG_MAT(1,:),'Linewidth',2) %Elbow Angle vs Pole Angle
+hold on
+plot(Hum_Ang_T(1,idx(1)),180-ELB_ANG_MAT(1,idx(1)),'o','MarkerSize',24,'MarkerFaceColor','g')
+plot(Hum_Ang_T(1,idx(3)),180-ELB_ANG_MAT(1,idx(3)),'o','MarkerSize',24,'MarkerFaceColor','r')
+
+title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
+ylabel('Elbow Extension Angle (deg)','FontSize',26)
+xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
