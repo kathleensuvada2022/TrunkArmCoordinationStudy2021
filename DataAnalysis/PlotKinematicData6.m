@@ -1568,9 +1568,9 @@ for i=1: length(mtrials)
     
     % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
     
-    [t,xhand,xshoulder,xtrunk,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
+    [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
-
+test
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -1658,32 +1658,35 @@ for i=1: length(mtrials)
 
 % pause
 
+%% Plotting EM and EL BLs July 2023 - Verification for RTIS2010
+figure() 
+% BLS of the Humerus
+plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
+hold on
+plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
+plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
+plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
 
-%     figure(19)
-%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
-%     hold on
-%     plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % Computed EM
-%     plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % Computed EL
-%     
-%     plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % Computed RS
-%     plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % Computed US
-%     plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % Computed OL
-%     
-%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
-%     plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',2)
-%     
-%     plot(xghest(:,1),xghest(:,2),'Linewidth',2) %esimated GH
-%     axis equal
-%     %         legend('Acromion','3rd MCP','Jug Notch','Trunk Marker','Estimated GH','FontSizƒe',14)
-%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%     xlabel('X position (mm)','FontSize',14)
-%     ylabel('Y position (mm)','FontSize',14)
-%     legend('AA','EM','EL','RS','US','OL','3rdMCP','JUG','trunkMarker','estGH','FontSize',14)
+% BLs of the Forearm
+plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
+plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
+plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
+plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
 
 
+plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
+plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
+plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
 
+
+axis equal
+legend('Humerus Marker','EM','EL','Digitized GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+title('Overhead View of Reach- GCS' ,'FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+
+
+%%
 % % Plotting TRUNK CS XY plane in GCS
 % quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
 % text(HTttog(1,4)+50*HTttog(1,1:2),HTttog(2,4)+50*HTttog(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
