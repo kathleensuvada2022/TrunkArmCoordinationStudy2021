@@ -65,7 +65,7 @@ trex_current_trial=zeros(ntrials,1);
 
 
 % Angles
-ElbAng_current_trial = zeros(ntrials,1);
+% ElbAng_current_trial = zeros(ntrials,1);
 TrunkAng_FE_current_trial = zeros(ntrials,1);
 TrunkAng_Twist_current_trial = zeros(ntrials,1);
 TrunkAng_LB_current_trial = zeros(ntrials,1);
@@ -1570,7 +1570,7 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
-test
+
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -3934,16 +3934,16 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Trial by Trial Plots
-figure()
-plot(Hum_Ang_T(1,:),180-ELB_ANG_MAT(1,:),'Linewidth',2) %Elbow Angle vs Pole Angle
-hold on
-plot(Hum_Ang_T(1,idx(1)),180-ELB_ANG_MAT(1,idx(1)),'o','MarkerSize',24,'MarkerFaceColor','g')
-plot(Hum_Ang_T(1,idx(3)),180-ELB_ANG_MAT(1,idx(3)),'o','MarkerSize',24,'MarkerFaceColor','r')
-
-title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
-ylabel('Elbow Extension Angle (deg)','FontSize',26)
-xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
-
+% figure(60)
+% plot(Hum_Ang_T(1,:),180-ELB_ANG_MAT(1,:),'Linewidth',2) %Elbow Angle vs Pole Angle
+% hold on
+% plot(Hum_Ang_T(1,idx(1)),180-ELB_ANG_MAT(1,idx(1)),'o','MarkerSize',24,'MarkerFaceColor','g')
+% plot(Hum_Ang_T(1,idx(3)),180-ELB_ANG_MAT(1,idx(3)),'o','MarkerSize',24,'MarkerFaceColor','r')
+% axis equal
+% title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
+% ylabel('Elbow Extension Angle (deg)','FontSize',26)
+% xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
+% 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4263,21 +4263,21 @@ xhand_Hum = xhand_Hum';
 
     
  %% OUTCOME MEASURES   
-% Computation of Angles 
-
- ElbAng = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
-
-
-Trunk_Flex_Ext = Trunk_ANG_Ti(1,idx(3))-Trunk_ANG_Ti(1,idx(1));
-Trunk_Twist = Trunk_ANG_Ti(2,idx(3))-Trunk_ANG_Ti(2,idx(1));
-Trunk_LB = Trunk_ANG_Ti(3,idx(3))-Trunk_ANG_Ti(3,idx(1));
-
-Hum_Ang_Pole = Hum_Ang_T(1,idx(3))-Hum_Ang_T(1,idx(1));
-Hum_Ang_SABD = Hum_Ang_T(2,idx(3))-Hum_Ang_T(2,idx(1));
-
-Scap_Ang_Latrot = Scap_Ang_T(1,idx(3))-Scap_Ang_T(1,idx(1));
-Scap_Ang_fbtilt = Scap_Ang_T(2,idx(3))-Scap_Ang_T(2,idx(1));
-Scap_Ang_proretract = Scap_Ang_T(3,idx(3))-Scap_Ang_T(3,idx(1));
+% Computation of Angles - difference of start and ending angle 
+% 
+%  ElbAng = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
+% 
+% 
+% Trunk_Flex_Ext = Trunk_ANG_Ti(1,idx(3))-Trunk_ANG_Ti(1,idx(1));
+% Trunk_Twist = Trunk_ANG_Ti(2,idx(3))-Trunk_ANG_Ti(2,idx(1));
+% Trunk_LB = Trunk_ANG_Ti(3,idx(3))-Trunk_ANG_Ti(3,idx(1));
+% 
+% Hum_Ang_Pole = Hum_Ang_T(1,idx(3))-Hum_Ang_T(1,idx(1));
+% Hum_Ang_SABD = Hum_Ang_T(2,idx(3))-Hum_Ang_T(2,idx(1));
+% 
+% Scap_Ang_Latrot = Scap_Ang_T(1,idx(3))-Scap_Ang_T(1,idx(1));
+% Scap_Ang_fbtilt = Scap_Ang_T(2,idx(3))-Scap_Ang_T(2,idx(1));
+% Scap_Ang_proretract = Scap_Ang_T(3,idx(3))-Scap_Ang_T(3,idx(1));
 
     %% Compute reaching distance
     
@@ -4355,7 +4355,7 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     trex_current_trial(i) = trunk_exc;
     
 % Adding elbow angle at IDX(3)
-    ElbAng_current_trial(i)= ELB_ANG_MAT(1,idx(3));
+%     ElbAng_current_trial(i)= ELB_ANG_MAT(1,idx(3));
 
 %     close all
     %% Angles for current trial  - OLD don't USE 
@@ -5307,6 +5307,18 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
     % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
     
+%% July 2023- Saving Angle Outcome Measures Per Trial ACROSS TIME
+if i == 1
+ElbAng_current_trial = zeros(length(mtrials),length(ELB_ANG));
+end
+
+% Timing Issue BC length of all the Trials not the same- however reach is
+% done so just cut at the length of the first trial
+% 
+ElbAng_current_trial(i,:) = 180-ELB_ANG_MAT(1,1:length(ElbAng_current_trial));
+
+
+
     %% Saving Kinematic Position Data to Large Matrix
     
     
@@ -5370,59 +5382,65 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %     pause
 %     close all
         
+
     %% Plotting Elbow Angle vs RD % LL 
 
-    figure(95)
-    hold on
-    xlabel('Reaching Distance (% LL)','Fontsize',24)
-    ylabel('Elbow Angle (Deg)','Fontsize',24)
-    title('Elbow Angle vs Reaching Distance: Red Restrained')
-%     xlim([85 105])
-%     ylim([20 70])
+%     figure(95)
+%     hold on
+%     xlabel('Reaching Distance (% LL)','Fontsize',24)
+%     ylabel('Elbow Angle (Deg)','Fontsize',24)
+%     title('Elbow Angle vs Reaching Distance: Red Restrained')
+% %     xlim([85 105])
+% %     ylim([20 70])
+% 
+%     if expcond == 1
+%     p1 =  plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','r','MarkerSize',14)
+% %          legend(p1,'Trunk Restrained- Table','FontSize',16)
+% 
+%     end
+% 
+% 
+%     if expcond == 2
+%        p2= plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
+% %         legend(p2,'Trunk Restrained- 25%','FontSize',16)
+% 
+%     end
+% 
+% 
+%     if expcond == 3
+%         plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
+% %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
+% 
+%     end
+% 
+%     if expcond == 4
+%         plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','b','MarkerSize',14)
+% %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
+% 
+%     end
+% 
+%     if expcond == 5
+%         plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
+% %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
+% 
+%     end
+% 
+%     if expcond == 6
+%         plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
+% %         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
+% 
+%     end
+% 
+% %     pause
+% 
+%     set(gca,'fontsize',16)
+%    
 
-    if expcond == 1
-    p1 =  plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','r','MarkerSize',14)
-%          legend(p1,'Trunk Restrained- Table','FontSize',16)
 
-    end
-
-
-    if expcond == 2
-       p2= plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
-%         legend(p2,'Trunk Restrained- 25%','FontSize',16)
-
-    end
-
-
-    if expcond == 3
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0.6350 0.0780 0.1840],'MarkerSize',14)
-%         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
-
-    end
-
-    if expcond == 4
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor','b','MarkerSize',14)
-%         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
-
-    end
-
-    if expcond == 5
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
-%         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
-
-    end
-
-    if expcond == 6
-        plot(maxreach_current_trial(i)/armlength*100,ElbAng_current_trial(i),"hexagram",'Color','k','MarkerFaceColor',[0 0.4470 0.7410],'MarkerSize',14)
-%         legend('Trunk Restrained- Table','Trunk Restrained- 25%','FontSize',16)
-
-    end
-
-%     pause
-
-    set(gca,'fontsize',16)
-    
 end
+
+
+ElbAng_current_trial
 
 
 
