@@ -3,7 +3,7 @@
 % Function to create Scapular CS based on Kacey's Definition. 
 % For the right arm, x is to the right, z is up and y is forwards. Using
 % the Bls of the scapula in the marker cs, create a cs for the scapula in
-% the marker frame. For this definition the origin is centered at AC. 
+% the marker frame. For this definition the origin is centered at AA. 
 
 % Inputs: 
 % - BLs: full bonylandmark data from participant's setup file. These are
@@ -19,7 +19,7 @@
 
 % K. Suvada - 2022.
 
-function ScapCoord = Asscap_K(BLs,hand,flag)
+function ScapCoord = Asscap_K_OriginAA(BLs,hand,flag)
 
 % Scapular BLS in Scapula Marker Frame
 blmat= BLs{1,2}; 
@@ -40,8 +40,8 @@ ac = AC(1:3);
 %% Creating Scapular CS -Kacey's Definition
 
 
-xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
-yhulp = cross((AC(1:3)-AI(1:3)),xs);
+xs = (AA(1:3)-TS(1:3)) / norm(AA(1:3)-TS(1:3));
+yhulp = cross((AA(1:3)-AI(1:3)),xs);
 ys = yhulp/norm(yhulp);
 zs = cross(xs,ys);
 
@@ -59,9 +59,9 @@ s = [xs,ys,zs];
 
 s = [s;0 0 0];
 
-Orig = AC(1:4);
+Orig = AA(1:4);
 
-%Scapular CS in Marker Frame with origin at AC
+%Scapular CS in Marker Frame with origin at AA
 ScapCoord = [s Orig];
 
 
@@ -84,7 +84,7 @@ ScapCoord = [s Orig];
 % end
 
 %% Plotting Scapular CS and Bls in Marker Frame
-if flag ==1
+%if flag ==1
   figure(29)
 %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
@@ -111,9 +111,9 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title('Scap CS Raw Data in Marker CS - For Kinematics','FontSize',16)  
+title('Scap CS Raw Data in Marker CS Origin AA- For Kinematics','FontSize',16)  
     
-end
+%end
 
 
 
