@@ -1,63 +1,55 @@
-%% Testing BonyLandmarks Redigitzation 2023 
-%% RTIS2001 - Right Arm (Paretic)
+%% RTIS2001 BL Redigitization - Right Arm (Paretic)
 
 % Participant had incorrect Scapular AC JOINT Digitized. Needed to Bring
 % them back to redigitize. 
 
-blmat_Scap2023 =bl{1,2}';
-blmat_Scap2023 = blmat_Scap2023(1:4,:);
+
+% Run 'Asscap_K_OriginAA' for both 2023 and 2021 data. 
 
 
+%Creating Variable for Bls in the Shoulder Marker CS
+blmat =bl{1,2}';
+blmat = blmat(1:4,:);
+BLs2021 = blmat(1:4,:);
+BLs2023 = blmat(1:4,:);
+
+%Creating Variable for Scapular CS in Marker CS
+ScapCoord_2021 = ScapCoord;
+ScapCoord_2023 = ScapCoord;
+
+
+BLs_Marker_2021 = BLs2021;
+%% Computing BLs in Bone CS (2023 data)
+BLs_Bone_2023 = inv(ScapCoord_2023)* BLs2023;
+
+%% Computing AC in Original Marker Frame (2021 data)
+
+AC_Marker_2021 = ScapCoord_2021* BLs_Bone_2023(:,1);
+
+%% Plotting BLs from 2021 in Marker CS (from 2021) 
 BlNames = ["AC","AA","TS","AI","PC"];
-BLs_marker = blmat_Scap2023;
 
-% Creating Bl variables
-ACidx = find(BlNames=='AC');
-[AC,AA,TS,AI,PC]=deal(blmat_Scap2023(:,ACidx),blmat_Scap2023(:,ACidx+1),blmat_Scap2023(:,ACidx+2),blmat_Scap2023(:,ACidx+3),blmat_Scap2023(:,ACidx+4));
-
-aa = AA(1:3);
-pc= PC(1:3);
-ai = AI(1:3);
-ts = TS(1:3);
-ac = AC(1:3);
-
-%% Creating Scapular CS -Kacey's Definition with Origin at AA
-
-
-xs = (AA(1:3)-TS(1:3)) / norm(AA(1:3)-TS(1:3));
-yhulp = cross((AA(1:3)-AI(1:3)),xs);
-ys = yhulp/norm(yhulp);
-zs = cross(xs,ys);
-
-s = [xs,ys,zs];
-
-s = [s;0 0 0];
-
-Orig = AA(1:4);
-
-%Scapular CS in Marker Frame with origin at AA (for Redigitization) 
-ScapCoord = [s Orig];
-
-
-%% Plotting BonyLandmarks in Marker CS
   figure(29)
-%Plotting the BonyLandmarks and their Labels
+
+  %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
-    plot3(BLs_marker(1,i),BLs_marker(2,i),BLs_marker(3,i),'-o','Color','b','MarkerSize',10,...
+    plot3(BLs_Marker_2021(1,i),BLs_Marker_2021(2,i),BLs_Marker_2021(3,i),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
-    text(BLs_marker(1,i),BLs_marker(2,i),BLs_marker(3,i),BlNames(i),'FontSize',14)
+    text(BLs_Marker_2021(1,i),BLs_Marker_2021(2,i),BLs_Marker_2021(3,i),BlNames(i),'FontSize',14)
 end
 
-%Plotting the Scapular Polygon
-plot3([BLs_marker(1,4) BLs_marker(1,3)],[BLs_marker(2,4) BLs_marker(2,3)],[BLs_marker(3,4) BLs_marker(3,3)],'r') % line between AI and TS
-plot3([BLs_marker(1,4) BLs_marker(1,2)],[BLs_marker(2,4) BLs_marker(2,2)],[BLs_marker(3,4) BLs_marker(3,2)],'r') % line between AI and AA
-plot3([BLs_marker(1,3) BLs_marker(1,1)],[BLs_marker(2,3) BLs_marker(2,1)],[BLs_marker(3,3) BLs_marker(3,1)],'r') % line between TS and AC
-plot3([BLs_marker(1,1) BLs_marker(1,2)],[BLs_marker(2,1) BLs_marker(2,2)],[BLs_marker(3,1) BLs_marker(3,2)],'r') % line between AC and AA
+% Plotting New AC from 2023 
+ plot3(AC_Marker_2021(1),AC_Marker_2021(2),AC_Marker_2021(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(AC_Marker_2021(1),AC_Marker_2021(2),AC_Marker_2021(3),BlNames(1),'FontSize',14)
 
-% Plotting Desired Scapular CS
-quiver3(ScapCoord([1 1 1],4)',ScapCoord([2 2 2],4)',ScapCoord([3 3 3],4)',50*ScapCoord(1,1:3),50*ScapCoord(2,1:3),50*ScapCoord(3,1:3))
-text(ScapCoord(1,4)+50*ScapCoord(1,1:3),ScapCoord(2,4)+50*ScapCoord(2,1:3),ScapCoord(3,4)+50*ScapCoord(3,1:3),{'X_S','Y_S','Z_S'})
+%Plotting the Scapular Polygon
+plot3([BLs_Marker_2021(1,4) BLs_Marker_2021(1,3)],[BLs_Marker_2021(2,4) BLs_Marker_2021(2,3)],[BLs_Marker_2021(3,4) BLs_Marker_2021(3,3)],'r') % line between AI and TS
+plot3([BLs_Marker_2021(1,4) BLs_Marker_2021(1,2)],[BLs_Marker_2021(2,4) BLs_Marker_2021(2,2)],[BLs_Marker_2021(3,4) BLs_Marker_2021(3,2)],'r') % line between AI and AA
+  plot3([BLs_Marker_2021(1,3) AC_Marker_2021(1,1)],[BLs_Marker_2021(2,3) AC_Marker_2021(2,1)],[BLs_Marker_2021(3,3) AC_Marker_2021(3,1)],'r') % line between TS and AC
+  plot3([AC_Marker_2021(1,1) BLs_Marker_2021(1,2)],[AC_Marker_2021(2,1) BLs_Marker_2021(2,2)],[AC_Marker_2021(3,1) BLs_Marker_2021(3,2)],'r') % line between AC and AA
+
 
 plot3(0,0,0,'o')
 text(0,0,0,'Marker','FontSize',14)
@@ -66,5 +58,5 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title('Scap CS Raw Data in Marker CS- Origin at AC','FontSize',16)  
-    
+title('Scapular BLs in Shoulder Marker CS (From 2021 Data Collection)','FontSize',16)  
+

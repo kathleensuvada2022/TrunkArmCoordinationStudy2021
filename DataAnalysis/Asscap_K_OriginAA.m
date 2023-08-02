@@ -14,15 +14,18 @@
 
 
 % Outputs:
-% - ScapCS: created CS of the scapula for the participant. This is in
-% MARKER frame. 
+% - ScapCS: created CS of the scapula for the participant. This is in the
+% Scapular MARKER frame. 
 
-% K. Suvada - 2022.
 
-function ScapCoord = Asscap_K_OriginAA(BLs,hand,flag)
+% K. Suvada - 2023. NOTE: This was utilized for RTIS2001's Right Arm
+% Analysis since the AC joint was digitized incorrectly. 
+
+function ScapCoord = Asscap_K_OriginAA(bl)
 
 % Scapular BLS in Scapula Marker Frame
-blmat= BLs{1,2}; 
+blmat =bl{1,2}';
+blmat = blmat(1:4,:);
 
 BlNames = ["AC","AA","TS","AI","PC"];
 BLs_marker = blmat;
@@ -32,30 +35,20 @@ ACidx = find(BlNames=='AC');
 [AC,AA,TS,AI,PC]=deal(blmat(:,ACidx),blmat(:,ACidx+1),blmat(:,ACidx+2),blmat(:,ACidx+3),blmat(:,ACidx+4));
 
 aa = AA(1:3);
-pc= PC(1:3);
+pc = PC(1:3);
 ai = AI(1:3);
 ts = TS(1:3);
 ac = AC(1:3);
 
 %% Creating Scapular CS -Kacey's Definition
 
-
+% Centered at AA
 xs = (AA(1:3)-TS(1:3)) / norm(AA(1:3)-TS(1:3));
 yhulp = cross((AA(1:3)-AI(1:3)),xs);
 ys = yhulp/norm(yhulp);
 zs = cross(xs,ys);
 
 s = [xs,ys,zs];
-
-
-% if strcmp(hand,'Left')
-% xs = -xs;
-% ys = -ys;
-% zs = cross(xs,ys);
-% s = [xs,ys,zs];
-% 
-% end
-
 
 s = [s;0 0 0];
 
@@ -65,28 +58,10 @@ Orig = AA(1:4);
 ScapCoord = [s Orig];
 
 
-% else 
-%     
-%     
-% xs = (AC(1:3)-TS(1:3)) / norm(AC(1:3)-TS(1:3));
-% yhulp = cross(xs,(AC(1:3)-AI(1:3)));
-% ys = yhulp/norm(yhulp);
-% zs = cross(ys,xs);
-% s = [xs,ys,zs];
-% 
-% s = [s;0 0 0];
-% 
-% Orig = AC(1:4);
-% 
-% %Scapular CS in Marker Frame with origin at AC
-% ScapCoord = [s Orig];
-% 
-% end
-
 %% Plotting Scapular CS and Bls in Marker Frame
-%if flag ==1
   figure(29)
-%Plotting the BonyLandmarks and their Labels
+
+  %Plotting the BonyLandmarks and their Labels
 for i = 1:length(BlNames)
     plot3(BLs_marker(1,i),BLs_marker(2,i),BLs_marker(3,i),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
@@ -111,10 +86,7 @@ xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
 
-title('Scap CS Raw Data in Marker CS Origin AA- For Kinematics','FontSize',16)  
-    
-%end
-
+title('Scap CS and Respective BLs in Shoulder Marker CS with Origin at AA','FontSize',16)  
 
 
 
