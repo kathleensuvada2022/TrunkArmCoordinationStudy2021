@@ -1570,7 +1570,36 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
+%% MISC Plotting of Trajectories 2023 - in Global CS
+figure() 
+% BLS of the Humerus
+plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
+hold on
+plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
+plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
+plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
+plot(xghest(:,1),xghest(:,2),'Linewidth',2) % Estimated GH in GCS
 
+% BLs of the Forearm
+plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
+plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
+plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
+plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
+
+
+plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
+plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
+plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
+
+
+axis equal
+legend('Humerus Marker','EM','EL','Digitized GH','Estimated GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+title('Overhead View of Reach- GCS' ,'FontSize',16)
+xlabel('X position (mm)','FontSize',14)
+ylabel('Y position (mm)','FontSize',14)
+
+
+close all
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -1658,7 +1687,6 @@ for i=1: length(mtrials)
 
 % pause
 
-%% Plotting EM and EL BLs July 2023 - Verification for RTIS2010
 figure() 
 % BLS of the Humerus
 plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
@@ -1685,6 +1713,7 @@ title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
+close all
 
 %%
 % % Plotting TRUNK CS XY plane in GCS
@@ -5307,15 +5336,15 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
     % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
     
-%% July 2023- Saving Angle Outcome Measures Per Trial ACROSS TIME
+%% July 2023- Saving Shoudler Flexion/Extension and Elbow Flexion/Extension Per Trial ACROSS TIME
+
 if i == 1
 ElbAng_current_trial = zeros(length(mtrials),length(ELB_ANG));
+Hum_Ang_T_current_trial = zeros(length(mtrials),length(Hum_Ang_T));
 end
 
-% Timing Issue BC length of all the Trials not the same- however reach is
-% done so just cut at the length of the first trial
-% 
 ElbAng_current_trial(i,:) = 180-ELB_ANG_MAT(1,1:length(ElbAng_current_trial));
+Hum_Ang_T_current_trial(i,:) = Hum_Ang_T_current_trial(1,1:length(Hum_Ang_T_current_trial));
 
 
 
@@ -5440,10 +5469,17 @@ ElbAng_current_trial(i,:) = 180-ELB_ANG_MAT(1,1:length(ElbAng_current_trial));
 end
 
 
-ElbAng_current_trial
+
+%%  July 2023- Angle Angle Plot
+
+%Elbow Angle Saved Over Time for Each Trial 
+ElbAng_current_trial; % N Rows (Num of Trial) X M Columns (Length of Trial)
+
+%Shoulder Flexion/Extension Angle Over Time for Each Trial
+Hum_Ang_T_current_trial; % N Rows (Num of Trial) X M Columns (Length of Trial)
 
 
-
+%%
 %   DataMatrix = AllData;
 % save FullDataMatrix.mat DataMatrix
 
