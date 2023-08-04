@@ -3497,12 +3497,11 @@ HumAng_G= zeros(3,length(t));
 Trunk_ANG_Ti = zeros(3,length(t)); 
 Trunk_ANG_G = zeros(3,length(t));
 ELB_ANG = zeros(3,length(t)); % rows are angles  and cols are frames
-
+ELB_ANG_MAT = zeros(3,length(t)); % rows are angles  and cols are frames
 
 
 for k = 1:length(t)
 [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(hand,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
-
 end
 
 
@@ -3963,17 +3962,17 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Trial by Trial Plots
-% figure(60)
-% plot(Hum_Ang_T(1,:),180-ELB_ANG_MAT(1,:),'Linewidth',2) %Elbow Angle vs Pole Angle
-% hold on
-% plot(Hum_Ang_T(1,idx(1)),180-ELB_ANG_MAT(1,idx(1)),'o','MarkerSize',24,'MarkerFaceColor','g')
-% plot(Hum_Ang_T(1,idx(3)),180-ELB_ANG_MAT(1,idx(3)),'o','MarkerSize',24,'MarkerFaceColor','r')
-% axis equal
-% title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
-% ylabel('Elbow Extension Angle (deg)','FontSize',26)
-% xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
-% 
-
+ figure(60)
+plot(Hum_Ang_T(1,1:length(t)),180-ELB_ANG_MAT(1,1:length(t)),'Linewidth',2) %Elbow Angle vs Pole Angle
+hold on
+ plot(Hum_Ang_T(1,idx(1)),180-ELB_ANG_MAT(1,idx(1)),'o','MarkerSize',24,'MarkerFaceColor','g')
+plot(Hum_Ang_T(1,idx(3)),180-ELB_ANG_MAT(1,idx(3)),'o','MarkerSize',24,'MarkerFaceColor','r')
+axis equal
+title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
+ylabel('Elbow Extension Angle (deg)','FontSize',26)
+xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
+% % 
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4291,7 +4290,7 @@ xhand_Hum = xhand_Hum';
 %     
 
     
- %% OUTCOME MEASURES   
+ %% Angles Final-Initial 
 % Computation of Angles - difference of start and ending angle 
 % 
 %  ElbAng = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
@@ -5343,8 +5342,9 @@ ElbAng_current_trial = zeros(length(mtrials),length(ELB_ANG));
 Hum_Ang_T_current_trial = zeros(length(mtrials),length(Hum_Ang_T));
 end
 
-ElbAng_current_trial(i,:) = 180-ELB_ANG_MAT(1,1:length(ElbAng_current_trial));
-Hum_Ang_T_current_trial(i,:) = Hum_Ang_T_current_trial(1,1:length(Hum_Ang_T_current_trial));
+% Saving Each Trial Over Time
+ElbAng_current_trial(i,1:length(t)) = 180-ELB_ANG_MAT(1,1:length(t));
+Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 
