@@ -63,6 +63,8 @@ sh_Z_ex_current_trial =zeros(ntrials,1);
 
 trex_current_trial=zeros(ntrials,1);
 
+% Start and End Indices Saved for Every Trial 
+idx_alltrials = zeros(length(mtrials),4);
 
 % Angles
 % ElbAng_current_trial = zeros(ntrials,1);
@@ -2344,7 +2346,10 @@ close all
     
     [dist,vel,idx,timestart, timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
-    
+    % Saving idx variable for each trial 
+
+    idx_alltrials(i,:) = idx;
+
     %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
     
     %Saves file for each trial
@@ -3357,7 +3362,7 @@ ang3
 
 % pause
 %%
-  % Now have recreated t for resampled data
+  % Now have replace t with t2 vector so it is the resampled t vector
     t = t2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3961,7 +3966,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Trial by Trial Plots
+% Trial by Trial Elbow Flexion/Extension VS Shoulder Flexion Extension
  figure(60)
 plot(Hum_Ang_T(1,1:length(t)),180-ELB_ANG_MAT(1,1:length(t)),'Linewidth',2) %Elbow Angle vs Pole Angle
 hold on
@@ -5470,14 +5475,52 @@ end
 
 
 
-%%  July 2023- Angle Angle Plot
+%%  Summer 2023- Angle Angle Plot
 
-%Elbow Angle Saved Over Time for Each Trial 
+%Elbow Angle Saved Over Time for Each Trial - Already subtracted 180
 ElbAng_current_trial; % N Rows (Num of Trial) X M Columns (Length of Trial)
 
 %Shoulder Flexion/Extension Angle Over Time for Each Trial
 Hum_Ang_T_current_trial; % N Rows (Num of Trial) X M Columns (Length of Trial)
 
+% Matrix with start and end indicies for all trials 
+idx_alltrials; % N rows (per trial) X 4 - only looking at idx(1) reach start and idx(3) reach end
+
+for i = 1:length(mtrials)
+    figure(62)
+    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
+
+    if i==1
+        hold on
+    end
+
+    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1)),ElbAng_current_trial(i,idx_alltrials(i,1)),'o','MarkerSize',24,'MarkerFaceColor','g') % Start Marker for a given trial
+    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,3)),'o','MarkerSize',24,'MarkerFaceColor','r') % Start Marker for a given trial
+
+    axis equal
+    title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
+    ylabel('Elbow Extension Angle (deg)','FontSize',26)
+    xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
+end
+
+
+%% Converting Shoulder Flexion/Extension and Elbow Flexion/Extension to Polar (Trial by Trial) - August 2023
+
+%cart2pol(x,y) --> cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3))
+pause
+
+% Creating Matrix to Find Length of each Trial
+Length_reach = idx_alltrials(:,3)-idx_alltrials(:,1);
+
+
+[maxlength_Reach,idx_max_length] = max(Length_reach);
+
+theta = zeros(length(mtrials),maxlength_Reach);
+rho = zeros(length(mtrials),maxlength_Reach);
+
+for i = 1:length(mtrials)
+[theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
+end
 
 %%
 %   DataMatrix = AllData;
