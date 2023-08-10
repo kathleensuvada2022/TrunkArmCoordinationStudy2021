@@ -5537,22 +5537,23 @@ std_rho = NaN*ones(length(min_rho:max_rho),1);
 Avg_Theta= NaN*ones(length(min_rho:max_rho),1);
 std_Theta = NaN*ones(length(min_rho:max_rho),1);
 
-for j =1:length(min_rho:max_rho) %bins
+rhobins = min_rho:max_rho;
+
+for j =1:length(rhobins) 
     
-    for i = min_rho:max_rho
-        indices = rho>=i & rho< i+1;
+        indices = rho>=rhobins(i) & rho< rhobins(i+1);
         
-        Binned_rho = rho(indices);
-        Binned_Theta = Theta(indices);
+        Binned_rho = rho(indices); %values of rho in given bin
+        Binned_theta = theta(indices); %values of theta in a given bin
 
         % Mean and STD Rho
         Avg_rho(j) = nanmean(Binned_rho); %Average per bin
         std_rho(j) = nanstd(Binned_rho); %STD per bin
 
         % Mean and STD Theta
-        Avg_Theta(j) = nanmean(Binned_Theta); %Average per bin
-        std_Theta(j) = nanstd(Binned_Theta); %STD per bin
-    end
+        Avg_Theta(j) = nanmean(Binned_theta); %Average per bin
+        std_Theta(j) = nanstd(Binned_theta); %STD per bin
+    
 end
 
 %%
