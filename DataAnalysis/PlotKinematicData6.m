@@ -5515,12 +5515,44 @@ Length_reach = idx_alltrials(:,3)-idx_alltrials(:,1);
 
 [maxlength_Reach,idx_max_length] = max(Length_reach);
 
+maxlength_Reach = maxlength_Reach+1;
+
 % FIX NAN - and flip matrix trial would be each column 
-theta = nan(length(mtrials),maxlength_Reach);
-rho = nan(length(mtrials),maxlength_Reach);
+theta = NaN*ones(length(mtrials),maxlength_Reach);
+rho = NaN*ones(length(mtrials),maxlength_Reach);
 
 for i = 1:length(mtrials)
 [theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
+end
+
+%% Binning Polar Coords Data
+
+%Binning by Rho
+min_rho = ceil(min(min(rho)));
+max_rho = ceil(max(max(rho)));
+
+Avg_rho = NaN*ones(length(min_rho:max_rho),1);
+std_rho = NaN*ones(length(min_rho:max_rho),1);
+
+Avg_Theta= NaN*ones(length(min_rho:max_rho),1);
+std_Theta = NaN*ones(length(min_rho:max_rho),1);
+
+for j =1:length(min_rho:max_rho) %bins
+    
+    for i = min_rho:max_rho
+        indices = rho>=i & rho< i+1;
+        
+        Binned_rho = rho(indices);
+        Binned_Theta = Theta(indices);
+
+        % Mean and STD Rho
+        Avg_rho(j) = nanmean(Binned_rho); %Average per bin
+        std_rho(j) = nanstd(Binned_rho); %STD per bin
+
+        % Mean and STD Theta
+        Avg_Theta(j) = nanmean(Binned_Theta); %Average per bin
+        std_Theta(j) = nanstd(Binned_Theta); %STD per bin
+    end
 end
 
 %%
