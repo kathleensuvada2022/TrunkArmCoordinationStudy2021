@@ -5515,8 +5515,9 @@ Length_reach = idx_alltrials(:,3)-idx_alltrials(:,1);
 
 [maxlength_Reach,idx_max_length] = max(Length_reach);
 
-theta = zeros(length(mtrials),maxlength_Reach);
-rho = zeros(length(mtrials),maxlength_Reach);
+% FIX NAN - and flip matrix trial would be each column 
+theta = nan(length(mtrials),maxlength_Reach);
+rho = nan(length(mtrials),maxlength_Reach);
 
 for i = 1:length(mtrials)
 [theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
