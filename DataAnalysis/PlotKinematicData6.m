@@ -5577,10 +5577,17 @@ ElbAng_STD_PerBin = y_std_per_bin;
 
 %% Plotting the Average and STD Binned Trace for all trials in given Condition
 figure()
+
+% Plotting Average Traces and all Trials
 for m = 1:length(mtrials)
 plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
 hold on
 end
+
+% Plotting Average Trace and Boundaries
+figure()
+
+
 %%
 %   DataMatrix = AllData;
 % save FullDataMatrix.mat DataMatrix
