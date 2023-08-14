@@ -5539,9 +5539,9 @@ std_Theta = NaN*ones(length(min_rho:max_rho),1);
 
 rhobins = min_rho:max_rho;
 
-for j =1:length(rhobins) 
+for j =1:length(rhobins)-1
     
-        indices = rho>=rhobins(i) & rho< rhobins(i+1);
+        indices = rho>=rhobins(j) & rho< rhobins(j+1);
         
         Binned_rho = rho(indices); %values of rho in given bin
         Binned_theta = theta(indices); %values of theta in a given bin
@@ -5556,6 +5556,31 @@ for j =1:length(rhobins)
     
 end
 
+%% Converting Back to Cartesian
+
+
+% Converting the average rho and theta per bin back to cartesian coords
+
+% X is the Humeral angle (Shoulder Flexion) Y is Elbow Extension Angle
+[x_avg_per_bin,y_avg_per_bin]= pol2cart(Avg_Theta,Avg_rho); 
+
+
+% Converting the STD of rho and theta per bin back to cartesian coords. 
+[x_std_per_bin,y_std_per_bin]= pol2cart(std_Theta,std_rho); 
+
+
+HumAng_Avg_PerBin = x_avg_per_bin;
+HumAng_STD_PerBin = x_std_per_bin;
+
+ElbAng_Avg_PerBin = y_avg_per_bin;
+ElbAng_STD_PerBin = y_std_per_bin;
+
+%% Plotting the Average and STD Binned Trace for all trials in given Condition
+figure()
+for m = 1:length(mtrials)
+plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
+hold on
+end
 %%
 %   DataMatrix = AllData;
 % save FullDataMatrix.mat DataMatrix
