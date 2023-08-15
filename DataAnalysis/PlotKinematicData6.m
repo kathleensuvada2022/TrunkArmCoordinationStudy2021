@@ -5488,7 +5488,7 @@ idx_alltrials; % N rows (per trial) X 4 - only looking at idx(1) reach start and
 
 for i = 1:length(mtrials)
     figure(62)
-    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
+    p1  = plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
 
     if i==1
         hold on
@@ -5576,17 +5576,34 @@ ElbAng_Avg_PerBin = y_avg_per_bin;
 ElbAng_STD_PerBin = y_std_per_bin;
 
 %% Plotting the Average and STD Binned Trace for all trials in given Condition
-figure()
 
 % Plotting Average Traces and all Trials
-for m = 1:length(mtrials)
-plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
+% figure()
+% for m = 1:length(mtrials)
+% plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
+% hold on
+% end
+
+%% Plotting Average Trace and Boundaries
+
+figure(65) %Plot With Traces From All Trials
+
+%Binned Average Data
+plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,'Linewidth',3.5,'Color','g')
 hold on
-end
+%Upper Bound - For trial 1 % size 70 (bins) x 64 (idx1:idx3) 
+%plot(HumAng_Avg_PerBin+Hum_Ang_T_current_trial(1,idx_alltrials(1,1):idx_alltrials(1,3)),ElbAng_Avg_PerBin+ElbAng_current_trial(1,idx_alltrials(1,1):idx_alltrials(1,3)),'Linewidth',2,'Color','b')
+plot(HumAng_Avg_PerBin+Hum_Ang_T_current_trial(1,idx_alltrials(1,1)),ElbAng_Avg_PerBin+ElbAng_current_trial(1,idx_alltrials(1,1)),'Linewidth',3,'Color','b')
 
-% Plotting Average Trace and Boundaries
-figure()
+%Lower Bound - For trial 1
+% plot(HumAng_Avg_PerBin-Hum_Ang_T_current_trial(1,idx_alltrials(1,1):idx_alltrials(1,3)),ElbAng_Avg_PerBin-ElbAng_current_trial(1,idx_alltrials(1,1):idx_alltrials(1,3)),'Linewidth',2,'Color','b')
+plot(HumAng_Avg_PerBin-Hum_Ang_T_current_trial(1,idx_alltrials(1,1)),ElbAng_Avg_PerBin-ElbAng_current_trial(1,idx_alltrials(1,1)),'Linewidth',3,'Color','b')
 
+xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+axis equal
+legend('Average Trace','Bounds','FontSize',28)
 
 %%
 %   DataMatrix = AllData;
