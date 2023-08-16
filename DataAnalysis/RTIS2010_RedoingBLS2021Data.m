@@ -71,16 +71,17 @@ end
 idx=find(~isnan(Tftom(1,1,10:20)) & ~isnan(Thtom(1,1,10:20)));
 idx = idx(1)+9; %finding where both NOT NANs
 
-HT_Hum2Fore = inv(Tftom(:,:,idx))*Thtom(:,:,idx); % Hum Marker in Forearm Marker CS
+HT_Hum2Fore = inv(Tftom(:,:,idx))*Thtom(:,:,idx); % Hum to Fore Marker 
+HT_Fore2Hum = inv(Thtom(:,:,idx))*Tftom(:,:,idx); % Hum to Fore Marker 
 
 % Computing EM/EL in Forearm CS
-EM_ForearmCS = HT_Hum2Fore* EM;
-EL_ForearmCS = HT_Hum2Fore* EL;
+%EM_ForearmCS = HT_Hum2Fore* EM;
+%EL_ForearmCS = HT_Hum2Fore* EL;
 
 % Redefining EM and EL to be the ones in Forearm CS
-
-EM = EM_ForearmCS;
-EL = EL_ForearmCS;
+% 
+% EM = EM_ForearmCS;
+% EL = EL_ForearmCS;
 %% Creating Forearm CS in Forearm Marker Frame
 
 
@@ -103,22 +104,22 @@ f = [f;0 0 0];
 org_fore = [OL(1:3) ;1]; %centering at OL bc EM and EL incorrect in original CS
 
 %Forearm Coordinate System in Forearm Marker CS
-ForeCS = [f org_fore]; % This is HT from F2 to MF2 (Forearm Bone CS to Forearm Marker CS Day 2)
+ForeCS = [f org_fore]; % This is HT from F1 to MF1 (Forearm Bone CS to Forearm Marker CS Day 1)
 
 %% Plotting Forearm CS with Humerus and Forearm BLs in Forearm Marker Frame
 
-  figure(42)
+  figure(44)
 %Plotting the BonyLandmarks and their Labels
 
-%     plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     hold on
-%     text(EL(1),EL(2),EL(3),'EL','FontSize',14)
-% 
-% 
-%     plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(EM(1),EM(2),EM(3),'EM','FontSize',14)
+    plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL(1),EL(2),EL(3),'EL','FontSize',14)
+
+
+    plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM(1),EM(2),EM(3),'EM','FontSize',14)
 
     plot3(US(1),US(2),US(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
@@ -133,12 +134,15 @@ ForeCS = [f org_fore]; % This is HT from F2 to MF2 (Forearm Bone CS to Forearm M
         'MarkerFaceColor','#D9FFFF')
     text(OL(1),OL(2),OL(3),'OL','FontSize',14)
 
+    plot3(MCP3(1),MCP3(2),MCP3(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(MCP3(1),MCP3(2),MCP3(3),'MCP3','FontSize',14)
 
-% Plotting FORE CS at given Frame
-quiver3(ForeCS ([1 1 1],4)',ForeCS ([2 2 2],4)',ForeCS ([3 3 3],4)',50*ForeCS (1,1:3),50*ForeCS (2,1:3),50*ForeCS (3,1:3))
-text(ForeCS (1,4)+50*ForeCS (1,1:3),ForeCS (2,4)+50*ForeCS (2,1:3),ForeCS (3,4)+50*ForeCS (3,1:3),{'X_F','Y_F','Z_F'})
+% % Plotting FORE CS at given Frame
+% quiver3(ForeCS ([1 1 1],4)',ForeCS ([2 2 2],4)',ForeCS ([3 3 3],4)',50*ForeCS (1,1:3),50*ForeCS (2,1:3),50*ForeCS (3,1:3))
+% text(ForeCS (1,4)+50*ForeCS (1,1:3),ForeCS (2,4)+50*ForeCS (2,1:3),ForeCS (3,4)+50*ForeCS (3,1:3),{'X_F','Y_F','Z_F'})
 
-title('Forearm & Humerus BLs with Forearm Bone CS in Forearm Marker Frame 2021','FontSize',24)
+title('BLs with New EM and EL in Forearm Marker Frame 2021','FontSize',24)
 
 % line between styloids
 plot3([RS(1) US(1)],[RS(2) US(2)],[RS(3) US(3)])
@@ -147,3 +151,8 @@ axis equal
 xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
+%% Getting EM/EL in Humerus Day 1 - via trial data
+
+
+EM_HumerusDay1 = HT_Fore2Hum*EMDay1; 
+EL_HumerusDay1 = HT_Fore2Hum*ElDay1;

@@ -15,16 +15,17 @@ load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Da
 
 % Loading in Forearm BLS
 Fore_Bls_ForeMarker = bl{1,4} ;
+
 RS = Fore_Bls_ForeMarker(1,1:4)';
 US = Fore_Bls_ForeMarker(2,1:4)';
 OL = Fore_Bls_ForeMarker(3,1:4)';
 
-% Loading in EM/EL in Humerus Marker CS
-Hum_Bls_HumMarker = bl{1,3} ;
+%% Loading in EM/EL in Forearm Marker CS
+Hum_Bls_HumMarker = bl{1,4} ;
 EM = Hum_Bls_HumMarker(1,1:4)';
 EL = Hum_Bls_HumMarker(2,1:4)';
-GH_Dig = Hum_Bls_HumMarker(3,1:4)';
-%% Computing EM/EL in Forearm Coords - Need for Creating Forearm CS-Only Use if Centering at EM/EL Midpoint
+
+%% Computing EM/EL in Forearm Coords 
 
 % Setup File
 partid = 'RTIS2010';
@@ -41,7 +42,7 @@ x(x==0)=NaN; %h Replace zeros with NaN
 x = x(:,3:end); %omitting time and the camera series number
 [nimag,nmark]=size(x);
 nmark=(nmark)/8; 
-%% Only Use if Centering at EM/EL Midpoint
+
 t = (x(:,2)-x(1,2))/89; 
 
 [ridx,cidx]=find(x==setup.markerid(4));
@@ -83,7 +84,6 @@ EM = EM_ForearmCS;
 EL = EL_ForearmCS;
 %% Creating Forearm CS in Forearm Marker Frame
 
-
 H_mid=(RS(1:3)+US(1:3))/2; %midpnt between RS and US
 % H_mid_2=(EL(1:3)+EM(1:3))/2; % midpnt between EM and EL
 
@@ -110,15 +110,15 @@ ForeCS = [f org_fore]; % This is HT from F2 to MF2 (Forearm Bone CS to Forearm M
   figure(44)
 %Plotting the BonyLandmarks and their Labels
 
-%     plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     hold on
-%     text(EL(1),EL(2),EL(3),'EL','FontSize',14)
-% 
-% 
-%     plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(EM(1),EM(2),EM(3),'EM','FontSize',14)
+    plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL(1),EL(2),EL(3),'EL','FontSize',14)
+
+
+    plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM(1),EM(2),EM(3),'EM','FontSize',14)
 
     plot3(US(1),US(2),US(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
@@ -148,3 +148,18 @@ axis equal
 xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
+
+
+
+%% Converting EM/EL from Day 2 to Day 1 Forearm Marker CS
+
+% Load in the BL file with the Hum BLs in Forearm Marker CS
+
+EMDay2 = HumBLsinForeMarkerCS{1,4}(1,1:4)' ;
+ELDay2 = HumBLsinForeMarkerCS{1,4}(2,1:4)';
+
+% Need FM2toFM1
+EMDay1 = FM2toFM1*EMDay2;
+ElDay1 = FM2toFM1*ELDay2;
+
+
