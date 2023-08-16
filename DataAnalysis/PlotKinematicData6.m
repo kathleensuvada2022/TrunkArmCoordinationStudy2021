@@ -2788,7 +2788,7 @@ close all
     
 Hum_CS_G = zeros(4,4,length(gh));
 
-% Creating Humerus CS with interpolated and resampled data
+% Creating Humerus CS 
 for h = 1:length(gh) 
 Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
 
