@@ -112,16 +112,16 @@ ForeCS = [f org_fore]; % This is HT from F2 to MF2 (Forearm Bone CS to Forearm M
 
   figure(44)
 %Plotting the BonyLandmarks and their Labels
-% 
-%     plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     hold on
-%     text(EL(1),EL(2),EL(3),'EL','FontSize',14)
-% 
-% 
-%     plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(EM(1),EM(2),EM(3),'EM','FontSize',14)
+
+    plot3(EL(1),EL(2),EL(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL(1),EL(2),EL(3),'EL','FontSize',14)
+
+
+    plot3(EM(1),EM(2),EM(3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM(1),EM(2),EM(3),'EM','FontSize',14)
 
     plot3(US(1),US(2),US(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
