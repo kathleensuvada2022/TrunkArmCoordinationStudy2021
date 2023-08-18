@@ -1579,7 +1579,6 @@ plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
 hold on
 plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
 plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
-plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
 plot(xghest(:,1),xghest(:,2),'Linewidth',2) % Estimated GH in GCS
 
 % BLs of the Forearm
@@ -1595,7 +1594,7 @@ plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
 
 
 axis equal
-legend('Humerus Marker','EM','EL','Digitized GH','Estimated GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
 title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
