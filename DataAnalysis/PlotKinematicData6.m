@@ -5487,7 +5487,7 @@ idx_alltrials; % N rows (per trial) X 4 - only looking at idx(1) reach start and
 
 for i = 1:length(mtrials)
     figure(62)
-    p1  = plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
+     p1  = plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
 
     if i==1
         hold on
