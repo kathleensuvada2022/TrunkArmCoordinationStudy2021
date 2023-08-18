@@ -11,7 +11,7 @@
 
 
 %% Loading in BLs from Redigitization 2023 in their original marker CS
-load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/RTIS2010_BLsRedoing/Right/BL_HUMANDFOREORIGINAL.mat')
+%load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/RTIS2010_BLsRedoing/Right/BL_HUMANDFOREORIGINAL.mat')
 
 % Loading in Forearm BLS
 Fore_Bls_ForeMarker = bl{1,4} ;
@@ -27,6 +27,7 @@ OL = Fore_Bls_ForeMarker(3,1:4)';
 Hum_Bls_HumMarker = bl{1,4} ;
 EM = Hum_Bls_HumMarker(1,1:4)';
 EL = Hum_Bls_HumMarker(2,1:4)';
+GH_DIG = Hum_Bls_HumMarker(3,1:4)';
 
 %% Computing EM/EL in Forearm Coords - Use the EM/EL digitized in Forearm CS don't convert
 

@@ -134,9 +134,9 @@ ForeCS = [f org_fore]; % This is HT from F1 to MF1 (Forearm Bone CS to Forearm M
         'MarkerFaceColor','#D9FFFF')
     text(OL(1),OL(2),OL(3),'OL','FontSize',14)
 
-%     plot3(MCP3(1),MCP3(2),MCP3(3),'-o','Color','b','MarkerSize',10,...
+%     plot3(GH(1),GH(2),GH(3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
-%     text(MCP3(1),MCP3(2),MCP3(3),'MCP3','FontSize',14)
+%     text(GH(1),GH(2),GH(3),'GH','FontSize',14)
 
 % % Plotting FORE CS at given Frame
 % quiver3(ForeCS ([1 1 1],4)',ForeCS ([2 2 2],4)',ForeCS ([3 3 3],4)',50*ForeCS (1,1:3),50*ForeCS (2,1:3),50*ForeCS (3,1:3))
@@ -151,8 +151,81 @@ axis equal
 xlabel('X axis (mm)')
 ylabel('Y axis (mm)')
 zlabel('Z axis (mm)')
-%% Getting EM/EL in Humerus Day 1 - via trial data
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Computing BLS in Day 1 Forearm Marker Frame 
+
+% USE MEEEE!!!!!! AUGUST 18th 2023!!!!!!!! FINAL STEPS ONCE HAVE ALL THE
+% BLS IN FOREARM MARKER FRAME !!!!!!!!!!
+
+% Need HTForearmBoneToForearmMarker * BLsinForearmBoneFrame
+
+% BLs in Forearm Marker Framefrom Day 1 
+
+EL_ForearmMarkerDay1 = HTFtoFMDay1*EL_ForeBone;
+EM_ForearmMarkerDay1 = HTFtoFMDay1*EM_ForeBone;
+OL_ForearmMarkerDay1 = HTFtoFMDay1*OLForeBone;
+RS_ForearmMarkerDay1 = HTFtoFMDay1*RSForeBone;
+US_ForearmMarkerDay1 = HTFtoFMDay1*USForeBone;
+GH_ForearmMarkerDay1 = HTFtoFMDay1*GH_Dig_ForeBone;
+
+%% Grabbing HTForeMarkerinGCS and HTHumMarkerinGCS from Day 1 Trial Data
+
+% Trial Data from Initial Data Collection Day
+
+load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/RTIS2010/Right/trial1.mat')
+
+% Setup File
+partid = 'RTIS2010';
+arm = 'Right';
+filepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',arm];
+load([filepath '/' partid,'_','setup']);
+
+x = data.met;
+
+x(x==0)=NaN; %h Replace zeros with NaN
+x = x(:,3:end); %omitting time and the camera series number
+[nimag,nmark]=size(x);
+nmark=(nmark)/8; 
+t = (x(:,2)-x(1,2))/89; 
+
+[ridx,cidx]=find(x==setup.markerid(4));
+fidx =cidx(1)+1;
+xfore=x(:,fidx:(fidx+6));  % forearm marker in GCS
+
+[ridx,cidx]=find(x==setup.markerid(3));
+aidx =cidx(1)+1;
+xhum=x(:,aidx:(aidx+6)); % humerus marker in GCS
+
+%Forearm
+Tftom = zeros(4,4,length(xfore));   
+for i=1:length(xfore)
+% forearm marker HT
+Tftom(:,:,i) = quat2tform(circshift(xfore(i,4:7),1,2)); 
+Tftom(1:3,4,i) = xfore(i,1:3)';  
+end
+
+%Humerus
+Thtom=zeros(4,4,length(xhum));
+for i =1:length(xhum)  
+Thtom(:,:,i)= quat2tform(circshift(xhum(i,4:7),1,2));      
+Thtom(1:3,4,i) = xhum(i,1:3)';    
+end
+
+%Finding when neither Forearm nor Humerus are NAN
+idx=find(~isnan(Tftom(1,1,10:20)) & ~isnan(Thtom(1,1,10:20)));
+idx = idx(1)+9; %finding where both NOT NANs
+
+HT_Fore2Hum = inv(Thtom(:,:,idx))*Tftom(:,:,idx); % Hum to Fore Marker Transformation
+
+%% Multiply HTFore2Hum by the BLs in Forearm MARKER CS to Get EM/EL/GH_DIG in Humerus Marker 
+
+EM_HumerusMarkerFrameDay1 = HT_Fore2Hum* EM_ForearmMarkerDay1;
+EL_HumerusMarkerFrameDay1 = HT_Fore2Hum* EL_ForearmMarkerDay1;
+GH_HumerusMarkerFrameDay1 = HT_Fore2Hum* GH_ForearmMarkerDay1;
 
 
-EM_HumerusDay1 = HT_Fore2Hum*EMDay1; 
-EL_HumerusDay1 = HT_Fore2Hum*ElDay1;
+
