@@ -23,7 +23,7 @@
 %- avgemg_start: average EMG at the start of the reach. (check this)
 
 
-% K.SUVADA 2019-2022
+% K.SUVADA 2020-2023
 %%
 function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
@@ -196,12 +196,12 @@ BLs = setup.bl; % BLs in marker CS now including GH estimate in LCS with Shoulde
 
 for i=1: length(mtrials)
     
-    % For mass data sheet saving data
+    % Mass DataMatrix 
     if i==1
         
         %    for mac
-           %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+             %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
@@ -1585,6 +1585,7 @@ plot(xghest(:,1),xghest(:,2),'Linewidth',2) % Estimated GH in GCS
 plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
 plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
 plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
+plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % OL in GCS
 plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
 
 
@@ -1594,7 +1595,7 @@ plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
 
 
 axis equal
-legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','OL','MCP3','Shoulder Marker','AA','AC','FontSize',14)
 title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
@@ -1688,33 +1689,33 @@ close all
 
 % pause
 
-figure() 
-% BLS of the Humerus
-plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
-hold on
-plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
-plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
-plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
-
-% BLs of the Forearm
-plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
-plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
-plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
-plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
-
-
-plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
-plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
-plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
-
-
-axis equal
-legend('Humerus Marker','EM','EL','Digitized GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
-title('Overhead View of Reach- GCS' ,'FontSize',16)
-xlabel('X position (mm)','FontSize',14)
-ylabel('Y position (mm)','FontSize',14)
-
-close all
+% figure() 
+% % BLS of the Humerus
+% plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
+% hold on
+% plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
+% plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
+% plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
+% 
+% % BLs of the Forearm
+% plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
+% plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
+% plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
+% plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
+% 
+% 
+% plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
+% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
+% plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
+% 
+% 
+% axis equal
+% legend('Humerus Marker','EM','EL','Digitized GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+% title('Overhead View of Reach- GCS' ,'FontSize',16)
+% xlabel('X position (mm)','FontSize',14)
+% ylabel('Y position (mm)','FontSize',14)
+% 
+% close all
 
 %%
 % % Plotting TRUNK CS XY plane in GCS
@@ -2284,7 +2285,7 @@ close all
     
     [theta_vel2,t2]=resampledata(theta_vel2,t,89,100);
     
-    % Resampling ACT3D Data - use time vector and the 89 HZ for metria. - not 50HZ
+    % Resampling ACT3D Data - use time vector and the 89 HZ for metria. 
     [Ypos_act,t2]=resampledata(Ypos_act, t,89,100);
     [Zpos_act,t2]=resampledata(Zpos_act, t,89,100);
     
@@ -2523,7 +2524,7 @@ close all
     %% Filling in Missing Data and Resampling of GH
     
     
-    % Adding in August 2022 with new GHr linear regression Model
+    % Adding in August 2022 with new GHr (Meskers)  linear regression Model
     % gh_est is from GetHandShoulderTrunkPosition8. Gh in global at all
     % points of trial.
     
@@ -3365,7 +3366,7 @@ ang3
     t = t2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%% Computing Rotation Matrices (jR and gR) %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Computing Rotation Matrices (jR and gR)-2023 %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Note: jR is used for computing angle relative to proximal segments and gR
@@ -3965,7 +3966,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Trial by Trial Elbow Flexion/Extension VS Shoulder Flexion Extension
+% Trial by Trial Elbow Flexion/Extension VS Shoulder Flexion/Extension
  figure(60)
 plot(Hum_Ang_T(1,1:length(t)),180-ELB_ANG_MAT(1,1:length(t)),'Linewidth',2) %Elbow Angle vs Pole Angle
 hold on
@@ -3976,7 +3977,7 @@ title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
 ylabel('Elbow Extension Angle (deg)','FontSize',26)
 xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
 % % 
- 
+% pause
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4090,41 +4091,47 @@ xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
     
     %% Plotting Kinematic Data to Verify before outcome measures
     %
-%     figure(9)
-%     %
-%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) % Computed Acromion
+
+    % In Global CS 
+  
+    figure()
+    %
+%     plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  Acromion 
 %     hold on
-%     %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) % Computed Acromion
-%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%     plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Computed Jug Notch
+    %   plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder Marker
+    plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  3rd MCP 
+
+    hold on
+    plot(xjug(:,1),xjug(:,2),'Linewidth',2) % Jug Notch
+    
+    plot(gh(:,1),gh(:,2),'Linewidth',2) %  GH from Linear Reg.
+    
+    plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); % reach start
+    plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); % reach end
+   
+    
+    plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10);
+    plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); 
+    
+    plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); 
+    plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); 
 %     
-%     plot(gh(:,1),gh(:,2),'Linewidth',2) %esimated GH
-%     
-%     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-%     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-%     plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-%     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-%     axis equal
-%     legend('Acromion','3rd MCP','Jug Notch','Estimated GH','Start','End','FontSize',14)
-%     title('Overhead View of Reach- GCS Raw' ,'FontSize',16)
-%     xlabel('X position (mm)','FontSize',14)
-%     ylabel('Y position (mm)','FontSize',14)
-%     % pause
+%     plot(xshldr(idx(1),1),xshldr(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); 
+%     plot(xshldr(idx(3),1),xshldr(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10);
+    
+    axis equal
+    legend('3rd MCP','Jug Notch','Estimated GH','Start Reach','End Reach','FontSize',14)
+    title('Overhead View of Reach- GCS Resampled' ,'FontSize',16)
+    xlabel('X position (mm)','FontSize',14)
+    ylabel('Y position (mm)','FontSize',14)
+ %pause
 %   
 %     
 
 %% November 2022 
 
 % Getting 3rd MCP in Humeral CS (plane of the reach) for all points in time
-% during trial. For Reaching Distance now just dependant on MCP3 in Hum. in
+% during trial. For Reaching Distance now just dependant on MCP3 in Hum. In
 % YZ plane during reach. 
 
 % This is MCP3 in GCS
@@ -5350,42 +5357,38 @@ end
 ElbAng_current_trial(i,1:length(t)) = 180-ELB_ANG_MAT(1,1:length(t));
 Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
-
-
-    %% Saving Kinematic Position Data to Large Matrix
-    
     
     armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% Saving Kinematic Position Data to Large Matrix %%%%%%%%%%%%%%%%%%%%%%%%%
+%     !!!! Change which DataMatrix Loading in Depending on Stroke
+%     Paretic/Non-Paretic/Controls !!!!!! 
+
     
-%     % Lines below if adding a new participant to sheet
+%% For Adding New Participant to Data Matrix
 %     %         nextrow = size(DataMatrix,1);
 %     %         DataMatrix{nextrow+1,1} = partid;
 %     %         DataMatrix{nextrow+1,2} = expcond;
 %     %         DataMatrix{nextrow+1,3} = mfname;
 %     %         DataMatrix{nextrow+1,4} = maxreach_current_trial(i);
 %     %         DataMatrix{nextrow+1,5} = maxreach_current_trial(i)/armlength*100 ;
-%     
+%
 %     %         DataMatrix{nextrow+1,6} = maxhandexcrsn_current_trial(i);
 %     %         DataMatrix{nextrow+1,7}= maxhandexcrsn_current_trial(i)/armlength*100;
 %     %        DataMatrix{nextrow+1,8} =  trex_current_trial(i);
 %     %         DataMatrix{nextrow+1,9} = trex_current_trial(i)/armlength*100;
 %     %         DataMatrix{nextrow+1,10} = shex_current_trial(i);
 %     %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
-%     
-%     % Adding Outcome Measures to Data Matrix - USE if already have
-%     % participant data matrix and want to update - MAKE SURE TO CHANGE AT
-%     % START OF CODE WHICH DATA MATRIX LOADING IN --> PARETIC/NP/CONTROLS
-%     
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
-%     
-%     %
-%     %     'Check Data Matrix Repopulation'
-%     
-% 
-% %     % Updating the Data Matrix with Outcome Measures
-% 
+%
+%%  If Participant already exists in Matrix
+ 
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
+
+% Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
 %     DataMatrix{FinalRow,21} = ScapAng_fbtilt_current_trial(i);
 %     DataMatrix{FinalRow,20} = ScapAng_latrot_current_trial(i);
@@ -5398,23 +5401,32 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %     DataMatrix{FinalRow,15} = TrunkAng_FE_current_trial(i);
 %     DataMatrix{FinalRow,14} = ElbAng_current_trial(i);
 % 
-%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
-%     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
-%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
-%     
-%     DataMatrix{FinalRow,2} = expcond;
-%         %
-%     
-    %     pause
-%     close all
-        
+
+   % Check for making sure the conditions align from the loaded Matrix
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
+
+
+
+% Reaching Measures
+    DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+    DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+   
+
+%         pause
 
     %% Plotting Elbow Angle vs RD % LL 
 
@@ -5485,28 +5497,28 @@ Hum_Ang_T_current_trial; % N Rows (Num of Trial) X M Columns (Length of Trial)
 % Matrix with start and end indicies for all trials 
 idx_alltrials; % N rows (per trial) X 4 - only looking at idx(1) reach start and idx(3) reach end
 
-for i = 1:length(mtrials)
-    figure(62)
-     p1  = plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
-
-    if i==1
-        hold on
-    end
-
-    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1)),ElbAng_current_trial(i,idx_alltrials(i,1)),'o','MarkerSize',24,'MarkerFaceColor','g') % Start Marker for a given trial
-    plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,3)),'o','MarkerSize',24,'MarkerFaceColor','r') % Start Marker for a given trial
-
-    axis equal
-    title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
-    ylabel('Elbow Extension Angle (deg)','FontSize',26)
-    xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
-end
+% for i = 1:length(mtrials)
+%     figure(62)
+%      p1  = plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),'Linewidth',4,'Color',[0.8500 0.3250 0.0980]) %Elbow Angle vs Pole Angle
+% 
+%     if i==1
+%         hold on
+%     end
+% 
+%     plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,1)),ElbAng_current_trial(i,idx_alltrials(i,1)),'o','MarkerSize',24,'MarkerFaceColor','g') % Start Marker for a given trial
+%     plot(Hum_Ang_T_current_trial(i,idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,3)),'o','MarkerSize',24,'MarkerFaceColor','r') % Start Marker for a given trial
+% 
+%     axis equal
+%     title ('Elbow Extension Angle vs. Shoulder Flexion Angle (deg)','Fontsize',24)
+%     ylabel('Elbow Extension Angle (deg)','FontSize',26)
+%     xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
+% end
 
 
 %% Converting Shoulder Flexion/Extension and Elbow Flexion/Extension to Polar (Trial by Trial) - August 2023
 
 %cart2pol(x,y) --> cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3))
-pause
+%pause
 
 % Creating Matrix to Find Length of each Trial
 Length_reach = idx_alltrials(:,3)-idx_alltrials(:,1);
@@ -5520,8 +5532,13 @@ maxlength_Reach = maxlength_Reach+1;
 theta = NaN*ones(length(mtrials),maxlength_Reach);
 rho = NaN*ones(length(mtrials),maxlength_Reach);
 
-for i = 1:length(mtrials)
+% Removing any rows of zeros due to skipped trials
+Hum_Ang_T_current_trial( all(~Hum_Ang_T_current_trial,2), : ) = [];
+
+for i = 1:length(find(Hum_Ang_T_current_trial(:,1)))
+
 [theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
+
 end
 
 %% Binning Polar Coords Data
@@ -5585,24 +5602,24 @@ ElbAng_STD_PerBin = y_std_per_bin;
 
 %% Plotting Average Trace and Boundaries
 
-figure(65) 
+% figure(65) 
 
 %Binned Average Data for given condition
-plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,'Linewidth',1.5,'Color','r')
-hold on
-%Upper Bound  
-plot(HumAng_Avg_PerBin+HumAng_STD_PerBin,ElbAng_Avg_PerBin+ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
-%Lower Bound 
-plot(HumAng_Avg_PerBin-HumAng_STD_PerBin,ElbAng_Avg_PerBin-ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
-xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
-ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
-axis equal
-legend('Average Trace','Bounds','FontSize',28)
+% plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,'Linewidth',1.5,'Color','r')
+% hold on
+% %Upper Bound  
+% plot(HumAng_Avg_PerBin+HumAng_STD_PerBin,ElbAng_Avg_PerBin+ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
+% %Lower Bound 
+% plot(HumAng_Avg_PerBin-HumAng_STD_PerBin,ElbAng_Avg_PerBin-ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
+% xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+% ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+% title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+% axis equal
+% legend('Average Trace','Bounds','FontSize',28)
 
-%%
+%% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
-% save FullDataMatrix.mat DataMatrix
+save FullDataMatrix.mat DataMatrix
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
