@@ -196,6 +196,7 @@ BLs = setup.bl; % BLs in marker CS now including GH estimate in LCS with Shoulde
 
 for i=1: length(mtrials)
     
+    close all
     % Mass DataMatrix 
     if i==1
         
@@ -1600,8 +1601,7 @@ title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
-
-close all
+pause
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -4124,7 +4124,7 @@ xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
     title('Overhead View of Reach- GCS Resampled' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
- %pause
+ pause
 %   
 %     
 
@@ -5534,6 +5534,8 @@ rho = NaN*ones(length(mtrials),maxlength_Reach);
 
 % Removing any rows of zeros due to skipped trials
 Hum_Ang_T_current_trial( all(~Hum_Ang_T_current_trial,2), : ) = [];
+idx_alltrials( all(~idx_alltrials,2), : ) = [];
+ElbAng_current_trial( all(~ElbAng_current_trial,2), : ) = [];
 
 for i = 1:length(find(Hum_Ang_T_current_trial(:,1)))
 
