@@ -17,7 +17,7 @@ library(rstatix)
 # within: two factors testing effect on reaching distance limb length (RDLL)
 
 res.aov <- anova_test(
-  data = AllData_Stroke_Paretic_R_AVGs, dv = RDLL, wid = ID,
+  data = AllData_Stroke_Paretic_R_AVGs_Updated, dv = RDLL, wid = ID,
   within = c(Restraint,Loading)
 )
 
@@ -28,7 +28,7 @@ get_anova_table(res.aov)
 # POST HOC TESTING FOR 2 WAY REPEATED MEASURES ANOVA
 
 # Effect of Restraint at each Loading Level
-one.way <- AllData_Stroke_Paretic_R_AVGs %>%
+one.way <- AllData_Stroke_Paretic_R_AVGs_Updated %>%
   group_by(Loading) %>%
   anova_test(dv = RDLL, wid = ID, within = Restraint) %>%
   get_anova_table() %>%

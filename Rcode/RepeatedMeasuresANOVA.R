@@ -1,5 +1,5 @@
 # K. Suvada
-# August 2022
+# August 2023
 
 # ANOVA tutorial 
 #Original Source:https://www.statology.org/repeated-measures-anova-in-r/
