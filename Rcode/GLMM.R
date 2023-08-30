@@ -61,16 +61,20 @@ model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Pare
 # Need to include the random effects from each participant and trial 
 model3 <- lmer(RDLL ~ Loading * Restraint + (1 | ID/Trial), data = AllData_Stroke_Paretic,REML = TRUE)
 
-anova(model2, model3)
 
+# For including the limb for all stroke data 
+model4 <- lmer(RDLL ~ Loading * Restraint * Limb + (1 | ID/Trial), data = AllData_Stroke,REML = TRUE)
+
+
+anova(model2, model3)
 
 #outputs the estimates for your predictors
 tab_model(model3, show.df = TRUE)
 
-tab_model(model2, show.df = FALSE)
+tab_model(model2, show.df = TRUE)
 
 #outputs the "anova" output
-anova(model3)
+anova(model2)
 #if there's significance, you can do some pairwise comparisons
 emmeans(model3, pairwise ~ Loading * Restraint)
 #checking for normality
@@ -78,15 +82,15 @@ emmeans(model3, pairwise ~ Loading * Restraint)
 #However, your residuals DO have to have normal distribution 
 
 # Want to see residuals randomly dispersed
-plot(residuals(model3)) 
+plot(residuals(model2)) 
 #plot(fitted(model3), residuals(model3))
 
 #Want to appear that the residuals are a Normal Distrib
-hist(residuals(model3))
+hist(residuals(model2))
 
 # Create a QQ plot
-qqnorm(residuals(model3))
-qqline(residuals(model3))
+qqnorm(residuals(model2))
+qqline(residuals(model2))
 
 
 
