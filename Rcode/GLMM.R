@@ -45,12 +45,23 @@ library(sjPlot)
 #changing loading and restriant to categorical variable
 
 
-# Need to set restraint and loading as categorical variables 
+# Need to set restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
 AllData_Stroke_Paretic$Loading = as.factor(AllData_Stroke_Paretic$Loading)
 
+# For the Non-Paretic Limb 
+Non_Paretic_Edited_AUG2023$Restraint = as.factor(Non_Paretic_Edited_AUG2023$Restraint)
+Non_Paretic_Edited_AUG2023$Loading = as.factor(Non_Paretic_Edited_AUG2023$Loading)
+
+
+# For Massdata Sheet for Stroke (paretic and Nonparetic arms) making restraint, loading, and limb categorical variables
+AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
+AllData_Stroke$Loading = as.factor(AllData_Stroke$Loading)
+AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
+
+
 # Running every trial
-model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, family = gaussian(link = "identity"))
+# model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, family = gaussian(link = "identity"))
 #yielded error saying to call lmer bc it's within the Gaussian Family so don't need GLMER
 
 # Try running LMER 
@@ -59,22 +70,32 @@ model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Par
 model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, REML = TRUE)
 
 # Need to include the random effects from each participant and trial 
+
+# Trial is nested within participant ID so don't list ID and Trial Separate
 model3 <- lmer(RDLL ~ Loading * Restraint + (1 | ID/Trial), data = AllData_Stroke_Paretic,REML = TRUE)
+
+#For the Non-Paretic Limb Separate Analysis 
+model5 <- lmer(RDLL ~ Loading * Restraint + (1 | ID/Trial), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
 
 
 # For including the limb for all stroke data 
-model4 <- lmer(RDLL ~ Loading * Restraint * Limb + (1 | ID/Trial), data = AllData_Stroke,REML = TRUE)
+model4 <- lmer(RDLL ~ Loading * Restraint * ARM *(1 | ID/Trial), data = AllData_Stroke,REML = TRUE)
 
 
 anova(model2, model3)
 
 #outputs the estimates for your predictors
-tab_model(model3, show.df = TRUE)
+tab_model(model5, show.df = TRUE) # Non Paretic Limb
 
-tab_model(model2, show.df = TRUE)
+tab_model(model3, show.df = TRUE) # Paretic Limb
+
+
+tab_model(model4, show.df = TRUE) # All Stroke Limb
 
 #outputs the "anova" output
-anova(model2)
+anova(model3)
+anova(model4)
+
 #if there's significance, you can do some pairwise comparisons
 emmeans(model3, pairwise ~ Loading * Restraint)
 #checking for normality
