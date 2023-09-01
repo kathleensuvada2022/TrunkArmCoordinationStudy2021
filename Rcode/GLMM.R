@@ -54,6 +54,8 @@ Non_Paretic_Edited_AUG2023$Restraint = as.factor(Non_Paretic_Edited_AUG2023$Rest
 Non_Paretic_Edited_AUG2023$Loading = as.factor(Non_Paretic_Edited_AUG2023$Loading)
 
 
+
+
 # For Massdata Sheet for Stroke (paretic and Nonparetic arms) making restraint, loading, and limb categorical variables
 AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
 AllData_Stroke$Loading = as.factor(AllData_Stroke$Loading)
@@ -93,11 +95,25 @@ tab_model(model3, show.df = TRUE) # Paretic Limb
 tab_model(model4, show.df = TRUE) # All Stroke Limb
 
 #outputs the "anova" output
-anova(model3)
-anova(model4)
+anova(model3) #Paretic
+anova(model4) #Combined 
+anova(model5) # Non-Paretic
+
 
 #if there's significance, you can do some pairwise comparisons
-emmeans(model3, pairwise ~ Loading * Restraint)
+em = emmeans(model4, ~ Loading * ARM)
+summary(em)
+pairs(em)
+
+# Effect of Restraint at each Loading Level
+two.way <- AllData_Stroke 
+  anova_test(dv = RDLL, wid = ID, within = Restraint) 
+  get_anova_table() 
+  adjust_pvalue(method = "bonferroni")
+
+#Displays the effect of trunk restraint at each Limb Loading level
+one.way 
+
 #checking for normality
 #note, for lme, your data doesn't have to be normal.
 #However, your residuals DO have to have normal distribution 
