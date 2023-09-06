@@ -24,7 +24,6 @@ res.aov <- anova_test(
 #YIELDS SUMMARY OF ANOVA
 get_anova_table(res.aov) 
 
-
 # POST HOC TESTING FOR 2 WAY REPEATED MEASURES ANOVA
 
 # Effect of Restraint at each Loading Level
