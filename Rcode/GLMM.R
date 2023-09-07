@@ -44,6 +44,7 @@ library(sjPlot)
 #model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic_R_AVGs_Updated, family = gaussian(link = "identity"))
 #changing loading and restriant to categorical variable
 
+# For each dataset, converting categorical variables 
 
 # Need to set restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
@@ -56,39 +57,59 @@ Non_Paretic_Edited_AUG2023$Loading = as.factor(Non_Paretic_Edited_AUG2023$Loadin
 Non_Paretic_Edited_AUG2023$ID = as.factor(Non_Paretic_Edited_AUG2023$ID)
 
 
-
-
 # For Massdata Sheet for Stroke (paretic and Nonparetic arms) making restraint, loading, and limb categorical variables
 AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
 AllData_Stroke$Loading = as.factor(AllData_Stroke$Loading)
 AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
 AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
-# Running every trial
+# For Controls
+AllData_Controls$Restraint = as.factor(AllData_Controls$Restraint)
+AllData_Controls$Loading = as.factor(AllData_Controls$Loading)
+AllData_Controls$ID = as.factor(AllData_Controls$ID)
+
+
+# Models
+
 # model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, family = gaussian(link = "identity"))
-#yielded error saying to call lmer bc it's within the Gaussian Family so don't need GLMER
-
-# Try running LMER 
-
+#yielded error saying to call lmer bc it's within the Gaussian Family so don't need GLME
 # Restricted Maximum Likelihood (REML), provides better estimates of the random effects' variance components
+# Trial is nested within participant ID so don't list ID and Trial Separate - Tested the effect of trial as main effect and was a non significant effect
+
+
+#Paretic Limb
 model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, REML = TRUE)
+#Omitting Restraint to Test Effect of Restraint on RDLL
+model3 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
+# Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
+anova(model2, model3)
+tab_model(model2, show.df = TRUE) # Paretic Limb
 
-# Need to include the random effects from each participant and trial 
 
-# Trial is nested within participant ID so don't list ID and Trial Separate
-model3 <- lmer(RDLL ~ Loading * Restraint + (1 | ID/Trial), data = AllData_Stroke_Paretic,REML = TRUE)
+#Non-Paretic Limb 
+model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
+model5 <- lmer(RDLL ~ Loading +(1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
+# Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
+anova(model4, model5)
+tab_model(model4, show.df = TRUE) # Non-Paretic Limb
 
-#For the Non-Paretic Limb Separate Analysis 
-model5 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
+
+#Controls
+model6 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Controls,REML = TRUE)
+model7 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Controls,REML = TRUE)
+# Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
+anova(model6, model7)
+tab_model(model6, show.df = TRUE) #Controls
+
 
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
-model4 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
-
+model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
 #Omitting Restraint to Test Effect of Restraint on RDLL
-model7 <- lmer(RDLL ~ Loading * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
-
+model9 <- lmer(RDLL ~ Loading * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
-anova(model4, model7)
+anova(model8, model9)
+
+
 
 #Running Model on Raw Reaching Distance
 model10 <- lmer(ReachingDistance ~ Loading * ARM *Restraint +(1 | ID), data = AllData_Stroke,REML = TRUE)
@@ -98,6 +119,8 @@ model10 <- lmer(ReachingDistance ~ Loading * ARM *Restraint +(1 | ID), data = Al
 #outputs the estimates for your predictors
 tab_model(model5, show.df = TRUE) # Non Paretic Limb
 tab_model(model2, show.df = TRUE) # Paretic Limb
+tab_model(model6, show.df = TRUE) # Controls
+
 tab_model(model4, show.df = TRUE) # All Stroke Limb
 summary(model4, show.df = TRUE) # All Stroke Limb
 
