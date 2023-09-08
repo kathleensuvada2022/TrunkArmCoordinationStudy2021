@@ -335,4 +335,7 @@ summary(modelTD)
 # 2 way (Limb Loading and Trunk Restraint) ANOVA where looking at Reaching Distance Normalized to Limb Length
 modelRD <- aov(Reaching.Distance~factor(TrunkRestrained)+factor(Loading), data = Data_Controls)
 
-summary(modelRD)
+
+modelRD_2023 <- aov(RDLL~factor(Restraint)+factor(Loading)+Error(factor(ID)), data = AllData_Controls_R_AVGs)
+
+summary(modelRD_2023)
