@@ -5600,12 +5600,20 @@ figure()
 for m = 1:length(mtrials)
 plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),smooth(ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),'Linewidth',2.5)
 hold on
+xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+axis equal
 end
 
 figure()
 for m = 1:length(mtrials)
 plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
 hold on
+xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+axis equal
 end
 
 
