@@ -201,13 +201,13 @@ for i=1: length(mtrials)
     if i==1
         
         %    for mac
-                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+             %     load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
              %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+                     load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -1601,7 +1601,7 @@ title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
-pause
+% pause
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -4124,7 +4124,7 @@ xlabel('Shoulder Flexion Angle (deg)','FontSize',26)
     title('Overhead View of Reach- GCS Resampled' ,'FontSize',16)
     xlabel('X position (mm)','FontSize',14)
     ylabel('Y position (mm)','FontSize',14)
- pause
+%  pause
 %   
 %     
 
@@ -5408,7 +5408,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
     else
         'Mismatched EXP COND! '
-        pause
+%         pause
     end
 
 
@@ -5596,28 +5596,28 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Plotting the Average and STD Binned Trace for all trials in given Condition
 
 % Plotting Average Traces and all Trials
-% figure()
-% for m = 1:length(mtrials)
-% plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
-% hold on
-% end
+figure()
+for m = 1:length(mtrials)
+plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),smooth(ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),'Linewidth',2.5)
+hold on
+end
 
 %% Plotting Average Trace and Boundaries
 
-% figure(65) 
+ figure(66) 
 
 %Binned Average Data for given condition
-% plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,'Linewidth',1.5,'Color','r')
-% hold on
-% %Upper Bound  
-% plot(HumAng_Avg_PerBin+HumAng_STD_PerBin,ElbAng_Avg_PerBin+ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
-% %Lower Bound 
-% plot(HumAng_Avg_PerBin-HumAng_STD_PerBin,ElbAng_Avg_PerBin-ElbAng_STD_PerBin,'--','Linewidth',3.5,'Color','b')
-% xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
-% ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-% title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
-% axis equal
-% legend('Average Trace','Bounds','FontSize',28)
+plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth',1.5,'Color','r')
+hold on
+%Upper Bound  
+plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
+%Lower Bound 
+plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
+xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+axis equal
+legend('Average Trace','Bounds','FontSize',28)
 
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
