@@ -14,7 +14,7 @@ library(rstatix)
 
 ############# RUN BELOW FOR PARETIC LIMB####################### FINAL MAY 2023
 
-# For Paretic
+# For Paretic- Convert to categorical
 AllData_Stroke_Paretic_R_AVGs$Restraint = as.factor(AllData_Stroke_Paretic_R_AVGs$Restraint)
 AllData_Stroke_Paretic_R_AVGs$Loading = as.factor(AllData_Stroke_Paretic_R_AVGs$Loading)
 AllData_Stroke_Paretic_R_AVGs$ID = as.factor(AllData_Stroke_Paretic_R_AVGs$ID)
