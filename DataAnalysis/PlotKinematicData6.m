@@ -5602,6 +5602,13 @@ plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_curren
 hold on
 end
 
+figure()
+for m = 1:length(mtrials)
+plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
+hold on
+end
+
+
 %% Plotting Average Trace and Boundaries
 
  figure(66) 
