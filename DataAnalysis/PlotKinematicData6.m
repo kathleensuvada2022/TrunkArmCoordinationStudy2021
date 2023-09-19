@@ -204,10 +204,10 @@ for i=1: length(mtrials)
              %     load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
              %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-                     load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+       %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -5618,18 +5618,26 @@ end
 
 %% Plotting Average Trace and Boundaries
 
- figure(66) 
+
+% 
+
+figure(66) 
 
 %Binned Average Data for given condition
-plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth',3.5,'Color','m')
+%    plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 1,'Color','r')
+%     plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','r')
+ % plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 4.5,'Color','r')
+%  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 1,'Color','g')
+% plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','g')
+plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 4.5,'Color','g')
 hold on
 %Upper Bound  
-plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
+plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 %Lower Bound 
-plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
+plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2003 Non-Paretic','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2003- Paretic','FontSize',32)
 axis equal
 legend('Average Trace','Bounds','FontSize',28)
 
