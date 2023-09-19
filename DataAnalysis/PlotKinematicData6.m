@@ -196,7 +196,7 @@ BLs = setup.bl; % BLs in marker CS now including GH estimate in LCS with Shoulde
 
 for i=1: length(mtrials)
     
-    close all
+%     close all
     % Mass DataMatrix 
     if i==1
         
@@ -5517,6 +5517,9 @@ idx_alltrials; % N rows (per trial) X 4 - only looking at idx(1) reach start and
 
 %% Converting Shoulder Flexion/Extension and Elbow Flexion/Extension to Polar (Trial by Trial) - August 2023
 
+% September 2023: purpose of this is to average the trajectories from all
+% trials to have an "average" trace for all trials in a given condition.
+
 %cart2pol(x,y) --> cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)),ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3))
 %pause
 
@@ -5528,7 +5531,7 @@ Length_reach = idx_alltrials(:,3)-idx_alltrials(:,1);
 
 maxlength_Reach = maxlength_Reach+1;
 
-% FIX NAN - and flip matrix trial would be each column 
+% FIX NAN 
 theta = NaN*ones(length(mtrials),maxlength_Reach);
 rho = NaN*ones(length(mtrials),maxlength_Reach);
 
@@ -5537,9 +5540,14 @@ Hum_Ang_T_current_trial( all(~Hum_Ang_T_current_trial,2), : ) = [];
 idx_alltrials( all(~idx_alltrials,2), : ) = [];
 ElbAng_current_trial( all(~ElbAng_current_trial,2), : ) = [];
 
-for i = 1:length(find(Hum_Ang_T_current_trial(:,1)))
 
-[theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
+%Converting Cartesian (X: Hum_ang, Y: Elb_Ang) to Polar (theta and rho) for all trials from
+%length idx1:idx3
+
+
+%Going through every trial
+for i = 1:length(find(Hum_Ang_T_current_trial(:,1)))
+    [theta(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3))),rho(i,1:length(idx_alltrials(i,1):idx_alltrials(i,3)))] = cart2pol(Hum_Ang_T_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)), ElbAng_current_trial(i,idx_alltrials(i,1):idx_alltrials(i,3)));
 
 end
 
@@ -5561,14 +5569,15 @@ for j =1:length(rhobins)-1
     
         indices = rho>=rhobins(j) & rho< rhobins(j+1);
         
+        %Binning both rho and theta by rho
         Binned_rho = rho(indices); %values of rho in given bin
         Binned_theta = theta(indices); %values of theta in a given bin
 
-        % Mean and STD Rho
+        % Mean and STD Rho per bin
         Avg_rho(j) = nanmean(Binned_rho); %Average per bin
         std_rho(j) = nanstd(Binned_rho); %STD per bin
 
-        % Mean and STD Theta
+        % Mean and STD Theta per bin
         Avg_Theta(j) = nanmean(Binned_theta); %Average per bin
         std_Theta(j) = nanstd(Binned_theta); %STD per bin
     
@@ -5579,13 +5588,12 @@ end
 
 % Converting the average rho and theta per bin back to cartesian coords
 
-% X is the Humeral angle (Shoulder Flexion) Y is Elbow Extension Angle
+% X: Humeral angle (Shoulder Flexion) Y: Elbow Extension Angle
 [x_avg_per_bin,y_avg_per_bin]= pol2cart(Avg_Theta,Avg_rho); 
 
 
 % Converting the STD of rho and theta per bin back to cartesian coords. 
 [x_std_per_bin,y_std_per_bin]= pol2cart(std_Theta,std_rho); 
-
 
 HumAng_Avg_PerBin = x_avg_per_bin;
 HumAng_STD_PerBin = x_std_per_bin;
@@ -5595,24 +5603,15 @@ ElbAng_STD_PerBin = y_std_per_bin;
 
 %% Plotting the Average and STD Binned Trace for all trials in given Condition
 
-% Plotting Average Traces and all Trials
+% Plotting Average Traces and all Trials- Smoothed Version
 figure()
-for m = 1:length(mtrials)
+for m = 1:size(Hum_Ang_T_current_trial,1)
+%    avgHumtraj all trials      avgElbtraj across trials  
 plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),smooth(ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),'Linewidth',2.5)
 hold on
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
-axis equal
-end
-
-figure()
-for m = 1:length(mtrials)
-plot(HumAng_Avg_PerBin,ElbAng_Avg_PerBin,Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3)),'Linewidth',2.5)
-hold on
-xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
-ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+title(['Elbow Flexion/Extension vs Shoulder Flexion Extension EXP Cond:' num2str(expcond)],'FontSize',32)
 axis equal
 end
 
@@ -5622,7 +5621,7 @@ end
  figure(66) 
 
 %Binned Average Data for given condition
-plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth',1.5,'Color','r')
+plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth',3.5,'Color','m')
 hold on
 %Upper Bound  
 plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
@@ -5630,7 +5629,7 @@ plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng
 plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',3.5,'Color','b')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2003 Non-Paretic','FontSize',32)
 axis equal
 legend('Average Trace','Bounds','FontSize',28)
 
