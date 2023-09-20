@@ -129,3 +129,78 @@ qqline(residuals(model2))
 
 
 
+########################Z Scoring Raw Reaching Distance#########################
+################################################################################
+
+
+# Testing Zscore Method on Raw Reaching Distance
+
+
+#Centering and Scaling Raw Reaching Distance 
+ZscoreRD = scale(AllData_Stroke_Paretic$ReachingDistance)
+
+# Appending original stroke paretic dataframe with new zscored variable
+AllData_Stroke_Paretic$ZscoreReachingDistance <- ZscoreRD 
+
+
+# Running Original Model with Scaled and Zscored Raw Reaching Distance
+model15 <- lmer(ZscoreRD ~ Loading *Restraint +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
+
+#Model Omitting Restraint
+model16 <- lmer(ZscoreRD ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
+#Chisquared test to see if there is a difference between the models
+anova(model16, model15)
+
+
+
+tab_model(model15, show.df = TRUE) 
+
+########################Z Scoring %LL Reaching Distance#########################
+################################################################################
+
+
+#Centering and Scaling %LL Reaching Distance 
+ZscoreRDLL = scale(AllData_Stroke_Paretic$RDLL)
+
+# Appending original stroke paretic dataframe with new zscored variable
+AllData_Stroke_Paretic$ZscoreReachLimbLength <- ZscoreRDLL 
+
+
+# Running Original Model with Scaled and Zscored Raw Reaching Distance
+model17 <- lmer(ZscoreRDLL ~ Loading *Restraint +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
+
+#Model Omitting Restraint
+model18 <- lmer(ZscoreRDLL ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
+#Chisquared test to see if there is a difference between the models
+anova(model17, model18)
+
+
+
+tab_model(model17, show.df = TRUE)
+
+
+############Running Model with Combined Variable for Limb and Restraint########
+################################################################################
+
+# Both Limbs Stroke- restraint, loading,limb,ID categorical variables
+AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
+AllData_Stroke$Loading = as.factor(AllData_Stroke$Loading)
+AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
+AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
+AllData_Stroke$ArmRestraint = as.factor(AllData_Stroke$ArmRestraint)
+
+
+
+
+# Running Original Model with Scaled and Zscored Raw Reaching Distance
+model19 <- lmer(RDLL ~ ArmRestraint +(1 | ID), data = AllData_Stroke,REML = TRUE)
+
+#Model Omitting Restraint
+model20 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke,REML = TRUE)
+#Chisquared test to see if there is a difference between the models
+anova(model19, model20)
+
+
+
+tab_model(model19, show.df = TRUE)
+

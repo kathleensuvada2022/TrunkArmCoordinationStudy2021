@@ -37,7 +37,7 @@ BLs_lcs_t ={SC,IJ,PX,C7,T8};
 zt = (IJ(1:3)+C7(1:3))/2 - (PX(1:3)+T8(1:3))/2;
 zt = zt/norm(zt);
 
-blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]'; %For making a plane out of IJ,PX, C7,T8
+blmat_th =[IJ(1:3);PX(1:3);C7(1:3);T8(1:3)]'; %For making a plane out of IJ, PX, C7,T8
 
 
 % [A,DATAa,nvector,e]=vlak(blmat);
@@ -62,6 +62,16 @@ if strcmp(partid,'RTIS1003')
 xhulp = -xhulp;
 
 end
+
+
+if strcmp(partid,'RTIS2001')
+    if strcmp(arm,'Right')
+        
+        xhulp = -xhulp;
+    end
+end
+
+
 
 if strcmp(partid,'RTIS2003')
     if strcmp(arm,'Left')
