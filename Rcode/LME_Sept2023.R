@@ -191,12 +191,11 @@ AllData_Stroke$ArmRestraint = as.factor(AllData_Stroke$ArmRestraint)
 
 
 
-
 # Running Original Model with Scaled and Zscored Raw Reaching Distance
-model19 <- lmer(RDLL ~ ArmRestraint +(1 | ID), data = AllData_Stroke,REML = TRUE)
-
+model19 <- lmer(ReachingDistance ~ ArmRestraint +(1 | ID), data = AllData_Stroke,REML = TRUE)
+contrasts(AllData_Stroke$ArmRestraint)
 #Model Omitting Restraint
-model20 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke,REML = TRUE)
+model20 <- lmer(ReachingDistance ~ Loading +(1 | ID), data = AllData_Stroke,REML = TRUE)
 #Chisquared test to see if there is a difference between the models
 anova(model19, model20)
 
