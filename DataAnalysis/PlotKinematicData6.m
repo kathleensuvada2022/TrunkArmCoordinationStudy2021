@@ -5616,22 +5616,27 @@ axis equal
 end
 
 
-%% Plotting Average Trace and Boundaries
+%% Plotting Average Traces Centered and Fit to a Linear Regression
+
 
 figure(66) 
-
+%Fitting a linear polynomial and centering the plots 
+LinReg1 = polyfit(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),1);
+Xfit = linspace(min(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1))):max(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1))),100)
+Yfit= polyval(LinReg1,)
 %Binned Average Data for given condition
  %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 1,'Color','r')
 %      plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','r')
 %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 4.5,'Color','r')
 %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 1,'Color','g')
 %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','g')
- plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 4.5,'Color','g')
+ scatter(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),'o')
+
 hold on
-%Upper Bound  
-plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
-%Lower Bound 
-plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
+% %Upper Bound  
+% plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
+% %Lower Bound 
+% plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
 title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2001- Non-Paretic','FontSize',32)
