@@ -5622,8 +5622,14 @@ end
 figure(66) 
 %Fitting a linear polynomial and centering the plots 
 LinReg1 = polyfit(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),1);
-Xfit = linspace(min(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1))):max(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1))),100)
-Yfit= polyval(LinReg1,)
+
+
+% Computing the Y values of the linear regression
+x_values = linspace(ceil(min(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),ceil(max(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),100);
+y_fit = polyval(LinReg1,x_values);
+
+plot(x_values, y_fit, 'r', 'LineWidth', 2);
+hold on
 %Binned Average Data for given condition
  %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 1,'Color','r')
 %      plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','r')
@@ -5632,7 +5638,6 @@ Yfit= polyval(LinReg1,)
 %  plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),'Linewidth', 3.5,'Color','g')
  scatter(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),'o')
 
-hold on
 % %Upper Bound  
 % plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 % %Lower Bound 
@@ -5641,7 +5646,13 @@ xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
 title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2001- Non-Paretic','FontSize',32)
 axis equal
-legend('Average Trace','Bounds','FontSize',28)
+legend('Linear Reg',' Avg Trajectory for Condition','FontSize',28)
+% Display model details
+intercept = LinReg1(2);
+slope = LinReg1(1);
+
+text(10, 5, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+
 
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
