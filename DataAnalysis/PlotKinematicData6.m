@@ -2335,11 +2335,14 @@ ylabel('Y position (mm)','FontSize',14)
     
     
     %% Loading in EMGS
-    
-    % Normalized EMGS
-    %     load([afilepath afname])
-    %     emg= data.daq{1,2};
-    %     emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
+
+    % Need to load in clean EMGs 
+ 
+    %Loading in Max EMGs
+         load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
+
+         emg= data.daq{1,2};
+         emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
     %
     %% Computing the start of the reach
     
