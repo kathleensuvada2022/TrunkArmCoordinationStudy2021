@@ -5626,6 +5626,8 @@ figure(66)
 %Fitting a linear polynomial and centering the plots 
 LinReg1 = polyfit(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),1);
 
+% On raw data not smoothed data - don't fit linear 
+% regress function - examples
 
 % Computing the Y values of the linear regression
 x_values = linspace(ceil(min(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),ceil(max(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),100);

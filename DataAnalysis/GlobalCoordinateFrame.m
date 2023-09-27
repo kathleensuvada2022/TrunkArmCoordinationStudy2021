@@ -48,8 +48,6 @@ for i = 1:10 % loop 1:10 that builds the filename for the reaching trial
         %Grabbing the HT for the marker
         HT_marker = markerdata(:,jm+2:jm+13);
 
-
-
  
     P_GCS = zeros(4,t); % 1000 variable size(trial) 
     
