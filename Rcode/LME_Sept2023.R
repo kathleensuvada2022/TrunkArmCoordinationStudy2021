@@ -51,7 +51,7 @@ model3 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TR
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model2, model3)
 tab_model(model2, show.df = TRUE) # Paretic Limb
-
+print(model2)
 
 #Non-Paretic Limb 
 model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
@@ -70,12 +70,13 @@ tab_model(model6, show.df = TRUE) #Controls
 
 
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
-model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
+model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , data = AllData_Stroke,REML = TRUE)
 #Omitting Restraint to Test Effect of Restraint on RDLL
 model9 <- lmer(RDLL ~ Loading * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model8, model9)
-
+tab_model(model8, show.df = TRUE) #Controls
+anova(model8)
 
 #Running Model on Raw Reaching Distance
 model10 <- lmer(ReachingDistance ~ Loading * ARM *Restraint +(1 | ID), data = AllData_Stroke,REML = TRUE)
@@ -86,7 +87,7 @@ tab_model(model5, show.df = TRUE) # Non Paretic Limb
 tab_model(model2, show.df = TRUE) # Paretic Limb
 tab_model(model6, show.df = TRUE) # Controls
 
-tab_model(model4, show.df = TRUE) # All Stroke Limb
+tab_model(model8, show.df = TRUE) # All Stroke Limb
 summary(model4, show.df = TRUE) # All Stroke Limb
 
 tab_model(model10, show.df = TRUE) # All Stroke Limb
