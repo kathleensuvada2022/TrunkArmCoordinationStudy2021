@@ -5623,32 +5623,37 @@ end
 
 
 figure(66) 
-%Fitting a linear polynomial and centering the plots 
-LinReg1 = polyfit(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),1);
+%Fitting a linear regression and centering the plots 
+%LinReg1 = polyfit(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),1);
+LinReg1 = regress(ElbAng_Avg_PerBin-ElbAng_Avg_PerBin(1),HumAng_Avg_PerBin-HumAng_Avg_PerBin(1,1));
 
-% On raw data not smoothed data - don't fit linear 
-% regress function - examples
 
 % Computing the Y values of the linear regression
-x_values = linspace(ceil(min(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),ceil(max(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)))),100);
-y_fit = polyval(LinReg1,x_values);
+x_values = linspace(ceil(min(HumAng_Avg_PerBin-HumAng_Avg_PerBin(1,1))),ceil(max(HumAng_Avg_PerBin-HumAng_Avg_PerBin(1,1))),100);
+y_fit = LinReg1*x_values;
 
-hold on
+% Saving x and y values for each person to get the average trajectory across
+% participants
+   savefile = [partid '_' num2str(expcond) 'xyvalsLinReg.mat'];
+   
+   save(savefile, 'x_values', 'y_fit');
+
+   hold on
 
 %Binned Average Data for given condition
 
 % Restrained -Red 
-%        plot(x_values,y_fit,'Linewidth', 1,'Color','r')
- %           plot(x_values,y_fit,'Linewidth', 3.5,'Color','r')
-%         plot(x_values,y_fit,'Linewidth', 4.5,'Color','r')
+%          plot(x_values,y_fit,'Linewidth', 1,'Color','r')
+%               plot(x_values,y_fit,'Linewidth', 3.5,'Color','r')
+%             plot(x_values,y_fit,'Linewidth', 4.5,'Color','r')
 
 % Unrestrained- Green
-%          plot(x_values,y_fit, 'Linewidth', 1,'Color','g')
-%        plot(x_values,y_fit,'Linewidth', 3.5,'Color','g')
-         plot(x_values,y_fit,'Linewidth', 4.5,'Color','g')
+%              plot(x_values,y_fit, 'Linewidth', 1,'Color','g')
+%          plot(x_values,y_fit,'Linewidth', 3.5,'Color','g')
+            plot(x_values,y_fit,'Linewidth', 4.5,'Color','g')
 
    % Scatter Plot with the Average Trajectory
-  %  scatter(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),'o')
+%     scatter(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),'o')
 
 % %Upper Bound  
 % plot(smooth(HumAng_Avg_PerBin+HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin+ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
@@ -5656,22 +5661,23 @@ hold on
 % plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2011- Paretic','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2001- Paretic','FontSize',32)
 axis equal
 % legend('Linear Reg',' Avg Trajectory for Condition','FontSize',28)
 
 % Display model details
-intercept = LinReg1(2);
-slope = LinReg1(1);
+% intercept = LinReg1(2);
+slope = LinReg1;
+intercept = 0;
 
-%        text(50, 60, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%          text(50, 55, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%           text(50, 50, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%        text(50, 45, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%         text(50, 40, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-     text(50, 35, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+%          text(40, 60, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+%            text(40, 55, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+%               text(40, 50, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+%            text(40, 45, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+%           text(40, 40, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
+     text(40, 35, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
 xlim([-30 65])
-ylim([0 65])
+ylim([0 80])
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 save FullDataMatrix.mat DataMatrix
