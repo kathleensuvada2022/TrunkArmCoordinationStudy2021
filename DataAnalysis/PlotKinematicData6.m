@@ -201,13 +201,13 @@ for i=1: length(mtrials)
     if i==1
         
         %    for mac
-                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+%                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
              %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
    %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -5643,14 +5643,14 @@ y_fit = LinReg1*x_values;
 %Binned Average Data for given condition
 
 % Restrained -Red 
-%             plot(x_values,y_fit,'Linewidth', 1,'Color','r')
+             plot(x_values,y_fit,'Linewidth', 1,'Color','r')
 %                  plot(x_values,y_fit,'Linewidth', 3.5,'Color','r')
 %              plot(x_values,y_fit,'Linewidth', 4.5,'Color','r')
 
 % Unrestrained- Green
 %                plot(x_values,y_fit, 'Linewidth', 1,'Color','g')
 %            plot(x_values,y_fit,'Linewidth', 3.5,'Color','g')
-              plot(x_values,y_fit,'Linewidth', 4.5,'Color','g')
+%               plot(x_values,y_fit,'Linewidth', 4.5,'Color','g')
 
    % Scatter Plot with the Average Trajectory
 %     scatter(smooth(HumAng_Avg_PerBin)-smooth(HumAng_Avg_PerBin(1,1)),smooth(ElbAng_Avg_PerBin)-smooth(ElbAng_Avg_PerBin(1)),'o')
@@ -5661,23 +5661,22 @@ y_fit = LinReg1*x_values;
 % plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2011- Paretic','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2001: Non-Paretic','FontSize',32)
 axis equal
 % legend('Linear Reg',' Avg Trajectory for Condition','FontSize',28)
 
 % Display model details
 % intercept = LinReg1(2);
 slope = LinReg1;
-intercept = 0;
 
-%             text(40, 60, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%              text(40, 55, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%                 text(40, 50, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%             text(40, 45, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-%              text(40, 40, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-       text(40, 35, sprintf('Slope: %.2f\nIntercept: %.2f', slope, intercept), 'FontSize', 16, 'Color', 'black');
-xlim([-30 65])
-ylim([0 80])
+             text(60, 60, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+%              text(60, 55, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+%                 text(60, 50, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+%             text(60, 45, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+%              text(60, 40, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+%        text(60, 35, sprintf('Slope: %.2f', slope), 'FontSize', 16, 'Color', 'black');
+xlim([-30 75])
+ylim([0 90])
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 save FullDataMatrix.mat DataMatrix
