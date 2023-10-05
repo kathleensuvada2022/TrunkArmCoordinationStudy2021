@@ -67,18 +67,7 @@ trex_current_trial=zeros(ntrials,1);
 idx_alltrials = zeros(length(mtrials),4);
 
 % Angles
-% ElbAng_current_trial = zeros(ntrials,1);
-TrunkAng_FE_current_trial = zeros(ntrials,1);
-TrunkAng_Twist_current_trial = zeros(ntrials,1);
-TrunkAng_LB_current_trial = zeros(ntrials,1);
-
-HumAng_Pole_current_trial = zeros(ntrials,1);
-HumAng_SABD_current_trial = zeros(ntrials,1);
-
-ScapAng_latrot_current_trial = zeros(ntrials,1);
-ScapAng_fbtilt_current_trial = zeros(ntrials,1);
-ScapAng_prtract_current_trial = zeros(ntrials,1);
-
+Trunk_Angs_Trial = zeros(3,ntrials);
 
 %%
 
@@ -3616,7 +3605,7 @@ end
 % %ylabel('Flexion                       Extension ','FontSize',24)
 % ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
 % 
-% figure()
+%  figure()
 % plot(Trunk_ANG_G(2,:),'Linewidth',2) % Twisting Z
 % hold on
 % xline(idx(1),'g','Linewidth',2)
@@ -3627,7 +3616,7 @@ end
 % title ('Trunk Transverse Plane (Deg)-GCS ','Fontsize',24)
 % % ylabel('Right                  Left','FontSize',24)
 % ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
-% 
+% % 
 % 
 % figure()
 % plot(Trunk_ANG_G(3,:),'Linewidth',2) % Lat Bend Y
@@ -3640,48 +3629,47 @@ end
 % title ('Trunk Coronal Plane (Deg)-GCS ','Fontsize',24)
 % % ylabel('Left                   Right','FontSize',24)
 % ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
+% % 
 % % Trunk angles in Ti
-% figure()
+ figure(50)
 % %CalcEulerAng-XZY
-% plot(Trunk_ANG_Ti(1,:),'Linewidth',2) %Flexion X
-% hold on
+plot(smooth(Trunk_ANG_Ti(1,idx(1):idx(3))),'Color','b','Linewidth',2) %Flexion X
+hold on
 % xline(idx(1),'g','Linewidth',2)
 % xline(idx(3),'r','Linewidth',2)
 % legend('X axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Trunk Sagittal Plane (Deg) -Ti ','Fontsize',24)
-% %ylabel('Flexion                     Extension ','FontSize',24)
-% ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Sagittal Plane (Deg) -Ti ','Fontsize',24)
+%ylabel('Flexion                     Extension ','FontSize',24)
+ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
 % 
-% figure()
-% plot(Trunk_ANG_Ti(2,:),'Linewidth',2) % Twisting Z
-% hold on
+figure(54)
+plot(smooth(Trunk_ANG_Ti(2,idx(1):idx(3))),'Color','r','Linewidth',2) % Twisting Z
+hold on
 % xline(idx(1),'g','Linewidth',2)
 % xline(idx(3),'r','Linewidth',2)
 % legend('Z axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Trunk Transverse Plane (Deg)-Ti ','Fontsize',24)
-% %ylabel('Right                  Left','FontSize',24)
-% ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Transverse Plane (Deg)-Ti ','Fontsize',24)
+%ylabel('Right                  Left','FontSize',24)
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
 % 
 % 
-% figure()
-% plot(Trunk_ANG_Ti(3,:),'Linewidth',2) % Lat Bend Y
-% hold on
+figure(56)
+plot(smooth(Trunk_ANG_Ti(3,idx(1):idx(3))),'Color','k','Linewidth',2) % Lat Bend Y
+hold on
 % xline(idx(1),'g','Linewidth',2)
 % xline(idx(3),'r','Linewidth',2)
 % legend('Y axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Trunk Coronal Plane (Deg)-Ti ','Fontsize',24)
-% %ylabel('Left                      Right','FontSize',24)
-% ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Trunk Coronal Plane (Deg)-Ti ','Fontsize',24)
+%ylabel('Left                      Right','FontSize',24)
+ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
-%  pause
 
 %% Humerus - ZYZ
 %% If LEFT ARM, make pole and internal/external rotation negative
@@ -4395,27 +4383,11 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     sh_Z_ex_current_trial(i) = sh_Z_ex;
     
     trex_current_trial(i) = trunk_exc;
+%% Computing Changes in Trunk Kinematics 
+
+    Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
+
     
-% Adding elbow angle at IDX(3)
-%     ElbAng_current_trial(i)= ELB_ANG_MAT(1,idx(3));
-
-%     close all
-    %% Angles for current trial  - OLD don't USE 
-
-
-    % Final- Initial Angle-- this is OLD don't use. 2023
-%     ElbAng_current_trial(i) =ElbAng;
-%     TrunkAng_FE_current_trial(i) = Trunk_Flex_Ext;
-%     TrunkAng_Twist_current_trial(i) = Trunk_Twist;
-%     TrunkAng_LB_current_trial(i) =  Trunk_LB;
-% 
-%     HumAng_Pole_current_trial(i) =   Hum_Ang_Pole;
-%     HumAng_SABD_current_trial(i) = Hum_Ang_SABD;
-
-
-%     ScapAng_latrot_current_trial(i) =  Scap_Ang_Latrot;
-%     ScapAng_fbtilt_current_trial(i) = Scap_Ang_fbtilt;
-%    ScapAng_prtract_current_trial(i) = Scap_Ang_proretract;
     %% Plotting EMGS
     %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     %
@@ -5637,11 +5609,11 @@ y_fit = LinReg1*x_values;
 
 % Saving x and y values for each person to get the average trajectory across
 % participants
-   savefile = [partid '_' num2str(expcond) 'xyvalsLinReg.mat'];
+%    savefile = [partid '_' num2str(expcond) 'xyvalsLinReg.mat'];
    
-   save(savefile, 'x_values', 'y_fit');
+%    save(savefile, 'x_values', 'y_fit');
 
-   hold on
+%    hold on
 
 %Binned Average Data for given condition
 
