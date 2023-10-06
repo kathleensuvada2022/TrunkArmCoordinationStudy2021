@@ -3631,8 +3631,11 @@ end
 % ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 % % 
 % % Trunk angles in Ti
- figure(50)
+
+figure(50)
 % %CalcEulerAng-XZY
+
+subplot(3,1,1)
 plot(smooth(Trunk_ANG_Ti(1,idx(1):idx(3))),'Color','b','Linewidth',2) %Flexion X
 hold on
 % xline(idx(1),'g','Linewidth',2)
@@ -3640,11 +3643,11 @@ hold on
 % legend('X axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Sagittal Plane (Deg) -Ti ','Fontsize',24)
+title (['Trunk Sagittal Plane (Deg)' ' ' partid ' ' 'Cond'  num2str(expcond) ],'Fontsize',24)
 %ylabel('Flexion                     Extension ','FontSize',24)
 ylabel('$\Longleftarrow$ Flexion Extension $\Longrightarrow$','Interpreter','latex','FontSize',26)
 % 
-figure(54)
+subplot(3,1,2)
 plot(smooth(Trunk_ANG_Ti(2,idx(1):idx(3))),'Color','r','Linewidth',2) % Twisting Z
 hold on
 % xline(idx(1),'g','Linewidth',2)
@@ -3652,12 +3655,12 @@ hold on
 % legend('Z axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Transverse Plane (Deg)-Ti ','Fontsize',24)
+title (['Trunk Transverse Plane (Deg)' ' ' partid ' ' 'Cond'  num2str(expcond) ],'Fontsize',24)
 %ylabel('Right                  Left','FontSize',24)
 ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',26)
 % 
 % 
-figure(56)
+subplot(3,1,3)
 plot(smooth(Trunk_ANG_Ti(3,idx(1):idx(3))),'Color','k','Linewidth',2) % Lat Bend Y
 hold on
 % xline(idx(1),'g','Linewidth',2)
@@ -3665,7 +3668,8 @@ hold on
 % legend('Y axis','Reach Start','Reach End','Fontsize',16)
 a = get(gca,'XTickLabel');  
 set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Trunk Coronal Plane (Deg)-Ti ','Fontsize',24)
+title (['Trunk Coronal Plane (Deg)' ' ' partid ' ' 'Cond'  num2str(expcond) ],'Fontsize',24)
+
 %ylabel('Left                      Right','FontSize',24)
 ylabel('$\Longleftarrow$ Left Right $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
@@ -4383,7 +4387,7 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     sh_Z_ex_current_trial(i) = sh_Z_ex;
     
     trex_current_trial(i) = trunk_exc;
-%% Computing Changes in Trunk Kinematics 
+%% Computing Changes in Trunk Kinematics - October 2023
 
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
@@ -5459,7 +5463,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 end
 
-
+% End of Loop going through each trial  
 
 %%  Summer 2023- Angle Angle Plot
 
@@ -5656,6 +5660,15 @@ ylim([0 90])
 %   DataMatrix = AllData;
 
 save FullDataMatrix.mat DataMatrix
+
+
+%% Saving Trunk Kinematics to Separate Matrix  
+
+% Final- Initial for all 3 trunk Angles: all trials
+   savefile = [partid '_' num2str(expcond) 'TrunkKinematics.mat'];
+   
+   save(savefile, 'Trunk_Angs_Trial');
+
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
 
