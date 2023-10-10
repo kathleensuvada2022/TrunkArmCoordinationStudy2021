@@ -194,9 +194,9 @@ for i=1: length(mtrials)
              %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
    %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-%        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -5583,16 +5583,16 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Plotting the Average and STD Binned Trace for all trials in given Condition
 
 % Plotting Average Traces and all Trials- Smoothed Version
-figure()
-for m = 1:size(Hum_Ang_T_current_trial,1)
-%    avgHumtraj all trials      avgElbtraj across trials  
-plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),smooth(ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),'Linewidth',2.5)
-hold on
-xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
-ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title(['Elbow Flexion/Extension vs Shoulder Flexion Extension EXP Cond:' num2str(expcond)],'FontSize',32)
-axis equal
-end
+% figure()
+% for m = 1:size(Hum_Ang_T_current_trial,1)
+% %    avgHumtraj all trials      avgElbtraj across trials  
+% plot(smooth(HumAng_Avg_PerBin),smooth(ElbAng_Avg_PerBin),smooth(Hum_Ang_T_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),smooth(ElbAng_current_trial(m,idx_alltrials(m,1):idx_alltrials(m,3))),'Linewidth',2.5)
+% hold on
+% xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
+% ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
+% title(['Elbow Flexion/Extension vs Shoulder Flexion Extension EXP Cond:' num2str(expcond)],'FontSize',32)
+% axis equal
+% end
 
 
 %% Plotting Average Traces Centered and Fit to a Linear Regression
@@ -5601,8 +5601,8 @@ end
 figure(66) 
 
 if isnan(ElbAng_Avg_PerBin(1)) || isnan(HumAng_Avg_PerBin(1))
-LinReg1 = regress(ElbAng_Avg_PerBin-ElbAng_Avg_PerBin(2),HumAng_Avg_PerBin-HumAng_Avg_PerBin(2));
-x_values = linspace(ceil(min(HumAng_Avg_PerBin-HumAng_Avg_PerBin(2))),ceil(max(HumAng_Avg_PerBin-HumAng_Avg_PerBin(2))),100);
+LinReg1 = regress(ElbAng_Avg_PerBin-ElbAng_Avg_PerBin(3),HumAng_Avg_PerBin-HumAng_Avg_PerBin(3));
+x_values = linspace(ceil(min(HumAng_Avg_PerBin-HumAng_Avg_PerBin(3))),ceil(max(HumAng_Avg_PerBin-HumAng_Avg_PerBin(3))),100);
 else 
 LinReg1 = regress(ElbAng_Avg_PerBin-ElbAng_Avg_PerBin(1),HumAng_Avg_PerBin-HumAng_Avg_PerBin(1));
 x_values = linspace(ceil(min(HumAng_Avg_PerBin-HumAng_Avg_PerBin(1))),ceil(max(HumAng_Avg_PerBin-HumAng_Avg_PerBin(1))),100);
@@ -5613,16 +5613,16 @@ y_fit = LinReg1*x_values;
 
 % Saving x and y values for each person to get the average trajectory across
 % participants
-%    savefile = [partid '_' num2str(expcond) 'xyvalsLinReg.mat'];
+   savefile = [partid '_' num2str(expcond) 'xyvalsLinReg.mat'];
    
-%    save(savefile, 'x_values', 'y_fit');
+    save(savefile, 'x_values', 'y_fit');
 
-%    hold on
+   hold on
 
 %Binned Average Data for given condition
 
 % Restrained -Red 
-%              plot(x_values,y_fit,'Linewidth', 1,'Color','r')
+%               plot(x_values,y_fit,'Linewidth', 1,'Color','r')
 %                  plot(x_values,y_fit,'Linewidth', 3.5,'Color','r')
 %              plot(x_values,y_fit,'Linewidth', 4.5,'Color','r')
 
@@ -5640,7 +5640,7 @@ y_fit = LinReg1*x_values;
 % plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS2011: Non-Paretic','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS1003','FontSize',32)
 axis equal
 % legend('Linear Reg',' Avg Trajectory for Condition','FontSize',28)
 
@@ -5665,9 +5665,9 @@ save FullDataMatrix.mat DataMatrix
 %% Saving Trunk Kinematics to Separate Matrix  
 
 % Final- Initial for all 3 trunk Angles: all trials
-   savefile = [partid '_' num2str(expcond) 'TrunkKinematics.mat'];
+   savefileTRUNK = [partid '_' num2str(expcond) 'TrunkKinematics.mat'];
    
-   save(savefile, 'Trunk_Angs_Trial');
+   save(savefileTRUNK, 'Trunk_Angs_Trial');
 
 
 %% Printing out the max reach, std, shoulder and trunk displacement and std
