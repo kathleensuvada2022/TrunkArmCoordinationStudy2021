@@ -1590,7 +1590,7 @@ title('Overhead View of Reach- GCS' ,'FontSize',16)
 xlabel('X position (mm)','FontSize',14)
 ylabel('Y position (mm)','FontSize',14)
 
-% pause
+%  pause
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -5640,7 +5640,7 @@ y_fit = LinReg1*x_values;
 % plot(smooth(HumAng_Avg_PerBin-HumAng_STD_PerBin),smooth(ElbAng_Avg_PerBin-ElbAng_STD_PerBin),'--','Linewidth',1,'Color','k')
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS1003','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion Extension RTIS1006','FontSize',32)
 axis equal
 % legend('Linear Reg',' Avg Trajectory for Condition','FontSize',28)
 

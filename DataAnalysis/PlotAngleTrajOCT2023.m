@@ -24,7 +24,7 @@ plot(AVGXCOND6_FINAL,AVGYCOND6_FINAL,'Linewidth', 10.5,'Color','b')
 legend('Trunk Restrained Table','Trunk Restrained 25','Trunk Restrained 50','Trunk Unrestrained Table','Trunk Unrestrained 25','Trunk Unrestrained 50','FontSize',20)
 xlabel('Shoulder Flexion/Extension (Deg)','FontSize',24)
 ylabel('Elbow Flexion/Extension (Deg)','FontSize',24)
-title('Elbow Flexion/Extension vs Shoulder Flexion/Extension: Paretic Limb (N=9)','FontSize',32)
+title('Elbow Flexion/Extension vs Shoulder Flexion/Extension: CONTROLS (N=4)','FontSize',32)
 axis equal
 
 % Define the center and radius of the circle
