@@ -68,9 +68,17 @@ model7 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Controls,REML = TRUE)
 anova(model6, model7)
 tab_model(model6, show.df = TRUE) #Controls
 
+AllData_Stroke$RDLL2 = AllData_Stroke$RDLL/100
+AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, .999, AllData_Stroke$RDLL2)
+
+# Beta Regression October 2023
+m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
 
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
 model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , data = AllData_Stroke,REML = TRUE)
+
+
+
 #Omitting Restraint to Test Effect of Restraint on RDLL
 model9 <- lmer(RDLL ~ Loading * ARM +(1 | ID), data = AllData_Stroke,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
