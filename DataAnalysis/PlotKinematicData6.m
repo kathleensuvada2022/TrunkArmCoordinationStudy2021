@@ -195,11 +195,11 @@ for i=1: length(mtrials)
         %    for mac
 
 % For continuous loading of data - Oct 2023
- load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+%  load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
 %For running one condition at a time
-%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
              %       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
    %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
@@ -4403,8 +4403,8 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing Average velocity in given trial - October 2023
-    Vel_Trial(1,i) = nanmean(abs(vel(idx(1):idx(3)))); %in mm/s
+%% Computing peak velocity in given trial - October 2023
+    Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
      
 
 
@@ -5409,7 +5409,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 % Reaching Measures
-DataMatrix{1,14} = 'Avg Vel';
+DataMatrix{1,14} = 'Peak Vel';
     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
