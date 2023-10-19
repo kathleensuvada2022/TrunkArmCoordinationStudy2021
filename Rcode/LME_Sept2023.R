@@ -12,7 +12,7 @@ library(emmeans)
 library(lmerTest)
 library(sjPlot)
 
-
+AllData_Stroke_Paretic = AllData_Stroke_Paretic_VELS
 # Paretic Limb- restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
 AllData_Stroke_Paretic$Loading = as.factor(AllData_Stroke_Paretic$Loading)
@@ -45,7 +45,17 @@ AllData_Controls$ID = as.factor(AllData_Controls$ID)
 
 
 #Paretic Limb
+# Beta Regression Model
+AllData_Stroke_Paretic$RDLL2 = AllData_Stroke_Paretic$RDLL/100
+AllData_Stroke_Paretic$RDLL2 = ifelse(AllData_Stroke_Paretic$RDLL2 > 1, .999, AllData_Stroke_Paretic$RDLL2)
+mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=beta_family(link = "logit"))
+mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=ordbeta(link = "logit"))
+tab_model(mod2Beta, show.df = TRUE) # Paretic Limb
+
+#LME
 model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, REML = TRUE)
+
+
 #Omitting Restraint to Test Effect of Restraint on RDLL
 model3 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
@@ -54,8 +64,18 @@ tab_model(model2, show.df = TRUE) # Paretic Limb
 print(model2)
 
 #Non-Paretic Limb 
+
+#Beta Regression
+Non_Paretic_Edited_AUG2023$RDLL2 = Non_Paretic_Edited_AUG2023$RDLL/100
+Non_Paretic_Edited_AUG2023$RDLL2 = ifelse(Non_Paretic_Edited_AUG2023$RDLL2 > 1, .999, Non_Paretic_Edited_AUG2023$RDLL2)
+#mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=ordbeta(link = "logit"))
+mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=beta_family(link = "logit"))
+tab_model(mod3Beta, show.df = TRUE) # Non-Paretic Limb
+
+#LME
 model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
 model5 <- lmer(RDLL ~ Loading +(1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
+
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model4, model5)
 tab_model(model4, show.df = TRUE) # Non-Paretic Limb
@@ -73,7 +93,8 @@ AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, .999, AllData_Stroke$RDL
 
 # Beta Regression October 2023
 m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
-
+m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+tab_model(m, show.df = TRUE)
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
 model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , data = AllData_Stroke,REML = TRUE)
 
