@@ -1,8 +1,12 @@
 ## Linear Mixed Effects Model - September 2023
 
 
-install.packages("lme4")  # Install the lme4 package
+#install.packages("lme4")  # Install the lme4 package
 
+library( tidyverse )
+library( glmmTMB )
+# library( tictoc ) # not used
+library( ggeffects )
 library(Matrix) # Need to load in package matrix to load in LME4
 library(ggplot2)
 library(lme4)
@@ -26,7 +30,10 @@ Non_Paretic_Edited_AUG2023$ID = as.factor(Non_Paretic_Edited_AUG2023$ID)
 
 # Both Limbs Stroke- restraint, loading,limb,ID categorical variables
 AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
-AllData_Stroke$Loading = as.factor(AllData_Stroke$Loading)
+AllData_Stroke$Loading_C = scale(AllData_Stroke$Loading, scale=FALSE) #centering the loading
+AllData_Stroke$Loading_0 = as.factor(ifelse(AllData_Stroke$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
+AllData_Stroke$Loading_25 = as.factor(ifelse(AllData_Stroke$Loading ==25,1,0))  
+AllData_Stroke$Loading_50 = as.factor(ifelse(AllData_Stroke$Loading ==50,1,0))  
 AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
 AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
@@ -47,7 +54,7 @@ AllData_Controls$ID = as.factor(AllData_Controls$ID)
 #Paretic Limb
 # Beta Regression Model
 AllData_Stroke_Paretic$RDLL2 = AllData_Stroke_Paretic$RDLL/100
-AllData_Stroke_Paretic$RDLL2 = ifelse(AllData_Stroke_Paretic$RDLL2 > 1, .999, AllData_Stroke_Paretic$RDLL2)
+AllData_Stroke_Paretic$RDLL2 = ifelse(AllData_Stroke_Paretic$RDLL2 > 1, 1, AllData_Stroke_Paretic$RDLL2)
 mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=beta_family(link = "logit"))
 mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=ordbeta(link = "logit"))
 tab_model(mod2Beta, show.df = TRUE) # Paretic Limb
@@ -67,9 +74,9 @@ print(model2)
 
 #Beta Regression
 Non_Paretic_Edited_AUG2023$RDLL2 = Non_Paretic_Edited_AUG2023$RDLL/100
-Non_Paretic_Edited_AUG2023$RDLL2 = ifelse(Non_Paretic_Edited_AUG2023$RDLL2 > 1, .999, Non_Paretic_Edited_AUG2023$RDLL2)
-#mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=ordbeta(link = "logit"))
-mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=beta_family(link = "logit"))
+Non_Paretic_Edited_AUG2023$RDLL2 = ifelse(Non_Paretic_Edited_AUG2023$RDLL2 > 1, 1, Non_Paretic_Edited_AUG2023$RDLL2)
+mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=ordbeta(link = "logit"))
+#mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=beta_family(link = "logit"))
 tab_model(mod3Beta, show.df = TRUE) # Non-Paretic Limb
 
 #LME
@@ -89,12 +96,27 @@ anova(model6, model7)
 tab_model(model6, show.df = TRUE) #Controls
 
 AllData_Stroke$RDLL2 = AllData_Stroke$RDLL/100
-AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, .999, AllData_Stroke$RDLL2)
+AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, 1, AllData_Stroke$RDLL2)
 
 # Beta Regression October 2023
-m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
-m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+#m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
+#m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+m = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+#m = glmmTMB(formula= RDLL2 ~ Loading_B + ARM + Restraint +  Loading_B : ARM  + Restraint : ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+
+# separating loading terms
+#m_loading = glmmTMB(formula= RDLL2 ~ Loading_0+Loading_25+Loading_50+ARM+Restraint+
+ #                     Loading_0:ARM+Loading_25:ARM+Loading_50:ARM+Restraint:ARM +(1 | ID),data= AllData_Stroke,family=ordbeta(link = "logit"))
+
+#m_loading = glmmTMB(formula= RDLL2 ~ Loading_0+Loading_50+ARM+Restraint+
+#                      Loading_0:ARM+Loading_50:ARM+Restraint:ARM +(1 | ID),data= AllData_Stroke,family=ordbeta(link = "logit"))
+
 tab_model(m, show.df = TRUE)
+summary(m)
+# Plotting 
+plot(ggpredict(m, terms = c("Loading_C", "ARM")))
+plot(ggpredict(m, terms = c("Restraint", "ARM")))
+
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
 model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , data = AllData_Stroke,REML = TRUE)
 
