@@ -22,8 +22,8 @@ plot(AVGXCOND5_FINAL+30,AVGYCOND5_FINAL+90,'Linewidth', 9,'Color','b')
 plot(AVGXCOND6_FINAL+30,AVGYCOND6_FINAL+90,'Linewidth', 10.5,'Color','b')
 
 % legend('Trunk Restrained Table','Trunk Restrained 25','Trunk Restrained 50','Trunk Unrestrained Table','Trunk Unrestrained 25','Trunk Unrestrained 50','FontSize',20)
-xlabel('← Shoulder Extension | Flexion → (°)','FontSize',24)
-ylabel('← Elbow Flexion | Extension → (°)','FontSize',24)
+xlabel('← Shoulder Extension | Shoulder Flexion → (°)','FontSize',30)
+ylabel('← Elbow Flexion | Elbow Extension → (°)','FontSize',30)
 % title('Elbow Flexion/Extension vs Shoulder Flexion/Extension: Controls (N=4)','FontSize',32)
 axis equal
 
