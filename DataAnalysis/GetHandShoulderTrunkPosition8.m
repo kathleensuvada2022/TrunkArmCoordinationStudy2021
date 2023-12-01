@@ -443,7 +443,7 @@ for i=1:nimag % loop through time points
     
     BLg=Tftom *[bl{4}(4,1:3) 1]'; %Grabbing 3rd MCP
     xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time
-    lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); %what is this?
+%     lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2); 
 
     % For OL,RS,US for Forearm
     BLg=Tftom *[bl{4}(1,1:3) 1]'; %Grabbing RS and computing in GCS
@@ -464,7 +464,7 @@ for i=1:nimag % loop through time points
    
     EM_GCS(i,:)=BLg_h(1:3,1)'; % X Y Z of the EM in global cs and rows are time
     EL_GCS(i,:)=BLg_h(1:3,2)'; % X Y Z of the EL in global cs and rows are time
-    GH_Dig_GCS(i,:)=BLg_h(1:3,3)'; % X Y Z of the EL in global cs and rows are time
+    GH_Dig_GCS(i,:)=BLg_h(1:3,3)'; % X Y Z of the GH Dig in global cs and rows are time
 
 % Shoulder
     % for the acromion using the shoulder marker
@@ -488,8 +488,6 @@ for i=1:nimag % loop through time points
     BLg2d = (Tstom) *[bl{2}(5,1:3) 1]'; %PC
     xpc(i,:) = BLg2d(1:3,1)';
     
-
-
 
     HTstoG(:,:,i) = (Tstom) * ScapCoord; % HT of SCAP CS in GCS at all frames of trial.
 

@@ -195,7 +195,7 @@ for i=1: length(mtrials)
         %    for mac
 
 % For continuous loading of data - Oct 2023
-   load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+%    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
 %For running one condition at a time
@@ -5351,8 +5351,11 @@ end
 ElbAng_current_trial(i,1:length(t)) = 180-ELB_ANG_MAT(1,1:length(t));
 Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
-    
-    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+    % Below is from the EXP file measured by hand at time of experiment-
+  
+    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10
+
+    % Replacing with the computed Limb Length via BonyLandmarks
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
