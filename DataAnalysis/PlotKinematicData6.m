@@ -4154,6 +4154,38 @@ end
 % Gives MCP3 in Humerus CS at all frames of trial
 xhand_Hum = xhand_Hum'; 
 
+%% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
+
+% EM_Hum = zeros(4,length(EM_GCS));
+% EM_forhumcalc = [EM_GCS repmat(1,length(EM_GCS),1)];
+% EM_forhumcalc = EM_forhumcalc';
+% 
+% EL_Hum = zeros(4,length(EL_GCS));
+% EL_forhumcalc = [EL_GCS repmat(1,length(EL_GCS),1)];
+% EL_forhumcalc = EL_forhumcalc';
+% 
+% for r = 1 :length(EM_GCS)
+%     % 3rd MCP in Hum  = HT G to H * EM in G
+% EM_Hum(:,r) =  inv(Hum_CS_G(:,:,r))*EM_forhumcalc(:,r);
+% EL_Hum(:,r) =  inv(Hum_CS_G(:,:,r))*EL_forhumcalc(:,r);
+% end
+% 
+% % Gives EM and EL in Humerus CS at all frames of trial
+% EM_Hum = EM_Hum'; 
+% EL_Hum = EL_Hum'; 
+
+
+%% Computing Limb Length Via BonyLandmarks
+
+% Length 1
+
+% L1 = (EM_Hum+EL_Hum)/2;
+% 
+% L2 = sqrt((xhand_Hum(idx(1),1)-L1(idx(1),1))^2+(xhand_Hum(idx(1),2)-L1(idx(1),2))^2+(xhand_Hum(idx(1),3)-L1(idx(1),3))^2);
+% 
+% L1 = sqrt(L1(idx(1),1)^2+ L1(idx(1),2)^2+ L1(idx(1),3)^2)
+% 
+% LimbLengthBL = L1+L2
 %%
  % September 2022
  
@@ -5355,7 +5387,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
   
     armlength = (setup.exp.armLength+setup.exp.e2hLength)*10
 
-    % Replacing with the computed Limb Length via BonyLandmarks
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
