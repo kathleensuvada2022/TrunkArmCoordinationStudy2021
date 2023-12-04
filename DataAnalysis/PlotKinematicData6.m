@@ -2341,6 +2341,8 @@ for i=1: length(mtrials)
     %Loading in Max EMGs
          load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
 
+
+         % clean_data_trial_TRIALNUM.mat 
          emg= data.daq{1,2};
          emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
     %
