@@ -2341,10 +2341,12 @@ for i=1: length(mtrials)
     %Loading in Max EMGs
          load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
 
-
-         % clean_data_trial_TRIALNUM.mat 
-         emg= data.daq{1,2};
-         emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
+         % Loading in clean EMGS
+         emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
+         emg = emg.cleandata ;
+        % emg= data.daq{1,2}; non cleaned up data
+         
+        emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
     %
     %% Computing the start of the reach
     
@@ -4442,7 +4444,7 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
      
 
     %% Plotting EMGS
-    %  [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
+   [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
     %
     %  emgvel_trial(i,:) = emg_timevel;
     %  emgstart_trial(i,:) = emg_timestart;

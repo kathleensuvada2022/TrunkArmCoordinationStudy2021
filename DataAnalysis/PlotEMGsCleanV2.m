@@ -9,7 +9,7 @@ figure(2)
 sampRate=1000;
 avgwindow=0.25; ds=sampRate*avgwindow;
 nEMG=size(emg,2);
-t=(0:size(emg,1)-1)/sampRate; % Assuming sampling rate is 1000 Hz
+t=(0:size(emg,1)-1)/sampRate; 
 avgwindow=0.25; ds=sampRate*avgwindow;
 emg=abs(detrend(emg));
 meanEMG=movmean(emg,ds);
@@ -30,8 +30,6 @@ memg=max([max(emg(:,idx1));[max(emg(:,idx2)) 0]]);
 yspacing=cumsum([0 memg(2:nEMG)+.9]);
 %% Trunk muscles
 
-% ***** NOTE **** Shift EMG muscles back by 50 ms because they occur earlier than the
-% movement itself.. Move back 
 subplot(5,2,3)
 line(t,emg(:,idx1(1)))
 title(emgchan(idx1(1)))
