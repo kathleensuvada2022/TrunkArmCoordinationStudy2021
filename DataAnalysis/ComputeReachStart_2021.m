@@ -25,19 +25,10 @@
 %%
 
 function [dist,vel,idx,timestart, timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
-%% Finding Time Points
+
 
 idx=zeros(1,4); % creating variable with the indices of vel and distance
-% % Max distance
-% distmax = max(dist(1:70));
-% idx(3)= find(dist==distmax,1);
-% distmax = distmax+abs(min(dist));
-%
-% % Finding Max Vel
-% maxvel =max(vel(10:idx(3)));
-% idx(2)= find(vel==maxvel) ;
-% % Start Reach
-% idx(1) = find(abs(dist)>=abs(.06*max(dist)),1);% reach start when participant is 5% of max distance
+
 %% RTIS1002
 if  strcmp(partid,'RTIS1002')
     end_reach = find(vel(1:501)>=.05*max(vel(1:501)));
@@ -7082,7 +7073,7 @@ rangeZ= find(Zpos_act>.00005);
 rangeZ= find(Zpos_act>.00005);
 idx;
 timestart = t(idx(1));
-%timevelmax = t(idx(2));
+% timevelmax = t(idx(2));
 timedistmax = t(idx(3));
 
 % Start Time

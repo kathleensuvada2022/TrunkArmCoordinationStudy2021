@@ -2351,8 +2351,9 @@ for i=1: length(mtrials)
     %% Computing the start of the reach
     
     
-    [dist,vel,idx,timestart, timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
+    [dist,vel,idx,timestart,timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
+
     % Saving idx variable for each trial 
 
     idx_alltrials(i,:) = idx;
@@ -4439,16 +4440,18 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing peak velocity in given trial - October 2023
-    Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
-     
+%% Computing peak velocity in given trial - Oct/Nov/Dec 2023
 
+Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
+Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
+idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
+timevelmax = t2(idx(2)); % time max vel max is at in seconds
     %% Plotting EMGS
-   [emg_timevel emg_timestart]= PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)% disp([partid ' ' expcondname{expcond} ' trial ' num2str(i)])
-    %
-    %  emgvel_trial(i,:) = emg_timevel;
-    %  emgstart_trial(i,:) = emg_timestart;
+close all
     
+   PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+
+    pause
     
 
     %% Main Cumulative Metria Figure
@@ -5389,7 +5392,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
     % Below is from the EXP file measured by hand at time of experiment-
   
-    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10
+    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
 
  
 
@@ -5416,10 +5419,10 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %     %         DataMatrix{nextrow+1,11} = shex_current_trial(i)/armlength*100;
 %
 %%  If Participant already exists in Matrix
- 
-    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    FinalRow = trialrow(Currentrow);
+%  
+%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+%     FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5436,19 +5439,19 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
    % Check for making sure the conditions align from the loaded Matrix
-    if DataMatrix{FinalRow,2} == expcond
-        DataMatrix{FinalRow,2} = expcond;
-
-    else
-        'Mismatched EXP COND! '
-%         pause
-    end
+%     if DataMatrix{FinalRow,2} == expcond
+%         DataMatrix{FinalRow,2} = expcond;
+% 
+%     else
+%         'Mismatched EXP COND! '
+% %         pause
+%     end
 
 
 
 % Reaching Measures
-DataMatrix{1,14} = 'Peak Vel';
-    DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
+% DataMatrix{1,14} = 'Peak Vel';
+%     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
 %     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
@@ -5717,7 +5720,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
-save FullDataMatrix.mat DataMatrix
+% save FullDataMatrix.mat DataMatrix
 
 
 %% Saving Trunk Kinematics to Separate Matrix  
