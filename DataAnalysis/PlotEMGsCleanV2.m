@@ -17,10 +17,10 @@ meanEMG=movmean(emg,ds);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL
 
-emg_idxstart= round(timestart*1000);
-emg_idxvel = round(timevelmax*1000);
-emg_timestart = emg(emg_idxstart,:);
-emg_timevel = emg(emg_idxvel,:);
+% emg_idxstart= round(timestart*1000);
+% emg_idxvel = round(timevelmax*1000);
+% emg_timestart = emg(emg_idxstart,:);
+% emg_timevel = emg(emg_idxvel,:);
 
 
 idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];

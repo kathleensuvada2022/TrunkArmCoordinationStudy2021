@@ -1859,7 +1859,7 @@ for i=1: length(mtrials)
         
         if sum(sum(isnan(xhand)))>0 %checking if  xhand has NANs
             
-            'NANS PRESENT IN XHAND'
+       %     'NANS PRESENT IN XHAND'
             
             filled_data =   find(isnan(xhand(1:250)));
             
@@ -1983,7 +1983,7 @@ for i=1: length(mtrials)
         
         
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
-            'NANS PRESENT in XJUG'
+       %     'NANS PRESENT in XJUG'
             filled_data =   find(isnan(xjug(1:250)));
             
             if strcmp(partid,'RTIS1006') &&  expcond >3
@@ -2342,9 +2342,10 @@ for i=1: length(mtrials)
          load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
 
          % Loading in clean EMGS
-         emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
-         emg = emg.cleandata ;
-        % emg= data.daq{1,2}; non cleaned up data
+%          emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
+%          emg = emg.cleandata ;
+
+emg= data.daq{1,2}; 
          
         emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
     %
@@ -2539,7 +2540,7 @@ for i=1: length(mtrials)
     gh = xghest;
     
     if sum(sum(isnan(gh)))>0  % Checking if GH has NANS
-        'NANS PRESENT in GH'
+       % 'NANS PRESENT in GH'
         
         filled_data =   find(isnan(gh(1:250))); %rows of NANs
         if strcmp(partid,'RTIS1006') &&  expcond >3
@@ -2843,8 +2844,8 @@ s3_start = norm(gh(idx(1),1:3)-H_Mid_F(idx(1),1:3));
 
 [ang1 ang2 ang3]=triangle(s1_start,s2_start,s3_start);
 
-'Elbow Angle at Start - Law of Cosines'
-ang3
+% 'Elbow Angle at Start - Law of Cosines'
+% ang3
 
 
 s1_end = norm(H_Mid_F(idx(3),1:3)-H_Mid_H(idx(3),1:3));
@@ -2853,8 +2854,8 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 [ang1 ang2 ang3]=triangle(s1_end,s2_end,s3_end);
 
-'Elbow Angle at End-Law of Cosines'
-ang3
+% 'Elbow Angle at End-Law of Cosines'
+% ang3
 
 
 
