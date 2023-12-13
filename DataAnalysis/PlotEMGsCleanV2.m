@@ -1,6 +1,7 @@
 function PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
-cleandata=KaceyNotchfilter(emg);
+%cleandata=KaceyNotchfilter(emg);
+cleandata = emg;
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 %clf
 figure(2)
@@ -11,9 +12,14 @@ avgwindow=0.25; ds=sampRate*avgwindow;
 nEMG=size(emg,2);
 t=(0:size(emg,1)-1)/sampRate; 
 avgwindow=0.25; ds=sampRate*avgwindow;
-emg=abs(detrend(emg));
+%emg=abs(detrend(emg));
 meanEMG=movmean(emg,ds);
-% memg=max(emg);
+%emg = emg2;
+%%%%%%%%%
+%!!!! for all time points timestart-.05; %time 50 ms prior to start of reach
+
+%%
+     % memg=max(emg);
 % Subplot1 - LES,LRA,LEO,LIO,UT,MT,LD,PM
 % Subplot2 - RES,RRA,REO,RIO,BIC,TRI,IDEL
 
@@ -36,7 +42,7 @@ title(emgchan(idx1(1)))
 % pause
 cla
 subplot(5,2,3)
-line(t,abs(cleandata(:,idx1(1))))
+line(t,(cleandata(:,idx1(1))))
 yl=ylim;
 hold on
 plot(t,meanEMG(:,idx1(1)),'LineWidth',1,'Color','g')
@@ -51,7 +57,7 @@ title(emgchan(idx2(1)))
 
 cla
 subplot(5,2,4)
-line(t,abs(cleandata(:,idx2(1))))
+line(t,(cleandata(:,idx2(1))))
 hold on
 plot(t,meanEMG(:,idx2(1)),'LineWidth',1,'Color','g')
 yl=ylim;
@@ -66,7 +72,7 @@ title(emgchan(idx1(2)))
 %pause
 cla
 subplot(5,2,5)
-line(t,abs(cleandata(:,idx1(2))))
+line(t,(cleandata(:,idx1(2))))
 hold on
 plot(t,meanEMG(:,idx1(2)),'LineWidth',1,'Color','g')
 yl=ylim;
@@ -81,7 +87,7 @@ title(emgchan(idx2(2)))
 %pause
 cla
 subplot(5,2,6)
-line(t,abs(cleandata(:,idx2(2))))
+line(t,(cleandata(:,idx2(2))))
 hold on
 plot(t,meanEMG(:,idx2(2)),'LineWidth',1,'Color','g')
 yl=ylim;
@@ -96,7 +102,7 @@ title(emgchan(idx1(3)))
 % pause
 cla
 subplot(5,2,7)
-line(t,abs(cleandata(:,idx1(3))))
+line(t,(cleandata(:,idx1(3))))
 hold on
 plot(t,meanEMG(:,idx1(3)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -111,7 +117,7 @@ title(emgchan(idx2(3)))
 % pause
 cla
 subplot(5,2,8)
-line(t,abs(cleandata(:,idx2(3))))
+line(t,(cleandata(:,idx2(3))))
 hold on
 plot(t,meanEMG(:,idx2(3)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -126,7 +132,7 @@ title(emgchan(idx1(4)))
 % pause
 cla
 subplot(5,2,9)
-line(t,abs(cleandata(:,idx1(4))))
+line(t,(cleandata(:,idx1(4))))
 hold on
 plot(t,meanEMG(:,idx1(4)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -141,7 +147,7 @@ title(emgchan(idx2(4)))
 % pause
 cla
 subplot(5,2,10)
-line(t,abs(cleandata(:,idx2(4))))
+line(t,(cleandata(:,idx2(4))))
 hold on
 plot(t,meanEMG(:,idx2(4)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -159,7 +165,7 @@ title(emgchan(idx1(5)))
 % pause
 cla
 subplot(5,2,3)
-line(t,abs(cleandata(:,idx1(5))))
+line(t,(cleandata(:,idx1(5))))
 hold on
 plot(t,meanEMG(:,idx1(5)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -174,7 +180,7 @@ title(emgchan(idx2(5)))
 % pause
 cla
 subplot(5,2,4)
-line(t,abs(cleandata(:,idx2(5))))
+line(t,(cleandata(:,idx2(5))))
 hold on
 plot(t,meanEMG(:,idx2(5)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -189,7 +195,7 @@ title(emgchan(idx1(6)))
 %pause
 cla
 subplot(5,2,5)
-line(t,abs(cleandata(:,idx1(6))))
+line(t,(cleandata(:,idx1(6))))
 hold on
 plot(t,meanEMG(:,idx1(6)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -204,7 +210,7 @@ title(emgchan(idx2(6)))
 % pause
 cla
 subplot(5,2,6)
-line(t,abs(cleandata(:,idx2(6))))
+line(t,(cleandata(:,idx2(6))))
 hold on
 plot(t,meanEMG(:,idx2(6)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -218,7 +224,7 @@ line(t,emg(:,idx1(7)))
 title(emgchan(idx1(7)))
 cla
 subplot(5,2,7)
-line(t,abs(cleandata(:,idx1(7))))
+line(t,(cleandata(:,idx1(7))))
 hold on
 plot(t,meanEMG(:,idx1(7)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -233,7 +239,7 @@ title(emgchan(idx2(7)))
 
 cla
 subplot(5,2,8)
-line(t,abs(cleandata(:,idx2(7))))
+line(t,(cleandata(:,idx2(7))))
 hold on
 plot(t,meanEMG(:,idx2(7)),'LineWidth',2,'Color','g')
 yl=ylim;
@@ -247,7 +253,7 @@ line(t,emg(:,idx1(8)))
 title(emgchan(idx1(8)))
 cla
 subplot(5,2,9)
-line(t,abs(cleandata(:,idx1(8))))
+line(t,(cleandata(:,idx1(8))))
 hold on
 plot(t,meanEMG(:,idx1(8)),'LineWidth',2,'Color','g')
 yl=ylim;
