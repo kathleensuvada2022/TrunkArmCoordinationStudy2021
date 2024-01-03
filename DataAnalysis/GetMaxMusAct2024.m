@@ -1,6 +1,4 @@
-
-
-function maxEMG=GetMaxMusAct3NEW(flpath,basename,setfname,partid,plotflag,hand)
+function maxEMG=GetMaxMusAct2024(flpath,basename,setfname,partid,plotflag,hand)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
 % which contains the following matrices:
 % Inputs: basename: triacleal file name (before index)
@@ -43,20 +41,83 @@ for j=1:length(trials)
 
     emg=detrend(data(:,1:15)); %updated 12.2023- using raw not filtered maxes
     % Rectify EMG
-    emg=abs(emg);
+
+    %     emg=abs(emg);
 
     emg = emg-repmat(mean(emg(1:250,:)),length(emg),1); %removes baseline
+    %% SETTING NOISE FILLED CHANNELS TO 0
 
-    % Compute the mean EMG
-    meanEMG=movmean(emg,ds);
+    % For use when entire trial is bad and need to set values to 0 for
+    % given channel.
 
-    % Find maximum EMG
-    [maxTEMG(j,:),maxtidx(j,:)]=max(meanEMG);
+    if strcmp(partid,'RTIS2001')  && strcmp(hand,'Right')
+%         if j==34 %trial num
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+%         elseif j==1
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+% 
+%         elseif j==2
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+% 
+%         elseif j==37
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+% 
+%         elseif j==21
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+%         elseif j==33
+%             iemg=2;% RES Noise
+%             emg(:,iemg) = 0;
+%         end
+    end
 
 
-    if 1 %plotting each trial j = trial num
+%%
+% Compute the mean EMG
+meanEMG=movmean(emg,ds);
+% Find maximum EMG
+[maxTEMG(j,:),maxtidx(j,:)]=max(meanEMG);
+
+%% Skipping Samples where Artifacts Occur 2024
+if strcmp(partid,'RTIS2001')  && strcmp(hand,'Right')  % Name of folder containing artifact trial. Include "/" at the end.
+
+    % KACEY 2024- NOTE TRIAL !!! JUST USE j! Not trials.j
+    if strcmp(trials(j).name,'trial1.mat') % Trial containing artifact
+        % In order to exclude the artifact from the analysis, set upid
+        % and dnid to the beginning sample and final sample of the
+        % trial that excludes the artifact. iemg is the EMG channel
+        % that has the artifact.
+        %             upid=4500; dnid=5000; iemg=4;
+        %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif strcmp(trials(j).name,'trial1.mat')
+        %             upid=4500; dnid=5000; iemg=6;
+        %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif strcmp(trials(j).name,'trial34.mat')
+        %             upid=4900; dnid=5000; iemg=7;
+        %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif strcmp(trials(j).name,'trial34.mat')
+        %             upid=4900; dnid=5000; iemg=8;
+        %             [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %             maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+    end
+
+end
+
+    %% Plotting Individual Trials
+    % if 0 % change to 1 to plot individual trials
+
+    if  1
+%         pause
         figure(2)
-clf
+        clf
         t=(0:length(emg) - 1)/sampRate;
 
         rax = axes('position',[0.1,0.05,0.75,0.9]);
@@ -76,8 +137,10 @@ clf
         set(lax,'ColorOrder',co([2:end 1],:),'YLim',[-yspacing(end) memg(1)])
         plot(t,meanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
         ylabel 'V'
-                    pause
+         pause
     end
+
+
 end
 % %%
 
@@ -93,7 +156,7 @@ if plotflag
     t=(0:maxTlength - 1)/sampRate;
     for k=1:nEMG
         load([flpath basename num2str(maxidx(k))]);
-%         load([flpath trials(maxidx(k)).name]);
+        %         load([flpath trials(maxidx(k)).name]);
         newemg(:,k)=data(:,k);  % Each column is muscle and rows are whole trial over time where max occurs
     end
 end
@@ -120,7 +183,7 @@ print('-f1','-djpeg',[flpath '\MaxEMGs'])
 
 
 % Save results
- save([flpath '/maxEMG'],'maxEMG','maxidx')
+save([flpath '/maxEMG'],'maxEMG','maxidx')
 
 end
 

@@ -2348,7 +2348,7 @@ for i=1: length(mtrials)
 emg= data.daq{1,2}; 
     %    emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
  
-        emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
+%         emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
  
         % Subtract out baseline activity (normalized average) 250 ms 
         emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
