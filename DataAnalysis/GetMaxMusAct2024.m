@@ -162,10 +162,10 @@ if strcmp(partid,'RTIS2001')  && strcmp(hand,'Right') % Participant and Arm
                     upid=2000; dnid=5000; iemg=6;% REO
                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-
-                    upid=3300; dnid=5000; iemg=11;% LD
-                    [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-                    maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+% 
+%                     upid=3300; dnid=5000; iemg=11;% LD
+%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
 
     end
 
