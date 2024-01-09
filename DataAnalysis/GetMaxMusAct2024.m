@@ -42,7 +42,7 @@ for j=1:length(trials)
     emg=detrend(data(:,1:15)); %updated 12.2023- using raw not filtered maxes
     % Rectify EMG
 
-     emg=abs(emg);
+     emg=(emg);
 
     emg = emg-repmat(mean(emg(1:250,:)),length(emg),1); %removes baseline
     %% SETTING NOISE FILLED CHANNELS TO 0
@@ -181,13 +181,51 @@ for j=1:length(trials)
     end
 
     %% RTIS2002 Paretic Left
-        if strcmp(partid,'RTIS2002')  && strcmp(hand,'Left')
-        if j==34 %trial num
-
-        elseif j ==2
-     
+    if strcmp(partid,'RTIS2002')  && strcmp(hand,'Left')
+        if j ==4
+            iemg=7;% LIO
+            emg(:,iemg) = 0;
+        elseif j==33 %trial num
+            iemg=2;% RES
+            emg(:,iemg) = 0;
+        elseif j ==27
+            iemg=2;% RES
+            emg(:,iemg) = 0;
+        elseif j ==32
+            iemg=7;% LIO
+            emg(:,iemg) = 0;
+        elseif j ==34
+            iemg=7;% LIO
+            emg(:,iemg) = 0;
         end
-        end 
+    end
+
+    if strcmp(partid,'RTIS2002')  && strcmp(hand,'Right')
+        if j ==28
+            iemg=1;% LES
+            emg(:,iemg) = 0;
+        end
+    end
+
+    %% RTIS2003
+    if strcmp(partid,'RTIS2003')  && strcmp(hand,'Left')
+        if j ==3
+            iemg=2;% RES
+            emg(:,iemg) = 0;
+        elseif j ==14
+            iemg=2;% RES
+            emg(:,iemg) = 0;
+        elseif j==35 %trial num
+            iemg=2;% RES
+            emg(:,iemg) = 0;
+        elseif j ==27
+
+        elseif j ==32
+
+        elseif j ==34
+
+        end
+    end
 
 
 %% Computing Mean and Maxes after setting bad trials to 0 
@@ -264,48 +302,172 @@ if strcmp(partid,'RTIS2001')  && strcmp(hand,'Left') % Participant and Arm
 end
 
 if strcmp(partid,'RTIS2002')  && strcmp(hand,'Left') % Participant and Arm
+    if j==8
+        upid=1; dnid=2900; iemg=8;% RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    
+       elseif j==13
+        upid=1; dnid=2200; iemg=8;% RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
 
-    if j==15 % Trial containing artifact
+    elseif j==17 % Trial containing artifact
         % In order to exclude the artifact from the analysis, set upid
         % and dnid to the beginning sample and final sample of the
         % trial that excludes the artifact. iemg is the EMG channel
         % that has the artifact.
-%                     upid=2200; dnid=4000; iemg=5;% LEO
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-                    
-%                     upid=2000; dnid=5000; iemg=6;% REO
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-% 
-%                     upid=3300; dnid=5000; iemg=11;% LD
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=2050; dnid=5000; iemg=5;% LEO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+        %                     upid=2000; dnid=5000; iemg=6;% REO
+        %                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        %
+        %                     upid=3300; dnid=5000; iemg=11;% LD
+        %                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+    elseif j==26
+        upid=1; dnid=3400; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+        upid=1; dnid=3200; iemg=8; %RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
     elseif j==27
-%                     upid=3800; dnid=5000; iemg=11; %LD
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-    elseif j==28
-%         upid=1250; dnid=4500; iemg=12; %PM
-%         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=1; dnid=4200; iemg=8; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
     elseif j==29
-%                     upid=3800; dnid=5000; iemg=11; %LD
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=2000; dnid=5000; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+        upid=1800; dnid=5000; iemg=8; %RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==33
+        upid=4400; dnid=5000; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
     elseif j==34
-%                     upid=2200; dnid=3600; iemg=12; %PM
-%                     [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
-%                     maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=1900; dnid=2400; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==35
+        upid=1; dnid=1900; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==36
+        upid=2200; dnid=3200; iemg=7; %LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
 
     end
 
 end
 
+if strcmp(partid,'RTIS2002')  && strcmp(hand,'Right') % Participant and Arm
+    if j==8
+
+
+    elseif j==13
+
+
+    elseif j==17 % Trial containing artifact
+
+        %         upid=2050; dnid=5000; iemg=5;% LEO
+        %         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+    elseif j==25
+        upid=1; dnid=2800; iemg=11;% LD
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==26
+        upid=2800; dnid=5000; iemg=12;% PM
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==27
+        upid=2300; dnid=5000; iemg=12;% PM
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==28
+        upid=1900; dnid=2600; iemg=2;% RES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    
+        upid=1; dnid=4500; iemg=7;% LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+        upid=2200; dnid=5000; iemg=12;% PM
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==29
+        upid=1600; dnid=3400; iemg=1;% LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=2500; dnid=5000; iemg=12;% PM
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==30
+        upid=1500; dnid=3500; iemg=2;% RES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==33
+
+    elseif j==34
+
+    elseif j==35
+        upid=1; dnid=2550; iemg=1;% LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==37
+        upid=1200; dnid=2600; iemg=1;% LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        
+        upid=1700; dnid=2300; iemg=2;% RES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==38
+        upid=1; dnid=3500; iemg=7;% LIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif  j==39
+        upid=1500; dnid=5000; iemg=2;% RES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    end
+
+end
+
+if strcmp(partid,'RTIS2003')  && strcmp(hand,'Left') % Participant and Arm
+    if j==8
+
+
+
+    elseif j==17 % Trial containing artifact
+
+        %         upid=2050; dnid=5000; iemg=5;% LEO
+        %         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        %         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+
+
+
+
+    end
+end
     %% Plotting Individual Trials
     % if 0 % change to 1 to plot individual trials
 
-    if 0
+    if 1
 %         pause
         figure(2)
         clf
