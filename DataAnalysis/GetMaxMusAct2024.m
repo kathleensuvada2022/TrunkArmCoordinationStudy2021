@@ -21,6 +21,7 @@ sampRate= setup.daq.sRate;
 avgwindow=0.25; ds=sampRate*avgwindow;
 trials=dir([flpath '/*' basename '*.mat']);
 
+
 %emgchan = chanList(1:15);
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 nEMG= length(emgchan);
@@ -33,16 +34,16 @@ for j=1:length(trials)
     %Replace this line with however you load your data. Important to
     %include the code that selects the jth file
 
-    try load([flpath basename num2str(j)]);
+     load([flpath basename num2str(j)]);
         %         data= Totaldata.data %updated 10.2019
-    catch maxTEMG(j,:)=zeros(1,nEMG); continue % make comment about error after catch
-    end
+%     catch maxTEMG(j,:)=zeros(1,nEMG); continue % make comment about error after catch
+    
     %     Tlength(j)=length(data);
 
     emg=detrend(data(:,1:15)); %updated 12.2023- using raw not filtered maxes
     % Rectify EMG
 
-     emg=(emg);
+     emg=abs(emg);
 
     emg = emg-repmat(mean(emg(1:250,:)),length(emg),1); %removes baseline
     %% SETTING NOISE FILLED CHANNELS TO 0
@@ -685,7 +686,7 @@ end
     %% Plotting Individual Trials
     % if 0 % change to 1 to plot individual trials
 
-    if 1
+    if 0
 %         pause
         figure(2)
         clf
@@ -731,7 +732,7 @@ if plotflag
 end
 %% Plotting the trial where the max occurs per Muscle
 figure(1), clf
-newemg=detrend(abs(newemg));
+newemg=abs(detrend(newemg));
 newemg = newemg-repmat(mean(newemg(1:250,:)),length(newemg),1); %removes baseline
 newmeanEMG=movmean(newemg,ds);
 memg=max(newemg);
