@@ -367,6 +367,23 @@ for j=1:length(trials)
 
     end
 
+    if strcmp(partid,'RTIS1004')  && strcmp(hand,'Left') % Participant and Arm
+        if j <19
+            iemg=11;% LD
+            emg(:,iemg) = 0;
+
+        end
+    end
+  
+    if strcmp(partid,'RTIS1006')  && strcmp(hand,'Right') % Participant and Arm
+        if j ==30
+            iemg=3;% LRA
+            emg(:,iemg) = 0;
+
+        end
+    end
+
+
 %% Computing Mean and Maxes after setting bad trials to 0 
 
 % Compute the mean EMG
@@ -897,12 +914,51 @@ if strcmp(partid,'RTIS2011')  && strcmp(hand,'Right') % Participant and Arm
 end
 
 if strcmp(partid,'RTIS1003')  && strcmp(hand,'Left') % Participant and Arm
-    if j==17
+    if j ==2
+        upid=1400; dnid= 2400; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==3
+        upid=1000; dnid= 3500; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==9
+        upid=1; dnid= 3000; iemg=5;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==17
         upid=1; dnid= 2200; iemg=1;%LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+    elseif j ==35
+        upid=1; dnid= 2400; iemg=1;%LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+
+    elseif j ==36
+        upid=2600; dnid= 2800; iemg=1;%LES
         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
     end
 end
+
+if strcmp(partid,'RTIS1004')  && strcmp(hand,'Left') % Participant and Arm
+
+if j ==5
+        upid=1; dnid= 3000; iemg=5;%LEO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        
+        upid=1; dnid= 3000; iemg=9;%UT
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+              
+       
+
+end
+end
+
 
     %% Plotting Individual Trials
     % if 0 % change to 1 to plot individual trials
