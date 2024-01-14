@@ -829,16 +829,80 @@ if strcmp(partid,'RTIS2010')  && strcmp(hand,'Left') % Participant and Arm
         upid=1; dnid= 3500; iemg=2;%RES
         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
-
+    elseif j ==4
+        upid=3000; dnid= 4500; iemg=6;%REO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==5
+        upid=3500; dnid= 5000; iemg=6;%REO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==6
+        upid=1; dnid= 4000; iemg=5;%LEO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==7
+        upid=1; dnid= 3600; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==9
+        upid=1; dnid= 4000; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
     elseif j==12
-        upid=2000; dnid= 4000; iemg=2;%LRA
+        upid=2000; dnid= 4000; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+        upid=1; dnid= 1300; iemg=4;%RRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==13
+        upid=1500; dnid= 5000; iemg=8;%RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j==16
+        upid=1; dnid= 2800; iemg=3;%LRA
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    end
+end
+
+if strcmp(partid,'RTIS2011')  && strcmp(hand,'Left') % Participant and Arm
+ if j==28
+        upid=1; dnid= 2800; iemg=1;%LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+ end
+end
+
+if strcmp(partid,'RTIS2011')  && strcmp(hand,'Right') % Participant and Arm
+    if j==1
+        upid=2900; dnid= 5000; iemg=1;%LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==9
+        upid=1; dnid= 4600; iemg=8;%RIO
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==22
+        upid=1; dnid= 3300; iemg=2;%RES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    elseif j ==24
+        upid=1; dnid= 3500; iemg=2;%RES
         [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
         maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
 
     end
 end
 
-
+if strcmp(partid,'RTIS1003')  && strcmp(hand,'Left') % Participant and Arm
+    if j==17
+        upid=1; dnid= 2200; iemg=1;%LES
+        [maxTEMG(j,iemg),maxtidx(j,iemg)]=max(meanEMG(upid:dnid,iemg));
+        maxtidx(j,iemg)=maxtidx(j,iemg)+upid-1;
+    end
+end
 
     %% Plotting Individual Trials
     % if 0 % change to 1 to plot individual trials
