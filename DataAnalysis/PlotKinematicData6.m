@@ -2334,24 +2334,26 @@ for i=1: length(mtrials)
     %     end
     
     
-    %% Loading in EMGS
-
-    % Need to load in clean EMGs 
+    %% EMG Trial Data - Updated Jan 2024
  
-    %Loading in Max EMGs
-         load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
+    %Loading in Maxes
+    load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
 
-         % Loading in clean EMGS
-%          emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
-%          emg = emg.cleandata ;
+    % Clean EMG Trial Data
+    % emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
+    % emg = emg.cleandata ;
 
-emg= data.daq{1,2}; 
-    %    emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
- 
-%         emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
- 
-        % Subtract out baseline activity (normalized average) 250 ms 
-        emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
+    % Raw EMG Trial Data
+    emg= data.daq{1,2};
+
+    % Unrectified EMG
+    % emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:);
+
+    % Detrend and rectify EMG
+    emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:);
+
+    % Subtract out baseline activity (normalized average) 250 ms
+    emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
  
     %% Computing the start of the reach
     
@@ -4451,12 +4453,14 @@ Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
 Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
-    %% Plotting EMGS
-close all
+    %% Plotting EMG- Trial Data
+
+   close all
     
    PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
-    pause
+ 
+   pause
     
 
     %% Main Cumulative Metria Figure
