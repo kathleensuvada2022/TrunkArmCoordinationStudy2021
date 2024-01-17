@@ -1,5 +1,7 @@
 ## Linear Mixed Effects Model - September 2023
 
+# Includes most recent GLMMR Model from Fall/Winter 2023 and 2024
+
 
 #install.packages("lme4")  # Install the lme4 package
 

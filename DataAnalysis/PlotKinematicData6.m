@@ -2805,7 +2805,9 @@ Hum_CS_G = zeros(4,4,length(gh));
 
 % Creating Humerus CS 
 for h = 1:length(gh) 
-Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
+%Hum_CS_G(:,:,h) =ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0); 
+
+Hum_CS_G(:,:,h) =  ashum_K_2024_EMEL(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0); %Origin at Midpoint EM/EL
 
 end
 
@@ -4165,6 +4167,21 @@ end
 
 % Gives MCP3 in Humerus CS at all frames of trial
 xhand_Hum = xhand_Hum'; 
+
+
+% Jan 2024 - Estimated GH in Humeral CS (with Hum CS now centered at 0)
+
+gh_Hum = zeros(4,length(xhand));
+ghforhumcalc = [gh repmat(1,length(gh),1)];
+gh_forhumcalc = ghforhumcalc';
+
+for r = 1 :length(gh)
+    % 3rd MCP in Hum  = HT G to H * 3rd MCP in G
+gh_Hum (:,r) =  inv(Hum_CS_G(:,:,r))*gh_forhumcalc(:,r);
+end
+
+% Gives GH in Humerus CS at all frames of trial
+gh_Hum = gh_Hum'; 
 
 %% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
 
