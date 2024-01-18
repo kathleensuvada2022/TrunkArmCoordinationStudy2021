@@ -2869,118 +2869,118 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 
 %%
-% figure() %Plotting Elbow Line Diagram Start and End
-% % line between midpoint of forearm to midpoint of humerus.
-% % subplot(1,2,1)
-% % plot3([H_Mid_F(idx(3),1) H_Mid_H(idx(3),1)],[H_Mid_F(idx(3),2) H_Mid_H(idx(3),2)],[H_Mid_F(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
-% % hold on
-% % plot3([gh(idx(3),1) H_Mid_H(idx(3),1)],[gh(idx(3),2) H_Mid_H(idx(3),2)],[gh(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+figure() %Plotting Elbow Line Diagram Start and End
+% line between midpoint of forearm to midpoint of humerus.
+% subplot(1,2,1)
+% plot3([H_Mid_F(idx(3),1) H_Mid_H(idx(3),1)],[H_Mid_F(idx(3),2) H_Mid_H(idx(3),2)],[H_Mid_F(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+% hold on
+% plot3([gh(idx(3),1) H_Mid_H(idx(3),1)],[gh(idx(3),2) H_Mid_H(idx(3),2)],[gh(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+
+ 
+plot3([H_Mid_F(idx(1),1) H_Mid_H(idx(1),1)],[H_Mid_F(idx(1),2) H_Mid_H(idx(1),2)],[H_Mid_F(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
+plot3([gh(idx(1),1) H_Mid_H(idx(1),1)],[gh(idx(1),2) H_Mid_H(idx(1),2)],[gh(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
+
+% legend('Reach End','','Reach Start','','Fontsize',16)
+% title('Elbow Angle in GCS','FontSize',24)
 % 
-%  
-% plot3([H_Mid_F(idx(1),1) H_Mid_H(idx(1),1)],[H_Mid_F(idx(1),2) H_Mid_H(idx(1),2)],[H_Mid_F(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
-% plot3([gh(idx(1),1) H_Mid_H(idx(1),1)],[gh(idx(1),2) H_Mid_H(idx(1),2)],[gh(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
-% 
-% % legend('Reach End','','Reach Start','','Fontsize',16)
-% % title('Elbow Angle in GCS','FontSize',24)
-% % 
-% % subplot(1,2,2) % Plotting BLS and Hum/Fore CS at start and end to verify
-% 
-% % Reach Start - Hum
-% plot3(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+% subplot(1,2,2) % Plotting BLS and Hum/Fore CS at start and end to verify
+
+% Reach Start - Hum
+plot3(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'EL','FontSize',14)
+   
+    plot3(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'EM','FontSize',14)
+
+    plot3(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+  
+    text(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'GH','FontSize',14)
+  
+% Plotting HUM CS at start
+quiver3(Hum_CS_G ([1 1 1],4,idx(1))',Hum_CS_G ([2 2 2],4,idx(1))',Hum_CS_G ([3 3 3],4,idx(1))',50*Hum_CS_G (1,1:3,idx(1)),50*Hum_CS_G (2,1:3,idx(1)),50*Hum_CS_G (3,1:3,idx(1)))
+text(Hum_CS_G (1,4,idx(1))+50*Hum_CS_G (1,1:3,idx(1)),Hum_CS_G (2,4,idx(1))+50*Hum_CS_G (2,1:3,idx(1)),Hum_CS_G (3,4,idx(1))+50*Hum_CS_G (3,1:3,idx(1)),{'X_H','Y_H','Z_H'})
+ 
+% Reach End - Hum
+% plot3(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %     hold on
-%     text(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'EL','FontSize',14)
+%     text(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'EL','FontSize',14)
 %    
-%     plot3(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
-%     text(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'EM','FontSize',14)
+%     text(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'EM','FontSize',14)
 % 
-%     plot3(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %   
-%     text(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'GH','FontSize',14)
-%   
-% % Plotting HUM CS at start
-% quiver3(Hum_CS_G ([1 1 1],4,idx(1))',Hum_CS_G ([2 2 2],4,idx(1))',Hum_CS_G ([3 3 3],4,idx(1))',50*Hum_CS_G (1,1:3,idx(1)),50*Hum_CS_G (2,1:3,idx(1)),50*Hum_CS_G (3,1:3,idx(1)))
-% text(Hum_CS_G (1,4,idx(1))+50*Hum_CS_G (1,1:3,idx(1)),Hum_CS_G (2,4,idx(1))+50*Hum_CS_G (2,1:3,idx(1)),Hum_CS_G (3,4,idx(1))+50*Hum_CS_G (3,1:3,idx(1)),{'X_H','Y_H','Z_H'})
+%     text(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'GH','FontSize',14)
+  
+% Plotting HUM CS at end
+% quiver3(Hum_CS_G ([1 1 1],4,idx(3))',Hum_CS_G ([2 2 2],4,idx(3))',Hum_CS_G ([3 3 3],4,idx(3))',50*Hum_CS_G (1,1:3,idx(3)),50*Hum_CS_G (2,1:3,idx(3)),50*Hum_CS_G (3,1:3,idx(3)))
+% text(Hum_CS_G (1,4,idx(3))+50*Hum_CS_G (1,1:3,idx(3)),Hum_CS_G (2,4,idx(3))+50*Hum_CS_G (2,1:3,idx(3)),Hum_CS_G (3,4,idx(3))+50*Hum_CS_G (3,1:3,idx(3)),{'X_H','Y_H','Z_H'})
 %  
-% % Reach End - Hum
-% % plot3(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     hold on
-% %     text(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'EL','FontSize',14)
-% %    
-% %     plot3(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     text(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'EM','FontSize',14)
-% % 
-% %     plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %   
-% %     text(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'GH','FontSize',14)
-%   
-% % Plotting HUM CS at end
-% % quiver3(Hum_CS_G ([1 1 1],4,idx(3))',Hum_CS_G ([2 2 2],4,idx(3))',Hum_CS_G ([3 3 3],4,idx(3))',50*Hum_CS_G (1,1:3,idx(3)),50*Hum_CS_G (2,1:3,idx(3)),50*Hum_CS_G (3,1:3,idx(3)))
-% % text(Hum_CS_G (1,4,idx(3))+50*Hum_CS_G (1,1:3,idx(3)),Hum_CS_G (2,4,idx(3))+50*Hum_CS_G (2,1:3,idx(3)),Hum_CS_G (3,4,idx(3))+50*Hum_CS_G (3,1:3,idx(3)),{'X_H','Y_H','Z_H'})
-% %  
-% 
-% % Reach start -Fore
-% 
-%     plot3(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%    
-%     text(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'US','FontSize',14)
-%  
-%     plot3(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     
-%     text(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'RS','FontSize',14)
-%   
-%     plot3(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-% 
-%     text(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'OL','FontSize',14)
-% 
-% % Plotting FORE CS at given Frame
+
+% Reach start -Fore
+
+    plot3(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+   
+    text(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'US','FontSize',14)
+ 
+    plot3(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    
+    text(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'RS','FontSize',14)
+  
+    plot3(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+
+    text(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'OL','FontSize',14)
+
+% Plotting FORE CS at given Frame
 % quiver3(Fore_CS_G ([1 1 1],4,idx(1))',Fore_CS_G ([2 2 2],4,idx(1))',Fore_CS_G ([3 3 3],4,idx(1))',50*Fore_CS_G (1,1:3,idx(1)),50*Fore_CS_G (2,1:3,idx(1)),50*Fore_CS_G (3,1:3,idx(1)))
 % text(Fore_CS_G (1,4,idx(1))+50*Fore_CS_G (1,1:3,idx(1)),Fore_CS_G (2,4,idx(1))+50*Fore_CS_G (2,1:3,idx(1)),Fore_CS_G (3,4,idx(1))+50*Fore_CS_G (3,1:3,idx(1)),{'X_F','Y_F','Z_F'})
 %  
 % % Reach End -Fore
-% 
-% %     plot3(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %    
-% %     text(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'US','FontSize',14)
-% %  
-% %     plot3(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     
-% %     text(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'RS','FontSize',14)
-% %   
-% %     plot3(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% % 
-% %     text(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'OL','FontSize',14)
-% 
-% % Plotting FORE CS at given Frame
-% % quiver3(Fore_CS_G ([1 1 1],4,idx(3))',Fore_CS_G ([2 2 2],4,idx(3))',Fore_CS_G ([3 3 3],4,idx(3))',50*Fore_CS_G (1,1:3,idx(3)),50*Fore_CS_G (2,1:3,idx(3)),50*Fore_CS_G (3,1:3,idx(3)))
-% % text(Fore_CS_G (1,4,idx(3))+50*Fore_CS_G (1,1:3,idx(3)),Fore_CS_G (2,4,idx(3))+50*Fore_CS_G (2,1:3,idx(3)),Fore_CS_G (3,4,idx(3))+50*Fore_CS_G (3,1:3,idx(3)),{'X_F','Y_F','Z_F'})
-%  %Line between styloids
-% plot3([RS_GCS(idx(1),1) US_GCS(idx(1),1)],[RS_GCS(idx(1),2) US_GCS(idx(1),2)],[RS_GCS(idx(1),3) US_GCS(idx(1),3)],'g','Linewidth',2)
-% % plot3([RS_GCS(idx(3),1) US_GCS(idx(3),1)],[RS_GCS(idx(3),2) US_GCS(idx(3),2)],[RS_GCS(idx(3),3) US_GCS(idx(3),3)],'r','Linewidth',2)
-% 
-%  %Line between EM and El
-% plot3([EL_GCS(idx(1),1) EM_GCS(idx(1),1)],[EL_GCS(idx(1),2) EM_GCS(idx(1),2)],[EL_GCS(idx(1),3) EM_GCS(idx(1),3)],'g','Linewidth',2)
-% % plot3([EL_GCS(idx(3),1) EM_GCS(idx(3),1)],[EL_GCS(idx(3),2) EM_GCS(idx(3),2)],[EL_GCS(idx(3),3) EM_GCS(idx(3),3)],'r','Linewidth',2)
-% 
-% 
-% axis equal
-% title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsize',24)
-% xlabel('x axis','Fontsize',16)
-% ylabel('y axis','Fontsize',16)
-% zlabel('z axis','Fontsize',16)
 
-%  pause
+%     plot3(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%    
+%     text(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'US','FontSize',14)
+%  
+%     plot3(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%     
+%     text(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'RS','FontSize',14)
+%   
+%     plot3(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+% 
+%     text(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'OL','FontSize',14)
+
+% Plotting FORE CS at given Frame
+% quiver3(Fore_CS_G ([1 1 1],4,idx(3))',Fore_CS_G ([2 2 2],4,idx(3))',Fore_CS_G ([3 3 3],4,idx(3))',50*Fore_CS_G (1,1:3,idx(3)),50*Fore_CS_G (2,1:3,idx(3)),50*Fore_CS_G (3,1:3,idx(3)))
+% text(Fore_CS_G (1,4,idx(3))+50*Fore_CS_G (1,1:3,idx(3)),Fore_CS_G (2,4,idx(3))+50*Fore_CS_G (2,1:3,idx(3)),Fore_CS_G (3,4,idx(3))+50*Fore_CS_G (3,1:3,idx(3)),{'X_F','Y_F','Z_F'})
+ %Line between styloids
+plot3([RS_GCS(idx(1),1) US_GCS(idx(1),1)],[RS_GCS(idx(1),2) US_GCS(idx(1),2)],[RS_GCS(idx(1),3) US_GCS(idx(1),3)],'g','Linewidth',2)
+% plot3([RS_GCS(idx(3),1) US_GCS(idx(3),1)],[RS_GCS(idx(3),2) US_GCS(idx(3),2)],[RS_GCS(idx(3),3) US_GCS(idx(3),3)],'r','Linewidth',2)
+
+ %Line between EM and El
+plot3([EL_GCS(idx(1),1) EM_GCS(idx(1),1)],[EL_GCS(idx(1),2) EM_GCS(idx(1),2)],[EL_GCS(idx(1),3) EM_GCS(idx(1),3)],'g','Linewidth',2)
+% plot3([EL_GCS(idx(3),1) EM_GCS(idx(3),1)],[EL_GCS(idx(3),2) EM_GCS(idx(3),2)],[EL_GCS(idx(3),3) EM_GCS(idx(3),3)],'r','Linewidth',2)
+
+
+axis equal
+title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsize',24)
+xlabel('x axis','Fontsize',16)
+ylabel('y axis','Fontsize',16)
+zlabel('z axis','Fontsize',16)
+
+  pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 % 
 % figure()
@@ -4182,6 +4182,102 @@ end
 
 % Gives GH in Humerus CS at all frames of trial
 gh_Hum = gh_Hum'; 
+
+
+%% January 2024- Plotting MCP3 and GH in Humeral CS and GCS
+
+%Humerus Coordinate System
+
+% 3D
+figure()
+%MCP3
+plot3(xhand_Hum(idx(1):idx(3),1),xhand_Hum(idx(1):idx(3),2),xhand_Hum(idx(1):idx(3),3),'Linewidth',2)
+hold on
+plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+plot3(xhand_Hum(idx(1),1),xhand_Hum(idx(1),2),xhand_Hum(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot3(xhand_Hum(idx(3),1),xhand_Hum(idx(3),2),xhand_Hum(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+text(0,0,0,'Origin (Midpnt EM/EL)','FontSize',18)
+%GH
+plot3(gh_Hum(idx(1):idx(3),1),gh_Hum(idx(1):idx(3),2),gh_Hum(idx(1):idx(3),3),'Linewidth',2)
+hold on
+plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+plot3(gh_Hum(idx(1),1),gh_Hum(idx(1),2),gh_Hum(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot3(gh_Hum(idx(3),1),gh_Hum(idx(3),2),gh_Hum(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+text(0,0,0,'Origin (Midpnt EM/EL)','FontSize',18)
+axis equal
+title('MCP3 and GH in Humeral Coordinate Frame','FontSize',24)
+xlabel('X Axis','Fontsize',15)
+ylabel('Y Axis','Fontsize',15)
+zlabel('Z Axis','Fontsize',15)
+
+%Plane of Reach
+figure()
+%MCP3
+plot(xhand_Hum(idx(1):idx(3),3),-xhand_Hum(idx(1):idx(3),2),'Linewidth',4)
+hold on
+plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,'Origin (Midpnt EM/EL)','FontSize',18)
+plot(xhand_Hum(idx(1),3),-xhand_Hum(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot(xhand_Hum(idx(3),3),-xhand_Hum(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+%GH
+plot(gh_Hum(idx(1):idx(3),3),-gh_Hum(idx(1):idx(3),2),'Linewidth',4)
+hold on
+plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,'Origin (Midpnt EM/EL)','FontSize',18)
+plot(gh_Hum(idx(1),3),-gh_Hum(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot(gh_Hum(idx(3),3),-gh_Hum(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+axis equal
+ylabel('Y Axis','Fontsize',15)
+xlabel('Z Axis','Fontsize',15)
+
+% GH XYZ
+
+figure()
+subplot(3,1,1)
+plot(gh_Hum(idx(1):idx(3),1))
+subplot(3,1,2)
+plot(gh_Hum(idx(1):idx(3),2))
+subplot(3,1,3)
+plot(gh_Hum(idx(1):idx(3),3))
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%GCS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% XYZ
+figure()
+plot3(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),xhand(idx(1):idx(3),3),'Linewidth',4)
+hold on
+plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,0,'Origin','FontSize',18)
+plot3(xhand(idx(1),1),xhand(idx(1),2),xhand(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot3(xhand(idx(3),1),xhand(idx(3),2),xhand(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+plot3(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),gh(idx(1):idx(3),3),'Linewidth',4)
+plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,0,'Origin','FontSize',18)
+plot3(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+axis equal
+
+%Plane
+figure()
+plot(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),'Linewidth',4)
+hold on
+plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,'Origin','FontSize',18)
+plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+plot(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),'Linewidth',4)
+hold on
+plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+text(0,0,'Origin','FontSize',18)
+plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+axis equal
+
 
 %% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
 
