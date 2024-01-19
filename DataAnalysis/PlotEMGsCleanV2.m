@@ -40,6 +40,7 @@ idx1=[1:2:7 9:12]; idx2=[2:2:8 13:15];
 nEMG=length(idx1);
 memg=max([max(emg(:,idx1));[max(emg(:,idx2)) 0]]);
 yspacing=cumsum([0 memg(2:nEMG)+.9]);
+yrange = 0:1;
 %% Trunk 
 
 
@@ -50,13 +51,14 @@ title(emgchan(idx1(1)))
 cla
 subplot(5,2,3)
 line(t,(cleandata(:,idx1(1))))
-yl=ylim;
+yl=yrange;
 hold on
 plot(t,meanEMG(:,idx1(1)),'LineWidth',1,'Color','g')
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(1)))
+ylim([0 1])
 
 pause
 subplot(5,2,4)
@@ -68,11 +70,12 @@ subplot(5,2,4)
 line(t,(cleandata(:,idx2(1))))
 hold on
 plot(t,meanEMG(:,idx2(1)),'LineWidth',1,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(1)))
+ylim([0 1])
 
 pause
 subplot(5,2,5)
@@ -84,12 +87,12 @@ subplot(5,2,5)
 line(t,(cleandata(:,idx1(2))))
 hold on
 plot(t,meanEMG(:,idx1(2)),'LineWidth',1,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(2)))
-
+ylim([0 1])
 
 pause
 subplot(5,2,6)
@@ -101,11 +104,12 @@ subplot(5,2,6)
 line(t,(cleandata(:,idx2(2))))
 hold on
 plot(t,meanEMG(:,idx2(2)),'LineWidth',1,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(2)))
+ylim([0 1])
 
 pause
 subplot(5,2,7)
@@ -117,12 +121,12 @@ subplot(5,2,7)
 line(t,(cleandata(:,idx1(3))))
 hold on
 plot(t,meanEMG(:,idx1(3)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(3)))
-
+ylim([0 1])
 pause
 subplot(5,2,8)
 line(t,emg(:,idx2(3)))
@@ -133,11 +137,12 @@ subplot(5,2,8)
 line(t,(cleandata(:,idx2(3))))
 hold on
 plot(t,meanEMG(:,idx2(3)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(3)))
+ylim([0 1])
 
 pause
 subplot(5,2,9)
@@ -148,11 +153,12 @@ subplot(5,2,9)
 line(t,(cleandata(:,idx1(4))))
 hold on
 plot(t,meanEMG(:,idx1(4)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(4)))
+ylim([0 1])
 
 pause
 subplot(5,2,10)
@@ -163,11 +169,12 @@ subplot(5,2,10)
 line(t,(cleandata(:,idx2(4))))
 hold on
 plot(t,meanEMG(:,idx2(4)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(4)))
+ylim([0 1])
 
 %% ARM MUSCLES
 figure(3)
@@ -181,11 +188,12 @@ subplot(5,2,3)
 line(t,(cleandata(:,idx1(5))))
 hold on
 plot(t,meanEMG(:,idx1(5)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(5)))
+ylim([0 1])
 
 pause
 subplot(5,2,4)
@@ -197,11 +205,12 @@ subplot(5,2,4)
 line(t,(cleandata(:,idx2(5))))
 hold on
 plot(t,meanEMG(:,idx2(5)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(5)))
+ylim([0 1])
 
 pause
 subplot(5,2,5)
@@ -213,11 +222,12 @@ subplot(5,2,5)
 line(t,(cleandata(:,idx1(6))))
 hold on
 plot(t,meanEMG(:,idx1(6)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(6)))
+ylim([0 1])
 
 pause
 subplot(5,2,6)
@@ -229,11 +239,12 @@ subplot(5,2,6)
 line(t,(cleandata(:,idx2(6))))
 hold on
 plot(t,meanEMG(:,idx2(6)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(6)))
+ylim([0 1])
 
 pause
 subplot(5,2,7)
@@ -244,11 +255,12 @@ subplot(5,2,7)
 line(t,(cleandata(:,idx1(7))))
 hold on
 plot(t,meanEMG(:,idx1(7)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(7)))
+ylim([0 1])
 
 pause
 subplot(5,2,8)
@@ -260,11 +272,12 @@ subplot(5,2,8)
 line(t,(cleandata(:,idx2(7))))
 hold on
 plot(t,meanEMG(:,idx2(7)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx2(7)))
+ylim([0 1])
 
 pause
 subplot(5,2,9)
@@ -275,9 +288,10 @@ subplot(5,2,9)
 line(t,(cleandata(:,idx1(8))))
 hold on
 plot(t,meanEMG(:,idx1(8)),'LineWidth',2,'Color','g')
-yl=ylim;
+yl=yrange;
 line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',.7); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(8)))
+ylim([0 1])
 end

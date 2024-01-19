@@ -45,10 +45,12 @@ h = [xh yh zh];
 
 h = [h;0 0 0];
 
-% Origin = GH(1:3)';
+Origin = GH(1:3)'; 
+
+% SET so that GH at idx1 is the origin for all frames 
 % 
 
-Origin = H_mid(1:3)' ; 
+%Origin = H_mid(1:3)' ; 
 
 Origin =[Origin 1]';
 
