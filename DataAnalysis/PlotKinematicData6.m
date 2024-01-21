@@ -2805,9 +2805,9 @@ Hum_CS_G = zeros(4,4,length(gh));
 
 % Creating Humerus CS 
 for h = 1:length(gh) 
-%Hum_CS_G(:,:,h) =ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0); 
+Hum_CS_G(:,:,h) =ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0); 
 
-Hum_CS_G(:,:,h) =  ashum_K_2024_EMEL(EM_GCS(h,:),EL_GCS(h,:),gh(idx(1),:),hand,h,0); %Origin at First GH timepoint
+% Hum_CS_G(:,:,h) =  ashum_K_2024_EMEL(EM_GCS(h,:),EL_GCS(h,:),gh(idx(1),:),hand,h,0); %Origin at First GH timepoint
 
 end
 
@@ -4196,7 +4196,91 @@ end
 % Gives GH in Humerus CS at all frames of trial
 gh_Hum = gh_Hum'; 
 
+%% January 2024 - Getting GH,MCP3, EM/EL in TRUNK CS
 
+%GH
+gh_New = [gh, ones(length(gh), 1)]';
+
+%MCP3
+xhand_New = [xhand, ones(length(xhand), 1)]';
+
+%EM and EL
+EM_New = [EM_GCS, ones(length(EM_GCS), 1)]';
+EL_New = [EL_GCS, ones(length(EL_GCS), 1)]';
+
+for r = 1 :length(gh)
+    GH_TCS (:,r) =  inv(HTttog(:,:,r))*gh_New(:,r);
+    xhand_TCS(:,r) = inv(HTttog(:,:,r))*xhand_New(:,r);
+    EM_TCS(:,r) = inv(HTttog(:,:,r))*EM_New(:,r)  ;
+    EL_TCS(:,r) = inv(HTttog(:,:,r))*EL_New(:,r) ;
+end
+
+
+%% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
+
+PlaneofArmCS = zeros(4,4,length(gh));
+
+for h = 1:length(gh)
+    PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(1)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,0);
+end
+
+
+pause
+%% January 2024 - Computing GH,EM/EL,and MCP3 in PlaneofArmCS
+
+for r = 1 :length(gh)
+    GH_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*GH_TCS(:,r);
+    xhand_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*xhand_TCS(:,r);
+    EL_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EL_TCS(:,r);
+    EM_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EM_TCS(:,r);
+end
+
+H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
+
+%%  Plotting EM/EL, GH, and MCP3 in new CS
+
+
+    figure()
+    %Plotting the BonyLandmarks and their Labels
+    plot3(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'EL','FontSize',14)
+
+
+    plot3(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
+
+    plot3(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
+
+
+    plot3(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
+
+    % Plotting CS at first Frame
+    quiver3(PlaneofArmCS ([1 1 1],4,idx(1))',PlaneofArmCS ([2 2 2],4,idx(1))',PlaneofArmCS ([3 3 3],4,idx(1))',50*PlaneofArmCS (1,1:3,idx(1)),50*PlaneofArmCS (2,1:3,idx(1)),50*PlaneofArmCS (3,1:3,idx(1)))
+    text(PlaneofArmCS (1,4,idx(1))+50*PlaneofArmCS (1,1:3,idx(1)),PlaneofArmCS (2,4,idx(1))+50*PlaneofArmCS (2,1:3,idx(1)),PlaneofArmCS (3,4,idx(1))+50*PlaneofArmCS (3,1:3,idx(1)),{'X','Y','Z'})
+
+
+    %% Adding lines from GH to MCP3, GH to MID, and MID to MCP3
+    
+    plot3([H_mid(1,idx(1)) GH_ArmPlane(1,idx(1))],[H_mid(2,idx(1)) GH_ArmPlane(2,idx(1))],[H_mid(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to Midpnt
+    
+    plot3([xhand_ArmPlane(1,idx(1)) GH_ArmPlane(1,idx(1))],[xhand_ArmPlane(2,idx(1)) GH_ArmPlane(2,idx(1))],[xhand_ArmPlane(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to MCP3
+
+    plot3([xhand_ArmPlane(1,idx(1)) H_mid(1,idx(1))],[xhand_ArmPlane(2,idx(1)) H_mid(2,idx(1))],[xhand_ArmPlane(3,idx(1)) H_mid(3,idx(1))],'b','Linewidth',2) % Midpnt to MCP3
+
+
+    axis equal
+    xlabel('X axis (mm)')
+    ylabel('Y axis (mm)')
+    zlabel('Z axis (mm)')
+
+    title('Plane of Arm CS and Respective BLS in ARM Plane CS' ,'FontSize',16)
 %% January 2024- Plotting MCP3 and GH in Humeral CS and GCS
 
 %Humerus Coordinate System
