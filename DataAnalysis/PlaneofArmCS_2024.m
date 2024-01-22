@@ -47,7 +47,7 @@ PlaneofArmCS = [PlaneArmCS Origin]; % New Coordinate System with Origin at GHini
 %% Plot of CS
 
 if flag ==1
-    figure()
+    figure(54)
     %Plotting the BonyLandmarks and their Labels
     plot3(EL_TCS(1),EL_TCS(2),EL_TCS(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
@@ -59,10 +59,6 @@ if flag ==1
         'MarkerFaceColor','#D9FFFF')
     text(EM_TCS(1),EM_TCS(2),EM_TCS(3),'EM','FontSize',14)
 
-    plot3(GH_TCS_init(1),GH_TCS_init(2),GH_TCS_init(3),'-o','Color','g','MarkerSize',10,...
-        'MarkerFaceColor','#D9FFFF')
-    text(GH_TCS_init(1),GH_TCS_init(2),GH_TCS_init(3),'GH_i','FontSize',14)
-
     plot3(GH_TCS(1),GH_TCS(2),GH_TCS(3),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     text(GH_TCS(1),GH_TCS(2),GH_TCS(3),'GH','FontSize',14)
@@ -72,7 +68,7 @@ if flag ==1
         'MarkerFaceColor','#D9FFFF')
     text(xhand_TCS(1),xhand_TCS(2),xhand_TCS(3),'MCP3','FontSize',14)
 
-    % Plotting CS at given Frame
+    % Plotting CS at first Frame
     quiver3(PlaneofArmCS ([1 1 1],4)',PlaneofArmCS ([2 2 2],4)',PlaneofArmCS ([3 3 3],4)',50*PlaneofArmCS (1,1:3),50*PlaneofArmCS (2,1:3),50*PlaneofArmCS (3,1:3))
     text(PlaneofArmCS (1,4)+50*PlaneofArmCS (1,1:3),PlaneofArmCS (2,4)+50*PlaneofArmCS (2,1:3),PlaneofArmCS (3,4)+50*PlaneofArmCS (3,1:3),{'X','Y','Z'})
 
@@ -86,14 +82,12 @@ if flag ==1
     plot3([xhand_TCS(1) H_mid(1)],[xhand_TCS(2) H_mid(2)],[xhand_TCS(3) H_mid(3)],'b','Linewidth',2) % Midpnt to MCP3
 
 
-
-    %%
     axis equal
     xlabel('X axis (mm)')
     ylabel('Y axis (mm)')
     zlabel('Z axis (mm)')
 
-    title(['Plane of Arm CS and Respective BLS in TCS During Trial. FRAME:' num2str(frame)],'FontSize',16)
+    title(['Plane of Arm CS and Respective BLS in TRUNK CS FRAME:' num2str(frame)],'FontSize',16)
 
 end
 end

@@ -4215,6 +4215,8 @@ for r = 1 :length(gh)
     EL_TCS(:,r) = inv(HTttog(:,:,r))*EL_New(:,r) ;
 end
 
+ 
+
 
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
@@ -4222,10 +4224,10 @@ PlaneofArmCS = zeros(4,4,length(gh));
 
 for h = 1:length(gh)
     PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(1)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,0);
+%     pause(.1)
 end
 
 
-pause
 %% January 2024 - Computing GH,EM/EL,and MCP3 in PlaneofArmCS
 
 for r = 1 :length(gh)
@@ -4233,6 +4235,7 @@ for r = 1 :length(gh)
     xhand_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*xhand_TCS(:,r);
     EL_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EL_TCS(:,r);
     EM_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EM_TCS(:,r);
+    PlaneofArmCS_INPLANECS(:,:,r) = inv(PlaneofArmCS(:,:,r))*PlaneofArmCS(:,:,r);
 end
 
 H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
@@ -4241,38 +4244,38 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
 
 
     figure()
-    %Plotting the BonyLandmarks and their Labels
-    plot3(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    %Plotting the BonyLandmarks and their Labels at start of reach (idx(1))
+    plot3(EL_ArmPlane(1,idx(3)),EL_ArmPlane(2,idx(3)),EL_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     hold on
-    text(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'EL','FontSize',14)
+    text(EL_ArmPlane(1,idx(3)),EL_ArmPlane(2,idx(3)),EL_ArmPlane(3,idx(3)),'EL','FontSize',14)
 
 
-    plot3(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    plot3(EM_ArmPlane(1,idx(3)),EM_ArmPlane(2,idx(3)),EM_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
-    text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
+    text(EM_ArmPlane(1,idx(3)),EM_ArmPlane(2,idx(3)),EM_ArmPlane(3,idx(3)),'EM','FontSize',14)
 
-    plot3(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    plot3(GH_ArmPlane(1,idx(3)),GH_ArmPlane(2,idx(3)),GH_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
-    text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
+    text(GH_ArmPlane(1,idx(3)),GH_ArmPlane(2,idx(3)),GH_ArmPlane(3,idx(3)),'GH','FontSize',14)
 
 
-    plot3(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    plot3(xhand_ArmPlane(1,idx(3)),xhand_ArmPlane(2,idx(3)),xhand_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
-    text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
+    text(xhand_ArmPlane(1,idx(3)),xhand_ArmPlane(2,idx(3)),xhand_ArmPlane(3,idx(3)),'MCP3','FontSize',14)
 
-    % Plotting CS at first Frame
-    quiver3(PlaneofArmCS ([1 1 1],4,idx(1))',PlaneofArmCS ([2 2 2],4,idx(1))',PlaneofArmCS ([3 3 3],4,idx(1))',50*PlaneofArmCS (1,1:3,idx(1)),50*PlaneofArmCS (2,1:3,idx(1)),50*PlaneofArmCS (3,1:3,idx(1)))
-    text(PlaneofArmCS (1,4,idx(1))+50*PlaneofArmCS (1,1:3,idx(1)),PlaneofArmCS (2,4,idx(1))+50*PlaneofArmCS (2,1:3,idx(1)),PlaneofArmCS (3,4,idx(1))+50*PlaneofArmCS (3,1:3,idx(1)),{'X','Y','Z'})
+    % Plotting CS at Start of Reach
+    quiver3(PlaneofArmCS_INPLANECS ([1 1 1],4,idx(3))',PlaneofArmCS_INPLANECS ([2 2 2],4,idx(3))',PlaneofArmCS_INPLANECS ([3 3 3],4,idx(3))',50*PlaneofArmCS_INPLANECS (1,1:3,idx(3)),50*PlaneofArmCS_INPLANECS (2,1:3,idx(3)),50*PlaneofArmCS_INPLANECS (3,1:3,idx(3)))
+    text(PlaneofArmCS_INPLANECS (1,4,idx(3))+50*PlaneofArmCS_INPLANECS (1,1:3,idx(3)),PlaneofArmCS_INPLANECS (2,4,idx(3))+50*PlaneofArmCS_INPLANECS (2,1:3,idx(3)),PlaneofArmCS_INPLANECS (3,4,idx(3))+50*PlaneofArmCS_INPLANECS (3,1:3,idx(3)),{'X','Y','Z'})
 
 
     %% Adding lines from GH to MCP3, GH to MID, and MID to MCP3
     
-    plot3([H_mid(1,idx(1)) GH_ArmPlane(1,idx(1))],[H_mid(2,idx(1)) GH_ArmPlane(2,idx(1))],[H_mid(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to Midpnt
+    plot3([H_mid(1,idx(3)) GH_ArmPlane(1,idx(3))],[H_mid(2,idx(3)) GH_ArmPlane(2,idx(3))],[H_mid(3,idx(3)) GH_ArmPlane(3,idx(3))],'b','Linewidth',2) % GH to Midpnt
     
-    plot3([xhand_ArmPlane(1,idx(1)) GH_ArmPlane(1,idx(1))],[xhand_ArmPlane(2,idx(1)) GH_ArmPlane(2,idx(1))],[xhand_ArmPlane(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to MCP3
+    plot3([xhand_ArmPlane(1,idx(3)) GH_ArmPlane(1,idx(3))],[xhand_ArmPlane(2,idx(3)) GH_ArmPlane(2,idx(3))],[xhand_ArmPlane(3,idx(3)) GH_ArmPlane(3,idx(3))],'b','Linewidth',2) % GH to MCP3
 
-    plot3([xhand_ArmPlane(1,idx(1)) H_mid(1,idx(1))],[xhand_ArmPlane(2,idx(1)) H_mid(2,idx(1))],[xhand_ArmPlane(3,idx(1)) H_mid(3,idx(1))],'b','Linewidth',2) % Midpnt to MCP3
+    plot3([xhand_ArmPlane(1,idx(3)) H_mid(1,idx(3))],[xhand_ArmPlane(2,idx(3)) H_mid(2,idx(3))],[xhand_ArmPlane(3,idx(3)) H_mid(3,idx(3))],'b','Linewidth',2) % Midpnt to MCP3
 
 
     axis equal
@@ -4280,7 +4283,7 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
     ylabel('Y axis (mm)')
     zlabel('Z axis (mm)')
 
-    title('Plane of Arm CS and Respective BLS in ARM Plane CS' ,'FontSize',16)
+    title('Plane of Arm CS and Respective BLS in ARM Plane CS at End of Reach' ,'FontSize',16)
 %% January 2024- Plotting MCP3 and GH in Humeral CS and GCS
 
 %Humerus Coordinate System
