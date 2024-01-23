@@ -194,18 +194,18 @@ for i=1: length(mtrials)
         
         %    for mac
 
-% For continuous loading of data - Oct 2023
-%    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+% For continuous loading of data - Oct 2023/Winter 2024
+    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
 %For running one condition at a time
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
 %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
         
-   %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-%       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+%      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_VEL.mat')
+%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -2993,7 +2993,7 @@ xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
 
-  pause
+%   pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 % 
 % figure()
@@ -4408,7 +4408,7 @@ plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach
    title('BLS in GCS' ,'FontSize',16)
 axis equal
 
-pause
+% pause
 %% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
 
 % EM_Hum = zeros(4,length(EM_GCS));
@@ -4488,13 +4488,13 @@ pause
 
     %% JANUARY 2024 ******- UPDATING OUTCOME MEASURES TO BE IN CREATED COORDINATE SYSTEM IN PLANE OF REACH
   
-    RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2)
+    RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
     
-    GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2)
+    GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2);
 
-    XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2)
+    XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
 
-    pause
+
 
     %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
 %  
@@ -4619,8 +4619,7 @@ pause
 % Scap_Ang_Latrot = Scap_Ang_T(1,idx(3))-Scap_Ang_T(1,idx(1));
 % Scap_Ang_fbtilt = Scap_Ang_T(2,idx(3))-Scap_Ang_T(2,idx(1));
 % Scap_Ang_proretract = Scap_Ang_T(3,idx(3))-Scap_Ang_T(3,idx(1));
-
-    %% Compute reaching distance
+%% Reaching Distance Definitions 
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
     % of reach (timepoint idx(3)) - 
@@ -4630,10 +4629,16 @@ pause
    
    % XYZ Definition in TRUNK CS at idx1
    %                             X                              Y                              Z        
-%      maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2);
+      maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
+      RD_2024 % this is the 2024 definition in the created CS 
 
+      'CHECK FOR CONSISTENCY'
+% pause
+      maxreach =RD_2024;
+
+      'RD has been overwritten'
 % In Plane of the Arm (Humerus) YZ 
-maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
+% maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
 % GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
 
 
@@ -4662,7 +4667,17 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
     % XYZ PLANE
-    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2);
+    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2)
+
+    XJUG_2024
+
+    'CHECK FOR CONSISTENCY'
+    
+  
+%     pause
+    trunk_exc = XJUG_2024; 
+
+    'Trunk Excursion has been overwritten'
 
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
@@ -4670,14 +4685,23 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
    % XY PLANE
-   % sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2);
+   sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2)
+
+   GH_2024 
+
+   'CHECK FOR CONSISTENCY'
+%    pause
+
+   sh_exc =GH_2024;
+
+   'Old GH has been overwritten'
 
    % XYZ PLANE
-   sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
+%    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
 
 
    % Z Shoulder Excursion
-   sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
+    sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
@@ -4687,14 +4711,14 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
     
-    maxreach_current_trial(i) =maxreach % reaching distance in mm difference hand and shoudler
+    maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
     
-    shex_current_trial(i) = sh_exc
+    shex_current_trial(i) = sh_exc;
     sh_Z_ex_current_trial(i) = sh_Z_ex;
     
-    trex_current_trial(i) = trunk_exc
+    trex_current_trial(i) = trunk_exc;
 
-    pause
+%     pause
 %% Computing Changes in Trunk Kinematics - October 2023
 
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
@@ -5682,9 +5706,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5700,14 +5724,14 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 % 
 
-   % Check for making sure the conditions align from the loaded Matrix
-%     if DataMatrix{FinalRow,2} == expcond
-%         DataMatrix{FinalRow,2} = expcond;
-% 
-%     else
-%         'Mismatched EXP COND! '
-% %         pause
-%     end
+%    Check for making sure the conditions align from the loaded Matrix
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
 
 
 
@@ -5716,14 +5740,14 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
 %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
 %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
 
 %         pause
@@ -5982,7 +6006,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
-% save FullDataMatrix.mat DataMatrix
+ save FullDataMatrix.mat DataMatrix
 
 
 %% Saving Trunk Kinematics to Separate Matrix  
