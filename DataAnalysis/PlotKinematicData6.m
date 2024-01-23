@@ -4687,12 +4687,14 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
     
-    maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+    maxreach_current_trial(i) =maxreach % reaching distance in mm difference hand and shoudler
     
-    shex_current_trial(i) = sh_exc;
+    shex_current_trial(i) = sh_exc
     sh_Z_ex_current_trial(i) = sh_Z_ex;
     
-    trex_current_trial(i) = trunk_exc;
+    trex_current_trial(i) = trunk_exc
+
+    pause
 %% Computing Changes in Trunk Kinematics - October 2023
 
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
