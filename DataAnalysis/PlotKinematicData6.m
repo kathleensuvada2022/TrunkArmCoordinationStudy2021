@@ -195,7 +195,7 @@ for i=1: length(mtrials)
         %    for mac
 
 % For continuous loading of data - Oct 2023/Winter 2024
-    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+  %  load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
 %For running one condition at a time
@@ -205,7 +205,7 @@ for i=1: length(mtrials)
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
 %      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
+                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -4270,7 +4270,7 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
         'MarkerFaceColor','#D9FFFF')
     text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
 
-    plot3(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    plot3(GH_ArmPlane(1,idx(1):idx(3)),GH_ArmPlane(2,idx(1):idx(3)),GH_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
 
@@ -4278,12 +4278,12 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
     plot3(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     text(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'Jugular Notch','FontSize',14)
+% 
+%     plot3(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%     text(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'Jugular Notch FINAL','FontSize',14)
 
-    plot3(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
-        'MarkerFaceColor','#D9FFFF')
-    text(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'Jugular Notch FINAL','FontSize',14)
-
-    plot3(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+    plot3(xhand_ArmPlane(1,idx(1):idx(3)),xhand_ArmPlane(2,idx(1):idx(3)),xhand_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
         'MarkerFaceColor','#D9FFFF')
     text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
 
@@ -4307,6 +4307,28 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
     zlabel('Z axis (mm)')
 
     title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
+
+    pause
+
+
+    %% Plotting Glenohumeral Joint Translations in Arm Coordinate System
+
+% Created Arm Plane Coordinate System
+figure()
+
+%GH
+plot(GH_ArmPlane(1,:),GH_ArmPlane(2,:),'Linewidth',4)
+hold on
+plot(0,0,'*','MarkerEdgeColor','k','MarkerSize',25)
+text(0,0,'Origin (GH_S_t_a_r_t)','FontSize',18)
+plot(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+plot(GH_ArmPlane(1,idx(3)),GH_ArmPlane(2,idx(3)),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+axis equal
+ylabel('Y Axis','Fontsize',15)
+xlabel('Z Axis','Fontsize',15)
+
+
+
 %% January 2024- Plotting MCP3 and GH in Humeral CS and GCS
 
 %Humerus Coordinate System
