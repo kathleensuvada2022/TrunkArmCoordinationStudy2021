@@ -3140,7 +3140,6 @@ ylabel('Y Axis')
 zlabel('Z Axis')
 
 %Looping through scapular polygon during reach
-for b= idx(1):10:idx(3)
 
 plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
 plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
@@ -3148,7 +3147,6 @@ plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth
 plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
 
-end
 
 
 
@@ -3198,6 +3196,10 @@ plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA E','FontSize',14)
 
+plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
+plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
+plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
+plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
  pause
 
@@ -4239,13 +4241,13 @@ for r = 1 :length(gh)
     xjug_TCS(:,r) = inv(HTttog(:,:,r))*XJUG_New(:,r) ;
 end
 
- 
+
 
 
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
 PlaneofArmCS = zeros(4,4,length(gh));
-
+%HT ARMPLANE in TRUNK CS
 for h = 1:length(gh)
     PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(1)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,0);
 %     pause(.1)
@@ -4260,6 +4262,20 @@ end
 for h = 1:length(gh)
 PlaneofArmCS_GCS(:,:,h) = HTttog(:,:,h)*PlaneofArmCS(:,:,h);
 end
+
+% Testing the Reaching Distance Vector and Computing in Arm Plane CS ( Z
+% comp should be 0)
+ 
+RDVectinTrunk = xhand_TCS(1:3,idx(3)) - GH_TCS(1:3,idx(3));
+
+RDVectinTrunk=[RDVectinTrunk;1];
+
+% RD Vect in Arm Plane = HTArmPlanetoTrunkCS * RDVectorinTrunkCS
+RDVectinARMPlane = inv(PlaneofArmCS(:,:,idx(3)))*RDVectinTrunk; % z comp is not 0
+
+
+
+
 
 %% January 2024 - Computing GH,EM/EL,MCP3,XJUG in PlaneofArmCS
 
@@ -4514,7 +4530,20 @@ pause
   
     gh_start = HTgtot(:,:,idx(1))* gh; %Getting GH in Trunk Frame at 1 at idx(1)
     gh_end = HTgtot(:,:,idx(3))* gh; %Getting GH in Trunk Frame at 1 at idx(3)
-   
+
+    % Computing the 3D vector from GH_Initial to GH_Final - Jan 2024
+    ghVector = gh_end(1:3,idx(3))-gh_start(1:3,idx(1));
+    ghVector = [ghVector; 1];
+
+    ghVectorNormPlane = norm(ghVector(1:2)) % This number is good this is GH in trunk CS 
+    
+    ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(1)))*ghVector; % 3D vector in plane of reach at end of reach
+
+    ghVecArmPlaneEndMAG = norm(ghVecArmPlaneEnd(1:2)) % Magnitude in the plane %  too large doesn't check out
+
+
+    % Getting ghVector into Arm Plane CS at end of reach
+    %
     gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
     
     for d=1:length(gh)
@@ -4601,6 +4630,12 @@ plot3(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'-o','Color','b','MarkerSize',10,...
     'MarkerFaceColor','#D9FFFF')
 text(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'AA S','FontSize',14)
 
+plot3([ai_TCS(1,b) ts_TCS(1,b)],[ai_TCS(2,b) ts_TCS(2,b)],[ai_TCS(3,b) ts_TCS(3,b)],'b','Linewidth',1) % line between AI and TS
+plot3([ai_TCS(1,b) aa_TCS(1,b)],[ai_TCS(2,b) aa_TCS(2,b)],[ai_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AI and AA
+plot3([ts_TCS(1,b) ac_TCS(1,b)],[ts_TCS(2,b) ac_TCS(2,b)],[ts_TCS(3,b) ac_TCS(3,b)],'b','Linewidth',1) % line between TS and AC
+plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AC and AA
+
+
 %End of Reach
 b = idx(3);
 % AC
@@ -4637,16 +4672,13 @@ xlabel('X Axis')
 ylabel('Y Axis')
 zlabel('Z Axis')
 
-%Looping through scapular polygon during reach
-for b= idx(1):10:idx(3)
+
 
 plot3([ai_TCS(1,b) ts_TCS(1,b)],[ai_TCS(2,b) ts_TCS(2,b)],[ai_TCS(3,b) ts_TCS(3,b)],'b','Linewidth',1) % line between AI and TS
 plot3([ai_TCS(1,b) aa_TCS(1,b)],[ai_TCS(2,b) aa_TCS(2,b)],[ai_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AI and AA
 plot3([ts_TCS(1,b) ac_TCS(1,b)],[ts_TCS(2,b) ac_TCS(2,b)],[ts_TCS(3,b) ac_TCS(3,b)],'b','Linewidth',1) % line between TS and AC
 plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AC and AA
 
-
-end
 
 
 pause
