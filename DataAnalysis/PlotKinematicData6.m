@@ -2299,7 +2299,7 @@ for i=1: length(mtrials)
     %         figure(1),clf
     %         subplot(2,1,1)
     %         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-    %         hold on
+    %         hold on 
     %
     %         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
     %
@@ -4289,7 +4289,7 @@ PlaneofArmCS = zeros(4,4,length(gh));
 %HT ARMPLANE in TRUNK CS
 for h = 1:length(gh)
     PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(1)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,0);
-%     pause(.1)
+   % pause
 end
 
 %% JAN 2024 Getting new ARMPLANE (AP) CS in GCS FOR XJUG
@@ -4310,8 +4310,10 @@ RDVectinTrunk = xhand_TCS(1:3,idx(3)) - GH_TCS(1:3,idx(3));
 RDVectinTrunk=[RDVectinTrunk;1];
 
 % RD Vect in Arm Plane = HTArmPlanetoTrunkCS * RDVectorinTrunkCS
-RDVectinARMPlane = inv(PlaneofArmCS(:,:,idx(3)))*RDVectinTrunk; % z comp is not 0
+RDVectinARMPlane = inv(PlaneofArmCS(:,:,idx(3)))*RDVectinTrunk % z comp is not 0
 
+'Check RD'
+pause
 
 
 
@@ -4583,12 +4585,18 @@ pause
     ghVector = gh_end(1:3,idx(3))-gh_start(1:3,idx(1));
     ghVector = [ghVector; 1];
 
-    ghVectorNormPlane = norm(ghVector(1:2)) % This number is good this is GH in trunk CS 
+    ghVectorNormPlane = norm(ghVector(1:2)) % This number is good this is GH magnitude in trunk CS 
     
+       % GH in Armplane =  HTTrunktoArmPlane * GhinTrunk
     ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(1)))*ghVector; % 3D vector in plane of reach at end of reach
 
     ghVecArmPlaneEndMAG = norm(ghVecArmPlaneEnd(1:2)) % Magnitude in the plane %  too large doesn't check out
 
+    
+%    ghVecArmPlaneEndMAG= sqrt(ghVecArmPlaneEnd(1)^2+ghVecArmPlaneEnd(2)^2)
+
+
+    pause
 
     % Getting ghVector into Arm Plane CS at end of reach
     %
@@ -4709,8 +4717,9 @@ pause
   
     RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
     
-    GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2);
+    GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2)
 
+    pause
     XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
 
 
@@ -4909,7 +4918,7 @@ pause
    GH_2024 
 
    'CHECK FOR CONSISTENCY'
-%    pause
+  pause
 
    sh_exc =GH_2024;
 
