@@ -4288,8 +4288,8 @@ pause
 PlaneofArmCS = zeros(4,4,length(gh));
 %HT ARMPLANE in TRUNK CS
 for h = 1:length(gh)
-    PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(1)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,0);
-   % pause
+    PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(3)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,idx(3),1);
+%    pause
 end
 
 %% JAN 2024 Getting new ARMPLANE (AP) CS in GCS FOR XJUG
@@ -4336,60 +4336,60 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
 %%  Plotting EM/EL, GH, and MCP3 in new CS 
 
 
-%     figure()
-    %Plotting the BonyLandmarks and their Labels at start of reach (idx(1))
-%     plot3(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     hold on
-%     text(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'EL','FontSize',14)
-% 
-% 
-%     plot3(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
-%     hold on
-%     
-%     plot3(GH_ArmPlane(1,idx(1):idx(3)),GH_ArmPlane(2,idx(1):idx(3)),GH_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
-% 
-% 
-%     plot3(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'Jugular Notch','FontSize',14)
-% % 
-%     plot3(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'Jugular Notch FINAL','FontSize',14)
-% 
-%     plot3(xhand_ArmPlane(1,idx(1):idx(3)),xhand_ArmPlane(2,idx(1):idx(3)),xhand_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
-%         'MarkerFaceColor','#D9FFFF')
-%     text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
+    figure()
+%    Plotting the BonyLandmarks and their Labels at start of reach (idx(1))
+    plot3(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'EL','FontSize',14)
 
-    % Plotting CS at Start of Reach
-%     for g = idx(1):idx(3)
-%     quiver3(PlaneofArmCS_INPLANECS ([1 1 1],4,g)',PlaneofArmCS_INPLANECS ([2 2 2],4,g)',PlaneofArmCS_INPLANECS ([3 3 3],4,g)',50*PlaneofArmCS_INPLANECS (1,1:3,g),50*PlaneofArmCS_INPLANECS (2,1:3,g),50*PlaneofArmCS_INPLANECS (3,1:3,g))
-%     text(PlaneofArmCS_INPLANECS (1,4,g)+50*PlaneofArmCS_INPLANECS (1,1:3,g),PlaneofArmCS_INPLANECS (2,4,g)+50*PlaneofArmCS_INPLANECS (2,1:3,g),PlaneofArmCS_INPLANECS (3,4,g)+50*PlaneofArmCS_INPLANECS (3,1:3,g),{'X','Y','Z'})
-%     pause
-%     end
 
-    %% Adding lines from GH to MCP3, GH to MID, and MID to MCP3
+    plot3(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
+    hold on
     
-%     plot3([H_mid(1,idx(1)) GH_ArmPlane(1,idx(1))],[H_mid(2,idx(1)) GH_ArmPlane(2,idx(1))],[H_mid(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to Midpnt
-    
-%     plot3([xhand_ArmPlane(1,idx(1)) GH_ArmPlane(1,idx(1))],[xhand_ArmPlane(2,idx(1)) GH_ArmPlane(2,idx(1))],[xhand_ArmPlane(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to MCP3
-
-%     plot3([xhand_ArmPlane(1,idx(1)) H_mid(1,idx(1))],[xhand_ArmPlane(2,idx(1)) H_mid(2,idx(1))],[xhand_ArmPlane(3,idx(1)) H_mid(3,idx(1))],'b','Linewidth',2) % Midpnt to MCP3
+    plot3(GH_ArmPlane(1,idx(1):idx(3)),GH_ArmPlane(2,idx(1):idx(3)),GH_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
 
 
-%     axis equal
-%     xlabel('X axis (mm)')
-%     ylabel('Y axis (mm)')
-%     zlabel('Z axis (mm)')
+    plot3(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'Jugular Notch','FontSize',14)
 % 
-%     title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
-% 
+    plot3(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'Jugular Notch FINAL','FontSize',14)
+
+    plot3(xhand_ArmPlane(1,idx(1):idx(3)),xhand_ArmPlane(2,idx(1):idx(3)),xhand_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
+
+%     Plotting CS at Start of Reach
+    for g = idx(1):idx(3)
+    quiver3(PlaneofArmCS_INPLANECS ([1 1 1],4,g)',PlaneofArmCS_INPLANECS ([2 2 2],4,g)',PlaneofArmCS_INPLANECS ([3 3 3],4,g)',50*PlaneofArmCS_INPLANECS (1,1:3,g),50*PlaneofArmCS_INPLANECS (2,1:3,g),50*PlaneofArmCS_INPLANECS (3,1:3,g))
+    text(PlaneofArmCS_INPLANECS (1,4,g)+50*PlaneofArmCS_INPLANECS (1,1:3,g),PlaneofArmCS_INPLANECS (2,4,g)+50*PlaneofArmCS_INPLANECS (2,1:3,g),PlaneofArmCS_INPLANECS (3,4,g)+50*PlaneofArmCS_INPLANECS (3,1:3,g),{'X','Y','Z'})
 %     pause
+    end
+
+    % Adding lines from GH to MCP3, GH to MID, and MID to MCP3
+    
+    plot3([H_mid(1,idx(1)) GH_ArmPlane(1,idx(1))],[H_mid(2,idx(1)) GH_ArmPlane(2,idx(1))],[H_mid(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to Midpnt
+    
+    plot3([xhand_ArmPlane(1,idx(1)) GH_ArmPlane(1,idx(1))],[xhand_ArmPlane(2,idx(1)) GH_ArmPlane(2,idx(1))],[xhand_ArmPlane(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to MCP3
+
+    plot3([xhand_ArmPlane(1,idx(1)) H_mid(1,idx(1))],[xhand_ArmPlane(2,idx(1)) H_mid(2,idx(1))],[xhand_ArmPlane(3,idx(1)) H_mid(3,idx(1))],'b','Linewidth',2) % Midpnt to MCP3
+
+
+    axis equal
+    xlabel('X axis (mm)')
+    ylabel('Y axis (mm)')
+    zlabel('Z axis (mm)')
+
+    title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
+
+    pause
 
 
     %% Plotting Glenohumeral Joint Translations in Arm Coordinate System
@@ -4578,8 +4578,8 @@ pause
     gh = [gh repmat(1,length(gh),1)]; 
     gh = gh';
   
-    gh_start = HTgtot(:,:,idx(1))* gh; %Getting GH in Trunk Frame at 1 at idx(1)
-    gh_end = HTgtot(:,:,idx(3))* gh; %Getting GH in Trunk Frame at 1 at idx(3)
+    gh_start = HTgtot(:,:,idx(1))* gh(:,idx(1)); %Getting GH in Trunk Frame at 1 at idx(1)
+    gh_end = HTgtot(:,:,idx(3))* gh(:,idx(3)); %Getting GH in Trunk Frame at 3 at idx(3)
 
     % Computing the 3D vector from GH_Initial to GH_Final - Jan 2024
     ghVector = gh_end(1:3,idx(3))-gh_start(1:3,idx(1));
@@ -4588,7 +4588,15 @@ pause
     ghVectorNormPlane = norm(ghVector(1:2)) % This number is good this is GH magnitude in trunk CS 
     
        % GH in Armplane =  HTTrunktoArmPlane * GhinTrunk
-    ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(1)))*ghVector; % 3D vector in plane of reach at end of reach
+    ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(3)))*ghVector % 3D vector in plane of reach at end of reach WRONG! can't use translation 
+
+    % Transform GH at idx(1) where gh at idx(3) = 0
+    ghArmPlaneStart= inv(PlaneofArmCS(:,:,idx(3)))*gh_start
+
+    % 
+        ghVectorAP = -ghArmPlaneStart;
+        ghVectorAPMAG = norm(ghVectorAP) % THIS IS CORRECT FOR GH! in arm plane cs
+
 
     ghVecArmPlaneEndMAG = norm(ghVecArmPlaneEnd(1:2)) % Magnitude in the plane %  too large doesn't check out
 

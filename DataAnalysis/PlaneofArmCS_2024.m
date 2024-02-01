@@ -1,4 +1,4 @@
-function PlaneofArmCS = PlaneofArmCS_2024(GH_TCS,GH_TCS_init,xhand_TCS,EL_TCS,EM_TCS,frame,flag)
+function PlaneofArmCS = PlaneofArmCS_2024(GH_TCS,GH_TCS_end,xhand_TCS,EL_TCS,EM_TCS,frame,endidx,flag)
 
 
 % Used to create a coordinate system in the plane of the arm
@@ -20,10 +20,10 @@ H_mid=(EM_TCS(1:3)+EL_TCS(1:3))/2;
 
 %% Creating each axis
 
-Y_planeArm = xhand_TCS(1:3)-GH_TCS_init(1:3);
+Y_planeArm = xhand_TCS(1:3)-GH_TCS(1:3);
 Y_planeArm  = Y_planeArm /norm(Y_planeArm);
 
-Xhat = H_mid-GH_TCS_init(1:3);
+Xhat = H_mid-GH_TCS(1:3);
 
 Z_planeArm = cross(Xhat,Y_planeArm);
 Z_planeArm = Z_planeArm/norm(Z_planeArm);
@@ -37,7 +37,7 @@ PlaneArmCS = [X_planeArm Y_planeArm Z_planeArm];
 %% Setting Origin
 PlaneArmCS = [PlaneArmCS;0 0 0];
 
-Origin = GH_TCS_init(1:3)'; % GH Initial at Start of Reach
+Origin = GH_TCS(1:3)'; % GH Initial at Start of Reach
 
 Origin =[Origin 1]';
 
@@ -46,7 +46,7 @@ PlaneofArmCS = [PlaneArmCS Origin]; % New Coordinate System with Origin at GHini
 
 %% Plot of CS
 
-if flag ==1
+if flag ==1 && frame ==endidx
     figure(54)
     %Plotting the BonyLandmarks and their Labels
     plot3(EL_TCS(1),EL_TCS(2),EL_TCS(3),'-o','Color','b','MarkerSize',10,...
