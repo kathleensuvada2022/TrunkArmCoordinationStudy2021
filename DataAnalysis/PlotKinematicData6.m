@@ -203,7 +203,7 @@ for i=1: length(mtrials)
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
 %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
         
-%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
 %      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
 %                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
@@ -4564,6 +4564,8 @@ pause
     gh = [gh repmat(1,length(gh),1)]; 
     gh = gh';
   
+    % GH EXCURSION 2O24
+
     gh_start = HTgtot(:,:,idx(1))* gh(:,idx(1)); %Getting GH in Trunk Frame at 1 at idx(1)
     gh_end = HTgtot(:,:,idx(3))* gh(:,idx(3)); %Getting GH in Trunk Frame at 3 at idx(3)
 
@@ -4589,6 +4591,8 @@ pause
       GH_2024 = ghVectorAPMAG;
 
 
+    % TRUNK EXCURSION 2024
+
     % Repeating for XJUG to get displacement in the plane of the arm at the
     % end of the reach Jan 2024 
    
@@ -4598,16 +4602,27 @@ pause
 
 
     % Computing the distance of the XJUG in the arm plane
-    %Xjugf - Xjugi in the plane of the arm
+    %Xjugf - Xjugi in the plane of the arm  %********* Correct Outcome Measure for XJUG!!******* USE THIS 2024
 
     xjug_ArmPlaneMAG = sqrt((xjug_ArmPlaneend(2)-xjug_ArmPlanestart(2))^2+(xjug_ArmPlaneend(1)-xjug_ArmPlanestart(1))^2);
 
     XJUG_2024 = xjug_ArmPlaneMAG;
 
+
+    % REACHING DISTANCE 2024
+
+    % Computing 3rd MCP at the end of the reach in the plane at the end FEB
+    % 2024
+    xhand_ArmPlaneend= inv(PlaneofArmCS(:,:,idx(3)))*xhand_TCS(:,idx(3));
+
+    xhand_ArmPlaneendMAG = norm(xhand_ArmPlaneend);
+
+    RD_2024 = xhand_ArmPlaneendMAG;
+    
+    
 %%
 
-    pause
-
+  
 
 %     gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
 %     
@@ -4853,28 +4868,29 @@ pause
 % Scap_Ang_Latrot = Scap_Ang_T(1,idx(3))-Scap_Ang_T(1,idx(1));
 % Scap_Ang_fbtilt = Scap_Ang_T(2,idx(3))-Scap_Ang_T(2,idx(1));
 % Scap_Ang_proretract = Scap_Ang_T(3,idx(3))-Scap_Ang_T(3,idx(1));
+
 %% Reaching Distance Definitions 
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
     % of reach (timepoint idx(3)) - 
     
-    % XY Definition
+    % XY Definition in GCS
    % maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2); 
    
    % XYZ Definition in TRUNK CS at idx1
-   %                             X                              Y                              Z        
+   %                           X                              Y                              Z        
 %       maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
-%       RD_2024 % this is the 2024 definition in the created CS 
+   
+% In Plane of the Arm (Humerus) YZ % GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
+maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2) %Def in Humeral Plane
+RD_2024 % this is the 2024 definition in the created CS (see line 4616 for def) 
 
-      'CHECK FOR CONSISTENCY'
-% pause
-%       
-% maxreach =RD_2024;
+'Check Consistency'
+pause
 
-%       'RD has been overwritten'
-% In Plane of the Arm (Humerus) YZ 
-% maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
-% GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
+maxreach =RD_2024;
+
+'Reaching Distance has been Overwritten'
 
 
     %% Max Hand Excursion
@@ -4890,8 +4906,8 @@ pause
 %    maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
 
     % In Plane of Arm (HUMERAL CS) YZ
+%     maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2)
 
-    maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2);
 
     %% Compute shoulder and trunk displacement at maximum reach
     
@@ -4899,37 +4915,40 @@ pause
     % Based on jugular notch difference idx(3) - idx(1)
     
     % XY PLANE
-    %trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
+%     trunk_exc_OLD =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2)
     
     % XYZ PLANE
     trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2)
 
     XJUG_2024
 
+
     'CHECK FOR CONSISTENCY'
     
   
-%     pause
-    trunk_exc = XJUG_2024; 
+     pause
+    
+     trunk_exc =XJUG_2024; %Variable that goes into data matrix
 
     'Trunk Excursion has been overwritten'
 
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
     
-    %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
+%     sh_exc_OLD =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2)
     
    % XY PLANE
-%    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2)
+   sh_exc =  sqrt((gh_end(1)-gh_start(1))^2 +(gh_end(2)-gh_start(2))^2) % in TRUNK cs
 
-   GH_2024 
+   GH_2024 % in ARM PLANE
 
    'CHECK FOR CONSISTENCY'
-  pause
 
-   sh_exc =GH_2024;
+   pause
 
-   'Old GH has been overwritten'
+   sh_exc =GH_2024; % Variable that goes into data matrix
+
+   'GH Excursion has been overwritten'
 
    % XYZ PLANE
 %    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
@@ -4946,12 +4965,12 @@ pause
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
 %     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
 %     
-% %     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+    maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
 %     
-%     shex_current_trial(i) = sh_exc;
+    shex_current_trial(i) = sh_exc;
 % %     sh_Z_ex_current_trial(i) = sh_Z_ex;
 %     
-%     trex_current_trial(i) = trunk_exc;
+    trex_current_trial(i) = trunk_exc;
 
 %     pause
 %% Computing Changes in Trunk Kinematics - October 2023
@@ -5941,9 +5960,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5959,14 +5978,14 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 % 
 
-% %    Check for making sure the conditions align from the loaded Matrix
-%     if DataMatrix{FinalRow,2} == expcond
-%         DataMatrix{FinalRow,2} = expcond;
-% 
-%     else
-%         'Mismatched EXP COND! '
-%         pause
-%     end
+%    Check for making sure the conditions align from the loaded Matrix
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
 
 
 
@@ -5975,14 +5994,14 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
 % %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
 % %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
 
 %         pause
@@ -6241,7 +6260,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
-%  save FullDataMatrix.mat DataMatrix
+ save FullDataMatrix.mat DataMatrix
 
 
 %% Saving Trunk Kinematics to Separate Matrix  
