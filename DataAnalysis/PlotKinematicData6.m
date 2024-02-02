@@ -4292,7 +4292,7 @@ for h = 1:length(gh)
 %    pause
 end
 
-%% JAN 2024 Getting new ARMPLANE (AP) CS in GCS FOR XJUG
+%% JAN 2024 Getting new ARMPLANE (AP) CS in GCS FOR XJUG 
 
 
 %***** NOTE THIS IS DIFFERENT than other BLS!! Due to Trunk CS including XJUG
@@ -4301,20 +4301,6 @@ end
 for h = 1:length(gh)
 PlaneofArmCS_GCS(:,:,h) = HTttog(:,:,h)*PlaneofArmCS(:,:,h);
 end
-
-% Testing the Reaching Distance Vector and Computing in Arm Plane CS ( Z
-% comp should be 0)
- 
-RDVectinTrunk = xhand_TCS(1:3,idx(3)) - GH_TCS(1:3,idx(3));
-
-RDVectinTrunk=[RDVectinTrunk;1];
-
-% RD Vect in Arm Plane = HTArmPlanetoTrunkCS * RDVectorinTrunkCS
-RDVectinARMPlane = inv(PlaneofArmCS(:,:,idx(3)))*RDVectinTrunk % z comp is not 0
-
-'Check RD'
-pause
-
 
 
 
@@ -4327,7 +4313,7 @@ for r = 1 :length(gh)
     EL_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EL_TCS(:,r);
     EM_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EM_TCS(:,r);
     PlaneofArmCS_INPLANECS(:,:,r) = inv(PlaneofArmCS(:,:,r))*PlaneofArmCS(:,:,r);
-    xjug_ArmPlane(:,r)=inv(PlaneofArmCS_GCS(:,:,r))*XJUG_New(:,r); %NOTE THIS IS DIFFERENT than other BLS!! Due to Trunk CS including XJUG
+    xjug_ArmPlane(:,r)=inv(PlaneofArmCS_GCS(:,:,r))*XJUG_New(:,r); %NOTE THIS IS DIFFERENT than other BLS!! Due to Trunk CS Origin being XJUG
  
 end
 
@@ -4582,37 +4568,49 @@ pause
     gh_end = HTgtot(:,:,idx(3))* gh(:,idx(3)); %Getting GH in Trunk Frame at 3 at idx(3)
 
     % Computing the 3D vector from GH_Initial to GH_Final - Jan 2024
-    ghVector = gh_end(1:3,idx(3))-gh_start(1:3,idx(1));
+    ghVector = gh_end(1:3)-gh_start(1:3); % gh vector in trunk
     ghVector = [ghVector; 1];
 
-    ghVectorNormPlane = norm(ghVector(1:2)) % This number is good this is GH magnitude in trunk CS 
+    ghVectorNormPlane = norm(ghVector(1:2)); % This number is good this is GH magnitude in trunk CS 
     
        % GH in Armplane =  HTTrunktoArmPlane * GhinTrunk
-    ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(3)))*ghVector % 3D vector in plane of reach at end of reach WRONG! can't use translation 
+%     ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(3)))*ghVector %  WRONG!!! can't use translation 
 
-    % Transform GH at idx(1) where gh at idx(3) = 0
-    ghArmPlaneStart= inv(PlaneofArmCS(:,:,idx(3)))*gh_start
+    % Transform GH at idx(1) where gh at idx(3) = 0 % 
+    ghArmPlaneStart= inv(PlaneofArmCS(:,:,idx(3)))*gh_start;
 
-    % 
-        ghVectorAP = -ghArmPlaneStart;
-        ghVectorAPMAG = norm(ghVectorAP) % THIS IS CORRECT FOR GH! in arm plane cs
+    % GH disp = Ghf-Ghi where Ghf = 0 therefore distance is just - Ghi.
+  
+     ghVectorAP = -ghArmPlaneStart;
+
+      % Final Definition for Assessing GH translation
+      ghVectorAPMAG = norm(ghVectorAP); %********* Correct Outcome Measure for GH!!******* USE THIS 2024
+
+      GH_2024 = ghVectorAPMAG;
 
 
-    ghVecArmPlaneEndMAG = norm(ghVecArmPlaneEnd(1:2)) % Magnitude in the plane %  too large doesn't check out
+    % Repeating for XJUG to get displacement in the plane of the arm at the
+    % end of the reach Jan 2024 
+   
+    xjug_ArmPlanestart=inv(PlaneofArmCS_GCS(:,:,idx(3)))*XJUG_New(:,idx(1)); 
 
-    
-%    ghVecArmPlaneEndMAG= sqrt(ghVecArmPlaneEnd(1)^2+ghVecArmPlaneEnd(2)^2)
+    xjug_ArmPlaneend=inv(PlaneofArmCS_GCS(:,:,idx(3)))*XJUG_New(:,idx(3)); 
 
+
+    % Computing the distance of the XJUG in the arm plane
+    %Xjugf - Xjugi in the plane of the arm
+
+    xjug_ArmPlaneMAG = sqrt((xjug_ArmPlaneend(2)-xjug_ArmPlanestart(2))^2+(xjug_ArmPlaneend(1)-xjug_ArmPlanestart(1))^2);
+
+    XJUG_2024 = xjug_ArmPlaneMAG;
+
+%%
 
     pause
 
-    % Getting ghVector into Arm Plane CS at end of reach
-    %
+
 %     gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
 %     
-%     for d=1:length(gh)
-%     gh_T_alltime(:,:,d) = HTgtot(:,:,:)* gh(:,d); %Getting gh in Trunk Frame for all time
-%     end
 
     gh_start=  gh_start'; %Accounting for trunk rotation at the start 
     gh_end = gh_end'; % Accounting for trunk rotation at the end
@@ -4721,15 +4719,15 @@ plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,
 
 pause
 
-    %% JANUARY 2024 ******- UPDATING OUTCOME MEASURES TO BE IN CREATED COORDINATE SYSTEM IN PLANE OF REACH
+    %% JANUARY 2024 ******- UPDATING OUTCOME MEASURES TO BE IN CREATED COORDINATE SYSTEM IN PLANE OF REACH - OLD VERSION
   
-    RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
-    
-    GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2)
-
-    pause
-    XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
-
+%     RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
+%     
+%     GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2);
+% 
+%     pause
+%     XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
+% 
 
 
     %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
@@ -4865,14 +4863,15 @@ pause
    
    % XYZ Definition in TRUNK CS at idx1
    %                             X                              Y                              Z        
-      maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
-      RD_2024 % this is the 2024 definition in the created CS 
+%       maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
+%       RD_2024 % this is the 2024 definition in the created CS 
 
       'CHECK FOR CONSISTENCY'
 % pause
-      maxreach =RD_2024;
+%       
+% maxreach =RD_2024;
 
-      'RD has been overwritten'
+%       'RD has been overwritten'
 % In Plane of the Arm (Humerus) YZ 
 % maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
 % GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
@@ -4921,7 +4920,7 @@ pause
     %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
    % XY PLANE
-   sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2)
+%    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2)
 
    GH_2024 
 
@@ -4937,7 +4936,7 @@ pause
 
 
    % Z Shoulder Excursion
-    sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
+%     sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
@@ -4945,14 +4944,14 @@ pause
 
 
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
-    maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
-    
-    maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
-    
-    shex_current_trial(i) = sh_exc;
-    sh_Z_ex_current_trial(i) = sh_Z_ex;
-    
-    trex_current_trial(i) = trunk_exc;
+%     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
+%     
+% %     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
+%     
+%     shex_current_trial(i) = sh_exc;
+% %     sh_Z_ex_current_trial(i) = sh_Z_ex;
+%     
+%     trex_current_trial(i) = trunk_exc;
 
 %     pause
 %% Computing Changes in Trunk Kinematics - October 2023

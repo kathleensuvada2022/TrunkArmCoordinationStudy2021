@@ -37,7 +37,7 @@ PlaneArmCS = [X_planeArm Y_planeArm Z_planeArm];
 %% Setting Origin
 PlaneArmCS = [PlaneArmCS;0 0 0];
 
-Origin = GH_TCS(1:3)'; % GH Initial at Start of Reach
+Origin = GH_TCS(1:3)'; % GH for all time
 
 Origin =[Origin 1]';
 
