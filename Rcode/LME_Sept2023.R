@@ -1,6 +1,5 @@
-## Linear Mixed Effects Model - September 2023
+# Kacey's Stats Models 2023-2024
 
-# Includes most recent GLMMR Model from Fall/Winter 2023 and 2024
 
 
 #install.packages("lme4")  # Install the lme4 package
@@ -18,16 +17,16 @@ library(emmeans)
 library(lmerTest)
 library(sjPlot)
 
-AllData_Stroke_Paretic = AllData_Stroke_Paretic_VELS
+AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_FEB
 # Paretic Limb- restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
 AllData_Stroke_Paretic$Loading = as.factor(AllData_Stroke_Paretic$Loading)
 AllData_Stroke_Paretic$ID = as.factor(AllData_Stroke_Paretic$ID)
 
 # Non-Paretic Limb- restraint, loading, as categorical variables 
-Non_Paretic_Edited_AUG2023$Restraint = as.factor(Non_Paretic_Edited_AUG2023$Restraint)
-Non_Paretic_Edited_AUG2023$Loading = as.factor(Non_Paretic_Edited_AUG2023$Loading)
-Non_Paretic_Edited_AUG2023$ID = as.factor(Non_Paretic_Edited_AUG2023$ID)
+Non_Paretic_FEB2024$Restraint = as.factor(Non_Paretic_FEB2024$Restraint)
+Non_Paretic_FEB2024$Loading = as.factor(Non_Paretic_FEB2024$Loading)
+Non_Paretic_FEB2024$ID = as.factor(Non_Paretic_FEB2024$ID)
 
 
 # Both Limbs Stroke- restraint, loading,limb,ID categorical variables
@@ -40,9 +39,9 @@ AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
 AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
 # For Controls-restraint, loading, as categorical variables 
-AllData_Controls$Restraint = as.factor(AllData_Controls$Restraint)
-AllData_Controls$Loading = as.factor(AllData_Controls$Loading)
-AllData_Controls$ID = as.factor(AllData_Controls$ID)
+AllData_Controls_Feb2024$Restraint = as.factor(AllData_Controls_Feb2024$Restraint)
+AllData_Controls_Feb2024$Loading = as.factor(AllData_Controls_Feb2024$Loading)
+AllData_Controls_Feb2024$ID = as.factor(AllData_Controls_Feb2024$ID)
 
 
 # Models
@@ -55,11 +54,16 @@ AllData_Controls$ID = as.factor(AllData_Controls$ID)
 
 #Paretic Limb
 # Beta Regression Model
-AllData_Stroke_Paretic$RDLL2 = AllData_Stroke_Paretic$RDLL/100
-AllData_Stroke_Paretic$RDLL2 = ifelse(AllData_Stroke_Paretic$RDLL2 > 1, 1, AllData_Stroke_Paretic$RDLL2)
-mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=beta_family(link = "logit"))
-mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=ordbeta(link = "logit"))
+AllData_Stroke_Paretic$RDLL2 = AllData_Stroke_Paretic$RDLL/100 # setting the values to be between 0 and 1
+AllData_Stroke_Paretic$RDLL2 = ifelse(AllData_Stroke_Paretic$RDLL2 > 1, .99, AllData_Stroke_Paretic$RDLL2) # line to cap the data at 1
+mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=beta_family(link = "logit")) #  modeling continuous responses bounded between 0 and 1
+#mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=ordbeta(link = "logit"))
 tab_model(mod2Beta, show.df = TRUE) # Paretic Limb
+
+summary(mod2Beta)
+# Plotting 
+plot(ggpredict(mod2Beta, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
+plot(ggpredict(mod2Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
 
 #LME
 model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, REML = TRUE)
@@ -70,20 +74,28 @@ model3 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Stroke_Paretic,REML = TR
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model2, model3)
 tab_model(model2, show.df = TRUE) # Paretic Limb
+plot(ggpredict(model2, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
+
+
 print(model2)
 
 #Non-Paretic Limb 
 
 #Beta Regression
-Non_Paretic_Edited_AUG2023$RDLL2 = Non_Paretic_Edited_AUG2023$RDLL/100
-Non_Paretic_Edited_AUG2023$RDLL2 = ifelse(Non_Paretic_Edited_AUG2023$RDLL2 > 1, 1, Non_Paretic_Edited_AUG2023$RDLL2)
-mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=ordbeta(link = "logit"))
+Non_Paretic_FEB2024$RDLL2 = Non_Paretic_FEB2024$RDLL/100
+Non_Paretic_FEB2024$RDLL2 = ifelse(Non_Paretic_FEB2024$RDLL2 > 1, .999, Non_Paretic_FEB2024$RDLL2)
+mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_FEB2024, family=ordbeta(link = "logit"))
 #mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=beta_family(link = "logit"))
 tab_model(mod3Beta, show.df = TRUE) # Non-Paretic Limb
+plot(ggpredict(mod3Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
+
 
 #LME
-model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
-model5 <- lmer(RDLL ~ Loading +(1 | ID), data = Non_Paretic_Edited_AUG2023,REML = TRUE)
+model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_FEB2024,REML = TRUE)
+plot(ggpredict(model4, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
+plot(ggpredict(model4, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
+
+model5 <- lmer(RDLL ~ Loading +(1 | ID), data = Non_Paretic_FEB2024,REML = TRUE)
 
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model4, model5)
@@ -91,12 +103,26 @@ tab_model(model4, show.df = TRUE) # Non-Paretic Limb
 
 
 #Controls
-model6 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Controls,REML = TRUE)
+model6 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Controls_Feb2024,REML = TRUE)
 model7 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Controls,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
 anova(model6, model7)
 tab_model(model6, show.df = TRUE) #Controls
+plot(ggpredict(model6, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
+plot(ggpredict(model6, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
 
+#Beta Regression
+AllData_Controls_Feb2024$RDLL2 = AllData_Controls_Feb2024$RDLL/100
+AllData_Controls_Feb2024$RDLL2 = ifelse(AllData_Controls_Feb2024$RDLL2 > 1, .999, AllData_Controls_Feb2024$RDLL2)
+mod4Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Controls_Feb2024, family=ordbeta(link = "logit"))
+#mod3Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= Non_Paretic_Edited_AUG2023, family=beta_family(link = "logit"))
+tab_model(mod4Beta, show.df = TRUE) #  Controls
+plot(ggpredict(mod4Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
+
+
+
+
+# Combined Stroke Paretic and Non-Paretic
 AllData_Stroke$RDLL2 = AllData_Stroke$RDLL/100
 AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, 1, AllData_Stroke$RDLL2)
 
