@@ -60,7 +60,7 @@ mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllDat
 #mod2Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllData_Stroke_Paretic, family=ordbeta(link = "logit"))
 tab_model(mod2Beta, show.df = TRUE) # Paretic Limb
 
-summary(mod2Beta)
+ano9vsummary(mod2Beta)
 # Plotting 
 plot(ggpredict(mod2Beta, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
 plot(ggpredict(mod2Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
