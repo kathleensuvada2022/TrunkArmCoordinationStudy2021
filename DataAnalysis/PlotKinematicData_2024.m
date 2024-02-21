@@ -104,16 +104,16 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-        %  load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
         %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
         %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
 
-%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
-
+%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+%              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+% 
 %                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
@@ -1854,6 +1854,9 @@ axis equal
     [Ypos_act,t2]=resampledata(Ypos_act, t,89,100);
     [Zpos_act,t2]=resampledata(Zpos_act, t,89,100);
 
+    % Computing Acceleration with resampled Velocity
+    accel = ddt(smo(vel,3),1/100);
+
 
     %% EMG Trial Data - Updated Jan 2024
  
@@ -2509,7 +2512,8 @@ plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','
 plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
 plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
- pause
+%  
+% pause
 
 %% MASTER PLOT OF BLS CS in GCS
 
@@ -3305,7 +3309,7 @@ set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Scapular Angle About X -TCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-pause
+% pause
 
 %%%%%%%%%%%%%%%%%%%%%%ANGLE ANGLE PLOTS - July 2023 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3471,7 +3475,7 @@ ylabel('Y axis (mm)')
 
 axis equal
 
-pause
+% pause
 % %Plane
 % figure()
 % hold on
@@ -3575,7 +3579,7 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
 
     title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
 
-    pause
+%     pause
 
 
     %% Plotting Glenohumeral Joint Translations in Arm Coordinate System
@@ -3704,7 +3708,7 @@ legend('GH','XJUG','FontSize',16)
 
 
 
-pause
+% pause
 
 
 
@@ -3891,7 +3895,7 @@ plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,
 
 
 
-pause
+% pause
 
    
    
@@ -3929,7 +3933,7 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2) %Def in Humeral
 RD_2024 % this is the 2024 definition in the created CS (see line 3797 for def) !!!! CURRENT DEF ******************
 
 'Check Consistency'
-pause
+% pause
 
 maxreach =RD_2024;
 
@@ -3969,7 +3973,7 @@ maxreach =RD_2024;
     'CHECK FOR CONSISTENCY'
     
   
-     pause
+%      pause
     
      trunk_exc =XJUG_2024; %Variable that goes into data matrix
 
@@ -3987,7 +3991,7 @@ maxreach =RD_2024;
 
    'CHECK FOR CONSISTENCY'
 
-   pause
+%    pause
 
    sh_exc =GH_2024; % Variable that goes into data matrix
 
@@ -4019,12 +4023,17 @@ maxreach =RD_2024;
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing peak velocity in given trial - Oct/Nov/Dec 2023
+%% Computing peak velocity and accel in given trial - Oct/Nov/Dec 2023/ Feb 2024
 
-Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
+Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s for each trial
 Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
+
+ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))); %in mm/s for each trial
+Index_acc = find(abs(accel)==ACCEL_Trial(1,i)); %index max acc occurs
+maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
+timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
     %% Plotting EMG- Trial Data
 
    close all
@@ -5031,18 +5040,23 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 % Reaching Measures
-% DataMatrix{1,14} = 'Peak Vel';
+
+ DataMatrix{1,15} = 'Peak accel';
+      DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
+
+ %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,10} = shex_current_trial(i);
-    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,10} = shex_current_trial(i);
+%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
 % %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
 % %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
 
 %         pause
