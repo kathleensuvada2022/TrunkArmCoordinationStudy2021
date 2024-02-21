@@ -104,7 +104,7 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+%          load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -112,8 +112,8 @@ for i=1: length(mtrials)
         %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
 
 %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-%              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
-% 
+             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+
 %                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
@@ -1857,6 +1857,12 @@ axis equal
     % Computing Acceleration with resampled Velocity
     accel = ddt(smo(vel,3),1/100);
 
+close all
+    plot(vel)
+    hold on
+    plot(accel)
+    legend('vel','accel')
+%     pause
 
     %% EMG Trial Data - Updated Jan 2024
  
@@ -4030,7 +4036,7 @@ Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
 
-ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))); %in mm/s for each trial
+ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))) %in mm/s for each trial
 Index_acc = find(abs(accel)==ACCEL_Trial(1,i)); %index max acc occurs
 maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
 timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
@@ -5042,8 +5048,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % Reaching Measures
 
  DataMatrix{1,15} = 'Peak accel';
+ 
       DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
-
+% pause
  %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
