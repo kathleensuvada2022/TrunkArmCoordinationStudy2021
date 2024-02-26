@@ -23,9 +23,9 @@
 %- avgemg_start: average EMG at the start of the reach. (check this)
 
 
-% K.SUVADA 2020-2023
+% K.SUVADA 2020-2024
 %%
-function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData6(partid,hand,metriafname,act3dfname,expcond,flag)
+function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
 
 %For Mac
@@ -33,7 +33,6 @@ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUnivers
 % For PC
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 load(fullfile(datafilepath,[partid '_setup.mat'])); %load setup file
-
 
 
 %% Loading and setting file name and condition
@@ -72,98 +71,10 @@ Trunk_Angs_Trial = zeros(3,ntrials);
 %Velocity
 Vel_Trial=zeros(1,ntrials);
 
-%%
 
-% NOT SURE ABOUT ONES BELOW
-% maxreach=zeros(ntrials,1);
-% emgstart = zeros(ntrials,15);
-%
-% emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
-% % rdist = zeros(ntrials,1);
-% maxreach=zeros(ntrials,1);
-% emgstart = zeros(ntrials,15);
-%
-% emgval = zeros(ntrials,6,15); % 15 emgs ->Now 6 conditions
-% rdist = zeros(ntrials,1);
-%
-% % maxreach_current_trial =zeros(ntrials,1);
-% % maxTrunk_current_trial=zeros(ntrials,1);
-% % emgsmaxvel_vals = zeros(ntrials,15);
-%
-%
-% maxreach_current_trial =zeros(ntrials,1);
-% shtrdisp_current_trial=zeros(ntrials,2);
-%
-% emgvel_trial= zeros(length(mtrials),15);
-% emgstart_trial= zeros(length(mtrials),15);
-
-
-%myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
-%myhandles.met.bonylmrks =
-%{{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 %% Loading in BonyLandmark File
 BLs = setup.bl; % BLs in marker CS
 
-
-%% Plotting Humeral and Forearm BLs in Marker frame (without estimated GH)
-
-% To confirm Arm BLS were digitized correctly- this should've happened
-% during the experiment --> *plot pop up* 
-
-% Humerus% 
-%{'EM';'EL';'GH'}
-
-% Hum_BLS_Marker =  BLs{1,3};
-% 
-% figure()
-% plot3(Hum_BLS_Marker(1,1),Hum_BLS_Marker(2,1),Hum_BLS_Marker(3,1),'o')
-% text(Hum_BLS_Marker(1,1),Hum_BLS_Marker(2,1),Hum_BLS_Marker(3,1),'EM','FontSize',14)
-% hold on
-% 
-% plot3(Hum_BLS_Marker(1,2),Hum_BLS_Marker(2,2),Hum_BLS_Marker(3,2),'o')
-% text(Hum_BLS_Marker(1,2),Hum_BLS_Marker(2,2),Hum_BLS_Marker(3,2),'EL','FontSize',14)
-% 
-% plot3(Hum_BLS_Marker(1,3),Hum_BLS_Marker(2,3),Hum_BLS_Marker(3,3),'o')
-% text(Hum_BLS_Marker(1,3),Hum_BLS_Marker(2,3),Hum_BLS_Marker(3,3),'GH_D_I_G','FontSize',14)
-% 
-% plot3(0,0,0,'*')
-% text(0,0,0,'Marker','FontSize',14)
-% axis equal
-% title('Humerus BLs in Humerus Marker Frame during Digitization','FontSize',20)
-% xlabel('X axis','FontSize',14)
-% ylabel('Y axis','FontSize',14)
-% zlabel('Z axis','FontSize',14)
-% 
-% % Forearm % 
-% %{'RS';'US';'OL';'MCP3'}
-% Fore_BLS_Marker =  BLs{1,4};
-% figure()
-% 
-% plot3(Fore_BLS_Marker(1,1),Fore_BLS_Marker(2,1),Fore_BLS_Marker(3,1),'o')
-% text(Fore_BLS_Marker(1,1),Fore_BLS_Marker(2,1),Fore_BLS_Marker(3,1),'RS','FontSize',14)
-% hold on
-% 
-% plot3(Fore_BLS_Marker(1,2),Fore_BLS_Marker(2,2),Fore_BLS_Marker(3,2),'o')
-% text(Fore_BLS_Marker(1,2),Fore_BLS_Marker(2,2),Fore_BLS_Marker(3,2),'US','FontSize',14)
-% 
-% plot3(Fore_BLS_Marker(1,3),Fore_BLS_Marker(2,3),Fore_BLS_Marker(3,3),'o')
-% text(Fore_BLS_Marker(1,3),Fore_BLS_Marker(2,3),Fore_BLS_Marker(3,3),'OL','FontSize',14)
-% 
-% plot3(Fore_BLS_Marker(1,4),Fore_BLS_Marker(2,4),Fore_BLS_Marker(3,4),'o')
-% text(Fore_BLS_Marker(1,4),Fore_BLS_Marker(2,4),Fore_BLS_Marker(3,4),'MCP3','FontSize',14)
-% 
-% plot3(0,0,0,'*')
-% text(0,0,0,'Marker','FontSize',14)
-% axis equal
-% title('Forearm BLs in Humerus Marker Frame during Digitization','FontSize',20)
-% xlabel('X axis','FontSize',14)
-% ylabel('Y axis','FontSize',14)
-% zlabel('Z axis','FontSize',14)
-
-
-% pause
-
-% close all
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
@@ -174,10 +85,9 @@ setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 %% Creating Trunk CS
 TrunkCoord = asthorho_K2022(BLs,hand,0,partid); %Returns Trunk CS in Marker CS HT from T to M during digitization
 %  pause
-setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting old version bc incorrect
+setup.BoneCSinMarker{1} = TrunkCoord ; % overwriting OLD TCS with new TCS
 %%  Computing GH estimate
  gh_est = Ghest_2022(ScapCoord_forGH,BLs,0);
-
 
 % Saving Gh_est to BLs setup file creating new column
 setup.bl{1,2}(:,length(setup.bl{1,2})+1) = gh_est;
@@ -189,38 +99,38 @@ BLs = setup.bl; % BLs in marker CS now including GH estimate in LCS with Shoulde
 
 for i=1: length(mtrials)
     
-%     close all
-    % Mass DataMatrix 
-     if i==1
-        
+    if i==1 %Loading in appropriate mass data matrix                             
+
         %    for mac
 
-% For continuous loading of data - Oct 2023/Winter 2024
-  %  load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+        % For continuous loading of data - Oct 2023/Winter 2024
+%          load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
-%For running one condition at a time
-%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
-%                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
-        
-                 load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-%      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
-        
-%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
-        
+        %For running one condition at a time
+        %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
+        %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
+
+%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+
+%                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Controls.mat')
         %    load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_NonParetic.mat')
-        
-        
-     end
+
+
+    end
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
     afname =  mfname;
     afname2 = mfname;
     
     mfname
+
+    %% Skipping trials where data quality is poor
     
     if strcmp(partid,'RTIS1002')
         if strcmp(mfname,'/trials1.mat')
@@ -1551,292 +1461,22 @@ for i=1: length(mtrials)
             continue
         end
     end
+%% Getting Metria Data and BL locations during Trial in GCS
     
-    %
-    % % Kacey added to call new function to plot in GCS
-    % bl = load('/Users/kcs762/Box/KACEY/Data/RTIS1002/BLs/BL.mat');
-    % datafile =load([mfilepath '/' mfname]);
-    % PlotGCS(datafile,bl,setup)
-    %
-    %     figure(2),clf
-    %     if strcmp(partid,'RTIS2001') && (mtrials(i)==8)
-    %         [xhand,xshoulder,xtrunk,maxreach(i)]=GetHandShoulderPosition(mfilepath,mfname,partid);
-    %     else
-    %
-    %
-    
-    %%%%%%%%%%% Getting Metria Data %%%%%%%%%%%%%%%%%%%
-    
-    
-    % Metria Trial Data - traces of 3rd MCP, acromion, jugular notch, and GH_est during trial
-    
-    [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
-
-% MISC Plotting of Trajectories 2023 - in Global CS
-% figure() 
-% % % BLS of the Humerus
-%  plot(xjug(:,1),xjug(:,2),'Linewidth',2) % xjug 
-%  hold on
-% % plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
-% % plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
-% plot(xghest(:,1),xghest(:,2),'Linewidth',2) % Estimated GH in GCS
-% 
-% % BLs of the Forearm
-% % plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
-% % plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
-% % plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
-% % plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % OL in GCS
-% % plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
-% 
-% 
-% % plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
-% % hold on
-% % plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
-% % plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
-% 
-% 
-%  axis equal
-% %  legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','OL','MCP3','Shoulder Marker','AA','AC','FontSize',14)
-%   legend('IJ','Estimated GH','FontSize',14)
-% 
-% title('GH- RAW' ,'FontSize',16)
-% xlabel('X position (mm)','FontSize',14)
-% ylabel('Y position (mm)','FontSize',14)
-% 
-%   pause
-
-%% For Left Arm Kinematics Testing Spring 2023
-
-%Getting Rotation Matrices Across time for Trunk CS in GCS
- 
-% if strcmp(hand,'Left')
-%     TrunkinGCS_ROTMAT = HTttog(1:3,1:3,:);
-% 
-%     % Will Yield 3x3x250 samples rotated Rotation Matrix for Trunk CS in GCS
-%     
-%     RotZTrunk_ROTMAT = zeros(3,3,length(HTttog(1:3,1:3,:)));
-%   
-%     for b = 1:length(TrunkinGCS_ROTMAT)
-%         RotZTrunk_ROTMAT(1:3,1:3,b) = rotz(180)*TrunkinGCS_ROTMAT(:,:,b);
-%     end
-% 
-%     % Need to Put new 3x3x250 back into original HT so have position with new
-%     % orientation
-% 
-%     HTttog(1:3,1:3,:) = RotZTrunk_ROTMAT(1:3,1:3,:);
-% 
-% end
-%% Plotting Scapula BLs and marker during trial
-
-% b= idx(1);
-% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
-% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
-%  hold on
-% % Computing and Plotting GCS
-% GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
-% quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
-% text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
-%  
-
-%close all 
-% 
-% b = 1:length(xac);
-% 
-% figure()
-% % AC
-% plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% 
-% hold on 
-% text(xac(1,1),xac(1,2),xac(1,3),'AC','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
-% % AI
-% plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xai(1,1),xai(1,2),xai(1,3),'AI','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
-% %PC
-% plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xpc(1,1),xpc(1,2),xpc(1,3),'PC','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
-% %TS
-% plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xts(1,1),xts(1,2),xts(1,3),'TS','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
-% %AA
-% plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xshldr(1,1),xshldr(1,2),xshldr(1,3),'AA','FontSize',26, 'Color',[0.4660 0.6740 0.1880])
-% 
-% %Marker
-% plot3(xshoulder(b,1),xshoulder(b,2),xshoulder(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xshoulder(1,1),xshoulder(1,2),xshoulder(1,3),'Marker','FontSize',26, 'Color','g')
-% 
-% for s_idx = 1:10:length(xai)
-% %Plotting Scapular Polygon for all frames 
-% plot3([xai(s_idx,1) xts(s_idx,1)],[xai(s_idx,2) xts(s_idx,2)],[xai(s_idx,3) xts(s_idx,3)],'b','Linewidth',1) % line between AI and TS
-% plot3([xai(s_idx,1) xshldr(s_idx,1)],[xai(s_idx,2) xshldr(s_idx,2)],[xai(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AI and AA
-% plot3([xts(s_idx,1) xac(s_idx,1)],[xts(s_idx,2) xac(s_idx,2)],[xts(s_idx,3) xac(s_idx,3)],'b','Linewidth',1) % line between TS and AC
-% plot3([xac(s_idx,1) xshldr(s_idx,1)],[xac(s_idx,2) xshldr(s_idx,2)],[xac(s_idx,3) xshldr(s_idx,3)],'b','Linewidth',1) % line between AC and AA
-% xlabel('X Position (mm) ','FontSize',16)
-% ylabel('Y Position (mm)','FontSize',16)
-% zlabel('Z Position (mm)','FontSize',16)
-% title ('Scapular BLS in Global Coordinate System- RAW','FontSize',24)
-% axis equal
-% 
-% 
-% %   pause
-% end
-% 
+[t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
 
-% pause
-
-% figure() 
-% % BLS of the Humerus
-% plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
-% hold on
-% plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
-% plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
-% plot(GH_Dig_GCS(:,1),GH_Dig_GCS(:,2),'Linewidth',2) % GH_DIGITIZED in GCS
-% 
-% % BLs of the Forearm
-% plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
-% plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
-% plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
-% plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
-% 
-% 
-% plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
-% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
-% plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
-% 
-% 
-% axis equal
-% legend('Humerus Marker','EM','EL','Digitized GH','Forearm Marker','RS','US','MCP3','Shoulder Marker','AA','AC','FontSize',14)
-% title('Overhead View of Reach- GCS' ,'FontSize',16)
-% xlabel('X position (mm)','FontSize',14)
-% ylabel('Y position (mm)','FontSize',14)
-% 
-% close all
-
-%%
-% % Plotting TRUNK CS XY plane in GCS
-% quiver(HTttog([1 1],4)',HTttog([2 2],4)',50*HTttog(1,1:2),50*HTttog(2,1:2))
-% text(HTttog(1,4)+50*HTttog(1,1:2),HTttog(2,4)+50*HTttog(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
-% 
-% for h = 1:250
-% HT_trunkinG  = HTttog(:,:,h);
-% quiver(HT_trunkinG([1 1],4)',HT_trunkinG([2 2],4)',50*HT_trunkinG(1,1:2),50*HT_trunkinG(2,1:2))
-% if h ==1
-% text(HT_trunkinG(1,4)+50*HT_trunkinG(1,1:2),HT_trunkinG(2,4)+50*HT_trunkinG(2,1:2),{'X_T_t_o_G','Y_T_t_o_G'})
-% end
-% pause
-% end
-    
-
-
-
-    %% If Coordinate System Off (couldn't REG to room)
-%     if strcmp(partid,'RTIS2009')
-%         if strcmp(hand,'Right')
-%             % Rotating xhand by -50 deg
-%             xhand_transp = xhand';
-%             RotMat = rotz(-50);
-%             xhand_Rot50 = RotMat*xhand_transp;
-%             xhand_Rot50 =xhand_Rot50';
-%             xhand_Rot50(:,1) = -xhand_Rot50(:,1);
-%             
-%             xhand = xhand_Rot50;
-%             
-%             
-%             % Rotating xjug by -50 deg
-%             xjug_transp = xjug';
-%             RotMat = rotz(-50);
-%             xjug_Rot50 = RotMat*xjug_transp;
-%             xjug_Rot50 =xjug_Rot50';
-%             xjug_Rot50(:,1) = -xjug_Rot50(:,1);
-%             
-%             xjug = xjug_Rot50;
-%             
-%             % Rotating xtrunk by -50 deg
-%             xtrunk_transp = xtrunk(:,1:3)';
-%             RotMat = rotz(-50);
-%             xtrunk_Rot50 = RotMat*xtrunk_transp;
-%             xtrunk_Rot50 =xtrunk_Rot50';
-%             xtrunk_Rot50(:,1) = -xtrunk_Rot50(:,1);
-%             
-%             xjug = xjug_Rot50;
-%             
-%             % Rotating xshldr by -50 deg
-%             xshldr_transp = xshldr';
-%             RotMat = rotz(-50);
-%             xshldr_Rot50 = RotMat*xshldr_transp ;
-%             xshldr_Rot50 =xshldr_Rot50';
-%             xshldr_Rot50(:,1) = -xshldr_Rot50(:,1);
-%             
-%             xshldr = xshldr_Rot50;
-%             
-%             
-%             % Rotating gh by -50 deg
-%             xghest_transp = xghest';
-%             RotMat = rotz(-50);
-%             xghest_Rot50 = RotMat*xghest_transp ;
-%             xghest_Rot50 =xghest_Rot50';
-%             xghest_Rot50(:,1) = -xghest_Rot50(:,1);
-%             
-%             xghest = xghest_Rot50;
-%             
-%         end
-%     end
-    
-    
-    
-    %
-    %%
-%     if strcmp(partid,'RTIS1006') % fixing that kacey switched x and y in
-%     GCS creation -
-
-% no longer needed because now in trunk CS - SEPT 2022
-%         
-%         xhandfix(:,1) = xhand(:,2);
-%         xhand(:,2) = -xhand(:,1);
-%         
-%         xhand(:,1) =  xhandfix(:,1);
-%         
-%         
-%         xghestfix(:,1) = xghest(:,2);
-%         xghest(:,2) = -xghest(:,1);
-%         
-%         xghest(:,1) =  -xghestfix(:,1);
-%         
-%         xshldrfix(:,1) = xshldr(:,2);
-%         xshldr(:,2) = -xshldr(:,1);
-%         
-%         xshldr(:,1) =  -xshldrfix(:,1);
-%         
-%         
-%         
-%     end
-%     %
-    
-%     
-%     if strcmp(partid,'RTIS1006')
-%         
-%         xjugfix(:,1) = xjug(:,2);
-%         xjug(:,2) = -xjug(:,1);
-%         
-%         xjug(:,1) =  xjugfix(:,1);
-%         
-%         
-%         xjug(:,1) = -xjug(:,1);
-%     end
-%     
-    
-    
-    %%   Not sure what this is
-    load([mfilepath mfname]);
-    
+%Plotting Shoulder and Trunk MARKER Raw Data- Feb 2024
+figure(90)
+plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',3)
+hold on
+plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',3)
+title('Trunk MARKER and Shoulder Marker not resampled or Interpolated','FontSize',16)
+axis equal
     %% Loading in ACT3D Data for Reach Start Thresholding
+
+    load([mfilepath mfname]); % Need this
+
     act3d_data = data.act;
     
     Xpos_act = -act3d_data(:,2);
@@ -1857,8 +1497,9 @@ for i=1: length(mtrials)
     HTttognewCol3 =zeros(length(HTttog),4);
     HTttognewCol4 =zeros(length(HTttog),4);
     
- 
-    
+
+    %% MCP3 Interpolation
+   
     if sum(sum(isnan(xhand)))>0 || sum(sum(isnan(xjug)))>0 %
         
         if sum(sum(isnan(xhand)))>0 %checking if  xhand has NANs
@@ -1872,15 +1513,7 @@ for i=1: length(mtrials)
                 [xhandnew,TF] = fillmissing(xhand,'nearest');
                 
             elseif strcmp(partid,'RTIS1002')
-                %                 if strcmp(mfname,'/trials10.mat')
-                %                     [xhandnew,TF] = fillmissing(xhand,'linear');
-                %                 end
-                %                 if strcmp(mfname,'/trials9.mat')
-                %                     [xhandnew,TF] = fillmissing(xhand,'linear');
-                %                 end
-                %                 if strcmp(mfname,'/trials10.mat')
-                %                     [xhandnew,TF] = fillmissing(xhand,'nearest');
-                %                 end
+            
                 if strcmp(mfname,'/trials11.mat')
                     [xhandnew,TF] = fillmissing(xhand,'nearest','SamplePoints',t);
                 end
@@ -1922,18 +1555,7 @@ for i=1: length(mtrials)
                 ylabel('X Position (mm)','FontSize',14)
                 %                 xlim([0 5])
                 xlim([0 t(end)])
-                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %                     xlim([0 t(end)])
-                %                 end
-                % %
+      
                 subplot(3,1,2)
                 plot(t(filled_data),xhandnew(filled_data,2),'ro')
                 hold on
@@ -1942,19 +1564,7 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Y Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-                %
-                % if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %     xlim([0 10])
-                % end
-                %
-                % if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %     xlim([0 10])
-                % end
-                %
-                % if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %     xlim([0 t(end)])
-                % end
-                
+       
                 subplot(3,1,3)
                 plot(t(filled_data),xhandnew(filled_data,3),'ro')
                 hold on
@@ -1963,19 +1573,8 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-                %                if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %                      xlim([0 10])
-                %                end
-                %
-                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %                     xlim([0 t(end)])
-                %                 end
-                %
-                
+    
+              
                 'User Check Interpolation Accuracy'
                 pause
                 
@@ -1984,8 +1583,8 @@ for i=1: length(mtrials)
             
         end
         
-        
-        
+       
+   %% Trunk Interpolation     
         if sum(sum(isnan(xjug)))>0  % Checking if Trunk has NANS
        %     'NANS PRESENT in XJUG'
             filled_data =   find(isnan(xjug(1:250)));
@@ -2012,18 +1611,7 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('X Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-                %
-                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %                     xlim([0 t(end)])
-                %                 end
+
                 
                 subplot(3,1,2)
                 plot(t(filled_data),xjugnew(filled_data,2),'ro')
@@ -2035,18 +1623,7 @@ for i=1: length(mtrials)
                 xlim([0 t(end)])
                 
                 
-                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %                     xlim([0 t(end)])
-                %                 end
-                
+   
                 subplot(3,1,3)
                 plot(t(filled_data),xjugnew(filled_data,3),'ro')
                 hold on
@@ -2055,35 +1632,24 @@ for i=1: length(mtrials)
                 xlabel('Time (s)','FontSize',14)
                 ylabel('Z Position (mm)','FontSize',14)
                 xlim([0 t(end)])
-                %
-                %                 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==6
-                %                     xlim([0 10])
-                %                 end
-                %
-                %                 if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-                %                     xlim([0 t(end)])
-                %                 end
-                
+    
                 
                 'User Check Interpolation Accuracy'
                 
                 pause
             end
             xjug= xjugnew;
+
+            %% Interpolating HTttog Matrix 
             
             % Filling in HTttog Matrix and use method 'Nearest' so will
             % duplicate whichever sample is closest and not NAN. 
            
             
-            % Interpolation function doesn't like HT with 4x4xN samples - break up
+            % Interpolation function doesn't accept HT with 4x4xN samples - break up
             % each column then put back together. 
             
-            % Grabbing Closest non NAN sample 
-            
+         
             % Sept. 2022
            
             % Col 1 of HT
@@ -2104,7 +1670,6 @@ for i=1: length(mtrials)
             
             % Resampling
             [HTttognewCol3,t2]=resampledata(HTttognewCol3,t,89,100);
-            
             
             % Col 4 of HT
             [HTttognewCol4,TF] = fillmissing(squeeze(HTttog(:,4,:))','nearest','SamplePoints',t); %4th Column at every point in time
@@ -2187,7 +1752,6 @@ for i=1: length(mtrials)
       
             % Adding other Trunk BLS and Resampling 
 
-
             [xsc,t2]=resampledata(xsc,t,89,100);
             [xxp,t2]=resampledata(xxp,t,89,100);
             [xc7,t2]=resampledata(xc7,t,89,100);
@@ -2195,10 +1759,9 @@ for i=1: length(mtrials)
 
         end
       
+           
         
-        
-        
-    else % If there are no nans in trunk or hand, still need to do this step
+    else % If there are no nans in trunk or hand, or both still need to do
         
         HTttognewCol1 = squeeze(HTttog(:,1,:))';
         HTttognewCol2 = squeeze(HTttog(:,2,:))';
@@ -2247,8 +1810,7 @@ for i=1: length(mtrials)
 
     end
     
-
-    
+ 
     
     %% Computing Dist/Vel/Angles With Original Data
     
@@ -2259,7 +1821,7 @@ for i=1: length(mtrials)
     %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
     dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
     
-    % Computing Velocity and resampling
+    % Computing Velocity 
     vel = ddt(smo(dist,3),1/89);
     
     velx= ddt(smo(xhand(:,1),3),1/89);
@@ -2271,10 +1833,9 @@ for i=1: length(mtrials)
 
 
     
-    %% RESAMPLE
+    %% RESAMPLING Variables
     
-    % Resample variables before feeding into the ComputeReachStart
-    
+    % Resample variables before feeding into the ComputeReachStart    
     
     [xhand,t2]=resampledata(xhand,t,89,100);
     
@@ -2292,52 +1853,17 @@ for i=1: length(mtrials)
     % Resampling ACT3D Data - use time vector and the 89 HZ for metria. 
     [Ypos_act,t2]=resampledata(Ypos_act, t,89,100);
     [Zpos_act,t2]=resampledata(Zpos_act, t,89,100);
-    
-    %% Metria Trial by Trial Kinematic Data (computed BLS)
-    
-    %     if flag
-    %         figure(1),clf
-    %         subplot(2,1,1)
-    %         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-    %         hold on 
-    %
-    %         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
-    %
-    %         % % p1=plot(-[xshldr(:,1) xtrunk(:,1) xfore(:,1)],-[xshldr(:,2) xtrunk(:,2) xfore(:,2)],'LineWidth',2); hold on
-    %         % hold on
-    %         % p2=plot(gca,nanmean([xhand(1:10,1) xshoulder(1:10,1) xtrunk(1:10,1) xfore(1:10,1) xarm(1:10,1)]),nanmean([xhand(1:10,2) xshoulder(1:10,2) xtrunk(1:10,2) xfore(1:10,2) xarm(1:10,2)]),'o','MarkerSize',10,'MarkerFaceColor','g');
-    %         % % p3 = plot([xee*1000 xhnd*1000],[yee*1000 yhnd*1000],'LineWidth',4);  % added to add act 3d data
-    %         % % p3 = plot([xactee(:,1) xactha(:,1)],[xactee(:,2) xactha(:,2)],'LineWidth',4);  % added to add act 3d data
-    %         % %p3 = plot([xactee(:,1) p(:,1)],[xactee(:,2) p(:,2)],'LineWidth',4);  % added to add act 3d data
-    %         % p4=plot(gca,[setup.exp.hometar(1) setup.exp.shpos(1)]*1000,[setup.exp.hometar(2) setup.exp.shpos(2)]*1000,'o','MarkerSize',10,'MarkerFaceColor','r');
-    %         %
-    %         %
-    %         % %p5=quiver(gca,xfore([1 1 40 40],1),xfore([1 1 40 40],2),lcsfore([1 2 79 80],1),lcsfore([1 2 79 80],2),'LineWidth',2);
-    %         % % p3=plot([xhand(mridx,1) xshldr(mridx,1) xtrunk(mridx,1)],-[xhand(mridx,3) xshldr(mridx,3) xtrunk(mridx,3)],'s','MarkerSize',10,'MarkerFaceColor','r');
-    %
-    %         % % phandles=[p1' p2 p3];
-    %         axis 'equal'
-    %         legend('Hand','Shoulder','Trunk')
-    %         xlabel('x (mm)')
-    %         ylabel('y (mm)')
-    %         title(mfname)
-    %
-    %         %Metria Distance Plot with Max Distance Marked
-    %         subplot(2,1,2)
-    %         plot(t,rdist)
-    %         hold on
-    %         p1 = line('Color','b','Xdata',[t(mridx) t(mridx)],'Ydata',[400 650], 'LineWidth',.5); % start reach
-    %         % co=get(lax1,'ColorOrder');
-    %         % set(lax1,'ColorOrder',co(end-1:-1:1,:))
-    %         xlabel('Time')
-    %         ylabel('Distance')
-    %         % legend('Distance','Max Dist')
-    %         axis equal
-    %         %
-    %         pause
-    %     end
-    
-    
+
+    % Computing Acceleration with resampled Velocity
+    accel = ddt(smo(vel,3),1/100);
+
+close all
+    plot(vel)
+    hold on
+    plot(accel)
+    legend('vel','accel')
+%     pause
+
     %% EMG Trial Data - Updated Jan 2024
  
     %Loading in Maxes
@@ -2364,186 +1890,16 @@ for i=1: length(mtrials)
     
     [dist,vel,idx,timestart,timedistmax,xhand,rangeZ]= ComputeReachStart_2021(Zpos_act,Ypos_act,t2,xhand,xjug,dist,vel,velx,vely,theta_vel2,setup,expcond,partid,mfname,hand);
     
-
     % Saving idx variable for each trial 
 
     idx_alltrials(i,:) = idx;
 
-    %% Saving Variables from ComputeReachStart_2021 to .mat file 10.2021
-    
-    %Saves file for each trial
-    %     extention='.mat';
-    %     filepath_times=datafilepath;
-    %     name_times = ['Times_Trial' num2str(mtrials(i)) '.mat'];
-    %     matname = fullfile(filepath_times, [name_times extention]);
-    %
-    % save(matname,'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax','t_vector')
-    
-    %save(['Times_trial' num2str(i) '.mat'],'dist','vel','distmax','idx','timestart','timevelmax', 'timedistmax')
-    
 
-
-    %%  Computing Trunk Angle in GCS - Add back in when want Kinematics
-    
-    % Uncomment everything below to add back Kinematics  - SUMMER 2022
-    
-    
-%     metdata =  x;
-%         %
-%         TrunkAng_GCS= zeros(3,length(metdata));
-%     
-%         for k = 1:length(metdata)
-%             TrunkAng_GCS_frame = ComputeEulerAngles_AMA_K(mfname,hand,partid,k); % Gives Trunk Angle in GCS
-%             TrunkAng_GCS(:,k) =TrunkAng_GCS_frame(1:3);
-%         end
-%     
-% %     
-%     
-    
-    
-    % Trunk Angle Interpolation / Resampling
-    
-    % April 2022 - K. Suvada
-    % No need to check interpolation (how many missing NaNs) bc will have checked in missing trunk data
-    % for displacement
-    %     if sum(sum(isnan(TrunkAng_GCS)))>0
-    %         TrunkAng_GCS = TrunkAng_GCS';
-    %         [TrunkAng_GCS_new,TF] = fillmissing(TrunkAng_GCS,'spline','SamplePoints',t);
-    %
-    %         TrunkAng_GCS = TrunkAng_GCS_new; % Trunk 1) trunk flexion/extension 2) trunk rotation 3) lateral bending
-    %     else
-    %         TrunkAng_GCS = TrunkAng_GCS';
-    %     end
-    %
-    
-    %     if strcmp(partid,'RTIS2002')
-    %         if strcmp(hand,'Left')
-    %             for m = 1:length(TrunkAng_GCS)
-    %                 if (TrunkAng_GCS(m,1) <0)
-    %                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)+180;
-    %                 elseif (TrunkAng_GCS(m,1) >0)
-    %                     TrunkAng_GCS(m,1) = TrunkAng_GCS(m,1)-180;
-    %                 end
-    %             end
-    %         end
-    %     end
-    
-    %     if strcmp(partid,'RTIS2002') || strcmp(partid,'RTIS2001') || strcmp(partid,'RTIS2003') || strcmp(partid,'RTIS2006')|| strcmp(partid,'RTIS2007')|| strcmp(partid,'RTIS2008')|| strcmp(partid,'RTIS2009')|| strcmp(partid,'RTIS2010')|| strcmp(partid,'RTIS2011')|| strcmp(partid,'RTIS1003')|| strcmp(partid,'RTIS1004')
-    %         if strcmp(hand,'Left')
-    %             for m = 1:length(TrunkAng_GCS)
-    %                 if (TrunkAng_GCS(m,1) <0)
-    %                     TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
-    %                 elseif (TrunkAng_GCS(m,1) >0)
-    %                     TrunkAng_GCS(m,1) = -TrunkAng_GCS(m,1);
-    %                 end
-    %             end
-    %         end
-    %     end
-    %
-    
-    
-    
-    % !!!!!Convention for both arms now + angle means back extension - angle
-    % means forward flexion!!!!
-    
-    %Resampling Trunk Angle
-    
-    %[TrunkAng_GCS,t2]=resampledata(TrunkAng_GCS,t,89,100);
-    %%
-    %% MISC GH Computations from OLD GH estimation
-    
-    %     gh = gh';%Flipping so organized by columns (time = rows) like other variables
-    %
-    %     if strcmp(hand,'Left') % need to flip back since rotated 180 about Z axis in 'ComputeEulerAngles'
-    %         gh(:,1) = -gh(:,1);
-    %         gh(:,2) = -gh(:,2);
-    %
-    %     end
-    %     %
-    
-    
-    %  GH computed rotated 90 (Compared to Marker data) - June 2022 -- WRONG
-    %     if strcmp(partid,'RTIS2001')
-    %         if strcmp(hand,'Right')
-    %             if expcond==1
-    %                 %                 if strcmp(mfname,'/trial1.mat')
-    %
-    %                 ghflipped = gh';
-    %                 ghflipped = ghflipped (1:3,:);
-    %
-    %                 gh2 = zeros(3,length(gh));
-    %
-    %                 for l= 1: length(gh)
-    %                     gh2(:,l) = rotz(-45)*ghflipped(:,l);
-    %                 end
-    %
-    %                 gh2 = gh2';
-    %
-    %                 meanx_gh = mean(gh(1:10,1));
-    %                 meany_gh = mean(gh(1:10,2));
-    %
-    %                 meanx_gh_2 = mean(gh2(1:10,1));
-    %                 meany_gh_2 = mean(gh2(1:10,2));
-    %
-    %                 x_transl =  meanx_gh - meanx_gh_2;
-    %                 y_transl =  meany_gh - meany_gh_2;
-    %
-    %                 gh(:,1) = gh2(:,1)+x_transl;
-    %                 gh(:,2) = gh2(:,2)+y_transl;
-    %
-    %
-    %                 %                 end
-    %             end
-    %         end
-    %     end
-    %
-    %
-    %
-    
-    % * NOTE all this GH stuff is wrong... Kacey Corrected GH Linear Reg so
-    % now don't need this **
-    %     if strcmp(partid,'RTIS1006')  %flipping x and y issue with kacey GCS digitization fixed now
-    %
-    %         ghfix(:,1) = gh(:,2);
-    %         gh(:,2) = -gh(:,1);
-    %
-    %         gh(:,1) =  ghfix(:,1);
-    %
-    %         gh(:,1) = -gh(:,1);
-    %     end
-    %
-    %
-    %
-    %
-    %
-    %     if strcmp(partid,'RTIS2009')
-    %         if strcmp(hand,'Right')
-    %             % Rotating GH by -50 deg
-    %             GH_transp = gh(:,1:3)';
-    %             RotMat = rotz(-50);
-    %             GH_Rot50 = RotMat* GH_transp;
-    %             GH_Rot50 =GH_Rot50';
-    %             GH_Rot50(:,1) = -GH_Rot50(:,1);
-    %
-    %             gh(:,1:3) = GH_Rot50(:,1:3);
-    %         end
-    %     end
-    
-    %     if strcmp(partid,'RTIS2009')
-    %         if strcmp(hand,'Left')
-    %
-    %             gh(:,1) = -gh(:,1);
-    %             gh(:,2) = -gh(:,2);
-    %         end
-    %
-    %     end
-    
-    
-    
+  
     %% Filling in Missing Data and Resampling of GH
     
     
-    % Adding in August 2022 with new GHr (Meskers)  linear regression Model
+    % Adding in August 2022 with new GHr (Meskers Model)  linear regression Model
     % gh_est is from GetHandShoulderTrunkPosition8. Gh in global at all
     % points of trial.
     
@@ -2596,18 +1952,7 @@ for i=1: length(mtrials)
             xlabel('Time (s)','FontSize',14)
             ylabel('X Position (mm)','FontSize',14)
             xlim([0 t(end)])
-            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            %             xlim([0 t(end)])
-            %         end
-            
+  
             subplot(3,1,2)
             plot(t(filled_data),ghNew(filled_data,2),'ro')
             hold on
@@ -2616,18 +1961,7 @@ for i=1: length(mtrials)
             xlabel('Time (s)','FontSize',14)
             ylabel('Y Position (mm)','FontSize',14)
             xlim([0 t(end)])
-            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            %             xlim([0 t(end)])
-            %         end
-            
+    
             subplot(3,1,3)
             plot(t(filled_data),ghNew(filled_data,3),'ro')
             hold on
@@ -2636,17 +1970,7 @@ for i=1: length(mtrials)
             xlabel('Time (s)','FontSize',14)
             ylabel('Z Position (mm)','FontSize',14)
             xlim([0 t(end)])
-            %         if strcmp(partid,'RTIS2002') && strcmp(hand,'Left')
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2003') && strcmp(hand,'Left') && expcond==3
-            %             xlim([0 10])
-            %         end
-            %
-            %         if strcmp(partid,'RTIS2007') && strcmp(hand,'Right') && expcond==2 || 3 || 5 || 6
-            %             xlim([0 t(end)])
-            %         end
+
             
             'User Check Interpolation Accuracy'
             
@@ -2709,8 +2033,7 @@ for i=1: length(mtrials)
             % HT Scap to Global CS
             HTstog = HTstognew;
             
-           
-  
+          
             
         else % If there are no NANs in Scap, still need to separate columns to resample
             
@@ -2770,8 +2093,7 @@ for i=1: length(mtrials)
     [xpc,t2]=resampledata(xpc,t,89,100);
 
 
-% close all plots from the distance outcome measures
-% close all
+%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%BELOW SECTIONS ARE UPDATED 2022-2023%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2868,7 +2190,6 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 % 'Elbow Angle at End-Law of Cosines'
 % ang3
-
 
 
 
@@ -3147,10 +2468,6 @@ plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth
 plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
 
-
-
-
-
 % at end of reach
 
 
@@ -3201,7 +2518,8 @@ plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','
 plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
 plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
- pause
+%  
+% pause
 
 %% MASTER PLOT OF BLS CS in GCS
 
@@ -3396,10 +2714,12 @@ plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','
 % end
 
 % pause
-%%
+
   % Now have replace t with t2 vector so it is the resampled t vector
     t = t2;
 
+
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Computing Rotation Matrices (jR and gR)-2023 %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3477,7 +2797,6 @@ end
 %% Scapular Kinematics
 % - HTstoG computed during all frames of trial earlier
 
-
 % Left Arm 
 %Flipping the GCS if left arm so that bone CS and GCS align
 if strcmp(hand,'Left')  
@@ -3490,7 +2809,6 @@ else
 gR_Scap = HTstog(1:3,1:3,:);
 
 end
-
 
 % jR - Rotation Matrix for Scap in Trunk_initial
 jr_Scap_ti = zeros(3,3,length(t));
@@ -3543,7 +2861,6 @@ ELB_ANG_MAT = zeros(3,length(t)); % rows are angles  and cols are frames
 for k = 1:length(t)
 [ELB_ANG(1:3,k),ELB_ANG_MAT(1:3,k),Trunk_ANG_G(1:3,k),Trunk_ANG_G_Mat(1:3,k),Trunk_ANG_Ti(1:3,k),Trunk_ANG_Ti_Mat(1:3,k),HumAng_G(1:3,k),HumAng_G_CalcEuler(1:3,k),HumAng_Ti(1:3,k),HumAng_Ti_CalcEuler(1:3,k),Hum_Ang_T(1:3,k),Hum_Ang_T_CalcEuler(1:3,k),ScapAng_G(1:3,k),ScapAng_G_CalcEul(1:3,k),ScapAng_Ti(1:3,k),ScapAng_Ti_CalcEul(1:3,k),Scap_Ang_T(1:3,k),Scap_Ang_T_CalcEul(1:3,k)]= ComputeEulerAngles_2022(hand,Fore_CS_G(:,:,k),Hum_CS_G(:,:,k),gR_trunk(:,:,k),jR_trunk(:,:,k),gR_Hum(:,:,k),jr_Hum_ti(:,:,k),jr_Hum_T(:,:,k),gR_Scap(:,:,k),jr_Scap_ti(:,:,k),jr_Scap_T(:,:,k),k);
 end
-
 
 
 
@@ -3862,7 +3179,6 @@ end
 % close all
 
 
-
 %% Scapula - ZYX
 
 %% If LEFT ARM, make Internal/External Rotation and Anterior/Posterior Tilt Negative
@@ -3884,44 +3200,43 @@ end
 
 %% Plotting Scapular Kinematics 
 % GCS
-figure()
-plot(ScapAng_G(1,:),'Linewidth',2) %Internal/ External Rotation
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Z axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
-% ylabel('-------------> Forwards ','FontSize',24)
-ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
-figure()
-plot(ScapAng_G(2,:),'Linewidth',2)  % Upward and Downward Rotation
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('Y axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Angle About Y (Deg)-GCS ','Fontsize',24)
-% ylabel('Left        Right','FontSize',24)
-ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
-
-figure()
-plot(ScapAng_G(3,:),'Linewidth',2) % Anterior/Posterior Tilt
-hold on
-xline(idx(1),'g','Linewidth',2)
-xline(idx(3),'r','Linewidth',2)
-legend('X axis','Reach Start','Reach End','Fontsize',16)
-a = get(gca,'XTickLabel');  
-set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-title ('Scapular Angle About X -GCS ','Fontsize',24)
-% ylabel('Protraction        Retraction','FontSize',24)
-
-ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
-
+% figure()
+% plot(ScapAng_G(1,:),'Linewidth',2) %Internal/ External Rotation
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Z axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
+% % ylabel('-------------> Forwards ','FontSize',24)
+% ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% 
+% figure()
+% plot(ScapAng_G(2,:),'Linewidth',2)  % Upward and Downward Rotation
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('Y axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Angle About Y (Deg)-GCS ','Fontsize',24)
+% % ylabel('Left        Right','FontSize',24)
+% ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% 
+% 
+% figure()
+% plot(ScapAng_G(3,:),'Linewidth',2) % Anterior/Posterior Tilt
+% hold on
+% xline(idx(1),'g','Linewidth',2)
+% xline(idx(3),'r','Linewidth',2)
+% legend('X axis','Reach Start','Reach End','Fontsize',16)
+% a = get(gca,'XTickLabel');  
+% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+% title ('Scapular Angle About X -GCS ','Fontsize',24)
+% % ylabel('Protraction        Retraction','FontSize',24)
+% 
+% ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 % Scap angles in TI
@@ -4000,7 +3315,7 @@ set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
 title ('Scapular Angle About X -TCS ','Fontsize',24)
 ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-pause
+% pause
 
 %%%%%%%%%%%%%%%%%%%%%%ANGLE ANGLE PLOTS - July 2023 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4021,113 +3336,7 @@ pause
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %% Checking to see if GH has NANs via missing shoulder marker
-    %OLD way prior to resampling
-    %     if isnan(gh(idx(1),1)) || isnan(gh(idx(3),1))  %returns t- NAN start/end
-    %         'NAN SHLDR present Start/End Trial'
-    %
-    %         num_real_sh = find(~isnan(gh(:,1))); %Finding indices where not NAN
-    %
-    %         if isnan(gh(idx(1),1))
-    %         % for start index
-    %         Locs1_start= find(num_real_sh<idx(1));
-    %         Locs1_start = Locs1_start(length(Locs1_start));
-    %
-    %         Locs2_start= find(num_real_sh>idx(1),1);
-    %         Locs2_start = num_real_sh(Locs2_start);
-    %
-    %         if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
-    %             [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-    %         else
-    %             if abs(Locs2_start-Locs2_start)-1  ==6 % allowing if it's just 1 over
-    %                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-    %             else
-    %                 'CHECK GH DATA- NUM_NANS CONSEC START >5'
-    %                 %            abs(NANLocations_2-NANLocations_1)-1
-    %                 %             mfname
-    %                 pause
-    %                 continue
-    %             end
-    %         end
-    %
-    %         else
-    %
-    %         % end index
-    %         Locs1_end= find(num_real_sh<idx(3));
-    %         Locs1_end = Locs1_end(length(Locs1_end));
-    %
-    %         Locs2_end= find(num_real_sh>idx(3),1);
-    %         Locs2_end = num_real_sh(Locs2_end);
-    %
-    %         if abs(Locs2_end-Locs1_end)-1  <=5 % seeing if NANs consecutive
-    %             [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-    %         else
-    %             if abs(Locs2_end-Locs2_end)-1  ==6 % allowing if it's just 1 over
-    %                 [gh,TF] = fillmissing(gh,'spline','SamplePoints',t);
-    %             else
-    %                 'CHECK GH DATA- NUM_NANS CONSEC END >5'
-    %                 %            abs(NANLocations_2-NANLocations_1)-1
-    %                 %             mfname
-    %                 pause
-    %                 continue
-    %             end
-    %         end
-    %
-    %        end
-    %
-    %   end
-    %     %% Checking to see where Trunk has NANs
-    %     if isnan(xjug(idx(1),1)) || isnan(xjug(idx(3),1))  %returns true now if any element is NAN
-    %         'NAN TRUNK present Start/End Trial'
-    %         num_real_tr = find(~isnan(xjug(:,1))); %Finding # of reals
-    %
-    %         % for start index
-    %         if isnan(xjug(idx(1),1))
-    %         Locs1_start= find(num_real_tr<idx(1));
-    %         Locs1_start = Locs1_start(length(Locs1_start));
-    %
-    %         Locs2_start= find(num_real_tr>idx(1),1);
-    %         Locs2_start = num_real_tr(Locs2_start);
-    %
-    %         if abs(Locs2_start-Locs2_start)-1 <=5 % seeing if NANs consecutive
-    %             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
-    %             [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-    %         else
-    %
-    %             if abs(Locs2_start-Locs2_start)-1 ==6 % allowing if it's just 1 over
-    %                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-    %             else
-    %                 'CHECK Trunk DATA- NUM_NANS CONSEC START >5'
-    %                 % mfname
-    %                 pause
-    %                 continue
-    %             end
-    %         end
-    %
-    %         else
-    %         % For end index
-    %         Locs1_end= find(num_real_tr <idx(3));
-    %         Locs1_end = Locs1_end(length(Locs1_end));
-    %
-    %         Locs2_end= find(num_real_tr>idx(3),1);
-    %         Locs2_end = num_real_tr(Locs2_end);
-    %
-    %         if abs(Locs2_end-Locs1_end)-1 <=5 % seeing if NANs consecutive
-    %             %     if length(num_NANS_tr) <= 5 %threshold 5 NANS
-    %             [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-    %         else
-    %
-    %             if abs(Locs2_end-Locs2_end)-1 ==6 % allowing if it's just 1 over
-    %                 [xjug,TF] = fillmissing(xjug,'spline','SamplePoints',t);
-    %             else
-    %                 'CHECK Trunk DATA- NUM_NANS CONSEC END >5'
-    %                 % mfname
-    %                 pause
-    %                 continue
-    %             end
-    %         end
-    %         end
-    %     end
+ 
     
     %% Plotting Kinematic Data to Verify before outcome measures
     %
@@ -4238,7 +3447,7 @@ for r = 1 :length(gh)
     xhand_TCS(:,r) = inv(HTttog(:,:,r))*xhand_New(:,r);
     EM_TCS(:,r) = inv(HTttog(:,:,r))*EM_New(:,r)  ;
     EL_TCS(:,r) = inv(HTttog(:,:,r))*EL_New(:,r) ;
-    xjug_TCS(:,r) = inv(HTttog(:,:,r))*XJUG_New(:,r) ;
+%     xjug_TCS(:,r) = inv(HTttog(:,:,r))*XJUG_New(:,r) ;
 end
 
 
@@ -4251,6 +3460,7 @@ figure()
 hold on
 plot(GH_TCS(1,:),GH_TCS(2,:),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
 plot(aa_TCS(1,:),aa_TCS(2,:),'Color',[0.4660 0.6740 0.1880],'Linewidth',4)
+% plot(xhand_TCS(1,:),xhand_TCS(2,:),'Color','g','Linewidth',4)
 
 plot(GH_TCS(1,idx(1)),GH_TCS(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
 plot(GH_TCS(1,idx(1)),GH_TCS(2,idx(1)),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
@@ -4271,7 +3481,7 @@ ylabel('Y axis (mm)')
 
 axis equal
 
-pause
+% pause
 % %Plane
 % figure()
 % hold on
@@ -4375,7 +3585,7 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
 
     title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
 
-    pause
+%     pause
 
 
     %% Plotting Glenohumeral Joint Translations in Arm Coordinate System
@@ -4487,6 +3697,7 @@ figure()
 plot(gh(:,1),gh(:,2),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
 hold on
 plot(xjug(:,1),xjug(:,2),'Color',[0.8500 0.3250 0.0980],'Linewidth',4)
+%  plot(xhand(:,1),xhand(:,2),'Color','g','Linewidth',4)
 
 plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10,'Linewidth',4)  %Reach Start
 plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10,'Linewidth',4)  %Reach END
@@ -4503,66 +3714,48 @@ legend('GH','XJUG','FontSize',16)
 
 
 
-
-pause
-%% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
-
-% EM_Hum = zeros(4,length(EM_GCS));
-% EM_forhumcalc = [EM_GCS repmat(1,length(EM_GCS),1)];
-% EM_forhumcalc = EM_forhumcalc';
-% 
-% EL_Hum = zeros(4,length(EL_GCS));
-% EL_forhumcalc = [EL_GCS repmat(1,length(EL_GCS),1)];
-% EL_forhumcalc = EL_forhumcalc';
-% 
-% for r = 1 :length(EM_GCS)
-%     % 3rd MCP in Hum  = HT G to H * EM in G
-% EM_Hum(:,r) =  inv(Hum_CS_G(:,:,r))*EM_forhumcalc(:,r);
-% EL_Hum(:,r) =  inv(Hum_CS_G(:,:,r))*EL_forhumcalc(:,r);
-% end
-% 
-% % Gives EM and EL in Humerus CS at all frames of trial
-% EM_Hum = EM_Hum'; 
-% EL_Hum = EL_Hum'; 
+% pause
 
 
-%% Computing Limb Length Via BonyLandmarks
-
-% Length 1
-
-% L1 = (EM_Hum+EL_Hum)/2;
-% 
-% L2 = sqrt((xhand_Hum(idx(1),1)-L1(idx(1),1))^2+(xhand_Hum(idx(1),2)-L1(idx(1),2))^2+(xhand_Hum(idx(1),3)-L1(idx(1),3))^2);
-% 
-% L1 = sqrt(L1(idx(1),1)^2+ L1(idx(1),2)^2+ L1(idx(1),3)^2)
-% 
-% LimbLengthBL = L1+L2
 
 
-%% September 2022
- 
- % Below gives multiple ways to get data into trunk coordinate system. 
- % Current Method uses the HT matrix of TRUNK to include not just translation but
- % orientation ST data is in the frame of the TRUNK CS at the start of the
- % reach idx(1).
+ % Below gives multiple ways to compute outcome measures. See 2024 for
+ % current definition
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-    %% September 2022 - Using Trunk HT matrix to convert Hand, Shoulder, Trunk idx(1)- not just translation but rotation too
+    %% September 2022 -  Hand, Shoulder, Trunk in Trunk at idx(1)
     
     
-    % HAND
+    % MCP3
     
     xhand = [xhand repmat(1,length(xhand),1)]; 
     xhand = xhand';
   
-    xhand = HTgtot(:,:,idx(1))* xhand; %Getting Hand in Trunk Frame at idx(1)
+    xhand_trunkidx1 = HTgtot(:,:,idx(1))* xhand; %Getting Hand in Trunk Frame at idx(1)
     
-    xhand = xhand';
+    xhand_trunkidx = xhand_trunkidx1';
     
     
-    % Shoulder 
+    % GH 
         
     gh = [gh repmat(1,length(gh),1)]; 
     gh = gh';
+
+    
+    gh_trunkidx1  = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
+    
+    gh_trunkidx1 = gh_trunkidx1';
+    
+    % XJUG in Trunk at Start of Reach
+    
+    xjug = [xjug repmat(1,length(xjug),1)];
+    xjug = xjug';
+    
+    xjug_trunkidx1 = HTgtot(:,:,idx(1))* xjug; %Getting Hand in Trunk Frame at idx(1)
+    
+    xjug_trunkidx1 = xjug_trunkidx1';
+
+    %% 2024 Computation Trunk,Shoulder,and Reaching Distance in Arm Plane
   
     % GH EXCURSION 2O24
 
@@ -4620,34 +3813,10 @@ pause
     RD_2024 = xhand_ArmPlaneendMAG;
     
     
-%%
 
-  
-
-%     gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
-%     
-
-    gh_start=  gh_start'; %Accounting for trunk rotation at the start 
-    gh_end = gh_end'; % Accounting for trunk rotation at the end
-    
-    gh = gh';
-    
-    % Trunk 
-    
-    xjug = [xjug repmat(1,length(xjug),1)];
-    xjug = xjug';
-    
-    xjug = HTgtot(:,:,idx(1))* xjug; %Getting Hand in Trunk Frame at idx(1)
-    
-    xjug = xjug';
-
-
-%%
-
-% Scapular Polygon in TCS - Jan 2024
+%% Scapular Polygon in TCS - Jan 2024
 
 figure()
-
 
 %Start of Reach
 b = idx(1);
@@ -4732,126 +3901,10 @@ plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,
 
 
 
-pause
+% pause
 
-    %% JANUARY 2024 ******- UPDATING OUTCOME MEASURES TO BE IN CREATED COORDINATE SYSTEM IN PLANE OF REACH - OLD VERSION
-  
-%     RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
-%     
-%     GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2);
-% 
-%     pause
-%     XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
-% 
-
-
-    %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
-%  
-%     % Centering at the Trunk  (idx(1))
-%     xhand = xhand-xjug(idx(1),:);
-%     xjug_origin = xjug-xjug(idx(1),:);
-%     xshldr = xshldr - xjug(idx(1),:);
-%     
-%     % for GH need to also account for trunk contributing to shoulder 
-%   
-%     gh = gh-xjug(idx(1),:);
-%     
-%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
-%        
-%     
-    
-    %% Subtracting Trunk at first frame of trial From Hand, Arm Length, and Shoulder
-%  
-%     %Centering at the Trunk CS (first time point)
-%     xhand = xhand-xjug(1,:);
-%     xjug_origin = xjug-xjug(1,:);
-%     xshldr = xshldr - xjug(1,:);
-%     
-%     % for GH need to also account for trunk contributing to shoulder 
-%   
-%     gh = gh-xjug(1,:); %Centering Sh at the Trunk CS (first time point)
-%     
-%     gh = gh - xjug_origin;% Subtracting trunk from shoulder so Shoulder not including trunk movement
-%     
-    %% Fixing CS issue. Need to flip about trunk - Had to flip BL plot
-    %     RTIS 2008- Left
-    xhandnew = zeros(3,length(xhand));
-    ghnew =zeros(3,length(xhand));
-    xshldrnew =zeros(3,length(xshldr));
-%     
-%     if strcmp(partid,'RTIS2008')
-%         if strcmp(hand,'Left')
-%             
-%             for p = 1:length(gh)
-%                 ghnew(:,p) = roty(pi)*gh(p,:)';
-%                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
-%                 xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
-%             end
-%             
-%             ghnew = ghnew';
-%             xhandnew= xhandnew';
-%             xshldrnew= xshldrnew';
-%             
-%             gh = ghnew;
-%             xhand = xhandnew;
-%             xshldr = xshldrnew;
-%         end
-%     end
-    
-    %RTIS 2010- Left
-    
-%     if strcmp(partid,'RTIS2010')
-%         if strcmp(hand,'Left')
-%             for p = 1:length(gh)
-%                 ghnew(:,p) = roty(pi)*gh(p,:)';
-%                 xhandnew(:,p) = roty(pi)*xhand(p,:)';
-%                 xshldrnew(:,p) = roty(pi)*xshldr(p,:)';
-%                 
-%             end
-%             
-%             ghnew = ghnew';
-%             xhandnew= xhandnew';
-%             xshldrnew= xshldrnew';
-%             
-%             
-%             gh = ghnew;
-%             xhand = xhandnew;
-%             xshldr = xshldrnew;
-%             
-%         end
-%     end
-    
-    %%  Plots Post Subtraction of Initial Trunk Position - final data for outcome measures
-    
-    
-%     figure(35)
-%     plot(xhand(:,1),xhand(:,2),'Linewidth',2) % Computed 3rd MCP
-%     hold on
-%     plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-%     plot(xjug(:,1),xjug(:,2),'Linewidth',2)  % Computed Jug Notch
-%     
-%     plot(gh(:,1),gh(:,2),'Linewidth',2)
-%     % plot(xshldr(:,1),xshldr(:,2),'Linewidth',3)
-%     
-%     plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking shoulder start
-%     plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking shoulder start
-%     
-% 
-%     plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10); %marking trunk start
-%     plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10); %marking trunk end
-%       
-%     plot(0,0,'o','MarkerEdgeColor','g','MarkerSize',10); %trunk start which will always be at 0,0 --> centered at trunk start
-% 
-%     axis equal
-%     legend('3rd MCP','Reach Start','Reach End', 'Trunk',' Computed Gh','FontSize',14)
-%     title('Overhead View of Reach- HT Trunk Initial Position' ,'FontSize',16)
-%     xlabel('X position (mm)','FontSize',14)
-%     ylabel('Y position (mm)','FontSize',14)
-%     
-
-    
+   
+   
  %% Angles Final-Initial 
 % Computation of Angles - difference of start and ending angle 
 % 
@@ -4879,14 +3932,14 @@ pause
    
    % XYZ Definition in TRUNK CS at idx1
    %                           X                              Y                              Z        
-%       maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
+% maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
    
 % In Plane of the Arm (Humerus) YZ % GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
 maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2) %Def in Humeral Plane
-RD_2024 % this is the 2024 definition in the created CS (see line 4616 for def) 
+RD_2024 % this is the 2024 definition in the created CS (see line 3797 for def) !!!! CURRENT DEF ******************
 
 'Check Consistency'
-pause
+% pause
 
 maxreach =RD_2024;
 
@@ -4909,7 +3962,7 @@ maxreach =RD_2024;
 %     maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2)
 
 
-    %% Compute shoulder and trunk displacement at maximum reach
+    %% Compute shoulder and trunk displacement at maximum reach in GCS
     
     % Trunk
     % Based on jugular notch difference idx(3) - idx(1)
@@ -4918,7 +3971,7 @@ maxreach =RD_2024;
 %     trunk_exc_OLD =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2)
     
     % XYZ PLANE
-    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2)
+    trunk_exc =  sqrt((xjug(1,idx(3))-xjug(1,idx(1)))^2 +(xjug(2,idx(3))-xjug(2,idx(1)))^2+(xjug(3,idx(3))-xjug(3,idx(1)))^2)
 
     XJUG_2024
 
@@ -4926,7 +3979,7 @@ maxreach =RD_2024;
     'CHECK FOR CONSISTENCY'
     
   
-     pause
+%      pause
     
      trunk_exc =XJUG_2024; %Variable that goes into data matrix
 
@@ -4944,7 +3997,7 @@ maxreach =RD_2024;
 
    'CHECK FOR CONSISTENCY'
 
-   pause
+%    pause
 
    sh_exc =GH_2024; % Variable that goes into data matrix
 
@@ -4953,14 +4006,12 @@ maxreach =RD_2024;
    % XYZ PLANE
 %    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
 
-
    % Z Shoulder Excursion
 %     sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
    
-
 
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
 %     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
@@ -4978,12 +4029,17 @@ maxreach =RD_2024;
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing peak velocity in given trial - Oct/Nov/Dec 2023
+%% Computing peak velocity and accel in given trial - Oct/Nov/Dec 2023/ Feb 2024
 
-Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
+Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s for each trial
 Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
+
+ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))) %in mm/s for each trial
+Index_acc = find(abs(accel)==ACCEL_Trial(1,i)); %index max acc occurs
+maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
+timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
     %% Plotting EMG- Trial Data
 
    close all
@@ -5990,18 +5046,24 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 % Reaching Measures
-% DataMatrix{1,14} = 'Peak Vel';
+
+ DataMatrix{1,15} = 'Peak accel';
+ 
+      DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
+% pause
+ %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
 %     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,10} = shex_current_trial(i);
-    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,10} = shex_current_trial(i);
+%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
 % %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
 % %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
 
 %         pause
@@ -6263,59 +5325,8 @@ ElbAng_STD_PerBin = y_std_per_bin;
  save FullDataMatrix.mat DataMatrix
 
 
-%% Saving Trunk Kinematics to Separate Matrix  
-
-% Final- Initial for all 3 trunk Angles: all trials
-%    savefileTRUNK = [partid '_' num2str(expcond) 'TrunkKinematics.mat'];
-%    
-%    save(savefileTRUNK, 'Trunk_Angs_Trial');
 
 
-%% Printing out the max reach, std, shoulder and trunk displacement and std
-
-% UPDATED KCS Jan 2022 -- to fix large standard dev issue
-% Need to change 0s from skipped trials to NANs-- this is averages per
-% condition..... don't use if want every single trial
-
-% for k = 1:length(maxreach_current_trial)
-%     
-%     if maxreach_current_trial(k)== 0
-%         maxreach_current_trial(k) = nan;
-%     end
-%     if maxhandexcrsn_current_trial(k) ==0
-%         maxhandexcrsn_current_trial(k) = nan;
-%     end
-%     if shex_current_trial(k) ==0
-%         shex_current_trial(k) = nan;
-%     end
-%     
-%     if trex_current_trial(k) ==0
-%         trex_current_trial(k) = nan;
-%     end
-%     
-%     %     if TrunkAng_current_trial(k) ==0
-%     %         TrunkAng_current_trial(k)= nan;
-%     %     end
-% end
-
-% 
-% avgmaxreach =nanmean(maxreach_current_trial);
-% std_maxreach = nanstd(maxreach_current_trial);
-% 
-% avgmaxhand = nanmean(maxhandexcrsn_current_trial);
-% std_maxhand= nanstd(maxhandexcrsn_current_trial);
-% 
-% %Updated based on GH computation
-% avgshldr = nanmean(shex_current_trial);
-% stdshldr = nanstd(shex_current_trial);
-% 
-% %Trunk Displacement
-% avgtrunk = nanmean(trex_current_trial);
-% stdtrunk = nanstd(trex_current_trial);
-
-%Trunk Angle
-% avgtrunk_ANG = nanmean(TrunkAng_current_trial);
-% stdtrunk_ANG = nanstd(TrunkAng_current_trial);
 
 
 end

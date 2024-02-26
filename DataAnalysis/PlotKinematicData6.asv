@@ -99,7 +99,8 @@ Vel_Trial=zeros(1,ntrials);
 
 
 %myhandles.met.Segments = {'Trunk';'Scapula';'Humerus';'Forearm';'Probe'};
-%myhandles.met.bonylmrks = {{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
+%myhandles.met.bonylmrks =
+%{{'SC';'IJ';'PX';'C7';'T8'},{'AC';'AA';'TS';'AI';'PC'},{'EM';'EL';'GH'},{'RS';'US';'OL';'MCP3'}};
 %% Loading in BonyLandmark File
 BLs = setup.bl; % BLs in marker CS
 
@@ -166,7 +167,7 @@ BLs = setup.bl; % BLs in marker CS
 %% Creating Scapular CS
 
 % From BL Digitization File- creating Scapular CS in MARKER frame.
-ScapCoord_forGH = Asscap_K_GH(BLs,hand,0); % switching for left arm st Ghest works
+ScapCoord_forGH = Asscap_K_GH(BLs,hand,0); % switching for left arm 
 ScapCoord = Asscap_K(BLs,hand,0); % Not switching for left arm
 setup.BoneCSinMarker{2} = ScapCoord ; % overwriting old version bc incorrect
 
@@ -194,18 +195,18 @@ for i=1: length(mtrials)
         
         %    for mac
 
-% For continuous loading of data - Oct 2023
-%    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+% For continuous loading of data - Oct 2023/Winter 2024
+  %  load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
 %For running one condition at a time
 %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
 %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
         
-   %              load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
-%       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
+%                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic.mat')
+%      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls.mat')
         
-%                   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_VEL.mat')
+%                    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic.mat')
         
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -1571,35 +1572,38 @@ for i=1: length(mtrials)
     
     [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
-%% MISC Plotting of Trajectories 2023 - in Global CS
+% MISC Plotting of Trajectories 2023 - in Global CS
 % figure() 
-% % BLS of the Humerus
-% plot(xarm(:,1),xarm(:,2),'Linewidth',2) % Humerus Marker
-% hold on
-% plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
-% plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
+% % % BLS of the Humerus
+%  plot(xjug(:,1),xjug(:,2),'Linewidth',2) % xjug 
+%  hold on
+% % plot(EM_GCS(:,1),EM_GCS(:,2),'Linewidth',2) % EM in GCS
+% % plot(EL_GCS(:,1),EL_GCS(:,2),'Linewidth',2) % EL in GCS
 % plot(xghest(:,1),xghest(:,2),'Linewidth',2) % Estimated GH in GCS
 % 
 % % BLs of the Forearm
-% plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
-% plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
-% plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
-% plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % OL in GCS
-% plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
+% % plot(xfore(:,1),xfore(:,2),'Linewidth',2) % Forearm Marker
+% % plot(RS_GCS(:,1),RS_GCS(:,2),'Linewidth',2) % RS in GCS
+% % plot(US_GCS(:,1),US_GCS(:,2),'Linewidth',2) % US in GCS
+% % plot(OL_GCS(:,1),OL_GCS(:,2),'Linewidth',2) % OL in GCS
+% % plot(xhand(:,1),xhand(:,2),'Linewidth',2) %  MCP3 in  GCS
 % 
 % 
-% plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
-% plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
-% plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
+% % plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',2) %  Shoulder marker in  GCS
+% % hold on
+% % plot(xshldr(:,1),xshldr(:,2),'Linewidth',2) %  AA in  GCS
+% % plot(xac(:,1),xac(:,2),'Linewidth',2) %  AC in  GCS
 % 
 % 
-% axis equal
-% legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','OL','MCP3','Shoulder Marker','AA','AC','FontSize',14)
-% title('Overhead View of Reach- GCS' ,'FontSize',16)
+%  axis equal
+% %  legend('Humerus Marker','EM','EL','Estimated GH','Forearm Marker','RS','US','OL','MCP3','Shoulder Marker','AA','AC','FontSize',14)
+%   legend('IJ','Estimated GH','FontSize',14)
+% 
+% title('GH- RAW' ,'FontSize',16)
 % xlabel('X position (mm)','FontSize',14)
 % ylabel('Y position (mm)','FontSize',14)
-
-%  pause
+% 
+%   pause
 
 %% For Left Arm Kinematics Testing Spring 2023
 
@@ -2295,7 +2299,7 @@ for i=1: length(mtrials)
     %         figure(1),clf
     %         subplot(2,1,1)
     %         plot([(xhand(:,1)-xjug(1,1)) (xshldr(:,1)-xjug(1,1)) (xjug(:,1)-xjug(1,1))],[(xhand(:,2)-xjug(1,2)) (xshldr(:,2)-xjug(1,2)) (xjug(:,2)-xjug(1,2))],'LineWidth',1);
-    %         hold on
+    %         hold on 
     %
     %         plot(xhand(mridx,1),xhand(mridx,2),'o','MarkerSize',10,'MarkerFaceColor','r');
     %
@@ -2334,24 +2338,26 @@ for i=1: length(mtrials)
     %     end
     
     
-    %% Loading in EMGS
-
-    % Need to load in clean EMGs 
+    %% EMG Trial Data - Updated Jan 2024
  
-    %Loading in Max EMGs
-         load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
+    %Loading in Maxes
+    load([afilepath '/' 'Maxes' '/' 'maxEMG.mat'])
 
-         % Loading in clean EMGS
-%          emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
-%          emg = emg.cleandata ;
+    % Clean EMG Trial Data
+    % emg = load([afilepath '/' 'clean_data_trial_' num2str(mtrials(i)) '.mat']);
+    % emg = emg.cleandata ;
 
-emg= data.daq{1,2}; 
-        emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
- 
-        emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:); % Detrend and rectify EMG
- 
-        % Subtract out baseline activity (normalized average) 250 ms 
-        emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
+    % Raw EMG Trial Data
+    emg= data.daq{1,2};
+
+    % Unrectified EMG
+    % emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:);
+
+    % Detrend and rectify EMG
+    emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:);
+
+    % Subtract out baseline activity (normalized average) 250 ms
+    emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
  
     %% Computing the start of the reach
     
@@ -2803,7 +2809,9 @@ Hum_CS_G = zeros(4,4,length(gh));
 
 % Creating Humerus CS 
 for h = 1:length(gh) 
-Hum_CS_G(:,:,h) =  ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0);
+Hum_CS_G(:,:,h) =ashum_K_2022(EM_GCS(h,:),EL_GCS(h,:),gh(h,:),hand,h,0); 
+
+% Hum_CS_G(:,:,h) =  ashum_K_2024_EMEL(EM_GCS(h,:),EL_GCS(h,:),gh(idx(1),:),hand,h,0); %Origin at First GH timepoint
 
 end
 
@@ -2864,119 +2872,132 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 
 
-%%
-% figure() %Plotting Elbow Line Diagram Start and End
-% % line between midpoint of forearm to midpoint of humerus.
-% % subplot(1,2,1)
-% % plot3([H_Mid_F(idx(3),1) H_Mid_H(idx(3),1)],[H_Mid_F(idx(3),2) H_Mid_H(idx(3),2)],[H_Mid_F(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
-% % hold on
-% % plot3([gh(idx(3),1) H_Mid_H(idx(3),1)],[gh(idx(3),2) H_Mid_H(idx(3),2)],[gh(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+%% Plotting Humeral CS and BLS
+
+figure() %Plotting Elbow Line Diagram Start and End
+% line between midpoint of forearm to midpoint of humerus.
+
+% subplot(1,2,1)
+plot3([H_Mid_F(idx(3),1) H_Mid_H(idx(3),1)],[H_Mid_F(idx(3),2) H_Mid_H(idx(3),2)],[H_Mid_F(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+hold on
+plot3([gh(idx(3),1) H_Mid_H(idx(3),1)],[gh(idx(3),2) H_Mid_H(idx(3),2)],[gh(idx(3),3) H_Mid_H(idx(3),3)],'r','Linewidth',2)
+
+ 
+plot3([H_Mid_F(idx(1),1) H_Mid_H(idx(1),1)],[H_Mid_F(idx(1),2) H_Mid_H(idx(1),2)],[H_Mid_F(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
+plot3([gh(idx(1),1) H_Mid_H(idx(1),1)],[gh(idx(1),2) H_Mid_H(idx(1),2)],[gh(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
+
+
+
+% legend('Reach End','','Reach Start','','Fontsize',16)
+% title('Elbow Angle in GCS','FontSize',24)
 % 
-%  
-% plot3([H_Mid_F(idx(1),1) H_Mid_H(idx(1),1)],[H_Mid_F(idx(1),2) H_Mid_H(idx(1),2)],[H_Mid_F(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
-% plot3([gh(idx(1),1) H_Mid_H(idx(1),1)],[gh(idx(1),2) H_Mid_H(idx(1),2)],[gh(idx(1),3) H_Mid_H(idx(1),3)],'g','Linewidth',2)
-% 
-% % legend('Reach End','','Reach Start','','Fontsize',16)
-% % title('Elbow Angle in GCS','FontSize',24)
-% % 
-% % subplot(1,2,2) % Plotting BLS and Hum/Fore CS at start and end to verify
-% 
-% % Reach Start - Hum
-% plot3(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+% subplot(1,2,2) % Plotting BLS and Hum/Fore CS at start and end to verify
+
+% Reach Start - Hum
+plot3(EL_GCS(idx(1):idx(3),1),EL_GCS(idx(1):idx(3),2),EL_GCS(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'EL','FontSize',14)
+   
+    plot3(EM_GCS(idx(1):idx(3),1),EM_GCS(idx(1):idx(3),2),EM_GCS(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'EM','FontSize',14)
+
+    plot3(gh(idx(1):idx(3),1),gh(idx(1):idx(3),2),gh(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+  
+    text(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'GH','FontSize',14)
+  
+    plot3(xhand(idx(1):idx(3),1),xhand(idx(1):idx(3),2),xhand(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+  
+    text(xhand(idx(1),1),xhand(idx(1),2),xhand(idx(1),3),'MCP3','FontSize',14)
+
+% Plotting HUM CS at start
+quiver3(Hum_CS_G ([1 1 1],4,idx(1))',Hum_CS_G ([2 2 2],4,idx(1))',Hum_CS_G ([3 3 3],4,idx(1))',50*Hum_CS_G (1,1:3,idx(1)),50*Hum_CS_G (2,1:3,idx(1)),50*Hum_CS_G (3,1:3,idx(1)))
+text(Hum_CS_G (1,4,idx(1))+50*Hum_CS_G (1,1:3,idx(1)),Hum_CS_G (2,4,idx(1))+50*Hum_CS_G (2,1:3,idx(1)),Hum_CS_G (3,4,idx(1))+50*Hum_CS_G (3,1:3,idx(1)),{'X_H_s_t_a_r_t','Y_H_s_t_a_r_t','Z_H_s_t_a_r_t'})
+ 
+% % Reach End - Hum
+% plot3(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %     hold on
-%     text(EL_GCS(idx(1),1),EL_GCS(idx(1),2),EL_GCS(idx(1),3),'EL','FontSize',14)
+%     text(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'EL','FontSize',14)
 %    
-%     plot3(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
-%     text(EM_GCS(idx(1),1),EM_GCS(idx(1),2),EM_GCS(idx(1),3),'EM','FontSize',14)
+%     text(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'EM','FontSize',14)
 % 
-%     plot3(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %   
-%     text(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'GH','FontSize',14)
+%     text(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'GH','FontSize',14)
+  
+%Plotting HUM CS at end
+quiver3(Hum_CS_G ([1 1 1],4,idx(3))',Hum_CS_G ([2 2 2],4,idx(3))',Hum_CS_G ([3 3 3],4,idx(3))',50*Hum_CS_G (1,1:3,idx(3)),50*Hum_CS_G (2,1:3,idx(3)),50*Hum_CS_G (3,1:3,idx(3)))
+text(Hum_CS_G (1,4,idx(3))+50*Hum_CS_G (1,1:3,idx(3)),Hum_CS_G (2,4,idx(3))+50*Hum_CS_G (2,1:3,idx(3)),Hum_CS_G (3,4,idx(3))+50*Hum_CS_G (3,1:3,idx(3)),{'X_H_e_n_d','Y_H_e_n_d','Z_H_e_n_d'})
+ 
+%     plot3(xhand(idx(3),1),xhand(idx(3),2),xhand(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
 %   
-% % Plotting HUM CS at start
-% quiver3(Hum_CS_G ([1 1 1],4,idx(1))',Hum_CS_G ([2 2 2],4,idx(1))',Hum_CS_G ([3 3 3],4,idx(1))',50*Hum_CS_G (1,1:3,idx(1)),50*Hum_CS_G (2,1:3,idx(1)),50*Hum_CS_G (3,1:3,idx(1)))
-% text(Hum_CS_G (1,4,idx(1))+50*Hum_CS_G (1,1:3,idx(1)),Hum_CS_G (2,4,idx(1))+50*Hum_CS_G (2,1:3,idx(1)),Hum_CS_G (3,4,idx(1))+50*Hum_CS_G (3,1:3,idx(1)),{'X_H','Y_H','Z_H'})
-%  
-% % Reach End - Hum
-% % plot3(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     hold on
-% %     text(EL_GCS(idx(3),1),EL_GCS(idx(3),2),EL_GCS(idx(3),3),'EL','FontSize',14)
-% %    
-% %     plot3(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     text(EM_GCS(idx(3),1),EM_GCS(idx(3),2),EM_GCS(idx(3),3),'EM','FontSize',14)
-% % 
-% %     plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %   
-% %     text(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'GH','FontSize',14)
-%   
-% % Plotting HUM CS at end
-% % quiver3(Hum_CS_G ([1 1 1],4,idx(3))',Hum_CS_G ([2 2 2],4,idx(3))',Hum_CS_G ([3 3 3],4,idx(3))',50*Hum_CS_G (1,1:3,idx(3)),50*Hum_CS_G (2,1:3,idx(3)),50*Hum_CS_G (3,1:3,idx(3)))
-% % text(Hum_CS_G (1,4,idx(3))+50*Hum_CS_G (1,1:3,idx(3)),Hum_CS_G (2,4,idx(3))+50*Hum_CS_G (2,1:3,idx(3)),Hum_CS_G (3,4,idx(3))+50*Hum_CS_G (3,1:3,idx(3)),{'X_H','Y_H','Z_H'})
-% %  
+%     text(xhand(idx(3),1),xhand(idx(3),2),xhand(idx(3),3),'MCP3','FontSize',14)
+
+% Reach start -Fore
 % 
-% % Reach start -Fore
-% 
-%     plot3(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(US_GCS(idx(1):idx(3),1),US_GCS(idx(1):idx(3),2),US_GCS(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %    
 %     text(US_GCS(idx(1),1),US_GCS(idx(1),2),US_GCS(idx(1),3),'US','FontSize',14)
 %  
-%     plot3(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+%     plot3(RS_GCS(idx(1):idx(3),1),RS_GCS(idx(1):idx(3),2),RS_GCS(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 %     
 %     text(RS_GCS(idx(1),1),RS_GCS(idx(1),2),RS_GCS(idx(1),3),'RS','FontSize',14)
-%   
-%     plot3(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'-o','Color','b','MarkerSize',10,...
+  
+%     plot3(OL_GCS(idx(1):idx(3),1),OL_GCS(idx(1):idx(3),2),OL_GCS(idx(1):idx(3),3),'-o','Color','b','MarkerSize',10,...
 %         'MarkerFaceColor','#D9FFFF')
 % 
 %     text(OL_GCS(idx(1),1),OL_GCS(idx(1),2),OL_GCS(idx(1),3),'OL','FontSize',14)
-% 
-% % Plotting FORE CS at given Frame
+
+% Plotting FORE CS at given Frame
 % quiver3(Fore_CS_G ([1 1 1],4,idx(1))',Fore_CS_G ([2 2 2],4,idx(1))',Fore_CS_G ([3 3 3],4,idx(1))',50*Fore_CS_G (1,1:3,idx(1)),50*Fore_CS_G (2,1:3,idx(1)),50*Fore_CS_G (3,1:3,idx(1)))
 % text(Fore_CS_G (1,4,idx(1))+50*Fore_CS_G (1,1:3,idx(1)),Fore_CS_G (2,4,idx(1))+50*Fore_CS_G (2,1:3,idx(1)),Fore_CS_G (3,4,idx(1))+50*Fore_CS_G (3,1:3,idx(1)),{'X_F','Y_F','Z_F'})
 %  
-% % Reach End -Fore
+% Reach End -Fore
 % 
-% %     plot3(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %    
-% %     text(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'US','FontSize',14)
-% %  
-% %     plot3(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% %     
-% %     text(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'RS','FontSize',14)
-% %   
-% %     plot3(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
-% %         'MarkerFaceColor','#D9FFFF')
-% % 
-% %     text(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'OL','FontSize',14)
+%     plot3(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%    
+%     text(US_GCS(idx(3),1),US_GCS(idx(3),2),US_GCS(idx(3),3),'US','FontSize',14)
+%  
+%     plot3(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
+%     
+%     text(RS_GCS(idx(3),1),RS_GCS(idx(3),2),RS_GCS(idx(3),3),'RS','FontSize',14)
+%   
+%     plot3(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'-o','Color','b','MarkerSize',10,...
+%         'MarkerFaceColor','#D9FFFF')
 % 
-% % Plotting FORE CS at given Frame
-% % quiver3(Fore_CS_G ([1 1 1],4,idx(3))',Fore_CS_G ([2 2 2],4,idx(3))',Fore_CS_G ([3 3 3],4,idx(3))',50*Fore_CS_G (1,1:3,idx(3)),50*Fore_CS_G (2,1:3,idx(3)),50*Fore_CS_G (3,1:3,idx(3)))
-% % text(Fore_CS_G (1,4,idx(3))+50*Fore_CS_G (1,1:3,idx(3)),Fore_CS_G (2,4,idx(3))+50*Fore_CS_G (2,1:3,idx(3)),Fore_CS_G (3,4,idx(3))+50*Fore_CS_G (3,1:3,idx(3)),{'X_F','Y_F','Z_F'})
-%  %Line between styloids
-% plot3([RS_GCS(idx(1),1) US_GCS(idx(1),1)],[RS_GCS(idx(1),2) US_GCS(idx(1),2)],[RS_GCS(idx(1),3) US_GCS(idx(1),3)],'g','Linewidth',2)
-% % plot3([RS_GCS(idx(3),1) US_GCS(idx(3),1)],[RS_GCS(idx(3),2) US_GCS(idx(3),2)],[RS_GCS(idx(3),3) US_GCS(idx(3),3)],'r','Linewidth',2)
-% 
-%  %Line between EM and El
-% plot3([EL_GCS(idx(1),1) EM_GCS(idx(1),1)],[EL_GCS(idx(1),2) EM_GCS(idx(1),2)],[EL_GCS(idx(1),3) EM_GCS(idx(1),3)],'g','Linewidth',2)
-% % plot3([EL_GCS(idx(3),1) EM_GCS(idx(3),1)],[EL_GCS(idx(3),2) EM_GCS(idx(3),2)],[EL_GCS(idx(3),3) EM_GCS(idx(3),3)],'r','Linewidth',2)
-% 
-% 
-% axis equal
-% title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsize',24)
-% xlabel('x axis','Fontsize',16)
-% ylabel('y axis','Fontsize',16)
-% zlabel('z axis','Fontsize',16)
+%     text(OL_GCS(idx(3),1),OL_GCS(idx(3),2),OL_GCS(idx(3),3),'OL','FontSize',14)
 
-%  pause
+% Plotting FORE CS at given Frame
+% quiver3(Fore_CS_G ([1 1 1],4,idx(3))',Fore_CS_G ([2 2 2],4,idx(3))',Fore_CS_G ([3 3 3],4,idx(3))',50*Fore_CS_G (1,1:3,idx(3)),50*Fore_CS_G (2,1:3,idx(3)),50*Fore_CS_G (3,1:3,idx(3)))
+% text(Fore_CS_G (1,4,idx(3))+50*Fore_CS_G (1,1:3,idx(3)),Fore_CS_G (2,4,idx(3))+50*Fore_CS_G (2,1:3,idx(3)),Fore_CS_G (3,4,idx(3))+50*Fore_CS_G (3,1:3,idx(3)),{'X_F','Y_F','Z_F'})
+ %Line between styloids
+plot3([RS_GCS(idx(1),1) US_GCS(idx(1),1)],[RS_GCS(idx(1),2) US_GCS(idx(1),2)],[RS_GCS(idx(1),3) US_GCS(idx(1),3)],'g','Linewidth',2)
+% plot3([RS_GCS(idx(3),1) US_GCS(idx(3),1)],[RS_GCS(idx(3),2) US_GCS(idx(3),2)],[RS_GCS(idx(3),3) US_GCS(idx(3),3)],'r','Linewidth',2)
+
+ %Line between EM and El
+plot3([EL_GCS(idx(1),1) EM_GCS(idx(1),1)],[EL_GCS(idx(1),2) EM_GCS(idx(1),2)],[EL_GCS(idx(1),3) EM_GCS(idx(1),3)],'g','Linewidth',2)
+% plot3([EL_GCS(idx(3),1) EM_GCS(idx(3),1)],[EL_GCS(idx(3),2) EM_GCS(idx(3),2)],[EL_GCS(idx(3),3) EM_GCS(idx(3),3)],'r','Linewidth',2)
+
+
+axis equal
+title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsize',24)
+xlabel('x axis','Fontsize',16)
+ylabel('y axis','Fontsize',16)
+zlabel('z axis','Fontsize',16)
+
+%   pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 % 
 % figure()
@@ -3063,123 +3084,124 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 % pause 
 
 % close all
-%% Plotting Scapular CS and BLs at the Start and End of the Reach !!!! 2023
-% figure()
-% 
-% % At start of reach
-% 
-% % quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
-% % text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
-% %  hold on
-% 
-% % Computing and Plotting GCS
-% %GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
-% %quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
-% %text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
-%  
-% %BLS
-%  % Shoulder BLs
-% b = idx(1);
-% % AC
-% plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% 
-% hold on
-% text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
-% 
-% % AI
-% plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xai(b,1),xai(b,2),xai(b,3),'AI S','FontSize',14)
-% 
-% 
-% %PC
-% plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% 
-% text(xpc(b,1),xpc(b,2),xpc(b,3),'PC S','FontSize',14)
-% 
-% 
-% %TS
-% plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
-% 
-% 
-% %AA
-% plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
-% 
-% axis equal
-% 
-% title('Scapular BLs and Polygon (Resampled)','FontSize',16)
-% xlabel('X Axis')
-% ylabel('Y Axis')
-% zlabel('Z Axis')
-% 
-% %Looping through scapular polygon during reach
-% for b= idx(1):10:idx(3)
-% 
-% plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
-% plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
-% plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
-% plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
-% 
-% % pause
-% end
-% 
+%% Plotting Scapular CS and BLs at the Start and End of the Reach !!!! 2023 and 2024
+figure()
+
+% At start of reach
+
+% quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
+% text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X S','Y S','Z S'})
+ hold on
+
+% Computing and Plotting GCS
+%GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
+%quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
+%text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
+ 
+%BLS
+ % Shoulder BLs
+b = idx(1);
+% AC
+plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+hold on
+text(xac(b,1),xac(b,2),xac(b,3),'AC S','FontSize',14)
+
+% AI
+plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xai(b,1),xai(b,2),xai(b,3),'AI S','FontSize',14)
 
 
-% pause
+%PC
+plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+text(xpc(b,1),xpc(b,2),xpc(b,3),'PC S','FontSize',14)
+
+
+%TS
+plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xts(b,1),xts(b,2),xts(b,3),'TS S','FontSize',14)
+
+
+%AA
+plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA S','FontSize',14)
+
+axis equal
+
+title('Scapular BLs and Polygon (Resampled)','FontSize',16)
+xlabel('X Axis')
+ylabel('Y Axis')
+zlabel('Z Axis')
+
+%Looping through scapular polygon during reach
+
+plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
+plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
+plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
+plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
 
 
 
-% 
-% b= idx(3);
+
+
+
+% at end of reach
+
+
+b= idx(3);
 % quiver3(HTstog ([1 1 1],4,b)',HTstog ([2 2 2],4,b)',HTstog ([3 3 3],4,b)',50*HTstog (1,1:3,b),50*HTstog (2,1:3,b),50*HTstog (3,1:3,b))
 % text(HTstog (1,4,b)+50*HTstog (1,1:3,b),HTstog (2,4,b)+50*HTstog (2,1:3,b),HTstog (3,4,b)+50*HTstog (3,1:3,b),{'X E','Y E','Z E'})
 %  
-% % Computing and Plotting GCS
+% Computing and Plotting GCS
 % GCS_GCS(:,:,b) = HTttog(:,:,b)*inv(HTttog(:,:,b));
 % quiver3(GCS_GCS ([1 1 1],4,b)',GCS_GCS ([2 2 2],4,b)',GCS_GCS ([3 3 3],4,b)',50*GCS_GCS (1,1:3,b),50*GCS_GCS (2,1:3,b),50*GCS_GCS (3,1:3,b))
 % text(GCS_GCS (1,4,b)+50*GCS_GCS (1,1:3,b),GCS_GCS (2,4,b)+50*GCS_GCS (2,1:3,b),GCS_GCS (3,4,b)+50*GCS_GCS (3,1:3,b),{'X_GCS','Y_GCS','Z_GCS'})
 %  
-% %BLS
-%  % Shoulder BLs
-% 
-% % AC
-% plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% 
-% text(xac(b,1),xac(b,2),xac(b,3),'AC E','FontSize',14)
-% 
-% % AI
-% plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xai(b,1),xai(b,2),xai(b,3),'AI E','FontSize',14)
-% 
-% 
-% %PC
-% plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% 
-% text(xpc(b,1),xpc(b,2),xpc(b,3),'PC E','FontSize',14)
-% 
-% 
-% %TS
-% plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xts(b,1),xts(b,2),xts(b,3),'TS E','FontSize',14)
-% 
-% 
-% %AA
-% plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
-%     'MarkerFaceColor','#D9FFFF')
-% text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA E','FontSize',14)
+%BLS
+ % Shoulder BLs
+
+% AC
+plot3(xac(b,1),xac(b,2),xac(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+text(xac(b,1),xac(b,2),xac(b,3),'AC E','FontSize',14)
+
+% AI
+plot3(xai(b,1),xai(b,2),xai(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xai(b,1),xai(b,2),xai(b,3),'AI E','FontSize',14)
 
 
-%  pause
+%PC
+plot3(xpc(b,1),xpc(b,2),xpc(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+text(xpc(b,1),xpc(b,2),xpc(b,3),'PC E','FontSize',14)
+
+
+%TS
+plot3(xts(b,1),xts(b,2),xts(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xts(b,1),xts(b,2),xts(b,3),'TS E','FontSize',14)
+
+
+%AA
+plot3(xshldr(b,1),xshldr(b,2),xshldr(b,3),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(xshldr(b,1),xshldr(b,2),xshldr(b,3),'AA E','FontSize',14)
+
+plot3([xai(b,1) xts(b,1)],[xai(b,2) xts(b,2)],[xai(b,3) xts(b,3)],'b','Linewidth',1) % line between AI and TS
+plot3([xai(b,1) xshldr(b,1)],[xai(b,2) xshldr(b,2)],[xai(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AI and AA
+plot3([xts(b,1) xac(b,1)],[xts(b,2) xac(b,2)],[xts(b,3) xac(b,3)],'b','Linewidth',1) % line between TS and AC
+plot3([xac(b,1) xshldr(b,1)],[xac(b,2) xshldr(b,2)],[xac(b,3) xshldr(b,3)],'b','Linewidth',1) % line between AC and AA
+
+ pause
 
 %% MASTER PLOT OF BLS CS in GCS
 
@@ -3860,45 +3882,45 @@ Scap_Ang_T(1,:) = -Scap_Ang_T(1,:);
 Scap_Ang_T(3,:) = -Scap_Ang_T(3,:);
 end
 
-%%
+%% Plotting Scapular Kinematics 
 % GCS
-% figure()
-% plot(ScapAng_G(1,:),'Linewidth',2) %Internal/ External Rotation
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Z axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
-% % ylabel('-------------> Forwards ','FontSize',24)
-% ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
-% figure()
-% plot(ScapAng_G(2,:),'Linewidth',2)  % Upward and Downward Rotation
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Y axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle About Y (Deg)-GCS ','Fontsize',24)
-% % ylabel('Left        Right','FontSize',24)
-% ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
-% 
-% 
-% figure()
-% plot(ScapAng_G(3,:),'Linewidth',2) % Anterior/Posterior Tilt
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('X axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle About X -GCS ','Fontsize',24)
-% % ylabel('Protraction        Retraction','FontSize',24)
-% 
-% ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
+figure()
+plot(ScapAng_G(1,:),'Linewidth',2) %Internal/ External Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Z axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle about Z (Deg) -GCS ','Fontsize',24)
+% ylabel('-------------> Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+figure()
+plot(ScapAng_G(2,:),'Linewidth',2)  % Upward and Downward Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Y axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About Y (Deg)-GCS ','Fontsize',24)
+% ylabel('Left        Right','FontSize',24)
+ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+
+figure()
+plot(ScapAng_G(3,:),'Linewidth',2) % Anterior/Posterior Tilt
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('X axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About X -GCS ','Fontsize',24)
+% ylabel('Protraction        Retraction','FontSize',24)
+
+ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
 
 
@@ -3942,41 +3964,43 @@ end
 
 
 
-% Scap angles in T
-% figure()
-% plot(Scap_Ang_T(1,:),'Linewidth',2) %Internal/External Rotation
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Z axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle about Z (Deg) -TCS ','Fontsize',24)
-% %ylabel('-------------> Forwards ','FontSize',24)
-% ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+% Scap angles in Trunk CS for all time
+figure()
+plot(Scap_Ang_T(1,:),'Linewidth',2) %Internal/External Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Z axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle about Z (Deg) -TCS ','Fontsize',24)
+%ylabel('-------------> Forwards ','FontSize',24)
+ylabel('$\Longleftarrow$ External Rotation [] Internal Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-% figure()
-% plot(Scap_Ang_T(2,:),'Linewidth',2)  % Upward/Downward Rotation
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('Y axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle About Y (Deg)-TCS ','Fontsize',24)
-% %ylabel('Left        Right','FontSize',24)
-% ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
+figure()
+plot(Scap_Ang_T(2,:),'Linewidth',2)  % Upward/Downward Rotation
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('Y axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About Y (Deg)-TCS ','Fontsize',24)
+%ylabel('Left        Right','FontSize',24)
+ylabel('$\Longleftarrow$ Downward Rotation [] Upward Rotation $\Longrightarrow$','Interpreter','latex','FontSize',26)
 
-% figure()
-% plot(Scap_Ang_T(3,:),'Linewidth',2) %Anterior/Posterior Tilt
-% hold on
-% xline(idx(1),'g','Linewidth',2)
-% xline(idx(3),'r','Linewidth',2)
-% legend('X axis','Reach Start','Reach End','Fontsize',16)
-% a = get(gca,'XTickLabel');  
-% set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
-% title ('Scapular Angle About X -TCS ','Fontsize',24)
-% ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
+figure()
+plot(Scap_Ang_T(3,:),'Linewidth',2) %Anterior/Posterior Tilt
+hold on
+xline(idx(1),'g','Linewidth',2)
+xline(idx(3),'r','Linewidth',2)
+legend('X axis','Reach Start','Reach End','Fontsize',16)
+a = get(gca,'XTickLabel');  
+set(gca,'XTickLabel',a,'fontsize',16,'FontWeight','bold')
+title ('Scapular Angle About X -TCS ','Fontsize',24)
+ylabel('$\Longleftarrow$ Anterior Spinal Tilt [] Posterior Spinal Tilt $\Longrightarrow$','Interpreter','latex','FontSize',26)
+
+pause
 
 %%%%%%%%%%%%%%%%%%%%%%ANGLE ANGLE PLOTS - July 2023 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4164,6 +4188,323 @@ end
 % Gives MCP3 in Humerus CS at all frames of trial
 xhand_Hum = xhand_Hum'; 
 
+
+% Jan 2024 - Estimated GH in Humeral CS (with Hum CS now centered at 0)
+
+gh_Hum = zeros(4,length(xhand));
+ghforhumcalc = [gh repmat(1,length(gh),1)];
+gh_forhumcalc = ghforhumcalc';
+
+for r = 1 :length(gh)
+    % 3rd MCP in Hum  = HT G to H * 3rd MCP in G
+gh_Hum (:,r) =  inv(Hum_CS_G(:,:,r))*gh_forhumcalc(:,r);
+end
+
+% Gives GH in Humerus CS at all frames of trial
+gh_Hum = gh_Hum'; 
+
+%% January 2024 - Getting GH,MCP3, EM/EL, and XJUG, and scap BLS TCS in TRUNK CS
+
+%GH
+gh_New = [gh, ones(length(gh), 1)]';
+
+%Scapular BLs
+ac_New = [xac, ones(length(xac), 1)]';
+ai_New = [xai, ones(length(xai), 1)]';
+pc_New = [xpc, ones(length(xpc), 1)]';
+aa_New = [xshldr, ones(length(xshldr), 1)]';
+ts_New = [xts, ones(length(xts), 1)]';
+
+%XJUG
+XJUG_New = [xjug, ones(length(gh), 1)]';
+
+%MCP3
+xhand_New = [xhand, ones(length(xhand), 1)]';
+
+%EM and EL
+EM_New = [EM_GCS, ones(length(EM_GCS), 1)]';
+EL_New = [EL_GCS, ones(length(EL_GCS), 1)]';
+
+for r = 1 :length(gh)
+    GH_TCS (:,r) =  inv(HTttog(:,:,r))*gh_New(:,r);
+    
+    %Scapular BLS
+    ac_TCS (:,r) =  inv(HTttog(:,:,r))*ac_New(:,r);
+    ai_TCS (:,r) =  inv(HTttog(:,:,r))*ai_New(:,r);
+    pc_TCS (:,r) =  inv(HTttog(:,:,r))*pc_New(:,r);
+    aa_TCS (:,r) =  inv(HTttog(:,:,r))*aa_New(:,r);
+    ts_TCS (:,r) =  inv(HTttog(:,:,r))*ts_New(:,r);
+
+    xhand_TCS(:,r) = inv(HTttog(:,:,r))*xhand_New(:,r);
+    EM_TCS(:,r) = inv(HTttog(:,:,r))*EM_New(:,r)  ;
+    EL_TCS(:,r) = inv(HTttog(:,:,r))*EL_New(:,r) ;
+    xjug_TCS(:,r) = inv(HTttog(:,:,r))*XJUG_New(:,r) ;
+end
+
+
+%% January 2024
+
+% Plotting GH and AA in Trunk CS and start and end and all time
+
+% XYZ
+figure()
+hold on
+plot(GH_TCS(1,:),GH_TCS(2,:),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
+plot(aa_TCS(1,:),aa_TCS(2,:),'Color',[0.4660 0.6740 0.1880],'Linewidth',4)
+
+plot(GH_TCS(1,idx(1)),GH_TCS(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+plot(GH_TCS(1,idx(1)),GH_TCS(2,idx(1)),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+
+plot(GH_TCS(1,idx(3)),GH_TCS(2,idx(3)),'o','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+plot(GH_TCS(1,idx(3)),GH_TCS(2,idx(3)),'*','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+
+plot(aa_TCS(1,idx(1)),aa_TCS(2,idx(1)),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+plot(aa_TCS(1,idx(1)),aa_TCS(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+plot(aa_TCS(1,idx(3)),aa_TCS(2,idx(3)),'o','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+plot(aa_TCS(1,idx(3)),aa_TCS(2,idx(3)),'*','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+
+
+title('GH and AA in TCS','FontSize',16)
+legend('GH','AA','FontSize',16)
+xlabel('X axis (mm)')
+ylabel('Y axis (mm)')
+
+axis equal
+
+pause
+% %Plane
+% figure()
+% hold on
+% plot(gh_T_alltime(1,idx(1):idx(3)),gh_T_alltime(2,idx(1):idx(3)),'Linewidth',4)
+% plot(gh_T_alltime(1,idx(1)),gh_T_alltime(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot(gh_T_alltime(1,idx(3)),gh_T_alltime(2,idx(3)),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% xlabel('X axis (mm)')
+% ylabel('Y axis (mm)')
+% title('GH in TCS' ,'FontSize',16)
+% axis equal
+
+%% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
+
+PlaneofArmCS = zeros(4,4,length(gh));
+%HT ARMPLANE in TRUNK CS
+for h = 1:length(gh)
+    PlaneofArmCS(:,:,h) = PlaneofArmCS_2024(GH_TCS(:,h),GH_TCS(:,idx(3)),xhand_TCS(:,h),EL_TCS(:,h),EM_TCS(:,h),h,idx(3),1);
+%    pause
+end
+
+%% JAN 2024 Getting new ARMPLANE (AP) CS in GCS FOR XJUG 
+
+
+%***** NOTE THIS IS DIFFERENT than other BLS!! Due to Trunk CS including XJUG
+
+% HTtTOg * HTAPtot
+for h = 1:length(gh)
+PlaneofArmCS_GCS(:,:,h) = HTttog(:,:,h)*PlaneofArmCS(:,:,h);
+end
+
+
+
+%% January 2024 - Computing GH,EM/EL,MCP3,XJUG in PlaneofArmCS
+
+for r = 1 :length(gh)
+    %   GH_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,idx(3)))*GHf-GHi(Trunk) 
+    GH_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*GH_TCS(:,r);
+    xhand_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*xhand_TCS(:,r);
+    EL_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EL_TCS(:,r);
+    EM_ArmPlane(:,r) = inv(PlaneofArmCS(:,:,r))*EM_TCS(:,r);
+    PlaneofArmCS_INPLANECS(:,:,r) = inv(PlaneofArmCS(:,:,r))*PlaneofArmCS(:,:,r);
+    xjug_ArmPlane(:,r)=inv(PlaneofArmCS_GCS(:,:,r))*XJUG_New(:,r); %NOTE THIS IS DIFFERENT than other BLS!! Due to Trunk CS Origin being XJUG
+ 
+end
+
+H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
+
+%%  Plotting EM/EL, GH, and MCP3 in new CS 
+
+
+    figure()
+%    Plotting the BonyLandmarks and their Labels at start of reach (idx(1))
+    plot3(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    hold on
+    text(EL_ArmPlane(1,idx(1)),EL_ArmPlane(2,idx(1)),EL_ArmPlane(3,idx(1)),'EL','FontSize',14)
+
+
+    plot3(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(EM_ArmPlane(1,idx(1)),EM_ArmPlane(2,idx(1)),EM_ArmPlane(3,idx(1)),'EM','FontSize',14)
+    hold on
+    
+    plot3(GH_ArmPlane(1,idx(1):idx(3)),GH_ArmPlane(2,idx(1):idx(3)),GH_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),GH_ArmPlane(3,idx(1)),'GH','FontSize',14)
+
+
+    plot3(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xjug_ArmPlane(1,idx(1)),xjug_ArmPlane(2,idx(1)),xjug_ArmPlane(3,idx(1)),'Jugular Notch','FontSize',14)
+% 
+    plot3(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xjug_ArmPlane(1,idx(3)),xjug_ArmPlane(2,idx(3)),xjug_ArmPlane(3,idx(3)),'Jugular Notch FINAL','FontSize',14)
+
+    plot3(xhand_ArmPlane(1,idx(1):idx(3)),xhand_ArmPlane(2,idx(1):idx(3)),xhand_ArmPlane(3,idx(1):idx(3)),'-o','Color','b','MarkerSize',10,...
+        'MarkerFaceColor','#D9FFFF')
+    text(xhand_ArmPlane(1,idx(1)),xhand_ArmPlane(2,idx(1)),xhand_ArmPlane(3,idx(1)),'MCP3','FontSize',14)
+
+%     Plotting CS at Start of Reach
+    for g = idx(1):idx(3)
+    quiver3(PlaneofArmCS_INPLANECS ([1 1 1],4,g)',PlaneofArmCS_INPLANECS ([2 2 2],4,g)',PlaneofArmCS_INPLANECS ([3 3 3],4,g)',50*PlaneofArmCS_INPLANECS (1,1:3,g),50*PlaneofArmCS_INPLANECS (2,1:3,g),50*PlaneofArmCS_INPLANECS (3,1:3,g))
+    text(PlaneofArmCS_INPLANECS (1,4,g)+50*PlaneofArmCS_INPLANECS (1,1:3,g),PlaneofArmCS_INPLANECS (2,4,g)+50*PlaneofArmCS_INPLANECS (2,1:3,g),PlaneofArmCS_INPLANECS (3,4,g)+50*PlaneofArmCS_INPLANECS (3,1:3,g),{'X','Y','Z'})
+%     pause
+    end
+
+    % Adding lines from GH to MCP3, GH to MID, and MID to MCP3
+    
+    plot3([H_mid(1,idx(1)) GH_ArmPlane(1,idx(1))],[H_mid(2,idx(1)) GH_ArmPlane(2,idx(1))],[H_mid(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to Midpnt
+    
+    plot3([xhand_ArmPlane(1,idx(1)) GH_ArmPlane(1,idx(1))],[xhand_ArmPlane(2,idx(1)) GH_ArmPlane(2,idx(1))],[xhand_ArmPlane(3,idx(1)) GH_ArmPlane(3,idx(1))],'b','Linewidth',2) % GH to MCP3
+
+    plot3([xhand_ArmPlane(1,idx(1)) H_mid(1,idx(1))],[xhand_ArmPlane(2,idx(1)) H_mid(2,idx(1))],[xhand_ArmPlane(3,idx(1)) H_mid(3,idx(1))],'b','Linewidth',2) % Midpnt to MCP3
+
+
+    axis equal
+    xlabel('X axis (mm)')
+    ylabel('Y axis (mm)')
+    zlabel('Z axis (mm)')
+
+    title('Plane of Arm CS and Required BLS in ARM Plane CS at Start of Reach' ,'FontSize',16)
+
+    pause
+
+
+    %% Plotting Glenohumeral Joint Translations in Arm Coordinate System
+
+% Created Arm Plane Coordinate System
+% figure()
+% 
+% %GH
+% plot(GH_ArmPlane(1,idx(1):idx(3)),GH_ArmPlane(2,idx(1):idx(3)),'Linewidth',4)
+% hold on
+% plot(0,0,'*','MarkerEdgeColor','k','MarkerSize',25)
+% text(0,0,'Origin (GH_S_t_a_r_t)','FontSize',18)
+% plot(GH_ArmPlane(1,idx(1)),GH_ArmPlane(2,idx(1)),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot(GH_ArmPlane(1,idx(3)),GH_ArmPlane(2,idx(3)),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% axis equal
+% ylabel('Y Axis','Fontsize',15)
+% xlabel('X Axis','Fontsize',15)
+% 
+% pause
+% 
+
+%% January 2024- Plotting MCP3 and GH in Humeral CS and GCS
+
+%Humerus Coordinate System
+
+% % 3D
+% % figure()
+% % %MCP3
+% % plot3(xhand_Hum(idx(1):idx(1),1),xhand_Hum(idx(1):idx(3),2),xhand_Hum(idx(1):idx(3),3),'Linewidth',2)
+% % hold on
+% % plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+% % plot3(xhand_Hum(idx(1),1),xhand_Hum(idx(1),2),xhand_Hum(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% % plot3(xhand_Hum(idx(3),1),xhand_Hum(idx(3),2),xhand_Hum(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% % text(0,0,0,'Origin (GH_S_t_a_r_t)','FontSize',18)
+% % %GH
+% % plot3(gh_Hum(idx(1):idx(3),1),gh_Hum(idx(1):idx(3),2),gh_Hum(idx(1):idx(3),3),'Linewidth',2)
+% % hold on
+% % plot3(0,0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+% % plot3(gh_Hum(idx(1),1),gh_Hum(idx(1),2),gh_Hum(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% % plot3(gh_Hum(idx(3),1),gh_Hum(idx(3),2),gh_Hum(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% % axis equal
+% % title('MCP3 and GH in Humeral Coordinate Frame','FontSize',24)
+% % xlabel('X Axis','Fontsize',15)
+% % ylabel('Y Axis','Fontsize',15)
+% % zlabel('Z Axis','Fontsize',15)
+% 
+%Plane of Reach
+% figure()
+% %MCP3
+% plot(xhand_Hum(idx(1):idx(3),3),-xhand_Hum(idx(1):idx(3),2),'Linewidth',4)
+% hold on
+% plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+% plot(xhand_Hum(idx(1),3),-xhand_Hum(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot(xhand_Hum(idx(3),3),-xhand_Hum(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% %GH
+% plot(gh_Hum(idx(1):idx(3),3),-gh_Hum(idx(1):idx(3),2),'Linewidth',4)
+% hold on
+% plot(0,0,'*','MarkerEdgeColor','b','MarkerSize',25)
+% text(0,0,'Origin (GH_S_t_a_r_t)','FontSize',18)
+% plot(gh_Hum(idx(1),3),-gh_Hum(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot(gh_Hum(idx(3),3),-gh_Hum(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% axis equal
+% ylabel('Y Axis','Fontsize',15)
+% xlabel('Z Axis','Fontsize',15)
+% % 
+% % % GH XYZ
+% 
+% figure()
+% 
+% subplot(3,1,1)
+% plot(gh_Hum(idx(1):idx(3),1)/10)
+% title ('Glenohumeral Joint Translations in Each Direction (Hum CS)','Fontsize',24)
+% ylabel('Humeral X Dist in (cm)','FontSize',16)
+% subplot(3,1,2)
+% plot(gh_Hum(idx(1):idx(3),2)/10)
+% ylabel('Humeral Y Dist in (cm)','FontSize',16)
+% subplot(3,1,3)
+% plot(gh_Hum(idx(1):idx(3),3)/10)
+% ylabel('Humeral Z Dist (cm)','FontSize',16)
+
+
+
+
+% pause
+%% Plotting in Global Coordinate System
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%GCS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% XYZ
+% figure()
+% hold on
+% 
+% plot3(gh(:,1),gh(:,2),gh(:,3),'Linewidth',4)
+% plot3(xjug(:,1),xjug(:,2),xjug(:,3),'Linewidth',4)
+% plot3(gh(idx(1),1),gh(idx(1),2),gh(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot3(gh(idx(3),1),gh(idx(3),2),gh(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% 
+% plot3(xjug(idx(1),1),xjug(idx(1),2),xjug(idx(1),3),'o','MarkerEdgeColor','g','MarkerSize',25) %Reach Start
+% plot3(xjug(idx(3),1),xjug(idx(3),2),xjug(idx(3),3),'o','MarkerEdgeColor','r','MarkerSize',25) %Reach END
+% 
+% legend('GH','Xjug','FontSize',18)
+% title('GH and XJUG in GCS','FontSize',16)
+% xlabel('X axis (mm)')
+% ylabel('Y axis (mm)')
+% zlabel('Z axis (mm)')
+% axis equal
+
+%% Plane
+figure()
+plot(gh(:,1),gh(:,2),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
+hold on
+plot(xjug(:,1),xjug(:,2),'Color',[0.8500 0.3250 0.0980],'Linewidth',4)
+
+plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10,'Linewidth',4)  %Reach Start
+plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10,'Linewidth',4)  %Reach END
+
+plot(gh(idx(1),1),gh(idx(1),2),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+
+plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+plot(gh(idx(3),1),gh(idx(3),2),'*','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4)
+
+title('GH and XJUG in GCS' ,'FontSize',16)
+axis equal
+legend('GH','XJUG','FontSize',16)
+
+
+
+
+pause
 %% December 2023- Adding EM/EL in Humeral CS for Computation of Limb Length 
 
 % EM_Hum = zeros(4,length(EM_GCS));
@@ -4196,8 +4537,9 @@ xhand_Hum = xhand_Hum';
 % L1 = sqrt(L1(idx(1),1)^2+ L1(idx(1),2)^2+ L1(idx(1),3)^2)
 % 
 % LimbLengthBL = L1+L2
-%%
- % September 2022
+
+
+%% September 2022
  
  % Below gives multiple ways to get data into trunk coordinate system. 
  % Current Method uses the HT matrix of TRUNK to include not just translation but
@@ -4222,10 +4564,68 @@ xhand_Hum = xhand_Hum';
     gh = [gh repmat(1,length(gh),1)]; 
     gh = gh';
   
-    gh_start = HTgtot(:,:,idx(1))* gh; %Getting GH in Trunk Frame at 1 at idx(1)
-    gh_end = HTgtot(:,:,idx(3))* gh; %Getting GH in Trunk Frame at 1 at idx(3)
+    % GH EXCURSION 2O24
+
+    gh_start = HTgtot(:,:,idx(1))* gh(:,idx(1)); %Getting GH in Trunk Frame at 1 at idx(1)
+    gh_end = HTgtot(:,:,idx(3))* gh(:,idx(3)); %Getting GH in Trunk Frame at 3 at idx(3)
+
+    % Computing the 3D vector from GH_Initial to GH_Final - Jan 2024
+    ghVector = gh_end(1:3)-gh_start(1:3); % gh vector in trunk
+    ghVector = [ghVector; 1];
+
+    ghVectorNormPlane = norm(ghVector(1:2)); % This number is good this is GH magnitude in trunk CS 
+    
+       % GH in Armplane =  HTTrunktoArmPlane * GhinTrunk
+%     ghVecArmPlaneEnd= inv(PlaneofArmCS(:,:,idx(3)))*ghVector %  WRONG!!! can't use translation 
+
+    % Transform GH at idx(1) where gh at idx(3) = 0 % 
+    ghArmPlaneStart= inv(PlaneofArmCS(:,:,idx(3)))*gh_start;
+
+    % GH disp = Ghf-Ghi where Ghf = 0 therefore distance is just - Ghi.
+  
+     ghVectorAP = -ghArmPlaneStart;
+
+      % Final Definition for Assessing GH translation
+      ghVectorAPMAG = norm(ghVectorAP); %********* Correct Outcome Measure for GH!!******* USE THIS 2024
+
+      GH_2024 = ghVectorAPMAG;
+
+
+    % TRUNK EXCURSION 2024
+
+    % Repeating for XJUG to get displacement in the plane of the arm at the
+    % end of the reach Jan 2024 
    
-    gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
+    xjug_ArmPlanestart=inv(PlaneofArmCS_GCS(:,:,idx(3)))*XJUG_New(:,idx(1)); 
+
+    xjug_ArmPlaneend=inv(PlaneofArmCS_GCS(:,:,idx(3)))*XJUG_New(:,idx(3)); 
+
+
+    % Computing the distance of the XJUG in the arm plane
+    %Xjugf - Xjugi in the plane of the arm  %********* Correct Outcome Measure for XJUG!!******* USE THIS 2024
+
+    xjug_ArmPlaneMAG = sqrt((xjug_ArmPlaneend(2)-xjug_ArmPlanestart(2))^2+(xjug_ArmPlaneend(1)-xjug_ArmPlanestart(1))^2);
+
+    XJUG_2024 = xjug_ArmPlaneMAG;
+
+
+    % REACHING DISTANCE 2024
+
+    % Computing 3rd MCP at the end of the reach in the plane at the end FEB
+    % 2024
+    xhand_ArmPlaneend= inv(PlaneofArmCS(:,:,idx(3)))*xhand_TCS(:,idx(3));
+
+    xhand_ArmPlaneendMAG = norm(xhand_ArmPlaneend);
+
+    RD_2024 = xhand_ArmPlaneendMAG;
+    
+    
+%%
+
+  
+
+%     gh = HTgtot(:,:,idx(1))* gh; %Getting gh in Trunk Frame at 1 at idx(1)
+%     
 
     gh_start=  gh_start'; %Accounting for trunk rotation at the start 
     gh_end = gh_end'; % Accounting for trunk rotation at the end
@@ -4240,7 +4640,110 @@ xhand_Hum = xhand_Hum';
     xjug = HTgtot(:,:,idx(1))* xjug; %Getting Hand in Trunk Frame at idx(1)
     
     xjug = xjug';
-    
+
+
+%%
+
+% Scapular Polygon in TCS - Jan 2024
+
+figure()
+
+
+%Start of Reach
+b = idx(1);
+% AC
+plot3(ac_TCS(1,b),ac_TCS(2,b),ac_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+hold on
+text(ac_TCS(1,b),ac_TCS(2,b),ac_TCS(3,b),'AC S','FontSize',14)
+
+% AI
+plot3(ai_TCS(1,b),ai_TCS(2,b),ai_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(ai_TCS(1,b),ai_TCS(2,b),ai_TCS(3,b),'AI S','FontSize',14)
+
+
+%PC
+plot3(pc_TCS(1,b),pc_TCS(2,b),pc_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+text(pc_TCS(1,b),pc_TCS(2,b),pc_TCS(3,b),'PC S','FontSize',14)
+
+
+%TS
+plot3(ts_TCS(1,b),ts_TCS(2,b),ts_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(ts_TCS(1,b),ts_TCS(2,b),ts_TCS(3,b),'TS S','FontSize',14)
+
+
+%AA
+plot3(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'AA S','FontSize',14)
+
+plot3([ai_TCS(1,b) ts_TCS(1,b)],[ai_TCS(2,b) ts_TCS(2,b)],[ai_TCS(3,b) ts_TCS(3,b)],'b','Linewidth',1) % line between AI and TS
+plot3([ai_TCS(1,b) aa_TCS(1,b)],[ai_TCS(2,b) aa_TCS(2,b)],[ai_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AI and AA
+plot3([ts_TCS(1,b) ac_TCS(1,b)],[ts_TCS(2,b) ac_TCS(2,b)],[ts_TCS(3,b) ac_TCS(3,b)],'b','Linewidth',1) % line between TS and AC
+plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AC and AA
+
+
+%End of Reach
+b = idx(3);
+% AC
+plot3(ac_TCS(1,b),ac_TCS(2,b),ac_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+hold on
+text(ac_TCS(1,b),ac_TCS(2,b),ac_TCS(3,b),'AC E','FontSize',14)
+
+% AI
+plot3(ai_TCS(1,b),ai_TCS(2,b),ai_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(ai_TCS(1,b),ai_TCS(2,b),ai_TCS(3,b),'AI E','FontSize',14)
+
+%PC
+plot3(pc_TCS(1,b),pc_TCS(2,b),pc_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+
+text(pc_TCS(1,b),pc_TCS(2,b),pc_TCS(3,b),'PC E','FontSize',14)
+
+
+%TS
+plot3(ts_TCS(1,b),ts_TCS(2,b),ts_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(ts_TCS(1,b),ts_TCS(2,b),ts_TCS(3,b),'TS E','FontSize',14)
+
+%AA
+plot3(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'-o','Color','b','MarkerSize',10,...
+    'MarkerFaceColor','#D9FFFF')
+text(aa_TCS(1,b),aa_TCS(2,b),aa_TCS(3,b),'AA E','FontSize',14)
+axis equal
+
+title('Scapular BLs and Polygon (in TCS Resampled)','FontSize',16)
+xlabel('X Axis')
+ylabel('Y Axis')
+zlabel('Z Axis')
+
+
+
+plot3([ai_TCS(1,b) ts_TCS(1,b)],[ai_TCS(2,b) ts_TCS(2,b)],[ai_TCS(3,b) ts_TCS(3,b)],'b','Linewidth',1) % line between AI and TS
+plot3([ai_TCS(1,b) aa_TCS(1,b)],[ai_TCS(2,b) aa_TCS(2,b)],[ai_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AI and AA
+plot3([ts_TCS(1,b) ac_TCS(1,b)],[ts_TCS(2,b) ac_TCS(2,b)],[ts_TCS(3,b) ac_TCS(3,b)],'b','Linewidth',1) % line between TS and AC
+plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,b)],'b','Linewidth',1) % line between AC and AA
+
+
+
+pause
+
+    %% JANUARY 2024 ******- UPDATING OUTCOME MEASURES TO BE IN CREATED COORDINATE SYSTEM IN PLANE OF REACH - OLD VERSION
+  
+%     RD_2024 = sqrt((xhand_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(3)))^2+(xhand_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(3)))^2);
+%     
+%     GH_2024 = sqrt((GH_ArmPlane(1,idx(3))-GH_ArmPlane(1,idx(1)))^2+(GH_ArmPlane(2,idx(3))-GH_ArmPlane(2,idx(1)))^2);
+% 
+%     pause
+%     XJUG_2024 = sqrt((xjug_ArmPlane(1,idx(3))-xjug_ArmPlane(1,idx(1)))^2+(xjug_ArmPlane(2,idx(3))-xjug_ArmPlane(2,idx(1)))^2);
+% 
+
 
     %% Subtracting Trunk at idx(1) frame From Hand, Arm Length, and Shoulder
 %  
@@ -4366,21 +4869,28 @@ xhand_Hum = xhand_Hum';
 % Scap_Ang_fbtilt = Scap_Ang_T(2,idx(3))-Scap_Ang_T(2,idx(1));
 % Scap_Ang_proretract = Scap_Ang_T(3,idx(3))-Scap_Ang_T(3,idx(1));
 
-    %% Compute reaching distance
+%% Reaching Distance Definitions 
     
     % Def: between 3rd MCP and Computed Glenohumeral Joint Location at end
     % of reach (timepoint idx(3)) - 
     
-    % XY Definition
+    % XY Definition in GCS
    % maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2); 
    
    % XYZ Definition in TRUNK CS at idx1
-   %                             X                              Y                              Z        
-%      maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2);
+   %                           X                              Y                              Z        
+%       maxreach = sqrt((xhand(idx(3),1)-gh(idx(3),1))^2+(xhand(idx(3),2)-gh(idx(3),2))^2+(xhand(idx(3),3)-gh(idx(3),3))^2)
+   
+% In Plane of the Arm (Humerus) YZ % GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
+maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2) %Def in Humeral Plane
+RD_2024 % this is the 2024 definition in the created CS (see line 4616 for def) 
 
-% In Plane of the Arm (Humerus) YZ 
-maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
-% GH at all time is (0,0,0) in Humerus CS - so definition simplifies 
+'Check Consistency'
+pause
+
+maxreach =RD_2024;
+
+'Reaching Distance has been Overwritten'
 
 
     %% Max Hand Excursion
@@ -4395,9 +4905,9 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
    %                             X                                   Y                                      Z
 %    maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
 
-    % In Plane of Arm YZ
+    % In Plane of Arm (HUMERAL CS) YZ
+%     maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2)
 
-    maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2);
 
     %% Compute shoulder and trunk displacement at maximum reach
     
@@ -4408,7 +4918,19 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2);
     
     % XYZ PLANE
-    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2);
+    trunk_exc =  sqrt((xjug(idx(3),1)-xjug(idx(1),1))^2 +(xjug(idx(3),2)-xjug(idx(1),2))^2+(xjug(idx(3),3)-xjug(idx(1),3))^2)
+
+    XJUG_2024
+
+
+    'CHECK FOR CONSISTENCY'
+    
+  
+     pause
+    
+     trunk_exc =XJUG_2024; %Variable that goes into data matrix
+
+    'Trunk Excursion has been overwritten'
 
     % Shoulder
     %Def: difference in gh final - gh initial. gh(idx3) - gh(idx1)
@@ -4416,30 +4938,41 @@ maxreach = sqrt((xhand_Hum(idx(3),2))^2+(xhand_Hum(idx(3),3))^2);
     %sh_exc =  sqrt((gh(idx(3),1)-gh(idx(1),1))^2 +(gh(idx(3),2)-gh(idx(1),2))^2);
     
    % XY PLANE
-   % sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2);
+   sh_exc =  sqrt((gh_end(1)-gh_start(1))^2 +(gh_end(2)-gh_start(2))^2) % in TRUNK cs
+
+   GH_2024 % in ARM PLANE
+
+   'CHECK FOR CONSISTENCY'
+
+   pause
+
+   sh_exc =GH_2024; % Variable that goes into data matrix
+
+   'GH Excursion has been overwritten'
 
    % XYZ PLANE
-   sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
+%    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
 
 
    % Z Shoulder Excursion
-   sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
+%     sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
    
 
 
-
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
-    maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
-    
+%     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
+%     
     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
-    
+%     
     shex_current_trial(i) = sh_exc;
-    sh_Z_ex_current_trial(i) = sh_Z_ex;
-    
+% %     sh_Z_ex_current_trial(i) = sh_Z_ex;
+%     
     trex_current_trial(i) = trunk_exc;
+
+%     pause
 %% Computing Changes in Trunk Kinematics - October 2023
 
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
@@ -4451,12 +4984,14 @@ Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s
 Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
-    %% Plotting EMGS
-close all
-    
-   PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i,emg2)
+    %% Plotting EMG- Trial Data
 
-    pause
+   close all
+    
+%    PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+
+ 
+%    pause
     
 
     %% Main Cumulative Metria Figure
@@ -5397,7 +5932,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
     % Below is from the EXP file measured by hand at time of experiment-
   
-    armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
+ armlength = (setup.exp.armLength+setup.exp.e2hLength)*10;
 
  
 
@@ -5443,13 +5978,13 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 % 
 
-   % Check for making sure the conditions align from the loaded Matrix
+% %    Check for making sure the conditions align from the loaded Matrix
 %     if DataMatrix{FinalRow,2} == expcond
 %         DataMatrix{FinalRow,2} = expcond;
 % 
 %     else
 %         'Mismatched EXP COND! '
-% %         pause
+%         pause
 %     end
 
 
@@ -5463,8 +5998,8 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %     DataMatrix{FinalRow,10} = shex_current_trial(i);
 %     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
 %     DataMatrix{FinalRow,8} =  trex_current_trial(i);
-%     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+% %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+% %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
 %     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
 %     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
@@ -5725,7 +6260,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
-% save FullDataMatrix.mat DataMatrix
+%  save FullDataMatrix.mat DataMatrix
 
 
 %% Saving Trunk Kinematics to Separate Matrix  

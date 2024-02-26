@@ -1,6 +1,4 @@
-%%% Edited Dec 2023
 
-%%
 
 function maxEMG=GetMaxMusAct3NEW(flpath,basename,setfname,partid,plotflag,hand)
 % Function to get the maximum EMGs from the MVC Torques data. The output is a .mat file (*MaxEMG.mat)
@@ -56,7 +54,7 @@ for j=1:length(trials)
     [maxTEMG(j,:),maxtidx(j,:)]=max(meanEMG);
 
 
-    if 0 %plotting each trial j = trial num
+    if 1 %plotting each trial j = trial num
         figure(2)
 clf
         t=(0:length(emg) - 1)/sampRate;
@@ -78,7 +76,7 @@ clf
         set(lax,'ColorOrder',co([2:end 1],:),'YLim',[-yspacing(end) memg(1)])
         plot(t,meanEMG-yspacing(ones(length(t),1),:),'LineWidth',2)
         ylabel 'V'
-        %             pause
+                    pause
     end
 end
 % %%

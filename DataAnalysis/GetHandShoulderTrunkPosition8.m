@@ -376,7 +376,8 @@ xshoulder=x(:,sidx:(sidx+ 6)); % extracting shoulder marker
 tidx=cidx(1)+1;
 xtrunk=x(:,tidx:(tidx+6)); %if ~isempty(tidx), xtrunk=x(:,tidx+7); else xtrunk=zeros(size(xhand));end
 
-% Marker data themselves is correctly resampled Feb 2022 KCS
+
+
 
 %%
 % compute the hand position (3rd MCP) from the end effector
