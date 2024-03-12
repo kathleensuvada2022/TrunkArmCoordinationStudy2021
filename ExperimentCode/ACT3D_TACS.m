@@ -1836,6 +1836,7 @@ if isfield(myhandles.exp,'dir'), [fname,pname] = uigetfile([myhandles.exp.dir '/
 else [fname,pname] = uigetfile([pwd '/*.mat'],'Select the setup file (*.mat)');
 end
 if fname~=0 
+    subsetnames=[];
     load(fullfile(pname,fname),'setup');
     if exist('setup')
         setnames=fieldnames(setup);
