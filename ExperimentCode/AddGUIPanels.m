@@ -74,6 +74,7 @@ myhandles.daq.rt = 0;
 % TTL Checkbox
 myhandles.ui.daq_ttl = uicontrol(daqPanel,'Style','checkbox','String','TTL Pulse','Units','Normalized','Enable','Off','Interruptible','on','Callback',@DAQ_TTL_Callback,'Position',[0.15 0.3 0.3 0.1],'FontSize',10);
 myhandles.daq.ttl = 0;
+%% 
 % Initialize DAQ pushbutton 
 uicontrol(daqPanel,'Style','pushbutton','Callback',@DAQ_Init_Callback,'String','Initialize DAQ','Units','normalized','Position',[0.2 0.02 0.6 0.24],'FontSize',11,'Enable','off');
 % Timer - not enabled in this version

@@ -112,7 +112,7 @@ for i=1: length(mtrials)
         %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
 
 %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+   %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
 %                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
@@ -4044,10 +4044,10 @@ timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 
    close all
     
-%    PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+    PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
  
-%    pause
+    pause
     
 
     %% Main Cumulative Metria Figure
@@ -5016,9 +5016,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    FinalRow = trialrow(Currentrow);
+%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+%     FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5035,21 +5035,21 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-    if DataMatrix{FinalRow,2} == expcond
-        DataMatrix{FinalRow,2} = expcond;
-
-    else
-        'Mismatched EXP COND! '
-        pause
-    end
+%     if DataMatrix{FinalRow,2} == expcond
+%         DataMatrix{FinalRow,2} = expcond;
+% 
+%     else
+%         'Mismatched EXP COND! '
+%         pause
+%     end
 
 
 
 % Reaching Measures
 
- DataMatrix{1,15} = 'Peak accel';
+% DataMatrix{1,15} = 'Peak accel';
  
-      DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
+  %    DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
 % pause
  %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 
@@ -5322,7 +5322,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
- save FullDataMatrix.mat DataMatrix
+ %save FullDataMatrix.mat DataMatrix
 
 
 
