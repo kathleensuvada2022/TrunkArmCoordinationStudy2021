@@ -104,14 +104,16 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-%          load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
         %                  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_VEL.mat')
         %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
 
-%          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+
+       %**** USE BELOW
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
    %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
 %                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
@@ -3493,6 +3495,33 @@ axis equal
 % title('GH in TCS' ,'FontSize',16)
 % axis equal
 
+%% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
+
+close all
+
+% Trunk
+TRUNK_AngVel = ddt(smo(Trunk_ANG_G(1,:)),1/100); % theta dot- degrees/sec
+TRUNK_AngAcc = ddt(smo(TRUNK_AngVel),1/100); % theta double dot- degrees/s^2
+
+% Elbow 
+ELB_AngVel = ddt(smo(ELB_ANG_MAT(1,:)),1/100); % theta dot- degrees/sec
+ELB_AngAcc = ddt(smo(ELB_AngVel),1/100); % theta double dot- degrees/s^2
+
+% Shoulder
+SH_AngVel = ddt(smo(Hum_Ang_T(1,:)),1/100); % theta dot- degrees/sec
+SH_AngAcc = ddt(smo(SH_AngVel),1/100); % theta double dot-degrees/s^2
+
+% Finding the Maxes throughout the course of the reach
+TRUNK_ANG_VelMAX_Trial(1,i) = max(abs(TRUNK_AngVel(idx(1):idx(3)))); %in deg/s for each trial
+TRUNK_ANG_AccMAX_Trial(1,i) = max(abs(TRUNK_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+
+ELB_ANG_VelMAX_Trial(1,i) = max(abs(ELB_AngVel(idx(1):idx(3)))); %in deg/s for each trial
+ELB_ANG_AccMAX_Trial(1,i) = max(abs(ELB_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+
+SH_ANG_VelMAX_Trial(1,i) = max(abs(SH_AngVel(idx(1):idx(3)))); %in deg/s for each trial
+SH_ANG_AccMAX_Trial(1,i) = max(abs(SH_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+
+
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
 PlaneofArmCS = zeros(4,4,length(gh));
@@ -4029,14 +4058,14 @@ maxreach =RD_2024;
     Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing peak velocity and accel in given trial - Oct/Nov/Dec 2023/ Feb 2024
+%% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
 
 Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s for each trial
 Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
 
-ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))) %in mm/s for each trial
+ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))); %in mm/s for each trial
 Index_acc = find(abs(accel)==ACCEL_Trial(1,i)); %index max acc occurs
 maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
 timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
@@ -4044,10 +4073,10 @@ timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 
    close all
     
-    PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+  %  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
  
-    pause
+%     pause
     
 
     %% Main Cumulative Metria Figure
@@ -5016,9 +5045,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5035,23 +5064,43 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-%     if DataMatrix{FinalRow,2} == expcond
-%         DataMatrix{FinalRow,2} = expcond;
-% 
-%     else
-%         'Mismatched EXP COND! '
-%         pause
-%     end
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
 
 
 
 % Reaching Measures
 
 % DataMatrix{1,15} = 'Peak accel';
+DataMatrix{1,14} = 'Peak vel';
+
+DataMatrix{1,16} = 'Peak Trunk ANG VEL';
+DataMatrix{1,17} = 'Peak Trunk ANG ACC';
+DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
+
+
+DataMatrix{1,18} = 'Peak ELB ANG VEL';
+DataMatrix{1,19} = 'Peak ELB ANG ACC';
+DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
+
+
+DataMatrix{1,20} = 'Peak Shldr ANG VEL';
+DataMatrix{1,21} = 'Peak Shldr ANG ACC';
+DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
+
+
  
   %    DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
 % pause
- %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
@@ -5322,7 +5371,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
- %save FullDataMatrix.mat DataMatrix
+ save FullDataMatrix.mat DataMatrix
 
 
 
