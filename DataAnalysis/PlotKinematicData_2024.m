@@ -104,7 +104,7 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+        load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -116,7 +116,7 @@ for i=1: length(mtrials)
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
    %          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
-%                            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+%                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
