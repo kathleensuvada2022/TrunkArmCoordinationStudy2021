@@ -114,9 +114,9 @@ for i=1: length(mtrials)
 
        %**** USE BELOW
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
-%                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -5111,43 +5111,43 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-    if DataMatrix{FinalRow,2} == expcond
-        DataMatrix{FinalRow,2} = expcond;
-
-    else
-        'Mismatched EXP COND! '
-        pause
-    end
+%     if DataMatrix{FinalRow,2} == expcond
+%         DataMatrix{FinalRow,2} = expcond;
+% 
+%     else
+%         'Mismatched EXP COND! '
+%         pause
+%     end
 
 
 
 % Reaching Measures
 
 % DataMatrix{1,15} = 'Peak accel';
-DataMatrix{1,14} = 'Peak vel';
-
-DataMatrix{1,16} = 'Peak Trunk ANG VEL';
-DataMatrix{1,17} = 'Peak Trunk ANG ACC';
-DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
-
-
-DataMatrix{1,18} = 'Peak ELB ANG VEL';
-DataMatrix{1,19} = 'Peak ELB ANG ACC';
-DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
-
-
-DataMatrix{1,20} = 'Peak Shldr ANG VEL';
-DataMatrix{1,21} = 'Peak Shldr ANG ACC';
-DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
+% DataMatrix{1,14} = 'Peak vel';
+% 
+% DataMatrix{1,16} = 'Peak Trunk ANG VEL';
+% DataMatrix{1,17} = 'Peak Trunk ANG ACC';
+% DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
+% 
+% 
+% DataMatrix{1,18} = 'Peak ELB ANG VEL';
+% DataMatrix{1,19} = 'Peak ELB ANG ACC';
+% DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
+% 
+% 
+% DataMatrix{1,20} = 'Peak Shldr ANG VEL';
+% DataMatrix{1,21} = 'Peak Shldr ANG ACC';
+% DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
 
 
  
   %    DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
 % pause
-     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+%      DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
