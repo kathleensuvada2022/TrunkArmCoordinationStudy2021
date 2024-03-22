@@ -104,7 +104,7 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-        load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+%         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -114,7 +114,7 @@ for i=1: length(mtrials)
 
        %**** USE BELOW
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
 %                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
@@ -3493,16 +3493,73 @@ axis equal
 % xlabel('X axis (mm)')
 % ylabel('Y axis (mm)')
 % title('GH in TCS' ,'FontSize',16)
-% axis equal
 
+%% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
+Vel_Trial(1,i) = max(vel(idx(1):idx(3))); %in mm/s for each trial
+Index_Vel = find(vel==Vel_Trial(1,i)); %index max vel occurs
+idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
+timevelmax = t2(idx(2)); % time max vel max is at in seconds
+ACCEL_Trial(1,i) = max(accel(idx(1):idx(3))); %in mm/s for each trial
+Index_acc = find(accel==ACCEL_Trial(1,i)); %index max acc occurs
+maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
+timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 %% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
 
 close all
 
 % Trunk
-TRUNK_AngVel = ddt(smo(Trunk_ANG_G(1,:)),1/100); % theta dot- degrees/sec
+TRUNK_AngVel = ddt(smo(Trunk_ANG_Ti(2,:)),1/100); % theta dot- degrees/sec % Need to grab theta in the transverse plane 
 TRUNK_AngAcc = ddt(smo(TRUNK_AngVel),1/100); % theta double dot- degrees/s^2
 
+
+hexColor = '#7E2F8E';
+rgbColor = sscanf(hexColor(2:end),'%2x%2x%2x',[1 3])/255;
+
+hexColor2 = '77AC30';
+rgbColor2 = sscanf(hexColor2(2:end),'%2x%2x%2x',[1 3])/255;
+	
+figure()
+subplot(4,1,1)
+plot(vel, 'Color', rgbColor, 'LineWidth', 2);
+xlim([idx(1) idx(3)])
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
+title('Angular Kinematics of the Trunk','FontSize',24)
+subplot(4,1,2)
+plot(smooth(Trunk_ANG_Ti(2,:))','Color','b','Linewidth',2) % Twisting Z
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+xlim([idx(1) idx(3)])
+legend('${\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+
+subplot(4,1,3)
+plot(smooth(TRUNK_AngVel),'Color','c','Linewidth',2) % Ang vel
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+xlim([idx(1) idx(3)])
+legend('$\dot{\theta}_t$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+
+subplot(4,1,4)
+plot(smooth(TRUNK_AngAcc),'Color','m','Linewidth',2) % Ang acc
+xlim([idx(1) idx(3)])
+ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('$\ddot{\theta}_t$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+
+pause
+
+
+figure()
+plot(xhand(:,1),xhand(:,2),'Linewidth',3)
+hold on
+plot(xhand(idx(1),1),xhand(idx(1),2),'o','MarkerSize',20,'MarkerFaceColor','g')
+plot(xhand(idx(3),1),xhand(idx(3),2),'o','MarkerSize',20,'MarkerFaceColor','r')
+
+plot(xhand(idx(2),1),xhand(idx(2),2),'o','Color',[0.5 0 0.8],'MarkerSize',20,'MarkerFaceColor',[0.5 0 0.8])
+legend ('MCP3','Reach Start','Reach End','Max Velocity','FontSize',20)
+axis equal
+
+pause
 % Elbow 
 ELB_AngVel = ddt(smo(ELB_ANG_MAT(1,:)),1/100); % theta dot- degrees/sec
 ELB_AngAcc = ddt(smo(ELB_AngVel),1/100); % theta double dot- degrees/s^2
@@ -4055,20 +4112,10 @@ maxreach =RD_2024;
 %     pause
 %% Computing Changes in Trunk Kinematics - October 2023
 
-    Trunk_Angs_Trial(:,i) = Trunk_ANG_Ti(:,idx(3))- Trunk_ANG_Ti(:,idx(1));
+%     Trunk_Angs_Trial(:,i) = (:,idx(3))- Trunk_ANG_Ti(:,idx(1));
 
     
-%% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
 
-Vel_Trial(1,i) = max(abs(vel(idx(1):idx(3)))); %in mm/s for each trial
-Index_Vel = find(abs(vel)==Vel_Trial(1,i)); %index max vel occurs
-idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
-timevelmax = t2(idx(2)); % time max vel max is at in seconds
-
-ACCEL_Trial(1,i) = max(abs(accel(idx(1):idx(3)))); %in mm/s for each trial
-Index_acc = find(abs(accel)==ACCEL_Trial(1,i)); %index max acc occurs
-maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
-timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
     %% Plotting EMG- Trial Data
 
    close all
