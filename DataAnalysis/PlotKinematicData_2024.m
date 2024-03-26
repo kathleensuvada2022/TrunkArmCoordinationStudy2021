@@ -113,8 +113,8 @@ for i=1: length(mtrials)
 
 
        %**** USE BELOW
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
 %                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
@@ -3493,14 +3493,20 @@ axis equal
 % xlabel('X axis (mm)')
 % ylabel('Y axis (mm)')
 % title('GH in TCS' ,'FontSize',16)
+%% Recomputing Maximum Velocity with Start and End Times (see previous definition for identificiation of start and end)
+% March 2024
+
+dist_2024 = sqrt((xhand(:,1)-xhand(idx(1),1)).^2 + (xhand(:,2)-xhand(idx(1),2)).^2);
+vel_2024 = ddt(smo(dist_2024),1/100);
+accel_2024 = ddt(smo(vel_2024),1/100);
 
 %% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
-Vel_Trial(1,i) = max(vel(idx(1):idx(3))); %in mm/s for each trial
-Index_Vel = find(vel==Vel_Trial(1,i)); %index max vel occurs
+Vel_Trial(1,i) = max(vel_2024(idx(1):idx(3))); %in mm/s for each trial
+Index_Vel = find(vel_2024==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
-ACCEL_Trial(1,i) = max(accel(idx(1):idx(3))); %in mm/s for each trial
-Index_acc = find(accel==ACCEL_Trial(1,i)); %index max acc occurs
+ACCEL_Trial(1,i) = max(accel_2024(idx(1):idx(3))); %in mm/s for each trial
+Index_acc = find(accel_2024==ACCEL_Trial(1,i)); %index max acc occurs
 maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
 timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 %% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
@@ -3520,7 +3526,7 @@ rgbColor2 = sscanf(hexColor2(2:end),'%2x%2x%2x',[1 3])/255;
 	
 figure()
 subplot(4,1,1)
-plot(vel, 'Color', rgbColor, 'LineWidth', 2);
+plot(vel_2024, 'Color', rgbColor, 'LineWidth', 2);
 xlim([idx(1) idx(3)])
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
@@ -3578,6 +3584,9 @@ ELB_ANG_AccMAX_Trial(1,i) = max(abs(ELB_AngAcc(idx(1):idx(3)))); %in deg/s^2 for
 SH_ANG_VelMAX_Trial(1,i) = max(abs(SH_AngVel(idx(1):idx(3)))); %in deg/s for each trial
 SH_ANG_AccMAX_Trial(1,i) = max(abs(SH_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
 
+%% Outcome Measure for % Max Vel/ Total Reach
+
+MaxVel_HandPercent_Reach = (idx(2)-idx(1))/(idx(3)-idx(1)) * 100
 
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
