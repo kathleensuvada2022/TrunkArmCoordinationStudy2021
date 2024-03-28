@@ -3566,17 +3566,76 @@ legend ('MCP3','Reach Start','Reach End','Max Velocity','FontSize',20)
 axis equal
 
 pause
+
+
 % Elbow 
 ELB_AngVel = ddt(smo(ELB_ANG_MAT(1,:)),1/100); % theta dot- degrees/sec
 ELB_AngAcc = ddt(smo(ELB_AngVel),1/100); % theta double dot- degrees/s^2
+
+figure()
+subplot(4,1,1)
+plot(vel_2024, 'Color', rgbColor, 'LineWidth', 2);
+xlim([idx(1) idx(3)])
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
+title('Angular Kinematics of the Elbow','FontSize',24)
+subplot(4,1,2)
+plot(smooth(ELB_ANG_MAT(1,:))','Color','b','Linewidth',2) % Flexion/Extension 
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+xlim([idx(1) idx(3)])
+legend('${\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
+
+subplot(4,1,3)
+plot(smooth(ELB_AngVel),'Color','c','Linewidth',2) % Ang vel
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
+xlim([idx(1) idx(3)])
+legend('$\dot{\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+
+subplot(4,1,4)
+plot(smooth(ELB_AngAcc),'Color','m','Linewidth',2) % Ang acc
+xlim([idx(1) idx(3)])
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('$\ddot{\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
 % Shoulder
 SH_AngVel = ddt(smo(Hum_Ang_T(1,:)),1/100); % theta dot- degrees/sec
 SH_AngAcc = ddt(smo(SH_AngVel),1/100); % theta double dot-degrees/s^2
 
-% Finding the Maxes throughout the course of the reach
-TRUNK_ANG_VelMAX_Trial(1,i) = max(abs(TRUNK_AngVel(idx(1):idx(3)))); %in deg/s for each trial
-TRUNK_ANG_AccMAX_Trial(1,i) = max(abs(TRUNK_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+
+figure()
+subplot(4,1,1)
+plot(vel_2024, 'Color', rgbColor, 'LineWidth', 2);
+xlim([idx(1) idx(3)])
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
+title('Angular Kinematics of the Shoulder','FontSize',24)
+subplot(4,1,2)
+plot(smooth(Hum_Ang_T(1,:))','Color','b','Linewidth',2) % Flexion/Extension 
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+xlim([idx(1) idx(3)])
+legend('${\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+
+subplot(4,1,3)
+plot(smooth(SH_AngVel),'Color','c','Linewidth',2) % Ang vel
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+xlim([idx(1) idx(3)])
+legend('$\dot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+
+subplot(4,1,4)
+plot(smooth(SH_AngAcc),'Color','m','Linewidth',2) % Ang acc
+xlim([idx(1) idx(3)])
+ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
+xline(idx(2),'Color',rgbColor2,'Linewidth',2)
+legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
+
+% Trunk Kinematics at max Hand velocity
+TRUNK_ANG_VelMAX_Trial(1,i) = TRUNK_AngVel(idx(2)); %in deg/s for each trial
+TRUNK_ANG_AccMAX_Trial(1,i) = TRUNK_AngAcc(idx(2)); %in deg/s^2 for each trial
 
 ELB_ANG_VelMAX_Trial(1,i) = max(abs(ELB_AngVel(idx(1):idx(3)))); %in deg/s for each trial
 ELB_ANG_AccMAX_Trial(1,i) = max(abs(ELB_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
