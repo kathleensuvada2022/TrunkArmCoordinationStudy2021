@@ -3633,6 +3633,9 @@ ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','la
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
+pause
+
+
 % Trunk Kinematics at max Hand velocity
 TRUNK_ANG_VelMAX_Trial(1,i) = TRUNK_AngVel(idx(2)); %in deg/s for each trial
 TRUNK_ANG_AccMAX_Trial(1,i) = TRUNK_AngAcc(idx(2)); %in deg/s^2 for each trial
