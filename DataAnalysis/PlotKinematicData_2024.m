@@ -114,9 +114,9 @@ for i=1: length(mtrials)
 
        %**** USE BELOW
 %         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
-%                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -3532,21 +3532,21 @@ xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
 title('Angular Kinematics of the Trunk','FontSize',24)
 subplot(4,1,2)
-plot(smooth(Trunk_ANG_Ti(2,:))','Color','b','Linewidth',2) % Twisting Z
+plot(Trunk_ANG_Ti(2,:)','Color','b','Linewidth',2) % Twisting Z
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 xlim([idx(1) idx(3)])
 legend('${\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 
 subplot(4,1,3)
-plot(smooth(TRUNK_AngVel),'Color','c','Linewidth',2) % Ang vel
+plot(TRUNK_AngVel,'Color','c','Linewidth',2) % Ang vel
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 xlim([idx(1) idx(3)])
 legend('$\dot{\theta}_t$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
 subplot(4,1,4)
-plot(smooth(TRUNK_AngAcc),'Color','m','Linewidth',2) % Ang acc
+plot(TRUNK_AngAcc,'Color','m','Linewidth',2) % Ang acc
 xlim([idx(1) idx(3)])
 ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
@@ -3580,21 +3580,21 @@ xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
 title('Angular Kinematics of the Elbow','FontSize',24)
 subplot(4,1,2)
-plot(smooth(ELB_ANG_MAT(1,:))','Color','b','Linewidth',2) % Flexion/Extension 
+plot(ELB_ANG_MAT(1,:)','Color','b','Linewidth',2) % Flexion/Extension 
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 xlim([idx(1) idx(3)])
 legend('${\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
 
 subplot(4,1,3)
-plot(smooth(ELB_AngVel),'Color','c','Linewidth',2) % Ang vel
+plot(ELB_AngVel,'Color','c','Linewidth',2) % Ang vel
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
 xlim([idx(1) idx(3)])
 legend('$\dot{\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
 subplot(4,1,4)
-plot(smooth(ELB_AngAcc),'Color','m','Linewidth',2) % Ang acc
+plot(ELB_AngAcc,'Color','m','Linewidth',2) % Ang acc
 xlim([idx(1) idx(3)])
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',20)
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
@@ -3613,21 +3613,21 @@ xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
 title('Angular Kinematics of the Shoulder','FontSize',24)
 subplot(4,1,2)
-plot(smooth(Hum_Ang_T(1,:))','Color','b','Linewidth',2) % Flexion/Extension 
+plot(Hum_Ang_T(1,:)','Color','b','Linewidth',2) % Flexion/Extension 
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 xlim([idx(1) idx(3)])
 legend('${\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 
 subplot(4,1,3)
-plot(smooth(SH_AngVel),'Color','c','Linewidth',2) % Ang vel
+plot(SH_AngVel,'Color','c','Linewidth',2) % Ang vel
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 xlim([idx(1) idx(3)])
 legend('$\dot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
 subplot(4,1,4)
-plot(smooth(SH_AngAcc),'Color','m','Linewidth',2) % Ang acc
+plot(SH_AngAcc,'Color','m','Linewidth',2) % Ang acc
 xlim([idx(1) idx(3)])
 ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','latex','FontSize',25)
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
@@ -3636,20 +3636,19 @@ legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20
 pause
 
 
-% Trunk Kinematics at max Hand velocity
+%% March 2024- Angular Kinematics Outcome Measures at Max Hand Velocity
 TRUNK_ANG_VelMAX_Trial(1,i) = TRUNK_AngVel(idx(2)); %in deg/s for each trial
 TRUNK_ANG_AccMAX_Trial(1,i) = TRUNK_AngAcc(idx(2)); %in deg/s^2 for each trial
 
-ELB_ANG_VelMAX_Trial(1,i) = max(abs(ELB_AngVel(idx(1):idx(3)))); %in deg/s for each trial
-ELB_ANG_AccMAX_Trial(1,i) = max(abs(ELB_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+ELB_ANG_VelMAX_Trial(1,i) = ELB_AngVel(idx(2)); %in deg/s for each trial
+ELB_ANG_AccMAX_Trial(1,i) = ELB_AngAcc(idx(2)); %in deg/s^2 for each trial
 
-SH_ANG_VelMAX_Trial(1,i) = max(abs(SH_AngVel(idx(1):idx(3)))); %in deg/s for each trial
-SH_ANG_AccMAX_Trial(1,i) = max(abs(SH_AngAcc(idx(1):idx(3)))); %in deg/s^2 for each trial
+SH_ANG_VelMAX_Trial(1,i) = SH_AngVel(idx(2)); %in deg/s for each trial
+SH_ANG_AccMAX_Trial(1,i) = SH_AngAcc(idx(2)); %in deg/s^2 for each trial
 
-%% Outcome Measure for % Max Vel/ Total Reach
+MaxVel_HandPercent_Reach(i) = (idx(2)-idx(1))/(idx(3)-idx(1)) * 100 ; %  that max velocity is through the reach 
 
-MaxVel_HandPercent_Reach = (idx(2)-idx(1))/(idx(3)-idx(1)) * 100
-
+pause 
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
 PlaneofArmCS = zeros(4,4,length(gh));
@@ -5197,22 +5196,30 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % DataMatrix{1,15} = 'Peak accel';
 % DataMatrix{1,14} = 'Peak vel';
 % 
-% DataMatrix{1,16} = 'Peak Trunk ANG VEL';
-% DataMatrix{1,17} = 'Peak Trunk ANG ACC';
-% DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
-% DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
+DataMatrix{1,16} = 'Trunk ANG VEL';  % UPDATED ST AT MAX HAND VEL
+DataMatrix{1,17} = 'Trunk ANG ACC';
+DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
 % 
 % 
-% DataMatrix{1,18} = 'Peak ELB ANG VEL';
-% DataMatrix{1,19} = 'Peak ELB ANG ACC';
-% DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
-% DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
+DataMatrix{1,18} = 'ELB ANG VEL'; % UPDATED ST AT MAX HAND VEL
+DataMatrix{1,19} = 'ELB ANG ACC';
+DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
 % 
 % 
-% DataMatrix{1,20} = 'Peak Shldr ANG VEL';
-% DataMatrix{1,21} = 'Peak Shldr ANG ACC';
-% DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
-% DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
+DataMatrix{1,20} = 'Shldr ANG VEL'; % UPDATED ST AT MAX HAND VEL
+DataMatrix{1,21} = 'Shldr ANG ACC';
+DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
+DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
+
+DataMatrix{1,22} = 'Max Vel % of Reach '; % UPDATED ST AT MAX HAND VEL
+DataMatrix{FinalRow,22}= MaxVel_HandPercent_Reach(i);
+
+
+
+
+
 
 
  
