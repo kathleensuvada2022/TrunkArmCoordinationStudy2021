@@ -113,10 +113,10 @@ for i=1: length(mtrials)
 
 
        %**** USE BELOW
-%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
 %             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
-                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+%                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -3496,26 +3496,27 @@ axis equal
 %% Recomputing Maximum Velocity with Start and End Times (see previous definition for identificiation of start and end)
 % March 2024
 
-dist_2024 = sqrt((xhand(:,1)-xhand(idx(1),1)).^2 + (xhand(:,2)-xhand(idx(1),2)).^2);
-vel_2024 = ddt(smo(dist_2024),1/100);
-accel_2024 = ddt(smo(vel_2024),1/100);
+% dist_2024 = sqrt((xhand(idx(1):idx(3),1)-xhand(idx(1),1)).^2 + (xhand(idx(1):idx(3),2)-xhand(idx(1),2)).^2);
+% vel_2024 = ddt(smo(dist_2024),1/100);
+% accel_2024 = ddt(smo(vel_2024),1/100);
 
 %% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
-Vel_Trial(1,i) = max(vel_2024(idx(1):idx(3))); %in mm/s for each trial
-Index_Vel = find(vel_2024==Vel_Trial(1,i)); %index max vel occurs
+Vel_Trial(1,i) = max(vely(idx(1):idx(3))); %in mm/s for each trial
+Index_Vel = find(vely==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
-ACCEL_Trial(1,i) = max(accel_2024(idx(1):idx(3))); %in mm/s for each trial
-Index_acc = find(accel_2024==ACCEL_Trial(1,i)); %index max acc occurs
+ACCEL_Trial(1,i) = max(accel(idx(1):idx(3))); %in mm/s for each trial
+Index_acc = find(accel==ACCEL_Trial(1,i)); %index max acc occurs
 maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
 timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 %% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
 
+vel_2024 = vely;
 close all
 
 % Trunk
-TRUNK_AngVel = ddt(smo(Trunk_ANG_Ti(2,:)),1/100); % theta dot- degrees/sec % Need to grab theta in the transverse plane 
-TRUNK_AngAcc = ddt(smo(TRUNK_AngVel),1/100); % theta double dot- degrees/s^2
+TRUNK_AngVel = ddt(Trunk_ANG_Ti(2,:),1/100); % theta dot- degrees/sec % Need to grab theta in the transverse plane 
+TRUNK_AngAcc = ddt(TRUNK_AngVel,1/100); % theta double dot- degrees/s^2
 
 
 hexColor = '#7E2F8E';
@@ -3526,10 +3527,15 @@ rgbColor2 = sscanf(hexColor2(2:end),'%2x%2x%2x',[1 3])/255;
 	
 figure()
 subplot(4,1,1)
-plot(vel_2024, 'Color', rgbColor, 'LineWidth', 2);
-xlim([idx(1) idx(3)])
-xline(idx(2),'Color',rgbColor2,'Linewidth',2)
-legend('Linear Velocity of MCP3','Max Velocity of MCP3','FontSize',25)
+plot(vel_2024, 'Color', 'k', 'LineWidth', 2);
+hold on
+plot(dist, 'Color', 'b', 'LineWidth', 2);
+plot(xhand(:,2), 'Color', 'b', 'LineWidth', 2, 'LineStyle', '--');
+% xlim([idx(1) idx(3)])
+xline(idx(2),'Color',[0.5 0 0.8],'Linewidth',2)
+xline(idx(1),'Color','g','Linewidth',2)
+xline(idx(3),'Color','r','Linewidth',2)
+legend('Linear Velocity of MCP3 in Y','Distance','Y Position','Max Vel','Reach Start','Reach End','FontSize',15)
 title('Angular Kinematics of the Trunk','FontSize',24)
 subplot(4,1,2)
 plot(Trunk_ANG_Ti(2,:)','Color','b','Linewidth',2) % Twisting Z
@@ -3552,7 +3558,7 @@ ylabel('$\Longleftarrow$ Right Left $\Longrightarrow$ ','Interpreter','latex','F
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_t$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
-pause
+%  pause
 
 
 figure()
@@ -3565,12 +3571,12 @@ plot(xhand(idx(2),1),xhand(idx(2),2),'o','Color',[0.5 0 0.8],'MarkerSize',20,'Ma
 legend ('MCP3','Reach Start','Reach End','Max Velocity','FontSize',20)
 axis equal
 
-pause
+%  pause
 
 
 % Elbow 
-ELB_AngVel = ddt(smo(ELB_ANG_MAT(1,:)),1/100); % theta dot- degrees/sec
-ELB_AngAcc = ddt(smo(ELB_AngVel),1/100); % theta double dot- degrees/s^2
+ELB_AngVel = ddt(ELB_ANG_MAT(1,:),1/100); % theta dot- degrees/sec
+ELB_AngAcc = ddt(ELB_AngVel,1/100); % theta double dot- degrees/s^2
 
 figure()
 subplot(4,1,1)
@@ -3601,8 +3607,8 @@ xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_e$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
 % Shoulder
-SH_AngVel = ddt(smo(Hum_Ang_T(1,:)),1/100); % theta dot- degrees/sec
-SH_AngAcc = ddt(smo(SH_AngVel),1/100); % theta double dot-degrees/s^2
+SH_AngVel = ddt( Hum_Ang_T(1,:),1/100); % theta dot- degrees/sec
+SH_AngAcc = ddt(SH_AngVel,1/100); % theta double dot-degrees/s^2
 
 
 figure()
@@ -3633,7 +3639,7 @@ ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','la
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
-pause
+ pause
 
 
 %% March 2024- Angular Kinematics Outcome Measures at Max Hand Velocity
@@ -3648,7 +3654,7 @@ SH_ANG_AccMAX_Trial(1,i) = SH_AngAcc(idx(2)); %in deg/s^2 for each trial
 
 MaxVel_HandPercent_Reach(i) = (idx(2)-idx(1))/(idx(3)-idx(1)) * 100 ; %  that max velocity is through the reach 
 
-pause 
+% pause 
 %% Creating New Coordinate System for Updated Definition of Outcomes - Jan 2024 
 
 PlaneofArmCS = zeros(4,4,length(gh));
@@ -5193,9 +5199,12 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 % Reaching Measures
 
-% DataMatrix{1,15} = 'Peak accel';
-% DataMatrix{1,14} = 'Peak vel';
-% 
+DataMatrix{1,15} = 'Peak 3rd MCP accel';
+DataMatrix{1,14} = 'Peak 3rd MCP vel';
+DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
+
+DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+
 DataMatrix{1,16} = 'Trunk ANG VEL';  % UPDATED ST AT MAX HAND VEL
 DataMatrix{1,17} = 'Trunk ANG ACC';
 DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
@@ -5223,9 +5232,7 @@ DataMatrix{FinalRow,22}= MaxVel_HandPercent_Reach(i);
 
 
  
-  %    DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
-% pause
-%      DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
+
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
 %     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
