@@ -1,3 +1,4 @@
+
 %% Plotting Kinematic Data- Main Function
 
 % Main function that calls other functions for analysis. This function
@@ -104,7 +105,7 @@ for i=1: length(mtrials)
         %    for mac
 
         % For continuous loading of data - Oct 2023/Winter 2024
-%         load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+%       load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -113,10 +114,10 @@ for i=1: length(mtrials)
 
 
        %**** USE BELOW
-        load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+%         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
 %             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
-%                           load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -3639,7 +3640,7 @@ ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','la
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
- pause
+   pause
 
 
 %% March 2024- Angular Kinematics Outcome Measures at Max Hand Velocity
@@ -5187,13 +5188,13 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-%     if DataMatrix{FinalRow,2} == expcond
-%         DataMatrix{FinalRow,2} = expcond;
-% 
-%     else
-%         'Mismatched EXP COND! '
-%         pause
-%     end
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
 
 
 
