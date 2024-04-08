@@ -1828,6 +1828,7 @@ axis equal
     vel = ddt(smo(dist,3),1/89);
     
     velx= ddt(smo(xhand(:,1),3),1/89);
+
     vely= ddt(smo(xhand(:,2),3),1/89);
     
     
@@ -3501,9 +3502,21 @@ axis equal
 % vel_2024 = ddt(smo(dist_2024),1/100);
 % accel_2024 = ddt(smo(vel_2024),1/100);
 
+
+Xo_2024= nanmean(xhand(1:5,1));
+Yo_2024 = nanmean(xhand(1:5,2));
+
+% April 2024.
+%When doing smo- does not change morphology of the vel curve when on
+%resampled data.-  However, taking the derivative here results
+%in jagged plots. 
+
+dist_2024 = sqrt((xhand(:,1)-Xo_2024).^2 +(xhand(:,2)-Yo_2024 ).^2) ; % distance on resampled xhand
+vel_2024 = ddt(smo(dist_2024),1/100); % velocity computed on resampled distance 
+
 %% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
-Vel_Trial(1,i) = max(vely(idx(1):idx(3))); %in mm/s for each trial
-Index_Vel = find(vely==Vel_Trial(1,i)); %index max vel occurs
+Vel_Trial(1,i) = max(vel_2024(idx(1):idx(3))); %in mm/s for each trial
+Index_Vel = find(vel_2024==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
 ACCEL_Trial(1,i) = max(accel(idx(1):idx(3))); %in mm/s for each trial
@@ -3512,7 +3525,7 @@ maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
 timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
 %% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
 
-vel_2024 = vely;
+vel_2024 
 close all
 
 % Trunk
