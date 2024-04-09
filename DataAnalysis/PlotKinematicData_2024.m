@@ -1821,12 +1821,12 @@ axis equal
     Yo = nanmean(xhand(1:5,2));
     Zo = nanmean(xhand(1:5,3));
     
-    %dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
+    dist3D = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2 + (xhand(:,3)-Zo).^2);
     dist = sqrt((xhand(:,1)-Xo).^2 +(xhand(:,2)-Yo).^2);
     
     % Computing Velocity 
-    vel = ddt(smo(dist,3),1/89);
-    
+%    vel= ddt(dist,1/89);
+       vel= ddt(smo(dist),1/89); 
     velx= ddt(smo(xhand(:,1),3),1/89);
 
     vely= ddt(smo(xhand(:,2),3),1/89);
@@ -1848,7 +1848,7 @@ axis equal
     [dist,t2]=resampledata(dist,t,89,100);
     
     
-    [vel,t2]=resampledata(vel,t,89,100);
+    [vel,t2]=resampledata(vel,t,89,100); %this yields same as shape prior to ddt April 2024
     [velx,t2]=resampledata(velx,t,89,100);
     [vely,t2]=resampledata(vely,t,89,100);
     
@@ -1862,11 +1862,7 @@ axis equal
     accel = ddt(smo(vel,3),1/100);
 
 close all
-    plot(vel)
-    hold on
-    plot(accel)
-    legend('vel','accel')
-%     pause
+
 
     %% EMG Trial Data - Updated Jan 2024
  
@@ -3498,34 +3494,34 @@ axis equal
 %% Recomputing Maximum Velocity with Start and End Times (see previous definition for identificiation of start and end)
 % March 2024
 
-% dist_2024 = sqrt((xhand(idx(1):idx(3),1)-xhand(idx(1),1)).^2 + (xhand(idx(1):idx(3),2)-xhand(idx(1),2)).^2);
-% vel_2024 = ddt(smo(dist_2024),1/100);
-% accel_2024 = ddt(smo(vel_2024),1/100);
+Xo_2024= nanmean(xhand(1:idx(1),1));
+Yo_2024 = nanmean(xhand(1:idx(1),2));
+
+% April 2024. 
+% When doing smo- does not change profile of the vel curve ... 
+% but still omit from derivative step to eliminate induced errors. (both here and line 1828/29)
+% However, taking the derivative here results in jagged plots... THEREFORE
+% USED THE RESAMPLED VERSION COMPUTED LINE 1828/1829 which is CONSISTENT
+% WITH VELOCITY PROFILE OF COMPUTED DDT ON ORIGINAL DISTANCE DATA (250 Samples)
 
 
-Xo_2024= nanmean(xhand(1:5,1));
-Yo_2024 = nanmean(xhand(1:5,2));
 
-% April 2024.
-%When doing smo- does not change morphology of the vel curve when on
-%resampled data.-  However, taking the derivative here results
-%in jagged plots. 
+% dist_2024 = sqrt((xhand(:,1)-Xo_2024).^2 +(xhand(:,2)-Yo_2024 ).^2) ; % distance on resampled xhand - this gives same profile as original data where dist is computed and then resampled April 2024
+% 
+% vel_2024 = ddt(smo(dist_2024),1/200); % omit SMO
+% vel_2024 = ddt(dist_2024,1/100); % velocity computed on resampled distance- however varies greatly from velcity of original data-- DON'T USE THIS
 
-dist_2024 = sqrt((xhand(:,1)-Xo_2024).^2 +(xhand(:,2)-Yo_2024 ).^2) ; % distance on resampled xhand
-vel_2024 = ddt(smo(dist_2024),1/100); % velocity computed on resampled distance 
 
+% Using original velocity line 1829 
+vel_2024 = vel;
 %% Computing peak linear velocity and accel of hand in given trial - Oct/Nov/Dec 2023/ Feb 2024
 Vel_Trial(1,i) = max(vel_2024(idx(1):idx(3))); %in mm/s for each trial
 Index_Vel = find(vel_2024==Vel_Trial(1,i)); %index max vel occurs
 idx(2) = Index_Vel; %idx variable (2) is where the max vel occurs
 timevelmax = t2(idx(2)); % time max vel max is at in seconds
-ACCEL_Trial(1,i) = max(accel(idx(1):idx(3))); %in mm/s for each trial
-Index_acc = find(accel==ACCEL_Trial(1,i)); %index max acc occurs
-maxaccelIDX = Index_acc ; %idx variable (2) is where the max acc occurs
-timeaccelmax = t2(maxaccelIDX); % time max accel max is at in seconds
+
 %% Computing Angular Velocities and Accelerations of Trunk,Elbow,and Shoulder for Dynamics - March 2024
 
-vel_2024 
 close all
 
 % Trunk
@@ -3653,12 +3649,13 @@ ylabel('$\Longleftarrow$ Extension Flexion $\Longrightarrow$ ','Interpreter','la
 xline(idx(2),'Color',rgbColor2,'Linewidth',2)
 legend('$\ddot{\theta}_s$','Max Vel MCP3','Interpreter', 'latex', 'FontSize', 20)
 
-   pause
-
+%pause
+close all
 
 %% March 2024- Angular Kinematics Outcome Measures at Max Hand Velocity
 TRUNK_ANG_VelMAX_Trial(1,i) = TRUNK_AngVel(idx(2)); %in deg/s for each trial
 TRUNK_ANG_AccMAX_Trial(1,i) = TRUNK_AngAcc(idx(2)); %in deg/s^2 for each trial
+
 
 ELB_ANG_VelMAX_Trial(1,i) = ELB_AngVel(idx(2)); %in deg/s for each trial
 ELB_ANG_AccMAX_Trial(1,i) = ELB_AngAcc(idx(2)); %in deg/s^2 for each trial
@@ -3869,24 +3866,24 @@ H_mid=(EM_ArmPlane(1:3,:)+EL_ArmPlane(1:3,:))/2;
 % axis equal
 
 %% Plane
-figure()
-plot(gh(:,1),gh(:,2),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
-hold on
-plot(xjug(:,1),xjug(:,2),'Color',[0.8500 0.3250 0.0980],'Linewidth',4)
-%  plot(xhand(:,1),xhand(:,2),'Color','g','Linewidth',4)
-
-plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10,'Linewidth',4)  %Reach Start
-plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10,'Linewidth',4)  %Reach END
-
-plot(gh(idx(1),1),gh(idx(1),2),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
-
-plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
-plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
-plot(gh(idx(3),1),gh(idx(3),2),'*','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4)
-
-title('GH and XJUG in GCS' ,'FontSize',16)
-axis equal
-legend('GH','XJUG','FontSize',16)
+% figure()
+% plot(gh(:,1),gh(:,2),'Color',[0.4940 0.1840 0.5560],'Linewidth',4)
+% hold on
+% plot(xjug(:,1),xjug(:,2),'Color',[0.8500 0.3250 0.0980],'Linewidth',4)
+% %  plot(xhand(:,1),xhand(:,2),'Color','g','Linewidth',4)
+% 
+% plot(xjug(idx(1),1),xjug(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',10,'Linewidth',4)  %Reach Start
+% plot(xjug(idx(3),1),xjug(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',10,'Linewidth',4)  %Reach END
+% 
+% plot(gh(idx(1),1),gh(idx(1),2),'*','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+% 
+% plot(gh(idx(1),1),gh(idx(1),2),'o','MarkerEdgeColor','g','MarkerSize',25,'Linewidth',4) %Reach Start
+% plot(gh(idx(3),1),gh(idx(3),2),'o','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4) %Reach END
+% plot(gh(idx(3),1),gh(idx(3),2),'*','MarkerEdgeColor','r','MarkerSize',25,'Linewidth',4)
+% 
+% title('GH and XJUG in GCS' ,'FontSize',16)
+% axis equal
+% legend('GH','XJUG','FontSize',16)
 
 
 
@@ -4084,7 +4081,13 @@ plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,
  %% Angles Final-Initial 
 % Computation of Angles - difference of start and ending angle 
 % 
-%  ElbAng = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
+%                SMALLER (greater extension)  LARGER
+ ElbAng_DELTA_2024 = ELB_ANG_MAT(1,idx(3))- ELB_ANG_MAT(1,idx(1));
+
+                            % Negative = extension
+ ELB_ANG_DELTA_Trial(1,i) =  ElbAng_DELTA_2024;
+
+ 
 % 
 % 
 % Trunk_Flex_Ext = Trunk_ANG_Ti(1,idx(3))-Trunk_ANG_Ti(1,idx(1));
@@ -5211,11 +5214,11 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 
-% Reaching Measures
+% Outcome Measures
 
-DataMatrix{1,15} = 'Peak 3rd MCP accel';
+% DataMatrix{1,15} = 'Peak 3rd MCP accel';
 DataMatrix{1,14} = 'Peak 3rd MCP vel';
-DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
+% DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
 
 DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 
@@ -5239,6 +5242,8 @@ DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i);
 DataMatrix{1,22} = 'Max Vel % of Reach '; % UPDATED ST AT MAX HAND VEL
 DataMatrix{FinalRow,22}= MaxVel_HandPercent_Reach(i);
 
+DataMatrix{1,23} = 'Change in Elbow Angle'; %April 2024 to compare restrained vs unrestrained 
+DataMatrix{FinalRow,23} = ELB_ANG_DELTA_Trial(1,i);
 
 
 
