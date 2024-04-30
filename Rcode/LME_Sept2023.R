@@ -3,6 +3,7 @@
 
 
 #install.packages("lme4")  # Install the lme4 package
+#install.packages("TMB") 
 
 library( tidyverse )
 library( glmmTMB )
@@ -17,7 +18,7 @@ library(emmeans)
 library(lmerTest)
 library(sjPlot)
 
-AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_FEB
+AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_FEB_OLD
 # Paretic Limb- restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
 AllData_Stroke_Paretic$Loading = as.factor(AllData_Stroke_Paretic$Loading)
@@ -33,6 +34,7 @@ AllData_Controls_Feb2024$Restraint = as.factor(AllData_Controls_Feb2024$Restrain
 AllData_Controls_Feb2024$Loading = as.factor(AllData_Controls_Feb2024$Loading)
 AllData_Controls_Feb2024$ID = as.factor(AllData_Controls_Feb2024$ID)
 
+AllData_Stroke = AllData_2024_FEB
 # Both Limbs Stroke- restraint, loading,limb,ID categorical variables
 AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
 AllData_Stroke$Loading_C = scale(AllData_Stroke$Loading, scale=FALSE) #centering the loading
@@ -164,14 +166,44 @@ model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , dat
 AllData_2024$RDLL2 = AllData_2024$RDLL/100
 AllData_2024$RDLL2 = ifelse(AllData_2024$RDLL2 > 1, 1, AllData_2024$RDLL2)
 
-ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:Restraint) + (1 | ARM:Loading_C) + (1 | ID), data= AllData_2024, family=ordbeta(link = "logit"))
 
+
+AllData_2024_New <- AllData_2024 %>%
+  group_by(ID) %>%
+  mutate(Group = ifelse(ARM == "P" | ARM == "NP", "S","C"))
+
+
+AllData_2024_New$Group = as.factor(AllData_2024_New$Group)
+
+AllData_2024_New$ARM = as.factor(AllData_2024_New$ARM)
+
+ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
+ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM), data= AllData_2024_New, family=ordbeta(link = "logit"))
+ModFinal2 = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint*ARM  + (1 | ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
+ModFinal2 = glmmTMB(formula= RDLL2 ~ Group+ARM + (1 | ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
+
+ModFinal2 = betareg(RDLL ~ Restraint, data= AllData_2024_New, link = "logit")
+
+
+## LMER FOR ALL 3 PARTICIPANT GROUPS- APRIL 2024 
+model_test1 = lmer(RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:Group)+(1|ID), data= AllData_2024_New, REML = TRUE)
+tab_model(model_test1, show.df= TRUE)
+anova(model_test1)
+
+anova()
 # Plotting Model Summaries and Effect of Loading and Restraint
 tab_model(ModFinal, show.df = TRUE)
 summary(ModFinal)
 # Plotting 
 plot(ggpredict(ModFinal, terms = c("Loading_C", "ARM")))
 plot(ggpredict(ModFinal, terms = c("Restraint", "ARM")))
+
+
+#plotting ------
+loading.labs <- c("0" = "No load", "1" = "Load")
+ggplot(AllData_2024_New, mapping = aes(x=ARM, y = RDLL))+
+  facet_wrap(vars(Loading_C), scales = "free_x", strip.position = "top", labeller=labeller(Loading_C = loading.labs))+
+  geom_boxplot()
 
 ################################################################################
 
