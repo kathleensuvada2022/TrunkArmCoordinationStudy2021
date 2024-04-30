@@ -28,6 +28,10 @@ Non_Paretic_FEB2024$Restraint = as.factor(Non_Paretic_FEB2024$Restraint)
 Non_Paretic_FEB2024$Loading = as.factor(Non_Paretic_FEB2024$Loading)
 Non_Paretic_FEB2024$ID = as.factor(Non_Paretic_FEB2024$ID)
 
+# For Controls-restraint, loading, as categorical variables 
+AllData_Controls_Feb2024$Restraint = as.factor(AllData_Controls_Feb2024$Restraint)
+AllData_Controls_Feb2024$Loading = as.factor(AllData_Controls_Feb2024$Loading)
+AllData_Controls_Feb2024$ID = as.factor(AllData_Controls_Feb2024$ID)
 
 # Both Limbs Stroke- restraint, loading,limb,ID categorical variables
 AllData_Stroke$Restraint = as.factor(AllData_Stroke$Restraint)
@@ -38,10 +42,16 @@ AllData_Stroke$Loading_50 = as.factor(ifelse(AllData_Stroke$Loading ==50,1,0))
 AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
 AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
-# For Controls-restraint, loading, as categorical variables 
-AllData_Controls_Feb2024$Restraint = as.factor(AllData_Controls_Feb2024$Restraint)
-AllData_Controls_Feb2024$Loading = as.factor(AllData_Controls_Feb2024$Loading)
-AllData_Controls_Feb2024$ID = as.factor(AllData_Controls_Feb2024$ID)
+# April 2024 Stroke and Controls- restraint, loading,limb,ID categorical variables
+AllData$Restraint = as.factor(AllData$Restraint)
+AllData$Loading_C = scale(AllData$Loading, scale=FALSE) #centering the loading
+AllData$Loading_0 = as.factor(ifelse(AllData$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
+AllData$Loading_25 = as.factor(ifelse(AllData$Loading ==25,1,0))  
+AllData$Loading_50 = as.factor(ifelse(AllData$Loading ==50,1,0))  
+AllData$ARM = as.factor(AllData$ARM)
+AllData$ID = as.factor(AllData$ID)
+
+
 
 
 # Models
@@ -130,6 +140,7 @@ AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, 1, AllData_Stroke$RDLL2)
 #m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
 #m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
 m = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
+#ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:Restraint) + (1 | ARM:Loading_C) + (1 | ID), data= AllData_StrokeandControls, family=ordbeta(link = "logit"))
 #m = glmmTMB(formula= RDLL2 ~ Loading_B + ARM + Restraint +  Loading_B : ARM  + Restraint : ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
 
 # separating loading terms
