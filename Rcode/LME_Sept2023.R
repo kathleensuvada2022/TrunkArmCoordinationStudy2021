@@ -43,13 +43,13 @@ AllData_Stroke$ARM = as.factor(AllData_Stroke$ARM)
 AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
 # April 2024 Stroke and Controls- restraint, loading,limb,ID categorical variables
-AllData$Restraint = as.factor(AllData$Restraint)
-AllData$Loading_C = scale(AllData$Loading, scale=FALSE) #centering the loading
-AllData$Loading_0 = as.factor(ifelse(AllData$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
-AllData$Loading_25 = as.factor(ifelse(AllData$Loading ==25,1,0))  
-AllData$Loading_50 = as.factor(ifelse(AllData$Loading ==50,1,0))  
-AllData$ARM = as.factor(AllData$ARM)
-AllData$ID = as.factor(AllData$ID)
+AllData_2024$Restraint = as.factor(AllData_2024$Restraint)
+AllData_2024$Loading_C = scale(AllData_2024$Loading, scale=FALSE) #centering the loading
+AllData_2024$Loading_0 = as.factor(ifelse(AllData_2024$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
+AllData_2024$Loading_25 = as.factor(ifelse(AllData_2024$Loading ==25,1,0))  
+AllData_2024$Loading_50 = as.factor(ifelse(AllData_2024$Loading ==50,1,0))  
+AllData_2024$ARM = as.factor(AllData_2024$ARM)
+AllData_2024$ID = as.factor(AllData_2024$ID)
 
 
 
@@ -140,7 +140,6 @@ AllData_Stroke$RDLL2 = ifelse(AllData_Stroke$RDLL2 > 1, 1, AllData_Stroke$RDLL2)
 #m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=beta_family(link = "logit"))
 #m = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
 m = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
-#ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:Restraint) + (1 | ARM:Loading_C) + (1 | ID), data= AllData_StrokeandControls, family=ordbeta(link = "logit"))
 #m = glmmTMB(formula= RDLL2 ~ Loading_B + ARM + Restraint +  Loading_B : ARM  + Restraint : ARM +(1 | ID), data= AllData_Stroke, family=ordbeta(link = "logit"))
 
 # separating loading terms
@@ -159,6 +158,22 @@ plot(ggpredict(m, terms = c("Restraint", "ARM")))
 # For including the limb for all stroke data  USE THIS MODEL SEPT 2023
 model8 <- lmer(RDLL ~ Loading * Restraint * ARM +(1 | ID) + (1 | ID:Trial) , data = AllData_Stroke,REML = TRUE)
 
+
+################################################################################
+# All Data Stroke and Controls- April 2024
+AllData_2024$RDLL2 = AllData_2024$RDLL/100
+AllData_2024$RDLL2 = ifelse(AllData_2024$RDLL2 > 1, 1, AllData_2024$RDLL2)
+
+ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:Restraint) + (1 | ARM:Loading_C) + (1 | ID), data= AllData_2024, family=ordbeta(link = "logit"))
+
+# Plotting Model Summaries and Effect of Loading and Restraint
+tab_model(ModFinal, show.df = TRUE)
+summary(ModFinal)
+# Plotting 
+plot(ggpredict(ModFinal, terms = c("Loading_C", "ARM")))
+plot(ggpredict(ModFinal, terms = c("Restraint", "ARM")))
+
+################################################################################
 
 
 #Omitting Restraint to Test Effect of Restraint on RDLL
