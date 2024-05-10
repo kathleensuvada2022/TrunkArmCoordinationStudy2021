@@ -53,6 +53,10 @@ ntrials=length(mtrials);
 %% Initializing Outcome Measure Variables
 
 % Distances/ Positions/ Displacements
+handtraj_current_trial_x=zeros(ntrials,100); %Just for Plotting
+handtraj_current_trial_y=zeros(ntrials,100); %Just for Plotting
+handtraj_current_trial_z=zeros(ntrials,100); %Just for Plotting
+
 maxreach_current_trial=zeros(ntrials,1);
 
 maxhandexcrsn_current_trial =zeros(ntrials,1);
@@ -115,7 +119,7 @@ for i=1: length(mtrials)
 
        %**** USE BELOW
 %   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-            load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
 
 %                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
@@ -1469,6 +1473,7 @@ for i=1: length(mtrials)
 [t,xhand,xshoulder,xtrunk,xfore,xshldr,xac,xts,xai,xpc,xarm,xjug,xsc,xxp,xc7,xt8,x,xghest,HTttog,HTstog,EM_GCS,EL_GCS,GH_Dig_GCS,RS_GCS,US_GCS,OL_GCS]=GetHandShoulderTrunkPosition8(mfilepath,mfname,partid,hand,setup,gh_est,TrunkCoord,ScapCoord);
 
 
+
 %Plotting Shoulder and Trunk MARKER Raw Data- Feb 2024
 figure(90)
 plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',3)
@@ -2190,7 +2195,7 @@ s3_end = norm(gh(idx(3),1:3)-H_Mid_F(idx(3),1:3));
 
 % 'Elbow Angle at End-Law of Cosines'
  ang3
-pause
+% pause
 
 
 %% Plotting Humeral CS and BLS
@@ -2318,7 +2323,7 @@ title('Forearm and Humerus CS in GCS with Humerus and Forearm Segments','Fontsiz
 xlabel('x axis','Fontsize',16)
 ylabel('y axis','Fontsize',16)
 zlabel('z axis','Fontsize',16)
-   pause
+%    pause
 %% Plotting TRUNK CS and BLs at Start and End of Reach
 % 
 % figure()
@@ -4216,9 +4221,12 @@ maxreach =RD_2024;
   %  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
  
-%     pause
+   %  pause
+   % test = 0;
     
-
+    handtraj_current_trial_x(i,1:length(idx(1):idx(3)))=xhand(1,idx(1):idx(3));
+    handtraj_current_trial_y(i,1:length(idx(1):idx(3)))=xhand(2,idx(1):idx(3));
+    handtraj_current_trial_z(i,1:length(idx(1):idx(3)))=xhand(3,idx(1):idx(3));
     %% Main Cumulative Metria Figure
   
     
@@ -5185,9 +5193,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    FinalRow = trialrow(Currentrow);
+%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+%     FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5204,46 +5212,46 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-    if DataMatrix{FinalRow,2} == expcond
-        DataMatrix{FinalRow,2} = expcond;
-
-    else
-        'Mismatched EXP COND! '
-        pause
-    end
+%     if DataMatrix{FinalRow,2} == expcond
+%         DataMatrix{FinalRow,2} = expcond;
+% 
+%     else
+%         'Mismatched EXP COND! '
+%         pause
+%     end
 
 
 
 % Outcome Measures
 
-% DataMatrix{1,15} = 'Peak 3rd MCP accel';
-DataMatrix{1,14} = 'Peak 3rd MCP vel';
-% DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
-
-DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
-
-DataMatrix{1,16} = 'Trunk ANG VEL';  % UPDATED ST AT MAX HAND VEL
-DataMatrix{1,17} = 'Trunk ANG ACC';
-DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
+% % DataMatrix{1,15} = 'Peak 3rd MCP accel';
+% DataMatrix{1,14} = 'Peak 3rd MCP vel';
+% % DataMatrix{FinalRow,15} =ACCEL_Trial(1,i); % max accel in mm/s2 for given trial
 % 
+% DataMatrix{FinalRow,14} = Vel_Trial(1,i); % max velocity in mm/s for given trial
 % 
-DataMatrix{1,18} = 'ELB ANG VEL'; % UPDATED ST AT MAX HAND VEL
-DataMatrix{1,19} = 'ELB ANG ACC';
-DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
+% DataMatrix{1,16} = 'Trunk ANG VEL';  % UPDATED ST AT MAX HAND VEL
+% DataMatrix{1,17} = 'Trunk ANG ACC';
+% DataMatrix{FinalRow,16} = TRUNK_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,17} = TRUNK_ANG_AccMAX_Trial(1,i); 
+% % 
+% % 
+% DataMatrix{1,18} = 'ELB ANG VEL'; % UPDATED ST AT MAX HAND VEL
+% DataMatrix{1,19} = 'ELB ANG ACC';
+% DataMatrix{FinalRow,18} = ELB_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,19} = ELB_ANG_AccMAX_Trial(1,i); 
+% % 
+% % 
+% DataMatrix{1,20} = 'Shldr ANG VEL'; % UPDATED ST AT MAX HAND VEL
+% DataMatrix{1,21} = 'Shldr ANG ACC';
+% DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
+% DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
 % 
+% DataMatrix{1,22} = 'Max Vel % of Reach '; % UPDATED ST AT MAX HAND VEL
+% DataMatrix{FinalRow,22}= MaxVel_HandPercent_Reach(i);
 % 
-DataMatrix{1,20} = 'Shldr ANG VEL'; % UPDATED ST AT MAX HAND VEL
-DataMatrix{1,21} = 'Shldr ANG ACC';
-DataMatrix{FinalRow,20} = SH_ANG_VelMAX_Trial(1,i); 
-DataMatrix{FinalRow,21} = SH_ANG_AccMAX_Trial(1,i); 
-
-DataMatrix{1,22} = 'Max Vel % of Reach '; % UPDATED ST AT MAX HAND VEL
-DataMatrix{FinalRow,22}= MaxVel_HandPercent_Reach(i);
-
-DataMatrix{1,23} = 'Change in Elbow Angle'; %April 2024 to compare restrained vs unrestrained 
-DataMatrix{FinalRow,23} = ELB_ANG_DELTA_Trial(1,i);
+% DataMatrix{1,23} = 'Change in Elbow Angle'; %April 2024 to compare restrained vs unrestrained 
+% DataMatrix{FinalRow,23} = ELB_ANG_DELTA_Trial(1,i);
 
 
 
@@ -5324,8 +5332,65 @@ DataMatrix{FinalRow,23} = ELB_ANG_DELTA_Trial(1,i);
 
 end
 
+%End of Loop going through each trial  
 
-% End of Loop going through each trial  
+
+%% For plotting Average Trajectory - May 2024
+handtraj_current_trial_x;
+handtraj_current_trial_y;
+handtraj_current_trial_z;
+
+% Correcting so that at 0,0,0
+handtraj_current_trial_x_cor = handtraj_current_trial_x - handtraj_current_trial_x(:,1); 
+handtraj_current_trial_y_cor = handtraj_current_trial_y - handtraj_current_trial_y(:,1); 
+
+handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:48);
+handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:48);
+
+
+% Computing the Average Trajectory
+AvgHandTraj_x = mean(handtraj_current_trial_x_cor); % Average Trace for X
+AvgHandTraj_y = mean(handtraj_current_trial_y_cor); % Average Trace for Y
+
+
+% Computing Confidence Intervals
+
+% Compute at every SAMPLE ( did the average at every sample) 
+
+% X
+for b = 1:length(handtraj_current_trial_x_cor)
+SEM = std(handtraj_current_trial_x_cor(:,b))/sqrt(length(handtraj_current_trial_x_cor(:,b)));               % Standard Error at given sample
+ts = tinv([0.025  0.975],length(handtraj_current_trial_x_cor(:,b))-1);      % T-Score at given sample
+CI(b,1:2) = mean(handtraj_current_trial_x_cor(:,b)) + ts*SEM;                      % Confidence Intervals for given sample (and save)
+end
+
+
+% Y
+for b = 1:length(handtraj_current_trial_y_cor)
+SEM = std(handtraj_current_trial_y_cor(:,b))/sqrt(length(handtraj_current_trial_y_cor(:,b)));               % Standard Error at given sample
+ts = tinv([0.025  0.975],length(handtraj_current_trial_y_cor(:,b))-1);      % T-Score at given sample
+CI(b,1:2) = mean(handtraj_current_trial_y_cor(:,b)) + ts*SEM;                      % Confidence Intervals for given sample (and save)
+end
+
+
+
+
+% Plotting with Average
+plot(handtraj_current_trial_x_cor(1,1:48),handtraj_current_trial_y_cor(1,1:48),'b','Linewidth',3)
+hold on
+plot(handtraj_current_trial_x_cor(2,1:48),handtraj_current_trial_y_cor(2,1:48),'b','Linewidth',3)
+plot(handtraj_current_trial_x_cor(3,1:48),handtraj_current_trial_y_cor(3,1:48),'b','Linewidth',3)
+plot(handtraj_current_trial_x_cor(4,1:48),handtraj_current_trial_y_cor(4,1:48),'b' ,'Linewidth',3)
+plot(handtraj_current_trial_x_cor(5,1:48),handtraj_current_trial_y_cor(5,1:48),'b','Linewidth',3)
+plot(handtraj_current_trial_x_cor(6,1:48),handtraj_current_trial_y_cor(6,1:48),'b','Linewidth',3)
+plot(handtraj_current_trial_x_cor(7,1:48),handtraj_current_trial_y_cor(7,1:48),'b','Linewidth',3)
+plot(handtraj_current_trial_x_cor(8,1:48),handtraj_current_trial_y_cor(8,1:48),'b','Linewidth',3)
+plot(AvgHandTraj_x,AvgHandTraj_y,'r','Linewidth',3)
+axis equal
+circle(0,0,25) % Home TAR
+
+               
+%%
 
 %%  Summer 2023- Angle Angle Plot
 
@@ -5522,7 +5587,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
- save FullDataMatrix.mat DataMatrix
+%  save FullDataMatrix.mat DataMatrix
 
 
 

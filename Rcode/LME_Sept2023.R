@@ -46,10 +46,11 @@ AllData_Stroke$ID = as.factor(AllData_Stroke$ID)
 
 # April 2024 Stroke and Controls- restraint, loading,limb,ID categorical variables
 AllData_2024$Restraint = as.factor(AllData_2024$Restraint)
-AllData_2024$Loading_C = scale(AllData_2024$Loading, scale=FALSE) #centering the loading
-AllData_2024$Loading_0 = as.factor(ifelse(AllData_2024$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
-AllData_2024$Loading_25 = as.factor(ifelse(AllData_2024$Loading ==25,1,0))  
-AllData_2024$Loading_50 = as.factor(ifelse(AllData_2024$Loading ==50,1,0))  
+AllData_2024$Loading = as.factor(AllData_2024$Loading)
+#AllData_2024$Loading_C = scale(AllData_2024$Loading, scale=FALSE) #centering the loading
+#AllData_2024$Loading_0 = as.factor(ifelse(AllData_2024$Loading ==0,1,0)) # anywhere where 0 put 0, otherwise put a 1. 
+#AllData_2024$Loading_25 = as.factor(ifelse(AllData_2024$Loading ==25,1,0))  
+#AllData_2024$Loading_50 = as.factor(ifelse(AllData_2024$Loading ==50,1,0))  
 AllData_2024$ARM = as.factor(AllData_2024$ARM)
 AllData_2024$ID = as.factor(AllData_2024$ID)
 
@@ -181,8 +182,25 @@ ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | ARM:ID), 
 ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM), data= AllData_2024_New, family=ordbeta(link = "logit"))
 ModFinal2 = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint*ARM  + (1 | ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
 ModFinal2 = glmmTMB(formula= RDLL2 ~ Group+ARM + (1 | ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
+ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM), data= AllData_2024_New, family=ordbeta(link = "logit"))
 
-ModFinal2 = betareg(RDLL ~ Restraint, data= AllData_2024_New, link = "logit")
+# Removing the Centered Loading 5.1.2024
+#ModFinal = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 | ARM:ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
+#ModFinal = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 | ARM:Group), data= AllData_2024_New, family=ordbeta(link = "logit"))
+ModFinal_CURRENT = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=ordbeta(link = "logit")) # USE ME!!!!!!! BEST BET 
+
+# FINAL MODEL!!!! MAY 2024
+tab_model(ModFinal_CURRENT, show.df= TRUE)
+summary(ModFinal_CURRENT)
+# Plotting 
+plot(ggpredict(ModFinal_CURRENT, terms = c("Loading", "ARM")))
+plot(ggpredict(ModFinal_CURRENT, terms = c("Restraint", "ARM")))
+
+# Interaction Effects Removed 5.1.2024
+ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C + Restraint + ARM , data= AllData_2024_New, family=ordbeta(link = "logit"))
+tab_model(ModFinal, show.df= TRUE)
+
+#ModFinal2 = betareg(RDLL ~ Restraint, data= AllData_2024_New, link = "logit")
 
 
 ## LMER FOR ALL 3 PARTICIPANT GROUPS- APRIL 2024 
@@ -200,11 +218,18 @@ plot(ggpredict(ModFinal, terms = c("Restraint", "ARM")))
 
 
 #plotting ------
+
+# Reaching Distance with Loading
 loading.labs <- c("0" = "No load", "1" = "Load")
-ggplot(AllData_2024_New, mapping = aes(x=ARM, y = RDLL))+
-  facet_wrap(vars(Loading_C), scales = "free_x", strip.position = "top", labeller=labeller(Loading_C = loading.labs))+
+ggplot(AllData_2024_New, mapping = aes(x=ARM, y = RDLL2))+
+  facet_wrap(vars(Loading), scales = "free_x", strip.position = "top", labeller=labeller(Loading_C = loading.labs))+
   geom_boxplot()
 
+#Reaching Distance with Trunk Restraint 
+loading.labs <- c("0" = "No Restraint", "1" = "Restrained")
+ggplot(AllData_2024_New, mapping = aes(x=ARM, y = RDLL2))+
+  facet_wrap(vars(Restraint), scales = "free_x", strip.position = "top", labeller=labeller(Restraint = loading.labs))+
+  geom_boxplot()
 ################################################################################
 
 
