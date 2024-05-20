@@ -5355,38 +5355,141 @@ end
 
 
 %% For plotting Average Trajectories - May 2024
-handtraj_current_trial_x ;
-handtraj_current_trial_y ;
-handtraj_current_trial_z;
 
-Trunktraj_current_trial_x; 
-Trunktraj_current_trial_y ;
+% For RTIS2003 cond 4
+% handtraj_current_trial_x =  handtraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
+% handtraj_current_trial_y = handtraj_current_trial_y([1, 2, 3, 7, 8, 10], :); 
+% handtraj_current_trial_z;
+% 
+% Trunktraj_current_trial_x = Trunktraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
+% Trunktraj_current_trial_y = Trunktraj_current_trial_y([1, 2, 3, 7, 8, 10], :);
+% 
+% Shldtraj_current_trial_x = Shldtraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
+% Shldtraj_current_trial_y = Shldtraj_current_trial_y([1, 2, 3, 7, 8, 10], :);
 
+% Correcting so that at 0,0,0 
 
-% Correcting so that at 0,0,0 - Use only for Confidence Intervals-- need to
-% plot average TRACE in original position so trunk, shoulder, hand not all
-% at origin 
 handtraj_current_trial_x_cor = handtraj_current_trial_x - handtraj_current_trial_x(:,1); 
 handtraj_current_trial_y_cor = handtraj_current_trial_y - handtraj_current_trial_y(:,1); 
 
 Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x- Trunktraj_current_trial_x(:,1);
 Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y- Trunktraj_current_trial_y(:,1);
 
-handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:48);
-handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:48);
+Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x- Shldtraj_current_trial_x(:,1);
+Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y- Shldtraj_current_trial_y(:,1);
 
-Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:48);
-Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:48);
+%RTIS2002 p i = 1
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:98);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:98);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:98);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:98);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:98);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:98);
 
-% Computing the Average Trajectory
-AvgHandTraj_x = mean(handtraj_current_trial_x,1); % Average Trace for X
-AvgHandTraj_y = mean(handtraj_current_trial_y,1); % Average Trace for Y
+%RTIS2002 p i = 4
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor([1:4 6:11 13],1:130);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor([1:4 6:11 13],1:130);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor([1:4 6:11 13],1:130);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor([1:4 6:11 13],1:130);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor([1:4 6:11 13],1:130);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor([1:4 6:11 13],1:130);
 
-AvgHandTraj_x = AvgHandTraj_x(1:48);
-AvgHandTraj_y = AvgHandTraj_y(1:48);
+%RTIS2002 np i = 1
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor([1 2 4 6:11],1:94);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor([1 2 4 6:11],1:94);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor([1 2 4 6:11],1:94);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor([1 2 4 6:11],1:94);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor([1 2 4 6:11],1:94);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor([1 2 4 6:11],1:94);
 
-AvgTrunkTraj_x = mean(Trunktraj_current_trial_x,1); % Average Trace for X
-AvgTrunkTraj_y = mean(Trunktraj_current_trial_y,1); % Average Trace for Y
+%RTIS2002 np i = 4
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:102);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:102);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:102);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:102);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:102);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:102);
+
+% RTIS2003 i = 4
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:41);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:41);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:41);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:41);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:41);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:41);
+
+ % RTIS2001 i = 1
+handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(1:7,1:64);
+handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(1:7,1:64);
+
+Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(1:7,1:64);
+Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(1:7,1:64);
+
+Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(1:7,1:64);
+Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(1:7,1:64);
+
+ % RTIS2001 i = 2
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:30);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:30);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:30);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:30);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:30);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:30);
+
+ % RTIS2001 i = 4
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor([1 5:8],1:47);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor([1 5:8],1:47);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor([1 5:8],1:47);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor([1 5:8],1:47);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor([1 5:8],1:47);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor([1 5:8],1:47);
+
+ % RTIS2001 i = 5
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:35);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:35);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:35);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:35);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:35);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:35);
+ 
+% RTIS2001 i = 6
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:38);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:38);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:38);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:38);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:38);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:38);
+% 
+% % Computing the Average Trajectory
+AvgHandTraj_x = mean(handtraj_current_trial_x_cor,1); % Average Trace for X
+AvgHandTraj_y = mean(handtraj_current_trial_y_cor,1); % Average Trace for Y
+
+% AvgHandTraj_x = AvgHandTraj_x(1:48);
+% AvgHandTraj_y = AvgHandTraj_y(1:48);
+
+AvgTrunkTraj_x = mean(Trunktraj_current_trial_x_cor,1); % Average Trace for X
+AvgTrunkTraj_y = mean(Trunktraj_current_trial_y_cor,1); % Average Trace for Y
+
+AvgShldTraj_x = mean(Shldtraj_current_trial_x_cor,1); % Average Trace for X
+AvgShldTraj_y = mean(Shldtraj_current_trial_y_cor,1); % Average Trace for Y
 
 
 %% Computing Confidence Intervals
@@ -5410,12 +5513,17 @@ for b = 1:length(handtraj_current_trial_x_cor)
 % Across all trials at a given sample b
 pd_x = fitdist(handtraj_current_trial_x_cor(:,b),'Normal');
 pd_x_t = fitdist(Trunktraj_current_trial_x_cor(:,b),'Normal');
+pd_x_s = fitdist(Shldtraj_current_trial_x_cor(:,b),'Normal');
+
 
 ci_x = paramci(pd_x);
 ci_x_t = paramci(pd_x_t);
+ci_x_s = paramci(pd_x_s);
+
 
 CI_X(:,b) = ci_x(:,1); % 95% Confidence Interval values for every sample
 CI_X_t(:,b) = ci_x_t(:,1); % 95% Confidence Interval values for every sample
+CI_X_s(:,b) = ci_x_s(:,1); % 95% Confidence Interval values for every sample
 
 end
 
@@ -5425,14 +5533,16 @@ for b = 1:length(handtraj_current_trial_y_cor)
 % Across all trials at a given sample b
 pd_y = fitdist(handtraj_current_trial_y_cor(:,b),'Normal');
 pd_y_t = fitdist(Trunktraj_current_trial_y_cor(:,b),'Normal');
+pd_y_s = fitdist(Shldtraj_current_trial_y_cor(:,b),'Normal');
 
 
 ci_y = paramci(pd_y);
 ci_y_t = paramci(pd_y_t);
-
+ci_y_s = paramci(pd_y_s);
 
 CI_Y(:,b) = ci_y(:,1); % 95% Confidence Interval values for every sample
 CI_Y_t(:,b) = ci_y_t(:,1); % 95% Confidence Interval values for every sample
+CI_Y_s(:,b) = ci_y_s(:,1); % 95% Confidence Interval values for every sample
 
 
 end
@@ -5446,7 +5556,7 @@ CI_X_Upper = CI_X(2,:)';
 CI_Y_Lower = CI_Y(1,:)';
 CI_Y_Upper = CI_Y(2,:)';
 
-% For plotting Polygon
+% For plotting Polygon - for hand
 
 % Right side
 X_Vector_Right = CI_X_Upper(1:length(CI_X_Upper)-1);
@@ -5470,7 +5580,7 @@ Y_Bounds = [Y_Vector_Right'; Right_Top_Y ; Left_Top_Y ; (fliplr(Y_Vector_Left))'
 
 
 
-% Trunk - don't use (looks ugly)
+% Trunk - just used cross hairs not the area
 
 CI_X_Lower_t = CI_X_t(1,:)';
 CI_X_Upper_t = CI_X_t(2,:)';
@@ -5485,38 +5595,46 @@ MaxX_t = max(CI_X_Upper_t);
 MinY_t = min(CI_Y_Lower_t);
 Max_Y_t = max(CI_Y_Upper_t);
 
-% For plotting Polygon
+% Shoulder - just used cross hairs not the area
 
-% Right side
-X_Vector_Right_t = CI_X_Upper_t(1:length(CI_X_Upper_t)-1);
-Y_Vector_Right_t = AvgTrunkTraj_y(1:length(AvgTrunkTraj_y)-1);
+CI_X_Lower_s = CI_X_s(1,:)';
+CI_X_Upper_s = CI_X_s(2,:)';
 
-%Left side
-X_Vector_Left_t = CI_X_Lower_t(1:length(CI_X_Lower_t)-1);
-Y_Vector_Left_t = AvgTrunkTraj_y(1:length(AvgTrunkTraj_y)-1);
+CI_Y_Lower_s = CI_Y_s(1,:)';
+CI_Y_Upper_s = CI_Y_s(2,:)';
 
-% Top Points
-Right_Top_X_t = CI_X_Upper_t(end);
-Right_Top_Y_t = CI_Y_Upper_t(end);
 
-Left_Top_X_t = CI_X_Lower_t(end);
-Left_Top_Y_t = CI_Y_Upper_t(end);
-
-% Making Mass X Vector
-X_Bounds_t = [X_Vector_Right_t; Right_Top_X_t ; Left_Top_X_t ; flipud(X_Vector_Left_t)];
-
-Y_Bounds_t = [Y_Vector_Right_t'; Right_Top_Y_t ; Left_Top_Y_t ; (fliplr(Y_Vector_Left_t))'];
+% Finding the Abs Min and Abs Max for X and Y
+MinX_s = min(CI_X_Lower_s);
+MaxX_s = max(CI_X_Upper_s);
+MinY_s = min(CI_Y_Lower_s);
+Max_Y_s = max(CI_Y_Upper_s);
 
 
 
+% For plotting
 
-%
+ fill(X_Bounds,Y_Bounds,[0.68, 0.85, 0.90]) %Hand 
+% fill(X_Bounds_t,Y_Bounds_t,[0.68, 0.85, 0.90]) %Trunk 
 
-fill(X_Bounds,Y_Bounds,[0.68, 0.85, 0.90]) %Hand 
-%fill(X_Bounds_t,Y_Bounds_t,[0.68, 0.85, 0.90]) %Trunk 
+%fill(X_Bounds,Y_Bounds,[0.6350 0.0780 0.1840]) %Hand  unrestrained
 
 
 hold on
+
+
+% Plotting all Traces and Traces (Not centered at 0,0,0)
+% plot(handtraj_current_trial_x(1,1:120),handtraj_current_trial_y(1,1:120),'b','Linewidth',3)
+% hold on
+% plot(handtraj_current_trial_x(2,1:120),handtraj_current_trial_y(2,1:120),'b','Linewidth',3)
+% plot(handtraj_current_trial_x(3,1:120),handtraj_current_trial_y(3,1:120),'b','Linewidth',3)
+% plot(handtraj_current_trial_x(4,1:120),handtraj_current_trial_y(4,1:120),'b' ,'Linewidth',3)
+% plot(handtraj_current_trial_x(5,1:120),handtraj_current_trial_y(5,1:120),'b','Linewidth',3)
+% plot(handtraj_current_trial_x(6,1:120),handtraj_current_trial_y(6,1:120),'b','Linewidth',3)
+% plot(handtraj_current_trial_x(7,1:120),handtraj_current_trial_y(7,1:120),'b','Linewidth',3)
+% plot(handtraj_current_trial_x(8,1:120),handtraj_current_trial_y(8,1:120),'b','Linewidth',3)
+% axis equal
+
 
 % Plotting with Average
 % figure()
@@ -5528,14 +5646,79 @@ hold on
 %plot(handtraj_current_trial_x_cor(6,:),handtraj_current_trial_y_cor(6,:),'b','Linewidth',3)
 %plot(handtraj_current_trial_x_cor(7,:),handtraj_current_trial_y_cor(7,:),'b','Linewidth',3)
 %plot(handtraj_current_trial_x_cor(8,:),handtraj_current_trial_y_cor(8,:),'b','Linewidth',3)
-plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 3);
-plot(AvgTrunkTraj_x, AvgTrunkTraj_y, 'k', 'LineWidth', 3);
 
+plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 2);
 hold on
+plot(AvgTrunkTraj_x -100, AvgTrunkTraj_y-250, 'b', 'LineWidth', 3);
+plot(AvgShldTraj_x, AvgShldTraj_y -300,'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3);
+
 axis equal
+hold on
 circle(0,0,25) % Home TAR
+xlim([-200 150]) % For RTIS2001
+ylim([-350 250])
 
 
+% Trunk Error Bars
+% RTIS2002
+x = AvgTrunkTraj_x(70)- 100; % Midway through trajectory
+y = AvgTrunkTraj_y(70)-250;
+yneg = MinY_t - AvgTrunkTraj_y(70);
+ypos = Max_Y_t - AvgTrunkTraj_y(70);
+xneg = MinX_t -AvgTrunkTraj_x(70);
+xpos = MaxX_t -AvgTrunkTraj_x(70);
+
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+
+
+% RTIS2003 
+x = AvgTrunkTraj_x(25)-100; % Midway through trajectory
+y = AvgTrunkTraj_y(25)-250;
+yneg = MinY_t - AvgTrunkTraj_y(25);
+ypos = Max_Y_t - AvgTrunkTraj_y(25);
+xneg = MinX_t -AvgTrunkTraj_x(25);
+xpos = MaxX_t -AvgTrunkTraj_x(25) ;
+
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+
+% RTIS2001 - p
+x = AvgTrunkTraj_x(15)-100; % Midway through trajectory
+y = AvgTrunkTraj_y(15)-250;
+yneg = MinY_t - AvgTrunkTraj_y(15);
+ypos = Max_Y_t - AvgTrunkTraj_y(15);
+xneg = MinX_t -AvgTrunkTraj_x(15);
+xpos = MaxX_t -AvgTrunkTraj_x(15);
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+
+% Shoulder Error Bars
+
+% RTIS2002
+x = AvgShldTraj_x(60); % Midway through trajectory
+y = AvgShldTraj_y(60)-300;
+yneg = MinY_s - AvgShldTraj_y(60) ;
+ypos = Max_Y_s - AvgShldTraj_y(60);
+xneg = MinX_s -AvgShldTraj_x(60) ;
+xpos = MaxX_s -AvgShldTraj_x(60) ;
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
+
+% RTIS2003
+x = AvgShldTraj_x(25); % Midway through trajectory
+y = AvgShldTraj_y(25)-300;
+yneg = MinY_s - AvgShldTraj_y(25) ;
+ypos = Max_Y_s - AvgShldTraj_y(25);
+xneg = MinX_s -AvgShldTraj_x(25) ;
+xpos = MaxX_s -AvgShldTraj_x(25) ;
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
+
+
+% RTIS2001
+x = AvgShldTraj_x(15); % Midway through trajectory
+y = AvgShldTraj_y(15)-300;
+yneg = MinY_s - AvgShldTraj_y(15) ;
+ypos = Max_Y_s - AvgShldTraj_y(15);
+xneg = MinX_s -AvgShldTraj_x(15) ;
+xpos = MaxX_s -AvgShldTraj_x(15) ;
+errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
 
 
 
