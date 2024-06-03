@@ -5354,18 +5354,19 @@ end
 %End of Loop going through each trial  
 
 
-%% For plotting Average Trajectories - May 2024
+%% For plotting Average Trajectories - May 2024 - PLS NOTE THIS IS FOR PLOTTING NOT FOR RESULTS
 
-% For RTIS2003 cond 4
-% handtraj_current_trial_x =  handtraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
-% handtraj_current_trial_y = handtraj_current_trial_y([1, 2, 3, 7, 8, 10], :); 
-% handtraj_current_trial_z;
-% 
-% Trunktraj_current_trial_x = Trunktraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
-% Trunktraj_current_trial_y = Trunktraj_current_trial_y([1, 2, 3, 7, 8, 10], :);
-% 
-% Shldtraj_current_trial_x = Shldtraj_current_trial_x([1, 2, 3, 7, 8, 10], :);
-% Shldtraj_current_trial_y = Shldtraj_current_trial_y([1, 2, 3, 7, 8, 10], :);
+
+% Change zeros to NaNs so it doesn't effect the resampling - can use this
+% without resampling??? and just have NaNs and traces
+handtraj_current_trial_x(handtraj_current_trial_x==0) = NaN;
+handtraj_current_trial_y(handtraj_current_trial_y==0)= NaN;
+
+Trunktraj_current_trial_x(Trunktraj_current_trial_x==0) = NaN;
+Trunktraj_current_trial_y(Trunktraj_current_trial_y==0) = NaN;
+
+Shldtraj_current_trial_x(Shldtraj_current_trial_x== 0) = NaN;
+Shldtraj_current_trial_y(Shldtraj_current_trial_y== 0) = NaN;
 
 % Correcting so that at 0,0,0 
 
@@ -5378,8 +5379,49 @@ Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y- Trunktraj_current_tri
 Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x- Shldtraj_current_trial_x(:,1);
 Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y- Shldtraj_current_trial_y(:,1);
 
+
+
+
 %RTIS2002 p i = 1
-% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:98);
+
+% Making all trials the same length
+
+% Desired length
+% newLength = length(handtraj_current_trial_x);
+% 
+% % Resample each row of the matrix to the desired length
+% % Hand
+% handtraj_current_trial_x_cor_f = zeros(size(handtraj_current_trial_x,1), newLength); % Preallocate matrix
+% handtraj_current_trial_y_cor_f = zeros(size(handtraj_current_trial_y_cor,1), newLength); % Preallocate matrix
+% % Trunk
+% Trunktraj_current_trial_x_cor_f = zeros(size(Trunktraj_current_trial_x_cor, 1), newLength); % Preallocate matrix
+% Trunktraj_current_trial_y_cor_f = zeros(size(Trunktraj_current_trial_y_cor, 1), newLength); % Preallocate matrix
+% % Shoulder 
+% Shldtraj_current_trial_x_cor_f = zeros(size(Shldtraj_current_trial_x_cor, 1), newLength); % Preallocate matrix
+% Shldtraj_current_trial_y_cor_f = zeros(size(Shldtraj_current_trial_y_cor, 1), newLength); % Preallocate matrix
+% 
+% for i = 1:size(handtraj_current_trial_x_cor, 1)
+%     % Hand
+% 
+% % This did what we wanted with the length, but now you are stuck with NaNs
+%     handtraj_current_trial_x_cor_f(i, :) = resample(handtraj_current_trial_x_cor(i, :), newLength, size(handtraj_current_trial_x_cor, 2)); 
+%     
+%     
+%     
+%     handtraj_current_trial_y_cor_f(i, :) = resample(handtraj_current_trial_x_cor(i, :), newLength, size(handtraj_current_trial_x_cor, 1));
+%     
+%     % Trunk
+%     Trunktraj_current_trial_x_cor_f(i, :) = resample(Trunktraj_current_trial_x_cor(i, :), newLength, size(Trunktraj_current_trial_x_cor, 1));
+%     Trunktraj_current_trial_y_cor_f(i, :) = resample(Trunktraj_current_trial_y_cor(i, :), newLength, size(Trunktraj_current_trial_y_cor, 1));
+%     
+%     % Shoulder 
+%     Shldtraj_current_trial_x_cor_f(i, :) = resample(Shldtraj_current_trial_x_cor(i, :), newLength, size(Shldtraj_current_trial_x_cor, 1));
+%     Shldtraj_current_trial_y_cor_f(i, :) = resample(Shldtraj_current_trial_y_cor(i, :), newLength, size(Shldtraj_current_trial_y_cor, 1));
+% 
+% end
+
+
+%handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:98);
 % handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:98);
 % 
 % Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:98);
@@ -5397,6 +5439,17 @@ Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y- Shldtraj_current_trial_
 % 
 % Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor([1:4 6:11 13],1:130);
 % Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor([1:4 6:11 13],1:130);
+
+%RTIS2002 p i = 6
+% pause
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor([1 2 4 5 9 10],1:56);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor([1 2 4 5 9 10],1:56);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor([1 2 4 5 9 10],1:56);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor([1 2 4 5 9 10],1:56);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor([1 2 4 5 9 10],1:56);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor([1 2 4 5 9 10],1:56);
 
 %RTIS2002 np i = 1
 % handtraj_current_trial_x_cor = handtraj_current_trial_x_cor([1 2 4 6:11],1:94);
@@ -5469,14 +5522,14 @@ Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y- Shldtraj_current_trial_
 % Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:35);
  
 % RTIS2001 i = 6
-handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:38);
-handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:38);
-
-Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:38);
-Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:38);
-
-Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:38);
-Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:38);
+% handtraj_current_trial_x_cor = handtraj_current_trial_x_cor(:,1:38);
+% handtraj_current_trial_y_cor = handtraj_current_trial_y_cor(:,1:38);
+% 
+% Trunktraj_current_trial_x_cor = Trunktraj_current_trial_x_cor(:,1:38);
+% Trunktraj_current_trial_y_cor = Trunktraj_current_trial_y_cor(:,1:38);
+% 
+% Shldtraj_current_trial_x_cor = Shldtraj_current_trial_x_cor(:,1:38);
+% Shldtraj_current_trial_y_cor = Shldtraj_current_trial_y_cor(:,1:38);
 % 
 % % Computing the Average Trajectory
 AvgHandTraj_x = mean(handtraj_current_trial_x_cor,1); % Average Trace for X
@@ -5612,11 +5665,18 @@ Max_Y_s = max(CI_Y_Upper_s);
 
 
 
+% Interpolate X and Y bounds
+X_Bounds_F = fillmissing(X_Bounds,"linear");
+Y_Bounds_F = fillmissing(Y_Bounds,"linear");
+
 % For plotting
 
 %  fill(X_Bounds,Y_Bounds,[0.68, 0.85, 0.90]) %Hand 
 % fill(X_Bounds_t,Y_Bounds_t,[0.68, 0.85, 0.90]) %Trunk 
 
+fill(X_Bounds_F,Y_Bounds_F,[0.6350 0.0780 0.1840]) %Hand  unrestrained
+
+figure()
 fill(X_Bounds,Y_Bounds,[0.6350 0.0780 0.1840]) %Hand  unrestrained
 
 
@@ -5647,10 +5707,10 @@ hold on
 %plot(handtraj_current_trial_x_cor(7,:),handtraj_current_trial_y_cor(7,:),'b','Linewidth',3)
 %plot(handtraj_current_trial_x_cor(8,:),handtraj_current_trial_y_cor(8,:),'b','Linewidth',3)
 
-% plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 2);
+plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 2);
 hold on
-plot(AvgTrunkTraj_x -100, AvgTrunkTraj_y-250, 'b', 'LineWidth', 3);
-plot(AvgShldTraj_x, AvgShldTraj_y -300,'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3);
+plot(AvgTrunkTraj_x +100, AvgTrunkTraj_y-200, 'b', 'LineWidth', 3);
+plot(AvgShldTraj_x, AvgShldTraj_y -200,'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3);
 
 axis equal
 hold on

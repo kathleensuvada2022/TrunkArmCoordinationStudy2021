@@ -187,7 +187,14 @@ ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM
 # Removing the Centered Loading 5.1.2024
 #ModFinal = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 | ARM:ID), data= AllData_2024_New, family=ordbeta(link = "logit"))
 #ModFinal = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 | ARM:Group), data= AllData_2024_New, family=ordbeta(link = "logit"))
-ModFinal_CURRENT = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=ordbeta(link = "logit")) # USE ME!!!!!!! BEST BET 
+
+# For RD - May 2024!!!!! USEEEE FINALLLLL
+ModFinal_CURRENT = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=ordbeta(link = "logit")) # USE ME!!!!!!! BEST BET # 
+
+# For Trunk Excursion - Don't need to use the beta distribution bc results are for excursions in CM 
+ModFinal_CURRENT_Trunk = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
+
+# For Shoulder Excursion
 
 # FINAL MODEL!!!! MAY 2024
 tab_model(ModFinal_CURRENT, show.df= TRUE)
