@@ -12,15 +12,18 @@
 % -  numelements: Total number of elements in the matrix. 
 
 % Output Arguments: 
-% - CoP: Center of pressure in x and y position. 
+% - CoP: Center of pressure in x and y position in inches
 
 function CoP = ComputeCoP(DataMatrix,XposMatrix,YPosMatrix,numframes,numelements)
 
 % Total Pressure of Data Matrix
-TotalPressure= sum(DataMatrix ,2); 
+TotalPressure= sum(DataMatrix,2); % Total Pressure For the Mat at Each Frame 
 
 % Computing COP -For Pressure Mat Data and Layout of Mat
 CoP=[sum(DataMatrix(:,1:numelements).*XposMatrix,2)./TotalPressure sum(DataMatrix(:,1:numelements).*YPosMatrix,2)./TotalPressure];
+
+% Matlab Populates the Matrices in Y from top to bottom but PPS Mat is
+% populated from bottom to top.
 CoP(:,2) = 16- CoP(:,2); 
 
 

@@ -5150,14 +5150,16 @@ maxreach =RD_2024;
     % %           axis equal
     %          end
     %pause
-    %% Calling COP Function
-    %        ppsdata =data.pps;
-    %        tpps = data.pps{1,1};
-    %        ppsdata= ppsdata{1,2};
-    %
-    %        %Getting start and end time in seconds
-    %        t_start = t(idx(1));
-    %        t_end = t(idx(3));
+    %% Pressure Mat Data
+    close all       
+    
+    ppsdata =data.pps;
+           tpps = data.pps{1,1};
+           ppsdata= ppsdata{1,2};
+    
+           %Getting start and end time in seconds
+           t_start = t(idx(1));
+           t_end = t(idx(3));
     
     
     % Use if plotting small multiples
@@ -5167,8 +5169,10 @@ maxreach =RD_2024;
     %            [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,sm,sm2);
     %        end
     
-    
-    %Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+    close all
+    Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+
+    pause
     % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
     
 %% July 2023- Saving Shoudler Flexion/Extension and Elbow Flexion/Extension Per Trial ACROSS TIME
