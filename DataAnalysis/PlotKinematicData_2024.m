@@ -5355,6 +5355,8 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 end
 
+return
+
 %End of Loop going through each trial  
 
 

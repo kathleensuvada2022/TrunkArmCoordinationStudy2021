@@ -39,18 +39,21 @@ function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Nu
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 
 %For MAC
-% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
-% load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
 % baseline_mat1 = data(:,1:256);
-% baseline_mat2 = data(:,257:end);
+baseline_mat2 = data(:,257:end); % Mat on seat  
 % baseline_t = t;
 %
 % %Averaging Across the Interval
-% avg_interval = size(baseline_mat1,1)/2;
-% avg_interval = round(avg_interval);
+avg_interval = size(baseline_mat2,1)/2;
+avg_interval = round(avg_interval);
 %
 % baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
-% baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+
+ % Average Value per element (1x 256)
+baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+
 % Figure 15 shows average value for each element during baseline (this is prior to
 % Mat being zeroed bc it is read before calling library 'SetBaseline'.
 
@@ -62,11 +65,11 @@ function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Nu
 % xlabel('Element')
 % ylabel('Value in Volts')
 %
-% subplot(2,1,2)
-% plot(baseline_mat2_corrected,'o')
-% title('Mat 2 Baseline- averaged')
-% xlabel('Element')
-% ylabel('Value in Volts')
+figure()
+plot(baseline_mat2_corrected ,'o')
+title('Mat 2- Average Value per Element','FontSize',20)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
 %
 % figure(16)
 % clf
@@ -76,11 +79,11 @@ function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Nu
 % xlabel('Time')
 % ylabel('Volts')
 %
-% subplot(2,1,2)
-% plot(t,baseline_mat2)
-% title('Mat 2 Element Values during PPS Initialization')
-% xlabel('Time')
-% ylabel('Volts')
+figure()
+plot(t,baseline_mat2)
+title('Mat 2 Element Values during PPS Initialization','FontSize',20)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
 
 %% Finding start/stop samples for each mat
 % Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
@@ -92,13 +95,36 @@ start_samp_M2= round(t_start*14);
 end_samp_M2= round(t_end*14);
 
 
-% Plotting Raw Data
+%% Removing Tare BaseLine
+
+pps_mat2_trial = ppsdata(:,257:512);
+
+pps_mat2_trial_minustare = pps_mat2_trial- baseline_mat2_corrected;
+
+
 figure()
-plot(ppsdata)
-xlabel('Samples')
-ylabel('Elements (512) in PSI')
-title('Raw Data','FontSize',16)
-% close
+plot(pps_mat2_trial_minustare)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('PPS MAT 2 DATA Baseline Tare Removed','FontSize',20)
+%legend(cellstr(num2str((257:512)', 'Element %d')));
+
+
+figure()
+plot(pps_mat2_trial)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('PPS MAT 2 DATA Trial','FontSize',20)
+
+figure()
+plot(data)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Raw Baseline Data','FontSize',20)
+%%
+
+
+
 
 % Seeing How Many Elements are Negative - most likely due to seat cushion
 % or noise if negative
@@ -122,8 +148,18 @@ pause
 
 %Mat 2 (Seat)
 
-pps_mat2 = ppsdata(:,257:512)-ppsdata(1,257:512); % subtracting baseline
+pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:10,:)); % subtracting baseline
 
+%% Plotting Mat 2 minus the first 10 samples of the trial (with the Tare removed) 
+figure()
+plot(pps_mat2_FINAL)
+ylabel('PSI','FontSize',16)
+xlabel('Samples','FontSize',16)
+xline(start_samp_M2,'g','LineWidth',2)
+xline(end_samp_M2,'r','LineWidth',2)
+title('Trial Data with the Baseline of the trial subtracted','FontSize',20)
+
+%% 
 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
     % For the artifact along bottom of mat
     pps_mat1(:,1:16) = 0;
