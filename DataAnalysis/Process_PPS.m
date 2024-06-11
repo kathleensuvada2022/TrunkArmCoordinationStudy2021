@@ -41,7 +41,7 @@ function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Nu
 %For MAC
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
-% baseline_mat1 = data(:,1:256);
+baseline_mat1 = data(:,1:256);
 baseline_mat2 = data(:,257:end); % Mat on seat  
 % baseline_t = t;
 %
@@ -49,40 +49,48 @@ baseline_mat2 = data(:,257:end); % Mat on seat
 avg_interval = size(baseline_mat2,1)/2;
 avg_interval = round(avg_interval);
 %
-% baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
+baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
 
- % Average Value per element (1x 256)
+ % Average Value per element (1x 256) - cutting such that it's when the
+ % elements have stabilized 
 baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+
+% Replacing Negative Values with 0s 
+if any(baseline_mat1_corrected < 0)
+    baseline_mat1_corrected(baseline_mat1_corrected < 0) = 0;
+end
+
+if any(baseline_mat2_corrected < 0)
+    baseline_mat2_corrected(baseline_mat2_corrected < 0) = 0;
+end
+
 
 % Figure 15 shows average value for each element during baseline (this is prior to
 % Mat being zeroed bc it is read before calling library 'SetBaseline'.
 
-% figure(15)
-% clf
-% subplot(2,1,1)
-% plot(baseline_mat1_corrected,'o')
-% title('Mat 1 Baseline- averaged')
-% xlabel('Element')
-% ylabel('Value in Volts')
 %
-figure()
-plot(baseline_mat2_corrected ,'o')
-title('Mat 2- Average Value per Element','FontSize',20)
+subplot(2,1,1)
+plot(baseline_mat2)
+title('Mat 2- baseline','FontSize',20)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
-%
-% figure(16)
-% clf
-% subplot(2,1,1)
-% plot(t,baseline_mat1)
-% title('Mat 1 Element Values during PPS Initialization')
-% xlabel('Time')
-% ylabel('Volts')
+subplot(2,1,2)
+plot(baseline_mat2_corrected ,'o')
+title('Mat 2- Average/Element (Stable Interval)','FontSize',20)
+xlabel('Element','FontSize',16)
+ylabel('PSI','FontSize',16)
+
 %
 figure()
-plot(t,baseline_mat2)
-title('Mat 2 Element Values during PPS Initialization','FontSize',20)
+subplot(2,1,1)
+plot(baseline_mat1)
+title('Mat 1- baseline','FontSize',20)
 xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+subplot(2,1,2)
+plot(baseline_mat1_corrected,'o')
+title('Mat 1- Average/Element (Stable Interval)','FontSize',20)
+xlabel('Element','FontSize',16)
 ylabel('PSI','FontSize',16)
 
 %% Finding start/stop samples for each mat
@@ -95,35 +103,64 @@ start_samp_M2= round(t_start*14);
 end_samp_M2= round(t_end*14);
 
 
-%% Removing Tare BaseLine
+%% Removing Tare BaseLine From Trial Data
 
 pps_mat2_trial = ppsdata(:,257:512);
 
 pps_mat2_trial_minustare = pps_mat2_trial- baseline_mat2_corrected;
 
+pps_mat1_trial = ppsdata(:,1:256);
+
+pps_mat1_trial_minustare = pps_mat1_trial- baseline_mat1_corrected;
 
 figure()
 plot(pps_mat2_trial_minustare)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
-title('PPS MAT 2 DATA Baseline Tare Removed','FontSize',20)
-%legend(cellstr(num2str((257:512)', 'Element %d')));
+title('MAT 2: TareBaselineAVG Removed','FontSize',20)
 
 
 figure()
 plot(pps_mat2_trial)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
-title('PPS MAT 2 DATA Trial','FontSize',20)
+title('MAT 2: Raw Trial Data','FontSize',20)
 
 figure()
-plot(data)
+plot(pps_mat1_trial_minustare)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
-title('Raw Baseline Data','FontSize',20)
+title('MAT 1: TareBaselineAVG Removed','FontSize',20)
+
+
+figure()
+plot(pps_mat1_trial)
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Mat 1: Raw Trial Data','FontSize',20)
+
+subplot(4,1,1)
+plot(data(:,1:256))
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Mat 1: Raw Baseline Data ','FontSize',20)
+subplot(4,1,2)
+plot(data(:,257:512))
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Mat2: Raw Baseline Data ','FontSize',20)
+subplot(4,1,3)
+plot(ppsdata(:,1:256))
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Mat 1: Raw Trial Data ','FontSize',20)
+subplot(4,1,4)
+plot(ppsdata(:,257:512))
+xlabel('Samples','FontSize',16)
+ylabel('PSI','FontSize',16)
+title('Mat 2: Raw Trial Data','FontSize',20)
+
 %%
-
-
 
 
 % Seeing How Many Elements are Negative - most likely due to seat cushion
@@ -131,33 +168,42 @@ title('Raw Baseline Data','FontSize',20)
 Negs = ppsdata(ppsdata<0);
 NumElmPPSData = size(ppsdata,1)*size(ppsdata,2);
 
-PercentNegElements_BothMatsRaw = length(Negs)/NumElmPPSData *100
-
-pause
+PercentNegElements_BothMatsRaw = length(Negs)/NumElmPPSData *100;
 
 %% Subtracting Baseline (First 5 samples) from Trial Data
 
 % Mat 1 (Backrest)
-pps_mat1 = ppsdata(:,1:256)- mean(ppsdata(1:5,1:256)); %Subtracting baseline
+% pps_mat1 = ppsdata(:,1:256)- mean(ppsdata(1:5,1:256)); %Subtracting baseline
 % pps_mat1 = ppsdata(:,1:256); %just the raw data
-Negs_M1 = pps_mat1(pps_mat1<0);
-NumElmPPSData_M1 = size(pps_mat1,1)*size(pps_mat1,2);
+%Negs_M1 = pps_mat1(pps_mat1<0);
+%NumElmPPSData_M1 = size(pps_mat1,1)*size(pps_mat1,2);
 
-PercentNegElements_M1 = length(Negs_M1)/NumElmPPSData_M1*100
-pause
+%PercentNegElements_M1 = length(Negs_M1)/NumElmPPSData_M1*100;
+
+% Mat 1 (chair back)
+pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:10,:)); % subtracting first 10 samples of corrected trial data
+
 
 %Mat 2 (Seat)
 
-pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:10,:)); % subtracting baseline
+pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:10,:)); % subtracting first 10 samples of corrected trial data
 
 %% Plotting Mat 2 minus the first 10 samples of the trial (with the Tare removed) 
-figure()
+subplot(2,1,1)
 plot(pps_mat2_FINAL)
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
 xline(start_samp_M2,'g','LineWidth',2)
 xline(end_samp_M2,'r','LineWidth',2)
-title('Trial Data with the Baseline of the trial subtracted','FontSize',20)
+title('Mat 2: TRIAL DATA FINAL','FontSize',20)
+subplot(2,1,2)
+plot(pps_mat1_FINAL)
+ylabel('PSI','FontSize',16)
+xlabel('Samples','FontSize',16)
+xline(start_samp_M1,'g','LineWidth',2)
+xline(end_samp_M1,'r','LineWidth',2)
+title('Mat 1 : TRIAL DATA FINAL','FontSize',20)
+
 
 %% 
 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
@@ -171,34 +217,13 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
     
 end 
 
-Negs_M2 = pps_mat2(pps_mat2<0);
-NumElmPPSData_M2 = size(pps_mat2,1)*size(pps_mat2,2);
+% Negs_M2 = pps_mat2(pps_mat2<0);
+% NumElmPPSData_M2 = size(pps_mat2,1)*size(pps_mat2,2);
+% 
+% PercentNegElements_M2 = length(Negs_M2)/NumElmPPSData_M2*100
+% pause
 
-PercentNegElements_M2 = length(Negs_M2)/NumElmPPSData_M2*100
-pause
 
-
-%% Setting any negative changes to NaNS -
-% pps_mat1(pps_mat1<0) = NaN;
-% pps_mat2(pps_mat2<0) = NaN;
-
-%% Plotting Corrected Traces Mat 1 and Mat 2 
-
-figure()
-subplot(2,1,1)
-plot(pps_mat1)
-xlabel('Samples','FontSize',16)
-ylabel('Elements in PSI','FontSize',16)
-title('Back of Chair Mat','FontSize',20)
-xline(start_samp_M1,'g','LineWidth',2)
-xline(end_samp_M1,'r','LineWidth',2)
-subplot(2,1,2)
-plot(pps_mat2)
-xline(start_samp_M2,'g','LineWidth',2)
-xline(end_samp_M2,'r','LineWidth',2)
-xlabel('Samples','FontSize',16)
-ylabel('Elements in PSI','FontSize',16)
-title('On Seat (under Bottom) Mat','FontSize',20)
 
 %% Calling Small Multiples Function
 
@@ -208,6 +233,8 @@ title('On Seat (under Bottom) Mat','FontSize',20)
 %     [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
 % end
 
+
+return
 
 %% Number of Frames
 nframes=size(ppsdata,1);
