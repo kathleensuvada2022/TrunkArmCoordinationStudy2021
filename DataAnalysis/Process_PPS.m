@@ -37,7 +37,7 @@ function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Nu
 
 %For PC
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
-
+% %%
 %For MAC
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
@@ -92,7 +92,7 @@ plot(baseline_mat1_corrected,'o')
 title('Mat 1- Average/Element (Stable Interval)','FontSize',20)
 xlabel('Element','FontSize',16)
 ylabel('PSI','FontSize',16)
-
+%
 %% Finding start/stop samples for each mat
 % Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
 
@@ -113,32 +113,27 @@ pps_mat1_trial = ppsdata(:,1:256);
 
 pps_mat1_trial_minustare = pps_mat1_trial- baseline_mat1_corrected;
 
+%% Trial Data Minus the Tarebaseline 
+
+% Should see positive values and the participant's weight
+
 figure()
 plot(pps_mat2_trial_minustare)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
 title('MAT 2: TareBaselineAVG Removed','FontSize',20)
-
-
-figure()
-plot(pps_mat2_trial)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('MAT 2: Raw Trial Data','FontSize',20)
-
+% 
+% pause
+% 
 figure()
 plot(pps_mat1_trial_minustare)
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
 title('MAT 1: TareBaselineAVG Removed','FontSize',20)
-
-
-figure()
-plot(pps_mat1_trial)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('Mat 1: Raw Trial Data','FontSize',20)
-
+% 
+% pause
+%%
+% Raw Data Baseline and Trial
 subplot(4,1,1)
 plot(data(:,1:256))
 xlabel('Samples','FontSize',16)
@@ -159,9 +154,8 @@ plot(ppsdata(:,257:512))
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
 title('Mat 2: Raw Trial Data','FontSize',20)
-
+pause
 %%
-
 
 % Seeing How Many Elements are Negative - most likely due to seat cushion
 % or noise if negative
@@ -180,15 +174,15 @@ PercentNegElements_BothMatsRaw = length(Negs)/NumElmPPSData *100;
 
 %PercentNegElements_M1 = length(Negs_M1)/NumElmPPSData_M1*100;
 
-% Mat 1 (chair back)
-pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:10,:)); % subtracting first 10 samples of corrected trial data
+% Mat 1 (Chair Back)
+pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 
 
 %Mat 2 (Seat)
+pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 
-pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:10,:)); % subtracting first 10 samples of corrected trial data
+%% Plotting Mat 2 minus the first 250 ms (with the TareBaseline ALSO removed) 
 
-%% Plotting Mat 2 minus the first 10 samples of the trial (with the Tare removed) 
 subplot(2,1,1)
 plot(pps_mat2_FINAL)
 ylabel('PSI','FontSize',16)
@@ -196,14 +190,16 @@ xlabel('Samples','FontSize',16)
 xline(start_samp_M2,'g','LineWidth',2)
 xline(end_samp_M2,'r','LineWidth',2)
 title('Mat 2: TRIAL DATA FINAL','FontSize',20)
+
 subplot(2,1,2)
 plot(pps_mat1_FINAL)
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
 xline(start_samp_M1,'g','LineWidth',2)
 xline(end_samp_M1,'r','LineWidth',2)
-title('Mat 1 : TRIAL DATA FINAL','FontSize',20)
+title('Mat 1: TRIAL DATA FINAL','FontSize',20)
 
+pause
 
 %% 
 if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
