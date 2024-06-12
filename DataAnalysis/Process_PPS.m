@@ -31,67 +31,77 @@
 
 
 function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond, sm,sm2)
-%% Working with Baseline File - which isn't interpretable bc of memory of mats and need to 'ClearBaseline' for future use.
 
 %Loading in PPS baseline file
+
+% K. Suvada 2024: Flow for the PPS Data Collection code is as follows : 
+% When the PPS Box is checked on the GUI -->  PPS_Init_Callback: creates PPS object, calls InitializePPS 
+% (which runs StartPPS, ReadData after 3 seconds, ppsSetBaseline, ppsStop, then saves file in that order). 
+% Then back in PPS_Init_Callback, ppsStart is called and left running to avoid the issue of the elements 
+% having to re-stabilize once in trial data. So yes, the mats have been torn prior to trials and therefore 
+% trial data will not reflect participant weights. It will still be able to track the changes however, which 
+% is what I am interested in. So I only need to subtract the first 250 ms of the trial prior to them starting the reach.
+
+% In other words, for processing your actual data, you don't need the
+% baseline file as this is zeroing the mat prior to the trial.
 
 %For PC
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 % %%
 %For MAC
-datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
-load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
-baseline_mat1 = data(:,1:256);
-baseline_mat2 = data(:,257:end); % Mat on seat  
+% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+% load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+% baseline_mat1 = data(:,1:256);
+% baseline_mat2 = data(:,257:end); % Mat on seat  
 % baseline_t = t;
 %
 % %Averaging Across the Interval
-avg_interval = size(baseline_mat2,1)/2;
-avg_interval = round(avg_interval);
-%
-baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
+% avg_interval = size(baseline_mat2,1)/2;
+% avg_interval = round(avg_interval);
+% %
+% baseline_mat1_corrected = mean(baseline_mat1(avg_interval:end,:));
 
  % Average Value per element (1x 256) - cutting such that it's when the
  % elements have stabilized 
-baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
+% baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
 
-% Replacing Negative Values with 0s 
-if any(baseline_mat1_corrected < 0)
-    baseline_mat1_corrected(baseline_mat1_corrected < 0) = 0;
-end
-
-if any(baseline_mat2_corrected < 0)
-    baseline_mat2_corrected(baseline_mat2_corrected < 0) = 0;
-end
+% % Replacing Negative Values with 0s 
+% if any(baseline_mat1_corrected < 0)
+%     baseline_mat1_corrected(baseline_mat1_corrected < 0) = 0;
+% end
+% 
+% if any(baseline_mat2_corrected < 0)
+%     baseline_mat2_corrected(baseline_mat2_corrected < 0) = 0;
+% end
 
 
 % Figure 15 shows average value for each element during baseline (this is prior to
 % Mat being zeroed bc it is read before calling library 'SetBaseline'.
 
 %
-subplot(2,1,1)
-plot(baseline_mat2)
-title('Mat 2- baseline','FontSize',20)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-subplot(2,1,2)
-plot(baseline_mat2_corrected ,'o')
-title('Mat 2- Average/Element (Stable Interval)','FontSize',20)
-xlabel('Element','FontSize',16)
-ylabel('PSI','FontSize',16)
+% subplot(2,1,1)
+% plot(baseline_mat2)
+% title('Mat 2- baseline','FontSize',20)
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% subplot(2,1,2)
+% plot(baseline_mat2_corrected ,'o')
+% title('Mat 2- Average/Element (Stable Interval)','FontSize',20)
+% xlabel('Element','FontSize',16)
+% ylabel('PSI','FontSize',16)
 
 %
-figure()
-subplot(2,1,1)
-plot(baseline_mat1)
-title('Mat 1- baseline','FontSize',20)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-subplot(2,1,2)
-plot(baseline_mat1_corrected,'o')
-title('Mat 1- Average/Element (Stable Interval)','FontSize',20)
-xlabel('Element','FontSize',16)
-ylabel('PSI','FontSize',16)
+% figure()
+% subplot(2,1,1)
+% plot(baseline_mat1)
+% title('Mat 1- baseline','FontSize',20)
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% subplot(2,1,2)
+% plot(baseline_mat1_corrected,'o')
+% title('Mat 1- Average/Element (Stable Interval)','FontSize',20)
+% xlabel('Element','FontSize',16)
+% ylabel('PSI','FontSize',16)
 %
 %% Finding start/stop samples for each mat
 % Mat 1 SR = 13.5 Hz  Mat 2 SR = 14 Hz
@@ -107,49 +117,51 @@ end_samp_M2= round(t_end*14);
 
 pps_mat2_trial = ppsdata(:,257:512);
 
-pps_mat2_trial_minustare = pps_mat2_trial- baseline_mat2_corrected;
+% pps_mat2_trial_minustare = pps_mat2_trial- baseline_mat2_corrected;
 
 pps_mat1_trial = ppsdata(:,1:256);
 
-pps_mat1_trial_minustare = pps_mat1_trial- baseline_mat1_corrected;
+% pps_mat1_trial_minustare = pps_mat1_trial- baseline_mat1_corrected;
 
-%% Trial Data Minus the Tarebaseline 
+%% Trial Data Minus the Tarebaseline - WRONG Don't USE. See Comment at top of function
 
-% Should see positive values and the participant's weight
-
-figure()
-plot(pps_mat2_trial_minustare)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('MAT 2: TareBaselineAVG Removed','FontSize',20)
+% % Should see positive values and the participant's weight
 % 
-% pause
-% 
-figure()
-plot(pps_mat1_trial_minustare)
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('MAT 1: TareBaselineAVG Removed','FontSize',20)
-% 
-% pause
+% figure()
+% plot(pps_mat2_trial_minustare)
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% title('MAT 2: TareBaselineAVG Removed','FontSize',20)
+% % 
+% % pause
+% % 
+% figure()
+% plot(pps_mat1_trial_minustare)
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% title('MAT 1: TareBaselineAVG Removed','FontSize',20)
+% % 
+%  pause
 %%
 % Raw Data Baseline and Trial
-subplot(4,1,1)
-plot(data(:,1:256))
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('Mat 1: Raw Baseline Data ','FontSize',20)
-subplot(4,1,2)
-plot(data(:,257:512))
-xlabel('Samples','FontSize',16)
-ylabel('PSI','FontSize',16)
-title('Mat2: Raw Baseline Data ','FontSize',20)
-subplot(4,1,3)
+% figure()
+% subplot(4,1,1)
+% plot(data(:,1:256))
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% title('Mat 1: Raw Baseline Data ','FontSize',20)
+% subplot(4,1,2)
+% plot(data(:,257:512))
+% xlabel('Samples','FontSize',16)
+% ylabel('PSI','FontSize',16)
+% title('Mat2: Raw Baseline Data ','FontSize',20)
+figure()
+subplot(2,1,1)
 plot(ppsdata(:,1:256))
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
 title('Mat 1: Raw Trial Data ','FontSize',20)
-subplot(4,1,4)
+subplot(2,1,2)
 plot(ppsdata(:,257:512))
 xlabel('Samples','FontSize',16)
 ylabel('PSI','FontSize',16)
@@ -166,52 +178,55 @@ PercentNegElements_BothMatsRaw = length(Negs)/NumElmPPSData *100;
 
 %% Subtracting Baseline (First 5 samples) from Trial Data
 
-% Mat 1 (Backrest)
-% pps_mat1 = ppsdata(:,1:256)- mean(ppsdata(1:5,1:256)); %Subtracting baseline
-% pps_mat1 = ppsdata(:,1:256); %just the raw data
+pps_mat1 = ppsdata(:,1:256); %just the raw data
+pps_mat2 = ppsdata(:,257:512); %just the raw data
+
 %Negs_M1 = pps_mat1(pps_mat1<0);
 %NumElmPPSData_M1 = size(pps_mat1,1)*size(pps_mat1,2);
 
 %PercentNegElements_M1 = length(Negs_M1)/NumElmPPSData_M1*100;
 
 % Mat 1 (Chair Back)
-pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
+% pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 
-
+pps_mat1_FINAL = pps_mat1 - mean(pps_mat1(1:5,:));
 %Mat 2 (Seat)
-pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
-
+% pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
+pps_mat2_FINAL = pps_mat2 - mean(pps_mat2(1:5,:));
 %% Plotting Mat 2 minus the first 250 ms (with the TareBaseline ALSO removed) 
 
+figure()
 subplot(2,1,1)
-plot(pps_mat2_FINAL)
-ylabel('PSI','FontSize',16)
-xlabel('Samples','FontSize',16)
-xline(start_samp_M2,'g','LineWidth',2)
-xline(end_samp_M2,'r','LineWidth',2)
-title('Mat 2: TRIAL DATA FINAL','FontSize',20)
-
-subplot(2,1,2)
 plot(pps_mat1_FINAL)
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
 xline(start_samp_M1,'g','LineWidth',2)
 xline(end_samp_M1,'r','LineWidth',2)
-title('Mat 1: TRIAL DATA FINAL','FontSize',20)
+title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
+
+subplot(2,1,2)
+% plot(pps_mat2_FINAL(start_samp_M2:end_samp_M2,:))
+plot(pps_mat2_FINAL)
+
+ylabel('PSI','FontSize',16)
+xlabel('Samples','FontSize',16)
+xline(start_samp_M2,'g','LineWidth',2)
+xline(end_samp_M2,'r','LineWidth',2)
+title('Mat 2 (Seat): TRIAL DATA FINAL','FontSize',20)
 
 pause
 
 %% 
-if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
-    % For the artifact along bottom of mat
-    pps_mat1(:,1:16) = 0;
-    
-end 
-if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
-    % For the artifact along bottom of mat
-    pps_mat1(:,26) = 0;
-    
-end 
+% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
+%     % For the artifact along bottom of mat
+%     pps_mat1(:,1:16) = 0;
+%     
+% end 
+% if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
+%     % For the artifact along bottom of mat
+%     pps_mat1(:,26) = 0;
+%     
+% end 
 
 % Negs_M2 = pps_mat2(pps_mat2<0);
 % NumElmPPSData_M2 = size(pps_mat2,1)*size(pps_mat2,2);
@@ -223,11 +238,11 @@ end
 
 %% Calling Small Multiples Function
 
-% if mtrial_Num~= 1
-%     [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num,sm,sm2);
-% else
-%     [sm,sm2] = PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
-% end
+if mtrial_Num~= 1
+    [sm,sm2] = PPS_timeseriesPlots(pps_mat1_FINAL,pps_mat2_FINAL,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num,sm,sm2);
+else
+    [sm,sm2] = PPS_timeseriesPlots(pps_mat1_FINAL,pps_mat2_FINAL,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+end
 
 
 return

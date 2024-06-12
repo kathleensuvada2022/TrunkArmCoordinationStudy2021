@@ -121,7 +121,7 @@ for i = 1:256
         hold on
         
     else
-        plot(sm(i),tpps(1:end_samp_M1),pps_mat1(1:end_samp_M1,i))
+        plot(sm(i),tpps(start_samp_M1:end_samp_M1),pps_mat1(start_samp_M1:end_samp_M1,i))
 %         plot(sm(i),tpps,pps_mat1(:,i))
 %         hold on
 %         xline(start_samp_M1,'g')
@@ -222,7 +222,7 @@ for i = 1:256
         
         
         axis tight
-        plot(sm2(i),tpps(1:end_samp_M2),pps_mat2((1:end_samp_M2),i))
+        plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
 %         plot(sm2(i),tpps,pps_mat2(:,i),i)
 %         hold on
 %         xline(start_samp_M2,'g')
@@ -232,7 +232,7 @@ for i = 1:256
         hold on
         
     else
-        plot(sm2(i),tpps(1:end_samp_M2),pps_mat2((1:end_samp_M2),i))
+        plot(sm2(i),tpps(start_samp_M2:end_samp_M2),pps_mat2((start_samp_M2:end_samp_M2),i))
 %         plot(sm2(i),tpps,pps_mat2(:,i),i)
 %         hold on
 %         xline(start_samp_M2,'g')
