@@ -198,10 +198,11 @@ pps_mat2_FINAL = pps_mat2 - mean(pps_mat2(1:5,:));
 figure()
 subplot(2,1,1)
 plot(pps_mat1_FINAL)
+
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
-xline(start_samp_M1,'g','LineWidth',2)
-xline(end_samp_M1,'r','LineWidth',2)
+% xline(start_samp_M1,'g','LineWidth',2)
+% xline(end_samp_M1,'r','LineWidth',2)
 title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
 
 subplot(2,1,2)
@@ -210,8 +211,8 @@ plot(pps_mat2_FINAL)
 
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
-xline(start_samp_M2,'g','LineWidth',2)
-xline(end_samp_M2,'r','LineWidth',2)
+% xline(start_samp_M2,'g','LineWidth',2)
+% xline(end_samp_M2,'r','LineWidth',2)
 title('Mat 2 (Seat): TRIAL DATA FINAL','FontSize',20)
 
 pause
