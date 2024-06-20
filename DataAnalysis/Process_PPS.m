@@ -129,7 +129,7 @@ pps_mat1_trial = ppsdata(:,1:256);
 PPS_timeseriesPlots(pps_mat1_trial,pps_mat2_trial,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
 
 
-pause
+%pause
 % Need to remove any dead elements, odd waveforms etc.
 
 
@@ -294,8 +294,8 @@ nframes=size(ppsdata,1);
 %% Creating Matrices for Left and Right Half of Mat 1
 % *Note: Left/Right is PARTICIPANT'S left and right.
 
-pps_mat1= pps_mat1_FINAL ;  % Redefining with 2024 definition 
-pps_mat2 = pps_mat2_FINAL;
+% pps_mat1= pps_mat1_FINAL ;  % Redefining with 2024 definition 
+% pps_mat2 = pps_mat2_FINAL;
 
 Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat1_LeftHalf= pps_mat1(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
@@ -465,69 +465,44 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 %% COP Plots - June 2024 
 
 
-% Mat 1 - on back of chair
+% Mat 1 - on back of chair - all 3 COPS: whole and for each half of the mat
+% 
 figure()
 plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'k','LineWidth',2);
 hold on
+plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'b','LineWidth',2);
+plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'m','LineWidth',2);
+plot(CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2),'*','Color','g');
+plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','Color','r');
 plot(CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2),'*','Color','g');
 plot(CoP_Mat1_Whole(end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2),'*','Color','r');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 1 Full Mat COP','FontSize',20)
-figure()
-plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'k','LineWidth',2);
-hold on
 plot(CoP_Mat1_LeftHalf(start_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1,2),'*','Color','g');
 plot(CoP_Mat1_LeftHalf(end_samp_M1,1),CoP_Mat1_LeftHalf( end_samp_M1,2),'*','Color','r');
 xlabel('Postion in X','FontSize',16)
 ylabel('Position in Y','FontSize',16)
+legend('Whole','Left','Right','FontSize',16)
 xlim([0 16])
 ylim([0 16])
-title('Mat 1 Left Half COP','FontSize',20)
-figure()
-plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'k','LineWidth',2);
-hold on
-plot(CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','Color','r');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 1 Right Half COP','FontSize',20)
+title('Mat 1 on Back of Chair CoPs (Whole,Left,Right) ','FontSize',20)
 
 % Mat 2 - on Seat
 figure()
 plot(CoP_Mat2_Whole(start_samp_M2: end_samp_M2,1),CoP_Mat2_Whole(start_samp_M2: end_samp_M2,2),'k','LineWidth',2);
 hold on
+plot(CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,2),'b','LineWidth',2);
+plot(CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,2),'m','LineWidth',2);
+plot(CoP_Mat2_RightHalf(start_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2,2),'*','Color','g');
+plot(CoP_Mat2_RightHalf(end_samp_M2,1),CoP_Mat2_RightHalf(end_samp_M2,2),'*','Color','r');
+plot(CoP_Mat2_LeftHalf(start_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2,2),'*','Color','g');
+plot(CoP_Mat2_LeftHalf(end_samp_M2,1),CoP_Mat2_LeftHalf(end_samp_M2,2),'*','Color','r');
 plot(CoP_Mat2_Whole(start_samp_M2,1),CoP_Mat2_Whole(start_samp_M2,2),'*','Color','g');
 plot(CoP_Mat2_Whole(end_samp_M2,1),CoP_Mat2_Whole(end_samp_M2,2),'*','Color','r');
 xlabel('Postion in X','FontSize',16)
 ylabel('Position in Y','FontSize',16)
 xlim([0 16])
 ylim([0 16])
-title('Mat 2 Full Mat COP','FontSize',20)
-figure()
-plot(CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,2),'k','LineWidth',2);
-hold on
-plot(CoP_Mat2_LeftHalf(start_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2,2),'*','Color','g');
-plot(CoP_Mat2_LeftHalf(end_samp_M2,1),CoP_Mat2_LeftHalf(end_samp_M2,2),'*','Color','r');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 2 Left Half COP','FontSize',20)
-figure()
-plot(CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,2),'k','LineWidth',2);
-hold on
-plot(CoP_Mat2_RightHalf(start_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2,2),'*','Color','g');
-plot(CoP_Mat2_RightHalf(end_samp_M2,1),CoP_Mat2_RightHalf(end_samp_M2,2),'*','Color','r');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 2 Right Half COP','FontSize',20)
+title('Mat 2 On Seat CoPs (Whole,Left,Right)','FontSize',20)
+legend('Whole','Left','Right','FontSize',16)
 
 pause
 
