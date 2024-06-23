@@ -230,7 +230,7 @@ for i = 1:256 % Mat 1
         plot(sm(i),pps_mat1(:,i))
         title(['Element' ' ' num2str(i)])
         set(gca,'xticklabel',[])
-        set(gca,'yticklabel',[])
+%         set(gca,'yticklabel',[])
 
         hold on
 
@@ -244,7 +244,7 @@ end
 
 'Both Sides of Mat 1 Displayed'
 
-pause
+% pause
 
 
 
@@ -451,7 +451,7 @@ for i = 1:256
         title(['Element' ' ' num2str(i+256)])
 
         set(gca,'xticklabel',[])
-        set(gca,'yticklabel',[])
+%         set(gca,'yticklabel',[])
 
         hold on
 

@@ -122,18 +122,6 @@ end_samp_M2= round(t_end*14);
 
 pps_mat2_trial = ppsdata(:,257:512);
 pps_mat1_trial = ppsdata(:,1:256);
-%% Cleaning up PPS Data - June 2024 -
-
-
-% Plotting Elements Raw - Identify Faulty Elements for a given participant
-PPS_timeseriesPlots(pps_mat1_trial,pps_mat2_trial,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
-
-
-%pause
-% Need to remove any dead elements, odd waveforms etc.
-
-
-
 
 
 
@@ -222,10 +210,24 @@ pps_mat1_FINAL =  pps_mat1_FINAL+5;
 % pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 pps_mat2_FINAL = pps_mat2 - mean(pps_mat2(1:5,:));
 pps_mat2_FINAL = pps_mat2_FINAL + 5;
+
+
+%% Cleaning up PPS Data - June 2024 -
+
+
+% Plotting Elements Raw - Identify Faulty Elements for a given participant
+% PPS_timeseriesPlots(pps_mat1_FINAL,pps_mat2_FINAL,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+
+
+%pause
+% Need to remove any dead elements, odd waveforms etc.
+
+
 %% Plotting Mat 2 minus the first 250 ms 
 figure()
 subplot(2,1,1)
-plot(pps_mat2_FINAL)
+plot(pps_mat1_FINAL)
 hold on
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
@@ -235,7 +237,7 @@ title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
 
 subplot(2,1,2)
 % plot(pps_mat2_FINAL(start_samp_M2:end_samp_M2,:))
-plot(pps_mat1_FINAL)
+plot(pps_mat2_FINAL)
 hold on
 ylabel('PSI','FontSize',16)
 xlabel('Samples','FontSize',16)
