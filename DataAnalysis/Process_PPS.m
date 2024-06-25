@@ -202,14 +202,14 @@ pps_mat2 = ppsdata(:,257:512); %just the raw data
 % Mat 1 (Chair Back)
 % pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 
-pps_mat1_FINAL = pps_mat1 - mean(pps_mat1(1:5,:));
+pps_mat1_FINAL_1 = pps_mat1 - mean(pps_mat1(1:5,:));
 
 % Displacing all values by 5 PSI so all elements are positive
-pps_mat1_FINAL =  pps_mat1_FINAL+5;
+pps_mat1_FINAL =  pps_mat1_FINAL_1+5;
 %Mat 2 (Seat)
 % pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
-pps_mat2_FINAL = pps_mat2 - mean(pps_mat2(1:5,:));
-pps_mat2_FINAL = pps_mat2_FINAL + 5;
+pps_mat2_FINAL_1 = pps_mat2 - mean(pps_mat2(1:5,:));
+pps_mat2_FINAL = pps_mat2_FINAL_1 + 5;
 
 
 %% Cleaning up PPS Data - June 2024 -
@@ -217,7 +217,7 @@ pps_mat2_FINAL = pps_mat2_FINAL + 5;
 
 % Plotting Elements Raw - Identify Faulty Elements for a given participant
 % PPS_timeseriesPlots(pps_mat1_FINAL,pps_mat2_FINAL,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
-PPS_timeseriesPlots(pps_mat1,pps_mat2,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+PPS_timeseriesPlots(pps_mat1_FINAL_1,pps_mat2_FINAL_1,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
 
 
 %pause
