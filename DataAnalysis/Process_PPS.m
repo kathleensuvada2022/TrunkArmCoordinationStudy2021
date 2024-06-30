@@ -220,8 +220,12 @@ pps_mat2_FINAL = pps_mat2_FINAL_1 + 5;
 PPS_timeseriesPlots(pps_mat1_FINAL_1,pps_mat2_FINAL_1,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
 
 
-%pause
+
 % Need to remove any dead elements, odd waveforms etc.
+
+% ppsdata_clean = CleanPPSElem(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond)
+
+
 
 
 %% Plotting Mat 2 minus the first 250 ms 
