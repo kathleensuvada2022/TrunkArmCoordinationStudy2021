@@ -521,20 +521,9 @@ if strcmp(partid,'RTIS1005')
     % Element 366
     ppsdata(:,366) = NaN;
 
-    % Element 350
-    ppsdata(:,350) = NaN;
 
-    % Element 464
-    ppsdata(:,464) = NaN;
-
-    % Element 496
-    ppsdata(:,496) = NaN;
-
-    % Element 489
-    ppsdata(:,489) = NaN;
-
-    % Element 368
-    ppsdata(:,368) = NaN;
+    % Element 379
+    ppsdata(:,379) = NaN;
 end
 
 
