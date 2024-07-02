@@ -537,11 +537,299 @@ if strcmp(partid,'RTIS1005')
     ppsdata(:,368) = NaN;
 end
 
+if strcmp(partid,'RTIS1006')
 
+    % Mat 1
+  
+    % Element 1
+    ppsdata(:,1) = NaN;
+  
+    % Element 2
+    ppsdata(:,2) = NaN;
+
+    % Element 3
+    ppsdata(:,3) = NaN;
+
+    % Element 14
+    ppsdata(:,14) = NaN;
+  
+    % Element 15
+    ppsdata(:,15) = NaN;
+
+    % Element 16
+    ppsdata(:,16) = NaN;
+       
+
+    % Mat 2
+    % Element 481
+    ppsdata(:,481) = NaN;
+  
+    % Element 465
+    ppsdata(:,465) = NaN;
+
+    % Element 449
+    ppsdata(:,449) = NaN;
+   
+    % Element 433
+    ppsdata(:,433) = NaN;
+  
+    % Element 417
+    ppsdata(:,417) = NaN;
+
+    % Element 407
+    ppsdata(:,407) = NaN;
+
+    % Element 369
+    ppsdata(:,369) = NaN;
+
+    % Element 353
+    ppsdata(:,353) = NaN;
+
+    % Element 498
+    ppsdata(:,498) = NaN;
+
+    % Element 263
+    ppsdata(:,263) = NaN;
+
+    % Element 264
+    ppsdata(:,264) = NaN;
+
+    % Element 401
+    ppsdata(:,401) = NaN;
+
+    % Element 354
+    ppsdata(:,354) = NaN;
+
+    % Element 497
+    ppsdata(:,497) = NaN;
+
+    % Element 466
+    ppsdata(:,466) = NaN;
+
+    % Element 471
+    ppsdata(:,471) = NaN;
+
+    % Element 366
+    ppsdata(:,366) = NaN;
+
+    % Element 383
+    ppsdata(:,383) = NaN;
+
+    % Element 384
+    ppsdata(:,384) = NaN;
+
+    % Element 368
+    ppsdata(:,368) = NaN;
+
+    % Element 352
+    ppsdata(:,352) = NaN;
+
+    % Element 367
+    ppsdata(:,367) = NaN;
+
+    % Element 473
+    ppsdata(:,473) = NaN;
+
+    % Element 496
+    ppsdata(:,496) = NaN;
+end
 
         
 
 %% Stroke
+
+
+if strcmp(partid,'RTIS2001')
+
+    if strcmp(hand,'Right') % Paretic 
+
+    % Element 193
+    ppsdata(:,193) = NaN;
+ 
+    % Element 161
+    ppsdata(:,161) = NaN;
+
+    % Element 242
+    ppsdata(:,242) = NaN;
+
+    % Element 226
+    ppsdata(:,226) = NaN;
+
+    % Element 210
+    ppsdata(:,210) = NaN;
+
+    % Element 178
+    ppsdata(:,178) = NaN;
+
+    % Element 162
+    ppsdata(:,162) = NaN;
+
+    % Element 209
+    ppsdata(:,209) = NaN;
+
+    % Element 241
+    ppsdata(:,241) = NaN;
+
+    % Element 225
+    ppsdata(:,225) = NaN;
+
+    % Element 129
+    ppsdata(:,129) = NaN;
+
+    % Element 113
+    ppsdata(:,113) = NaN;
+
+    % Element 194
+    ppsdata(:,194) = NaN;
+
+    % Element 146
+    ppsdata(:,146) = NaN;
+
+    % Element 130
+    ppsdata(:,130) = NaN;
+
+    % Element 114
+    ppsdata(:,114) = NaN;
+
+    % Element 66
+    ppsdata(:,66) = NaN;
+
+    % Element 50
+    ppsdata(:,50) = NaN;
+
+    % Element 243
+    ppsdata(:,243) = NaN;
+
+    % Element 211
+    ppsdata(:,211) = NaN;
+
+    % Element 195
+    ppsdata(:,195) = NaN;
+
+    % Element 24
+    ppsdata(:,24) = NaN;
+
+    % Element 177
+    ppsdata(:,177) = NaN;
+
+    % Element 39
+    ppsdata(:,39) = NaN;
+
+    % Element 145
+    ppsdata(:,145) = NaN;
+
+     % Element 25
+    ppsdata(:,25) = NaN;
+
+
+    % Mat 2
+    % Element 497
+    ppsdata(:,497) = NaN;
+
+    % Element 481
+    ppsdata(:,481) = NaN;
+
+    % Element 465
+    ppsdata(:,465) = NaN;
+
+    % Element 449
+    ppsdata(:,449) = NaN;
+
+    % Element 433
+    ppsdata(:,433) = NaN;
+
+    % Element 417
+    ppsdata(:,417) = NaN;
+
+    % Element 401
+    ppsdata(:,401) = NaN;
+
+    % Element 369
+    ppsdata(:,369) = NaN;
+
+    % Element 353
+    ppsdata(:,353) = NaN;
+
+    % Element 337
+    ppsdata(:,337) = NaN;
+
+    % Element 466
+    ppsdata(:,466) = NaN;
+
+    % Element 354
+    ppsdata(:,354) = NaN;
+
+    % Element 264
+    ppsdata(:,264) = NaN;
+
+    % Element 385
+    ppsdata(:,385) = NaN;
+
+    % Element 321
+    ppsdata(:,321) = NaN;
+
+    % Element 305
+    ppsdata(:,305) = NaN;
+
+    % Element 273
+    ppsdata(:,273) = NaN;
+
+    % Element 482
+    ppsdata(:,482) = NaN;
+    
+    % Element 338
+    ppsdata(:,338) = NaN;
+
+    % Element 263
+    ppsdata(:,263) = NaN;
+
+    % Element 274
+    ppsdata(:,274) = NaN;
+
+    % Element 398
+    ppsdata(:,398) = NaN;
+
+    % Element 382
+    ppsdata(:,382) = NaN;
+
+    % Element 366
+    ppsdata(:,366) = NaN;
+
+    % Element 473
+    ppsdata(:,473) = NaN;
+
+    % Element 365
+    ppsdata(:,365) = NaN;
+
+    % Element 368
+    ppsdata(:,368) = NaN;
+
+    % Element 352
+    ppsdata(:,352) = NaN;
+
+    % Element 336
+    ppsdata(:,336) = NaN;
+
+    % Element 512
+    ppsdata(:,512) = NaN;
+    end
+
+end
+
+
+
+
+
+    end
+
+
+
+
+end
+
+
+
+
 
 
 
