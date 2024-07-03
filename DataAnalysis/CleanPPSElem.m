@@ -817,24 +817,177 @@ if strcmp(partid,'RTIS2001')
 end
 
 
+if strcmp(partid,'RTIS2002')
+
+    if strcmp(hand,'Left') % Paretic 
+    % Element 1
+    ppsdata(:,1) = NaN;
+
+    % Element 2
+    ppsdata(:,2) = NaN;
+
+    % Element 3
+    ppsdata(:,3) = NaN;
+
+    % Element 4
+    ppsdata(:,4) = NaN;
+
+    % Element 5
+    ppsdata(:,5) = NaN;
+
+    % Element 7
+    ppsdata(:,7) = NaN;
+
+    % Element 8
+    ppsdata(:,8) = NaN;
+
+    % Element 24
+    ppsdata(:,24) = NaN;
+
+    % Element 14
+    ppsdata(:,14) = NaN;
+
+    % Element 15
+    ppsdata(:,15) = NaN;
+
+    % Element 16
+    ppsdata(:,16) = NaN;
+
+    % Element 25
+    ppsdata(:,25) = NaN;
 
 
+    % Element 12
+    ppsdata(:,12) = NaN;
 
-    end
+    % Element 13
+    ppsdata(:,13) = NaN;
+
+    % Element 11
+    ppsdata(:,11) = NaN;
+
+    % Element 9
+    ppsdata(:,9) = NaN;
+
+    % Element 10
+    ppsdata(:,10) = NaN;
 
 
+    % Mat 2
+    % Element 497
+    ppsdata(:,497) = NaN;
 
 
-end
+    % Element 481
+    ppsdata(:,481) = NaN;
+
+    % Element 465
+    ppsdata(:,465) = NaN;
+
+    % Element 449
+    ppsdata(:,449) = NaN;
+
+    % Element 433
+    ppsdata(:,433) = NaN;
+
+    % Element 417
+    ppsdata(:,417) = NaN;
+
+    % Element 498
+    ppsdata(:,498) = NaN;
+
+    % Element 482
+    ppsdata(:,482) = NaN;
+
+    % Element 466
+    ppsdata(:,466) = NaN;
 
 
+    % Element 450
+    ppsdata(:,450) = NaN;
+
+    % Element 434
+    ppsdata(:,434) = NaN;
+
+    % Element 386
+    ppsdata(:,386) = NaN;
+
+    % Element 370
+    ppsdata(:,370) = NaN;
+
+    % Element 354
+    ppsdata(:,354) = NaN;
+
+   % Element 499
+    ppsdata(:,499) = NaN;
+
+    % Element 483
+    ppsdata(:,483) = NaN;
+
+    % Element 387
+    ppsdata(:,387) = NaN;
+
+    % Element 371
+    ppsdata(:,371) = NaN;
+
+    % Element 472
+    ppsdata(:,472) = NaN;
+
+    % Element 471
+    ppsdata(:,471) = NaN;
+
+    % Element 467
+    ppsdata(:,467) = NaN;
+
+    % Element 339
+    ppsdata(:,339) = NaN;
+
+    % Element 485
+    ppsdata(:,485) = NaN;
+
+    % Element 470
+    ppsdata(:,470) = NaN;
+
+   % Element 473
+    ppsdata(:,473) = NaN;
+
+    % Element 365
+    ppsdata(:,365) = NaN;
+
+    % Element 398
+    ppsdata(:,398) = NaN;
+
+    % Element 382
+    ppsdata(:,382) = NaN;
+
+    % Element 366
+    ppsdata(:,366) = NaN;
 
 
+   % Element 512
+    ppsdata(:,512) = NaN;
+
+    % Element 448
+    ppsdata(:,448) = NaN;
+
+    % Element 368
+    ppsdata(:,368) = NaN;
+
+    % Element 496
+    ppsdata(:,496) = NaN;
+
+    % Element 336
+    ppsdata(:,336) = NaN;
+
+    % Element 352
+    ppsdata(:,352) = NaN;
+
+    % Element 474
+    ppsdata(:,474) = NaN;
 
 
-
-
-
+    end 
+end 
 
 % creating new matrix once replaces bad elements with NaNs
 
