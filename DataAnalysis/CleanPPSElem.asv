@@ -1843,6 +1843,7 @@ if strcmp(partid,'RTIS2006')
 
     % Mat 2
 
+
    % Element 433
     ppsdata(:,433) = NaN;
 
@@ -1915,8 +1916,8 @@ if strcmp(partid,'RTIS2006')
     % Element 472
     ppsdata(:,472) = NaN;
 
-    % Element 264
-    ppsdata(:,264) = NaN;
+
+
 
     % Element 505
     ppsdata(:,505) = NaN;
