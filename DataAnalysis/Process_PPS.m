@@ -37,7 +37,7 @@
 
 
 
-function [sm sm2] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond, sm,sm2)
+function [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond, sm,sm2)
 
 %Loading in PPS baseline file
 
@@ -194,21 +194,20 @@ PercentNegElements_BothMatsRaw = length(Negs)/NumElmPPSData *100;
 pps_mat1 = ppsdata(:,1:256); %just the raw data
 pps_mat2 = ppsdata(:,257:512); %just the raw data
 
-%Negs_M1 = pps_mat1(pps_mat1<0);
-%NumElmPPSData_M1 = size(pps_mat1,1)*size(pps_mat1,2);
-
-%PercentNegElements_M1 = length(Negs_M1)/NumElmPPSData_M1*100;
 
 % Mat 1 (Chair Back)
-% pps_mat1_FINAL = pps_mat1_trial_minustare-mean(pps_mat1_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
-
 pps_mat1_FINAL_1 = pps_mat1 - mean(pps_mat1(1:5,:));
 
-% Displacing all values by 5 PSI so all elements are positive
+% Displacing all values by 5 PSI so all elements are positive for proper
+% COP Computation
+
 pps_mat1_FINAL =  pps_mat1_FINAL_1+5;
+
 %Mat 2 (Seat)
-% pps_mat2_FINAL = pps_mat2_trial_minustare-mean(pps_mat2_trial_minustare(1:4,:)); % subtracting first 250 ms of trial
 pps_mat2_FINAL_1 = pps_mat2 - mean(pps_mat2(1:5,:));
+
+% Displacing all values by 5 PSI so all elements are positive for proper
+% COP Computation
 pps_mat2_FINAL = pps_mat2_FINAL_1 + 5;
 
 
@@ -216,19 +215,30 @@ pps_mat2_FINAL = pps_mat2_FINAL_1 + 5;
 
 
 % Plotting Elements Raw - Identify Faulty Elements for a given participant
-% PPS_timeseriesPlots(pps_mat1_FINAL,pps_mat2_FINAL,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
-PPS_timeseriesPlots(pps_mat1_FINAL_1,pps_mat2_FINAL_1,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+% - uncomment to see small multiples ( July6 2024) 
+% PPS_timeseriesPlots(pps_mat1_FINAL_1,pps_mat2_FINAL_1,tpps,start_samp_M1,end_samp_M1,start_samp_M2,end_samp_M2,mtrial_Num);
+
+
+% Filling Dead Elements with NaN - July 2024
+
+ppsdata_clean = CleanPPSElem(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond);
 
 
 
-% Need to remove any dead elements, odd waveforms etc.
+%% Subtracting Baseline (First 5 samples of Trial) Cleaned up Data 
 
-% ppsdata_clean = CleanPPSElem(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond)
+pps_mat1 = ppsdata_clean(:,1:256); 
+pps_mat2 = ppsdata_clean(:,257:512); 
 
+% Mat 1 
+pps_mat1_FINAL_1 = pps_mat1 - mean(pps_mat1(1:5,:));
+pps_mat1_FINAL =  pps_mat1_FINAL_1+5; % For COP all Positive Values 
 
+%Mat 2 
+pps_mat2_FINAL_1 = pps_mat2 - mean(pps_mat2(1:5,:));
+pps_mat2_FINAL = pps_mat2_FINAL_1 + 5; % For COP all Positive Values 
 
-
-%% Plotting Mat 2 minus the first 250 ms 
+%% Plotting Cleaned Up Data 
 figure()
 subplot(2,1,1)
 plot(pps_mat1_FINAL)
@@ -240,7 +250,6 @@ xline(end_samp_M1,'r','LineWidth',2)
 title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
 
 subplot(2,1,2)
-% plot(pps_mat2_FINAL(start_samp_M2:end_samp_M2,:))
 plot(pps_mat2_FINAL)
 hold on
 ylabel('PSI','FontSize',16)
@@ -249,25 +258,8 @@ xline(start_samp_M2,'g','LineWidth',2)
 xline(end_samp_M2,'r','LineWidth',2)
 title('Mat 2 (Seat): TRIAL DATA FINAL','FontSize',20)
 
-pause
-
-%% 
-% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') && expcond ==3
-%     % For the artifact along bottom of mat
-%     pps_mat1(:,1:16) = 0;
-%     
-% end 
-% if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
-%     % For the artifact along bottom of mat
-%     pps_mat1(:,26) = 0;
-%     
-% end 
-
-% Negs_M2 = pps_mat2(pps_mat2<0);
-% NumElmPPSData_M2 = size(pps_mat2,1)*size(pps_mat2,2);
-% 
-% PercentNegElements_M2 = length(Negs_M2)/NumElmPPSData_M2*100
 % pause
+
 
 
 
@@ -300,13 +292,13 @@ nframes=size(ppsdata,1);
 %% Creating Matrices for Left and Right Half of Mat 1
 % *Note: Left/Right is PARTICIPANT'S left and right.
 
-% pps_mat1= pps_mat1_FINAL ;  % Redefining with 2024 definition 
-% pps_mat2 = pps_mat2_FINAL;
+pps_mat1= pps_mat1_FINAL ;  % Redefining 2024- No Negative Values 
+pps_mat2 = pps_mat2_FINAL;
 
 Mat1_RightHalf = pps_mat1(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 129:136 145:152 161:168 177:184 193:200 209:216 225:232 241:248]);
 Mat1_LeftHalf= pps_mat1(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
 
-rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:);
+rm=repmat((0:15)'+0.5,1,8); rm=rm'; rm=rm(:); % For half of mat 
 
 % Calling COP function for Right Half of Mat 1 - set flag to 1 if want to
 
@@ -315,9 +307,8 @@ CoP_Mat1_RightHalf = ComputeCoP(Mat1_RightHalf,repmat((0:7)+0.5,nframes,16),repm
 % Calling COP function for Left Half of Mat 1
 CoP_Mat1_LeftHalf = ComputeCoP(Mat1_LeftHalf,repmat((8:15)+0.5,nframes,16),repmat(rm',nframes,1),nframes,128); % Modifying for the left side of mat since starting at (8,0)
 
-
 rm_whole=repmat((0:15)'+0.5,1,16); rm_whole=rm_whole'; rm_whole=rm_whole(:); % Use for both mats
-%
+
 % Whole Mat COP X and Y Position over time 
 CoP_Mat1_Whole = ComputeCoP(pps_mat1,repmat((0:15)+0.5,nframes,16),repmat(rm_whole',nframes,1),nframes,256);
 
@@ -340,22 +331,15 @@ Mat2_RightHalf = pps_mat2(:,[1:8 17:24 33:40 49:56 65:72 81:88 97:104 113:120 12
 Mat2_LeftHalf= pps_mat2(:,[9:16 25:32 41:48 57:64 73:80 89:96 105:112 121:128 137:144 153:160 169:176 185:192 201:208 217:224 233:240 249:256]);
 
 
-% Calling COP function for Right Half of Mat 2 - set flag to 1 if want plot
+% Calling COP function for Right Half of Mat 2 
 CoP_Mat2_RightHalf = ComputeCoP(Mat2_RightHalf,repmat((0:7)+0.5,nframes,16),repmat(rm',nframes,1),nframes,128);
 
 % Calling COP function for Left Half of Mat 2
-CoP_Mat2_LeftHalf = ComputeCoP(Mat2_LeftHalf,repmat((8:15)+0.5,nframes,16),repmat(rm',nframes,1),nframes,128); % Modifying for the left side of mat since starting at (8,0)
-
+CoP_Mat2_LeftHalf = ComputeCoP(Mat2_LeftHalf,repmat((8:15)+0.5,nframes,16),repmat(rm',nframes,1),nframes,128); 
 
 % Whole Mat COP
 CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_whole',nframes,1),nframes,256);
 
-
-%% Omitting COP Data that Deviates too much from the first few samples and removes negatives - Mat2
-
-% CoP_Mat2_RightHalf = CleanupCOP(CoP_Mat2_RightHalf,start_samp_M2);
-% CoP_Mat2_LeftHalf = CleanupCOP(CoP_Mat2_LeftHalf,start_samp_M2);
-% CoP_Mat2_Whole = CleanupCOP(CoP_Mat2_Whole,start_samp_M2); % Whole Mat
 
 
 %% Reorganizing data Matrix to Create Orientation of both Mats - for HeatMap
@@ -402,9 +386,11 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 %%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Delta COPs for Both Mats
-% * NOTE THIS IS IN INCHES 
 
- DeltaCOP_right_Mat1  = sqrt((CoP_Mat1_RightHalf(end_samp_M1,1)-CoP_Mat1_RightHalf(start_samp_M1,1))^2 +(CoP_Mat1_RightHalf(end_samp_M1,2)-CoP_Mat1_RightHalf(start_samp_M1,2))^2)             
+
+% * NOTE THIS IS IN INCHES *
+
+ DeltaCOP_right_Mat1  = sqrt((CoP_Mat1_RightHalf(end_samp_M1,1)-CoP_Mat1_RightHalf(start_samp_M1,1))^2 +(CoP_Mat1_RightHalf(end_samp_M1,2)-CoP_Mat1_RightHalf(start_samp_M1,2))^2)        
  DeltaCOP_left_Mat1  = sqrt((CoP_Mat1_LeftHalf(end_samp_M1,1)-CoP_Mat1_LeftHalf(start_samp_M1,1))^2 +(CoP_Mat1_LeftHalf(end_samp_M1,2)-CoP_Mat1_LeftHalf(start_samp_M1,2))^2)       
  
 
@@ -418,55 +404,6 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 
 
 
-
-%% Not sure what this is below? May have been when had negative pressure values and thought was wrong 
-%  pause 
-% 
-% if strcmp(partid,'RTIS2001') && strcmp(hand,'Right') 
-%     if strcmp(filename,'/trial5.mat') || strcmp(filename,'/trial13.mat') || strcmp(filename,'/trial14.mat') || strcmp(filename,'/trial25.mat')
-%   
-%     CoP_Mat1_RightHalf(end_samp_M1,1) = nan;
-%     CoP_Mat1_RightHalf(end_samp_M1,2) = nan;
-%     CoP_Mat1_RightHalf(start_samp_M1,1) = nan;
-%     CoP_Mat1_RightHalf(start_samp_M1,2) = nan;
-%       
-% % elseif isnan(DeltaCOP_left) 
-%     CoP_Mat1_LeftHalf(end_samp_M1,1) = nan;
-%     CoP_Mat1_LeftHalf(end_samp_M1,2) = nan;
-%     CoP_Mat1_LeftHalf(start_samp_M1,1) = nan;
-%     CoP_Mat1_LeftHalf(start_samp_M1,2) = nan;
-%        
-% % elseif isnan(DeltaCOP_whole)
-%     CoP_Mat1_Whole(start_samp_M1,1) = nan;
-%     CoP_Mat1_Whole(start_samp_M1,2) = nan;
-%     CoP_Mat1_Whole(end_samp_M1,1) = nan;
-%     CoP_Mat1_Whole(end_samp_M1,2) = nan;
-%     end
-% end
-% 
-% if strcmp(partid,'RTIS2002') && strcmp(hand,'Left') 
-%     if strcmp(filename,'/trial13.mat') ||strcmp(filename,'/trial1.mat') || strcmp(filename,'/trial2.mat') || strcmp(filename,'/trial4.mat') || strcmp(filename,'/trial6.mat') || strcmp(filename,'/trial7.mat') || strcmp(filename,'/trial9.mat')  || strcmp(filename,'/trial10.mat')
-%   
-%     CoP_Mat1_RightHalf(end_samp_M1,1) = nan;
-%     CoP_Mat1_RightHalf(end_samp_M1,2) = nan;
-%     CoP_Mat1_RightHalf(start_samp_M1,1) = nan;
-%     CoP_Mat1_RightHalf(start_samp_M1,2) = nan;
-%       
-% % elseif isnan(DeltaCOP_left) 
-%     CoP_Mat1_LeftHalf(end_samp_M1,1) = nan;
-%     CoP_Mat1_LeftHalf(end_samp_M1,2) = nan;
-%     CoP_Mat1_LeftHalf(start_samp_M1,1) = nan;
-%     CoP_Mat1_LeftHalf(start_samp_M1,2) = nan;
-%        
-% % elseif isnan(DeltaCOP_whole)
-%     CoP_Mat1_Whole(start_samp_M1,1) = nan;
-%     CoP_Mat1_Whole(start_samp_M1,2) = nan;
-%     CoP_Mat1_Whole(end_samp_M1,1) = nan;
-%     CoP_Mat1_Whole(end_samp_M1,2) = nan;
-%     end
-% end
-
-%           pause
 
 %% COP Plots - June 2024 
 
@@ -489,7 +426,7 @@ ylabel('Position in Y','FontSize',16)
 legend('Whole','Left','Right','FontSize',16)
 xlim([0 16])
 ylim([0 16])
-title('Mat 1 on Back of Chair CoPs (Whole,Left,Right) ','FontSize',20)
+title('Mat 1 (Whole,Left,Right) ','FontSize',20)
 
 % Mat 2 - on Seat
 figure()
@@ -507,10 +444,10 @@ xlabel('Postion in X','FontSize',16)
 ylabel('Position in Y','FontSize',16)
 xlim([0 16])
 ylim([0 16])
-title('Mat 2 On Seat CoPs (Whole,Left,Right)','FontSize',20)
+title('Mat 2 (Whole,Left,Right)','FontSize',20)
 legend('Whole','Left','Right','FontSize',16)
 
-pause
+% pause
 
 
 %% Heat Map

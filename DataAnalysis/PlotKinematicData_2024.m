@@ -117,8 +117,8 @@ for i=1: length(mtrials)
 
         %    for mac
 
-        % For continuous loading of data - Oct 2023/Winter 2024
-%    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+        % For continuous loading of data - Oct 2023/Winter 2024/Summer 2024
+   load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -4101,6 +4101,8 @@ plot3([ac_TCS(1,b) aa_TCS(1,b)],[ac_TCS(2,b) aa_TCS(2,b)],[ac_TCS(3,b) aa_TCS(3,
                             % Negative = extension
  ELB_ANG_DELTA_Trial(1,i) =  ElbAng_DELTA_2024;
 
+
+
  
 % 
 % 
@@ -5170,11 +5172,24 @@ maxreach =RD_2024;
     %        end
     
     close all
-    Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
 
-    pause
-    % ComputeCOP(ppsdata,tpps,t_start,t_end,hand,partid,i)
+    [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+
+%     pause
     
+
+   % PPS Variables Initialization for Data Matrix 
+
+ % Mat 1 
+ DeltaCOP_right_Mat1_Trial(1,i) = DeltaCOP_right_Mat1;
+ DeltaCOP_left_Mat1_Trial(1,i) = DeltaCOP_left_Mat1;
+ DeltaCOPMat1_whole_Trial(1,i) = DeltaCOPMat1_whole;
+
+ % Mat 2
+ DeltaCOP_right_Mat2_Trial(1,i) = DeltaCOP_right_Mat2;
+ DeltaCOP_left_Mat2_Trial(1,i) = DeltaCOP_left_Mat2;
+ DeltaCOPMat2_whole_Trial(1,i) = DeltaCOPMat2_whole;
+
 %% July 2023- Saving Shoudler Flexion/Extension and Elbow Flexion/Extension Per Trial ACROSS TIME
 
 if i == 1
@@ -5216,9 +5231,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5276,12 +5291,27 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % DataMatrix{1,23} = 'Change in Elbow Angle'; %April 2024 to compare restrained vs unrestrained 
 % DataMatrix{FinalRow,23} = ELB_ANG_DELTA_Trial(1,i);
 
+% Adding PPS MEASURES JULY 2024 
 
+% MAT 1 
+DataMatrix{1,24} = 'DeltaCOP_right_Mat1';
+DataMatrix{FinalRow,24} = DeltaCOP_right_Mat1_Trial(1,i);
 
+DataMatrix{1,25} = 'DeltaCOP_left_Mat1'; 
+DataMatrix{FinalRow,25} = DeltaCOP_left_Mat1_Trial(1,i);
 
+DataMatrix{1,26} = 'DeltaCOPMat1_whole '; 
+DataMatrix{FinalRow,26} = DeltaCOPMat1_whole_Trial(1,i);
 
+% MAT 2
+DataMatrix{1,27} = 'DeltaCOP_right_Mat2';
+DataMatrix{FinalRow,27} = DeltaCOP_right_Mat2_Trial(1,i);
 
- 
+DataMatrix{1,28} = 'DeltaCOP_left_Mat2'; 
+DataMatrix{FinalRow,28} = DeltaCOP_left_Mat2_Trial(1,i);
+
+DataMatrix{1,29} = 'DeltaCOPMat2_whole'; 
+DataMatrix{FinalRow,29} = DeltaCOPMat2_whole_Trial(1,i);
 
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
@@ -5355,7 +5385,7 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 end
 
-return
+% return
 
 %End of Loop going through each trial  
 
@@ -5559,234 +5589,234 @@ AvgShldTraj_y = mean(Shldtraj_current_trial_y_cor,1); % Average Trace for Y
 % handtraj_current_trial_x_cor = n trials x m samples 
 
 % 10 trials x 48 samples
-
-% X
-
-CI_X = zeros(2,length(handtraj_current_trial_x_cor));
-CI_Y = zeros(2,length(handtraj_current_trial_y_cor));
-
-CI_X_t = zeros(2,length(Trunktraj_current_trial_x_cor));
-CI_Y_t = zeros(2,length(Trunktraj_current_trial_y_cor));
-
-for b = 1:length(handtraj_current_trial_x_cor)
-% Across all trials at a given sample b
-pd_x = fitdist(handtraj_current_trial_x_cor(:,b),'Normal');
-pd_x_t = fitdist(Trunktraj_current_trial_x_cor(:,b),'Normal');
-pd_x_s = fitdist(Shldtraj_current_trial_x_cor(:,b),'Normal');
-
-
-ci_x = paramci(pd_x);
-ci_x_t = paramci(pd_x_t);
-ci_x_s = paramci(pd_x_s);
-
-
-CI_X(:,b) = ci_x(:,1); % 95% Confidence Interval values for every sample
-CI_X_t(:,b) = ci_x_t(:,1); % 95% Confidence Interval values for every sample
-CI_X_s(:,b) = ci_x_s(:,1); % 95% Confidence Interval values for every sample
-
-end
-
-
-% Y
-for b = 1:length(handtraj_current_trial_y_cor)
-% Across all trials at a given sample b
-pd_y = fitdist(handtraj_current_trial_y_cor(:,b),'Normal');
-pd_y_t = fitdist(Trunktraj_current_trial_y_cor(:,b),'Normal');
-pd_y_s = fitdist(Shldtraj_current_trial_y_cor(:,b),'Normal');
-
-
-ci_y = paramci(pd_y);
-ci_y_t = paramci(pd_y_t);
-ci_y_s = paramci(pd_y_s);
-
-CI_Y(:,b) = ci_y(:,1); % 95% Confidence Interval values for every sample
-CI_Y_t(:,b) = ci_y_t(:,1); % 95% Confidence Interval values for every sample
-CI_Y_s(:,b) = ci_y_s(:,1); % 95% Confidence Interval values for every sample
-
-
-end
-
-
-% Creating Points of Polygon % hand
-
-CI_X_Lower = CI_X(1,:)';
-CI_X_Upper = CI_X(2,:)';
-
-CI_Y_Lower = CI_Y(1,:)';
-CI_Y_Upper = CI_Y(2,:)';
-
-% For plotting Polygon - for hand
-
-% Right side
-X_Vector_Right = CI_X_Upper(1:length(CI_X_Upper)-1);
-Y_Vector_Right = AvgHandTraj_y(1:length(AvgHandTraj_y)-1);
-
-%Left side
-X_Vector_Left = CI_X_Lower(1:length(CI_X_Lower)-1);
-Y_Vector_Left = AvgHandTraj_y(1:length(AvgHandTraj_y)-1);
-
-% Top Points
-Right_Top_X = CI_X_Upper(end);
-Right_Top_Y = CI_Y_Upper(end);
-
-Left_Top_X = CI_X_Lower(end);
-Left_Top_Y = CI_Y_Upper(end);
-
-% Making Mass X Vector
-X_Bounds = [X_Vector_Right; Right_Top_X ; Left_Top_X ; flipud(X_Vector_Left)];
-
-Y_Bounds = [Y_Vector_Right'; Right_Top_Y ; Left_Top_Y ; (fliplr(Y_Vector_Left))'];
-
-
-
-% Trunk - just used cross hairs not the area
-
-CI_X_Lower_t = CI_X_t(1,:)';
-CI_X_Upper_t = CI_X_t(2,:)';
-
-CI_Y_Lower_t = CI_Y_t(1,:)';
-CI_Y_Upper_t = CI_Y_t(2,:)';
-
-
-% Finding the Abs Min and Abs Max for X and Y
-MinX_t = min(CI_X_Lower_t);
-MaxX_t = max(CI_X_Upper_t);
-MinY_t = min(CI_Y_Lower_t);
-Max_Y_t = max(CI_Y_Upper_t);
-
-% Shoulder - just used cross hairs not the area
-
-CI_X_Lower_s = CI_X_s(1,:)';
-CI_X_Upper_s = CI_X_s(2,:)';
-
-CI_Y_Lower_s = CI_Y_s(1,:)';
-CI_Y_Upper_s = CI_Y_s(2,:)';
-
-
-% Finding the Abs Min and Abs Max for X and Y
-MinX_s = min(CI_X_Lower_s);
-MaxX_s = max(CI_X_Upper_s);
-MinY_s = min(CI_Y_Lower_s);
-Max_Y_s = max(CI_Y_Upper_s);
-
-
-
-% Interpolate X and Y bounds
-X_Bounds_F = fillmissing(X_Bounds,"linear");
-Y_Bounds_F = fillmissing(Y_Bounds,"linear");
-
-% For plotting
-
-%  fill(X_Bounds,Y_Bounds,[0.68, 0.85, 0.90]) %Hand 
-% fill(X_Bounds_t,Y_Bounds_t,[0.68, 0.85, 0.90]) %Trunk 
-
-fill(X_Bounds_F,Y_Bounds_F,[0.6350 0.0780 0.1840]) %Hand  unrestrained
-
-figure()
-fill(X_Bounds,Y_Bounds,[0.6350 0.0780 0.1840]) %Hand  unrestrained
-
-
-hold on
-
-
-% Plotting all Traces and Traces (Not centered at 0,0,0)
-% plot(handtraj_current_trial_x(1,1:120),handtraj_current_trial_y(1,1:120),'b','Linewidth',3)
-% hold on
-% plot(handtraj_current_trial_x(2,1:120),handtraj_current_trial_y(2,1:120),'b','Linewidth',3)
-% plot(handtraj_current_trial_x(3,1:120),handtraj_current_trial_y(3,1:120),'b','Linewidth',3)
-% plot(handtraj_current_trial_x(4,1:120),handtraj_current_trial_y(4,1:120),'b' ,'Linewidth',3)
-% plot(handtraj_current_trial_x(5,1:120),handtraj_current_trial_y(5,1:120),'b','Linewidth',3)
-% plot(handtraj_current_trial_x(6,1:120),handtraj_current_trial_y(6,1:120),'b','Linewidth',3)
-% plot(handtraj_current_trial_x(7,1:120),handtraj_current_trial_y(7,1:120),'b','Linewidth',3)
-% plot(handtraj_current_trial_x(8,1:120),handtraj_current_trial_y(8,1:120),'b','Linewidth',3)
-% axis equal
-
-
-% Plotting with Average
-% figure()
-%plot(handtraj_current_trial_x_cor(1,:),handtraj_current_trial_y_cor(1,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(2,:),handtraj_current_trial_y_cor(2,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(3,:),handtraj_current_trial_y_cor(3,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(4,:),handtraj_current_trial_y_cor(4,:),'b' ,'Linewidth',3)
-%plot(handtraj_current_trial_x_cor(5,:),handtraj_current_trial_y_cor(5,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(6,:),handtraj_current_trial_y_cor(6,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(7,:),handtraj_current_trial_y_cor(7,:),'b','Linewidth',3)
-%plot(handtraj_current_trial_x_cor(8,:),handtraj_current_trial_y_cor(8,:),'b','Linewidth',3)
-
-plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 2);
-hold on
-plot(AvgTrunkTraj_x +100, AvgTrunkTraj_y-200, 'b', 'LineWidth', 3);
-plot(AvgShldTraj_x, AvgShldTraj_y -200,'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3);
-
-axis equal
-hold on
-circle(0,0,25) % Home TAR
-xlim([-400 300]) % For RTIS2001
-ylim([-350 250])
-
-
-% Trunk Error Bars
-% RTIS2002
-% x = AvgTrunkTraj_x(70)- 100; % Midway through trajectory
-% y = AvgTrunkTraj_y(70)-250;
-% yneg = MinY_t - AvgTrunkTraj_y(70);
-% ypos = Max_Y_t - AvgTrunkTraj_y(70);
-% xneg = MinX_t -AvgTrunkTraj_x(70);
-% xpos = MaxX_t -AvgTrunkTraj_x(70);
 % 
-% errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
-
-
-% RTIS2003 
-% x = AvgTrunkTraj_x(25)-100; % Midway through trajectory
-% y = AvgTrunkTraj_y(25)-250;
-% yneg = MinY_t - AvgTrunkTraj_y(25);
-% ypos = Max_Y_t - AvgTrunkTraj_y(25);
-% xneg = MinX_t -AvgTrunkTraj_x(25);
-% xpos = MaxX_t -AvgTrunkTraj_x(25) ;
+% % X
 % 
-% errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
-
-% RTIS2001 - p
-x = AvgTrunkTraj_x(15)-100; % Midway through trajectory
-y = AvgTrunkTraj_y(15)-250;
-yneg = MinY_t - AvgTrunkTraj_y(15);
-ypos = Max_Y_t - AvgTrunkTraj_y(15);
-xneg = MinX_t -AvgTrunkTraj_x(15);
-xpos = MaxX_t -AvgTrunkTraj_x(15);
-errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
-
-hold on
-% Shoulder Error Bars
-
-% RTIS2002
-% x = AvgShldTraj_x(60); % Midway through trajectory
-% y = AvgShldTraj_y(60)-300;
-% yneg = MinY_s - AvgShldTraj_y(60) ;
-% ypos = Max_Y_s - AvgShldTraj_y(60);
-% xneg = MinX_s -AvgShldTraj_x(60) ;
-% xpos = MaxX_s -AvgShldTraj_x(60) ;
-% errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
-
-% RTIS2003
-% x = AvgShldTraj_x(25); % Midway through trajectory
-% y = AvgShldTraj_y(25)-300;
-% yneg = MinY_s - AvgShldTraj_y(25) ;
-% ypos = Max_Y_s - AvgShldTraj_y(25);
-% xneg = MinX_s -AvgShldTraj_x(25) ;
-% xpos = MaxX_s -AvgShldTraj_x(25) ;
-% errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
-
-
-% RTIS2001
-x = AvgShldTraj_x(15); % Midway through trajectory
-y = AvgShldTraj_y(15)-300;
-yneg = MinY_s - AvgShldTraj_y(15) ;
-ypos = Max_Y_s - AvgShldTraj_y(15);
-xneg = MinX_s -AvgShldTraj_x(15) ;
-xpos = MaxX_s -AvgShldTraj_x(15) ;
-errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
-
+% CI_X = zeros(2,length(handtraj_current_trial_x_cor));
+% CI_Y = zeros(2,length(handtraj_current_trial_y_cor));
+% 
+% CI_X_t = zeros(2,length(Trunktraj_current_trial_x_cor));
+% CI_Y_t = zeros(2,length(Trunktraj_current_trial_y_cor));
+% 
+% for b = 1:length(handtraj_current_trial_x_cor)
+% % Across all trials at a given sample b
+% pd_x = fitdist(handtraj_current_trial_x_cor(:,b),'Normal');
+% pd_x_t = fitdist(Trunktraj_current_trial_x_cor(:,b),'Normal');
+% pd_x_s = fitdist(Shldtraj_current_trial_x_cor(:,b),'Normal');
+% 
+% 
+% ci_x = paramci(pd_x);
+% ci_x_t = paramci(pd_x_t);
+% ci_x_s = paramci(pd_x_s);
+% 
+% 
+% CI_X(:,b) = ci_x(:,1); % 95% Confidence Interval values for every sample
+% CI_X_t(:,b) = ci_x_t(:,1); % 95% Confidence Interval values for every sample
+% CI_X_s(:,b) = ci_x_s(:,1); % 95% Confidence Interval values for every sample
+% 
+% end
+% 
+% 
+% % Y
+% for b = 1:length(handtraj_current_trial_y_cor)
+% % Across all trials at a given sample b
+% pd_y = fitdist(handtraj_current_trial_y_cor(:,b),'Normal');
+% pd_y_t = fitdist(Trunktraj_current_trial_y_cor(:,b),'Normal');
+% pd_y_s = fitdist(Shldtraj_current_trial_y_cor(:,b),'Normal');
+% 
+% 
+% ci_y = paramci(pd_y);
+% ci_y_t = paramci(pd_y_t);
+% ci_y_s = paramci(pd_y_s);
+% 
+% CI_Y(:,b) = ci_y(:,1); % 95% Confidence Interval values for every sample
+% CI_Y_t(:,b) = ci_y_t(:,1); % 95% Confidence Interval values for every sample
+% CI_Y_s(:,b) = ci_y_s(:,1); % 95% Confidence Interval values for every sample
+% 
+% 
+% end
+% 
+% 
+% % Creating Points of Polygon % hand
+% 
+% CI_X_Lower = CI_X(1,:)';
+% CI_X_Upper = CI_X(2,:)';
+% 
+% CI_Y_Lower = CI_Y(1,:)';
+% CI_Y_Upper = CI_Y(2,:)';
+% 
+% % For plotting Polygon - for hand
+% 
+% % Right side
+% X_Vector_Right = CI_X_Upper(1:length(CI_X_Upper)-1);
+% Y_Vector_Right = AvgHandTraj_y(1:length(AvgHandTraj_y)-1);
+% 
+% %Left side
+% X_Vector_Left = CI_X_Lower(1:length(CI_X_Lower)-1);
+% Y_Vector_Left = AvgHandTraj_y(1:length(AvgHandTraj_y)-1);
+% 
+% % Top Points
+% Right_Top_X = CI_X_Upper(end);
+% Right_Top_Y = CI_Y_Upper(end);
+% 
+% Left_Top_X = CI_X_Lower(end);
+% Left_Top_Y = CI_Y_Upper(end);
+% 
+% % Making Mass X Vector
+% X_Bounds = [X_Vector_Right; Right_Top_X ; Left_Top_X ; flipud(X_Vector_Left)];
+% 
+% Y_Bounds = [Y_Vector_Right'; Right_Top_Y ; Left_Top_Y ; (fliplr(Y_Vector_Left))'];
+% 
+% 
+% 
+% % Trunk - just used cross hairs not the area
+% 
+% CI_X_Lower_t = CI_X_t(1,:)';
+% CI_X_Upper_t = CI_X_t(2,:)';
+% 
+% CI_Y_Lower_t = CI_Y_t(1,:)';
+% CI_Y_Upper_t = CI_Y_t(2,:)';
+% 
+% 
+% % Finding the Abs Min and Abs Max for X and Y
+% MinX_t = min(CI_X_Lower_t);
+% MaxX_t = max(CI_X_Upper_t);
+% MinY_t = min(CI_Y_Lower_t);
+% Max_Y_t = max(CI_Y_Upper_t);
+% 
+% % Shoulder - just used cross hairs not the area
+% 
+% CI_X_Lower_s = CI_X_s(1,:)';
+% CI_X_Upper_s = CI_X_s(2,:)';
+% 
+% CI_Y_Lower_s = CI_Y_s(1,:)';
+% CI_Y_Upper_s = CI_Y_s(2,:)';
+% 
+% 
+% % Finding the Abs Min and Abs Max for X and Y
+% MinX_s = min(CI_X_Lower_s);
+% MaxX_s = max(CI_X_Upper_s);
+% MinY_s = min(CI_Y_Lower_s);
+% Max_Y_s = max(CI_Y_Upper_s);
+% 
+% 
+% 
+% % Interpolate X and Y bounds
+% X_Bounds_F = fillmissing(X_Bounds,"linear");
+% Y_Bounds_F = fillmissing(Y_Bounds,"linear");
+% 
+% % For plotting
+% 
+% %  fill(X_Bounds,Y_Bounds,[0.68, 0.85, 0.90]) %Hand 
+% % fill(X_Bounds_t,Y_Bounds_t,[0.68, 0.85, 0.90]) %Trunk 
+% 
+% % fill(X_Bounds_F,Y_Bounds_F,[0.6350 0.0780 0.1840]) %Hand  unrestrained
+% % 
+% % figure()
+% % fill(X_Bounds,Y_Bounds,[0.6350 0.0780 0.1840]) %Hand  unrestrained
+% % 
+% % 
+% % hold on
+% 
+% 
+% % Plotting all Traces and Traces (Not centered at 0,0,0)
+% % plot(handtraj_current_trial_x(1,1:120),handtraj_current_trial_y(1,1:120),'b','Linewidth',3)
+% % hold on
+% % plot(handtraj_current_trial_x(2,1:120),handtraj_current_trial_y(2,1:120),'b','Linewidth',3)
+% % plot(handtraj_current_trial_x(3,1:120),handtraj_current_trial_y(3,1:120),'b','Linewidth',3)
+% % plot(handtraj_current_trial_x(4,1:120),handtraj_current_trial_y(4,1:120),'b' ,'Linewidth',3)
+% % plot(handtraj_current_trial_x(5,1:120),handtraj_current_trial_y(5,1:120),'b','Linewidth',3)
+% % plot(handtraj_current_trial_x(6,1:120),handtraj_current_trial_y(6,1:120),'b','Linewidth',3)
+% % plot(handtraj_current_trial_x(7,1:120),handtraj_current_trial_y(7,1:120),'b','Linewidth',3)
+% % plot(handtraj_current_trial_x(8,1:120),handtraj_current_trial_y(8,1:120),'b','Linewidth',3)
+% % axis equal
+% 
+% 
+% % Plotting with Average
+% % figure()
+% %plot(handtraj_current_trial_x_cor(1,:),handtraj_current_trial_y_cor(1,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(2,:),handtraj_current_trial_y_cor(2,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(3,:),handtraj_current_trial_y_cor(3,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(4,:),handtraj_current_trial_y_cor(4,:),'b' ,'Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(5,:),handtraj_current_trial_y_cor(5,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(6,:),handtraj_current_trial_y_cor(6,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(7,:),handtraj_current_trial_y_cor(7,:),'b','Linewidth',3)
+% %plot(handtraj_current_trial_x_cor(8,:),handtraj_current_trial_y_cor(8,:),'b','Linewidth',3)
+% 
+% % plot(AvgHandTraj_x, AvgHandTraj_y, 'k--', 'LineWidth', 2);
+% % hold on
+% % plot(AvgTrunkTraj_x +100, AvgTrunkTraj_y-200, 'b', 'LineWidth', 3);
+% % plot(AvgShldTraj_x, AvgShldTraj_y -200,'Color', [0.8500 0.3250 0.0980], 'LineWidth', 3);
+% % 
+% % axis equal
+% % hold on
+% % circle(0,0,25) % Home TAR
+% % xlim([-400 300]) % For RTIS2001
+% % ylim([-350 250])
+% 
+% 
+% % Trunk Error Bars
+% % RTIS2002
+% % x = AvgTrunkTraj_x(70)- 100; % Midway through trajectory
+% % y = AvgTrunkTraj_y(70)-250;
+% % yneg = MinY_t - AvgTrunkTraj_y(70);
+% % ypos = Max_Y_t - AvgTrunkTraj_y(70);
+% % xneg = MinX_t -AvgTrunkTraj_x(70);
+% % xpos = MaxX_t -AvgTrunkTraj_x(70);
+% % 
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+% 
+% 
+% % RTIS2003 
+% % x = AvgTrunkTraj_x(25)-100; % Midway through trajectory
+% % y = AvgTrunkTraj_y(25)-250;
+% % yneg = MinY_t - AvgTrunkTraj_y(25);
+% % ypos = Max_Y_t - AvgTrunkTraj_y(25);
+% % xneg = MinX_t -AvgTrunkTraj_x(25);
+% % xpos = MaxX_t -AvgTrunkTraj_x(25) ;
+% % 
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+% 
+% % RTIS2001 - p
+% x = AvgTrunkTraj_x(15)-100; % Midway through trajectory
+% y = AvgTrunkTraj_y(15)-250;
+% yneg = MinY_t - AvgTrunkTraj_y(15);
+% ypos = Max_Y_t - AvgTrunkTraj_y(15);
+% xneg = MinX_t -AvgTrunkTraj_x(15);
+% xpos = MaxX_t -AvgTrunkTraj_x(15);
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color','b','LineWidth', 3)
+% 
+% % hold on
+% % Shoulder Error Bars
+% 
+% % RTIS2002
+% % x = AvgShldTraj_x(60); % Midway through trajectory
+% % y = AvgShldTraj_y(60)-300;
+% % yneg = MinY_s - AvgShldTraj_y(60) ;
+% % ypos = Max_Y_s - AvgShldTraj_y(60);
+% % xneg = MinX_s -AvgShldTraj_x(60) ;
+% % xpos = MaxX_s -AvgShldTraj_x(60) ;
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
+% 
+% % RTIS2003
+% % x = AvgShldTraj_x(25); % Midway through trajectory
+% % y = AvgShldTraj_y(25)-300;
+% % yneg = MinY_s - AvgShldTraj_y(25) ;
+% % ypos = Max_Y_s - AvgShldTraj_y(25);
+% % xneg = MinX_s -AvgShldTraj_x(25) ;
+% % xpos = MaxX_s -AvgShldTraj_x(25) ;
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
+% 
+% 
+% % RTIS2001
+% x = AvgShldTraj_x(15); % Midway through trajectory
+% y = AvgShldTraj_y(15)-300;
+% yneg = MinY_s - AvgShldTraj_y(15) ;
+% ypos = Max_Y_s - AvgShldTraj_y(15);
+% xneg = MinX_s -AvgShldTraj_x(15) ;
+% xpos = MaxX_s -AvgShldTraj_x(15) ;
+% % errorbar(x,y,yneg,ypos,xneg,xpos,'o', 'Color',[0.8500 0.3250 0.0980],'LineWidth', 3)
+% 
 
 
 %%  Summer 2023- Angle Angle Plot
@@ -5984,7 +6014,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
-%  save FullDataMatrix.mat DataMatrix
+ save FullDataMatrix.mat DataMatrix
 
 
 
