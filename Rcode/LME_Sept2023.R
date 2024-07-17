@@ -18,21 +18,32 @@ library(emmeans)
 library(lmerTest)
 library(sjPlot)
 
-AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_FEB_OLD
+AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_CURRENT
 # Paretic Limb- restraint, loading, as categorical variables 
 AllData_Stroke_Paretic$Restraint = as.factor(AllData_Stroke_Paretic$Restraint)
 AllData_Stroke_Paretic$Loading = as.factor(AllData_Stroke_Paretic$Loading)
 AllData_Stroke_Paretic$ID = as.factor(AllData_Stroke_Paretic$ID)
 
+# Subsetting to include only rows where Restraint == 1 for back mat 
+AllData_Stroke_Paretic_restraint_1 <- AllData_Stroke_Paretic[AllData_Stroke_Paretic$Restraint == 1, ]
+
 # Non-Paretic Limb- restraint, loading, as categorical variables 
-Non_Paretic_FEB2024$Restraint = as.factor(Non_Paretic_FEB2024$Restraint)
-Non_Paretic_FEB2024$Loading = as.factor(Non_Paretic_FEB2024$Loading)
-Non_Paretic_FEB2024$ID = as.factor(Non_Paretic_FEB2024$ID)
+Non_Paretic_CURRENT$Restraint = as.factor(Non_Paretic_CURRENT$Restraint)
+Non_Paretic_CURRENT$Loading = as.factor(Non_Paretic_CURRENT$Loading)
+Non_Paretic_CURRENT$ID = as.factor(Non_Paretic_CURRENT$ID)
+
+# Subsetting to include only rows where Restraint == 1 for back mat 
+Non_Paretic_CURRENT_restraint_1 <- Non_Paretic_CURRENT[Non_Paretic_CURRENT$Restraint == 1, ]
+
 
 # For Controls-restraint, loading, as categorical variables 
-AllData_Controls_Feb2024$Restraint = as.factor(AllData_Controls_Feb2024$Restraint)
-AllData_Controls_Feb2024$Loading = as.factor(AllData_Controls_Feb2024$Loading)
-AllData_Controls_Feb2024$ID = as.factor(AllData_Controls_Feb2024$ID)
+AllData_Controls_CURRENT$Restraint = as.factor(AllData_Controls_CURRENT$Restraint)
+AllData_Controls_CURRENT$Loading = as.factor(AllData_Controls_CURRENT$Loading)
+AllData_Controls_CURRENT$ID = as.factor(AllData_Controls_CURRENT$ID)
+
+# Subsetting to include only rows where Restraint == 1 for back mat 
+AllData_Controls_CURRENT_restraint_1 <- AllData_Controls_CURRENT[AllData_Controls_CURRENT$Restraint == 1, ]
+
 
 AllData_Stroke = AllData_2024_FEB
 # Both Limbs Stroke- restraint, loading,limb,ID categorical variables
@@ -55,8 +66,6 @@ AllData_2024$ARM = as.factor(AllData_2024$ARM)
 AllData_2024$ID = as.factor(AllData_2024$ID)
 
 
-
-
 # Models
 
 # model1 <- glmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, family = gaussian(link = "identity"))
@@ -77,6 +86,29 @@ ano9vsummary(mod2Beta)
 # Plotting 
 plot(ggpredict(mod2Beta, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
 plot(ggpredict(mod2Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
+
+
+# For Center of Pressure Changes- July 2024
+
+#Mat 2
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOPMat2_whole ~ Loading * Restraint + (1 |ID), data= AllData_Stroke_Paretic, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
+
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOP_right_Mat2 ~ Loading * Restraint  + (1 |ID), data= AllData_Stroke_Paretic, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
+
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOP_left_Mat2 ~ Loading * Restraint  + (1 |ID), data= AllData_Stroke_Paretic, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
+
+# Mat 1 - no effect of restraint just loading 
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOPMat1_whole ~ Loading + (1 |ID), data= AllData_Stroke_Paretic_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
+
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOP_right_Mat1 ~ Loading  + (1 |ID), data= AllData_Stroke_Paretic_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
+
+ModFinal_CURRENT_COP_Paretic = glmmTMB(formula= DeltaCOP_left_Mat1 ~ Loading  + (1 |ID), data= AllData_Stroke_Paretic_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) # Paretic Limb
 
 #LME
 model2 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Stroke_Paretic, REML = TRUE)
@@ -103,6 +135,26 @@ tab_model(mod3Beta, show.df = TRUE) # Non-Paretic Limb
 plot(ggpredict(mod3Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
 
 
+# FOR COP JULY 2024
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOPMat2_whole ~ Loading * Restraint + (1 |ID), data= Non_Paretic_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_NonParetic, show.df = TRUE)
+
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOP_right_Mat2 ~ Loading * Restraint + (1 |ID), data= Non_Paretic_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_NonParetic, show.df = TRUE)
+
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOP_left_Mat2 ~ Loading * Restraint + (1 |ID), data= Non_Paretic_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_NonParetic, show.df = TRUE)
+
+# Mat 1 - no effect of restraint just loading 
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOPMat1_whole ~ Loading + (1 |ID), data= Non_Paretic_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_NonParetic, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOP_right_Mat1 ~ Loading  + (1 |ID), data= Non_Paretic_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_NonParetic, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_NonParetic = glmmTMB(formula= DeltaCOP_left_Mat1 ~ Loading + (1 |ID), data= Non_Paretic_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Paretic, show.df = TRUE) 
+
 #LME
 model4 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = Non_Paretic_FEB2024,REML = TRUE)
 plot(ggpredict(model4, terms = c("Loading"))) #VISUALIZING EFFECT OF LOADING ON RDLL2
@@ -116,6 +168,9 @@ tab_model(model4, show.df = TRUE) # Non-Paretic Limb
 
 
 #Controls
+
+
+
 model6 <- lmer(RDLL ~ Loading * Restraint + (1 | ID), data = AllData_Controls_Feb2024,REML = TRUE)
 model7 <- lmer(RDLL ~ Loading +(1 | ID), data = AllData_Controls,REML = TRUE)
 # Comparing with and Without Restraint to see the effect of Restraint Using ChiSquared Test
@@ -132,6 +187,27 @@ mod4Beta = glmmTMB(formula= RDLL2 ~ Loading * Restraint  +(1 | ID), data= AllDat
 tab_model(mod4Beta, show.df = TRUE) #  Controls
 plot(ggpredict(mod4Beta, terms = c("Restraint")))# VISUALIZING EFFECT OF RESTRAINT ON RDLL2
 
+
+# FOR COP JULY 2024
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOPMat2_whole ~ Loading * Restraint + (1 |ID), data=AllData_Controls_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOP_right_Mat2 ~ Loading * Restraint + (1 |ID), data=AllData_Controls_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOP_left_Mat2 ~ Loading * Restraint + (1 |ID), data=AllData_Controls_CURRENT, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
+
+
+# Mat 1 - no effect of restraint just loading 
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOPMat1_whole ~ Loading + (1 |ID), data= AllData_Controls_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOP_right_Mat1 ~ Loading  + (1 |ID), data= AllData_Controls_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
+
+ModFinal_CURRENT_COP_Controls = glmmTMB(formula= DeltaCOP_left_Mat1 ~ Loading + (1 |ID), data= AllData_Controls_CURRENT_restraint_1, family=gaussian(link = "identity"))
+tab_model(ModFinal_CURRENT_COP_Controls, show.df = TRUE) 
 
 
 
@@ -192,13 +268,25 @@ ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM
 ModFinal_CURRENT = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=ordbeta(link = "logit")) # USE ME!!!!!!! BEST BET # 
 
 # For Trunk Excursion - Don't need to use the beta distribution bc results are for excursions in CM 
-ModFinal_CURRENT_Trunk = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
+ModFinal_CURRENT_Trunk = glmmTMB(formula= TrunkExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
 
 # For Shoulder Excursion
+ModFinal_CURRENT_Shoulder = glmmTMB(formula= ShoulderExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
+
 
 # FINAL MODEL!!!! MAY 2024
 tab_model(ModFinal_CURRENT, show.df= TRUE)
 summary(ModFinal_CURRENT)
+
+tab_model(ModFinal_CURRENT_Trunk, show.df= TRUE)
+summary(ModFinal_CURRENT_Trunk)
+
+tab_model(ModFinal_CURRENT_Shoulder, show.df= TRUE)
+summary(ModFinal_CURRENT_Shoulder)
+
+
+
+
 # Plotting 
 plot(ggpredict(ModFinal_CURRENT, terms = c("Loading", "ARM")))
 plot(ggpredict(ModFinal_CURRENT, terms = c("Restraint", "ARM")))
