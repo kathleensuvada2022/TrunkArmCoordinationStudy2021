@@ -56,8 +56,11 @@ function [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_le
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 % %%
 %For MAC
-% datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
-% load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+
+baselinedata_full = data;
+
 % baseline_mat1 = data(:,1:256);
 % baseline_mat2 = data(:,257:end); % Mat on seat  
 % baseline_t = t;
@@ -182,8 +185,7 @@ pps_mat1_trial = ppsdata(:,1:256);
 % pause
 %%
 
-% Seeing How Many Elements are Negative - most likely due to seat cushion
-% or noise if negative
+
 Negs = ppsdata(ppsdata<0);
 NumElmPPSData = size(ppsdata,1)*size(ppsdata,2);
 
@@ -221,8 +223,7 @@ pps_mat2_FINAL = pps_mat2_FINAL_1 + 5;
 
 % Filling Dead Elements with NaN - July 2024
 
-ppsdata_clean = CleanPPSElem(ppsdata,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond);
-
+ppsdata_clean = CleanPPSElem(ppsdata,baselinedata_full,tpps,t_start,t_end,hand,partid,mtrial_Num,filename,expcond);
 
 
 %% Subtracting Baseline (First 5 samples of Trial) Cleaned up Data 
@@ -348,21 +349,21 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 % need to reshape to be a 16x16 where we have Nframes matrices
 % Pressuremat1R_frame= zeros(16,8,nframes);
 % Pressuremat1L_frame= zeros(16,8,nframes);
-% 
+% % 
 % for i=1:nframes
 %     Pressuremat1R_frame(:,:,i) =flipud(reshape(Mat1_RightHalf(i,:),[8,16])'); %corresponds to layout of mat (see figure from PPS)
 %     Pressuremat1L_frame(:,:,i) =flipud(reshape(Mat1_LeftHalf(i,:),[8,16])');
 % end
+
+% Full Mat - Mat 1
+Pressuremat1_frame= zeros(16,16,nframes);
 % 
-% % Full Mat
-% Pressuremat1_frame= zeros(16,16,nframes);
 % 
-% 
-% for i=1:nframes
-%     Pressuremat1_frame(:,:,i) =flipud(reshape(pps_mat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
-%     
-% end
-% Pressuremat1_frame(15,7,:) = 0; 
+for i=1:nframes
+    Pressuremat1_frame(:,:,i) =flipud(reshape(pps_mat1(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
+   
+end
+
 % 
 % % Mat2
 % % need to reshape to be a 16x16 where we have Nframes matrices
@@ -374,14 +375,13 @@ CoP_Mat2_Whole = ComputeCoP(pps_mat2,repmat((0:15)+0.5,nframes,16),repmat(rm_who
 %     Pressuremat2L_frame(:,:,i) =flipud(reshape(Mat2_LeftHalf(i,:),[8,16])');
 % end
 % 
-% % Full Mat
-% Pressuremat2_frame= zeros(16,16,nframes);
-% 
-% 
-% for i=1:nframes
-%     Pressuremat2_frame(:,:,i) =flipud(reshape(pps_mat2(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)
-%     
-% end
+
+% Full Mat - Mat 2 
+Pressuremat2_frame= zeros(16,16,nframes);
+
+for i=1:nframes
+    Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)    
+end
 
 %%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
