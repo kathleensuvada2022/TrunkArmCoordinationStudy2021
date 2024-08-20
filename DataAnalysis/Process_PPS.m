@@ -58,13 +58,32 @@ function [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_le
 %For MAC
 datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
 load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+baselinedata_full = data; 
+baseline_mat1 = data(:,1:256);
+baseline_mat2 = data(:,257:end); % Mat on seat  
+baseline_t = t;
 
-baselinedata_full = data;
+nframes = length(baseline_t);
 
-% baseline_mat1 = data(:,1:256);
-% baseline_mat2 = data(:,257:end); % Mat on seat  
-% baseline_t = t;
+Pressuremat2_frame= zeros(16,16,nframes);
+Pressuremat1_frame= zeros(16,16,nframes);
+
+
+%Reshaping and populating matrix to correspond to layout of the mat 
+for i=1:nframes
+Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); 
+Pressuremat1_frame(:,:,i) =flipud(reshape(baseline_mat1(i,:),[16,16])'); 
+
+end
+
+% Averaging the baseline file across all frames
+Pressuremat2_Baseline_Final = mean(Pressuremat2_frame,3); % Plot this later with the COP
+Pressuremat1_Baseline_Final = mean(Pressuremat1_frame,3);
+
+
 %
+
+
 % %Averaging Across the Interval
 % avg_interval = size(baseline_mat2,1)/2;
 % avg_interval = round(avg_interval);
@@ -75,14 +94,6 @@ baselinedata_full = data;
  % elements have stabilized 
 % baseline_mat2_corrected = mean(baseline_mat2(avg_interval:end,:));
 
-% % Replacing Negative Values with 0s 
-% if any(baseline_mat1_corrected < 0)
-%     baseline_mat1_corrected(baseline_mat1_corrected < 0) = 0;
-% end
-% 
-% if any(baseline_mat2_corrected < 0)
-%     baseline_mat2_corrected(baseline_mat2_corrected < 0) = 0;
-% end
 
 
 % Figure 15 shows average value for each element during baseline (this is prior to
@@ -377,11 +388,11 @@ end
 % 
 
 % Full Mat - Mat 2 
-Pressuremat2_frame= zeros(16,16,nframes);
-
-for i=1:nframes
-    Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)    
-end
+% Pressuremat2_frame= zeros(16,16,nframes);
+% 
+% for i=1:nframes
+%     Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); %corresponds to layout of mat (see figure from PPS)    
+% end
 
 %%%%%%%%%% Plotting Trajectories Mat 1 and Mat 2 Together%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -416,11 +427,11 @@ hold on
 plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'b','LineWidth',2);
 plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'m','LineWidth',2);
 plot(CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','Color','r');
+plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','MarkerSize',30,'Color','b');
 plot(CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_Whole(end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2),'*','Color','r');
+plot(CoP_Mat1_Whole(end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
 plot(CoP_Mat1_LeftHalf(start_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_LeftHalf(end_samp_M1,1),CoP_Mat1_LeftHalf( end_samp_M1,2),'*','Color','r');
+plot(CoP_Mat1_LeftHalf(end_samp_M1,1),CoP_Mat1_LeftHalf( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
 xlabel('Postion in X','FontSize',16)
 ylabel('Position in Y','FontSize',16)
 legend('Whole','Left','Right','FontSize',16)
