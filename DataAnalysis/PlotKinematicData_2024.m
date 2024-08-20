@@ -4229,10 +4229,10 @@ maxreach =RD_2024;
 
    close all
     
-  %  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+   PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
 
  
-   %  pause
+    pause
    % test = 0;
     
     handtraj_current_trial_x(i,1:length(idx(1):idx(3)))=xhand(1,idx(1):idx(3));
@@ -5231,9 +5231,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-    FinalRow = trialrow(Currentrow);
+%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+%     FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5294,24 +5294,24 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % Adding PPS MEASURES JULY 2024 
 
 % MAT 1 
-DataMatrix{1,24} = 'DeltaCOP_right_Mat1';
-DataMatrix{FinalRow,24} = DeltaCOP_right_Mat1_Trial(1,i);
-
-DataMatrix{1,25} = 'DeltaCOP_left_Mat1'; 
-DataMatrix{FinalRow,25} = DeltaCOP_left_Mat1_Trial(1,i);
-
-DataMatrix{1,26} = 'DeltaCOPMat1_whole '; 
-DataMatrix{FinalRow,26} = DeltaCOPMat1_whole_Trial(1,i);
-
-% MAT 2
-DataMatrix{1,27} = 'DeltaCOP_right_Mat2';
-DataMatrix{FinalRow,27} = DeltaCOP_right_Mat2_Trial(1,i);
-
-DataMatrix{1,28} = 'DeltaCOP_left_Mat2'; 
-DataMatrix{FinalRow,28} = DeltaCOP_left_Mat2_Trial(1,i);
-
-DataMatrix{1,29} = 'DeltaCOPMat2_whole'; 
-DataMatrix{FinalRow,29} = DeltaCOPMat2_whole_Trial(1,i);
+% DataMatrix{1,24} = 'DeltaCOP_right_Mat1';
+% DataMatrix{FinalRow,24} = DeltaCOP_right_Mat1_Trial(1,i);
+% 
+% DataMatrix{1,25} = 'DeltaCOP_left_Mat1'; 
+% DataMatrix{FinalRow,25} = DeltaCOP_left_Mat1_Trial(1,i);
+% 
+% DataMatrix{1,26} = 'DeltaCOPMat1_whole '; 
+% DataMatrix{FinalRow,26} = DeltaCOPMat1_whole_Trial(1,i);
+% 
+% % MAT 2
+% DataMatrix{1,27} = 'DeltaCOP_right_Mat2';
+% DataMatrix{FinalRow,27} = DeltaCOP_right_Mat2_Trial(1,i);
+% 
+% DataMatrix{1,28} = 'DeltaCOP_left_Mat2'; 
+% DataMatrix{FinalRow,28} = DeltaCOP_left_Mat2_Trial(1,i);
+% 
+% DataMatrix{1,29} = 'DeltaCOPMat2_whole'; 
+% DataMatrix{FinalRow,29} = DeltaCOPMat2_whole_Trial(1,i);
 
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
@@ -6014,7 +6014,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
- save FullDataMatrix.mat DataMatrix
+ %save FullDataMatrix.mat DataMatrix
 
 
 
