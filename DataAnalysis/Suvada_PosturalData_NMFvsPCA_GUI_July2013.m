@@ -51,7 +51,7 @@ function PosturalData_NMFvsPCA_GUI_July2013_OpeningFcn(hObject, eventdata, handl
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to PosturalData_NMFvsPCA_GUI_July2013 (see VARARGIN)
-
+ 
 % Choose default command line output for PosturalData_NMFvsPCA_GUI_July2013
 handles.output = hObject;
 
