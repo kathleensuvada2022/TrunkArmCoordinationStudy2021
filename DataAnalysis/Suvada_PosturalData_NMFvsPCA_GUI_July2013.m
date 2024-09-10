@@ -181,6 +181,8 @@ for i=1:nmus
         ylabel(Muscle_LST(i,:))
     end
 end
+
+
 orient tall
 guidata(hObject, handles); %updates the handles
 
@@ -772,11 +774,7 @@ end
 
 
 
-
-
-
-
- function [W,H,err,stdev]=NNMF_stacie_May2013(V,r,flag)
+ function [W,H,err,stdev]=NNMF_stacie_May2013(V,r,flag) 
 % NNMF: Given a nonnegative matrix V, NNMF finds nonnegative matrix W 
 %       and nonnegative coefficient matrix H such that V~WH. 
 %       The algorithm solves the problem of minimizing (V-WH)^2 by varying W and H
@@ -835,7 +833,25 @@ Vnew = diag(1./stdev)*Vnew;
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 opts = statset('MaxIter',1000,'TolFun',1e-6,'TolX',1e-4);
-[W,H,err] = nnmf(Vnew,r,'alg','mult','rep',50,'options',opts);
+[W,H,err] = nnmf(Vnew,r,'alg','mult','rep',50,'options',opts); % NNMF built in matlab function
+
+%%%%%%%%%% Kacey notes on the inputs for nnmf- 2024 %%%%%%%%%%%%%%%%%%%%%%
+
+% r is the rank (cols of W and rows of H or basis vectors)
+% Vnew is the matrix we want to factorize (original EMG data)
+% 'alg' and 'mult' specifies the algorithm. Multiplicative update algorithm.
+% 'rep' repeats the algorithm 50 times 
+
+% opts is to set parameters of the algorithm for finding a solution to the
+%   optimization problem V = WH. Max iteration is 1000 times. 'Tolfun' is 
+%   tolerance for the function and tolx is the tolerance for the
+%   variables. Once these are met the solution is considered converged.
+%   TLDR: OPTs sets the bounds on the convergence for the solution to the
+%   optimization problem and will assess whether or not the solution
+%   converges.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % [W,H,err] = nnmf(Vnew,r,'alg','mult','rep',50);
 
 
@@ -928,7 +944,10 @@ function [numsyn]=choosesyns(DATA,synergy_nmf)
 
 
 
-%bootstrap VAF code
+% Bootstrap VAF Code - Resampling method that can assess variability 
+% and reliability of statistical estimates
+
+
 function [VAF_CI]=bootstrap_VAFCI(DATA,synergy_nmf,nboot)
 
 VAFtot=[];sortedVAF=[];
