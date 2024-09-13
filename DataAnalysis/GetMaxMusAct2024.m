@@ -19,7 +19,7 @@ sampRate= setup.daq.sRate;
 
 % Specify the width of the averaging window in seconds
 avgwindow=0.25; ds=sampRate*avgwindow;
-trials=dir([flpath '/*' basename '*.mat']);
+trials=dir([flpath basename '*.mat']);
 
 
 %emgchan = chanList(1:15);

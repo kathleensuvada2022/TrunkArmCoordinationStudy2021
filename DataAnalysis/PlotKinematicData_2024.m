@@ -1890,14 +1890,18 @@ close all
     % Raw EMG Trial Data
     emg= data.daq{1,2};
 
-    % Unrectified EMG
-    % emg2=detrend(emg(:,1:15))./maxEMG(ones(length(emg(:,1:15)),1),:);
+%     emg=detrend(emg(:,1:15)); %updated 12.2023- using raw not filtered maxes
+    
+    % Removes Baseline
+     emg = emg-repmat(mean(emg(1:250,:)),length(emg),1); 
 
-    % Detrend and rectify EMG
-    emg=abs(detrend(emg(:,1:15)))./maxEMG(ones(length(emg(:,1:15)),1),:);
+    % Rectify EMG
+    emg=abs(emg);
 
-    % Subtract out baseline activity (normalized average) 250 ms
-    emg = emg-repmat(mean(emg(1:250,:)),length(emg),1);
+    % Normalizing to Max
+    emg=emg(:,1:15)./maxEMG(ones(length(emg(:,1:15)),1),:);
+
+
  
     %% Computing the start of the reach
     
@@ -4229,10 +4233,22 @@ maxreach =RD_2024;
 
    close all
     
-   PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+   meanEMG =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i);
 
  
-    pause
+   
+   
+   pause
+
+
+%% September 2024- Saving EMGs into Matrix for NNMF Analysis 
+
+
+NMFMatrix_FULL = Suvada_NMF_2024(NMFMatrix_FULL,meanEMG,timestart,timedistmax,ntrials,mfname,i)
+
+%%
+
+
    % test = 0;
     
     handtraj_current_trial_x(i,1:length(idx(1):idx(3)))=xhand(1,idx(1):idx(3));
