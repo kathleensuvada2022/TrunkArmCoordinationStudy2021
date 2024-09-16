@@ -7,7 +7,7 @@
 % that columns are each trial data.
 
 
-function NMFMatrix_FULL = Suvada_NMF_2024(NMFMatrix_FULL,emg,timestart,timedistmax,ntrials,filename,i)
+function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,ntrials,filename,expcond,i,NMFMatrix_trial)
 
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
@@ -26,20 +26,39 @@ MaxReach_idx_emg = timedistmax* 1000;
 emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
 
 % NMF Matrix
-NMFMatrix_COND1= num2cell(zeros(8,ntrials)); 
+if i ==1 && expcond ==1
+NMFMatrix_trial= num2cell(zeros(8,ntrials));
+NMFMatrix_trial = [ArmMusc' NMFMatrix_trial];
+end 
 
-NMFMatrix_COND1 = [ArmMusc' NMFMatrix_COND1];
+RunningCols = size(NMFMatrix_trial,2);
 
-NMFMatrix_COND1{1,i+1} = filename;
+    if expcond ==1 
+    NMFMatrix_trial{1,i+1} = [filename '_' 'COND' num2str(expcond)];
+    
+    NMFMatrix_trial{2,i+1} = emgvalsNMF(1);
+    NMFMatrix_trial{3,i+1} = emgvalsNMF(2);
+    NMFMatrix_trial{4,i+1} = emgvalsNMF(3);
+    NMFMatrix_trial{5,i+1} = emgvalsNMF(4);
+    NMFMatrix_trial{6,i+1} = emgvalsNMF(5);
+    NMFMatrix_trial{7,i+1} = emgvalsNMF(6);
+    NMFMatrix_trial{8,i+1} = emgvalsNMF(7);
+    
+    else
 
-NMFMatrix_COND1{2,2} = emgvalsNMF(1);
-NMFMatrix_COND1{3,2} = emgvalsNMF(2);
-NMFMatrix_COND1{4,2} = emgvalsNMF(3);
-NMFMatrix_COND1{5,2} = emgvalsNMF(4);
-NMFMatrix_COND1{6,2} = emgvalsNMF(5);
-NMFMatrix_COND1{7,2} = emgvalsNMF(6);
-NMFMatrix_COND1{8,2} = emgvalsNMF(7);
+    NMFMatrix_trial_updated = NMFMatrix_trial
 
-NMFMatrix_FULL = 
+    NMFMatrix_trial_updated{1,RunningCols+1} = [filename '_' 'COND' num2str(expcond)];
+    
+    NMFMatrix_trial_updated{2,RunningCols+1} = emgvalsNMF(1);
+    NMFMatrix_trial_updated{3,RunningCols+1} = emgvalsNMF(2);
+    NMFMatrix_trial_updated{4,RunningCols+1} = emgvalsNMF(3);
+    NMFMatrix_trial_updated{5,RunningCols+1} = emgvalsNMF(4);
+    NMFMatrix_trial_updated{6,RunningCols+1} = emgvalsNMF(5);
+    NMFMatrix_trial_updated{7,RunningCols+1} = emgvalsNMF(6);
+    NMFMatrix_trial_updated{8,RunningCols+1} = emgvalsNMF(7);
+    
+    end 
+
 
 end

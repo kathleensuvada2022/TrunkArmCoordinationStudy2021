@@ -139,6 +139,13 @@ for i=1: length(mtrials)
 
 
     end
+
+
+    % For Loading Muscle Matrix September 2024 for NMF
+ 
+    if expcond ~= 1 && i ==1
+         load('NMFMat.mat')
+    end 
     
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
     afname =  mfname;
@@ -4243,11 +4250,22 @@ maxreach =RD_2024;
 
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
 
+if i ==1 && expcond ==1
+NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i);
+                %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
 
-NMFMatrix_FULL = Suvada_NMF_2024(NMFMatrix_FULL,meanEMG,timestart,timedistmax,ntrials,mfname,i)
+elseif i ==1 && expcond ==2
+NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
 
+else 
+
+
+    NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+
+pause
+end
 %%
-
+    NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
 
    % test = 0;
     
@@ -5399,11 +5417,16 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %    
 
 
-end
+end %End of Loop going through each trial  
 
+test = 0 ; 
 % return
 
-%End of Loop going through each trial  
+
+%% Saving Muscle Activations Matrix for all Trials in a condition
+save NMFMat.mat NMFMatrix_trial_updated
+
+%%
 
 
 %% For plotting Average Trajectories - May 2024 - PLS NOTE THIS IS FOR PLOTTING NOT FOR RESULTS

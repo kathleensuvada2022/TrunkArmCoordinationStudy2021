@@ -61,7 +61,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(1)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,4)
 line(t,emg(:,idx2(1)))
 title(emgchan(idx2(1)))
@@ -78,7 +78,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(1)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,5)
 line(t,emg(:,idx1(2)))
 title(emgchan(idx1(2)))
@@ -95,7 +95,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(2)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,6)
 line(t,emg(:,idx2(2)))
 title(emgchan(idx2(2)))
@@ -112,7 +112,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(2)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,7)
 line(t,emg(:,idx1(3)))
 title(emgchan(idx1(3)))
@@ -128,7 +128,7 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidt
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',.7); %max, dist
 title(emgchan(idx1(3)))
 ylim([0 1])
-pause
+% pause
 subplot(5,2,8)
 line(t,emg(:,idx2(3)))
 title(emgchan(idx2(3)))
@@ -145,7 +145,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(3)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,9)
 line(t,emg(:,idx1(4)))
 title(emgchan(idx1(4)))
@@ -161,7 +161,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(4)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,10)
 line(t,emg(:,idx2(4)))
 title(emgchan(idx2(4)))
@@ -179,7 +179,7 @@ ylim([0 1])
 
 %% ARM MUSCLES
 figure(3)
-pause
+% pause
 subplot(5,2,3)
 line(t,emg(:,idx1(5)))
 title(emgchan(idx1(5)))
@@ -197,7 +197,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(5)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,4)
 line(t,emg(:,idx2(5)))
 title(emgchan(idx2(5)))
@@ -216,7 +216,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(5)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,5)
 line(t,emg(:,idx1(6)))
 title(emgchan(idx1(6)))
@@ -235,7 +235,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(6)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,6)
 line(t,emg(:,idx2(6)))
 title(emgchan(idx2(6)))
@@ -254,7 +254,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(6)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,7)
 line(t,emg(:,idx1(7)))
 title(emgchan(idx1(7)))
@@ -272,7 +272,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx1(7)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,8)
 line(t,emg(:,idx2(7)))
 title(emgchan(idx2(7)))
@@ -290,7 +290,7 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWi
 title(emgchan(idx2(7)))
 ylim([0 1])
 
-pause
+% pause
 subplot(5,2,9)
 line(t,emg(:,idx1(8)))
 title(emgchan(idx1(8)))
