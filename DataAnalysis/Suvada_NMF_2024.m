@@ -1,10 +1,11 @@
 % K. Suvada 
 % 2024
 
-% Function to compute motor modules given a matrix input V of collected
-% data to estimate weighting matrix "W" and time coefficient matrix "C."
-% Data collected for Trunk and reaching arm. Feed in trial by trial such
-% that columns are each trial data.
+% Function to organize muscle activation values that will be used for
+% computations of muscle modules. Saves as a matrix that is m muscles by n
+% trials for all conditions of a given participant. Extracting the average
+% activation during the reach. Confirm visually with plots from
+% 'PlotEMGsCleanV2'
 
 
 function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,ntrials,filename,expcond,i,NMFMatrix_trial)
@@ -22,7 +23,7 @@ Reachstart_idx_emg = timestart*1000;
 MaxReach_idx_emg = timedistmax* 1000;
 
 
-% For Arm Muscles 
+% For Arm Muscles extracting the mean value during the reach
 emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
 
 % NMF Matrix
@@ -46,7 +47,7 @@ RunningCols = size(NMFMatrix_trial,2);
     
     else
 
-    NMFMatrix_trial_updated = NMFMatrix_trial
+    NMFMatrix_trial_updated = NMFMatrix_trial;
 
     NMFMatrix_trial_updated{1,RunningCols+1} = [filename '_' 'COND' num2str(expcond)];
     
