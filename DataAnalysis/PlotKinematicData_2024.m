@@ -4251,21 +4251,28 @@ maxreach =RD_2024;
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
 
 if i ==1 && expcond ==1
-NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i);
+NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
 
+elseif i == 2 && expcond ==1
+NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
+
+elseif expcond ==1
+NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+
 elseif i ==1 && expcond ==2
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
+NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
 
 else 
+mfname
 
-
-    NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+    NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
 
 pause
+    NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
+
 end
 %%
-    NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
 
    % test = 0;
     

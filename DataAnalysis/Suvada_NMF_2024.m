@@ -8,7 +8,7 @@
 % 'PlotEMGsCleanV2'
 
 
-function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,ntrials,filename,expcond,i,NMFMatrix_trial)
+function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,timevelmax,ntrials,filename,expcond,i,NMFMatrix_trial)
 
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
@@ -21,10 +21,23 @@ emgTrunk = 1:8;
 % Start and End index for EMG data (Fs= 1000 Hz)
 Reachstart_idx_emg = timestart*1000;
 MaxReach_idx_emg = timedistmax* 1000;
+MaxVel_idx_emg = timevelmax*1000;
 
 
 % For Arm Muscles extracting the mean value during the reach
-emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
+
+% Can alter to interval of interest 
+
+%During Reach
+%emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
+
+% Start of Reach to the Max Vel (acceleration phase of the movement)
+
+if Reachstart_idx_emg == MaxVel_idx_emg
+emgvalsNMF = emg(Reachstart_idx_emg)';
+else 
+emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
+end 
 
 % NMF Matrix
 if i ==1 && expcond ==1
@@ -45,6 +58,8 @@ RunningCols = size(NMFMatrix_trial,2);
     NMFMatrix_trial{7,i+1} = emgvalsNMF(6);
     NMFMatrix_trial{8,i+1} = emgvalsNMF(7);
     
+    NMFMatrix_trial_updated = NMFMatrix_trial;
+
     else
 
     NMFMatrix_trial_updated = NMFMatrix_trial;
