@@ -136,6 +136,72 @@ VarRatio = VarDiff/VarOriginalSig;
 % CHECK THIS DEFINITION 
 VAF_total = (1-VarRatio)*100
 
+%% Computing VAF From Code From Hongchul
+data = [];
+data = NNMF_Mat;
+nmus = size(data,1);
+
+for s=1:nmus
+nmf(s).nsyn=s; %The number of synergies
+[nmf(s).W,nmf(s).C,nmf(s).err,nmf(s).stdev] = NNMF_stacie_May2013(data,s,1);
+[nmf(s).VAFcond, nmf(s).VAFmus, nmf(s).VAF]=funur(data,nmf(s).W,nmf(s).C); %calculate VAF of reconstruction
+nmf(s).RECON = nmf(s).W*nmf(s).C;
+end
+
+%% VAF as a function of the number of modules 
+
+figure()
+plot([nmf.VAF],'Linewidth',3)
+title('Motor Modules vs VAF', 'FontSize', 20);
+xlabel('Modules', 'FontSize', 16); 
+ylabel('% VAF', 'FontSize', 16); 
+y = 99; % y-coordinate
+x = xlim; % Get current x-axis limits
+line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
+xline(3,'r','Linewidth',2)
+
+%% Plotting the Modules for n = 3 modules and the Time Component
+
+Mus = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+x = 1:length(Mus);
+
+
+figure
+% Weightings per Module
+subplot(3,2,1)
+title('Module 1','Fontsize',16)
+hold on
+bar(nmf(3).W(:,1))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+subplot(3,2,3)
+hold on
+bar(nmf(3).W(:,2))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+title('Module 2','Fontsize',16)
+subplot(3,2,5)
+bar(nmf(3).W(:,end))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+hold on
+title('Module 3','Fontsize',16)
+
+
+%Time Component Per Module
+subplot(3,2,2)
+plot(nmf(3).C(1,:),'Linewidth',2)
+xlabel('Trials','FontSize',16)
+ylabel('Contribution to Module 1','FontSize',16)
+subplot(3,2,4)
+plot(nmf(3).C(2,:),'Linewidth',2)
+xlabel('Trials','FontSize',16)
+ylabel('Contribution to Module 2','FontSize',16)
+subplot(3,2,6)
+plot(nmf(3).C(end,:),'Linewidth',2)
+xlabel('Trials','FontSize',16)
+ylabel('Contribution to Module 3','FontSize',16)
+
 
 %% Saved VAFS from given number of modules 
 
