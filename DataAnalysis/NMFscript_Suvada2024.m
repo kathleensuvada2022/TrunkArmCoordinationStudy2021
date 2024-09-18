@@ -52,23 +52,23 @@ Mods = 4;
 
 MuscleWeightingMatrix = [NMFMatrix_trial_FINAL(2:end,1) num2cell(W)];
 
-MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} ; MuscleWeightingMatrix];
-MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} {'Mod 3'} {'Mod 4'} {'Mod 5'} ; MuscleWeightingMatrix];
+% MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} ; MuscleWeightingMatrix];
+MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} {'Mod 3'} {'Mod 4'}; MuscleWeightingMatrix];
 %% Plotting Muscle Weighting with the given Modules 
 
 
-Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+Mus = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 Mod1 = cell2mat(MuscleWeightingMatrix(2:end,2));
 Mod2 = cell2mat(MuscleWeightingMatrix(2:end,3));
 Mod3 = cell2mat(MuscleWeightingMatrix(2:end,4));
 Mod4 = cell2mat(MuscleWeightingMatrix(2:end,5));
-Mod5 = cell2mat(MuscleWeightingMatrix(2:end,6));
+% Mod5 = cell2mat(MuscleWeightingMatrix(2:end,6));
 %% 
 figure()
 x = 1:length(Muscles);
 
 % Create bar plot for Mod1
-subplot(1,5,1); 
+subplot(1,4,1); 
 bar(x, Mod1, 'FaceColor', [0 0.5 0.5]); 
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45); 
@@ -78,7 +78,7 @@ ylabel('Module 1 Weightings', 'FontSize', 16);
 ylim([0 5])
 
 % Create bar plot for Mod2
-subplot(1,5,2); 
+subplot(1,4,2); 
 bar(x, Mod2, 'FaceColor', [0.5 0 0.5]); 
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45); 
@@ -88,7 +88,7 @@ ylabel('Module 2 Weightings', 'FontSize', 16);
 ylim([0 5])
 
 % Create bar plot for Mod3
-subplot(1,5,3); 
+subplot(1,4,3); 
 bar(x, Mod3, 'FaceColor', [0.6 0.8 0.2]); 
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
@@ -98,7 +98,7 @@ ylabel('Module 3 Weightings', 'FontSize', 16);
 ylim([0 5])
 
 % Create bar plot for Mod4
-subplot(1,5,4); 
+subplot(1,4,4); 
 bar(x, Mod4, 'FaceColor', [0.3 0.6 0.9]); 
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
@@ -107,23 +107,24 @@ xlabel('Muscles', 'FontSize', 16);
 ylabel('Module 4 Weightings', 'FontSize', 16); 
 ylim([0 5])
 
-% Create bar plot for Mod5
-subplot(1,5,5); 
-bar(x, Mod5, 'FaceColor', [1 0.6 0.2]); 
-set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
-xtickangle(45);
-title('Module 5', 'FontSize', 20);
-xlabel('Muscles', 'FontSize', 16); 
-ylabel('Module 5 Weightings', 'FontSize', 16); 
-ylim([0 5])
+% % Create bar plot for Mod5
+% subplot(1,5,5); 
+% bar(x, Mod5, 'FaceColor', [1 0.6 0.2]); 
+% set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+% xtickangle(45);
+% title('Module 5', 'FontSize', 20);
+% xlabel('Muscles', 'FontSize', 16); 
+% ylabel('Module 5 Weightings', 'FontSize', 16); 
+% ylim([0 5])
 
 
-%% Plotting the VAF 
+%% Computing the Total VAF
 
 % Difference in the computed signal (W*C) from the input Data (NNMF_Mat)
 
 EMG_est = W*C; 
 
+                  % Actual     % ESTimated
 DiffActualfromEst = NNMF_Mat - EMG_est;
 
 VarDiff = var(DiffActualfromEst);
@@ -136,7 +137,9 @@ VarRatio = VarDiff/VarOriginalSig;
 VAF_total = (1-VarRatio)*100
 
 
-%% Saved VAFS
+%% Saved VAFS from given number of modules 
+
+% Plotting the Number of Modules vs the VAF
 x1 =2;
 x2=3;
 x3=4;
@@ -147,6 +150,7 @@ ModulesVAF_3 = 88.7685 ;
 ModulesVAF_4 =  89.9994 ; 
 ModulesVAF_5 = 98.1836;
 
+% Kacey: where is the plateau? Once you get to 80/90% VAF it's okay?
 
 figure()
 plot(x1, ModulesVAF_2, 'o', 'MarkerSize', 10, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
