@@ -1,4 +1,4 @@
-% K. Suvada. Sept 2024
+ % K. Suvada. Sept 2024
 
 % Script to run NMF analysis and remove zeros from matrix using internal
 % Matlab function.
@@ -57,7 +57,7 @@ MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} {'Mod 3'} {'Mod 4'}; Muscle
 %% Plotting Muscle Weighting with the given Modules 
 
 
-Mus = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 Mod1 = cell2mat(MuscleWeightingMatrix(2:end,2));
 Mod2 = cell2mat(MuscleWeightingMatrix(2:end,3));
 Mod3 = cell2mat(MuscleWeightingMatrix(2:end,4));
@@ -118,25 +118,25 @@ ylim([0 5])
 % ylim([0 5])
 
 
-%% Computing the Total VAF
+%% Computing the Total VAF - Kacey's Old Version Don't USE
 
 % Difference in the computed signal (W*C) from the input Data (NNMF_Mat)
 
-EMG_est = W*C; 
+% EMG_est = W*C; 
+% 
+%                   % Actual     % ESTimated
+% DiffActualfromEst = NNMF_Mat - EMG_est;
+% 
+% VarDiff = var(DiffActualfromEst);
+% 
+% VarOriginalSig = var(NNMF_Mat);
+% 
+% VarRatio = VarDiff/VarOriginalSig;
+% 
+% % CHECK THIS DEFINITION 
+% VAF_total = (1-VarRatio)*100
 
-                  % Actual     % ESTimated
-DiffActualfromEst = NNMF_Mat - EMG_est;
-
-VarDiff = var(DiffActualfromEst);
-
-VarOriginalSig = var(NNMF_Mat);
-
-VarRatio = VarDiff/VarOriginalSig;
-
-% CHECK THIS DEFINITION 
-VAF_total = (1-VarRatio)*100
-
-%% Computing VAF From Code From Hongchul
+%% Computing VAF From Code From Hongchul *** USE!!!****
 data = [];
 data = NNMF_Mat;
 nmus = size(data,1);
@@ -162,7 +162,7 @@ xline(3,'r','Linewidth',2)
 
 %% Plotting the Modules for n = 3 modules and the Time Component
 
-Mus = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 x = 1:length(Mus);
 
 
@@ -202,32 +202,111 @@ plot(nmf(3).C(end,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 3','FontSize',16)
 
+%% Box Plots for the Module Curves as a function of Condition
 
-%% Saved VAFS from given number of modules 
+% Choosing for when 3 Modules 
+Modules_CMatrices_3Modules = nmf(3).C;
+
+
+% Table (trials Table: 1-7 25: 8-18 50: 19:end) 
+
+%Module1 
+
+Mod1_T= Modules_CMatrices_3Modules(1,1:7)';
+Mod1_25 = Modules_CMatrices_3Modules(1,8:18)';
+Mod1_50 = Modules_CMatrices_3Modules(1,19:end)';
+
+
+Mod1_T = [Mod1_T;NaN;NaN;NaN;NaN] ; 
+Mod1_50 = [Mod1_50;NaN]; 
+
+Mod1_colsasLoads = [Mod1_T Mod1_25 Mod1_50];
+
+
+%% Module2
+
+Mod2_T= Modules_CMatrices_3Modules(2,1:7)';
+Mod2_25 = Modules_CMatrices_3Modules(2,8:18)';
+Mod2_50 = Modules_CMatrices_3Modules(2,19:end)';
+
+
+Mod2_T = [Mod2_T;NaN;NaN;NaN;NaN] ; 
+Mod2_50 = [Mod2_50;NaN]; 
+
+Mod2_colsasLoads = [Mod2_T Mod2_25 Mod2_50];
+
+
+%Module3
+
+Mod3_T= Modules_CMatrices_3Modules(3,1:7)';
+Mod3_25 = Modules_CMatrices_3Modules(3,8:18)';
+Mod3_50 = Modules_CMatrices_3Modules(3,19:end)';
+
+
+Mod3_T = [Mod3_T;NaN;NaN;NaN;NaN] ; 
+Mod3_50 = [Mod3_50;NaN]; 
+
+Mod3_colsasLoads = [Mod3_T Mod3_25 Mod3_50];
+
+%% Module 1 Box Plot 
+figure()
+%subplot(3,1,1)
+boxplot(Mod1_colsasLoads)
+title('Module 1 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+ylabel('Expression of Module 1')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+
+% Module 2 Box Plot 
+figure()
+%subplot(3,1,2)
+boxplot(Mod2_colsasLoads)
+title('Module 2 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+ylabel('Expression of Module 2')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+% Module 3 Box Plot 
+figure()
+%subplot(3,1,3)
+boxplot(Mod3_colsasLoads)
+title('Module 3 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+ylabel('Expression of Module 3')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+%% Saved VAFS from given number of modules - OLD VAF DEF - DON'T USE 
 
 % Plotting the Number of Modules vs the VAF
-x1 =2;
-x2=3;
-x3=4;
-x4 = 5;
-
-ModulesVAF_2 = 74.7773;
-ModulesVAF_3 = 88.7685 ; 
-ModulesVAF_4 =  89.9994 ; 
-ModulesVAF_5 = 98.1836;
-
-% Kacey: where is the plateau? Once you get to 80/90% VAF it's okay?
-
-figure()
-plot(x1, ModulesVAF_2, 'o', 'MarkerSize', 10, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-hold on
-plot(x2, ModulesVAF_3, 'o', 'MarkerSize', 12, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-plot(x3, ModulesVAF_4, 'o', 'MarkerSize', 14, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-plot(x4, ModulesVAF_5, 'o', 'MarkerSize', 16, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-xlim([1 6])
-ylabel('Variance Accounted For','FontSize',20)
-xlabel('Number of Modules','FontSize',20)
-title('Variance Accounted for as a Function of Modules','FontSize',25)
-set(gca, 'FontSize', 14); % Set font size for tick labels
+% x1 =2;
+% x2=3;
+% x3=4;
+% x4 = 5;
+% 
+% ModulesVAF_2 = 74.7773;
+% ModulesVAF_3 = 88.7685 ; 
+% ModulesVAF_4 =  89.9994 ; 
+% ModulesVAF_5 = 98.1836;
+% 
+% % Kacey: where is the plateau? Once you get to 80/90% VAF it's okay?
+% 
+% figure()
+% plot(x1, ModulesVAF_2, 'o', 'MarkerSize', 10, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
+% hold on
+% plot(x2, ModulesVAF_3, 'o', 'MarkerSize', 12, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
+% plot(x3, ModulesVAF_4, 'o', 'MarkerSize', 14, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
+% plot(x4, ModulesVAF_5, 'o', 'MarkerSize', 16, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
+% xlim([1 6])
+% ylabel('Variance Accounted For','FontSize',20)
+% xlabel('Number of Modules','FontSize',20)
+% title('Variance Accounted for as a Function of Modules','FontSize',25)
+% set(gca, 'FontSize', 14); % Set font size for tick labels
 
 
