@@ -143,10 +143,15 @@ for i=1: length(mtrials)
 
     % For Loading Muscle Matrix September 2024 for NMF
  
-    if expcond ~= 1 && i ==1
+%     if expcond ~= 1 && i ==1
+%          load('NMFMat.mat')
+%     end 
+    
+ 
+    if expcond ~= 4 && i ==1
          load('NMFMat.mat')
     end 
-    
+
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
     afname =  mfname;
     afname2 = mfname;
@@ -342,6 +347,11 @@ for i=1: length(mtrials)
     
     if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
+        if strcmp(mfname,'/trial31.mat')
+          pause
+        end
+
+
         if strcmp(mfname,'/trial8.mat')
             maxhandexcrsn_current_trial(i) = 0;
             shex_current_trial(i) =0;
@@ -4250,17 +4260,41 @@ maxreach =RD_2024;
 
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
 
-if i ==1 && expcond ==1
+% if i ==1 && expcond ==1
+% NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
+%                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
+% 
+% elseif i == 2 && expcond ==1
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
+% 
+% elseif expcond ==1
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% elseif i ==1 && expcond ==2
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% else 
+% mfname
+% 
+%     NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% pause
+%     NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
+% 
+% end
+
+
+if i ==1 && expcond ==4
 NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
 
-elseif i == 2 && expcond ==1
+elseif i == 5 && expcond ==4
 NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
 
-elseif expcond ==1
+elseif expcond ==4
 NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
 
-elseif i ==1 && expcond ==2
+elseif i ==1 && expcond ==5
 NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
 
 else 

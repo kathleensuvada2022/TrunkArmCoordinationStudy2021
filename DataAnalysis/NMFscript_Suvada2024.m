@@ -18,7 +18,6 @@ for i = 1: NumCols
 
     NMFMatrix_trial_FINAL = NMFMatrix_trial_updated(:,i);
         
-  
     elseif cell2mat(NMFMatrix_trial_updated(2,i)) == 0 
 
     else
@@ -58,6 +57,7 @@ MuscleWeightingMatrix = [{'Mus'} {'Mod 1'} {'Mod 2'} {'Mod 3'} {'Mod 4'}; Muscle
 
 
 Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+Mus = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 Mod1 = cell2mat(MuscleWeightingMatrix(2:end,2));
 Mod2 = cell2mat(MuscleWeightingMatrix(2:end,3));
 Mod3 = cell2mat(MuscleWeightingMatrix(2:end,4));
@@ -155,7 +155,7 @@ plot([nmf.VAF],'Linewidth',3)
 title('Motor Modules vs VAF', 'FontSize', 20);
 xlabel('Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
-y = 99; % y-coordinate
+y = 99.1355; % y-coordinate
 x = xlim; % Get current x-axis limits
 line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
 xline(3,'r','Linewidth',2)
@@ -189,6 +189,21 @@ title('Module 3','Fontsize',16)
 
 
 %Time Component Per Module
+% subplot(3,2,2)
+% plot(nmf(3).C(1,:),'Linewidth',2)
+% xlabel('Trials','FontSize',16)
+% ylabel('Contribution to Module 1','FontSize',16)
+% subplot(3,2,4)
+% plot(nmf(3).C(2,:),'Linewidth',2)
+% xlabel('Trials','FontSize',16)
+% ylabel('Contribution to Module 2','FontSize',16)
+% subplot(3,2,6)
+% plot(nmf(3).C(end,:),'Linewidth',2)
+% xlabel('Trials','FontSize',16)
+% ylabel('Contribution to Module 3','FontSize',16)
+
+
+%Time Component Per Module- box plots
 subplot(3,2,2)
 plot(nmf(3).C(1,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
@@ -201,6 +216,7 @@ subplot(3,2,6)
 plot(nmf(3).C(end,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 3','FontSize',16)
+
 
 %% Box Plots for the Module Curves as a function of Condition
 
@@ -218,7 +234,7 @@ Mod1_50 = Modules_CMatrices_3Modules(1,19:end)';
 
 
 Mod1_T = [Mod1_T;NaN;NaN;NaN;NaN] ; 
-Mod1_50 = [Mod1_50;NaN]; 
+Mod1_50 = [Mod1_50;NaN;NaN]; 
 
 Mod1_colsasLoads = [Mod1_T Mod1_25 Mod1_50];
 
@@ -231,7 +247,7 @@ Mod2_50 = Modules_CMatrices_3Modules(2,19:end)';
 
 
 Mod2_T = [Mod2_T;NaN;NaN;NaN;NaN] ; 
-Mod2_50 = [Mod2_50;NaN]; 
+Mod2_50 = [Mod2_50;NaN;NaN]; 
 
 Mod2_colsasLoads = [Mod2_T Mod2_25 Mod2_50];
 
@@ -244,9 +260,73 @@ Mod3_50 = Modules_CMatrices_3Modules(3,19:end)';
 
 
 Mod3_T = [Mod3_T;NaN;NaN;NaN;NaN] ; 
-Mod3_50 = [Mod3_50;NaN]; 
+Mod3_50 = [Mod3_50;NaN;NaN]; 
 
 Mod3_colsasLoads = [Mod3_T Mod3_25 Mod3_50];
+%%Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+x = 1:length(Mus);
+
+%% MODULE 1-  Weightings and Box Plots with Time Component * USE ME* 
+
+figure
+% Weightings per Module
+subplot(1,2,1)
+title('Module 1','Fontsize',16)
+hold on
+bar(nmf(3).W(:,1))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+subplot(1,2,2) % Time Component as Box Plots 
+boxplot(Mod1_colsasLoads)
+title('Module 1 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+%ylabel('Expression of Module 1')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+
+
+%% Module 2: Weightings and Box Plots with Time Component * USE ME* 
+figure
+subplot(1,2,1)
+hold on
+bar(nmf(3).W(:,2))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+title('Module 2','Fontsize',16)
+
+subplot(1,2,2)
+boxplot(Mod2_colsasLoads)
+title('Module 2 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+%ylabel('Expression of Module 2')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+%% MODULE 3: Weightings and Box Plots with Time Component * USE ME* 
+
+
+figure
+subplot(1,2,1)
+bar(nmf(3).W(:,end))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+hold on
+title('Module 3','Fontsize',16)
+
+subplot(1,2,2)
+boxplot(Mod3_colsasLoads)
+title('Module 3 Across Loading Conditions','FontSize',20)
+xticks(1:3); % Set x-tick positions
+xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+%ylabel('Expression of Module 3')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
+
+
+
 
 %% Module 1 Box Plot 
 figure()
