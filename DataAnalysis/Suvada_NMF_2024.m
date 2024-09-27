@@ -8,8 +8,8 @@
 % 'PlotEMGsCleanV2'
 
 
-function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,timevelmax,ntrials,filename,expcond,i)
-% function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,timevelmax,ntrials,filename,expcond,i,NMFMatrix_trial)
+% function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,timevelmax,ntrials,filename,expcond,i)
+function NMFMatrix_trial_updated = Suvada_NMF_2024(emg,timestart,timedistmax,timevelmax,ntrials,filename,expcond,i,NMFMatrix_trial)
 
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
@@ -30,14 +30,14 @@ MaxVel_idx_emg = timevelmax*1000;
 % Can alter to interval of interest 
 
 %During Reach
-emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
+% emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
 
 % Start of Reach to the Max Vel (acceleration phase of the movement)
-% if Reachstart_idx_emg == MaxVel_idx_emg
-% emgvalsNMF = emg(Reachstart_idx_emg,:)';
-% else 
-% emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
-% end 
+if Reachstart_idx_emg == MaxVel_idx_emg
+emgvalsNMF = emg(Reachstart_idx_emg,:)';
+else 
+emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
+end 
 
 % NMF Matrix
 if i ==1 && expcond ==1 

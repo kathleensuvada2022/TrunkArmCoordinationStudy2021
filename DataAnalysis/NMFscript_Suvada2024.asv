@@ -155,7 +155,7 @@ plot([nmf.VAF],'Linewidth',3)
 title('Motor Modules vs VAF', 'FontSize', 20);
 xlabel('Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
-y = 96.5936; % y-coordinate
+y = 96.1355; % y-coordinate
 x = xlim; % Get current x-axis limits
 line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
 xline(3,'r','Linewidth',2)
