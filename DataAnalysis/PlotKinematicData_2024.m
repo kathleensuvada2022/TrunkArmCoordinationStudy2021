@@ -146,11 +146,11 @@ for i=1: length(mtrials)
 %     if expcond ~= 1 && i ==1
 %          load('NMFMat.mat')
 %     end 
-    
- 
-    if expcond ~= 4 && i ==1
-         load('NMFMat.mat')
-    end 
+%     
+%  
+%     if expcond ~= 4 && i ==1
+%          load('NMFMat.mat')
+%     end 
 
     mfname = ['/' metriafname num2str(mtrials(i)) '.mat'];
     afname =  mfname;
@@ -4260,6 +4260,7 @@ maxreach =RD_2024;
 
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
 
+% For Restrained
 % if i ==1 && expcond ==1
 % NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
 %                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
@@ -4281,31 +4282,31 @@ maxreach =RD_2024;
 % pause
 %     NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
 % 
+%  end
+
+% For Unrestrained
+% if i ==1 && expcond ==4
+% NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
+%                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
+% 
+% elseif i == 5 && expcond ==4
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
+% 
+% elseif expcond ==4
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% elseif i ==1 && expcond ==5
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% else 
+% mfname
+% 
+%     NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% pause
+%     NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
+% 
 % end
-
-
-if i ==1 && expcond ==4
-NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
-                %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
-
-elseif i == 5 && expcond ==4
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
-
-elseif expcond ==4
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-elseif i ==1 && expcond ==5
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-else 
-mfname
-
-    NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-pause
-    NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
-
-end
 %%
 
    % test = 0;
@@ -5248,7 +5249,7 @@ end
     
     close all
 
-    [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+%     [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
 
 %     pause
     
@@ -5256,14 +5257,14 @@ end
    % PPS Variables Initialization for Data Matrix 
 
  % Mat 1 
- DeltaCOP_right_Mat1_Trial(1,i) = DeltaCOP_right_Mat1;
- DeltaCOP_left_Mat1_Trial(1,i) = DeltaCOP_left_Mat1;
- DeltaCOPMat1_whole_Trial(1,i) = DeltaCOPMat1_whole;
-
- % Mat 2
- DeltaCOP_right_Mat2_Trial(1,i) = DeltaCOP_right_Mat2;
- DeltaCOP_left_Mat2_Trial(1,i) = DeltaCOP_left_Mat2;
- DeltaCOPMat2_whole_Trial(1,i) = DeltaCOPMat2_whole;
+%  DeltaCOP_right_Mat1_Trial(1,i) = DeltaCOP_right_Mat1;
+%  DeltaCOP_left_Mat1_Trial(1,i) = DeltaCOP_left_Mat1;
+%  DeltaCOPMat1_whole_Trial(1,i) = DeltaCOPMat1_whole;
+% 
+%  % Mat 2
+%  DeltaCOP_right_Mat2_Trial(1,i) = DeltaCOP_right_Mat2;
+%  DeltaCOP_left_Mat2_Trial(1,i) = DeltaCOP_left_Mat2;
+%  DeltaCOPMat2_whole_Trial(1,i) = DeltaCOPMat2_whole;
 
 %% July 2023- Saving Shoudler Flexion/Extension and Elbow Flexion/Extension Per Trial ACROSS TIME
 
@@ -5465,7 +5466,7 @@ test = 0 ;
 
 
 %% Saving Muscle Activations Matrix for all Trials in a condition
-save NMFMat.mat NMFMatrix_trial_updated
+% save NMFMat.mat NMFMatrix_trial_updated
 
 %%
 

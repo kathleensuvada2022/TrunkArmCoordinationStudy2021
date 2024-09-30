@@ -32,6 +32,15 @@ timedistmax = timedistmax -.05;
 emg_idxstart= round(timestart*1000);
 emg_idxvel = round(timevelmax*1000);
 emg_idx_distmax = round(timedistmax*1000);
+
+if emg_idxvel > length(emg)
+emg_idxvel = length(emg)
+elseif emg_idx_distmax >length(emg)
+    emg_idx_distmax = length(emg)
+end 
+
+
+
 % emg_timestart = emg(emg_idxstart,:);
 % emg_timevel = emg(emg_idxvel,:);
 
