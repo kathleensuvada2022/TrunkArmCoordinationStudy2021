@@ -155,10 +155,12 @@ plot([nmf.VAF],'Linewidth',3)
 title('Motor Modules vs VAF', 'FontSize', 20);
 xlabel('Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
-y = 96.5936; % y-coordinate
+y = 99.0929; % y-coordinate
 x = xlim; % Get current x-axis limits
 line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
-xline(3,'r','Linewidth',2)
+xline(4,'r','Linewidth',2)
+ax = gca; % Get current axes
+ax.FontSize = 20; % Set axes font size to 20
 
 %% Plotting the Modules for n = 3 modules and the Time Component
 
@@ -218,53 +220,136 @@ xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 3','FontSize',16)
 
 
-%% Box Plots for the Module Curves as a function of Condition
+%% Separating by Condition
 
-% Choosing for when 3 Modules 
-Modules_CMatrices_3Modules = nmf(3).C;
+%% RTIS2001_P : for all conditions ( autmate this so you can search for the
+% conditions and it does it on it's own for all participants)
 
-
-% Table (trials Table: 1-7 25: 8-18 50: 19:end) 
-
-%Module1 
-
-Mod1_T= Modules_CMatrices_3Modules(1,1:7)';
-Mod1_25 = Modules_CMatrices_3Modules(1,8:18)';
-Mod1_50 = Modules_CMatrices_3Modules(1,19:end)';
+% Choosing for when 4 Modules 
+Modules_CMatrices_4Modules = nmf(4).C;
 
 
-Mod1_T = [Mod1_T;NaN;NaN;NaN;NaN] ; 
-Mod1_50 = [Mod1_50;NaN;NaN;NaN;NaN;NaN]; 
+Mod1_TR= Modules_CMatrices_4Modules(1,1:7)'; % 7x1
+Mod1_25R = Modules_CMatrices_4Modules(1,8:17)'; % 10x1
+Mod1_50R = Modules_CMatrices_4Modules(1,18:27)';% 10x1
 
-Mod1_colsasLoads = [Mod1_T Mod1_25 Mod1_50];
+Mod1_TU= Modules_CMatrices_4Modules(1,28:32)'; % 5x1
+Mod1_25U = Modules_CMatrices_4Modules(1,33:42)'; % 10x1
+Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
+
+
+% For RTIS2001_P - NEED TO ADD BACK IN NANS
+
+% !!!!!! KACEY- YOU NEED TO ADD THIS BACK IN AND AGAIN YOU NEED TO AUTOMATE THIS
+% SO IT'S NOT ALL MANUAL !!!!!!!!!!!!!!!!!
+
+%% RTIS1003 : 
+% for all conditions ( autmate this so you can search for the
+% conditions and it does it on it's own for all participants)
+
+% Choosing for when 4 Modules 
+Modules_CMatrices_4Modules = nmf(4).C;
+
+
+Mod1_TR= Modules_CMatrices_4Modules(1,1:4)';% 4x1
+Mod1_25R = Modules_CMatrices_4Modules(1,5:8)'; %4x1
+Mod1_50R = Modules_CMatrices_4Modules(1,9:13)'; %5x1
+
+Mod1_TU= Modules_CMatrices_4Modules(1,14:16)'; % 3x1
+Mod1_25U = Modules_CMatrices_4Modules(1,17:19)'; %3x1
+Mod1_50U = Modules_CMatrices_4Modules(1,20:22)'; %3x1
+
+% Get Sizes of all Conditions so can Concatonate 
+
+
+%% For RTIS1003
+
+Mod1_TR = [Mod1_TR;NaN]; 
+Mod1_25R = [Mod1_25R;NaN]; 
+Mod1_TU = [Mod1_TU;NaN;NaN]; 
+Mod1_25U = [Mod1_25U;NaN;NaN]; 
+Mod1_50U = [Mod1_50U;NaN;NaN]; 
+
+
+%%
+Mod1_colsasConditions = [Mod1_TR Mod1_25R Mod1_50R Mod1_TU Mod1_25U Mod1_50U];
 
 
 %% Module2
 
-Mod2_T= Modules_CMatrices_3Modules(2,1:7)';
-Mod2_25 = Modules_CMatrices_3Modules(2,8:18)';
-Mod2_50 = Modules_CMatrices_3Modules(2,19:end)';
+
+%% RTIS2001
+Mod2_TR= Modules_CMatrices_4Modules(2,1:7)'; % 7x1
+Mod2_25R = Modules_CMatrices_4Modules(2,8:17)'; % 10x1
+Mod2_50R = Modules_CMatrices_4Modules(2,18:27)';% 10x1
+
+Mod2_TU= Modules_CMatrices_4Modules(2,28:32)'; % 5x1
+Mod2_25U = Modules_CMatrices_4Modules(2,33:42)'; % 10x1
+Mod2_50U = Modules_CMatrices_4Modules(2,43:51)'; %9x1
 
 
-Mod2_T = [Mod2_T;NaN;NaN;NaN;NaN] ; 
-Mod2_50 = [Mod2_50;NaN;NaN;NaN;NaN;NaN]; 
 
-Mod2_colsasLoads = [Mod2_T Mod2_25 Mod2_50];
+Mod2_TR = [Mod2_TR;NaN;NaN;NaN]; 
+Mod2_TU = [Mod2_TU;NaN;NaN;NaN;NaN;NaN]; 
+Mod2_50U = [Mod2_50U;NaN]; 
+%% RTIS1003
+Mod2_TR= Modules_CMatrices_4Modules(2,1:4)';% 4x1
+Mod2_25R = Modules_CMatrices_4Modules(2,5:8)'; %4x1
+Mod2_50R = Modules_CMatrices_4Modules(2,9:13)'; %5x1
 
+Mod2_TU= Modules_CMatrices_4Modules(2,14:16)'; % 3x1
+Mod2_25U = Modules_CMatrices_4Modules(2,17:19)'; %3x1
+Mod2_50U = Modules_CMatrices_4Modules(2,20:22)'; %3x1
+
+
+Mod2_TR = [Mod2_TR;NaN]; 
+Mod2_25R = [Mod2_25R;NaN]; 
+Mod2_TU = [Mod2_TU;NaN;NaN]; 
+Mod2_25U = [Mod2_25U;NaN;NaN]; 
+Mod2_50U = [Mod2_50U;NaN;NaN]; 
+
+
+
+%%
+Mod2_colsasConditions = [Mod2_TR Mod2_25R Mod2_50R Mod2_TU Mod2_25U Mod2_50U];
+
+%%
 
 %Module3
+Mod3_TR= Modules_CMatrices_4Modules(3,1:7)'; % 7x1
+Mod3_25R = Modules_CMatrices_4Modules(3,8:17)'; % 10x1
+Mod3_50R = Modules_CMatrices_4Modules(3,18:27)';% 10x1
 
-Mod3_T= Modules_CMatrices_3Modules(3,1:7)';
-Mod3_25 = Modules_CMatrices_3Modules(3,8:18)';
-Mod3_50 = Modules_CMatrices_3Modules(3,19:end)';
+Mod3_TU= Modules_CMatrices_4Modules(3,28:32)'; % 5x1
+Mod3_25U = Modules_CMatrices_4Modules(3,33:42)'; % 10x1
+Mod3_50U = Modules_CMatrices_4Modules(3,43:51)'; %9x1
 
 
-Mod3_T = [Mod3_T;NaN;NaN;NaN;NaN] ; 
-Mod3_50 = [Mod3_50;NaN;NaN;NaN;NaN;NaN]; 
 
-Mod3_colsasLoads = [Mod3_T Mod3_25 Mod3_50];
-%%Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
-x = 1:length(Mus);
+Mod3_TR = [Mod3_TR;NaN;NaN;NaN]; 
+Mod3_TU = [Mod3_TU;NaN;NaN;NaN;NaN;NaN]; 
+Mod3_50U = [Mod3_50U;NaN]; 
+
+Mod3_colsasConditions = [Mod3_TR Mod3_25R Mod3_50R Mod3_TU Mod3_25U Mod3_50U];
+
+
+
+
+% Module4
+Mod4_TR= Modules_CMatrices_4Modules(4,1:7)'; % 7x1
+Mod4_25R = Modules_CMatrices_4Modules(4,8:17)'; % 10x1
+Mod4_50R = Modules_CMatrices_4Modules(4,18:27)';% 10x1
+
+Mod4_TU= Modules_CMatrices_4Modules(4,28:32)'; % 5x1
+Mod4_25U = Modules_CMatrices_4Modules(4,33:42)'; % 10x1
+Mod4_50U = Modules_CMatrices_4Modules(4,43:51)'; %9x1
+
+Mod4_TR = [Mod4_TR;NaN;NaN;NaN]; 
+Mod4_TU = [Mod4_TU;NaN;NaN;NaN;NaN;NaN]; 
+Mod4_50U = [Mod4_50U;NaN]; 
+
+Mod4_colsasConditions = [Mod4_TR Mod4_25R Mod4_50R Mod4_TU Mod4_25U Mod4_50U];
+
 
 %% MODULE 1-  Weightings and Box Plots with Time Component * USE ME* 
 
@@ -273,14 +358,14 @@ figure
 subplot(1,2,1)
 title('Module 1','Fontsize',16)
 hold on
-bar(nmf(3).W(:,1))
+bar(nmf(4).W(:,1))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 subplot(1,2,2) % Time Component as Box Plots 
-boxplot(Mod1_colsasLoads)
-title('Module 1 Across Loading Conditions','FontSize',20)
-xticks(1:3); % Set x-tick positions
-xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+boxplot(Mod1_colsasConditions)
+title('Module 1 Across Conditions','FontSize',20)
+xticks(1:6); % Set x-tick positions
+xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
 %ylabel('Expression of Module 1')
 ylim([0 1])
 set(gca, 'FontSize', 18); % Set font size for axes
@@ -291,16 +376,16 @@ set(gca, 'FontSize', 18); % Set font size for axes
 figure
 subplot(1,2,1)
 hold on
-bar(nmf(3).W(:,2))
+bar(nmf(4).W(:,2))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 title('Module 2','Fontsize',16)
 
 subplot(1,2,2)
-boxplot(Mod2_colsasLoads)
+boxplot(Mod2_colsasConditions)
 title('Module 2 Across Loading Conditions','FontSize',20)
-xticks(1:3); % Set x-tick positions
-xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+xticks(1:6); % Set x-tick positions
+xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
 %ylabel('Expression of Module 2')
 ylim([0 1])
 set(gca, 'FontSize', 18); % Set font size for axes
@@ -310,21 +395,38 @@ set(gca, 'FontSize', 18); % Set font size for axes
 
 figure
 subplot(1,2,1)
-bar(nmf(3).W(:,end))
+bar(nmf(4).W(:,3))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 hold on
 title('Module 3','Fontsize',16)
 
 subplot(1,2,2)
-boxplot(Mod3_colsasLoads)
-title('Module 3 Across Loading Conditions','FontSize',20)
-xticks(1:3); % Set x-tick positions
-xticklabels({'Table', '25% MVT', '50% MVT'}); % Set x-tick labels
+boxplot(Mod3_colsasConditions)
+title('Module 3 Across Conditions','FontSize',20)
+xticks(1:6); % Set x-tick positions
+xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
 %ylabel('Expression of Module 3')
 ylim([0 1])
 set(gca, 'FontSize', 18); % Set font size for axes
 
+%% MODULE 4: Weightings and Box Plots with Time Component * USE ME* 
+figure
+subplot(1,2,1)
+bar(nmf(4).W(:,4))
+set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
+xtickangle(45);
+hold on
+title('Module4','Fontsize',16)
+
+subplot(1,2,2)
+boxplot(Mod4_colsasConditions)
+title('Module 4 Across Conditions','FontSize',20)
+xticks(1:6); % Set x-tick positions
+xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
+%ylabel('Expression of Module 3')
+ylim([0 1])
+set(gca, 'FontSize', 18); % Set font size for axes
 
 
 
