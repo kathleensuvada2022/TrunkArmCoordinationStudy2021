@@ -151,14 +151,14 @@ end
 %% VAF as a function of the number of modules 
 
 figure()
-plot([nmf.VAF],'Linewidth',3)
+plot([nmf.VAF],'Linewidth',4)
 title('Motor Modules vs VAF', 'FontSize', 20);
 xlabel('Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
-y = 98.6419; % y-coordinate
+y = 100; % y-coordinate
 x = xlim; % Get current x-axis limits
 line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
-xline(2,'r','Linewidth',2)
+xline(4,'r','Linewidth',2)
 ax = gca; % Get current axes
 ax.FontSize = 20; % Set axes font size to 20
 
@@ -251,16 +251,22 @@ Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
 
 %% RTIS2011
 % Choosing for when 2 Modules 
-Modules_CMatrices_4Modules = nmf(2).C;
+Modules_CMatrices_2Modules = nmf(2).C;
 
 
-Mod1_TR= Modules_CMatrices_4Modules(1,1:7)'; % 7x1
-Mod1_25R = Modules_CMatrices_4Modules(1,8:17)'; % 10x1
-Mod1_50R = Modules_CMatrices_4Modules(1,18:27)';% 10x1
+Mod1_TR= Modules_CMatrices_2Modules(1,1:12)'; % 12x1
+Mod1_25R = Modules_CMatrices_2Modules(1,13:24)'; % 12x1
+Mod1_50R = Modules_CMatrices_2Modules(1,25:31)';% 7x1
 
-Mod1_TU= Modules_CMatrices_4Modules(1,28:32)'; % 5x1
-Mod1_25U = Modules_CMatrices_4Modules(1,33:42)'; % 10x1
-Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
+Mod1_TU= Modules_CMatrices_2Modules(1,32:39)'; % 8x1
+Mod1_25U = Modules_CMatrices_2Modules(1,40:49)'; % 10x1
+Mod1_50U = Modules_CMatrices_2Modules(1,50:60)'; %11x1
+
+
+Mod1_50R = [Mod1_50R;NaN;NaN;NaN;NaN;NaN]; 
+Mod1_TU = [Mod1_TU;NaN;NaN;NaN;NaN]; 
+Mod1_25U = [Mod1_25U;NaN;NaN]; 
+Mod1_50U = [Mod1_50U;NaN]; 
 
 
 %% RTIS1003 : 
@@ -282,7 +288,7 @@ Mod1_50U = Modules_CMatrices_4Modules(1,19:21)'; %3x1
 % Get Sizes of all Conditions so can Concatonate 
 
 
-%% For RTIS1003
+% For RTIS1003
 
 Mod1_TR = [Mod1_TR;NaN]; 
 Mod1_25R = [Mod1_25R;NaN;NaN]; 
@@ -290,7 +296,31 @@ Mod1_TU = [Mod1_TU;NaN;NaN];
 Mod1_25U = [Mod1_25U;NaN;NaN]; 
 Mod1_50U = [Mod1_50U;NaN;NaN]; 
 
+%% RTIS1005
+Modules_CMatrices_4Modules = nmf(4).C;
 
+Mod1_TR= Modules_CMatrices_4Modules(1,1:6)'; 
+size(Mod1_TR)
+Mod1_25R = Modules_CMatrices_4Modules(1,7:15)';
+size(Mod1_25R)
+Mod1_50R = Modules_CMatrices_4Modules(1,16:24)'; 
+size(Mod1_50R)
+Mod1_TU= Modules_CMatrices_4Modules(1,25:30)'; 
+size(Mod1_TU)
+Mod1_25U = Modules_CMatrices_4Modules(1,31:37)'; 
+size(Mod1_25U)
+Mod1_50U = Modules_CMatrices_4Modules(1,38:43)'; 
+size(Mod1_50U)
+
+% Get Sizes of all Conditions so can Concatonate 
+
+
+% For RTIS1005
+
+Mod1_TR = [Mod1_TR;NaN;NaN;NaN]; 
+Mod1_TU = [Mod1_TU;NaN;NaN;NaN]; 
+Mod1_25U = [Mod1_25U;NaN;NaN]; 
+Mod1_50U = [Mod1_50U;NaN;NaN;NaN]; 
 %%
 Mod1_colsasConditions = [Mod1_TR Mod1_25R Mod1_50R Mod1_TU Mod1_25U Mod1_50U];
 
@@ -312,6 +342,23 @@ Mod2_50U = Modules_CMatrices_4Modules(2,43:51)'; %9x1
 Mod2_TR = [Mod2_TR;NaN;NaN;NaN]; 
 Mod2_TU = [Mod2_TU;NaN;NaN;NaN;NaN;NaN]; 
 Mod2_50U = [Mod2_50U;NaN]; 
+
+%% RTIS2011
+
+Mod2_TR= Modules_CMatrices_2Modules(2,1:12)'; % 12x1
+Mod2_25R = Modules_CMatrices_2Modules(2,13:24)'; % 12x1
+Mod2_50R = Modules_CMatrices_2Modules(2,25:31)';% 7x1
+
+Mod2_TU= Modules_CMatrices_2Modules(2,32:39)'; % 8x1
+Mod2_25U = Modules_CMatrices_2Modules(2,40:49)'; % 10x1
+Mod2_50U = Modules_CMatrices_2Modules(2,50:60)'; %11x1
+
+
+Mod2_50R = [Mod2_50R;NaN;NaN;NaN;NaN;NaN]; 
+Mod2_TU = [Mod2_TU;NaN;NaN;NaN;NaN]; 
+Mod2_25U = [Mod2_25U;NaN;NaN]; 
+Mod2_50U = [Mod2_50U;NaN]; 
+
 %% RTIS1003
 Mod2_TR= Modules_CMatrices_4Modules(2,1:4)';% 4x1
 Mod2_25R = Modules_CMatrices_4Modules(2,5:7)'; %3x1
@@ -327,7 +374,24 @@ Mod2_25R = [Mod2_25R;NaN;NaN];
 Mod2_TU = [Mod2_TU;NaN;NaN]; 
 Mod2_25U = [Mod2_25U;NaN;NaN]; 
 Mod2_50U = [Mod2_50U;NaN;NaN]; 
+%% RTIS1005
 
+Mod2_TR= Modules_CMatrices_4Modules(2,1:6)'; 
+Mod2_25R = Modules_CMatrices_4Modules(2,7:15)';
+Mod2_50R = Modules_CMatrices_4Modules(2,16:24)'; 
+Mod2_TU= Modules_CMatrices_4Modules(2,25:30)'; 
+Mod2_25U = Modules_CMatrices_4Modules(2,31:37)'; 
+Mod2_50U = Modules_CMatrices_4Modules(2,38:43)'; 
+
+% Get Sizes of all Conditions so can Concatonate 
+
+
+% For RTIS1005
+
+Mod2_TR = [Mod2_TR;NaN;NaN;NaN]; 
+Mod2_TU = [Mod2_TU;NaN;NaN;NaN]; 
+Mod2_25U = [Mod2_25U;NaN;NaN]; 
+Mod2_50U = [Mod2_50U;NaN;NaN;NaN]; 
 
 %%
 Mod2_colsasConditions = [Mod2_TR Mod2_25R Mod2_50R Mod2_TU Mod2_25U Mod2_50U];
@@ -371,7 +435,24 @@ Mod3_25U = [Mod3_25U;NaN;NaN];
 Mod3_50U = [Mod3_50U;NaN;NaN]; 
 
 
+%% RTIS1005
 
+Mod3_TR= Modules_CMatrices_4Modules(3,1:6)'; 
+Mod3_25R = Modules_CMatrices_4Modules(3,7:15)';
+Mod3_50R = Modules_CMatrices_4Modules(3,16:24)'; 
+Mod3_TU= Modules_CMatrices_4Modules(3,25:30)'; 
+Mod3_25U = Modules_CMatrices_4Modules(3,31:37)'; 
+Mod3_50U = Modules_CMatrices_4Modules(3,38:43)'; 
+
+% Get Sizes of all Conditions so can Concatonate 
+
+
+% For RTIS1005
+
+Mod3_TR = [Mod3_TR;NaN;NaN;NaN]; 
+Mod3_TU = [Mod3_TU;NaN;NaN;NaN]; 
+Mod3_25U = [Mod3_25U;NaN;NaN]; 
+Mod3_50U = [Mod3_50U;NaN;NaN;NaN]; 
 %%
 
 Mod3_colsasConditions = [Mod3_TR Mod3_25R Mod3_50R Mod3_TU Mod3_25U Mod3_50U];
@@ -395,7 +476,23 @@ Mod4_TU = [Mod4_TU;NaN;NaN];
 Mod4_25U = [Mod4_25U;NaN;NaN]; 
 Mod4_50U = [Mod4_50U;NaN;NaN]; 
 
+%% RTIS1005
+Mod4_TR= Modules_CMatrices_4Modules(4,1:6)'; 
+Mod4_25R = Modules_CMatrices_4Modules(4,7:15)';
+Mod4_50R = Modules_CMatrices_4Modules(4,16:24)'; 
+Mod4_TU= Modules_CMatrices_4Modules(4,25:30)'; 
+Mod4_25U = Modules_CMatrices_4Modules(4,31:37)'; 
+Mod4_50U = Modules_CMatrices_4Modules(4,38:43)'; 
 
+% Get Sizes of all Conditions so can Concatonate 
+
+
+% For RTIS1005
+
+Mod4_TR = [Mod4_TR;NaN;NaN;NaN]; 
+Mod4_TU = [Mod4_TU;NaN;NaN;NaN]; 
+Mod4_25U = [Mod4_25U;NaN;NaN]; 
+Mod4_50U = [Mod4_50U;NaN;NaN;NaN]; 
 %% RTIS2001
 
 Mod4_TR= Modules_CMatrices_4Modules(4,1:7)'; % 7x1
@@ -418,7 +515,6 @@ Mod4_colsasConditions = [Mod4_TR Mod4_25R Mod4_50R Mod4_TU Mod4_25U Mod4_50U];
 %% MODULE 1-  Weightings and Box Plots with Time Component * USE ME* 
 
 
-
 figure
 % Weightings per Module
 subplot(1,2,1)
@@ -426,6 +522,8 @@ title('Module 1','Fontsize',16)
 hold on
 bar(nmf(4).W(:,1))
 set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+%set(gca, 'XTick', 1:6, 'XTickLabel', {'UT', 'MT', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+
 xtickangle(45);
 subplot(1,2,2) % Time Component as Box Plots 
 boxplot(Mod1_colsasConditions)
@@ -443,6 +541,8 @@ figure
 subplot(1,2,1)
 hold on
 bar(nmf(4).W(:,2))
+%set(gca, 'XTick', 1:6, 'XTickLabel', {'UT', 'MT', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+
 set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
 xtickangle(45);
 title('Module 2','Fontsize',16)
