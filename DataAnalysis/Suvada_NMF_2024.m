@@ -37,12 +37,16 @@ if Reachstart_idx_emg == MaxVel_idx_emg
     % Midpoint between start and end bc for some very severe stroke, the max vel is the start of
     % the reach and they continue to slow.
     emgvalsNMF = emg(median(Reachstart_idx_emg:MaxReach_idx_emg),emgArm)';
+
+elseif MaxVel_idx_emg>length(emg)
+    emgvalsNMF = mean(emg(Reachstart_idx_emg:length(emg),emgArm))';
+
 else
     emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
 end
 
 % NMF Matrix
-if i ==2 && expcond ==1 
+if i ==1 && expcond ==1 
 NMFMatrix_trial= num2cell(zeros(8,ntrials));
 NMFMatrix_trial = [ArmMusc' NMFMatrix_trial];
 end 

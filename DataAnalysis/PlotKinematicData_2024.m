@@ -4261,11 +4261,11 @@ maxreach =RD_2024;
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
 
 % For Restrained
-if i ==2 && expcond ==1
+if i ==1 && expcond ==1
 NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
 
-elseif i == 3 && expcond ==1
+elseif i == 2 && expcond ==1
 NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
 
 elseif expcond ==1
