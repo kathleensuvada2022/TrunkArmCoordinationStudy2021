@@ -151,16 +151,16 @@ end
 %% VAF as a function of the number of modules 
 
 figure()
-plot([nmf.VAF],'Linewidth',4)
-title('Motor Modules vs VAF', 'FontSize', 20);
-xlabel('Modules', 'FontSize', 16); 
+plot([nmf.VAF], 'Color', [0 0.5 0], 'LineWidth', 4) % Dark green color
+title('S2: UE FM 7/66', 'FontSize', 45);
+xlabel('Number of Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
-y = 100; % y-coordinate
-x = xlim; % Get current x-axis limits
-line(x, [y y], 'Color', 'r', 'LineStyle', '--', 'LineWidth', 1);
-xline(4,'r','Linewidth',2)
+xlim([1 7])
+ylim([50 100])
+yline(100,'r','LineWidth',4)
+xline(2,'r','Linewidth',4)
 ax = gca; % Get current axes
-ax.FontSize = 20; % Set axes font size to 20
+ax.FontSize = 35; % Set axes font size to 20
 
 %% Plotting the Modules for n = 3 modules and the Time Component
 
@@ -248,6 +248,9 @@ Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
 % !!!!!! KACEY- YOU NEED TO ADD THIS BACK IN AND AGAIN YOU NEED TO AUTOMATE THIS
 % SO IT'S NOT ALL MANUAL !!!!!!!!!!!!!!!!!
 
+Mod1_TR = [Mod1_TR;NaN;NaN;NaN]; 
+Mod1_TU = [Mod1_TU;NaN;NaN;NaN;NaN;NaN]; 
+Mod1_50U = [Mod1_50U;NaN]; 
 
 %% RTIS2011
 % Choosing for when 2 Modules 
@@ -514,87 +517,121 @@ Mod4_colsasConditions = [Mod4_TR Mod4_25R Mod4_50R Mod4_TU Mod4_25U Mod4_50U];
 
 %% MODULE 1-  Weightings and Box Plots with Time Component * USE ME* 
 
-
-figure
 % Weightings per Module
 subplot(1,2,1)
-title('Module 1','Fontsize',16)
+title('S1: Mod 1 Composition','Fontsize',35)
 hold on
-bar(nmf(4).W(:,1))
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
-%set(gca, 'XTick', 1:6, 'XTickLabel', {'UT', 'MT', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
-
+bar(nmf(4).W(:,1), 'FaceColor', [0.5 0 0.5]) % Dark purple color
+set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
 xtickangle(45);
+
 subplot(1,2,2) % Time Component as Box Plots 
-boxplot(Mod1_colsasConditions)
-title('Module 1 Across Conditions','FontSize',20)
+boxplot(Mod1_colsasConditions); % Create box plot
+title('S1: Mod 1 Across Conditions','FontSize',35)
 xticks(1:6); % Set x-tick positions
 xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
-%ylabel('Expression of Module 1')
 ylim([0 1])
-set(gca, 'FontSize', 18); % Set font size for axes
+set(gca, 'FontSize', 35); % Set font size for axes
+
+% Set box plot colors to dark purple and adjust line width
+h = findobj(gca, 'Tag', 'Box'); % Find box objects
+for k = 1:length(h)
+    set(h(k), 'Color', [0.5 0 0.5]); % Set the color of the box plots to dark purple
+    set(h(k), 'LineWidth', 2); % Adjust line width to make it thicker
+end
+
+% Adjust line width for median lines
+hMedian = findobj(gca, 'Tag', 'Median');
+set(hMedian, 'LineWidth', 2); % Set median line width
 
 
 
 %% Module 2: Weightings and Box Plots with Time Component * USE ME* 
-figure
+% Weightings per Module
 subplot(1,2,1)
 hold on
-bar(nmf(4).W(:,2))
-%set(gca, 'XTick', 1:6, 'XTickLabel', {'UT', 'MT', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
-
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+bar(nmf(4).W(:,2), 'FaceColor', [0.5 0 0.5]) % Dark purple color
+set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
 xtickangle(45);
-title('Module 2','Fontsize',16)
+title('S1: Mod 2 Composition','Fontsize',35)
 
-subplot(1,2,2)
-boxplot(Mod2_colsasConditions)
-title('Module 2 Across Loading Conditions','FontSize',20)
+subplot(1,2,2) % Time Component as Box Plots 
+boxplot(Mod2_colsasConditions); % Create box plot
+title('S1: Mod 2 Across Conditions','FontSize',35)
 xticks(1:6); % Set x-tick positions
 xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
-%ylabel('Expression of Module 2')
 ylim([0 1])
-set(gca, 'FontSize', 18); % Set font size for axes
+set(gca, 'FontSize', 35); % Set font size for axes
+
+% Set box plot colors to dark purple and adjust line width
+h = findobj(gca, 'Tag', 'Box'); % Find box objects
+for k = 1:length(h)
+    set(h(k), 'Color', [0.5 0 0.5]); % Set the color of the box plots to dark purple
+    set(h(k), 'LineWidth', 2); % Adjust line width to make it thicker
+end
+
+% Adjust line width for median lines
+hMedian = findobj(gca, 'Tag', 'Median');
+set(hMedian, 'LineWidth', 2); % Set median line width
+
 
 %% MODULE 3: Weightings and Box Plots with Time Component * USE ME* 
 
-
 figure
 subplot(1,2,1)
-bar(nmf(4).W(:,3))
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+bar(nmf(4).W(:,3), 'FaceColor', [0.5 0 0.5]) % Dark purple color
+set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
 xtickangle(45);
 hold on
-title('Module 3','Fontsize',16)
+title('S1: Mod 3 Composition','Fontsize',35)
 
-subplot(1,2,2)
-boxplot(Mod3_colsasConditions)
-title('Module 3 Across Conditions','FontSize',20)
+subplot(1,2,2) % Time Component as Box Plots 
+boxplot(Mod3_colsasConditions); % Create box plot
+title('S1: Mod 3 Across Conditions','FontSize',35)
 xticks(1:6); % Set x-tick positions
 xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
-%ylabel('Expression of Module 3')
 ylim([0 1])
-set(gca, 'FontSize', 18); % Set font size for axes
+set(gca, 'FontSize', 35); % Set font size for axes
+
+% Set box plot colors to dark purple and adjust line width
+h = findobj(gca, 'Tag', 'Box'); % Find box objects
+for k = 1:length(h)
+    set(h(k), 'Color', [0.5 0 0.5]); % Set the color of the box plots to dark purple
+    set(h(k), 'LineWidth', 2); % Adjust line width to make it thicker
+end
+
+% Adjust line width for median lines
+hMedian = findobj(gca, 'Tag', 'Median');
+set(hMedian, 'LineWidth', 2); % Set median line width
+
 
 %% MODULE 4: Weightings and Box Plots with Time Component * USE ME* 
 figure
 subplot(1,2,1)
-bar(nmf(4).W(:,4))
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 16); 
+bar(nmf(4).W(:,4), 'FaceColor', [0.5 0 0.5]) % Dark purple color
+set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
 xtickangle(45);
 hold on
-title('Module4','Fontsize',16)
+title('S1: Mod 4 Composition','Fontsize',35)
 
-subplot(1,2,2)
-boxplot(Mod4_colsasConditions)
-title('Module 4 Across Conditions','FontSize',20)
+subplot(1,2,2) % Time Component as Box Plots 
+boxplot(Mod4_colsasConditions); % Create box plot
+title('S1: Mod 4 Across Conditions','FontSize',35)
 xticks(1:6); % Set x-tick positions
 xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
-%ylabel('Expression of Module 3')
 ylim([0 1])
-set(gca, 'FontSize', 18); % Set font size for axes
+set(gca, 'FontSize', 35); % Set font size for axes
 
+% Set box plot colors to dark purple and adjust line width
+h = findobj(gca, 'Tag', 'Box'); % Find box objects
+for k = 1:length(h)
+    set(h(k), 'Color', [0.5 0 0.5]); % Set the color of the box plots to dark purple
+    set(h(k), 'LineWidth', 2); % Adjust line width to make it thicker
+end
 
+% Adjust line width for median lines
+hMedian = findobj(gca, 'Tag', 'Median');
+set(hMedian, 'LineWidth', 2); % Set median line width
 
 %% Module 1 Box Plot 
 figure()
