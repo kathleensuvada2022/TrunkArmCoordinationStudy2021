@@ -9,7 +9,7 @@
 
 NumCols = size(NMFMatrix_trial_updated,2);
 
-Zerocols = find(cell2mat(NMFMatrix_trial_updated(2,2:end)) == 0)+1; %Omit first col bc names of muscles
+Zerocols = find(cell2mat(NMFMatrix_trial_updated(3,2:end)) == 0)+1; %Omit first col bc names of muscles
 
 %% Removing the Columns of the Matrix that are 0 (skipped trials) and concatonating 
 
@@ -18,7 +18,7 @@ for i = 1: NumCols
 
     NMFMatrix_trial_FINAL = NMFMatrix_trial_updated(:,i);
         
-    elseif cell2mat(NMFMatrix_trial_updated(2,i)) == 0 
+    elseif cell2mat(NMFMatrix_trial_updated(3,i)) == 0 
 
     else
 
@@ -28,7 +28,7 @@ for i = 1: NumCols
 end
 
 % Need to Omit the Names of the muscles and Trial Nums 
-NNMF_Mat = cell2mat(NMFMatrix_trial_FINAL(2:end,2:end));
+NNMF_Mat = cell2mat(NMFMatrix_trial_FINAL(3:end,2:end));
 
 
 
@@ -150,21 +150,40 @@ end
 
 %% VAF as a function of the number of modules 
 
-figure()
-plot([nmf.VAF], 'Color', [0 0.5 0], 'LineWidth', 4) % Dark green color
-title('S2: UE FM 7/66', 'FontSize', 45);
+
+% Total VAF with error bars
+figure(1)
+% plot([nmf.VAF], 'Color', [0 0.5 0], 'LineWidth', 4) % Dark green color
+errorbar(1:7,[nmf.VAF],[nmf.err],'Color', '#31a354','LineWidth',4)
+% title(', 'FontSize', 45);
 xlabel('Number of Modules', 'FontSize', 16); 
 ylabel('% VAF', 'FontSize', 16); 
 xlim([1 7])
-ylim([50 100])
-yline(100,'r','LineWidth',4)
-xline(2,'r','Linewidth',4)
+ylim([80 100])
 ax = gca; % Get current axes
 ax.FontSize = 35; % Set axes font size to 20
 
+% Red is 2011
+
+% VAF Plot with Error Bars per muscle
+
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus, nmf(ss).VAFmus];
+VAFcond = [VAFcond, nmf(ss).VAFcond];
+end
+
+figure(3)
+errorbar(1:7,mean(VAFmus),std(VAFmus),'Color', '#dd1c77','LineWidth',3)
+hold on
+errorbar(1:7, mean(VAFmus), std(VAFmus), 'o', 'Color', '#c994c7' , 'LineWidth', 2.5, 'MarkerSize', 8); % Dark green color, thicker line
+ax = gca; % Get current axes
+ax.FontSize = 35; % Set axes font size to 20
+ylim([80 105])
+
 %% Plotting the Modules for n = 3 modules and the Time Component
 
-Muscles = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
+Mus= {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 x = 1:length(Mus);
 
 
@@ -230,17 +249,21 @@ ylabel('Contribution to Module 3','FontSize',16)
 %% RTIS2001_P : for all conditions ( autmate this so you can search for the
 % conditions and it does it on it's own for all participants)
 
+% For Combined Matrix with 2 time points 
+% columns 1-51 are the accel phase 
+
 % Choosing for when 4 Modules 
 Modules_CMatrices_4Modules = nmf(4).C;
 
+%For accel phase
 
-Mod1_TR= Modules_CMatrices_4Modules(1,1:7)'; % 7x1
-Mod1_25R = Modules_CMatrices_4Modules(1,8:17)'; % 10x1
-Mod1_50R = Modules_CMatrices_4Modules(1,18:27)';% 10x1
+Mod1_TR_A= Modules_CMatrices_4Modules(1,1:7)'; % 7x1
+Mod1_25R_A = Modules_CMatrices_4Modules(1,8:17)'; % 10x1
+Mod1_50R_A = Modules_CMatrices_4Modules(1,18:27)';% 10x1
 
-Mod1_TU= Modules_CMatrices_4Modules(1,28:32)'; % 5x1
-Mod1_25U = Modules_CMatrices_4Modules(1,33:42)'; % 10x1
-Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
+Mod1_TU_A= Modules_CMatrices_4Modules(1,28:32)'; % 5x1
+Mod1_25U_A = Modules_CMatrices_4Modules(1,33:42)'; % 10x1
+Mod1_50U_A = Modules_CMatrices_4Modules(1,43:51)'; %9x1
 
 
 % For RTIS2001_P - NEED TO ADD BACK IN NANS
@@ -248,9 +271,28 @@ Mod1_50U = Modules_CMatrices_4Modules(1,43:51)'; %9x1
 % !!!!!! KACEY- YOU NEED TO ADD THIS BACK IN AND AGAIN YOU NEED TO AUTOMATE THIS
 % SO IT'S NOT ALL MANUAL !!!!!!!!!!!!!!!!!
 
-Mod1_TR = [Mod1_TR;NaN;NaN;NaN]; 
-Mod1_TU = [Mod1_TU;NaN;NaN;NaN;NaN;NaN]; 
-Mod1_50U = [Mod1_50U;NaN]; 
+Mod1_TR_A = [Mod1_TR_A;NaN;NaN;NaN]; 
+Mod1_TU_A = [Mod1_TU_A;NaN;NaN;NaN;NaN;NaN]; 
+Mod1_50U_A = [Mod1_50U_A;NaN]; 
+
+% For ppa phase
+Mod1_TR_P= Modules_CMatrices_4Modules(1,52:58)'; % 7x1
+Mod1_25R_P = Modules_CMatrices_4Modules(1,59:68)'; % 10x1
+Mod1_50R_P= Modules_CMatrices_4Modules(1,69:78)';% 10x1
+
+Mod1_TU_P= Modules_CMatrices_4Modules(1,79:83)'; % 5x1
+Mod1_25U_P = Modules_CMatrices_4Modules(1,84:93)'; % 10x1
+Mod1_50U_P = Modules_CMatrices_4Modules(1,94:102)'; %9x1
+
+
+% For RTIS2001_P - NEED TO ADD BACK IN NANS
+
+% !!!!!! KACEY- YOU NEED TO ADD THIS BACK IN AND AGAIN YOU NEED TO AUTOMATE THIS
+% SO IT'S NOT ALL MANUAL !!!!!!!!!!!!!!!!!
+
+Mod1_TR_P = [Mod1_TR_P;NaN;NaN;NaN]; 
+Mod1_TU_P = [Mod1_TU_P;NaN;NaN;NaN;NaN;NaN]; 
+Mod1_50U_P = [Mod1_50U_P;NaN]; 
 
 %% RTIS2011
 % Choosing for when 2 Modules 
@@ -325,7 +367,7 @@ Mod1_TU = [Mod1_TU;NaN;NaN;NaN];
 Mod1_25U = [Mod1_25U;NaN;NaN]; 
 Mod1_50U = [Mod1_50U;NaN;NaN;NaN]; 
 %%
-Mod1_colsasConditions = [Mod1_TR Mod1_25R Mod1_50R Mod1_TU Mod1_25U Mod1_50U];
+Mod1_colsasConditions = [Mod1_TR_A Mod1_25R_A Mod1_50R_A Mod1_TU_A Mod1_25U_A Mod1_50U_A Mod1_TR_P Mod1_25R_P Mod1_50R_P Mod1_TU_P Mod1_25U_P Mod1_50U_P];
 
 
 %% Module2
@@ -528,8 +570,8 @@ xtickangle(45);
 subplot(1,2,2) % Time Component as Box Plots 
 boxplot(Mod1_colsasConditions); % Create box plot
 title('S1: Mod 1 Across Conditions','FontSize',35)
-xticks(1:6); % Set x-tick positions
-xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
+xticks(1:12); % Set x-tick positions
+xticklabels({'Table-RA', '25% MVT-RA', '50% MVT-RA','Table-UA', '25% MVT-UA', '50% MVT-UA','Table-RP', '25% MVT-RP', '50% MVT-RP','Table-UP', '25% MVT-UP', '50% MVT-UP'}); % Set x-tick labels
 ylim([0 1])
 set(gca, 'FontSize', 35); % Set font size for axes
 
@@ -695,3 +737,137 @@ set(gca, 'FontSize', 18); % Set font size for axes
 % set(gca, 'FontSize', 14); % Set font size for tick labels
 
 
+%% Hongchul October 3
+plot(NNMF_Mat(1,:))
+hold on
+plot(nmf(1).RECON(1,:))
+plot(cell2mat(NMFMatrix_trial_FINAL(4,2:end)))
+for mm=1:7
+plot(NNMF_Mat(mm,:))
+hold on
+end
+clear all
+for mm=1:7
+plot(NNMF_Mat(mm,:))
+hold on
+end
+close all
+for mm=1:7
+plot(NNMF_Mat(mm,:))
+hold on
+end
+for mm=1:7
+subplot(4,2,mm)
+for ss=1:4
+plot(NNMF_Mat(mm,:))
+hold on
+plot(nmf(ss).RECON(mm,:))
+end
+end
+for mm=1:7
+subplot(4,2,mm)
+plot(NNMF_Mat(mm,:),'k','LineWidth',2)
+hold on
+for ss=1:4
+plot(nmf(ss).RECON(mm,:))
+end
+end
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus; nmf(ss).VAFmus];
+VAFcond = [VAFcond; VAFcond];'
+end
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus; nmf(ss).VAFmus];
+VAFcond = [VAFcond; VAFcond];
+end
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus; nmf(ss).VAFmus];
+VAFcond = [VAFcond; nmf(ss).VAFcond];
+end
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus, nmf(ss).VAFmus];
+VAFcond = [VAFcond, VAFcond];
+end
+VAFmus = []; VAFcond = [];
+for ss=1:7
+VAFmus = [VAFmus, nmf(ss).VAFmus];
+VAFcond = [VAFcond, nmf(ss).VAFcond];
+end
+figure;
+plot(1:51,VAFcond)
+plot(1:7,VAFmus)
+figure; plot(1:7,VAFmus)
+figure; plot(1:7,VAFmus')
+figure; errorbar(1:7,mean(VAFmus'),std(VAFmus'))
+figure; errorbar(1:7,mean(VAFmus),std(VAFmus))
+figure;
+plot(1:51,VAFcond)
+figure; plot(1:51,nmf(4).C)
+figure;
+for ww=1:4
+subplot(4,3,1+3*(ww-1))
+barplot(nmf(4).W(:,ww)
+subplot(4,3,[2 3] + 3*(ww-1))
+plot(1:51,nmf(4).C(ww,:))
+end
+figure;
+for ww=1:4
+subplot(4,3,1+3*(ww-1))
+barplot(nmf(4).W(:,ww)
+subplot(4,3,[2 3] + 3*(ww-1))
+plot(1:51,nmf(4).C(ww,:)))
+end
+figure;
+for ww=1:4
+subplot(4,3,1+3*(ww-1))
+barplot(nmf(4).W(:,ww))
+subplot(4,3,[2 3] + 3*(ww-1))
+plot(1:51,nmf(4).C(ww,:))
+end
+figure;
+for ww=1:4
+subplot(4,3,1+3*(ww-1))
+bar(nmf(4).W(:,ww))
+subplot(4,3,[2 3] + 3*(ww-1))
+plot(1:51,nmf(4).C(ww,:))
+end
+figure;
+for ww=1:4
+subplot(4,1,ww)
+plot(1:7,nmf(4).W(:,ww)*C(ww,:))
+end
+figure;
+for ww=1:4
+subplot(4,1,ww)
+plot(1:7,nmf(4).W(:,ww)*nmf(4).C(ww,:))
+end
+nmf(4).W(:,ww)*nmf(4).C(ww,:);
+figure;
+for ww=1:4
+subplot(4,1,ww)
+plot(1:51,nmf(4).W(:,ww)*nmf(4).C(ww,:))
+end
+figure;
+plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
+hold on
+for ww=1:4
+plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,4))
+end
+nmf(4).W(4,ww)*nmf(4).C(ww,4);
+figure;
+plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
+hold on
+for ww=1:4
+plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,:))
+end
+figure;
+for ww=1:4
+plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,:))
+hold on
+end
+plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
+close all

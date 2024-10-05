@@ -20,30 +20,41 @@ emgArm = 9:15;
 emgTrunk = 1:8;
 
 % Start and End index for EMG data (Fs= 1000 Hz)
+timeppa = timestart-.250;
+
+
+
 Reachstart_idx_emg = timestart*1000;
 MaxReach_idx_emg = timedistmax* 1000;
 MaxVel_idx_emg = timevelmax*1000;
+PPA_idx_emg = timeppa*1000;
 
 
 % For Arm Muscles extracting the mean value during the reach
 
 % Can alter to interval of interest 
 
+%PPA phase
+
+ emgvalsNMF = mean(emg(PPA_idx_emg:Reachstart_idx_emg,emgArm));
+
+
+
 %During Reach
 % emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxReach_idx_emg,emgArm))';
 
 % Start of Reach to the Max Vel (acceleration phase of the movement)
-if Reachstart_idx_emg == MaxVel_idx_emg
-    % Midpoint between start and end bc for some very severe stroke, the max vel is the start of
-    % the reach and they continue to slow.
-    emgvalsNMF = emg(median(Reachstart_idx_emg:MaxReach_idx_emg),emgArm)';
-
-elseif MaxVel_idx_emg>length(emg)
-    emgvalsNMF = mean(emg(Reachstart_idx_emg:length(emg),emgArm))';
-
-else
-    emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
-end
+% if Reachstart_idx_emg == MaxVel_idx_emg
+%     % Midpoint between start and end bc for some very severe stroke, the max vel is the start of
+%     % the reach and they continue to slow.
+%     emgvalsNMF = emg(median(Reachstart_idx_emg:MaxReach_idx_emg),emgArm)';
+% 
+% elseif MaxVel_idx_emg>length(emg)
+%     emgvalsNMF = mean(emg(Reachstart_idx_emg:length(emg),emgArm))';
+% 
+% else
+%     emgvalsNMF = mean(emg(Reachstart_idx_emg:MaxVel_idx_emg,emgArm))';
+% end
 
 % NMF Matrix
 if i ==1 && expcond ==1 
