@@ -3,7 +3,7 @@
 % Script to run NMF analysis and remove zeros from matrix using internal
 % Matlab function.
 
-
+NMFMatrix_trial_updated= RTIS2001_COMBINEDPPAANDACCEL;
 % Concatonate by hand the nonzero columns (zero columns are trials that
 % were skipped with the kinematic data)
 
@@ -163,7 +163,6 @@ ylim([80 100])
 ax = gca; % Get current axes
 ax.FontSize = 35; % Set axes font size to 20
 
-% Red is 2011
 
 % VAF Plot with Error Bars per muscle
 
@@ -275,7 +274,7 @@ Mod1_TR_A = [Mod1_TR_A;NaN;NaN;NaN];
 Mod1_TU_A = [Mod1_TU_A;NaN;NaN;NaN;NaN;NaN]; 
 Mod1_50U_A = [Mod1_50U_A;NaN]; 
 
-% For ppa phase
+%% For ppa phase
 Mod1_TR_P= Modules_CMatrices_4Modules(1,52:58)'; % 7x1
 Mod1_25R_P = Modules_CMatrices_4Modules(1,59:68)'; % 10x1
 Mod1_50R_P= Modules_CMatrices_4Modules(1,69:78)';% 10x1
@@ -366,28 +365,50 @@ Mod1_TR = [Mod1_TR;NaN;NaN;NaN];
 Mod1_TU = [Mod1_TU;NaN;NaN;NaN]; 
 Mod1_25U = [Mod1_25U;NaN;NaN]; 
 Mod1_50U = [Mod1_50U;NaN;NaN;NaN]; 
-%%
+%% Combined Accel and PPA
 Mod1_colsasConditions = [Mod1_TR_A Mod1_25R_A Mod1_50R_A Mod1_TU_A Mod1_25U_A Mod1_50U_A Mod1_TR_P Mod1_25R_P Mod1_50R_P Mod1_TU_P Mod1_25U_P Mod1_50U_P];
 
+%% Just accel
+Mod1_colsasConditions = [Mod1_TR_A Mod1_25R_A Mod1_50R_A Mod1_TU_A Mod1_25U_A Mod1_50U_A];
 
 %% Module2
 
 
 %% RTIS2001
-Mod2_TR= Modules_CMatrices_4Modules(2,1:7)'; % 7x1
-Mod2_25R = Modules_CMatrices_4Modules(2,8:17)'; % 10x1
-Mod2_50R = Modules_CMatrices_4Modules(2,18:27)';% 10x1
+% Choosing for when 4 Modules 
+Modules_CMatrices_4Modules = nmf(4).C;
 
-Mod2_TU= Modules_CMatrices_4Modules(2,28:32)'; % 5x1
-Mod2_25U = Modules_CMatrices_4Modules(2,33:42)'; % 10x1
-Mod2_50U = Modules_CMatrices_4Modules(2,43:51)'; %9x1
+%For accel phase
+
+Mod2_TR_A= Modules_CMatrices_4Modules(2,1:7)'; % 7x1
+Mod2_25R_A = Modules_CMatrices_4Modules(2,8:17)'; % 10x1
+Mod2_50R_A = Modules_CMatrices_4Modules(2,18:27)';% 10x1
+
+Mod2_TU_A= Modules_CMatrices_4Modules(2,28:32)'; % 5x1
+Mod2_25U_A = Modules_CMatrices_4Modules(2,33:42)'; % 10x1
+Mod2_50U_A = Modules_CMatrices_4Modules(2,43:51)'; %9x1
 
 
+% For RTIS2001_P - NEED TO ADD BACK IN NANS
 
-Mod2_TR = [Mod2_TR;NaN;NaN;NaN]; 
-Mod2_TU = [Mod2_TU;NaN;NaN;NaN;NaN;NaN]; 
-Mod2_50U = [Mod2_50U;NaN]; 
 
+Mod2_TR_A = [Mod2_TR_A;NaN;NaN;NaN]; 
+Mod2_TU_A = [Mod2_TU_A;NaN;NaN;NaN;NaN;NaN]; 
+Mod2_50U_A = [Mod2_50U_A;NaN]; 
+
+% For ppa phase
+Mod2_TR_P= Modules_CMatrices_4Modules(2,52:58)'; % 7x1
+Mod2_25R_P = Modules_CMatrices_4Modules(2,59:68)'; % 10x1
+Mod2_50R_P= Modules_CMatrices_4Modules(2,69:78)';% 10x1
+
+Mod2_TU_P= Modules_CMatrices_4Modules(2,79:83)'; % 5x1
+Mod2_25U_P = Modules_CMatrices_4Modules(2,84:93)'; % 10x1
+Mod2_50U_P = Modules_CMatrices_4Modules(2,94:102)'; %9x1
+
+
+Mod2_TR_P = [Mod2_TR_P;NaN;NaN;NaN]; 
+Mod2_TU_P = [Mod2_TU_P;NaN;NaN;NaN;NaN;NaN]; 
+Mod2_50U_P = [Mod2_50U_P;NaN]; 
 %% RTIS2011
 
 Mod2_TR= Modules_CMatrices_2Modules(2,1:12)'; % 12x1
@@ -439,28 +460,46 @@ Mod2_25U = [Mod2_25U;NaN;NaN];
 Mod2_50U = [Mod2_50U;NaN;NaN;NaN]; 
 
 %%
-Mod2_colsasConditions = [Mod2_TR Mod2_25R Mod2_50R Mod2_TU Mod2_25U Mod2_50U];
+Mod2_colsasConditions = [Mod2_TR_A Mod2_25R_A Mod2_50R_A Mod2_TU_A Mod2_25U_A Mod2_50U_A Mod2_TR_P Mod2_25R_P Mod2_50R_P Mod2_TU_P Mod2_25U_P Mod2_50U_P];
 
+%% Just accel
+Mod2_colsasConditions = [Mod2_TR_A Mod2_25R_A Mod2_50R_A Mod2_TU_A Mod2_25U_A Mod2_50U_A];
 
 %% Module3
 
 
 %% RTIS2001 
-Mod3_TR= Modules_CMatrices_4Modules(3,1:7)'; % 7x1
-Mod3_25R = Modules_CMatrices_4Modules(3,8:17)'; % 10x1
-Mod3_50R = Modules_CMatrices_4Modules(3,18:27)';% 10x1
+%For accel phase
 
-Mod3_TU= Modules_CMatrices_4Modules(3,28:32)'; % 5x1
-Mod3_25U = Modules_CMatrices_4Modules(3,33:42)'; % 10x1
-Mod3_50U = Modules_CMatrices_4Modules(3,43:51)'; %9x1
+Mod3_TR_A= Modules_CMatrices_4Modules(3,1:7)'; % 7x1
+Mod3_25R_A = Modules_CMatrices_4Modules(3,8:17)'; % 10x1
+Mod3_50R_A = Modules_CMatrices_4Modules(3,18:27)';% 10x1
 
-
-
-Mod3_TR = [Mod3_TR;NaN;NaN;NaN]; 
-Mod3_TU = [Mod3_TU;NaN;NaN;NaN;NaN;NaN]; 
-Mod3_50U = [Mod3_50U;NaN]; 
+Mod3_TU_A= Modules_CMatrices_4Modules(3,28:32)'; % 5x1
+Mod3_25U_A = Modules_CMatrices_4Modules(3,33:42)'; % 10x1
+Mod3_50U_A = Modules_CMatrices_4Modules(3,43:51)'; %9x1
 
 
+% For RTIS2001_P - NEED TO ADD BACK IN NANS
+
+
+Mod3_TR_A = [Mod3_TR_A;NaN;NaN;NaN]; 
+Mod3_TU_A = [Mod3_TU_A;NaN;NaN;NaN;NaN;NaN]; 
+Mod3_50U_A = [Mod3_50U_A;NaN]; 
+
+% For ppa phase
+Mod3_TR_P= Modules_CMatrices_4Modules(3,52:58)'; % 7x1
+Mod3_25R_P = Modules_CMatrices_4Modules(3,59:68)'; % 10x1
+Mod3_50R_P= Modules_CMatrices_4Modules(3,69:78)';% 10x1
+
+Mod3_TU_P= Modules_CMatrices_4Modules(3,79:83)'; % 5x1
+Mod3_25U_P = Modules_CMatrices_4Modules(3,84:93)'; % 10x1
+Mod3_50U_P = Modules_CMatrices_4Modules(3,94:102)'; %9x1
+
+
+Mod3_TR_P = [Mod3_TR_P;NaN;NaN;NaN]; 
+Mod3_TU_P = [Mod3_TU_P;NaN;NaN;NaN;NaN;NaN]; 
+Mod3_50U_P = [Mod3_50U_P;NaN]; 
 
 %% RTIS1003
 Mod3_TR= Modules_CMatrices_4Modules(3,1:4)';% 4x1
@@ -500,8 +539,9 @@ Mod3_25U = [Mod3_25U;NaN;NaN];
 Mod3_50U = [Mod3_50U;NaN;NaN;NaN]; 
 %%
 
-Mod3_colsasConditions = [Mod3_TR Mod3_25R Mod3_50R Mod3_TU Mod3_25U Mod3_50U];
-
+Mod3_colsasConditions = [Mod3_TR_A Mod3_25R_A Mod3_50R_A Mod3_TU_A Mod3_25U_A Mod3_50U_A Mod3_TR_P Mod3_25R_P Mod3_50R_P Mod3_TU_P Mod3_25U_P Mod3_50U_P];
+   %% Just accel
+Mod3_colsasConditions = [Mod3_TR_A Mod3_25R_A Mod3_50R_A Mod3_TU_A Mod3_25U_A Mod3_50U_A];
 %% Module4
 
 %% RTIS1003
@@ -540,41 +580,67 @@ Mod4_25U = [Mod4_25U;NaN;NaN];
 Mod4_50U = [Mod4_50U;NaN;NaN;NaN]; 
 %% RTIS2001
 
-Mod4_TR= Modules_CMatrices_4Modules(4,1:7)'; % 7x1
-Mod4_25R = Modules_CMatrices_4Modules(4,8:17)'; % 10x1
-Mod4_50R = Modules_CMatrices_4Modules(4,18:27)';% 10x1
+%For accel phase
 
-Mod4_TU= Modules_CMatrices_4Modules(4,28:32)'; % 5x1
-Mod4_25U = Modules_CMatrices_4Modules(4,33:42)'; % 10x1
-Mod4_50U = Modules_CMatrices_4Modules(4,43:51)'; %9x1
+Mod4_TR_A= Modules_CMatrices_4Modules(4,1:7)'; % 7x1
+Mod4_25R_A = Modules_CMatrices_4Modules(4,8:17)'; % 10x1
+Mod4_50R_A = Modules_CMatrices_4Modules(4,18:27)';% 10x1
 
-Mod4_TR = [Mod4_TR;NaN;NaN;NaN]; 
-Mod4_TU = [Mod4_TU;NaN;NaN;NaN;NaN;NaN]; 
-Mod4_50U = [Mod4_50U;NaN]; 
+Mod4_TU_A= Modules_CMatrices_4Modules(4,28:32)'; % 5x1
+Mod4_25U_A = Modules_CMatrices_4Modules(4,33:42)'; % 10x1
+Mod4_50U_A = Modules_CMatrices_4Modules(4,43:51)'; %9x1
 
+
+Mod4_TR_A = [Mod4_TR_A;NaN;NaN;NaN]; 
+Mod4_TU_A = [Mod4_TU_A;NaN;NaN;NaN;NaN;NaN]; 
+Mod4_50U_A = [Mod4_50U_A;NaN]; 
+
+% For ppa phase
+Mod4_TR_P= Modules_CMatrices_4Modules(4,52:58)'; % 7x1
+Mod4_25R_P = Modules_CMatrices_4Modules(4,59:68)'; % 10x1
+Mod4_50R_P= Modules_CMatrices_4Modules(4,69:78)';% 10x1
+
+Mod4_TU_P= Modules_CMatrices_4Modules(4,79:83)'; % 5x1
+Mod4_25U_P = Modules_CMatrices_4Modules(4,84:93)'; % 10x1
+Mod4_50U_P = Modules_CMatrices_4Modules(4,94:102)'; %9x1
+
+
+Mod4_TR_P = [Mod4_TR_P;NaN;NaN;NaN]; 
+Mod4_TU_P = [Mod4_TU_P;NaN;NaN;NaN;NaN;NaN]; 
+Mod4_50U_P = [Mod4_50U_P;NaN]; 
 
 %%
-Mod4_colsasConditions = [Mod4_TR Mod4_25R Mod4_50R Mod4_TU Mod4_25U Mod4_50U];
-
+Mod4_colsasConditions = [Mod4_TR_A Mod4_25R_A Mod4_50R_A Mod4_TU_A Mod4_25U_A Mod4_50U_A Mod4_TR_P Mod4_25R_P Mod4_50R_P Mod4_TU_P Mod4_25U_P Mod4_50U_P];
+%% Just accel
+Mod4_colsasConditions = [Mod4_TR_A Mod4_25R_A Mod4_50R_A Mod4_TU_A Mod4_25U_A Mod4_50U_A];
 
 %% MODULE 1-  Weightings and Box Plots with Time Component * USE ME* 
 
 % Weightings per Module
+figure()
 subplot(1,2,1)
-title('S1: Mod 1 Composition','Fontsize',35)
+% title('S1: Mod 1 Composition','Fontsize',35)
 hold on
 bar(nmf(4).W(:,1), 'FaceColor', [0.5 0 0.5]) % Dark purple color
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
-xtickangle(45);
+% set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
+% xtickangle(45);
+xlim([.5 7.5])
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 
 subplot(1,2,2) % Time Component as Box Plots 
 boxplot(Mod1_colsasConditions); % Create box plot
-title('S1: Mod 1 Across Conditions','FontSize',35)
-xticks(1:12); % Set x-tick positions
-xticklabels({'Table-RA', '25% MVT-RA', '50% MVT-RA','Table-UA', '25% MVT-UA', '50% MVT-UA','Table-RP', '25% MVT-RP', '50% MVT-RP','Table-UP', '25% MVT-UP', '50% MVT-UP'}); % Set x-tick labels
-ylim([0 1])
-set(gca, 'FontSize', 35); % Set font size for axes
+% title('S1: Mod 1 Across Conditions','FontSize',35)
+%xticks(1:12); % Set x-tick positions
+% xticks(1:6); % Set x-tick positions
+% xticklabels({'TR-A', '25R-A', '50R-A','TU-A', '25U-A', '50U-A'}); % Set x-tick labels
+% xticklabels({'TR-A', '25R-A', '50R-A','TU-A', '25U-A', '50U-A','TR-P','25R-P', '50R-P','TU-P', '25U-P', '50U-P'}); % Set x-tick labels
 
+ylim([0 1])
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 % Set box plot colors to dark purple and adjust line width
 h = findobj(gca, 'Tag', 'Box'); % Find box objects
 for k = 1:length(h)
@@ -590,21 +656,27 @@ set(hMedian, 'LineWidth', 2); % Set median line width
 
 %% Module 2: Weightings and Box Plots with Time Component * USE ME* 
 % Weightings per Module
+figure()
 subplot(1,2,1)
 hold on
 bar(nmf(4).W(:,2), 'FaceColor', [0.5 0 0.5]) % Dark purple color
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
-xtickangle(45);
-title('S1: Mod 2 Composition','Fontsize',35)
+% set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
+% xtickangle(45);
+% title('S1: Mod 2 Composition','Fontsize',35)
+xlim([.5 7.5])
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 
 subplot(1,2,2) % Time Component as Box Plots 
 boxplot(Mod2_colsasConditions); % Create box plot
-title('S1: Mod 2 Across Conditions','FontSize',35)
-xticks(1:6); % Set x-tick positions
-xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
+% title('S1: Mod 2 Across Conditions','FontSize',35)
+% xticks(1:6); % Set x-tick positions
+% xticklabels({'Table-RA', '25% MVT-RA', '50% MVT-RA','Table-UA', '25% MVT-UA', '50% MVT-UA','Table-RP', '25% MVT-RP', '50% MVT-RP','Table-UP', '25% MVT-UP', '50% MVT-UP'}); % Set x-tick labels
 ylim([0 1])
 set(gca, 'FontSize', 35); % Set font size for axes
-
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 % Set box plot colors to dark purple and adjust line width
 h = findobj(gca, 'Tag', 'Box'); % Find box objects
 for k = 1:length(h)
@@ -622,19 +694,24 @@ set(hMedian, 'LineWidth', 2); % Set median line width
 figure
 subplot(1,2,1)
 bar(nmf(4).W(:,3), 'FaceColor', [0.5 0 0.5]) % Dark purple color
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
-xtickangle(45);
+% set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
+% xtickangle(45);
 hold on
-title('S1: Mod 3 Composition','Fontsize',35)
+% title('S1: Mod 3 Composition','Fontsize',35)
+xlim([.5 7.5])
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 
 subplot(1,2,2) % Time Component as Box Plots 
 boxplot(Mod3_colsasConditions); % Create box plot
-title('S1: Mod 3 Across Conditions','FontSize',35)
-xticks(1:6); % Set x-tick positions
-xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
+% title('S1: Mod 3 Across Conditions','FontSize',35)
+% xticks(1:12); % Set x-tick positions
+% xticklabels({'Table-RA', '25% MVT-RA', '50% MVT-RA','Table-UA', '25% MVT-UA', '50% MVT-UA','Table-RP', '25% MVT-RP', '50% MVT-RP','Table-UP', '25% MVT-UP', '50% MVT-UP'}); % Set x-tick labels
 ylim([0 1])
 set(gca, 'FontSize', 35); % Set font size for axes
-
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 % Set box plot colors to dark purple and adjust line width
 h = findobj(gca, 'Tag', 'Box'); % Find box objects
 for k = 1:length(h)
@@ -651,19 +728,26 @@ set(hMedian, 'LineWidth', 2); % Set median line width
 figure
 subplot(1,2,1)
 bar(nmf(4).W(:,4), 'FaceColor', [0.5 0 0.5]) % Dark purple color
-set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
-xtickangle(45);
-hold on
-title('S1: Mod 4 Composition','Fontsize',35)
+% set(gca, 'XTick', 1:7, 'XTickLabel', {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'}, 'FontSize', 35); 
+% xtickangle(45);
+% hold on
+% title('S1: Mod 4 Composition','Fontsize',35)
+xlim([.5 7.5])
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 
-subplot(1,2,2) % Time Component as Box Plots 
+subplot(1,2,2) % Time Component as Box Plots  
 boxplot(Mod4_colsasConditions); % Create box plot
-title('S1: Mod 4 Across Conditions','FontSize',35)
-xticks(1:6); % Set x-tick positions
-xticklabels({'Table-R', '25% MVT-R', '50% MVT-R','Table-U', '25% MVT-U', '50% MVT-U'}); % Set x-tick labels
+% title('S1: Mod 4 Across Conditions','FontSize',35)
+% xticks(1:12); % Set x-tick positions
+% xticklabels({'Table-RA', '25% MVT-RA', '50% MVT-RA','Table-UA', '25% MVT-UA', '50% MVT-UA','Table-RP', '25% MVT-RP', '50% MVT-RP','Table-UP', '25% MVT-UP', '50% MVT-UP'}); % Set x-tick labels
 ylim([0 1])
 set(gca, 'FontSize', 35); % Set font size for axes
 
+ set(gca, 'FontSize', 35); % Set font size for axes
+set(gca, 'XTick', []);  % Remove x-ticks
+set(gca, 'XTickLabel', []);  % Remove x-tick labels
 % Set box plot colors to dark purple and adjust line width
 h = findobj(gca, 'Tag', 'Box'); % Find box objects
 for k = 1:length(h)
@@ -709,165 +793,126 @@ ylabel('Expression of Module 3')
 ylim([0 1])
 set(gca, 'FontSize', 18); % Set font size for axes
 
-%% Saved VAFS from given number of modules - OLD VAF DEF - DON'T USE 
-
-% Plotting the Number of Modules vs the VAF
-% x1 =2;
-% x2=3;
-% x3=4;
-% x4 = 5;
-% 
-% ModulesVAF_2 = 74.7773;
-% ModulesVAF_3 = 88.7685 ; 
-% ModulesVAF_4 =  89.9994 ; 
-% ModulesVAF_5 = 98.1836;
-% 
-% % Kacey: where is the plateau? Once you get to 80/90% VAF it's okay?
-% 
-% figure()
-% plot(x1, ModulesVAF_2, 'o', 'MarkerSize', 10, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-% hold on
-% plot(x2, ModulesVAF_3, 'o', 'MarkerSize', 12, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-% plot(x3, ModulesVAF_4, 'o', 'MarkerSize', 14, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-% plot(x4, ModulesVAF_5, 'o', 'MarkerSize', 16, 'MarkerEdgeColor', [0.13 0.55 0.13], 'MarkerFaceColor', [0.13 0.55 0.13]);
-% xlim([1 6])
-% ylabel('Variance Accounted For','FontSize',20)
-% xlabel('Number of Modules','FontSize',20)
-% title('Variance Accounted for as a Function of Modules','FontSize',25)
-% set(gca, 'FontSize', 14); % Set font size for tick labels
 
 
-%% Hongchul October 3
-plot(NNMF_Mat(1,:))
-hold on
-plot(nmf(1).RECON(1,:))
-plot(cell2mat(NMFMatrix_trial_FINAL(4,2:end)))
+%% Hongchul October 3 - Code for Playing Around with Determining the Appropriate Number of Synergies
+
+%% Plotting Orignal Input Data with Reconstructed Data
+
+% Observe effect of increasing the number of synergies with how closely the
+% original data and recon data align
 for mm=1:7
-plot(NNMF_Mat(mm,:))
-hold on
+% subplot(4,2,mm)
+plot(NNMF_Mat(mm,:),'k','LineWidth',2.5)
+if mm ==1
+    title('UT')
+elseif mm==2
+    title('MT')
+elseif mm==3
+    title('LD')
+elseif mm== 4
+    title('PM')
+elseif mm ==5
+    title('BIC')
+elseif mm == 6
+    title('TRI')
+else
+    title('IDL','FontSize',30)
+    % Set the axes font size
+ax = gca; % Get current axes
+ax.FontSize = 20; % Set font size to 20
+xlabel('Trials','FontSize',25)
+ylabel('EMG Activation (Normalized)','FontSize',25)
+
 end
-clear all
-for mm=1:7
-plot(NNMF_Mat(mm,:))
-hold on
-end
-close all
-for mm=1:7
-plot(NNMF_Mat(mm,:))
-hold on
-end
-for mm=1:7
-subplot(4,2,mm)
-for ss=1:4
-plot(NNMF_Mat(mm,:))
-hold on
-plot(nmf(ss).RECON(mm,:))
-end
-end
-for mm=1:7
-subplot(4,2,mm)
-plot(NNMF_Mat(mm,:),'k','LineWidth',2)
+
+
 hold on
 for ss=1:4
-plot(nmf(ss).RECON(mm,:))
+plot(nmf(ss).RECON(mm,:),'Linewidth',1)
+'Synergies'
+ss
+% pause
+
 end
+if mm <7
+   
+close
+end 
 end
-VAFmus = []; VAFcond = [];
-for ss=1:7
-VAFmus = [VAFmus; nmf(ss).VAFmus];
-VAFcond = [VAFcond; VAFcond];'
+
+%% Plotting Individual Muscle VAFS as a function of Number of synergies
+
+for mm = 1:7
+    plot(VAFmus(mm,:))
+    hold on
+    
+ if mm ==1
+    title('UT')
+elseif mm==2
+    title('MT')
+elseif mm==3
+    title('LD')
+elseif mm== 4
+    title('PM')
+elseif mm ==5
+    title('BIC')
+elseif mm == 6
+    title('TRI')
+else
+    title('IDL')
 end
-VAFmus = []; VAFcond = [];
-for ss=1:7
-VAFmus = [VAFmus; nmf(ss).VAFmus];
-VAFcond = [VAFcond; VAFcond];
+
 end
-VAFmus = []; VAFcond = [];
-for ss=1:7
-VAFmus = [VAFmus; nmf(ss).VAFmus];
-VAFcond = [VAFcond; nmf(ss).VAFcond];
-end
-VAFmus = []; VAFcond = [];
-for ss=1:7
-VAFmus = [VAFmus, nmf(ss).VAFmus];
-VAFcond = [VAFcond, VAFcond];
-end
+
+ylabel('VAF per muscle','Fontsize',16)
+xlabel('Number of Synergies','Fontsize',16)
+
+
+
+%%
+% For plotting the mean VAF per muscle as a function of the number of 
+% Synergies along with the std of each vaf per muscle
+
 VAFmus = []; VAFcond = [];
 for ss=1:7
 VAFmus = [VAFmus, nmf(ss).VAFmus];
 VAFcond = [VAFcond, nmf(ss).VAFcond];
 end
-figure;
-plot(1:51,VAFcond)
-plot(1:7,VAFmus)
-figure; plot(1:7,VAFmus)
-figure; plot(1:7,VAFmus')
-figure; errorbar(1:7,mean(VAFmus'),std(VAFmus'))
+
 figure; errorbar(1:7,mean(VAFmus),std(VAFmus))
+
+
+
+%% Plotting the VAF for each trial as a function of the number of synergies
 figure;
-plot(1:51,VAFcond)
-figure; plot(1:51,nmf(4).C)
-figure;
-for ww=1:4
-subplot(4,3,1+3*(ww-1))
-barplot(nmf(4).W(:,ww)
-subplot(4,3,[2 3] + 3*(ww-1))
-plot(1:51,nmf(4).C(ww,:))
-end
-figure;
-for ww=1:4
-subplot(4,3,1+3*(ww-1))
-barplot(nmf(4).W(:,ww)
-subplot(4,3,[2 3] + 3*(ww-1))
-plot(1:51,nmf(4).C(ww,:)))
-end
-figure;
-for ww=1:4
-subplot(4,3,1+3*(ww-1))
-barplot(nmf(4).W(:,ww))
-subplot(4,3,[2 3] + 3*(ww-1))
-plot(1:51,nmf(4).C(ww,:))
-end
+plot(1:102,VAFcond)
+xlabel('Trial','Fontsize',20)
+ylabel('VAF','Fontsize',20)
+legend('1 Synergies','2 Synergies','3 Synergies','4 Synergies','5 Synergies','6 Synergies','7 Synergies','Fontsize',20)
+
+
+%% Plotting Each Synergy Composition and the Expression of Each over Time 
+
 figure;
 for ww=1:4
 subplot(4,3,1+3*(ww-1))
 bar(nmf(4).W(:,ww))
 subplot(4,3,[2 3] + 3*(ww-1))
-plot(1:51,nmf(4).C(ww,:))
+plot(1:102,nmf(4).C(ww,:))
 end
+
+%%
+
+
+
+% Way of showing how much the data aligns for that muscle as a function of
+% synergy number 
 figure;
 for ww=1:4
-subplot(4,1,ww)
-plot(1:7,nmf(4).W(:,ww)*C(ww,:))
-end
-figure;
-for ww=1:4
-subplot(4,1,ww)
-plot(1:7,nmf(4).W(:,ww)*nmf(4).C(ww,:))
-end
-nmf(4).W(:,ww)*nmf(4).C(ww,:);
-figure;
-for ww=1:4
-subplot(4,1,ww)
-plot(1:51,nmf(4).W(:,ww)*nmf(4).C(ww,:))
-end
-figure;
-plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
+plot(1:102,nmf(4).W(4,ww)*nmf(4).C(ww,:))
 hold on
-for ww=1:4
-plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,4))
+title('Pec Major')
 end
-nmf(4).W(4,ww)*nmf(4).C(ww,4);
-figure;
-plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
-hold on
-for ww=1:4
-plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,:))
-end
-figure;
-for ww=1:4
-plot(1:51,nmf(4).W(4,ww)*nmf(4).C(ww,:))
-hold on
-end
-plot(1:51,NNMF_Mat(4,:),'k','LineWidth',1.5)
-close all
+plot(1:102,NNMF_Mat(4,:),'k','LineWidth',1.5)
+legend('1 Synergy','2 Synergies','3 Synergies','4 Synergies','Original Data')
