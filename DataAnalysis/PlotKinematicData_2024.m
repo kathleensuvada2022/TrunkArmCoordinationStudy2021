@@ -4250,10 +4250,18 @@ maxreach =RD_2024;
 
    close all
     
-   meanEMG =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i);
+   [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i);
 
  
-   
+    NNMFstruc{1}.emgTrace = meanEMG
+    NNMFstruc{1}.startidx = emg_idxstart
+    NNMFstruc{1}.endidx = emg_idx_distmax
+    NNMFstruc{1}.ppaidx = emg_idx_ppa
+    NNMFstruc{1}.trialname = mfname
+    NNMFstruc{1}.cond = expcond
+    NNMFstruc{1}.ID= partid
+
+   % need too save emg traces and the time points to a struct. Oct 2024
    
    pause
 

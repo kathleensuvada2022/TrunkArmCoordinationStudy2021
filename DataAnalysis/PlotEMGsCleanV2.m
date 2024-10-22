@@ -1,4 +1,7 @@
-function meanEMG  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+% function meanEMG  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i)
+
+function [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa] = PlotEMGsCleanV2(emg, timestart, timevelmax, timedistmax, i);
+
 
 % cleandata=KaceyNotchfilter(emg);
 
