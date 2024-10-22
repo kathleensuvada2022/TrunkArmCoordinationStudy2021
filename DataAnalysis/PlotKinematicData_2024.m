@@ -26,7 +26,7 @@
 
 % K.SUVADA 2020-2024
 %%
-function [avgshouldertrunk std_shldtr  avgmaxreach std_maxreach,avgemg_vel,avgemg_start] = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac
@@ -4252,18 +4252,26 @@ maxreach =RD_2024;
     
    [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i);
 
- 
-    NNMFstruc{1}.emgTrace = meanEMG
-    NNMFstruc{1}.startidx = emg_idxstart
-    NNMFstruc{1}.endidx = emg_idx_distmax
-    NNMFstruc{1}.ppaidx = emg_idx_ppa
-    NNMFstruc{1}.trialname = mfname
-    NNMFstruc{1}.cond = expcond
-    NNMFstruc{1}.ID= partid
+   if expcond ==1 && i ==1
+       NNMFstruc = struct();
+   end
+
+   runninglengthnmfstruc= length(NNMFstruc);
+    
+   struct_idx = 1+runninglengthnmfstruc;
+
+    NNMFstruc(struct_idx).emgTrace = meanEMG;
+    NNMFstruc(struct_idx).startidx = emg_idxstart;
+    NNMFstruc(struct_idx).endidx = emg_idx_distmax;
+    NNMFstruc(struct_idx).ppaidx = emg_idx_ppa;
+    NNMFstruc(struct_idx).velidx = emg_idxvel;
+    NNMFstruc(struct_idx).trialname = mfname;
+    NNMFstruc(struct_idx).cond = expcond;
+    NNMFstruc(struct_idx).ID= partid;
 
    % need too save emg traces and the time points to a struct. Oct 2024
    
-   pause
+%    pause
 
 
 %% September 2024- Saving EMGs into Matrix for NNMF Analysis 
