@@ -51,7 +51,7 @@ end
 %% Cond 1
 
 DesiredCond = Cond1; %replace with condition want to see 
-
+%%
 for i = 1:length(DesiredCond) %Number of trials 
 
     if i==1
@@ -61,18 +61,18 @@ for i = 1:length(DesiredCond) %Number of trials
     plot(DesiredCond(i).emgTrace(:,9))
    
     % Determine the shift
-    shift = 2500 - DesiredCond(i).velidx; % Centering around the middle of the samples
-    
-    % Align the data
-    if shift >= 0
-        % If shift is positive, pad the left side
-        aligned_data(shift+1:shift+5000,i) = DesiredCond(i).emgTrace(:,9);
-%                 aligned_data(trial, shift+1:shift+5000) = data(trial, :);
-
-    else
-        % If shift is negative, pad the right side
-        aligned_data(1:5000 + shift,i) = DesiredCond(i).emgTrace(:,9);
-    end
+%     shift = 2500 - DesiredCond(i).velidx; % Centering around the middle of the samples
+%     
+%     % Align the data
+%     if shift >= 0
+%         % If shift is positive, pad the left side
+%         aligned_data(shift+1:shift+5000,i) = DesiredCond(i).emgTrace(:,9);
+% %                 aligned_data(trial, shift+1:shift+5000) = data(trial, :);
+% 
+%     else
+%         % If shift is negative, pad the right side
+%         aligned_data(1:5000 + shift,i) = DesiredCond(i).emgTrace(:,9);
+%     end
     title(MUSC(1),'FontSize',24)
     hold on
 %%
