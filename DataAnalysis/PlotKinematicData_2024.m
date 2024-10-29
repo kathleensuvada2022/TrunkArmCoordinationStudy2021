@@ -27,6 +27,7 @@
 % K.SUVADA 2020-2024
 %%
 function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
+% function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
 % File path and loading setupfile
 
 %For Mac
@@ -4260,14 +4261,18 @@ maxreach =RD_2024;
     
    struct_idx = 1+runninglengthnmfstruc;
 
-    NNMFstruc(struct_idx).emgTrace = meanEMG;
-    NNMFstruc(struct_idx).startidx = emg_idxstart;
-    NNMFstruc(struct_idx).endidx = emg_idx_distmax;
-    NNMFstruc(struct_idx).ppaidx = emg_idx_ppa;
-    NNMFstruc(struct_idx).velidx = emg_idxvel;
-    NNMFstruc(struct_idx).trialname = mfname;
-    NNMFstruc(struct_idx).cond = expcond;
-    NNMFstruc(struct_idx).ID= partid;
+    NNMFstruc(struct_idx).emgTrace = meanEMG;%mean EMG
+    NNMFstruc(struct_idx).startidx_EMG = emg_idxstart; % start index for EMG
+    NNMFstruc(struct_idx).endidx_EMG = emg_idx_distmax; % end index for EMG
+    NNMFstruc(struct_idx).ppaidx_EMG = emg_idx_ppa; % PPA index for EMG
+    NNMFstruc(struct_idx).velidx_EMG = emg_idxvel; % max vel index for EMG
+    NNMFstruc(struct_idx).idx_metria= idx; % idx(1): start idx(2): max vel idx(3): end
+    NNMFstruc(struct_idx).vel = vel_2024;% vel from metria
+    NNMFstruc(struct_idx).dist = dist;% vel from metria
+    NNMFstruc(struct_idx).xyzmet = xhand;% xyz from metria
+    NNMFstruc(struct_idx).trialname = mfname; %filename
+    NNMFstruc(struct_idx).cond = expcond; % condition
+    NNMFstruc(struct_idx).ID= partid; % participant 
 
    % need too save emg traces and the time points to a struct. Oct 2024
    

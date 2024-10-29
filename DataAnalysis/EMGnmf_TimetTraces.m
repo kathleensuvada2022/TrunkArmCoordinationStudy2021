@@ -5,13 +5,46 @@
 
 MUSC = {'UT', 'MT', 'LD', 'PM', 'BIC', 'TRI', 'IDEL'};
 
-% IDL: 15
-% TRI: 14
-% BIC: 13
-% PM : 12
-% LD : 11
-% MT : 10
-% UT : 09
+ IDL = 15;
+ TRI = 14 ;
+ BIC = 13 ; 
+ PM  = 12 ;
+ LD =  11 ;
+ MT = 10;
+ UT = 9;
+
+
+%% Cut the EMG Data 
+% Aligning the data st you are grabbing 1500 samples prior to max velocity
+% through 1500 samples post the max velocity.
+
+% Doing this within a given condition for all trials. 
+
+Newindicies = zeros(51,3001);
+NewMaxVelLocs = zeros(1,51);
+
+% Looping through all Trials and saving cut EMG data such that they are now
+% aligned at the max velocity 
+for j = 1:length(NNMFstruc)
+Newindicies(j,:) = NNMFstruc(j).velidx_EMG-1500:NNMFstruc(j).velidx_EMG+1500;
+NewMaxVelLocs(j) = find(Newindicies(j,:) == NNMFstruc(j).velidx_EMG);
+
+if NNMFstruc(j).velidx_EMG+1500 > 5000
+   EndidxCut = 5000;
+else 
+    EndidxCut = NNMFstruc(j).velidx_EMG+1500;
+end 
+
+if NNMFstruc(j).velidx_EMG-1500 < 1
+   StartidxCut = 1;
+else 
+    StartidxCut = NNMFstruc(j).velidx_EMG-1500;
+end 
+
+NNMFstruc(j).emgcut = NNMFstruc(j).emgTrace(StartidxCut:EndidxCut,:);
+end
+
+
 %%
 % Separating the Structure by Condition
 
@@ -22,32 +55,55 @@ Cond4 = NNMFstruc([NNMFstruc.cond] == 4);
 Cond5 = NNMFstruc([NNMFstruc.cond] == 5);
 Cond6 = NNMFstruc([NNMFstruc.cond] == 6);
 
-%% Sample data
-data = rand(7, 5000); % Replace this with your actual data
-max_vel = randi([1, 5000], 7, 1); % Example max_vel indices for each trial
 
-% Initialize an array to hold the aligned data
-aligned_data = zeros(7, 5000); 
 
-% Align each trial
-for trial = 1:7
-    max_index = max_vel(trial); % Get the max_vel index for the current trial
-    
-    % Determine the shift
-    shift = 2500 - max_index; % Centering around the middle of the samples
-    
-    % Align the data
-    if shift >= 0
-        % If shift is positive, pad the left side
-        aligned_data(trial, shift+1:shift+5000) = data(trial, :);
-    else
-        % If shift is negative, pad the right side
-        aligned_data(trial, 1:5000 + shift) = data(trial, :);
-    end
-end
+%% Plotting the Averages and Errors for Muscle Activations
 
-% aligned_data now contains the aligned trials
+% Condition 1
 
+UT_alltrials_Cond = [Cond1(1).emgcut(:,9) Cond1(2).emgcut(:,9) Cond1(3).emgcut(:,9) Cond1(4).emgcut(:,9) Cond1(5).emgcut(:,9) Cond1(6).emgcut(:,9) Cond1(7).emgcut(:,9)];
+
+% taking the average across all columns to give an average trace that is
+% 3001x1 
+
+% Mean for all trials in condition 1 
+meanUT_Cond1 = mean(UT_alltrials,2); 
+
+
+% Condition 2 
+UT_alltrials = [Cond2(1).emgcut(:,9) Cond1(2).emgcut(:,9) Cond1(3).emgcut(:,9) Cond1(4).emgcut(:,9) Cond1(5).emgcut(:,9) Cond1(6).emgcut(:,9) Cond1(7).emgcut(:,9)];
+
+% taking the average across all columns to give an average trace that is
+% 3001x1 
+
+% Mean for all trials in condition 1 
+meanUT_Cond1 = mean(UT_alltrials,2); 
+
+
+
+% Condition 3
+
+
+
+
+% Condition 4
+
+
+
+
+% Condition 5
+
+
+
+
+
+% Condition 6 
+
+
+
+
+
+%% Code Below Plots Time Traces of all Trials in a Given Condition
 %% Cond 1
 
 DesiredCond = Cond1; %replace with condition want to see 
