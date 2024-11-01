@@ -26,8 +26,8 @@
 
 % K.SUVADA 2020-2024
 %%
-function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
-% function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+% function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac
@@ -4251,7 +4251,7 @@ maxreach =RD_2024;
 
    close all
     
-   [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,i);
+   [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa,temg]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,vel_2024,dist,t2,i);
 
    if expcond ==1 && i ==1
        NNMFstruc = struct();
@@ -4262,11 +4262,17 @@ maxreach =RD_2024;
    struct_idx = 1+runninglengthnmfstruc;
 
     NNMFstruc(struct_idx).emgTrace = meanEMG;%mean EMG
+    NNMFstruc(struct_idx).TimestartTimeVelTimeEnd= [timestart timevelmax timedistmax]; % idx(1): start idx(2): max vel idx(3): end
+
     NNMFstruc(struct_idx).startidx_EMG = emg_idxstart; % start index for EMG
     NNMFstruc(struct_idx).endidx_EMG = emg_idx_distmax; % end index for EMG
     NNMFstruc(struct_idx).ppaidx_EMG = emg_idx_ppa; % PPA index for EMG
     NNMFstruc(struct_idx).velidx_EMG = emg_idxvel; % max vel index for EMG
+    NNMFstruc(struct_idx).emgtimevec= temg; % idx(1): start idx(2): max vel idx(3): end
+
     NNMFstruc(struct_idx).idx_metria= idx; % idx(1): start idx(2): max vel idx(3): end
+    NNMFstruc(struct_idx).tmet= t2; 
+
     NNMFstruc(struct_idx).vel = vel_2024;% vel from metria
     NNMFstruc(struct_idx).dist = dist;% vel from metria
     NNMFstruc(struct_idx).xyzmet = xhand;% xyz from metria
