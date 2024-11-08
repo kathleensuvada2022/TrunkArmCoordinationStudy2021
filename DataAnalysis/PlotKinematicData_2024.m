@@ -26,8 +26,8 @@
 
 % K.SUVADA 2020-2024
 %%
-% function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
-function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
+function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+% function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac

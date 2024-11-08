@@ -114,7 +114,8 @@ IDL_alltrials_Cond1 = [Cond1(1).emgTrace(:,15) Cond1(2).emgTrace(:,15) Cond1(3).
 
  % Avg time max vel occurs 
 
- MeanMaxVel = mean([Cond1(1).TimestartTimeVelTimeEnd(2),Cond1(2).TimestartTimeVelTimeEnd(2),Cond1(3).TimestartTimeVelTimeEnd(2),Cond1(4).TimestartTimeVelTimeEnd(2),Cond1(5).TimestartTimeVelTimeEnd(2),Cond1(6).TimestartTimeVelTimeEnd(2),Cond1(7).TimestartTimeVelTimeEnd(2)])
+ MeanMaxVel_Cond1 = mean([Cond1(1).TimestartTimeVelTimeEnd(2),Cond1(2).TimestartTimeVelTimeEnd(2),Cond1(3).TimestartTimeVelTimeEnd(2),Cond1(4).TimestartTimeVelTimeEnd(2),Cond1(5).TimestartTimeVelTimeEnd(2),Cond1(6).TimestartTimeVelTimeEnd(2),Cond1(7).TimestartTimeVelTimeEnd(2)])
+ MeanStart_Cond1 = mean([Cond1(1).TimestartTimeVelTimeEnd(1),Cond1(2).TimestartTimeVelTimeEnd(1),Cond1(3).TimestartTimeVelTimeEnd(1),Cond1(4).TimestartTimeVelTimeEnd(1),Cond1(5).TimestartTimeVelTimeEnd(1),Cond1(6).TimestartTimeVelTimeEnd(1),Cond1(7).TimestartTimeVelTimeEnd(1)])
 
  %% Condition 2: 10 trials total 
  UT_alltrials_Cond2 = [Cond2(1).emgTrace(:,9) Cond2(2).emgTrace(:,9) Cond2(3).emgTrace(:,9) Cond2(4).emgTrace(:,9) Cond2(5).emgTrace(:,9) Cond2(6).emgTrace(:,9) Cond2(7).emgTrace(:,9)  Cond2(8).emgTrace(:,9) Cond2(9).emgTrace(:,9) Cond2(10).emgTrace(:,9)];
@@ -130,65 +131,404 @@ IDL_alltrials_Cond2 = [Cond2(1).emgTrace(:,15) Cond2(2).emgTrace(:,15) Cond2(3).
 
  % Avg time max vel occurs 
 
- MeanMaxVel = mean([Cond2(1).TimestartTimeVelTimeEnd(2),Cond2(2).TimestartTimeVelTimeEnd(2),Cond2(3).TimestartTimeVelTimeEnd(2),Cond2(4).TimestartTimeVelTimeEnd(2),Cond2(5).TimestartTimeVelTimeEnd(2),Cond2(6).TimestartTimeVelTimeEnd(2),Cond2(7).TimestartTimeVelTimeEnd(2),Cond2(8).TimestartTimeVelTimeEnd(2),Cond2(9).TimestartTimeVelTimeEnd(2),Cond2(10).TimestartTimeVelTimeEnd(2)])
+ MeanMaxVel_Cond2 = mean([Cond2(1).TimestartTimeVelTimeEnd(2),Cond2(2).TimestartTimeVelTimeEnd(2),Cond2(3).TimestartTimeVelTimeEnd(2),Cond2(4).TimestartTimeVelTimeEnd(2),Cond2(5).TimestartTimeVelTimeEnd(2),Cond2(6).TimestartTimeVelTimeEnd(2),Cond2(7).TimestartTimeVelTimeEnd(2),Cond2(8).TimestartTimeVelTimeEnd(2),Cond2(9).TimestartTimeVelTimeEnd(2),Cond2(10).TimestartTimeVelTimeEnd(2)])
+ MeanStart_Cond2 = mean([Cond2(1).TimestartTimeVelTimeEnd(1),Cond2(2).TimestartTimeVelTimeEnd(1),Cond2(3).TimestartTimeVelTimeEnd(1),Cond2(4).TimestartTimeVelTimeEnd(1),Cond2(5).TimestartTimeVelTimeEnd(1),Cond2(6).TimestartTimeVelTimeEnd(1),Cond2(7).TimestartTimeVelTimeEnd(1),Cond2(8).TimestartTimeVelTimeEnd(1),Cond2(9).TimestartTimeVelTimeEnd(1),Cond2(10).TimestartTimeVelTimeEnd(1)])
 
-%% Velocity 
+ %% %% Condition 3: 10 trials total 
+ UT_alltrials_Cond3 = [Cond3(1).emgTrace(:,9) Cond3(2).emgTrace(:,9) Cond3(3).emgTrace(:,9) Cond3(4).emgTrace(:,9) Cond3(5).emgTrace(:,9) Cond3(6).emgTrace(:,9) Cond3(7).emgTrace(:,9)  Cond3(8).emgTrace(:,9) Cond3(9).emgTrace(:,9) Cond3(10).emgTrace(:,9)];
+MT_alltrials_Cond3 = [Cond3(1).emgTrace(:,10) Cond3(2).emgTrace(:,10) Cond3(3).emgTrace(:,10) Cond3(4).emgTrace(:,10) Cond3(5).emgTrace(:,10) Cond3(6).emgTrace(:,10) Cond3(7).emgTrace(:,10) Cond3(8).emgTrace(:,10) Cond3(9).emgTrace(:,10) Cond3(10).emgTrace(:,10)];
+LD_alltrials_Cond3 = [Cond3(1).emgTrace(:,11) Cond3(2).emgTrace(:,11) Cond3(3).emgTrace(:,11) Cond3(4).emgTrace(:,11) Cond3(5).emgTrace(:,11) Cond3(6).emgTrace(:,11) Cond3(7).emgTrace(:,11) Cond3(8).emgTrace(:,11) Cond3(9).emgTrace(:,11) Cond3(10).emgTrace(:,11)];
+PM_alltrials_Cond3 = [Cond3(1).emgTrace(:,12) Cond3(2).emgTrace(:,12) Cond3(3).emgTrace(:,12) Cond3(4).emgTrace(:,12) Cond3(5).emgTrace(:,12) Cond3(6).emgTrace(:,12) Cond3(7).emgTrace(:,12) Cond3(8).emgTrace(:,12) Cond3(9).emgTrace(:,12) Cond3(10).emgTrace(:,12)];
+BIC_alltrials_Cond3 = [Cond3(1).emgTrace(:,13) Cond3(2).emgTrace(:,13) Cond3(3).emgTrace(:,13) Cond3(4).emgTrace(:,13) Cond3(5).emgTrace(:,13) Cond3(6).emgTrace(:,13) Cond3(7).emgTrace(:,13) Cond3(8).emgTrace(:,13) Cond3(9).emgTrace(:,13) Cond3(10).emgTrace(:,13)];
+TRI_alltrials_Cond3 = [Cond3(1).emgTrace(:,14) Cond3(2).emgTrace(:,14) Cond3(3).emgTrace(:,14) Cond3(4).emgTrace(:,14) Cond3(5).emgTrace(:,14) Cond3(6).emgTrace(:,14) Cond3(7).emgTrace(:,14) Cond3(8).emgTrace(:,14) Cond3(9).emgTrace(:,14) Cond3(10).emgTrace(:,14)];
+IDL_alltrials_Cond3 = [Cond3(1).emgTrace(:,15) Cond3(2).emgTrace(:,15) Cond3(3).emgTrace(:,15) Cond3(4).emgTrace(:,15) Cond3(5).emgTrace(:,15) Cond3(6).emgTrace(:,15) Cond3(7).emgTrace(:,15) Cond3(8).emgTrace(:,15) Cond3(9).emgTrace(:,15) Cond3(10).emgTrace(:,15)];
+
+
+% Metria: 500 samples = 5 seconds
+
+ % Avg time max vel occurs 
+
+
+ MeanMaxVel_Cond3 = mean([Cond3(1).TimestartTimeVelTimeEnd(2),Cond3(2).TimestartTimeVelTimeEnd(2),Cond3(3).TimestartTimeVelTimeEnd(2),Cond3(4).TimestartTimeVelTimeEnd(2),Cond3(5).TimestartTimeVelTimeEnd(2),Cond3(6).TimestartTimeVelTimeEnd(2),Cond3(7).TimestartTimeVelTimeEnd(2),Cond3(8).TimestartTimeVelTimeEnd(2),Cond3(9).TimestartTimeVelTimeEnd(2),Cond3(10).TimestartTimeVelTimeEnd(2)])
+ MeanStart_Cond3 = mean([Cond3(1).TimestartTimeVelTimeEnd(1),Cond3(2).TimestartTimeVelTimeEnd(1),Cond3(3).TimestartTimeVelTimeEnd(1),Cond3(4).TimestartTimeVelTimeEnd(1),Cond3(5).TimestartTimeVelTimeEnd(1),Cond3(6).TimestartTimeVelTimeEnd(1),Cond3(7).TimestartTimeVelTimeEnd(1),Cond3(8).TimestartTimeVelTimeEnd(1),Cond3(9).TimestartTimeVelTimeEnd(1),Cond3(10).TimestartTimeVelTimeEnd(1)])
+
+ %% Condition 4: 5 trials total 
+ UT_alltrials_Cond4 = [Cond4(1).emgTrace(:,9) Cond4(2).emgTrace(:,9) Cond4(3).emgTrace(:,9) Cond4(4).emgTrace(:,9) Cond4(5).emgTrace(:,9)];
+MT_alltrials_Cond4 = [Cond4(1).emgTrace(:,10) Cond4(2).emgTrace(:,10) Cond4(3).emgTrace(:,10) Cond4(4).emgTrace(:,10) Cond4(5).emgTrace(:,10)];
+LD_alltrials_Cond4 = [Cond4(1).emgTrace(:,11) Cond4(2).emgTrace(:,11) Cond4(3).emgTrace(:,11) Cond4(4).emgTrace(:,11) Cond4(5).emgTrace(:,11)];
+PM_alltrials_Cond4 = [Cond4(1).emgTrace(:,12) Cond4(2).emgTrace(:,12) Cond4(3).emgTrace(:,12) Cond4(4).emgTrace(:,12) Cond4(5).emgTrace(:,12)];
+BIC_alltrials_Cond4 = [Cond4(1).emgTrace(:,13) Cond4(2).emgTrace(:,13) Cond4(3).emgTrace(:,13) Cond4(4).emgTrace(:,13) Cond4(5).emgTrace(:,13)];
+TRI_alltrials_Cond4 = [Cond4(1).emgTrace(:,14) Cond4(2).emgTrace(:,14) Cond4(3).emgTrace(:,14) Cond4(4).emgTrace(:,14) Cond4(5).emgTrace(:,14)];
+IDL_alltrials_Cond4 = [Cond4(1).emgTrace(:,15) Cond4(2).emgTrace(:,15) Cond4(3).emgTrace(:,15) Cond4(4).emgTrace(:,15) Cond4(5).emgTrace(:,15)];
+
+
+% Metria: 500 samples = 5 seconds
+
+ % Avg time max vel occurs 
+ MeanStart_Cond4 = mean([Cond4(1).TimestartTimeVelTimeEnd(1),Cond4(2).TimestartTimeVelTimeEnd(1),Cond4(3).TimestartTimeVelTimeEnd(1),Cond4(4).TimestartTimeVelTimeEnd(1),Cond4(5).TimestartTimeVelTimeEnd(1)])
+
+ MeanMaxVel_Cond4 = mean([Cond4(1).TimestartTimeVelTimeEnd(2),Cond4(2).TimestartTimeVelTimeEnd(2),Cond4(3).TimestartTimeVelTimeEnd(2),Cond4(4).TimestartTimeVelTimeEnd(2),Cond4(5).TimestartTimeVelTimeEnd(2)])
+ %% Condition 5: 10 trials total 
+UT_alltrials_Cond5 = [Cond5(1).emgTrace(:,9) Cond5(2).emgTrace(:,9) Cond5(3).emgTrace(:,9) Cond5(4).emgTrace(:,9) Cond5(5).emgTrace(:,9) Cond5(6).emgTrace(:,9) Cond5(7).emgTrace(:,9)  Cond5(8).emgTrace(:,9) Cond5(9).emgTrace(:,9) Cond5(10).emgTrace(:,9)];
+MT_alltrials_Cond5 = [Cond5(1).emgTrace(:,10) Cond5(2).emgTrace(:,10) Cond5(3).emgTrace(:,10) Cond5(4).emgTrace(:,10) Cond5(5).emgTrace(:,10) Cond5(6).emgTrace(:,10) Cond5(7).emgTrace(:,10) Cond5(8).emgTrace(:,10) Cond5(9).emgTrace(:,10) Cond5(10).emgTrace(:,10)];
+LD_alltrials_Cond5 = [Cond5(1).emgTrace(:,11) Cond5(2).emgTrace(:,11) Cond5(3).emgTrace(:,11) Cond5(4).emgTrace(:,11) Cond5(5).emgTrace(:,11) Cond5(6).emgTrace(:,11) Cond5(7).emgTrace(:,11) Cond5(8).emgTrace(:,11) Cond5(9).emgTrace(:,11) Cond5(10).emgTrace(:,11)];
+PM_alltrials_Cond5 = [Cond5(1).emgTrace(:,12) Cond5(2).emgTrace(:,12) Cond5(3).emgTrace(:,12) Cond5(4).emgTrace(:,12) Cond5(5).emgTrace(:,12) Cond5(6).emgTrace(:,12) Cond5(7).emgTrace(:,12) Cond5(8).emgTrace(:,12) Cond5(9).emgTrace(:,12) Cond5(10).emgTrace(:,12)];
+BIC_alltrials_Cond5 = [Cond5(1).emgTrace(:,13) Cond5(2).emgTrace(:,13) Cond5(3).emgTrace(:,13) Cond5(4).emgTrace(:,13) Cond5(5).emgTrace(:,13) Cond5(6).emgTrace(:,13) Cond5(7).emgTrace(:,13) Cond5(8).emgTrace(:,13) Cond5(9).emgTrace(:,13) Cond5(10).emgTrace(:,13)];
+TRI_alltrials_Cond5 = [Cond5(1).emgTrace(:,14) Cond5(2).emgTrace(:,14) Cond5(3).emgTrace(:,14) Cond5(4).emgTrace(:,14) Cond5(5).emgTrace(:,14) Cond5(6).emgTrace(:,14) Cond5(7).emgTrace(:,14) Cond5(8).emgTrace(:,14) Cond5(9).emgTrace(:,14) Cond5(10).emgTrace(:,14)];
+IDL_alltrials_Cond5 = [Cond5(1).emgTrace(:,15) Cond5(2).emgTrace(:,15) Cond5(3).emgTrace(:,15) Cond5(4).emgTrace(:,15) Cond5(5).emgTrace(:,15) Cond5(6).emgTrace(:,15) Cond5(7).emgTrace(:,15) Cond5(8).emgTrace(:,15) Cond5(9).emgTrace(:,15) Cond5(10).emgTrace(:,15)];
+
+
+% Metria: 500 samples = 5 seconds
+
+ % Avg time max vel occurs 
+ MeanStart_Cond5 = mean([Cond5(1).TimestartTimeVelTimeEnd(1),Cond5(2).TimestartTimeVelTimeEnd(1),Cond5(3).TimestartTimeVelTimeEnd(1),Cond5(4).TimestartTimeVelTimeEnd(1),Cond5(5).TimestartTimeVelTimeEnd(1),Cond5(6).TimestartTimeVelTimeEnd(1),Cond5(7).TimestartTimeVelTimeEnd(1),Cond5(8).TimestartTimeVelTimeEnd(1),Cond5(9).TimestartTimeVelTimeEnd(1),Cond5(10).TimestartTimeVelTimeEnd(1)])
+
+ MeanMaxVel_Cond5 = mean([Cond5(1).TimestartTimeVelTimeEnd(2),Cond5(2).TimestartTimeVelTimeEnd(2),Cond5(3).TimestartTimeVelTimeEnd(2),Cond5(4).TimestartTimeVelTimeEnd(2),Cond5(5).TimestartTimeVelTimeEnd(2),Cond5(6).TimestartTimeVelTimeEnd(2),Cond5(7).TimestartTimeVelTimeEnd(2),Cond5(8).TimestartTimeVelTimeEnd(2),Cond5(9).TimestartTimeVelTimeEnd(2),Cond5(10).TimestartTimeVelTimeEnd(2)])
+ %% Condition 6: 9 trials total 
+UT_alltrials_Cond6 = [Cond6(1).emgTrace(:,9) Cond6(2).emgTrace(:,9) Cond6(3).emgTrace(:,9) Cond6(4).emgTrace(:,9) Cond6(5).emgTrace(:,9) Cond6(6).emgTrace(:,9) Cond6(7).emgTrace(:,9)  Cond6(8).emgTrace(:,9) Cond6(9).emgTrace(:,9)];
+MT_alltrials_Cond6 = [Cond6(1).emgTrace(:,10) Cond6(2).emgTrace(:,10) Cond6(3).emgTrace(:,10) Cond6(4).emgTrace(:,10) Cond6(5).emgTrace(:,10) Cond6(6).emgTrace(:,10) Cond6(7).emgTrace(:,10) Cond6(8).emgTrace(:,10) Cond6(9).emgTrace(:,10)];
+LD_alltrials_Cond6 = [Cond6(1).emgTrace(:,11) Cond6(2).emgTrace(:,11) Cond6(3).emgTrace(:,11) Cond6(4).emgTrace(:,11) Cond6(5).emgTrace(:,11) Cond6(6).emgTrace(:,11) Cond6(7).emgTrace(:,11) Cond6(8).emgTrace(:,11) Cond6(9).emgTrace(:,11)];
+PM_alltrials_Cond6 = [Cond6(1).emgTrace(:,12) Cond6(2).emgTrace(:,12) Cond6(3).emgTrace(:,12) Cond6(4).emgTrace(:,12) Cond6(5).emgTrace(:,12) Cond6(6).emgTrace(:,12) Cond6(7).emgTrace(:,12) Cond6(8).emgTrace(:,12) Cond6(9).emgTrace(:,12)];
+BIC_alltrials_Cond6 = [Cond6(1).emgTrace(:,13) Cond6(2).emgTrace(:,13) Cond6(3).emgTrace(:,13) Cond6(4).emgTrace(:,13) Cond6(5).emgTrace(:,13) Cond6(6).emgTrace(:,13) Cond6(7).emgTrace(:,13) Cond6(8).emgTrace(:,13) Cond6(9).emgTrace(:,13)];
+TRI_alltrials_Cond6 = [Cond6(1).emgTrace(:,14) Cond6(2).emgTrace(:,14) Cond6(3).emgTrace(:,14) Cond6(4).emgTrace(:,14) Cond6(5).emgTrace(:,14) Cond6(6).emgTrace(:,14) Cond6(7).emgTrace(:,14) Cond6(8).emgTrace(:,14) Cond6(9).emgTrace(:,14)];
+IDL_alltrials_Cond6 = [Cond6(1).emgTrace(:,15) Cond6(2).emgTrace(:,15) Cond6(3).emgTrace(:,15) Cond6(4).emgTrace(:,15) Cond6(5).emgTrace(:,15) Cond6(6).emgTrace(:,15) Cond6(7).emgTrace(:,15) Cond6(8).emgTrace(:,15) Cond6(9).emgTrace(:,15)];
+
+
+% Metria: 500 samples = 5 seconds
+
+ % Avg time max vel occurs 
+ MeanStart_Cond6 = mean([Cond6(1).TimestartTimeVelTimeEnd(1),Cond6(2).TimestartTimeVelTimeEnd(1),Cond6(3).TimestartTimeVelTimeEnd(1),Cond6(4).TimestartTimeVelTimeEnd(1),Cond6(5).TimestartTimeVelTimeEnd(1),Cond6(6).TimestartTimeVelTimeEnd(1),Cond6(7).TimestartTimeVelTimeEnd(1),Cond6(8).TimestartTimeVelTimeEnd(1),Cond6(9).TimestartTimeVelTimeEnd(1)])
+
+ MeanMaxVel_Cond6 = mean([Cond6(1).TimestartTimeVelTimeEnd(2),Cond6(2).TimestartTimeVelTimeEnd(2),Cond6(3).TimestartTimeVelTimeEnd(2),Cond6(4).TimestartTimeVelTimeEnd(2),Cond6(5).TimestartTimeVelTimeEnd(2),Cond6(6).TimestartTimeVelTimeEnd(2),Cond6(7).TimestartTimeVelTimeEnd(2),Cond6(8).TimestartTimeVelTimeEnd(2),Cond6(9).TimestartTimeVelTimeEnd(2)])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Mass Plot Conditions 1-3 (Restrained) USE!!!!!!!! Nov 2024 - All Trials
+
+fig = figure(1);
+orient(fig,'portrait')
+for m = 1:7 % 7 trials in Condition 1
+subplot(8,6,1) % Condition 1 Velocity Plot All Trials
+plot(Cond1(m).tmet,smoothdata(Cond1(m).vel)/1000,'LineWidth',2)
+title('Restrained-T','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,7)
+plot(Cond1(m).emgtimevec,smoothdata(UT_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('UT','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,13)
+plot(Cond1(m).emgtimevec,smoothdata(MT_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('MT','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,19)
+plot(Cond1(m).emgtimevec,smoothdata(LD_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('LD','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,25)
+plot(Cond1(m).emgtimevec,smoothdata(PM_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('PM','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,31) 
+plot(Cond1(m).emgtimevec,smoothdata(BIC_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('BIC','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,37)
+plot(Cond1(m).emgtimevec,smoothdata(TRI_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('TRI','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,43) 
+plot(Cond1(m).emgtimevec,smoothdata(IDL_alltrials_Cond1(:,:)),'LineWidth',1)
+ylabel('IDL','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+end
+
+figure(1)
+for m = 1:5 % 5 trials in Condition 4
+subplot(8,6,2) % Condition 4 Velocity Plot All Trials
+plot(Cond4(m).tmet,smoothdata(Cond4(m).vel)/1000,'LineWidth',2)
+title('Unrestrained-T','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,8)
+plot(Cond4(m).emgtimevec,smoothdata(UT_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,14)
+plot(Cond4(m).emgtimevec,smoothdata(MT_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,20)
+plot(Cond4(m).emgtimevec,smoothdata(LD_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,26)
+plot(Cond4(m).emgtimevec,smoothdata(PM_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,32) 
+plot(Cond4(m).emgtimevec,smoothdata(BIC_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,38)
+plot(Cond4(m).emgtimevec,smoothdata(TRI_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,44) 
+plot(Cond4(m).emgtimevec,smoothdata(IDL_alltrials_Cond4(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+end
+
+figure(1)
+for m = 1:10 % 10 trials in Condition 2
+subplot(8,6,3) % Condition 2 Velocity Plot All Trials
+plot(Cond2(m).tmet,smoothdata(Cond2(m).vel)/1000,'LineWidth',2)
+title('Restrained-25','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,9)
+plot(Cond2(m).emgtimevec,smoothdata(UT_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,15)
+plot(Cond2(m).emgtimevec,smoothdata(MT_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,21)
+plot(Cond2(m).emgtimevec,smoothdata(LD_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,27)
+plot(Cond2(m).emgtimevec,smoothdata(PM_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,33) 
+plot(Cond2(m).emgtimevec,smoothdata(BIC_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,39)
+plot(Cond2(m).emgtimevec,smoothdata(TRI_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,45) 
+plot(Cond2(m).emgtimevec,smoothdata(IDL_alltrials_Cond2(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+end
+
+
+
+% Mass Plot Conditions 4-6 (Unrestrained) USE!!!!!!!! Nov 2024
+
+
+%Conditions 4-6
+figure(1)
+for m = 1:10 % 10 trials in Condition 5
+subplot(8,6,4) % Condition 5 Velocity Plot All Trials
+plot(Cond5(m).tmet,smoothdata(Cond5(m).vel)/1000,'LineWidth',2)
+title('Unrestrained-25','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,10)
+plot(Cond5(m).emgtimevec,smoothdata(UT_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('UT','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,16)
+plot(Cond5(m).emgtimevec,smoothdata(MT_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('MT','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,22)
+plot(Cond5(m).emgtimevec,smoothdata(LD_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('LD','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,28)
+plot(Cond5(m).emgtimevec,smoothdata(PM_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('PM','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,34) 
+plot(Cond5(m).emgtimevec,smoothdata(BIC_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('BIC','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,40)
+plot(Cond5(m).emgtimevec,smoothdata(TRI_alltrials_Cond5(:,:)),'LineWidth',1)
+ylabel('TRI','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,46) 
+plot(Cond5(m).emgtimevec,smoothdata(IDL_alltrials_Cond5(:,:)),'LineWidth',1)
+%ylabel('IDL','FontSize',16)
+ylim([0 1])
+xlim([0 5])
+end
+
+figure(1)
+for m = 1:10 % 10 trials in Condition 3
+subplot(8,6,5) % Condition 2 Velocity Plot All Trials
+plot(Cond3(m).tmet,smoothdata(Cond3(m).vel)/1000,'LineWidth',2)
+title('Restrained-50','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,11)
+plot(Cond3(m).emgtimevec,smoothdata(UT_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,17)
+plot(Cond3(m).emgtimevec,smoothdata(MT_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,23)
+plot(Cond3(m).emgtimevec,smoothdata(LD_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,29)
+plot(Cond3(m).emgtimevec,smoothdata(PM_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,35) 
+plot(Cond3(m).emgtimevec,smoothdata(BIC_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,41)
+plot(Cond3(m).emgtimevec,smoothdata(TRI_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,47) 
+plot(Cond3(m).emgtimevec,smoothdata(IDL_alltrials_Cond3(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+end
+
+figure(1)
+for m = 1:9 % 9 trials in Condition 6
+subplot(8,6,6) % Condition 6 Velocity Plot All Trials
+plot(Cond6(m).tmet,smoothdata(Cond6(m).vel)/1000,'LineWidth',2)
+title('Unrestrained-50','FontSize',18)
+xlim([0 5])
+ylim([-5 5])
+hold on
+subplot(8,6,12)
+plot(Cond6(m).emgtimevec,smoothdata(UT_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,18)
+plot(Cond6(m).emgtimevec,smoothdata(MT_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,24)
+plot(Cond6(m).emgtimevec,smoothdata(LD_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,30)
+plot(Cond6(m).emgtimevec,smoothdata(PM_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,36) 
+plot(Cond6(m).emgtimevec,smoothdata(BIC_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,42)
+plot(Cond6(m).emgtimevec,smoothdata(TRI_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+subplot(8,6,48) 
+plot(Cond6(m).emgtimevec,smoothdata(IDL_alltrials_Cond6(:,:)),'LineWidth',1)
+ylim([0 1])
+xlim([0 5])
+end
+
+
+%% Average Traces of Velocities 
+
+% Condition 1 Across all Trials - 7 trials for first 5 seconds
+AllTrialsVel_Cond1_AVG = [Cond1(1).vel(1:500) Cond1(2).vel(1:500) Cond1(3).vel(1:500) Cond1(4).vel(1:500) Cond1(5).vel(1:500) Cond1(6).vel(1:500) Cond1(7).vel(1:500)]
+AllTrialsVel_Cond2_AVG = [Cond2(1).vel(1:500) Cond2(2).vel(1:500) Cond2(3).vel(1:500) Cond2(4).vel(1:500) Cond2(5).vel(1:500) Cond2(6).vel(1:500) Cond2(7).vel(1:500) Cond2(8).vel(1:500) Cond2(9).vel(1:500) Cond2(10).vel(1:500)]
+AllTrialsVel_Cond3_AVG = [Cond3(1).vel(1:500) Cond3(2).vel(1:500) Cond3(3).vel(1:500) Cond3(4).vel(1:500) Cond3(5).vel(1:500) Cond3(6).vel(1:500) Cond3(7).vel(1:500) Cond3(8).vel(1:500) Cond3(9).vel(1:500) Cond3(10).vel(1:500)]
+AllTrialsVel_Cond4_AVG = [Cond4(1).vel(1:500) Cond4(2).vel(1:500) Cond4(3).vel(1:500) Cond4(4).vel(1:500) Cond4(5).vel(1:500)]
+AllTrialsVel_Cond5_AVG = [Cond5(1).vel(1:500) Cond5(2).vel(1:500) Cond5(3).vel(1:500) Cond5(4).vel(1:500) Cond5(5).vel(1:500) Cond5(6).vel(1:500) Cond5(7).vel(1:500) Cond5(8).vel(1:500) Cond5(9).vel(1:500) Cond5(10).vel(1:500)]
+AllTrialsVel_Cond6_AVG = [Cond6(1).vel(1:500) Cond6(2).vel(1:500) Cond6(3).vel(1:500) Cond6(4).vel(1:500) Cond6(5).vel(1:500) Cond6(6).vel(1:500) Cond6(7).vel(1:500) Cond6(8).vel(1:500) Cond6(9).vel(1:500) Cond6(10).vel(1:500)]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 figure()
 subplot(1,2,1)
-plot(Cond2(1).tmet,smoothdata(Cond2(1).vel)/1000,'k','LineWidth',2)
+plot(Cond6(1).tmet,smoothdata(Cond6(1).vel)/1000,'k','LineWidth',2)
 hold on
  xline(MeanMaxVel,'m','LineWidth',2)
 
-plot(Cond2(2).tmet,smoothdata(Cond2(2).vel)/1000,'k','LineWidth',2)
-plot(Cond2(3).tmet,smoothdata(Cond2(3).vel)/1000,'k','LineWidth',2)
-plot(Cond2(4).tmet,smoothdata(Cond2(4).vel)/1000,'k', 'LineWidth',2)
-plot(Cond2(5).tmet,smoothdata(Cond2(5).vel)/1000,'k','LineWidth',2)
-plot(Cond2(6).tmet,smoothdata(Cond2(6).vel)/1000,'k','LineWidth',2)
-plot(Cond2(7).tmet,smoothdata(Cond2(7).vel)/1000,'k','LineWidth',2)
-plot(Cond2(8).tmet,smoothdata(Cond2(8).vel)/1000,'k','LineWidth',2)
-plot(Cond2(9).tmet,smoothdata(Cond2(9).vel)/1000,'k','LineWidth',2)
-plot(Cond2(10).tmet,smoothdata(Cond2(10).vel)/1000,'k','LineWidth',2)
+plot(Cond6(2).tmet,smoothdata(Cond6(2).vel)/1000,'k','LineWidth',2)
+plot(Cond6(3).tmet,smoothdata(Cond6(3).vel)/1000,'k','LineWidth',2)
+plot(Cond6(4).tmet,smoothdata(Cond6(4).vel)/1000,'k', 'LineWidth',2)
+plot(Cond6(5).tmet,smoothdata(Cond6(5).vel)/1000,'k','LineWidth',2)
+plot(Cond6(6).tmet,smoothdata(Cond6(6).vel)/1000,'k','LineWidth',2)
+plot(Cond6(7).tmet,smoothdata(Cond6(7).vel)/1000,'k','LineWidth',2)
+plot(Cond6(8).tmet,smoothdata(Cond6(8).vel)/1000,'k','LineWidth',2)
+plot(Cond6(9).tmet,smoothdata(Cond6(9).vel)/1000,'k','LineWidth',2)
+% plot(Cond6(10).tmet,smoothdata(Cond6(10).vel)/1000,'k','LineWidth',2)
 
 ylabel('Velocity (m/s)','FontSize',18)
 yyaxis right
-plot(Cond2(1).tmet,smoothdata(Cond2(1).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(1).tmet,smoothdata(Cond6(1).dist)/1000,'b-','LineWidth',.75)
 hold on
-plot(Cond2(2).tmet,smoothdata(Cond2(2).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(3).tmet,smoothdata(Cond2(3).dist)/1000,'b-', 'LineWidth',.75)
-plot(Cond2(4).tmet,smoothdata(Cond2(4).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(5).tmet,smoothdata(Cond2(5).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(6).tmet,smoothdata(Cond2(6).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(7).tmet,smoothdata(Cond2(7).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(8).tmet,smoothdata(Cond2(8).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(9).tmet,smoothdata(Cond2(9).dist)/1000,'b-','LineWidth',.75)
-plot(Cond2(10).tmet,smoothdata(Cond2(10).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(2).tmet,smoothdata(Cond6(2).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(3).tmet,smoothdata(Cond6(3).dist)/1000,'b-', 'LineWidth',.75)
+plot(Cond6(4).tmet,smoothdata(Cond6(4).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(5).tmet,smoothdata(Cond6(5).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(6).tmet,smoothdata(Cond6(6).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(7).tmet,smoothdata(Cond6(7).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(8).tmet,smoothdata(Cond6(8).dist)/1000,'b-','LineWidth',.75)
+plot(Cond6(9).tmet,smoothdata(Cond6(9).dist)/1000,'b-','LineWidth',.75)
+% plot(Cond6(10).tmet,smoothdata(Cond6(10).dist)/1000,'b-','LineWidth',.75)
 
 ylabel('Distance (m)','FontSize',18)
 xlim([0 5])
 xlabel('Time (seconds)','FontSize',18)
-title('Condition 2','FontSize',25)
+title('Condition 6','FontSize',25)
 
 
 subplot(1,2,2)
 
-% plot(Cond2(1).emgtimevec,smoothdata(UT_alltrials_Cond2(:,:)),'b','LineWidth',1)
-%plot(Cond2(1).emgtimevec,smoothdata(MT_alltrials_Cond2(:,:)),'b','LineWidth',1)
-%plot(Cond2(1).emgtimevec,smoothdata(LD_alltrials_Cond2(:,:)),'b','LineWidth',1)
-%plot(Cond2(1).emgtimevec,smoothdata(PM_alltrials_Cond2(:,:)),'b','LineWidth',1)
- %plot(Cond2(1).emgtimevec,smoothdata(BIC_alltrials_Cond2(:,:)),'b','LineWidth',1)
-plot(Cond2(1).emgtimevec,smoothdata(TRI_alltrials_Cond2(:,:)),'b','LineWidth',1)
-% plot(Cond2(1).emgtimevec,smoothdata(IDL_alltrials_Cond2(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(UT_alltrials_Cond6(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(MT_alltrials_Cond6(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(LD_alltrials_Cond6(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(PM_alltrials_Cond6(:,:)),'b','LineWidth',1)
+ plot(Cond6(1).emgtimevec,smoothdata(BIC_alltrials_Cond6(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(TRI_alltrials_Cond6(:,:)),'b','LineWidth',1)
+plot(Cond6(1).emgtimevec,smoothdata(IDL_alltrials_Cond6(:,:)),'b','LineWidth',1)
 
  xline(MeanMaxVel,'m','LineWidth',2)
-% xline(Cond2(2).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
-% xline(Cond2(3).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
-% xline(Cond2(4).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
-% xline(Cond2(5).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
-% xline(Cond2(6).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
-% xline(Cond2(7).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(2).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(3).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(4).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(5).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(6).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
+% xline(Cond6(7).TimestartTimeVelTimeEnd(2),'m','LineWidth',2)
 xlabel('Time (seconds)','FontSize',18)
 ylabel('Muscle Activation','FontSize',18)
-title('Condition 2- TRI','FontSize',25)
+title('Condition 6- IDL','FontSize',25)
 %%
 % Mean trace for all trials in condition 1 : size is 3000x1
 meanUT_Cond1 = mean(UT_alltrials_Cond1,2); 
