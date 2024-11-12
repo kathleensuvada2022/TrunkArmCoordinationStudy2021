@@ -333,7 +333,7 @@ end
 ylabel('LD','FontSize',16)
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,25)
+subplot(8,6,43)
 plot(Cond1(m).emgtimevec,smoothdata(PM_alltrials_Cond1(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -360,7 +360,7 @@ end
 ylabel('TRI','FontSize',16)
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,43) 
+subplot(8,6,25) 
 plot(Cond1(m).emgtimevec,smoothdata(IDL_alltrials_Cond1(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -407,7 +407,7 @@ plot(Cond4(m).emgtimevec,smoothdata(LD_Cond4_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,26)
+subplot(8,6,44)
 plot(Cond4(m).emgtimevec,smoothdata(PM_alltrials_Cond4(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -431,7 +431,7 @@ plot(Cond4(m).emgtimevec,smoothdata(TRI_Cond4_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,44) 
+subplot(8,6,26) 
 plot(Cond4(m).emgtimevec,smoothdata(IDL_alltrials_Cond4(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -477,7 +477,7 @@ plot(Cond2(m).emgtimevec,smoothdata(LD_Cond2_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,27)
+subplot(8,6,45)
 plot(Cond2(m).emgtimevec,smoothdata(PM_alltrials_Cond2(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -501,7 +501,7 @@ plot(Cond2(m).emgtimevec,smoothdata(TRI_Cond2_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,45) 
+subplot(8,6,27) 
 plot(Cond2(m).emgtimevec,smoothdata(IDL_alltrials_Cond2(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -556,7 +556,7 @@ end
 %ylabel('LD','FontSize',16)
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,28)
+subplot(8,6,46)
 plot(Cond5(m).emgtimevec,smoothdata(PM_alltrials_Cond5(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -580,10 +580,10 @@ hold on
 if m ==1 
 plot(Cond5(m).emgtimevec,smoothdata(TRI_Cond5_Avg),'LineWidth',5)
 end 
-ylabel('TRI','FontSize',16)
+% ylabel('TRI','FontSize',16)
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,46) 
+subplot(8,6,28) 
 plot(Cond5(m).emgtimevec,smoothdata(IDL_alltrials_Cond5(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -630,7 +630,7 @@ plot(Cond3(m).emgtimevec,smoothdata(LD_Cond3_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,29)
+subplot(8,6,47)
 plot(Cond3(m).emgtimevec,smoothdata(PM_alltrials_Cond3(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -654,7 +654,7 @@ plot(Cond3(m).emgtimevec,smoothdata(TRI_Cond3_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,47) 
+subplot(8,6,29) 
 plot(Cond3(m).emgtimevec,smoothdata(IDL_alltrials_Cond3(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -700,7 +700,7 @@ plot(Cond6(m).emgtimevec,smoothdata(LD_Cond3_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,30)
+subplot(8,6,48)
 plot(Cond6(m).emgtimevec,smoothdata(PM_alltrials_Cond6(:,:)),'LineWidth',1)
 hold on
 if m ==1 
@@ -724,7 +724,7 @@ plot(Cond6(m).emgtimevec,smoothdata(TRI_Cond3_Avg),'LineWidth',5)
 end 
 ylim([0 1])
 xlim([0 5])
-subplot(8,6,48) 
+subplot(8,6,30) 
 plot(Cond6(m).emgtimevec,smoothdata(IDL_alltrials_Cond6(:,:)),'LineWidth',1)
 hold on
 if m ==1 

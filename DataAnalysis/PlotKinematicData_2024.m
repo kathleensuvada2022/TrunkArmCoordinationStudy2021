@@ -26,8 +26,8 @@
 
 % K.SUVADA 2020-2024
 %%
-function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
-% function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
+% function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac
@@ -4261,7 +4261,8 @@ maxreach =RD_2024;
     
    struct_idx = 1+runninglengthnmfstruc;
 
-    NNMFstruc(struct_idx).emgTrace = meanEMG;%mean EMG
+    NNMFstruc(struct_idx).emgRAW =emg;% raw emg
+    NNMFstruc(struct_idx).emgTraceMAF = meanEMG;%mean EMG
     NNMFstruc(struct_idx).TimestartTimeVelTimeEnd= [timestart timevelmax timedistmax]; % idx(1): start idx(2): max vel idx(3): end
 
     NNMFstruc(struct_idx).startidx_EMG = emg_idxstart; % start index for EMG
