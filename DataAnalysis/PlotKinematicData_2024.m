@@ -1908,6 +1908,8 @@ close all
     % Raw EMG Trial Data
     emg= data.daq{1,2};
 
+    emgraw = data.daq{1,2};
+
 %     emg=detrend(emg(:,1:15)); %updated 12.2023- using raw not filtered maxes
     
     % Removes Baseline
@@ -4261,7 +4263,7 @@ maxreach =RD_2024;
     
    struct_idx = 1+runninglengthnmfstruc;
 
-    NNMFstruc(struct_idx).emgRAW =emg;% raw emg
+    NNMFstruc(struct_idx).emgRAW =emgraw;% raw emg
     NNMFstruc(struct_idx).emgTraceMAF = meanEMG;%mean EMG
     NNMFstruc(struct_idx).TimestartTimeVelTimeEnd= [timestart timevelmax timedistmax]; % idx(1): start idx(2): max vel idx(3): end
 
