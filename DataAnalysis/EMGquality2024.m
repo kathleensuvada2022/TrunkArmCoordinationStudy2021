@@ -5,8 +5,6 @@
 
 % Load in raw EMG data for given participant
 
-
-
 %% Organizing by Condition
 
 Cond1 = NNMFstruc([NNMFstruc.cond] == 1);
@@ -22,40 +20,49 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 %% Plotting Raw Trial Data for Given Condition
 
-%% Cond2
+Cond = Cond5; % Set desired Condition
 
-% set j = 12 for PM
-% set j = 9 for UT (high baseline in loading conditions)
-% set j = 11 for LD
+filteredSignal = zeros(5000,15);
 
-% PM high baseline activity prior to activation or just noise?
-
-for i = 1:length(Cond2) % All trials in given cond
+for i = 1:length(Cond) % All trials in given cond
     for j = 1:15 % size(Cond2(i).emgRAW,2) %going through all muscles
 
-        %% Creating Notch Filter at 60hz
+        %% Filtering Data
+
+        % Notch filter at 60,120,180
+
         fs = 1000;
 
-        notchFreq = 60;
-        Q = 35; % Quality factor (determines bandwidth of the notch filter)
-        notchFilter = designfilt('bandstopiir', 'FilterOrder', 2, ...
-            'HalfPowerFrequency1', notchFreq - notchFreq/Q, ...
-            'HalfPowerFrequency2', notchFreq + notchFreq/Q, ...
-            'SampleRate', fs);
+        % Apply notch filters sequentially (60 Hz, 120 Hz, 180 Hz)
+        filteredSignal(:,j) = detrend(Cond(i).emgRAW(:,j));
 
-        % Apply the notch filter
-        filteredSignal = filtfilt(notchFilter, Cond2(i).emgRAW(:,j));
-%%
+        notchFreqs = [60, 120, 180];
+        Q = 35;  % Quality factor for the notch filter
 
+        for k = 1:length(notchFreqs)
+            % Design the notch filter for the current frequency
+            notchFilter = designfilt('bandstopiir', ...
+                'FilterOrder', 4, ...  % 4,8 not much difference. Also not much difference when doing 120 and 180
+                'HalfPowerFrequency1', notchFreqs(k) - notchFreqs(k)/Q, ...
+                'HalfPowerFrequency2', notchFreqs(k) + notchFreqs(k)/Q, ...
+                'SampleRate', fs);
 
+            % Apply the notch filter
+            filteredSignal(:,j) = filter(notchFilter, filteredSignal(:,j));
+        end
+        %% Running Notch Filtered Data through Lowpass Filter
+
+        [filteredSignal(:,j) d] = lowpass(filteredSignal(:,j),200,1000);
+
+        
+        %%
 
         figure(1) % Plot Raw EMG unrectified
         subplot(4,4,j)
-%         size(Cond2(i).emgRAW(:,j))
-        plot(Cond2(i).emgtimevec,detrend(Cond2(i).emgRAW(:,j)))
+        plot(Cond(i).emgtimevec,detrend(Cond(i).emgRAW(:,j)))
         hold on
-        plot(Cond2(i).emgtimevec,detrend(filteredSignal))
-        legend('Original','Filtered')
+        plot(Cond(i).emgtimevec,filteredSignal(:,j))
+        legend('Original','Filtered','FontSize',16)
         title(emgchan(j))
         xlim([0 5])
 
@@ -63,16 +70,17 @@ for i = 1:length(Cond2) % All trials in given cond
         subplot(4,4,j)
 
         % 2000 window length % 500 overlap length % 500 FFT length % 1000 Fs
-        [pxx,f] = pwelch(detrend(Cond2(i).emgRAW(:,j)),2000,500,500,1000);
-        % Adjusting the FFT length
-         %       [pxx,f] =  pwelch(Cond2(i).emgRAW(:,j), 2000, 1000, 500, 1000);
+        [pxx,f] = pwelch(detrend(Cond(i).emgRAW(:,j)),2000,500,500,1000);
+       
+        [pxx2,f2] = pwelch(filteredSignal(:,j),2000,500,500,1000);
 
-%         figure(2);
-%         subplot(4,4,j);
-        %         plot(f, log10(pxx), 'b'); % Plot the log10 of pxx for better visualization
 
-        plot(f, pxx), 'b'; %
+
+        plot(f, pxx), 'b'; % original data
         hold on;
+        plot(f2, pxx2, '--', 'Color', 'r'); %filtered data
+
+        legend('Original','Filtered','FontSize',16)
 
         xlabel('F (Hz)');
         ylabel('PSD');
@@ -81,35 +89,23 @@ for i = 1:length(Cond2) % All trials in given cond
 
 
 
-        %% Plotting Filtered Data
-
-%         figure(3)
-%         % EMG Filtered Data
-%         subplot(4,4,j)
-% 
-%         plot(Cond2(i).emgtimevec,detrend(filteredSignal))
-%         title(emgchan(j))
-%         xlim([0 5])
-%         figure(4)
-        % PSD of Filtered Data
-%         subplot(4,4,j)
-%         [pxx2,f2] = pwelch(filteredSignal,2000,500,500,1000);
-%         plot(f2, pxx2), 'b'; %
-%         hold on;
-% 
-%         xlabel('F (Hz)');
-%         ylabel('PSD');
-%         title(['Trial ' num2str(i) 'Muscle ' emgchan(j)])
-%         title(emgchan(j))
-
 
     end
-    Cond1(i).trialname
-    pause %Stopping at each trial
+
+     Cond(i).trialname
+     Cond(i).FiltEMG = filteredSignal; % saving filtered EMG for each trial in a given condition
+  
+     pause %Stopping at each trial
+
+
     close all
 
 end
 
+%% Concatonating all Conditions with filtered EMG
+
+% Run after updating all the Conditions with the cleaned up EMG 
 
 
+NNMF_allConds_Filtered = [Cond1 Cond2 Cond3 Cond4 Cond5 Cond6]
 
