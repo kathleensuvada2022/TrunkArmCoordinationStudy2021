@@ -4288,31 +4288,31 @@ maxreach =RD_2024;
 %    pause
 
 
-%% September 2024- Saving EMGs into Matrix for NNMF Analysis 
+%% September 2024- Saving EMGs into Matrix for NNMF Analysis - We don't need this?
 
 % For Restrained
-if i ==1 && expcond ==1
-NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
-                %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
-
-elseif i == 2 && expcond ==1
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
-
-elseif expcond ==1
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-elseif i ==1 && expcond ==2
-NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-else 
-mfname
-
-    NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
-
-pause
-    NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
-
- end
+% if i ==2 && expcond ==1
+% NMFMatrix_trial = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i);
+%                 %(emg,timestart,timedistmax,ntrials,filename,expcond,i)
+% 
+% elseif i == 3 && expcond ==1
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial);
+% 
+% elseif expcond ==1
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% elseif i ==1 && expcond ==2
+% NMFMatrix_trial_updated = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% else 
+% mfname
+% 
+%     NMFMatrix_trial_updated_2 = Suvada_NMF_2024(meanEMG,timestart,timedistmax,timevelmax,ntrials,mfname,expcond,i,NMFMatrix_trial_updated);
+% 
+% pause
+%     NMFMatrix_trial_updated= NMFMatrix_trial_updated_2 ;
+% 
+%  end
 
 % For Unrestrained
 % if i ==1 && expcond ==4
@@ -5496,7 +5496,7 @@ test = 0 ;
 
 
 %% Saving Muscle Activations Matrix for all Trials in a condition
-save NMFMat.mat NMFMatrix_trial_updated
+% save NMFMat.mat NMFMatrix_trial_updated
 
 %%
 
