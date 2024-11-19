@@ -25,9 +25,8 @@
 
 
 % K.SUVADA 2020-2024
-%%
-% function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
-function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
+% %function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+ function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac
@@ -349,7 +348,7 @@ for i=1: length(mtrials)
     if strcmp(partid,'RTIS2001') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial31.mat')
-          pause
+        %  pause
         end
 
 
@@ -1611,7 +1610,7 @@ axis equal
     
               
                 'User Check Interpolation Accuracy'
-                pause
+            %    pause
                 
             end
             xhand = xhandnew; %Replacing with interpolated data
@@ -1671,7 +1670,7 @@ axis equal
                 
                 'User Check Interpolation Accuracy'
                 
-                pause
+               % pause
             end
             xjug= xjugnew;
 
@@ -2013,7 +2012,7 @@ close all
             'User Check Interpolation Accuracy'
             
             
-            pause
+         %   pause
         end
         
         gh= ghNew;
@@ -4255,7 +4254,7 @@ maxreach =RD_2024;
     
    [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa,temg]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,vel_2024,dist,t2,i);
 
-   if expcond ==1 && i ==1
+   if expcond ==1 && i ==2
        NNMFstruc = struct();
    end
 

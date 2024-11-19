@@ -20,7 +20,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 %% Plotting Raw Trial Data for Given Condition
 
-Cond = Cond4; % Set desired Condition
+Cond = Cond6; % Set desired Condition
 
 filteredSignal = zeros(5000,15);
 
