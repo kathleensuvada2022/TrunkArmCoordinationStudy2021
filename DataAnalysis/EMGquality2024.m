@@ -56,35 +56,35 @@ for i = 1:length(Cond) % All trials in given cond
         
         %%
 
-        figure(1) % Plot Raw EMG unrectified
-        subplot(4,4,j)
-        plot(Cond(i).emgtimevec,detrend(Cond(i).emgRAW(:,j)))
-        hold on
-        plot(Cond(i).emgtimevec,filteredSignal(:,j))
-        legend('Original','Filtered','FontSize',16)
-        title(emgchan(j))
-        xlim([0 5])
+%         figure(1) % Plot Raw EMG unrectified
+%         subplot(4,4,j)
+%         plot(Cond(i).emgtimevec,detrend(Cond(i).emgRAW(:,j)))
+%         hold on
+%         plot(Cond(i).emgtimevec,filteredSignal(:,j))
+%         legend('Original','Filtered','FontSize',16)
+%         title(emgchan(j))
+%         xlim([0 5])
+% 
+%         figure(2) % Plot PSD for each muscle
+%         subplot(4,4,j)
 
-        figure(2) % Plot PSD for each muscle
-        subplot(4,4,j)
-
-        % 2000 window length % 500 overlap length % 500 FFT length % 1000 Fs
-        [pxx,f] = pwelch(detrend(Cond(i).emgRAW(:,j)),2000,500,500,1000);
-       
-        [pxx2,f2] = pwelch(filteredSignal(:,j),2000,500,500,1000);
-
-
-
-        plot(f, pxx), 'b'; % original data
-        hold on;
-        plot(f2, pxx2, '--', 'Color', 'r'); %filtered data
-
-        legend('Original','Filtered','FontSize',16)
-
-        xlabel('F (Hz)');
-        ylabel('PSD');
-        title(['Trial ' num2str(i) 'Muscle ' emgchan(j)])
-        title(emgchan(j))
+%         % 2000 window length % 500 overlap length % 500 FFT length % 1000 Fs
+%         [pxx,f] = pwelch(detrend(Cond(i).emgRAW(:,j)),2000,500,500,1000);
+%        
+%         [pxx2,f2] = pwelch(filteredSignal(:,j),2000,500,500,1000);
+% 
+% 
+% 
+%         plot(f, pxx), 'b'; % original data
+%         hold on;
+%         plot(f2, pxx2, '--', 'Color', 'r'); %filtered data
+% 
+%         legend('Original','Filtered','FontSize',16)
+% 
+%         xlabel('F (Hz)');
+%         ylabel('PSD');
+%         title(['Trial ' num2str(i) 'Muscle ' emgchan(j)])
+%         title(emgchan(j))
 
 
 
@@ -94,7 +94,7 @@ for i = 1:length(Cond) % All trials in given cond
      Cond(i).trialname
      Cond(i).FiltEMG = filteredSignal; % saving filtered EMG for each trial in a given condition
   
-     pause %Stopping at each trial
+%      pause %Stopping at each trial
 
 
     close all

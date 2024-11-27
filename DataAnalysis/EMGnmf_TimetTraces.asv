@@ -24,7 +24,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 % Trial by Trial 
 
-SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+SelectedCond = Cond2; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 
 
@@ -64,7 +64,7 @@ figure(4)
 
 subplot(5,2,1)
 %plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 
@@ -74,7 +74,7 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); 
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
 subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 
@@ -183,7 +183,7 @@ figure(6)
 
 subplot(5,2,1)
 %plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
@@ -192,7 +192,7 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); 
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
 subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
@@ -270,7 +270,7 @@ title(emgchan(idx2(4)))
 figure(3)
 subplot(5,2,1)
 %plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 
@@ -280,7 +280,7 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); 
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
 subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 hold on
 
@@ -426,7 +426,7 @@ title(emgchan(idx1(8)),'Fontsize',18)
 figure(7)
 subplot(5,2,1)
 %plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 
@@ -436,7 +436,7 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); 
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
 subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+plot(tmet,smooth(vel)/1000,'b','LineWidth',2)
 xlim([0 5])
 hold on
 
@@ -449,56 +449,128 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5)
 
 
 subplot(5,2,3)
-[pxx2,f2] = pwelch(cleandata(:,idx1(5)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx1(5))))
+hold on
+% plot(t,meanEMG(:,idx1(5)),'LineWidth',2.5,'Color','k')
+
+%plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx1(5))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx1(5))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx1(5))),'*')
+
+ yl=ylim;
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
 title(emgchan(idx1(5)),'Fontsize',18)
+% ylim([0 1])
 
 
 subplot(5,2,4)
-[pxx2,f2] = pwelch(cleandata(:,idx2(5)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx2(5))))
+hold on
+% plot(t,meanEMG(:,idx2(5)),'LineWidth',2.5,'Color','k')
+ %plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx2(5))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx2(5))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx2(5))),'*')
+
+yl=ylim;
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
 title(emgchan(idx2(5)),'Fontsize',18)
+% ylim([0 1])
+
 
 subplot(5,2,5)
-[pxx2,f2] = pwelch(cleandata(:,idx1(6)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx1(6))))
+hold on
+% plot(t,meanEMG(:,idx1(6)),'LineWidth',2.5,'Color','k')
+ %plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx1(6))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx1(6))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx1(6))),'*')
+
+yl=ylim;
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
 title(emgchan(idx1(6)),'Fontsize',18)
+% ylim([0 1])
 
 
 subplot(5,2,6)
-[pxx2,f2] = pwelch(cleandata(:,idx2(6)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx2(6))))
+hold on
+% plot(t,meanEMG(:,idx2(6)),'LineWidth',2.5,'Color','k')
+% plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx2(6))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx2(6))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx2(6))),'*')
+
+yl=ylim;
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
 title(emgchan(idx2(6)),'Fontsize',18)
+% ylim([0 1])
+
+% pause
 
 subplot(5,2,7)
-[pxx2,f2] = pwelch(cleandata(:,idx1(7)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx1(7))))
+hold on
+% plot(t,meanEMG(:,idx1(7)),'LineWidth',2.5,'Color','k')
+ %plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx1(7))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx1(7))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx1(7))),'*')
+
+yl=ylim;
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
 title(emgchan(idx1(7)),'Fontsize',18)
+% ylim([0 1])
 
 
 subplot(5,2,8)
-[pxx2,f2] = pwelch(cleandata(:,idx2(7)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx2(7))))
+hold on
+% plot(t,meanEMG(:,idx2(7)),'LineWidth',2.5,'Color','k')
+ %plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx2(7))),'*')
+ %plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx2(7))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx2(7))),'*')
+
+yl=ylim;
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
 title(emgchan(idx2(7)),'Fontsize',18)
+% ylim([0 1])
 
 
 subplot(5,2,9)
-[pxx2,f2] = pwelch(cleandata(:,idx1(8)),2000,500,500,1000);
-plot(f2, pxx2,'Color', 'r'); %filtered data
-xlabel('F (Hz)');
-ylabel('PSD');
+line(t,(cleandata(:,idx1(8))))
+hold on
+% plot(t,meanEMG(:,idx1(8)),'LineWidth',2.5,'Color','k')
+%plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx1(8))),'*')
+%plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx1(8))),'*')
+% plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx1(8))),'*')
+
+yl=ylim;
+line('Color','g','Xdata',[timestart timestart],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
+% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+
 title(emgchan(idx1(8)),'Fontsize',18)
 
 
