@@ -24,9 +24,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 % Trial by Trial 
 
-SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
-
-
+SelectedCond = Cond3; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -34,8 +32,21 @@ NumTrials = length(SelectedCond);
 
 for k = 1:NumTrials
 
+dist = SelectedCond(k).dist; 
 emg = SelectedCond(k).FiltEMG;
 vel = SelectedCond(k).vel;
+XYZMET = SelectedCond(k).xyzmet;
+
+x_all = XYZMET(1,:);
+y_all = XYZMET(2,:);
+x1 = XYZMET(1,idxmetria(1));
+y1 = XYZMET(2,idxmetria(1));
+x2 = XYZMET(1,idxmetria(3));
+y2 = XYZMET(2,idxmetria(3));
+
+XYdistnew = sqrt((x_all-x1).^2+(y_all-y1).^2);
+
+idxmetria= SelectedCond(k).idx_metria;
 tmet = SelectedCond(k).tmet;
 t = SelectedCond(k).emgtimevec;
 timestart = SelectedCond(k).TimestartTimeVelTimeEnd(1);
@@ -60,23 +71,36 @@ yrange = 0:1;
 cleandata=emg;
 %% Trunk 
 
-figure(4)
-
-subplot(5,2,1)
-%plotting velocity
+% Distance and Velocity Plots
+figure(1)
 plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+hold on
+yyaxis right
+plot(tmet,smoothdata(dist)/1000)
 xlim([0 5])
-
 
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
-subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+
+figure(2)
+
+XYZMET
+idxmetria
 xlim([0 5])
 
+plot(XYZMET(1,:),XYZMET(2,:))
+hold on
+plot(XYZMET(1,idxmetria(1)),XYZMET(2,idxmetria(1)),'o') %start reach
+plot(XYZMET(1,idxmetria(3)),XYZMET(2,idxmetria(3)),'o') %start reach
+line('Color','g','Xdata',[idxmetria(1) idxmetria(1)],'Ydata',ylim, 'LineWidth',2.5); % start reach
+line('Color','r','Xdata',[idxmetria(3) idxmetria(3)],'Ydata',ylim,'LineWidth',2.5); %max, dist
+
+
+
+axis equal
 
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
@@ -84,6 +108,8 @@ line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); 
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 % legend('Velocity (m/s)','Start','Max Vel','End','FontSize',18)
 
+
+figure(4)
 subplot(5,2,3)
 line(t,(cleandata(:,idx1(1))))
 hold on
@@ -181,27 +207,8 @@ title(emgchan(idx2(4)))
 %%
 figure(6)
 
+
 subplot(5,2,1)
-%plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
-xlim([0 5])
-
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
-line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
-
-subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
-xlim([0 5])
-
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
-line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
-% legend('Velocity (m/s)','Start','Max Vel','End','FontSize',18)
-
-subplot(5,2,3)
  
 [pxx2,f2] = pwelch(cleandata(:,idx1(1)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
@@ -209,7 +216,7 @@ xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx1(1)),'Fontsize',18)
 
-subplot(5,2,4)
+subplot(5,2,2)
 [pxx2,f2] = pwelch(cleandata(:,idx2(1)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -217,7 +224,7 @@ ylabel('PSD');
 title(emgchan(idx2(1)),'Fontsize',18)
 
 
-subplot(5,2,5)
+subplot(5,2,3)
 [pxx2,f2] = pwelch(cleandata(:,idx1(2)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -225,7 +232,7 @@ ylabel('PSD');
 title(emgchan(idx1(2)),'Fontsize',18)
 
 
-subplot(5,2,6)
+subplot(5,2,4)
 [pxx2,f2] = pwelch(cleandata(:,idx2(2)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -234,7 +241,7 @@ title(emgchan(idx2(2)),'Fontsize',18)
 
 
 
-subplot(5,2,7)
+subplot(5,2,5)
 [pxx2,f2] = pwelch(cleandata(:,idx1(3)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -242,7 +249,7 @@ ylabel('PSD');
 title(emgchan(idx1(3)),'Fontsize',18)
 
 
-subplot(5,2,8)
+subplot(5,2,6)
 [pxx2,f2] = pwelch(cleandata(:,idx2(3)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -250,7 +257,7 @@ ylabel('PSD');
 title(emgchan(idx2(3)),'Fontsize',18)
 
 
-subplot(5,2,9)
+subplot(5,2,7)
 [pxx2,f2] = pwelch(cleandata(:,idx1(4)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -259,7 +266,7 @@ ylabel('PSD');
 
 % pause
 
-subplot(5,2,10)
+subplot(5,2,8)
 [pxx2,f2] = pwelch(cleandata(:,idx2(4)),2000,500,500,1000);
 plot(f2, pxx2, 'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -271,6 +278,8 @@ figure(3)
 subplot(5,2,1)
 %plotting velocity
 plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+hold on
+plot(tmet,smoothdata(dist)/1000,'b','LineWidth',2)
 xlim([0 5])
 
 
@@ -281,6 +290,8 @@ line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5)
 
 subplot(5,2,2)
 plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+hold on
+plot(tmet,smoothdata(dist)/1000,'b','LineWidth',2)
 xlim([0 5])
 hold on
 
@@ -424,31 +435,9 @@ title(emgchan(idx1(8)),'Fontsize',18)
 
 
 figure(7)
+
+
 subplot(5,2,1)
-%plotting velocity
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
-xlim([0 5])
-
-
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
-line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
-
-subplot(5,2,2)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
-xlim([0 5])
-hold on
-
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
-line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
-line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
-% legend('Velocity (m/s)','Start','Max Vel','End','FontSize',18)
-% pause
-
-
-subplot(5,2,3)
 [pxx2,f2] = pwelch(cleandata(:,idx1(5)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -456,14 +445,14 @@ ylabel('PSD');
 title(emgchan(idx1(5)),'Fontsize',18)
 
 
-subplot(5,2,4)
+subplot(5,2,2)
 [pxx2,f2] = pwelch(cleandata(:,idx2(5)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(5)),'Fontsize',18)
 
-subplot(5,2,5)
+subplot(5,2,3)
 [pxx2,f2] = pwelch(cleandata(:,idx1(6)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -471,14 +460,14 @@ ylabel('PSD');
 title(emgchan(idx1(6)),'Fontsize',18)
 
 
-subplot(5,2,6)
+subplot(5,2,4)
 [pxx2,f2] = pwelch(cleandata(:,idx2(6)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(6)),'Fontsize',18)
 
-subplot(5,2,7)
+subplot(5,2,5)
 [pxx2,f2] = pwelch(cleandata(:,idx1(7)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -486,7 +475,7 @@ ylabel('PSD');
 title(emgchan(idx1(7)),'Fontsize',18)
 
 
-subplot(5,2,8)
+subplot(5,2,6)
 [pxx2,f2] = pwelch(cleandata(:,idx2(7)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
@@ -494,7 +483,7 @@ ylabel('PSD');
 title(emgchan(idx2(7)),'Fontsize',18)
 
 
-subplot(5,2,9)
+subplot(5,2,7)
 [pxx2,f2] = pwelch(cleandata(:,idx1(8)),2000,500,500,1000);
 plot(f2, pxx2,'Color', 'r'); %filtered data
 xlabel('F (Hz)');
