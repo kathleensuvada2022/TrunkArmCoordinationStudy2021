@@ -36,9 +36,11 @@ dist = SelectedCond(k).dist;
 emg = SelectedCond(k).FiltEMG;
 vel = SelectedCond(k).vel;
 XYZMET = SelectedCond(k).xyzmet;
+idxmetria = SelectedCond(k).idx_metria;
 
 x_all = XYZMET(1,:);
 y_all = XYZMET(2,:);
+z_all = XYZMET(3,:);
 x1 = XYZMET(1,idxmetria(1));
 y1 = XYZMET(2,idxmetria(1));
 x2 = XYZMET(1,idxmetria(3));
@@ -49,9 +51,17 @@ XYdistnew = sqrt((x_all-x1).^2+(y_all-y1).^2);
 idxmetria= SelectedCond(k).idx_metria;
 tmet = SelectedCond(k).tmet;
 t = SelectedCond(k).emgtimevec;
-timestart = SelectedCond(k).TimestartTimeVelTimeEnd(1);
-timevelmax = SelectedCond(k).TimestartTimeVelTimeEnd(2);
-timedistmax = SelectedCond(k).TimestartTimeVelTimeEnd(3);
+
+% These Times incorrect
+% timestart = SelectedCond(k).TimestartTimeVelTimeEnd(1);
+% timevelmax = SelectedCond(k).TimestartTimeVelTimeEnd(2);
+% timedistmax = SelectedCond(k).TimestartTimeVelTimeEnd(3); 
+
+% Correcting 
+timestart = idxmetria(1)/100;
+timedistmax = idxmetria(3)/100;
+timevelmax =idxmetria(2)/100;
+
 
 sampRate=1000;
 avgwindow=0.25; ds=sampRate*avgwindow;
@@ -73,42 +83,52 @@ cleandata=emg;
 
 % Distance and Velocity Plots
 figure(1)
-plot(tmet,smoothdata(vel)/1000,'b','LineWidth',2)
+subplot(4,1,1)
+plot(tmet,vel/1000,'b','LineWidth',2)
+ylabel('m/s','FontSize',16)
 hold on
 yyaxis right
-plot(tmet,smoothdata(dist)/1000)
+ylabel('m','FontSize',16)
+plot(tmet,dist/1000)
 xlim([0 5])
 
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+legend('vel','dist','start','max vel','end','fontsize',16)
+
+figure(1)
+subplot(4,1,2)
+plot(tmet,x_all/1000,'b','LineWidth',2)
+xlim([0 5])
+ylabel('m','FontSize',16)
 line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 
-
-figure(2)
-
-XYZMET
-idxmetria
+title('X','FontSize',16)
+subplot(4,1,3)
+plot(tmet,y_all/1000,'b','LineWidth',2)
 xlim([0 5])
-
-plot(XYZMET(1,:),XYZMET(2,:))
-hold on
-plot(XYZMET(1,idxmetria(1)),XYZMET(2,idxmetria(1)),'o') %start reach
-plot(XYZMET(1,idxmetria(3)),XYZMET(2,idxmetria(3)),'o') %start reach
-line('Color','g','Xdata',[idxmetria(1) idxmetria(1)],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','r','Xdata',[idxmetria(3) idxmetria(3)],'Ydata',ylim,'LineWidth',2.5); %max, dist
-
-
-
-axis equal
-
-% line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+ylabel('m','FontSize',16)
 line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
-% legend('Velocity (m/s)','Start','Max Vel','End','FontSize',18)
+title('Y','FontSize',16)
+subplot(4,1,4)
+plot(tmet,z_all/1000,'b','LineWidth',2)
+xlim([0 5])
+ylabel('m','FontSize',16)
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+title('Z','FontSize',16)
+xlabel('Time(s)','FontSize',16)
+
+%% 
 
 
+%%
 figure(4)
 subplot(5,2,3)
 line(t,(cleandata(:,idx1(1))))
