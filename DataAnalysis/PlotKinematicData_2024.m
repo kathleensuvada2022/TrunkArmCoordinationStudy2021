@@ -1857,7 +1857,7 @@ axis equal
     
     % Computing Velocity 
 %    vel= ddt(dist,1/89);
-       vel= ddt(smo(dist),1/89); 
+      vel= ddt(smo(dist),1/89); 
     velx= ddt(smo(xhand(:,1),3),1/89);
 
     vely= ddt(smo(xhand(:,2),3),1/89);

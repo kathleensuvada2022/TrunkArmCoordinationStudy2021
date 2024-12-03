@@ -210,15 +210,21 @@ if  strcmp(partid,'RTIS1003')
         
         if strcmp(mfname,'/trials2.mat')
             idx(3) = idx(3) -30;
+
+           maxdisty= max(xhand(1:idx(3),2)); 
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+
         end
         
         if strcmp(mfname,'/trials3.mat')
-            idx(3) = idx(3) -15;
+            idx(3) = idx(3) -11;
         end
         
         
         if strcmp(mfname,'/trials4.mat')
-            idx(3) = idx(3) -15;
+            idx(3) = idx(3) -4;
         end
         
         
@@ -236,7 +242,7 @@ if  strcmp(partid,'RTIS1003')
         idx(1) = vUd(1);
         
         if strcmp(mfname,'/trials13.mat')
-            idx(3) = idx(3) -215;
+            idx(3) = idx(3) -195;
             idx(1) = idx(1) +15;
         end
         
@@ -247,7 +253,7 @@ if  strcmp(partid,'RTIS1003')
         
         
         if strcmp(mfname,'/trials15.mat')
-            idx(1) = idx(1) +15;
+            idx(1) = idx(1) +2;
             idx(3) = idx(3) -25;
         end
         
@@ -277,25 +283,31 @@ if  strcmp(partid,'RTIS1003')
         end
         
         if strcmp(mfname,'/trials8.mat')
-            idx(3) = idx(3) -20;
+            idx(3) = idx(3) -14;
+            idx(1) = idx(1)-6;
         end
         
         
         if strcmp(mfname,'/trials9.mat')
-            idx(1) = idx(1) +10+20;
+            idx(1) = idx(1) +10+11;
             idx(3) = idx(3) -15;
+      
+            maxdisty= max(xhand(1:idx(3),2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trials10.mat')
-            idx(1) = idx(1)+20;
-            idx(3) = idx(3) -10;
+            idx(1) = idx(1)+12;
+            idx(3) = idx(3) -7;
         end
         
         
         
         if strcmp(mfname,'/trials11.mat')
-            idx(1) = idx(1) +43;
+            idx(1) = idx(1) +39;
             idx(3) = idx(3) -10;
         end
     end
@@ -323,7 +335,7 @@ if  strcmp(partid,'RTIS1003')
         
         if strcmp(mfname,'/trials21.mat')
             %             idx(1) = idx(1) +43;
-            idx(3) = idx(3) -9;
+            idx(3) = idx(3) +1;
         end
     end
     
@@ -359,13 +371,13 @@ if  strcmp(partid,'RTIS1003')
         
         if strcmp(mfname,'/trials34.mat')
             idx(3) = idx(3) -2;
-            idx(1) = idx(1) +15;
+            idx(1) = idx(1) +8;
         end
         
         
         if strcmp(mfname,'/trials35.mat')
-            idx(3) = idx(3) -265;
-            idx(1) = idx(1) +17;
+            idx(3) = idx(3) -230;
+            idx(1) = idx(1) +11;
         end
         
         
@@ -389,7 +401,7 @@ if  strcmp(partid,'RTIS1003')
             %                     idx(1) = idx(1) +15;
         end
         if strcmp(mfname,'/trials26.mat')
-            idx(3) = idx(3) -25;
+            idx(3) = idx(3) -17;
             %                     idx(1) = idx(1) +15;
         end
         if strcmp(mfname,'/trials27.mat')
@@ -442,13 +454,13 @@ if  strcmp(partid,'RTIS1004')
         
         
         if strcmp(mfname,'/trial1.mat')
-            idx(1) = idx(1) +45;
-            idx(3) = idx(3) -70;
+            idx(1) = idx(1) +15;
+            idx(3) = idx(3) -58;
         end
         
         if strcmp(mfname,'/trial2.mat')
-            idx(1) = idx(1) +15;
-            idx(3) = idx(3) -25;
+            idx(1) = idx(1) -15;
+            idx(3) = idx(3) -4;
         end
         
         if strcmp(mfname,'/trial3.mat')
@@ -457,12 +469,12 @@ if  strcmp(partid,'RTIS1004')
         end
         
         if strcmp(mfname,'/trial4.mat')
-            idx(1) = idx(1) +15;
-            idx(3) = idx(3) -25;
+            idx(1) = idx(1) -5;
+            idx(3) = idx(3) +5;
         end
         
         if strcmp(mfname,'/trial6.mat')
-            idx(1) = idx(1) -1;
+            idx(1) = idx(1) -13;
         end
         
         
@@ -471,7 +483,7 @@ if  strcmp(partid,'RTIS1004')
         end
         
         if strcmp(mfname,'/trial10.mat')
-            idx(1) = idx(1) -1;
+            idx(1) = idx(1) -16;
         end
     end
     
@@ -500,26 +512,26 @@ if  strcmp(partid,'RTIS1004')
         
         if strcmp(mfname,'/trial26.mat')
             idx(1) = idx(1) +60;
-            idx(3) = idx(3) -8;
+            idx(3) = idx(3) -4;
         end
         
         if strcmp(mfname,'/trial27.mat')
             idx(1) = idx(1) +75;
-            idx(3) = idx(3) -15;
+            idx(3) = idx(3) +1;
         end
         
         if strcmp(mfname,'/trial28.mat')
             idx(1) = idx(1) +85;
-            idx(3) = idx(3) -40;
+            idx(3) = idx(3) -10;
         end
         
         if strcmp(mfname,'/trial30.mat')
-            idx(1) = idx(1) +14+7;
+            idx(1) = idx(1) +14+5;
         end
         
         if strcmp(mfname,'/trial33.mat')
             idx(1) = idx(1) +82;
-            idx(3) = idx(3) -20;
+            idx(3) = idx(3) -15;
         end
         
         
@@ -545,10 +557,10 @@ if  strcmp(partid,'RTIS1004')
         
         if strcmp(mfname,'/trial13.mat')
             idx(1) = idx(1) +30;
-            idx(3) = idx(3) -20;
+            idx(3) = idx(3) -10;
         end
         if strcmp(mfname,'/trial14.mat')
-            idx(1) = idx(1) -7;
+            idx(1) = idx(1) +23+15;
         end
         if strcmp(mfname,'/trial15.mat')
             idx(1) = idx(1) +15+25;
@@ -572,7 +584,7 @@ if  strcmp(partid,'RTIS1004')
         end
         
         if strcmp(mfname,'/trial22.mat')
-            idx(1) = idx(1) -10;
+            idx(1) = idx(1) -30;
         end
     end
     
@@ -7068,6 +7080,89 @@ rangeZ= find(Zpos_act>.00005);
 % end
 
 
+
+%% Verification of reach start and end - 2024 
+
+% Correcting for the resampling 1000 HZ sampling Rate 
+
+% idx = idx*10; 
+
+idxmetria = idx;
+
+% Correcting - KINEMATICS
+timestart = idx(1)/100;
+timedistmax = idx(3)/100;
+timevelmax =idx(2)/100;
+
+
+tmet = t;
+x_all = xhand(:,1);
+y_all = xhand(:,2);
+z_all = xhand(:,3);
+
+figure(1)
+subplot(4,3,1)
+plot(tmet,vel/1000,'b','LineWidth',2)
+hold on
+plot(tmet,vely/1000,'LineWidth',2)
+
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+ylabel('m/s','FontSize',16)
+hold on
+yyaxis right
+ylabel('m','FontSize',16)
+plot(tmet,dist/1000)
+xlim([0 5])
+
+
+legend('vel','vely','start','end','dist','fontsize',16)
+
+figure(1)
+subplot(4,3,4)
+plot(tmet,x_all/1000,'b','LineWidth',2)
+xlim([0 5])
+ylabel('m','FontSize',16)
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+
+title('X','FontSize',16)
+
+subplot(4,3,7)
+plot(tmet,y_all/1000,'b','LineWidth',2)
+xlim([0 5])
+ylabel('m','FontSize',16)
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+title('Y','FontSize',16)
+subplot(4,3,10)
+plot(tmet,z_all/1000,'b','LineWidth',2)
+hold on
+plot(tmet,Zpos_act,'b','LineWidth',2)
+
+xlim([0 5])
+ylabel('m','FontSize',16)
+line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); % start reach
+% line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
+title('Z','FontSize',16)
+legend('Z Metria','Z ACT3D','FontSize',16)
+xlabel('Time(s)','FontSize',16)
+
+
+subplot(4,3,[2:3 5:6 8:9 11:12])
+plot(x_all,y_all,'LineWidth',2)
+hold on
+plot(x_all(idxmetria(1),1 ), y_all(idxmetria(1), 1), 'go', 'MarkerSize', 10);
+plot(x_all(idxmetria(3),1), y_all(idxmetria(3),1), 'ro', 'MarkerSize', 10);
+axis equal
+
+
+
+pause
 %%
 
 rangeZ= find(Zpos_act>.00005);
@@ -7076,14 +7171,7 @@ timestart = t(idx(1));
 % timevelmax = t(idx(2));
 timedistmax = t(idx(3));
 
-% Start Time
-% timestart = idx(1)*(1/89);% divide by sampling rate
-% timevelmax = idx(2)*(1/89); % time when max velocity
-% timedistmax = idx(3) *(1/89); %when at max dist
-timebefore = timestart-.05; %time 50 ms prior to start of reach
-% timebefore =1;
-timeend = timedistmax+2;
-%ibefore = ceil(timebefore*50);
+
 
 %% USE THIS PLOT FOR VERIFICATION OF REACH START 2023!!!!!! UNCOMMENT BELOW
 % figure(2)
