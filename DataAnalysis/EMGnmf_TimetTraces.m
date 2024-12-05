@@ -24,7 +24,8 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 % Trial by Trial 
 
-SelectedCond = Cond3; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+
+SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
