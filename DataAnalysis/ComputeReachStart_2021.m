@@ -1844,13 +1844,22 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial18.mat')
-            idx(1) = idx(1)-1;
+            idx(1) = idx(1)-6;
         end
         
-        
+                
+ 
+        if strcmp(mfname,'/trial16.mat')
+            idx(1) = idx(1)-15;
+        end
         
         if strcmp(mfname,'/trial17.mat')
             idx(1) = idx(1)+1;
+        end
+        
+
+        if strcmp(mfname,'/trial21.mat')
+            idx(1) = idx(1)-5;
         end
         
     end
@@ -1922,7 +1931,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         end
         if strcmp(mfname,'/trial31.mat')
             
-            idx(1) = idx(1) +5;
+            idx(1) = idx(1) +5-7;
             
         end
         
@@ -1941,24 +1950,26 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial34.mat')
             
-            idx(1) = idx(1) -95;
+            idx(1) = idx(1) -95-10;
             
         end
         if strcmp(mfname,'/trial25.mat')
             
-            idx(3) = idx(3) -16;
+            idx(3) = idx(3) -13;
+            idx(1) = idx(1)-6;
             
         end
         
         
         if strcmp(mfname,'/trial26.mat')
             
-            idx(1) = idx(1)+21;
-            idx(3) = idx(3) -3;
+            idx(1) = idx(1)+21-7;
+            idx(3) = idx(3) +2;
         end
         
         if strcmp(mfname,'/trial27.mat')
-            idx(1) = idx(1) +7;
+            idx(1) = idx(1) +5;
+            idx(3) = idx(3) +3;
             
             
         end
@@ -1966,8 +1977,7 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial28.mat')
             idx(1) = idx(1) +13;
-            
-            
+            idx(3) = idx(3) +8;
         end
         
         
@@ -1978,6 +1988,13 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
             
         end
         
+                
+        if strcmp(mfname,'/trial30.mat')
+%             idx(1) = idx(1) +5;
+            idx(3) = idx(3) +5;
+            
+            
+        end
         
         
     end
@@ -2004,8 +2021,16 @@ if strcmp(partid,'RTIS2001') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial44.mat')
-            % idx(1) = idx(1) -2;
+             idx(3) = idx(3) -1;
             idx(1) = idx(1) +25;
+            
+        end
+
+
+        
+        if strcmp(mfname,'/trial45.mat')
+            % idx(1) = idx(1) -2;
+            idx(1) = idx(1) -10;
             
         end
         if strcmp(mfname,'/trial55.mat')
