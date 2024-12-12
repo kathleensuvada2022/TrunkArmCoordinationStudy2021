@@ -2151,28 +2151,53 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial19.mat')
             idx(1)= idx(1)-10;
-            idx(3) = idx(3)-10;
+            idx(3) = idx(3)-9;
         end
         
         if strcmp(mfname,'/trial34.mat')
             %             idx(1)= idx(1)-3;
             idx(3) = idx(3)-5;
+
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach-5;
         end
         
         if strcmp(mfname,'/trial36.mat')
             %             idx(1)= idx(1)-3;
             idx(3) = idx(3)-2;
+
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial37.mat')
             idx(1)= idx(1)-3;
             idx(3) = idx(3)-3;
+
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial38.mat')
             idx(1)= idx(1)-3;
             idx(3) = idx(3) - 200;
+
+
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach-1;
         end
         
     end
@@ -2189,48 +2214,79 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial22.mat')
             idx(3)= idx(3)-205;
-            idx(1) = idx(1) +20;
+            idx(1) = idx(1) +10;
         end
         %
         %
         if strcmp(mfname,'/trial23.mat')
-            idx(1)= idx(1)-15;
+            idx(1)= idx(1)-35;
             idx(3) = idx(3) -193;
         end
         %
         
         if strcmp(mfname,'/trial24.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-15;
             idx(3) = idx(3) +65;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %
         %
         if strcmp(mfname,'/trial26.mat')
-            idx(1)= idx(1)+5;
+            idx(1)= idx(1)+5-8;
             idx(3) = idx(3)+55;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %         %
         if strcmp(mfname,'/trial27.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-12;
             idx(3) = idx(3)+50;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
             
         end
         %
         if strcmp(mfname,'/trial40.mat')
             idx(3)= idx(3)-250+18;
+            idx(1) = idx(1)-25;
         end
         %
         %
         if strcmp(mfname,'/trial41.mat')
-            idx(3)= idx(3)+65;
+            idx(3)= idx(3)+65-11;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+           idx(1) = idx(1)-12;
         end
         %
         if strcmp(mfname,'/trial42.mat')
             idx(3)= idx(3)-40;
+            idx(1) =  idx(1)-5;
         end
         
         if strcmp(mfname,'/trial43.mat')
             idx(3)= idx(3)+75-8;
+
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+
+           idx(1) = idx(1)-20;
         end
         
         
@@ -2260,6 +2316,11 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         if strcmp(mfname,'/trial30.mat')
             idx(3)= idx(3)-105-9;
             idx(1) = idx(1)-15;
+
+            maxdisty= max(xhand(1:idx(3),2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         
@@ -2270,17 +2331,24 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         
         if strcmp(mfname,'/trial45.mat')
             idx(3)= idx(3)+65+6;
-            idx(1) = idx(1)-25;
+            idx(1) = idx(1)-25+2;
         end
         
         
         if strcmp(mfname,'/trial48.mat')
             idx(3)= idx(3)-85-9;
+            idx(1) = idx(1)-15;
         end
         
         
         if strcmp(mfname,'/trial49.mat')
             idx(3)= idx(3)-130;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+           idx(1) = idx(1)-2;
         end
     end
     
@@ -2289,14 +2357,29 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         idx(3) = end_reach(length(end_reach));
         idx(1) = find(dist>=.02*max(dist),1)-1;
         
+
+
+        if strcmp(mfname,'/trial57.mat')
+            maxdisty= max(xhand(1:idx(3),2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+        end
+
+
         if strcmp(mfname,'/trial59.mat')
             idx(1)= idx(1)+15;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
+
         end
         
         %
         %
         if strcmp(mfname,'/trial60.mat')
-            idx(1)= idx(1)+2;
+            idx(1)= idx(1)+2-12;
             idx(3) = idx(3) -10-14;
         end
         %
@@ -2311,12 +2394,16 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         end
         %
         if strcmp(mfname,'/trial75.mat')
-            idx(3)= idx(3)-335;
+            idx(3)= idx(3)-335-10;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         %
         if strcmp(mfname,'/trial76.mat')
-            idx(3)= idx(3)-15-14;
+            idx(3)= idx(3)-15-13;
         end
         
     end
@@ -2333,51 +2420,82 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         if strcmp(mfname,'/trial62.mat')
             idx(1)= idx(1)-25;
             idx(3) = idx(3) +55;
+           
+           maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+           idx(3) = endreach;
         end
         %
         if strcmp(mfname,'/trial63.mat')
-            idx(1)= idx(1)-20;
+            idx(1)= idx(1)-20-6;
             idx(3) = idx(3) - 67;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %
         
         if strcmp(mfname,'/trial64.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-9;
             idx(3) = idx(3) +70;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach-13;
         end
         %
         
         if strcmp(mfname,'/trial65.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-12;
             idx(3) = idx(3) -229;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial66.mat')
-            idx(1)= idx(1)-15;
+            idx(1)= idx(1)-15-14;
             idx(3) = idx(3) +60;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial77.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-10;
             idx(3) = idx(3) +55;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial79.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-12;
             idx(3) = idx(3) -25;
         end
         
         
         if strcmp(mfname,'/trial80.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-12;
             idx(3) = idx(3) +55+15;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial81.mat')
-            idx(1)= idx(1)-35;
+            idx(1)= idx(1)-35-10;
             idx(3) = idx(3) +70;
         end
     end
@@ -2396,6 +2514,10 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
             
             idx(1)= idx(1)-20;
             idx(3) = idx(3) +70;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %
         if strcmp(mfname,'/trial69.mat')
@@ -2404,24 +2526,38 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Left')
         end
         %
         if strcmp(mfname,'/trial70.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-10;
             idx(3) = idx(3) +70;
         end
         %
         if strcmp(mfname,'/trial83.mat')
             idx(3)= idx(3)+65;
-            idx(1) = idx(1) -10;
+            idx(1) = idx(1) -10-10;
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %
         %
         if strcmp(mfname,'/trial84.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-30;
             idx(3) = idx(3) -25-15;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         %
         if strcmp(mfname,'/trial86.mat')
-            idx(1)= idx(1)-15;
+            idx(1)= idx(1)-15-10;
             idx(3) = idx(3) +65;
+
+            maxdisty= max(xhand(:,2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
     end
     
@@ -2436,18 +2572,35 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial35.mat')
             idx(3)= idx(3)-6;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         
         if strcmp(mfname,'/trial36.mat')
             idx(3)= idx(3)-55-13;
+            idx(1) = idx(1)-10;
         end
         
         if strcmp(mfname,'/trial37.mat')
             idx(3)= idx(3)-55-13-7;
+            idx(1) = idx(1)-6;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
-        
+       
+        if strcmp(mfname,'/trial38.mat')
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
+            idx(1) = idx(1)-6;
+        end
+
         if strcmp(mfname,'/trial39.mat')
             idx(3)= idx(3)-55-13-4;
         end
@@ -2455,26 +2608,47 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial50.mat')
             idx(3)= idx(3)-12;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial51.mat')
             idx(3)= idx(3)-76;
+            idx(1) = idx(1)-5;
         end
         
         
         if strcmp(mfname,'/trial52.mat')
             idx(3)= idx(3)-12;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
+            idx(1)=idx(1)-9;
         end
         
         
         if strcmp(mfname,'/trial53.mat')
             idx(3)= idx(3)-5;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
+
+            idx(1) = idx(1)-5;
         end
         
         
         if strcmp(mfname,'/trial54.mat')
             idx(3)= idx(3)-96;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+
+            idx(3) = endreach;
         end
     end
     
@@ -2487,6 +2661,8 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         idx(3) = end_reach(length(end_reach))-70;
         
         %
+
+
         if strcmp(mfname,'/trial40.mat')
             idx(3)= idx(3)+68;
             idx(1) = idx(1) +15;
@@ -2496,39 +2672,60 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial41.mat')
             idx(3)= idx(3)+59;
             idx(1) = idx(1)+20 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         %
         if strcmp(mfname,'/trial42.mat')
             idx(3)= idx(3)+65;
             idx(1) = idx(1)+12 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         %
         if strcmp(mfname,'/trial43.mat')
             idx(3)= idx(3)+65;
             idx(1) = idx(1)+20 ;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         %
         if strcmp(mfname,'/trial44.mat')
             idx(3)= idx(3)+68;
-            idx(1) = idx(1)+20 ;
+            idx(1) = idx(1)+20+3 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         %
         if strcmp(mfname,'/trial55.mat')
             idx(3)= idx(3)+65;
-            idx(1) = idx(1)+20 ;
+            idx(1) = idx(1)+20 -4;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         %
         if strcmp(mfname,'/trial56.mat')
             idx(3)= idx(3)+80-7;
-            idx(1) = idx(1)+10 ;
+            idx(1) = idx(1)+10 +5;
         end
         
         %
         if strcmp(mfname,'/trial59.mat')
             idx(3)= idx(3)+65;
-            idx(1) = idx(1)+10 ;
+            idx(1) = idx(1)+10-7 ;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
     end
     
@@ -2544,24 +2741,34 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial45.mat')
             idx(3)= idx(3)+70;
-            idx(1) = idx(1)+30 ;
+            idx(1) = idx(1)+30+1 ;
         end
         
         
         if strcmp(mfname,'/trial46.mat')
             idx(3)= idx(3)-120;
             idx(1) = idx(1)+20 ;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         
         if strcmp(mfname,'/trial47.mat')
             idx(3)= idx(3)+65;
             idx(1) = idx(1)+15 ;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         if strcmp(mfname,'/trial48.mat')
             idx(3)= idx(3)+65+8;
-            idx(1) = idx(1)+20 ;
+            idx(1) = idx(1)+20-5 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         if strcmp(mfname,'/trial63.mat')
@@ -2572,19 +2779,27 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial64.mat')
             idx(3)= idx(3)-65-13;
-            idx(1) = idx(1)-5 ;
+            idx(1) = idx(1)-5-15 ;
         end
         
         
         if strcmp(mfname,'/trial65.mat')
             idx(3)= idx(3)+70;
             idx(1) = idx(1)-5 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
         
         
         if strcmp(mfname,'/trial66.mat')
             idx(3)= idx(3)+65;
             idx(1) = idx(1)-5 ;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
         end
     end
     
@@ -2596,15 +2811,48 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial67.mat')
             idx(3)= idx(3)-95-12;
+            idx(3) = idx(3)-2;
+            idx(1) = idx(1)-3;
         end
         %
         if strcmp(mfname,'/trial68.mat')
             idx(3)= idx(3)-115+21;
+            idx(1) = idx(1)-1;
         end
         %
         if strcmp(mfname,'/trial69.mat')
             idx(3)= idx(3)-105+8;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
         end
+        %
+        if strcmp(mfname,'/trial83.mat')
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
+        end
+
+        if strcmp(mfname,'/trial84.mat')
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
+        end
+
+        if strcmp(mfname,'/trial86.mat')
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
+        end
+
+
     end
     
     if expcond ==5
@@ -2618,18 +2866,36 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial74.mat')
             idx(3)= idx(3)-75;
             idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
+            idx(1) = idx(1)+3;
+
+     
         end
         
         %
         if strcmp(mfname,'/trial75.mat')
             idx(3)= idx(3)+65;
             %  idx(1) = idx(1) +10;
+
+     
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach; 
+
         end
         
         %
         if strcmp(mfname,'/trial88.mat')
             idx(3)= idx(3)+65;
             %  idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         %
@@ -2641,6 +2907,10 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial90.mat')
             idx(3)= idx(3)+75;
             %  idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial91.mat')
@@ -2661,35 +2931,59 @@ if strcmp(partid,'RTIS2003') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial77.mat')
             idx(3)= idx(3)+69;
             %  idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         %
         if strcmp(mfname,'/trial78.mat')
             idx(3)= idx(3)+70;
             idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         %
         if strcmp(mfname,'/trial79.mat')
             idx(3)= idx(3)+70;
             idx(1) = idx(1) +10;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
+            idx(1) = idx(1)-20;
         end
         %
         if strcmp(mfname,'/trial80.mat')
             idx(3)= idx(3)+70;
             idx(1) = idx(1) +10;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
+
         end
         
         %
         if strcmp(mfname,'/trial93.mat')
             idx(3)= idx(3)+63;
             idx(1) = idx(1) +10;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         %
         if strcmp(mfname,'/trial94.mat')
             idx(3)= idx(3)+70;
             idx(1) = idx(1)-5;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
     end
     
@@ -2708,12 +3002,19 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         idx(3) = end_reach;
         idx(1) = find(dist>=.05*max(dist),1);
         %
+
+                %
+        if strcmp(mfname,'/trial22.mat')
+            idx(1)= idx(1)-7;
+        end
         if strcmp(mfname,'/trial23.mat')
             idx(3)= idx(3)-25+7;
+            idx(1) = idx(1)-10;
         end
         %
         if strcmp(mfname,'/trial24.mat')
             idx(3)= idx(3)-35-18;
+             idx(1) = idx(1)-10;
         end
         %
         
@@ -2725,25 +3026,40 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         %
         if strcmp(mfname,'/trial26.mat')
             idx(3)= idx(3)-55+18;
+            idx(1) = idx(1)-10;
+
         end
         %
         %
         if strcmp(mfname,'/trial32.mat')
             idx(3)= idx(3)-35-25;
+             idx(1) = idx(1)-15;
         end
         %
         
         if strcmp(mfname,'/trial33.mat')
             idx(3)= idx(3)-62;
+            idx(1) = idx(1)-15;
+
         end
         
         if strcmp(mfname,'/trial34.mat')
             idx(3)= idx(3)-45;
+            idx(1) = idx(1)-15;
+
         end
         
+        if strcmp(mfname,'/trial35.mat')
+%             idx(3)= idx(3)-45;
+            idx(1) = idx(1)-15;
+
+        end
         
         if strcmp(mfname,'/trial36.mat')
             idx(3)= idx(3)-54;
+            idx(1) = idx(1)-15;
+
+            
         end
     end
     
@@ -2757,43 +3073,62 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         
         
         if strcmp(mfname,'/trial27.mat')
-            idx(3)= idx(3)-180;
-            idx(1) = idx(1) -20;
+            idx(3)= idx(3)-180-1;
+            idx(1) = idx(1) -20+1;
         end
         %
         if strcmp(mfname,'/trial28.mat')
-            idx(3)= idx(3)-41;
-            idx(1) = idx(1) ;
+            idx(3)= idx(3)-41-3;
+            idx(1) = idx(1)-12 ;
         end
         %
         if strcmp(mfname,'/trial29.mat')
             idx(3)= idx(3)-190;
+            idx(1) = idx(1)-12;
         end
         %
         if strcmp(mfname,'/trial30.mat')
             idx(3)= idx(3)-185;
-            idx(1) = idx(1) -5;
+            idx(1) = idx(1) -5-11;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
+        
+
         end
         %
         if strcmp(mfname,'/trial31.mat')
             idx(3)= idx(3)-140;
-            idx(1) = idx(1) +5;
+            idx(1) = idx(1) +5-20;
+            idx(3)=idx(3)+15;
         end
         %
         if strcmp(mfname,'/trial37.mat')
             idx(3)= idx(3)+55+12;
-            idx(1)=idx(1)-5;
+            idx(1)=idx(1)-5-15;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach-50;
+
+            maxdisty= max(xhand(idx(1):idx(3),2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         %
         %
         if strcmp(mfname,'/trial38.mat')
-            
+            idx(1) = idx(1)-15+9;
             idx(3)=idx(3)-20;
         end
         %
         if strcmp(mfname,'/trial41.mat')
-            
+            idx(1) = idx(1)-8;
             idx(3)=idx(3)-200;
+            
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
+          
         end
     end
     
@@ -2807,14 +3142,17 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         idx(3) = end_reach(length(end_reach))-70;
         
         if strcmp(mfname,'/trial42.mat')
-            idx(1)= idx(1)+2;
+            idx(1)= idx(1)+2-10;
             idx(3) = idx(3)-205;
         end
         %
         
         if strcmp(mfname,'/trial45.mat')
-            idx(1)= idx(1)-10;
+            idx(1)= idx(1)-10-10;
             idx(3)= idx(3)-175;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+           
         end
         %
         
@@ -2825,7 +3163,7 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         %
         %
         if strcmp(mfname,'/trial49.mat')
-            idx(1)= idx(1)-15;
+            idx(1)= idx(1)-15-6;
             idx(3) = idx(3)-15;
         end
         %
@@ -2838,6 +3176,9 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial51.mat')
             idx(1)= idx(1)-15;
             idx(3) = idx(3)-200;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         
@@ -2848,37 +3189,49 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         end_reach = find(dist==max_dist);
         idx(3) = end_reach;
         idx(1) = find(dist>=.05*max(dist),1);
-        
+                
+        if strcmp(mfname,'/trial52.mat')
+            idx(1)= idx(1)-20;
+%             idx(3) = idx(3) -15;
+        end
+
         
         if strcmp(mfname,'/trial53.mat')
-            idx(1)= idx(1);
+            idx(1)= idx(1)-15;
             idx(3) = idx(3) -15;
         end
         %
         % %
         if strcmp(mfname,'/trial54.mat')
             idx(3)= idx(3)-5;
+            idx(1)= idx(1)-15;
         end
         %
-        
+        if strcmp(mfname,'/trial55.mat')
+%             idx(3)= idx(3)-5;
+            idx(1)= idx(1)-15;
+        end
         if strcmp(mfname,'/trial56.mat')
             idx(3)= idx(3)-70;
+            idx(1)= idx(1)-15-10;
         end
         %
         %
         
         if strcmp(mfname,'/trial64.mat')
             idx(3)= idx(3)-25;
+            idx(1)= idx(1)-15;
         end
         %
         if strcmp(mfname,'/trial65.mat')
             idx(3)= idx(3)-13;
+            idx(1)= idx(1)-15;
         end
         
         
         if strcmp(mfname,'/trial70.mat')
-            idx(3)= idx(3)-20;
-            
+            idx(3)= idx(3)-20+7;
+            idx(1)= idx(1)-15;
         end
     end
     
@@ -2893,42 +3246,51 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         
         %
         if strcmp(mfname,'/trial57.mat')
-            idx(1)= idx(1)+90;
-            idx(3) = idx(3)+20;
+            idx(1)= idx(1)+90-2;
+            idx(3) = idx(3)+20+15;
         end
         
         if strcmp(mfname,'/trial80.mat')
-            idx(1)= idx(1)-20;
-            idx(3) = idx(3)+25;
+            idx(1)= idx(1)-20-20;
+            idx(3) = idx(3)+25+18;
         end
         %
         %
         if strcmp(mfname,'/trial81.mat')
-            idx(1)= idx(1)-25;
-            idx(3) = idx(3)+5;
+            idx(1)= idx(1)-25-12;
+            idx(3) = idx(3)+5+16;
         end
         %
         if strcmp(mfname,'/trial75.mat')
-            idx(1)= idx(1)-20;
-            idx(3) = idx(3)+15;
+            idx(1)= idx(1)-20-15;
+            idx(3) = idx(3)+15+4;
         end
         %
         
+        if strcmp(mfname,'/trial76.mat')
+            idx(1)= idx(1)-15;
+            idx(3) = idx(3)+2;
+        end
+
         if strcmp(mfname,'/trial77.mat')
-            idx(1)= idx(1)-5;
+            idx(1)= idx(1)-5-15;
             idx(3) = idx(3)+60;
         end
         
         
         if strcmp(mfname,'/trial78.mat')
-            idx(1)= idx(1)-5;
-            idx(3) = idx(3)+55;
+            idx(1)= idx(1)-5-6;
+            idx(3) = idx(3)+55+4;
         end
         %
         
         if strcmp(mfname,'/trial79.mat')
             idx(1)= idx(1)-15;
             idx(3) = idx(3)+55;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
+            idx(1)=idx(1)-10;
         end
         %
         
@@ -2943,37 +3305,39 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         idx(3) = end_reach(length(end_reach))-70;
         
         if strcmp(mfname,'/trial60.mat')
-            idx(1)= idx(1)-30;
-            idx(3) = idx(3) -205;
+            idx(1)= idx(1)-30-10;
+            idx(3) = idx(3) -205+7;
             
         end
         %
         %
         if strcmp(mfname,'/trial61.mat')
             idx(1)= idx(1)-45 ;
-            idx(3) = idx(3) +20;
+            idx(3) = idx(3) -10+30+20+9;
             
         end
         %
         
         if strcmp(mfname,'/trial62.mat')
-            idx(3)= idx(3)-170 ;
-            idx(1) = idx(1) -5;
+            idx(3)= idx(3)-170+10 ;
+            idx(1) = idx(1) -5-10;
             
         end
         %
         if strcmp(mfname,'/trial71.mat')
-            idx(3)= idx(3)+45 ;
+            idx(3)= idx(3)+45 +6;
             idx(1) = idx(1)+22;
             
         end
         %
+
         if strcmp(mfname,'/trial73.mat')
             
-            idx(1) = idx(1)+5;
-            idx(3) = idx(3) +50;
+            idx(1) = idx(1)-10;
+            idx(3) = idx(3) +20+20+4;
             
         end
+
         %
         %
         if strcmp(mfname,'/trial67.mat')
@@ -2986,14 +3350,14 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial72.mat')
             
             idx(1) = idx(1)+30;
-            idx(3) = idx(3) +35;
+            idx(3) = idx(3) +35+20+13;
             
         end
         %
         if strcmp(mfname,'/trial74.mat')
             
-            %             idx(1) = idx(1)-15;
-            idx(3) = idx(3) -190;
+              idx(1) = idx(1)-15;
+            idx(3) = idx(3) -190+20+17;
             
         end
         %
@@ -3014,39 +3378,66 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         %
         idx(1) = find(dist>=.02*max(dist),1);
         
+        if strcmp(mfname,'/trial1.mat')
+            idx(1) = idx(1)-15;
+        end
+      
+        if strcmp(mfname,'/trial2.mat')
+            idx(1) = idx(1)-15;
+        end
+
         if strcmp(mfname,'/trial3.mat')
             idx(3) = idx(3)-8;
+            idx(1) = idx(1)-15;
+        end
+        if strcmp(mfname,'/trial4.mat')
+%             idx(3) = idx(3)-8;
+            idx(1) = idx(1)-10;
+        end
+        if strcmp(mfname,'/trial5.mat')
+%             idx(3) = idx(3)-8;
+            idx(1) = idx(1)-10;
         end
         if strcmp(mfname,'/trial6.mat')
-            %             idx(3) = idx(3)-27;
+         idx(1) = idx(1)-10;
         end
         if strcmp(mfname,'/trial8.mat')
-            %             idx(3) = idx(3)-27;
+                    idx(1) = idx(1)-5;
         end
         if strcmp(mfname,'/trial10.mat')
-            %             idx(3) = idx(3)-27;
+%                         idx(3) = idx(3)-27;
         end
     end
     
     if expcond ==2
         if strcmp(mfname,'/trial19.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-20 ;
             idx(3) = idx(3) -5;
+            
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial20.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20 -20;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial21.mat')
-            idx(1) = idx(1)-10 ;
+            idx(1) = idx(1)-10-20-20 ;
             %             idx(3) = idx(3) -5;
         end
         
         if strcmp(mfname,'/trial22.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-15 ;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial24.mat')
@@ -3055,12 +3446,12 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         end
         
         if strcmp(mfname,'/trial25.mat')
-            idx(1) = idx(1)-15 ;
+            idx(1) = idx(1)-35 ;
             %             idx(3) = idx(3) -5;
         end
         
         if strcmp(mfname,'/trial26.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-45 ;
             idx(3) = idx(3) -10;
         end
     end
@@ -3069,50 +3460,70 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial11.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20 -20;
             idx(3) = idx(3) -10;
         end
         
         
         if strcmp(mfname,'/trial14.mat')
-            idx(1) = idx(1)-9 ;
+            idx(1) = idx(1)-9-20 -20;
             idx(3) = idx(3) -5;
         end
         
         
         if strcmp(mfname,'/trial15.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20 -15;
             idx(3) = idx(3) -5;
         end
         
+                
+        if strcmp(mfname,'/trial27.mat')
+            idx(1) = idx(1)-20 ;
+%             idx(3) = idx(3) -10;
+        end
         
         
         if strcmp(mfname,'/trial28.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-20 ;
             idx(3) = idx(3) -10;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial29.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-20 ;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial30.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20 -25;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         
         if strcmp(mfname,'/trial31.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-18 ;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial32.mat')
             idx(1) = idx(1)-20 ;
             idx(3) = idx(3) -5;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
     end
     
@@ -3130,7 +3541,7 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         end
         
         if strcmp(mfname,'/trial35.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-10 ;
             idx(3) = idx(3) -10;
         end
         
@@ -3140,13 +3551,20 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         end
         
         if strcmp(mfname,'/trial39.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20 -10;
             idx(3) = idx(3) -25;
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial40.mat')
-            idx(1) = idx(1)-25 ;
+            idx(1) = idx(1)-25 -15;
             idx(3) = idx(3) -15;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial41.mat')
@@ -3158,14 +3576,18 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
     if expcond ==5
         
         if strcmp(mfname,'/trial55.mat')
-            idx(1) = idx(1)-25 ;
+            idx(1) = idx(1)-25-3 ;
             idx(3) = idx(3) -5;
         end
         
         
         if strcmp(mfname,'/trial57.mat')
-            idx(1) = idx(1)-25 ;
+            idx(1) = idx(1)-25 -15;
             idx(3) = idx(3) -25;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach-2;
         end
         
         
@@ -3177,24 +3599,28 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial59.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-20 ;
             %            idx(3) = idx(3) -25;
         end
         
         
         if strcmp(mfname,'/trial60.mat')
-            idx(1) = idx(1)-25 ;
+            idx(1) = idx(1)-25 -30;
             idx(3) = idx(3) -5;
         end
         
         if strcmp(mfname,'/trial61.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-15 ;
             idx(3) = idx(3) -5;
         end
         
         if strcmp(mfname,'/trial63.mat')
             idx(1) = idx(1)-25 ;
             idx(3) = idx(3) -25;
+         
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach-5;
         end
     end
     
@@ -3203,22 +3629,26 @@ if strcmp(partid,'RTIS2006') && strcmp(hand,'Left')
         
         
         if strcmp(mfname,'/trial47.mat')
-            idx(1) = idx(1)-25 ;
+            idx(1) = idx(1)-25-30 -7;
             idx(3) = idx(3) -40;
+
+            maxdisty= max(xhand(:,2));
+            endreach = find(xhand(:,2)==maxdisty);
+            idx(3) = endreach;
         end
         
         if strcmp(mfname,'/trial48.mat')
-            idx(1) = idx(1)-30 ;
+            idx(1) = idx(1)-30-6 ;
             idx(3) = idx(3) -20;
         end
         
         if strcmp(mfname,'/trial49.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-30 ;
             idx(3) = idx(3) -5;
         end
         
         if strcmp(mfname,'/trial50.mat')
-            idx(1) = idx(1)-20 ;
+            idx(1) = idx(1)-20-30 ;
             idx(3) = idx(3) -5;
         end
         
@@ -3641,6 +4071,12 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         if strcmp(mfname,'/trial4.mat')
             idx(1) = idx(1)-5;
             idx(3) = idx(3)+20+10+16;
+
+
+            maxdisty= max(xhand(1:idx(3),2));
+           endreach = find(xhand(:,2)==maxdisty);
+
+           idx(3) = endreach;
         end
         if strcmp(mfname,'/trial5.mat')
             idx(1) = idx(1)-1;
@@ -3649,22 +4085,28 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         %
         %
         if strcmp(mfname,'/trial6.mat')
-            idx(1) = idx(1) + 130;
+            idx(1) = idx(1) + 130-5;
             idx(3) = idx(3) + 15;
             
         end
+
+        if strcmp(mfname,'/trial7.mat')
+            idx(3) = idx(3) + 16;
+            
+        end
+        
         
         %
         if strcmp(mfname,'/trial8.mat')
             % idx(1) = idx(1) + 80;
-            idx(3) = idx(3);
+            idx(3) = idx(3)+14;
             
         end
         
         %
         if strcmp(mfname,'/trial9.mat')
             idx(1) = idx(1) ;
-            idx(3) = idx(3);
+            idx(3) = idx(3)+25;
             
         end
         %
@@ -3725,7 +4167,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         %
         if strcmp(mfname,'/trial28.mat')
             idx(1) = idx(1)-28-10;
-            idx(3) = idx(3) -15;
+            idx(3) = idx(3) -15+4;
         end
         %      %
         if strcmp(mfname,'/trial29.mat')
@@ -4016,7 +4458,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial57.mat')
             idx(3) = idx(3) -15;
-            idx(1) = idx(1)-15;
+            idx(1) = idx(1)-35;
 
             maxdisty= max(xhand(:,2));
            endreach = find(xhand(:,2)==maxdisty);
@@ -4037,7 +4479,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial59.mat')
             idx(3) = idx(3) -15;
-            idx(1) = idx(1) -25;
+            idx(1) = idx(1) -35;
             maxdisty= max(xhand(:,2));
            endreach = find(xhand(:,2)==maxdisty);
 
@@ -4046,7 +4488,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         
         if strcmp(mfname,'/trial60.mat')
-            idx(3) = idx(3) -15;
+            idx(3) = idx(3) -25;
             idx(1) = idx(1) -35;
             maxdisty= max(xhand(:,2));
            endreach = find(xhand(:,2)==maxdisty);
@@ -4058,7 +4500,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial61.mat')
             idx(3) = idx(3) -15;
-            idx(1) = idx(1) -5;
+            idx(1) = idx(1) -5-20;
 
             maxdisty= max(xhand(:,2));
            endreach = find(xhand(:,2)==maxdisty);
@@ -4075,7 +4517,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial82.mat')
             idx(3) = idx(3) -35;
-            idx(1) = idx(1) -35;
+            idx(1) = idx(1) -45;
             
             maxdisty= max(xhand(:,2));
            endreach = find(xhand(:,2)==maxdisty);
@@ -4102,7 +4544,7 @@ if strcmp(partid,'RTIS2002') && strcmp(hand,'Right')
         
         if strcmp(mfname,'/trial85.mat')
             % idx(3) = idx(3) -25;
-            idx(1) = idx(1) -35+15;
+            idx(1) = idx(1) -35+10;
             
         end
         
@@ -4135,28 +4577,32 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         %
         if   strcmp(mfname,'/trial2.mat')
             idx(1) = idx(1)-20;
-            idx(3) = idx(3) -45;
+            idx(3) = idx(3) -45+22;
         end
         %
         if   strcmp(mfname,'/trial3.mat')
-            idx(3) = idx(3)-15+2;
+            idx(3) = idx(3)-15+2+7-8+1+7+1;
+            idx(1) = idx(1)-6-6;
         end
         %
         if   strcmp(mfname,'/trial4.mat')
-            idx(3) = idx(3)-150;
+            idx(3) = idx(3)-150+30-6+8;
+            idx(1) = idx(1)-10;
         end
         %
         if   strcmp(mfname,'/trial5.mat')
-            idx(3) = idx(3)-35-27;
+            idx(3) = idx(3)-35-27-10;
+            idx(1)= idx(1)-8;
         end
         %
         if   strcmp(mfname,'/trial20.mat')
             idx(3) = idx(3)-75;
+            idx(1) = idx(1)-20-15;
         end
         %
         if   strcmp(mfname,'/trial21.mat')
             idx(3) = idx(3)-75;
-            idx(1) = idx(1) -15;
+            idx(1) = idx(1) -15-8;
         end
         %
         if   strcmp(mfname,'/trial22.mat')
@@ -4165,13 +4611,17 @@ if strcmp(partid,'RTIS2007') && strcmp(hand,'Right')
         end
         %
         if   strcmp(mfname,'/trial23.mat')
-            idx(3) = idx(3)-95;
-            idx(1) = idx(1) +10;
+            idx(3) = idx(3)-95+10;
+            idx(1) = idx(1) +10-20;
         end
         %
         if   strcmp(mfname,'/trial24.mat')
-            idx(3) = idx(3)-75;
-            idx(1) = idx(1) +2;
+            idx(3) = idx(3)-75+12;
+            idx(1) = idx(1) +2-10;
+%             maxdisty= max(xhand(:,2));
+%             endreach = find(xhand(:,2)==maxdisty);
+% 
+%            idx(3) = endreach;
         end
     end
     
