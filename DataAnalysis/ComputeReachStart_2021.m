@@ -8328,7 +8328,7 @@ axis equal
 
 
 
-pause
+%pause
 %%
 
 rangeZ= find(Zpos_act>.00005);
