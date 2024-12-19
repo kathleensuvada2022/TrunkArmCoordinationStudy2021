@@ -18,14 +18,12 @@ Cond6 = NNMFstruc([NNMFstruc.cond] == 6);
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 
-
-
 %% Load in the file with the FILTERED EMG DATA - November 2024***********
 
 % Trial by Trial 
 
 
-SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+SelectedCond = Cond1; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -45,7 +43,7 @@ maxEMG = NNMFstruc(1).emgMaxes;
 %Max vel index
 maxvel = max(vel(idxmetriastart:idxmetriaend,1));
 ans=find(vel==maxvel);
-Cond6(k).MaxVel = maxvel;
+Cond1(k).MaxVel = maxvel;
 idxmetriamaxvel =ans;
 % 
 
@@ -74,16 +72,16 @@ timevelmax = idxmetriamaxvel/100;
 timestart_EMG = timestart-.05;% Times for EMG (subtracting 50 ms)
 timedistmax_EMG = timedistmax-.05;% Times for EMG (subtracting 50 ms)
 timevelmax_EMG = timevelmax-.05;% Times for EMG (subtracting 50 ms)
-timeAPA = timestart_EMG - .1; % 100 ms prior to movement onset
+timeAPA = timestart_EMG - .075; % 75 ms prior to movement onset therefore with 25 ms window still in APA interval
 
 APAidx_EMG= timeAPA*1000; % EMG index APA
 
 
 sampRate=1000;
-avgwindow=0.25; ds=sampRate*avgwindow;
+avgwindow=0.050; ds=sampRate*avgwindow;
 nEMG=size(emg,2);
 t=(0:size(emg,1)-1)/sampRate; 
-avgwindow=0.25; ds=sampRate*avgwindow;
+avgwindow=0.050; ds=sampRate*avgwindow;
 
 emg = emg-repmat(mean(emg(1:250,:)),length(emg),1); %removes baseline
 
@@ -378,16 +376,31 @@ APAEMGvalues = meanEMG(round(APAidx_EMG), :);
 muscle_labels = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 APAEMG_table = table(muscle_labels', APAEMGvalues', 'VariableNames', {'Muscle', 'APAEMGvalues'});
 
-Cond6(k).APAvals = APAEMG_table;
+Cond1(k).APAvals = APAEMG_table;
 end 
 %%
 
 NNMF_allConds_Filtered = [Cond1 Cond2 Cond3 Cond4 Cond5 Cond6]
 
 
+%% Outputting the EMG values and formatting to put in the excel sheet
+
+for i = 1:length(NNMF_allConds_Filtered)
+emgvals = NNMF_allConds_Filtered(i).APAvals(:,2);
+ans = table2array(emgvals);
+FINALvals = ans';
+matEMGvalsAPA(i,:) = FINALvals;
 
 
 
+end
+
+
+%% If Greater than 1
+test = find (matEMGvalsAPA>1);
+
+matEMGvalsAPA(test) = 1;
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ARM MUSCLES
