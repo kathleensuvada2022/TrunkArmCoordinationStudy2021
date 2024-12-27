@@ -23,7 +23,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 % Trial by Trial 
 
 
-SelectedCond = Cond1; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -43,7 +43,7 @@ maxEMG = NNMFstruc(1).emgMaxes;
 %Max vel index
 maxvel = max(vel(idxmetriastart:idxmetriaend,1));
 ans=find(vel==maxvel);
-Cond1(k).MaxVel = maxvel;
+Cond6(k).MaxVel = maxvel;
 idxmetriamaxvel =ans;
 % 
 
@@ -112,6 +112,7 @@ ylabel('m/s','FontSize',16)
 yyaxis right
 ylabel('m','FontSize',16)
 plot(tmet,dist/1000)
+legend('Vel','Start','Max Vel','End','Dist','FontSize',16)
 xlim([0 5])
 
 
@@ -178,6 +179,7 @@ line('Color','g','Xdata',[timestart timestart],'Ydata',ylim, 'LineWidth',2.5); %
 line('Color','m','Xdata',[timevelmax timevelmax],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax timedistmax],'Ydata',ylim,'LineWidth',2.5); %max, dist
 xlim([0 5])
+legend('vel','dist','start','max vel','end','fontsize',16)
 
 subplot(5,2,2)
 plot(tmet,vel/1000,'b','LineWidth',2)
@@ -205,15 +207,17 @@ title(emgchan(idx1(1)),'Fontsize',18)
 % pause
 
 subplot(5,2,4)
+
 line(t,(cleandata(:,idx2(1))))
 hold on
 ylim([0 1])
+y1=ylim;
 plot(t,meanEMG(:,idx2(1)),'LineWidth',1,'Color','g')
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(1)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-
-line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
-line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
-line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
+y1=ylim;
+line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',y1, 'LineWidth',2.5); % start reach
+line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',y1,'LineWidth',2.5); % max vel
+line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',y1,'LineWidth',2.5); %max, dist
 title(emgchan(idx2(1)),'Fontsize',18)
 
 
@@ -236,13 +240,13 @@ subplot(5,2,6)
 line(t,(cleandata(:,idx2(2))))
 hold on
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(2)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-
  plot(t,meanEMG(:,idx2(2)),'LineWidth',1,'Color','g')
+ ylim([0 1])
 line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
 title(emgchan(idx2(2)),'Fontsize',18)
-ylim([0 1])
+
 
 
 subplot(5,2,7)
@@ -250,24 +254,23 @@ line(t,(cleandata(:,idx1(3))))
 hold on
 plot(t,meanEMG(:,idx1(3)),'LineWidth',2,'Color','g')
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx1(3)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
+ ylim([0 1])
 
 line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
 title(emgchan(idx1(3)),'Fontsize',18)
- ylim([0 1])
 
 subplot(5,2,8)
 line(t,(cleandata(:,idx2(3))))
 hold on
 plot(t,meanEMG(:,idx2(3)),'LineWidth',2,'Color','g')
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(3)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-
+ylim([0 1])
 line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
 title(emgchan(idx2(3)),'Fontsize',18)
-ylim([0 1])
 
 % pause
 
@@ -276,12 +279,12 @@ line(t,(cleandata(:,idx1(4))))
 hold on
 plot(t,meanEMG(:,idx1(4)),'LineWidth',2,'Color','g')
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx1(4)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-
+ylim([0 1])
 line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
  title(emgchan(idx1(4)),'Fontsize',18)
-ylim([0 1])
+
 
 % pause
 
@@ -290,12 +293,11 @@ line(t,(cleandata(:,idx2(4))))
 hold on
 plot(t,meanEMG(:,idx2(4)),'LineWidth',2,'Color','g')
 plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(4)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-
+ylim([0 1])
 line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',ylim, 'LineWidth',2.5); % start reach
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',ylim,'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',ylim,'LineWidth',2.5); %max, dist
 title(emgchan(idx2(4)),'FontSize',18)
-ylim([0 1])
 
 
 % PSDS - trunk 
@@ -376,7 +378,7 @@ APAEMGvalues = meanEMG(round(APAidx_EMG), :);
 muscle_labels = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 APAEMG_table = table(muscle_labels', APAEMGvalues', 'VariableNames', {'Muscle', 'APAEMGvalues'});
 
-Cond1(k).APAvals = APAEMG_table;
+Cond6(k).APAvals = APAEMG_table;
 end 
 %%
 
