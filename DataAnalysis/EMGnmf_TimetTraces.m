@@ -21,7 +21,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 %% Load in the file with the FILTERED EMG DATA - November 2024***********
 
 % Trial by Trial 
-
+ 
 
 SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
