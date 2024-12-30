@@ -4254,7 +4254,7 @@ maxreach =RD_2024;
     
    [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa,temg]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,vel_2024,dist,t2,i);
 
-   if expcond ==1 && i ==4
+   if expcond ==1 && i ==1
        NNMFstruc = struct();
    end
 
