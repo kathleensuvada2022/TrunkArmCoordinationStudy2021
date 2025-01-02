@@ -22,8 +22,8 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 % Trial by Trial 
   
-
-SelectedCond = Cond4; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+ 
+SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -32,7 +32,7 @@ NumTrials = length(SelectedCond);
 for k = 1:NumTrials
 
     
-Cond4(k).trialname
+Cond6(k).trialname
 
 
 dist = SelectedCond(k).dist; 
@@ -47,7 +47,7 @@ maxEMG = NNMFstruc(1).emgMaxes;
 %Max vel index
 maxvel = max(vel(idxmetriastart:idxmetriaend,1));
 ans=find(vel==maxvel);
-Cond4(k).MaxVel = maxvel;
+Cond6(k).MaxVel = maxvel;
 idxmetriamaxvel =ans;
 % 
 
@@ -376,7 +376,7 @@ xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(4)))
 
-%   pause
+   pause
 close all
 
 % Saving APA DATA Dec 2024 For given trial 
@@ -384,7 +384,7 @@ APAEMGvalues = meanEMG(round(APAidx_EMG), :);
 muscle_labels = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 APAEMG_table = table(muscle_labels', APAEMGvalues', 'VariableNames', {'Muscle', 'APAEMGvalues'});
 
-Cond4(k).APAvals = APAEMG_table;
+Cond6(k).APAvals = APAEMG_table;
 end 
 %%
 
