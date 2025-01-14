@@ -20,9 +20,10 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 
 %% Load in the file with the FILTERED EMG DATA - November 2024***********
 
-% Trial by Trial   
+% Trial by Trial               
   
  
+
 SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
@@ -386,7 +387,7 @@ xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(4)))
 
-   pause
+  pause
 close all
 
 % Saving APA and ACC Phase DATA Dec 2024/Jan 2025 For given trial 
