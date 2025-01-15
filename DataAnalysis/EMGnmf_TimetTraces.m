@@ -34,7 +34,7 @@ for k = 1:NumTrials
     
 Cond6(k).trialname
 
-% if strcmp(Cond3(k).trialname,'/trial16.mat')
+% if strcmp(Cond6(k).trialname,'/trial45.mat')
 % 
 %     continue
 % else
