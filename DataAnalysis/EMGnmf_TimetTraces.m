@@ -392,7 +392,7 @@ xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(4)))
 
-  pause
+%   pause
 close all
 
 % Saving APA and ACC Phase DATA Dec 2024/Jan 2025 For given trial 
@@ -642,7 +642,7 @@ ylabel('PSD');
 title(emgchan(idx1(8)),'Fontsize',18)
 
 
-pause
+% pause
 close all
 
 
