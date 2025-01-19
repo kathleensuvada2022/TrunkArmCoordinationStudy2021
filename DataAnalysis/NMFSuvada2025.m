@@ -24,11 +24,13 @@ muscnames= {'CLES','ILES','CLRA','ILRA','CLEO', 'ILEO','CLIO','ILIO'};
 
 % Grabbing just EMG values to input into NNMF
 
-NMFMAT = RTIS1003_MAT_APA_Trunk(10:17,2:end);
+NMFMAT = RTIS1003_MAT_APA_Trunk;
+
+
 
 %% Running NMF Analysis with code from Hongchul *** USE*****
 
-data = cell2mat(NMFMAT);
+data = cell2mat(NMFMAT(10:17,2:end));
 nmus = size(data,1);
 %%
 for s=1:nmus
@@ -71,6 +73,115 @@ ylabel('Mean % VAF and Error per Muscle', 'FontSize', 35);
 
 ylim([0 105])
 
+%% Additional Checks for the NumSyn
+
+% Observe effect of increasing the number of synergies with how closely the
+% original data and recon data align
+
+
+for mm=1:8
+ subplot(4,2,mm)
+plot(data(mm,:),'k','LineWidth',4)
+if mm ==1
+    title('CLES')
+elseif mm==2
+    title('ILES')
+elseif mm==3
+    title('CLRA')
+elseif mm== 4
+    title('ILRA')
+elseif mm ==5
+    title('CLEO')
+elseif mm == 6
+    title('ILEO')
+elseif mm == 7
+    title('CLIO')
+elseif mm == 8
+    title('ILIO')
+
+
+% ax = gca; % Get current axes
+% ax.FontSize = 20; % Set font size to 20
+xlabel('Trials','FontSize',25)
+% ylabel('EMG Activation (Normalized)','FontSize',25)
+
+end
+
+
+hold on
+for ss=1:4
+plot(nmf(ss).RECON(mm,:),'Linewidth',1)
+
+if ss == 4
+plot(nmf(ss).RECON(mm, :), 'r', 'LineWidth', 3, 'LineStyle', '--');
+else 
+end
+
+
+'Synergies'
+ss
+% pause
+
+end
+
+end
+
+
+%% Plotting Individual Muscle VAFS as a function of Number of synergies
+
+for mm = 1:8
+    plot(VAFmus(mm,:),'LineWidth',2)
+    hold on
+    
+if mm ==1
+%     title('CLES')
+elseif mm==2
+%     title('ILES')
+elseif mm==3
+%     title('CLRA')
+elseif mm== 4
+%     title('ILRA')
+elseif mm ==5
+%     title('CLEO')
+elseif mm == 6
+%     title('ILEO')
+elseif mm == 7
+%     title('CLIO')
+elseif mm == 8
+%     title('ILIO')
+end
+
+legend('CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','FontSize',18)
+ylabel('VAF per muscle','Fontsize',16)
+xlabel('Number of Synergies','Fontsize',16)
+
+end
+
+
+
+
+%% Plotting the VAF for each trial as a function of the number of synergies
+figure;
+plot(1:20,VAFcond)
+xlabel('Trial','Fontsize',20)
+ylabel('VAF','Fontsize',20)
+legend('1 Synergies','2 Synergies','3 Synergies','4 Synergies','5 Synergies','6 Synergies','7 Synergies','Fontsize',20)
+
+
+%% Plotting Each Synergy Composition and the Expression of Each over Time 
+
+figure;
+for ww=1:4
+subplot(4,3,1+3*(ww-1))
+bar(nmf(4).W(:,ww))
+subplot(4,3,[2 3] + 3*(ww-1))
+plot(1:20,nmf(4).C(ww,:))
+end
+
+%%
+
+
+
 %%
 %% Plotting the Modules for n = 4 modules and the Time Component
 
@@ -85,17 +196,17 @@ figure
 subplot(4,1,1)
 title('Module 1','Fontsize',16)
 hold on
-bar(nmf(3).W(:,1))
+bar(nmf(4).W(:,1))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 subplot(4,1,2)
 hold on
-bar(nmf(3).W(:,2))
+bar(nmf(4).W(:,2))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 title('Module 2','Fontsize',16)
 subplot(4,1,3)
-bar(nmf(3).W(:,end))
+bar(nmf(4).W(:,end))
 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16); 
 xtickangle(45);
 hold on
@@ -112,15 +223,15 @@ title('Module 4','Fontsize',16)
 
 %Time Component Per Module- box plots
 subplot(4,1,1)
-plot(nmf(3).C(1,:),'Linewidth',2)
+plot(nmf(4).C(1,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 1','FontSize',16)
 subplot(4,1,2)
-plot(nmf(3).C(2,:),'Linewidth',2)
+plot(nmf(4).C(2,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 2','FontSize',16)
 subplot(4,1,3)
-plot(nmf(3).C(end,:),'Linewidth',2)
+plot(nmf(4).C(end,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 3','FontSize',16)
 subplot(4,1,4)
@@ -129,13 +240,120 @@ xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 4','FontSize',16)
 
 
-%% Separating by Condition 
+%% Separating Time Component by Condition 
 
-NNMFstruc= NNMF_allConds_Filtered;
- 
-Cond1 = NNMFstruc([NNMFstruc.cond] == 1);
-Cond2 = NNMFstruc([NNMFstruc.cond] == 2);
-Cond3 = NNMFstruc([NNMFstruc.cond] == 3);
-Cond4 = NNMFstruc([NNMFstruc.cond] == 4);
-Cond5 = NNMFstruc([NNMFstruc.cond] == 5);
-Cond6 = NNMFstruc([NNMFstruc.cond] == 6);
+% Row of Cell Array where the conditions are indicated
+CONDSLOC =  strcmp(NMFMAT(:,1),'COND');
+
+Cond1_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==1); 
+Cond2_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==2); 
+Cond3_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==3); 
+Cond4_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==4); 
+Cond5_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==5); 
+Cond6_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==6); 
+
+%%
+% For Number of Modules go through and separate by condition 
+
+
+MChosenMods = 4; % set this to desired number of modules 
+
+for i = 1:MChosenMods
+Mod_TR(1:length(Cond1_cols),i)= nmf(MChosenMods).C(i,Cond1_cols)';
+Mod_25R(1:length(Cond2_cols),i) = nmf(MChosenMods).C(i,Cond2_cols)'; 
+Mod_50R(1:length(Cond3_cols),i) = nmf(MChosenMods).C(i,Cond3_cols)';
+
+Mod_TU(1:length(Cond4_cols),i)= nmf(MChosenMods).C(i,Cond4_cols)'; 
+Mod_25U(1:length(Cond5_cols),i) = nmf(MChosenMods).C(i,Cond5_cols)';
+Mod_50U(1:length(Cond6_cols),i) = nmf(MChosenMods).C(i,Cond6_cols)';
+end
+
+
+%%
+% Rows are trials and the columns are the expression of each module
+
+% Create a cell array to hold all the arrays
+arrays_Mod1 = {Mod_TR(:,1), Mod_25R(:,1), Mod_50R(:,1), Mod_TU(:,1), Mod_25U(:,1), Mod_50U(:,1)};
+arrays_Mod2 = {Mod_TR(:,2), Mod_25R(:,2), Mod_50R(:,2), Mod_TU(:,2), Mod_25U(:,2), Mod_50U(:,2)};
+arrays_Mod3 = {Mod_TR(:,3), Mod_25R(:,3), Mod_50R(:,3), Mod_TU(:,3), Mod_25U(:,3), Mod_50U(:,3)};
+arrays_Mod4 = {Mod_TR(:,4), Mod_25R(:,4), Mod_50R(:,4), Mod_TU(:,4), Mod_25U(:,4), Mod_50U(:,4)};
+
+
+% Find the maximum length among all arrays
+maxLength_mod1 = max(cellfun(@length, arrays_Mod1));
+maxLength_mod2 = max(cellfun(@length, arrays_Mod2));
+maxLength_mod3 = max(cellfun(@length, arrays_Mod3));
+maxLength_mod4 = max(cellfun(@length, arrays_Mod4));
+
+% Mod1 
+% Amend each array to match the maximum length by appending NaNs
+for i = 1:length(arrays_Mod1)
+    arrays_Mod1{i}(end+1:maxLength, 1) = NaN; % Append NaNs to match maxLength
+end
+
+Mod1_MAT = horzcat(arrays_Mod1{:}); % N trials x 6 conditions
+
+% Mod2
+% Amend each array to match the maximum length by appending NaNs
+for i = 1:length(arrays_Mod2)
+    arrays_Mod2{i}(end+1:maxLength_mod2, 1) = NaN; % Append NaNs to match maxLength
+end
+
+Mod2_MAT = horzcat(arrays_Mod2{:}); % N trials x 6 conditions
+
+% Mod3
+% Amend each array to match the maximum length by appending NaNs
+for i = 1:length(arrays_Mod3)
+    arrays_Mod3{i}(end+1:maxLength_mod3, 1) = NaN; % Append NaNs to match maxLength
+end
+
+Mod3_MAT = horzcat(arrays_Mod3{:}); % N trials x 6 conditions
+
+
+% Mod4
+% Amend each array to match the maximum length by appending NaNs
+for i = 1:length(arrays_Mod4)
+    arrays_Mod4{i}(end+1:maxLength_mod4, 1) = NaN; % Append NaNs to match maxLength
+end
+
+Mod4_MAT = horzcat(arrays_Mod4{:}); % N trials x 6 conditions
+
+
+
+
+
+
+
+%% BOX PLOTS
+
+figure()
+boxplot(Mod1_MAT)
+set(gca, 'XTick', x, ...
+         'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+         'FontSize', 16);
+title('Module 1 Expression','FontSize',20)
+ylim([0 1])
+
+figure()
+boxplot(Mod2_MAT)
+set(gca, 'XTick', x, ...
+         'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+         'FontSize', 16);
+title('Module 2 Expression','FontSize',20)
+ylim([0 1])
+
+figure()
+boxplot(Mod3_MAT)
+set(gca, 'XTick', x, ...
+         'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+         'FontSize', 16);
+title('Module 3 Expression','FontSize',20)
+ylim([0 1])
+
+figure()
+boxplot(Mod4_MAT)
+set(gca, 'XTick', x, ...
+         'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+         'FontSize', 16);
+title('Module 4 Expression','FontSize',20)
+ylim([0 1])

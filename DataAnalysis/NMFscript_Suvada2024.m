@@ -230,7 +230,7 @@ ylabel('Contribution to Module 4','FontSize',16)
 
 %Time Component Per Module- box plots
 subplot(3,2,2)
-plot(nmf(3).C(1,:),'Linewidth',2)
+plot(nmf(4).C(1,:),'Linewidth',2)
 xlabel('Trials','FontSize',16)
 ylabel('Contribution to Module 1','FontSize',16)
 subplot(3,2,4)
