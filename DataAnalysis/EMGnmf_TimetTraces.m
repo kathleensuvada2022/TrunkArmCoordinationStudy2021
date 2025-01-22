@@ -23,7 +23,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 % Trial by Trial               
  
 
-SelectedCond = Cond6; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+SelectedCond = Cond3; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -32,7 +32,7 @@ NumTrials = length(SelectedCond);
 for k = 1:NumTrials
 
     
-Cond6(k).trialname
+Cond3(k).trialname
 
 % if strcmp(Cond6(k).trialname,'/trial45.mat')
 % 
@@ -53,7 +53,7 @@ maxEMG = NNMFstruc(1).emgMaxes;
 %Max vel index
 maxvel = max(vel(idxmetriastart:idxmetriaend,1));
 ans=find(vel==maxvel);
-Cond6(k).MaxVel = maxvel;
+Cond3(k).MaxVel = maxvel;
 idxmetriamaxvel =ans;
 % 
 
@@ -177,7 +177,7 @@ plot(x_all(:, idxmetriaend), y_all(:, idxmetriaend), 'ro', 'MarkerSize', 10);
 axis equal
 %% 
 
-
+% pause
 % TRUNK
 
 figure(4)
@@ -392,8 +392,8 @@ xlabel('F (Hz)');
 ylabel('PSD');
 title(emgchan(idx2(4)))
 
-%   pause
-close all
+   pause
+% close all
 
 % Saving APA and ACC Phase DATA Dec 2024/Jan 2025 For given trial 
 APAEMGvalues = meanEMG(round(APAidx_EMG), :);
@@ -403,10 +403,10 @@ APAEMG_table = table(muscle_labels', APAEMGvalues', 'VariableNames', {'Muscle', 
 ACCEMG_table = table(muscle_labels', ACCEMGvalues', 'VariableNames', {'Muscle', 'ACCEMGvalues'});
 
 
-Cond6(k).APAvals = APAEMG_table;
-Cond6(k).ACCvals = ACCEMG_table;
+Cond3(k).APAvals = APAEMG_table;
+Cond3(k).ACCvals = ACCEMG_table;
 
- 
+  
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -579,7 +579,7 @@ line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)]
 
 title(emgchan(idx1(8)),'Fontsize',18)
 % ylim([0 1])
-
+% pause
 
 
 %% PSDs - Arm 
@@ -642,7 +642,7 @@ ylabel('PSD');
 title(emgchan(idx1(8)),'Fontsize',18)
 
 
-% pause
+pause
 close all
 
 
