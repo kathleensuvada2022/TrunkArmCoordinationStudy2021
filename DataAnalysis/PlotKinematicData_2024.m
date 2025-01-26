@@ -24,9 +24,11 @@
 %- avgemg_start: average EMG at the start of the reach. (check this)
 
 
-% K.SUVADA 2020-2024
-%      function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
-     function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
+% K.SUVADA 2020-2025
+    %  function NNMFstruc = PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+
+    function  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag)
+     % function  NNMFstruc =  PlotKinematicData_2024(partid,hand,metriafname,act3dfname,expcond,flag,NNMFstruc)
 % File path and loading setupfile
 
 %For Mac
@@ -117,8 +119,9 @@ for i=1: length(mtrials)
 
         %    for mac
 
-        % For continuous loading of data - Oct 2023/Winter 2024/Summer 2024
-%    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+        % For continuous loading of data - 2023.2024.2025
+   
+    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -126,11 +129,19 @@ for i=1: length(mtrials)
         %                load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_VEL.mat')
 
 
-       %**** USE BELOW
-%   load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
-%             load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+       %**** USE BELOW - 2025
+  %load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2025.mat')
 
-%                          load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
+ % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_P_2025.mat')
+   %load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NP_2025.mat')
+
+
+% 2024
+
+%  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_Paretic_2024.mat')
+           %  load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2024.mat')
+
+%                         load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NonParetic_2024.mat')
 
         % for pc
         %        load('C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\AllData_Stroke_Paretic.mat')
@@ -4177,7 +4188,7 @@ maxreach =RD_2024;
 %    maxhandexcrsn = sqrt((xhand(idx(3),1)-xhand(idx(1),1))^2 +(xhand(idx(3),2)-xhand(idx(1),2))^2+(xhand(idx(3),3)-xhand(idx(1),3))^2);
 
     % In Plane of Arm (HUMERAL CS) YZ
-%     maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2)
+    maxhandexcrsn = sqrt((xhand_Hum(idx(3),2)-xhand_Hum(idx(1),2))^2+(xhand_Hum(idx(3),3)-xhand_Hum(idx(1),3))^2)
 
 
     %% Compute shoulder and trunk displacement at maximum reach in GCS
@@ -4225,19 +4236,19 @@ maxreach =RD_2024;
 %    sh_exc =  sqrt((gh_end(idx(3),1)-gh_start(idx(1),1))^2 +(gh_end(idx(3),2)-gh_start(idx(1),2))^2+(gh_end(idx(3),3)-gh_start(idx(1),3))^2);
 
    % Z Shoulder Excursion
-%     sh_Z_ex = gh_end(idx(3),3)-gh_start(idx(1),3); %only Z component
+    sh_Z_ex = gh_end(3)-gh_start(3); %only Z component
     
     % Trunk Ang Disp : based on ComputeEulerAngles - flexion extension
     %TrunkAng_GCS_Disp = TrunkAng_GCS(idx(3),1)-TrunkAng_GCS(idx(1),1);
    
 
     %% Trunk, Shoulder, Hand Excursion,  reaching distance, and elbow angle for the current trial
-%     maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
+    maxhandexcrsn_current_trial(i) = maxhandexcrsn; %hand excursion defined as difference between hand at every point and inital shoudler position
 %     
     maxreach_current_trial(i) =maxreach; % reaching distance in mm difference hand and shoudler
 %     
     shex_current_trial(i) = sh_exc;
-% %     sh_Z_ex_current_trial(i) = sh_Z_ex;
+     sh_Z_ex_current_trial(i) = sh_Z_ex;
 %     
     trex_current_trial(i) = trunk_exc;
 
@@ -4254,37 +4265,40 @@ maxreach =RD_2024;
     
    [meanEMG, emg_idxstart, emg_idxvel,emg_idx_distmax,emg_idx_ppa,temg]  =  PlotEMGsCleanV2(emg,timestart,timevelmax,timedistmax,vel_2024,dist,t2,i);
 
-   if expcond ==1 && i ==1
-       NNMFstruc = struct();
-   end
+   %%  NNMF Code for Saving Timepoints into Structure for Further Processing Jan 2025. 
 
-   runninglengthnmfstruc= length(NNMFstruc);
-    
-   struct_idx = 1+runninglengthnmfstruc;
+%    if expcond ==1 && i ==1
+%        NNMFstruc = struct();
+%    end
+% 
+%    runninglengthnmfstruc= length(NNMFstruc);
+%     
+%    struct_idx = 1+runninglengthnmfstruc;
+% 
+%     NNMFstruc(struct_idx).emgRAW =emgraw;% raw emg
+%    
+% %     NNMFstruc(struct_idx).emgTraceMAF = meanEMG;%mean EMG
+%      NNMFstruc(struct_idx).TimestartTimeEnd= [idx(1)/100 idx(3)/100]; % idx(1): start idx(2): max vel idx(3): end
+% 
+% %     NNMFstruc(struct_idx).startidx_EMG = emg_idxstart; % start index for EMG
+% %     NNMFstruc(struct_idx).endidx_EMG = emg_idx_distmax; % end index for EMG
+% %     NNMFstruc(struct_idx).ppaidx_EMG = emg_idx_ppa; % PPA index for EMG
+% %     NNMFstruc(struct_idx).velidx_EMG = emg_idxvel; % max vel index for EMG
+%     NNMFstruc(struct_idx).emgtimevec= temg; % idx(1): start idx(2): max vel idx(3): end
+%     NNMFstruc(struct_idx).emgMaxes= maxEMG; % Max EMGS
+%     NNMFstruc(struct_idx).idx_metriastart= idx(1); % idx(1): start idx(2): max vel idx(3): end
+%     NNMFstruc(struct_idx).idx_metriaend= idx(3);
+%     NNMFstruc(struct_idx).tmet= t2; 
+% 
+%     NNMFstruc(struct_idx).vel = vel_2024;% vel from metria
+%     NNMFstruc(struct_idx).dist = dist;% dist from metria
+%     NNMFstruc(struct_idx).xyzmet = xhand;% xyz from metria
+%     NNMFstruc(struct_idx).trialname = mfname; %filename
+%     NNMFstruc(struct_idx).cond = expcond; % condition
+%     NNMFstruc(struct_idx).ID= partid; % participant 
 
-    NNMFstruc(struct_idx).emgRAW =emgraw;% raw emg
-   
-%     NNMFstruc(struct_idx).emgTraceMAF = meanEMG;%mean EMG
-     NNMFstruc(struct_idx).TimestartTimeEnd= [idx(1)/100 idx(3)/100]; % idx(1): start idx(2): max vel idx(3): end
-
-%     NNMFstruc(struct_idx).startidx_EMG = emg_idxstart; % start index for EMG
-%     NNMFstruc(struct_idx).endidx_EMG = emg_idx_distmax; % end index for EMG
-%     NNMFstruc(struct_idx).ppaidx_EMG = emg_idx_ppa; % PPA index for EMG
-%     NNMFstruc(struct_idx).velidx_EMG = emg_idxvel; % max vel index for EMG
-    NNMFstruc(struct_idx).emgtimevec= temg; % idx(1): start idx(2): max vel idx(3): end
-    NNMFstruc(struct_idx).emgMaxes= maxEMG; % Max EMGS
-    NNMFstruc(struct_idx).idx_metriastart= idx(1); % idx(1): start idx(2): max vel idx(3): end
-    NNMFstruc(struct_idx).idx_metriaend= idx(3);
-    NNMFstruc(struct_idx).tmet= t2; 
-
-    NNMFstruc(struct_idx).vel = vel_2024;% vel from metria
-    NNMFstruc(struct_idx).dist = dist;% dist from metria
-    NNMFstruc(struct_idx).xyzmet = xhand;% xyz from metria
-    NNMFstruc(struct_idx).trialname = mfname; %filename
-    NNMFstruc(struct_idx).cond = expcond; % condition
-    NNMFstruc(struct_idx).ID= partid; % participant 
-
-   
+%%
+  %%%%% 
  %  pause
 
 
@@ -5337,9 +5351,9 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 %
 %%  If Participant already exists in Matrix
 %  
-%     trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
-%     Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
-%     FinalRow = trialrow(Currentrow);
+    trialrow =   find(strcmp(DataMatrix(:,3),mfname)); %Finding File name
+    Currentrow =  find(strcmp(DataMatrix(trialrow,1),partid)); %Finding Participant with that filename
+    FinalRow = trialrow(Currentrow);
 
 % Angles
 %     DataMatrix{FinalRow,22} = ScapAng_prtract_current_trial(i);
@@ -5356,13 +5370,13 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % 
 
 %    Check for making sure the conditions align from the loaded Matrix
-%     if DataMatrix{FinalRow,2} == expcond
-%         DataMatrix{FinalRow,2} = expcond;
-% 
-%     else
-%         'Mismatched EXP COND! '
-%         pause
-%     end
+    if DataMatrix{FinalRow,2} == expcond
+        DataMatrix{FinalRow,2} = expcond;
+
+    else
+        'Mismatched EXP COND! '
+        pause
+    end
 
 
 
@@ -5421,16 +5435,16 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
-%     DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
-%     DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
-%     DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,10} = shex_current_trial(i);
-%     DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
-%     DataMatrix{FinalRow,8} =  trex_current_trial(i);
-% %     DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
-% %     DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
-%     DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
-%     DataMatrix{FinalRow,4} = maxreach_current_trial(i);
+    DataMatrix{FinalRow,13} = sh_Z_ex_current_trial(i)/armlength*100; %Shoulder Z component excursion - Norm to LL
+    DataMatrix{FinalRow,12} = sh_Z_ex_current_trial(i); %Shoulder Z component excursion - Raw in MM
+    DataMatrix{FinalRow,11} = shex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,10} = shex_current_trial(i);
+    DataMatrix{FinalRow,9} = trex_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,8} =  trex_current_trial(i);
+    DataMatrix{FinalRow,7}= maxhandexcrsn_current_trial(i)/armlength*100;
+    DataMatrix{FinalRow,6} = maxhandexcrsn_current_trial(i);
+    DataMatrix{FinalRow,5} = maxreach_current_trial(i)/armlength*100 ;
+    DataMatrix{FinalRow,4} = maxreach_current_trial(i);
    
 
 %         pause
@@ -6125,7 +6139,7 @@ ElbAng_STD_PerBin = y_std_per_bin;
 %% Saving Full Data Matrix to Current Filepath
 %   DataMatrix = AllData;
 
- %save FullDataMatrix.mat DataMatrix
+ save FullDataMatrix.mat DataMatrix
 
 
 
