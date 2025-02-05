@@ -469,7 +469,7 @@ Mod4_MAT = horzcat(arrays_Mod4{:}); % N trials x 6 conditions
 
 % Amend each array to match the maximum length by appending NaNs
 for i = 1:length(arrays_Mod5)
-    arrays_Mod5{i}(end+1:maxLength_mod5, 1) = NaN; % Append NaNs to match maxLength
+    arrays_Mod4{i}(end+1:maxLength_mod5, 1) = NaN; % Append NaNs to match maxLength
 end
 
 Mod5_MAT = horzcat(arrays_Mod5{:}); % N trials x 6 conditions
