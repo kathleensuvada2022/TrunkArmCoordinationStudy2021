@@ -26,7 +26,8 @@ MAT_APA = result';
 
 %muscnames= {'CLES','ILES','CLRA','ILRA','CLEO', 'ILEO','CLIO','ILIO'};
 
-muscnames= {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% muscnames= {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+muscnames = {'ILES',	'CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT',	'MT',	'LD',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 
 % Grabbing just EMG values to input into NNMF

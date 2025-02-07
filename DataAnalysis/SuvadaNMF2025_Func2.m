@@ -26,9 +26,8 @@ result = data2([true; matchingRows], :);
 
 MAT_APA = result';
 
-%muscnames= {'CLES','ILES','CLRA','ILRA','CLEO', 'ILEO','CLIO','ILIO'};
+muscnames = {'ILES','CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT','MT','LD','PM','BIC','TRI','IDEL'};
 
-musnames= {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 
 
 % Grabbing just EMG values to input into NNMF
@@ -239,7 +238,7 @@ end
 %% Plotting Mass Figure 
 
 x = 1:length(musnames);
-Mus = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+Mus= {'ILES',	'CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT',	'MT',	'LD',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 figure;
 
