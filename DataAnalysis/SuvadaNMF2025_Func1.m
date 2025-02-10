@@ -1,8 +1,8 @@
-% desiredpart = 'RTIS2011';
-% desiredhand = 'P';
-% filename = 'TRUNKANDARM_APA.xlsx'
-% selectedrowsmat = [10:24]
-% musnames = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% desiredpart = 'RTIS1003';
+% desiredhand = 'C';
+% filename = 'TrunkandArmAPA.xlsx'
+% selectedrowsmat = [10:23]
+% musnames = {'CLES',	'ILES',	'CLRA',	'ILRA',	'CLEO',	'ILEO',	'CLIO',	'ILIO',	'UT',	'MT',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 
 % Function to Run NMF Analysis and to choose number of synergies. 
@@ -15,7 +15,7 @@
 function nmf = SuvadaNMF2025_Func1(desiredpart,desiredhand,filename,selectedrowsmat,musnames)
 
 
-data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/FinalExcelSheets_CLEANEDANDCUT/' filename]);
+data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
 matchingRows = strcmp(data2(2:end, 1),desiredpart) &  strcmp(data2(2:end, 4),desiredhand);
 
@@ -23,11 +23,6 @@ matchingRows = strcmp(data2(2:end, 1),desiredpart) &  strcmp(data2(2:end, 4),des
 result = data2([true; matchingRows], :);
 
 MAT_APA = result';
-
-%muscnames= {'CLES','ILES','CLRA','ILRA','CLEO', 'ILEO','CLIO','ILIO'};
-
-% muscnames= {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-muscnames = {'ILES',	'CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT',	'MT',	'LD',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 
 % Grabbing just EMG values to input into NNMF
@@ -72,7 +67,7 @@ end
 
 errorbar(1:nmus,mean(VAFmus),std(VAFmus),'Color', '#dd1c77','LineWidth',3)
 hold on
-errorbar(1:nmus, mean(VAFmus), std(VAFmus), 'o', 'Color', '#c994c7' , 'LineWidth', 2.5, 'MarkerSize', 8); % Dark green color, thicker line
+ errorbar(1:nmus, mean(VAFmus), std(VAFmus), 'o', 'Color', '#c994c7' , 'LineWidth', 2.5, 'MarkerSize', 8); % Dark green color, thicker line
 ax = gca; % Get current axes
 ax.FontSize = 35; % Set axes font size to 20
 ylabel('Mean % VAF and Error per Muscle', 'FontSize', 35); 

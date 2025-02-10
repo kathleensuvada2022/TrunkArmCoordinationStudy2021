@@ -1,11 +1,4 @@
-% desiredpart = 'RTIS1003';
-% desiredhand = 'C';
-% filename = 'TRUNKANDARM_APA.xlsx'
-% selectedrowsmat = [10:24]
-% musnames = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-% nmf- load in output matrix of SuvadaNMF2025_Func1: DO NOT RERUN THIS bc
-% recall it yields different results each time 
-% mmods = 5 % chosen number of modules
+
 
 
 % Function to visualize results of NMF once set desired number of synergies
@@ -17,7 +10,7 @@
 function  SuvadaNMF2025_Func2(desiredpart,desiredhand,filename,selectedrowsmat,musnames,nmf,mmods,partid,arm)
 
 
-data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/FinalExcelSheets_CLEANEDANDCUT/' filename]);
+data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
 matchingRows = strcmp(data2(2:end, 1),desiredpart) &  strcmp(data2(2:end, 4),desiredhand);
 
@@ -25,8 +18,6 @@ matchingRows = strcmp(data2(2:end, 1),desiredpart) &  strcmp(data2(2:end, 4),des
 result = data2([true; matchingRows], :);
 
 MAT_APA = result';
-
-muscnames = {'ILES','CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT','MT','LD','PM','BIC','TRI','IDEL'};
 
 
 
@@ -238,7 +229,7 @@ end
 %% Plotting Mass Figure 
 
 x = 1:length(musnames);
-Mus= {'ILES',	'CLES',	'ILRA',	'CLRA',	'ILEO',	'CLEO',	'ILIO',	'CLIO',	'UT',	'MT',	'LD',	'PM',	'BIC',	'TRI',	'IDEL'};
+Mus  = {'CLES',	'ILES',	'CLRA',	'ILRA',	'CLEO',	'ILEO',	'CLIO',	'ILIO',	'UT',	'MT',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 figure;
 
@@ -268,10 +259,10 @@ for i = 1:rows
         if i == 1
             if j ==1
                 bar(nmf(mmods).W(:,1))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
              %   title('RTIS 1003 Module 1 (W)','FontSize',20)
-            title([partid '/' arm '/' 'Module 1 (W)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 1 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod1_MAT)
@@ -279,7 +270,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 1 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 1 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -287,9 +278,9 @@ for i = 1:rows
         if i ==2
             if j ==1
                 bar(nmf(mmods).W(:,2))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-                title('RTIS 1003  Module 2 (W)','FontSize',20)
+            title([partid '/' arm '/' 'Module 2 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod2_MAT)
@@ -297,7 +288,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 2 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 2 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -305,9 +296,9 @@ for i = 1:rows
         if i ==3
             if j ==1
                 bar(nmf(mmods).W(:,3))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 3 (W)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 3 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod3_MAT)
@@ -315,7 +306,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 3 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 3 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -324,9 +315,9 @@ for i = 1:rows
         if i ==4
             if j ==1
                 bar(nmf(mmods).W(:,4))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-               title([partid '/' arm '/' 'Module 4 (W)'], 'FontSize', 20)
+               title([partid '/' arm '/' 'Module 4 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod4_MAT)
@@ -334,7 +325,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 4 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 4 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -342,9 +333,9 @@ for i = 1:rows
         if i ==5
             if j ==1
                 bar(nmf(mmods).W(:,5))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 5 (W)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 5 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod5_MAT)
@@ -352,7 +343,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 5 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 5 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -360,9 +351,9 @@ for i = 1:rows
         if i ==6
             if j ==1
                 bar(nmf(mmods).W(:,6))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 6 (W)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 6 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod6_MAT)
@@ -370,7 +361,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 6 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 6 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
@@ -378,9 +369,9 @@ for i = 1:rows
         if i ==7
             if j ==1
                 bar(nmf(mmods).W(:,7))
-                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 16);
+                set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 7 (W)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 7 (W)'], 'FontSize', 12)
 
             else
                 boxplot(Mod7_MAT)
@@ -388,7 +379,7 @@ for i = 1:rows
                     'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
-            title([partid '/' arm '/' 'Module 7 (C)'], 'FontSize', 20)
+            title([partid '/' arm '/' 'Module 7 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
         end
