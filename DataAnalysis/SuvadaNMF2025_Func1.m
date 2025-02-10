@@ -1,7 +1,7 @@
-% desiredpart = 'RTIS1003';
-% desiredhand = 'C';
+% desiredpart = 'RTIS2001';
+% desiredhand = 'NP';
 % filename = 'TrunkandArmAPA.xlsx'
-% selectedrowsmat = [10:23]
+% selectedrowsmat = [10:15 17:23]
 % musnames = {'CLES',	'ILES',	'CLRA',	'ILRA',	'CLEO',	'ILEO',	'CLIO',	'ILIO',	'UT',	'MT',	'PM',	'BIC',	'TRI',	'IDEL'};
 
 
@@ -99,7 +99,7 @@ for mm=1:nmus
 %         pause
 
     end
-legend('Original', numStrings = arrayfun(@num2str, 1:nmus, 'UniformOutput', false))
+legend('Original Data', '1', '2', '3', '4', '5','6','7','8','9','10','11','12','13','14','15')
 
 
 end
