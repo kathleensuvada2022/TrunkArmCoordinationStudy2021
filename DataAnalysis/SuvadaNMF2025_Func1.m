@@ -1,9 +1,8 @@
-% desiredpart = 'RTIS2001';
-% desiredhand = 'NP';
+% desiredpart = 'RTIS1006';
+% desiredhand = 'C';
 % filename = 'TrunkandArmAPA.xlsx'
-% selectedrowsmat = [10:15 17:23]
-% musnames = {'CLES',	'ILES',	'CLRA',	'ILRA',	'CLEO',	'ILEO',	'CLIO',	'ILIO',	'UT',	'MT',	'PM',	'BIC',	'TRI',	'IDEL'};
-
+% selectedrowsmat = [10:23]
+% musnames = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 
 % Function to Run NMF Analysis and to choose number of synergies. 
 % Use SuvadaNMF2025_Func2 for analysis post choosing num syns
