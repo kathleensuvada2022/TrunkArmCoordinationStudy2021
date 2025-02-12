@@ -1,8 +1,40 @@
 % desiredpart = 'RTIS1006';
 % desiredhand = 'C';
 % filename = 'TrunkandArmAPA.xlsx'
-% selectedrowsmat = [10:23]
+% selectedrowsmat = [10:24]
 % musnames = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+
+% musnames2001_NP = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2001_P;
+
+%  musnames2003_NP = {'CLES','CLRA','ILRA','CLEO','ILEO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2003_NP;
+
+%  musnames2006_NP = {'ILES','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2006_NP;
+
+%  musnames2001_P = {'CLES','CLRA','ILRA','CLEO','ILEO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2001_P;
+
+% musnames2002_P = {'ILES','CLRA','ILRA','CLEO','ILEO','CLIO','UT','PM','BIC','TRI','IDEL'};
+% musnames=musnames2002_P;
+
+
+ %musnames2003_P =  {'ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2003_P;
+
+ %musnames2006_P =  {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2006_P;
+
+ %musnames2007_P =  {'CLES','CLRA','ILRA','CLEO','ILEO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2007_P;
+
+ %musnames2008_P = {'CLES','CLRA','ILRA','CLEO','ILEO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2008_P;
+
+
+% musnames2009_P =  {'CLES','ILES','CLRA','ILRA','CLEO','UT','MT','LD','PM','BIC','TRI','IDEL'};
+% musnames=musnames2009_P;
 
 % Function to Run NMF Analysis and to choose number of synergies. 
 % Use SuvadaNMF2025_Func2 for analysis post choosing num syns
@@ -86,7 +118,7 @@ for mm=1:nmus
     for ss=1:nmus
 
 
-        if ss == 4 % For chosen num of synergies
+        if ss == 3 % For chosen num of synergies
             plot(nmf(ss).RECON(mm, :), 'r', 'LineWidth', 3, 'LineStyle', '--');
         else
             plot(nmf(ss).RECON(mm,:),'Linewidth',1)
