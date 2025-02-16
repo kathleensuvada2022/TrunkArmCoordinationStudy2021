@@ -56,29 +56,29 @@ function [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_le
 %datafilepath = ['C:\Users\kcs762\OneDrive - Northwestern University\TACS\Data\','\',partid,'\',hand];
 % %%
 %For MAC
-datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
-load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
-baselinedata_full = data; 
-baseline_mat1 = data(:,1:256);
-baseline_mat2 = data(:,257:end); % Mat on seat  
-baseline_t = t;
-
-nframes = length(baseline_t);
-
-Pressuremat2_frame= zeros(16,16,nframes);
-Pressuremat1_frame= zeros(16,16,nframes);
-
-
-%Reshaping and populating matrix to correspond to layout of the mat 
-for i=1:nframes
-Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); 
-Pressuremat1_frame(:,:,i) =flipud(reshape(baseline_mat1(i,:),[16,16])'); 
-
-end
-
-% Averaging the baseline file across all frames
-Pressuremat2_Baseline_Final = mean(Pressuremat2_frame,3); % Plot this later with the COP
-Pressuremat1_Baseline_Final = mean(Pressuremat1_frame,3);
+ datafilepath = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data','/',partid,'/',hand];
+ load(fullfile(datafilepath, 'pps_baseline.mat')); %load setup file
+ baselinedata_full = data; 
+% baseline_mat1 = data(:,1:256);
+% baseline_mat2 = data(:,257:end); % Mat on seat  
+% baseline_t = t;
+% 
+% nframes = length(baseline_t);
+% 
+% Pressuremat2_frame= zeros(16,16,nframes);
+% Pressuremat1_frame= zeros(16,16,nframes);
+% 
+% 
+% %Reshaping and populating matrix to correspond to layout of the mat 
+% for i=1:nframes
+% Pressuremat2_frame(:,:,i) =flipud(reshape(baseline_mat2(i,:),[16,16])'); 
+% Pressuremat1_frame(:,:,i) =flipud(reshape(baseline_mat1(i,:),[16,16])'); 
+% 
+% end
+% 
+% % Averaging the baseline file across all frames
+% Pressuremat2_Baseline_Final = mean(Pressuremat2_frame,3); % Plot this later with the COP
+% Pressuremat1_Baseline_Final = mean(Pressuremat1_frame,3);
 
 
 %
@@ -251,24 +251,24 @@ pps_mat2_FINAL_1 = pps_mat2 - mean(pps_mat2(1:5,:));
 pps_mat2_FINAL = pps_mat2_FINAL_1 + 5; % For COP all Positive Values 
 
 %% Plotting Cleaned Up Data 
-figure()
-subplot(2,1,1)
-plot(pps_mat1_FINAL)
-hold on
-ylabel('PSI','FontSize',16)
-xlabel('Samples','FontSize',16)
-xline(start_samp_M1,'g','LineWidth',2)
-xline(end_samp_M1,'r','LineWidth',2)
-title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
-
-subplot(2,1,2)
-plot(pps_mat2_FINAL)
-hold on
-ylabel('PSI','FontSize',16)
-xlabel('Samples','FontSize',16)
-xline(start_samp_M2,'g','LineWidth',2)
-xline(end_samp_M2,'r','LineWidth',2)
-title('Mat 2 (Seat): TRIAL DATA FINAL','FontSize',20)
+% figure()
+% subplot(2,1,1)
+% plot(pps_mat1_FINAL)
+% hold on
+% ylabel('PSI','FontSize',16)
+% xlabel('Samples','FontSize',16)
+% xline(start_samp_M1,'g','LineWidth',2)
+% xline(end_samp_M1,'r','LineWidth',2)
+% title('Mat 1(Back): TRIAL DATA FINAL','FontSize',20)
+% 
+% subplot(2,1,2)
+% plot(pps_mat2_FINAL)
+% hold on
+% ylabel('PSI','FontSize',16)
+% xlabel('Samples','FontSize',16)
+% xline(start_samp_M2,'g','LineWidth',2)
+% xline(end_samp_M2,'r','LineWidth',2)
+% title('Mat 2 (Seat): TRIAL DATA FINAL','FontSize',20)
 
 % pause
 
@@ -421,42 +421,42 @@ end
 
 % Mat 1 - on back of chair - all 3 COPS: whole and for each half of the mat
 % 
-figure()
-plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'k','LineWidth',2);
-hold on
-plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'b','LineWidth',2);
-plot(CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'m','LineWidth',2);
-plot(CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','MarkerSize',30,'Color','b');
-plot(CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_Whole(end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
-plot(CoP_Mat1_LeftHalf(start_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1,2),'*','Color','g');
-plot(CoP_Mat1_LeftHalf(end_samp_M1,1),CoP_Mat1_LeftHalf( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-legend('Whole','Left','Right','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 1 (Whole,Left,Right) ','FontSize',20)
-
-% Mat 2 - on Seat
-figure()
-plot(CoP_Mat2_Whole(start_samp_M2: end_samp_M2,1),CoP_Mat2_Whole(start_samp_M2: end_samp_M2,2),'k','LineWidth',2);
-hold on
-plot(CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,2),'b','LineWidth',2);
-plot(CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,2),'m','LineWidth',2);
-plot(CoP_Mat2_RightHalf(start_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2,2),'*','Color','g');
-plot(CoP_Mat2_RightHalf(end_samp_M2,1),CoP_Mat2_RightHalf(end_samp_M2,2),'*','Color','r');
-plot(CoP_Mat2_LeftHalf(start_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2,2),'*','Color','g');
-plot(CoP_Mat2_LeftHalf(end_samp_M2,1),CoP_Mat2_LeftHalf(end_samp_M2,2),'*','Color','r');
-plot(CoP_Mat2_Whole(start_samp_M2,1),CoP_Mat2_Whole(start_samp_M2,2),'*','Color','g');
-plot(CoP_Mat2_Whole(end_samp_M2,1),CoP_Mat2_Whole(end_samp_M2,2),'*','Color','r');
-xlabel('Postion in X','FontSize',16)
-ylabel('Position in Y','FontSize',16)
-xlim([0 16])
-ylim([0 16])
-title('Mat 2 (Whole,Left,Right)','FontSize',20)
-legend('Whole','Left','Right','FontSize',16)
+% figure()
+% plot(CoP_Mat1_Whole(start_samp_M1: end_samp_M1,1),CoP_Mat1_Whole(start_samp_M1: end_samp_M1,2),'k','LineWidth',2);
+% hold on
+% plot(CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1: end_samp_M1,2),'b','LineWidth',2);
+% plot(CoP_Mat1_RightHalf(st  art_samp_M1: end_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1: end_samp_M1,2),'m','LineWidth',2);
+% plot(CoP_Mat1_RightHalf(start_samp_M1,1),CoP_Mat1_RightHalf(start_samp_M1,2),'*','Color','g');
+% plot(CoP_Mat1_RightHalf(end_samp_M1,1),CoP_Mat1_RightHalf(end_samp_M1,2),'*','MarkerSize',30,'Color','b');
+% plot(CoP_Mat1_Whole(start_samp_M1,1),CoP_Mat1_Whole(start_samp_M1,2),'*','Color','g');
+% plot(CoP_Mat1_Whole(end_samp_M1,1),CoP_Mat1_Whole( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
+% plot(CoP_Mat1_LeftHalf(start_samp_M1,1),CoP_Mat1_LeftHalf(start_samp_M1,2),'*','Color','g');
+% plot(CoP_Mat1_LeftHalf(end_samp_M1,1),CoP_Mat1_LeftHalf( end_samp_M1,2),'*','MarkerSize',30,'Color','b');
+% xlabel('Postion in X','FontSize',16)
+% ylabel('Position in Y','FontSize',16)
+% legend('Whole','Left','Right','FontSize',16)
+% xlim([0 16])
+% ylim([0 16])
+% title('Mat 1 (Whole,Left,Right) ','FontSize',20)
+% 
+% % Mat 2 - on Seat
+% figure()
+% plot(CoP_Mat2_Whole(start_samp_M2: end_samp_M2,1),CoP_Mat2_Whole(start_samp_M2: end_samp_M2,2),'k','LineWidth',2);
+% hold on
+% plot(CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2: end_samp_M2,2),'b','LineWidth',2);
+% plot(CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2: end_samp_M2,2),'m','LineWidth',2);
+% plot(CoP_Mat2_RightHalf(start_samp_M2,1),CoP_Mat2_RightHalf(start_samp_M2,2),'*','Color','g');
+% plot(CoP_Mat2_RightHalf(end_samp_M2,1),CoP_Mat2_RightHalf(end_samp_M2,2),'*','Color','r');
+% plot(CoP_Mat2_LeftHalf(start_samp_M2,1),CoP_Mat2_LeftHalf(start_samp_M2,2),'*','Color','g');
+% plot(CoP_Mat2_LeftHalf(end_samp_M2,1),CoP_Mat2_LeftHalf(end_samp_M2,2),'*','Color','r');
+% plot(CoP_Mat2_Whole(start_samp_M2,1),CoP_Mat2_Whole(start_samp_M2,2),'*','Color','g');
+% plot(CoP_Mat2_Whole(end_samp_M2,1),CoP_Mat2_Whole(end_samp_M2,2),'*','Color','r');
+% xlabel('Postion in X','FontSize',16)
+% ylabel('Position in Y','FontSize',16)
+% xlim([0 16])
+% ylim([0 16])
+% title('Mat 2 (Whole,Left,Right)','FontSize',20)
+% legend('Whole','Left','Right','FontSize',16)
 
 % pause
 

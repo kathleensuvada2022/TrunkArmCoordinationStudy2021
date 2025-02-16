@@ -121,7 +121,7 @@ for i=1: length(mtrials)
 
         % For continuous loading of data - 2023.2024.2025
    
-    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+           load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -130,10 +130,10 @@ for i=1: length(mtrials)
 
 
        %**** USE BELOW - 2025
-  %load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2025.mat')
+%    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2025.mat')
 
- % load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_P_2025.mat')
-   %load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NP_2025.mat')
+%    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_P_2025.mat')
+%       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NP_2025.mat')
 
 
 % 2024
@@ -5293,7 +5293,7 @@ maxreach =RD_2024;
     
     close all
 
-%     [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
+   [DeltaCOP_right_Mat1,DeltaCOP_left_Mat1,DeltaCOP_right_Mat2,DeltaCOP_left_Mat2,DeltaCOPMat1_whole,DeltaCOPMat2_whole] = Process_PPS(ppsdata,tpps,t_start,t_end,hand,partid,i,mfname,expcond);
 
 %     pause
     
@@ -5301,14 +5301,14 @@ maxreach =RD_2024;
    % PPS Variables Initialization for Data Matrix 
 
  % Mat 1 
-%  DeltaCOP_right_Mat1_Trial(1,i) = DeltaCOP_right_Mat1;
-%  DeltaCOP_left_Mat1_Trial(1,i) = DeltaCOP_left_Mat1;
-%  DeltaCOPMat1_whole_Trial(1,i) = DeltaCOPMat1_whole;
-% 
-%  % Mat 2
-%  DeltaCOP_right_Mat2_Trial(1,i) = DeltaCOP_right_Mat2;
-%  DeltaCOP_left_Mat2_Trial(1,i) = DeltaCOP_left_Mat2;
-%  DeltaCOPMat2_whole_Trial(1,i) = DeltaCOPMat2_whole;
+ DeltaCOP_right_Mat1_Trial(1,i) = DeltaCOP_right_Mat1;
+ DeltaCOP_left_Mat1_Trial(1,i) = DeltaCOP_left_Mat1;
+ DeltaCOPMat1_whole_Trial(1,i) = DeltaCOPMat1_whole;
+
+ % Mat 2
+ DeltaCOP_right_Mat2_Trial(1,i) = DeltaCOP_right_Mat2;
+ DeltaCOP_left_Mat2_Trial(1,i) = DeltaCOP_left_Mat2;
+ DeltaCOPMat2_whole_Trial(1,i) = DeltaCOPMat2_whole;
 
 %% July 2023- Saving Shoudler Flexion/Extension and Elbow Flexion/Extension Per Trial ACROSS TIME
 
@@ -5414,24 +5414,24 @@ Hum_Ang_T_current_trial(i,1:length(t)) = Hum_Ang_T(1,1:length(t));
 % Adding PPS MEASURES JULY 2024 
 
 % MAT 1 
-% DataMatrix{1,24} = 'DeltaCOP_right_Mat1';
-% DataMatrix{FinalRow,24} = DeltaCOP_right_Mat1_Trial(1,i);
-% 
-% DataMatrix{1,25} = 'DeltaCOP_left_Mat1'; 
-% DataMatrix{FinalRow,25} = DeltaCOP_left_Mat1_Trial(1,i);
-% 
-% DataMatrix{1,26} = 'DeltaCOPMat1_whole '; 
-% DataMatrix{FinalRow,26} = DeltaCOPMat1_whole_Trial(1,i);
-% 
-% % MAT 2
-% DataMatrix{1,27} = 'DeltaCOP_right_Mat2';
-% DataMatrix{FinalRow,27} = DeltaCOP_right_Mat2_Trial(1,i);
-% 
-% DataMatrix{1,28} = 'DeltaCOP_left_Mat2'; 
-% DataMatrix{FinalRow,28} = DeltaCOP_left_Mat2_Trial(1,i);
-% 
-% DataMatrix{1,29} = 'DeltaCOPMat2_whole'; 
-% DataMatrix{FinalRow,29} = DeltaCOPMat2_whole_Trial(1,i);
+DataMatrix{1,24} = 'DeltaCOP_right_Mat1';
+DataMatrix{FinalRow,24} = DeltaCOP_right_Mat1_Trial(1,i);
+
+DataMatrix{1,25} = 'DeltaCOP_left_Mat1'; 
+DataMatrix{FinalRow,25} = DeltaCOP_left_Mat1_Trial(1,i);
+
+DataMatrix{1,26} = 'DeltaCOPMat1_whole '; 
+DataMatrix{FinalRow,26} = DeltaCOPMat1_whole_Trial(1,i);
+
+% MAT 2
+DataMatrix{1,27} = 'DeltaCOP_right_Mat2';
+DataMatrix{FinalRow,27} = DeltaCOP_right_Mat2_Trial(1,i);
+
+DataMatrix{1,28} = 'DeltaCOP_left_Mat2'; 
+DataMatrix{FinalRow,28} = DeltaCOP_left_Mat2_Trial(1,i);
+
+DataMatrix{1,29} = 'DeltaCOPMat2_whole'; 
+DataMatrix{FinalRow,29} = DeltaCOPMat2_whole_Trial(1,i);
 
 
 %     DataMatrix{FinalRow,14} = Vel_Trial(1,i); % average velocity in mm/s for given trial
