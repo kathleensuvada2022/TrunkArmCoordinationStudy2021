@@ -65,6 +65,11 @@ AllData_2024$Loading = as.factor(AllData_2024$Loading)
 AllData_2024$ARM = as.factor(AllData_2024$ARM)
 AllData_2024$ID = as.factor(AllData_2024$ID)
 
+# For Velocity  2025
+Velocities_2025$Restraint = as.factor(Velocities_2025$Restraint)
+Velocities_2025$Loading = as.factor(Velocities_2025$LOADING)
+Velocities_2025$ARM = as.factor(Velocities_2025$ARM)
+Velocities_2025$ID = as.factor(Velocities_2025$PARTID)
 
 # Models
 
@@ -273,6 +278,9 @@ ModFinal_CURRENT_Trunk = glmmTMB(formula= TrunkExcursion ~ Loading * Restraint *
 # For Shoulder Excursion
 ModFinal_CURRENT_Shoulder = glmmTMB(formula= ShoulderExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
 
+# Velocity 2025
+ModFinal_CURRENT_Vel = glmmTMB(formula= MaxVel ~ Loading * Restraint * ARM + (1 |ID:ARM), data= Velocities_2025, family=gaussian(link = "identity"))
+
 
 # FINAL MODEL!!!! MAY 2024
 tab_model(ModFinal_CURRENT, show.df= TRUE)
@@ -283,6 +291,11 @@ summary(ModFinal_CURRENT_Trunk)
 
 tab_model(ModFinal_CURRENT_Shoulder, show.df= TRUE)
 summary(ModFinal_CURRENT_Shoulder)
+
+
+tab_model(ModFinal_CURRENT_Vel, show.df= TRUE)
+summary(ModFinal_CURRENT_Vel)
+
 
 
 
