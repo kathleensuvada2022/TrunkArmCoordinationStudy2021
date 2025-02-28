@@ -1,11 +1,11 @@
 % desiredpart = 'RTIS1006';
 % desiredhand = 'C';
-% filename = 'TrunkandArmAPA.xlsx'
+% filename = 'TRUNKANDARM_ACC.xlsx'
 % selectedrowsmat = [10:24]
 % musnames = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 
 % musnames2001_NP = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-% musnames=musnames2001_P;
+
 
 %  musnames2003_NP = {'CLES','CLRA','ILRA','CLEO','ILEO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
 % musnames=musnames2003_NP;
