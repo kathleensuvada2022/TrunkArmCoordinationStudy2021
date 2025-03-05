@@ -2,12 +2,12 @@
 
 
 % Function to visualize results of NMF once set desired number of synergies
-%
+% Combining acceleration and preparatory phases 
 % K. Suvada 2025. 
 
 
 %%
-function  SuvadaNMF2025_Func2(desiredpart,desiredhand,filename,nmf,mmods,partid,arm)
+function  SuvadaNMF2025_Func3(desiredpart,desiredhand,filename,nmf,mmods,partid,arm)
 
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
@@ -32,13 +32,13 @@ MissingRows = cell(1,15);
 musnames = cell(1,15);
 selectedrowsmat = cell(1,15);
 for p = 1:15
-  if  ismissing(NMFMAT{p+9,2}) ==1
-      MissingMus{1,p} = NMFMAT{p+9,1};
-      MissingRows{1,p} = p+9;
+  if  ismissing(NMFMAT{p+10,2}) ==1
+      MissingMus{1,p} = NMFMAT{p+10,1};
+      MissingRows{1,p} = p+10;
 
   else 
-      musnames{1,p} =  NMFMAT{p+9,1};
-      selectedrowsmat{1,p} = p+9;
+      musnames{1,p} =  NMFMAT{p+10,1};
+      selectedrowsmat{1,p} = p+10;
   end 
 end 
 
@@ -78,6 +78,39 @@ Cond4_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==4);
 Cond5_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==5);
 Cond6_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==6);
 
+%% Separating the Preparation Phase and the Acceleration Phase
+ Cond1_Prep_cols = find(strcmp(NMFMAT(8,Cond1_cols+1),'Prep'));
+ Cond1_Prep_cols = Cond1_cols(Cond1_Prep_cols);
+ Cond1_Acc_cols = find(strcmp(NMFMAT(8,Cond1_cols+1),'Acc'));
+ Cond1_Acc_cols = Cond1_cols(Cond1_Acc_cols); % indices shifted back one bc in C matrix no column for labels
+
+ Cond2_Prep_cols = strcmp(NMFMAT(8,Cond2_cols+1),'Prep');
+ Cond2_Prep_cols = Cond2_cols(Cond2_Prep_cols);
+ Cond2_Acc_cols = strcmp(NMFMAT(8,Cond2_cols+1),'Acc');
+ Cond2_Acc_cols = Cond2_cols(Cond2_Acc_cols);
+
+  
+ Cond3_Prep_cols = strcmp(NMFMAT(8,Cond3_cols+1),'Prep');
+ Cond3_Prep_cols = Cond3_cols(Cond3_Prep_cols);
+ Cond3_Acc_cols = strcmp(NMFMAT(8,Cond3_cols+1),'Acc');
+ Cond3_Acc_cols = Cond3_cols(Cond3_Acc_cols);
+
+  
+ Cond4_Prep_cols = strcmp(NMFMAT(8,Cond4_cols+1),'Prep');
+ Cond4_Prep_cols = Cond4_cols(Cond4_Prep_cols);
+ Cond4_Acc_cols = strcmp(NMFMAT(8,Cond4_cols+1),'Acc');
+ Cond4_Acc_cols = Cond4_cols(Cond4_Acc_cols);
+
+
+ Cond5_Prep_cols = strcmp(NMFMAT(8,Cond5_cols+1),'Prep');
+ Cond5_Prep_cols = Cond5_cols(Cond5_Prep_cols);
+ Cond5_Acc_cols = strcmp(NMFMAT(8,Cond5_cols+1),'Acc');
+ Cond5_Acc_cols = Cond5_cols(Cond5_Acc_cols);
+
+ Cond6_Prep_cols = strcmp(NMFMAT(8,Cond6_cols+1),'Prep');
+ Cond6_Prep_cols = Cond6_cols(Cond6_Prep_cols);
+ Cond6_Acc_cols = strcmp(NMFMAT(8,Cond6_cols+1),'Acc');
+ Cond6_Acc_cols = Cond6_cols(Cond6_Acc_cols);
 
 %% For Number of Modules go through and separate by condition
 
@@ -85,14 +118,38 @@ Cond6_cols = find(cell2mat(NMFMAT(CONDSLOC,2:end)) ==6);
 MChosenMods = mmods; % set this to desired number of modules
 
 for i = 1:MChosenMods
-    Mod_TR(1:length(Cond1_cols),i)= nmf(MChosenMods).C(i,Cond1_cols)'; % condition 1 expression (rows) across all m modules (columns)
-    Mod_25R(1:length(Cond2_cols),i) = nmf(MChosenMods).C(i,Cond2_cols)';
-    Mod_50R(1:length(Cond3_cols),i) = nmf(MChosenMods).C(i,Cond3_cols)';
 
-    Mod_TU(1:length(Cond4_cols),i)= nmf(MChosenMods).C(i,Cond4_cols)';
-    Mod_25U(1:length(Cond5_cols),i) = nmf(MChosenMods).C(i,Cond5_cols)';
-    Mod_50U(1:length(Cond6_cols),i) = nmf(MChosenMods).C(i,Cond6_cols)';
+  % For each condition (both prep and acceleration)
+
+  % Trunk Restrained Table
+  Mod_TR_Prep(1:length(Cond1_Prep_cols),i)= nmf(MChosenMods).C(i,Cond1_Prep_cols)';  % Prep Phase
+  Mod_TR_Acc(1:length(Cond1_Acc_cols),i)= nmf(MChosenMods).C(i,Cond1_Acc_cols)'; % Acceleration Phase
+
+  % Trunk Restrained 25
+  Mod_25R_Prep(1:length(Cond2_Prep_cols),i) = nmf(MChosenMods).C(i,Cond2_Prep_cols)';
+  Mod_25R_Acc(1:length(Cond2_Acc_cols),i) = nmf(MChosenMods).C(i,Cond2_Acc_cols)';
+
+  % Trunk Restrained 50 
+  Mod_50R_Prep(1:length(Cond3_Prep_cols),i) = nmf(MChosenMods).C(i,Cond3_Prep_cols)';
+  Mod_50R_Acc(1:length(Cond3_Acc_cols),i) = nmf(MChosenMods).C(i,Cond3_Acc_cols)';
+
+
+  % Trunk Unrestrained Table
+  Mod_TU_Prep(1:length(Cond4_Prep_cols),i)= nmf(MChosenMods).C(i,Cond4_Prep_cols)';
+  Mod_TU_Acc(1:length(Cond4_Acc_cols),i)= nmf(MChosenMods).C(i,Cond4_Acc_cols)';
+
+  % Trunk Unrestrained 25%
+  Mod_25U_Prep(1:length(Cond5_Prep_cols),i) = nmf(MChosenMods).C(i,Cond5_Prep_cols)';
+  Mod_25U_Acc(1:length(Cond5_Acc_cols),i) = nmf(MChosenMods).C(i,Cond5_Acc_cols)';
+
+  % Trunk Unrestrained 50%
+  Mod_50U_Prep(1:length(Cond6_Prep_cols),i) = nmf(MChosenMods).C(i,Cond6_Prep_cols)';
+  Mod_50U_Acc(1:length(Cond6_Acc_cols),i) = nmf(MChosenMods).C(i,Cond6_Acc_cols)';
+
 end
+
+
+
 
 
 %%
@@ -101,7 +158,10 @@ end
 for j = 1: mmods
 
     if j == 1
-        arrays_Mod1= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+
+        arrays_Mod1= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
+
+
         maxLength_mod1 = max(cellfun(@length, arrays_Mod1(:))); %finding the maximum length
         % Amend each array to match the maximum length by appending NaNs
        
@@ -109,40 +169,41 @@ for j = 1: mmods
             arrays_Mod1{i}(end+1:maxLength_mod1, 1) = NaN; % Append NaNs to match maxLength
         end
 
-        Mod1_MAT = horzcat(arrays_Mod1{:}); % N trials x 6 conditions
+        Mod1_MAT = horzcat(arrays_Mod1{:}); % N trials x 12 conditions : 6 Conditions with 2 timepoints each
 
     elseif j == 2
-        arrays_Mod2= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod2= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod2 = max(cellfun(@length, arrays_Mod2));
 
         for i = 1:length(arrays_Mod2)
             arrays_Mod2{i}(end+1:maxLength_mod2, 1) = NaN; % Append NaNs to match maxLength
         end
 
-        Mod2_MAT = horzcat(arrays_Mod2{:}); % N trials x 6 conditions
+        Mod2_MAT = horzcat(arrays_Mod2{:}); 
 
     elseif j ==3
-        arrays_Mod3= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod3= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
+       
         maxLength_mod3 = max(cellfun(@length, arrays_Mod3));
 
         for i = 1:length(arrays_Mod3)
             arrays_Mod3{i}(end+1:maxLength_mod3, 1) = NaN; % Append NaNs to match maxLength
         end
 
-        Mod3_MAT = horzcat(arrays_Mod3{:}); % N trials x 6 conditions
+        Mod3_MAT = horzcat(arrays_Mod3{:}); 
 
     elseif j ==4
-        arrays_Mod4= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod4= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod4 = max(cellfun(@length, arrays_Mod4));
 
         for i = 1:length(arrays_Mod4)
             arrays_Mod4{i}(end+1:maxLength_mod4, 1) = NaN; % Append NaNs to match maxLength
         end
 
-        Mod4_MAT = horzcat(arrays_Mod4{:}); % N trials x 6 conditions
+        Mod4_MAT = horzcat(arrays_Mod4{:}); 
 
     elseif j ==5
-        arrays_Mod5= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod5= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod5 = max(cellfun(@length, arrays_Mod5));
 
         for i = 1:length(arrays_Mod5)
@@ -152,7 +213,7 @@ for j = 1: mmods
         Mod5_MAT = horzcat(arrays_Mod5{:}); % N trials x 6 conditions
 
     elseif j ==6
-        arrays_Mod6= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod6= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod6 = max(cellfun(@length, arrays_Mod6));
 
 
@@ -163,7 +224,7 @@ for j = 1: mmods
         Mod6_MAT = horzcat(arrays_Mod6{:}); % N trials x 6 conditions
 
     elseif j ==7
-        arrays_Mod7= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod7= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod7 = max(cellfun(@length, arrays_Mod7));
 
 
@@ -174,7 +235,7 @@ for j = 1: mmods
         Mod7_MAT = horzcat(arrays_Mod7{:}); % N trials x 6 conditions
 
     elseif j ==8
-        arrays_Mod8= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod8= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod8 = max(cellfun(@length, arrays_Mod8));
 
 
@@ -185,7 +246,7 @@ for j = 1: mmods
         Mod8_MAT = horzcat(arrays_Mod8{:}); % N trials x 6 conditions
 
     elseif j ==9
-        arrays_Mod9= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod9= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod9 = max(cellfun(@length, arrays_Mod9));
 
         for i = 1:length(arrays_Mod9)
@@ -195,7 +256,7 @@ for j = 1: mmods
         Mod9_MAT = horzcat(arrays_Mod9{:}); % N trials x 6 conditions
 
     elseif j ==10
-        arrays_Mod10= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod10= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod10 = max(cellfun(@length, arrays_Mod10));
 
         for i = 1:length(arrays_Mod10)
@@ -205,7 +266,7 @@ for j = 1: mmods
         Mod10_MAT = horzcat(arrays_Mod10{:}); % N trials x 6 conditions
 
     elseif j ==11
-        arrays_Mod11= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod11= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod11 = max(cellfun(@length, arrays_Mod11(:,j)));
 
         for i = 1:length(arrays_Mod11)
@@ -215,7 +276,7 @@ for j = 1: mmods
         Mod11_MAT = horzcat(arrays_Mod11{:}); % N trials x 6 conditions
 
     elseif j ==12
-        arrays_Mod12= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod12= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod12 = max(cellfun(@length, arrays_Mod12));
 
         for i = 1:length(arrays_Mod12)
@@ -225,7 +286,7 @@ for j = 1: mmods
         Mod12_MAT = horzcat(arrays_Mod12{:}); % N trials x 6 conditions
 
     elseif j ==13
-        arrays_Mod13= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod13= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod13 = max(cellfun(@length, arrays_Mod13));
 
         for i = 1:length(arrays_Mod13)
@@ -235,7 +296,7 @@ for j = 1: mmods
         Mod13_MAT = horzcat(arrays_Mod13{:}); % N trials x 6 conditions
 
     elseif j ==14
-        arrays_Mod14= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod14= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod14 = max(cellfun(@length, arrays_Mod14));
        
         for i = 1:length(arrays_Mod14)
@@ -245,7 +306,7 @@ for j = 1: mmods
         Mod14_MAT = horzcat(arrays_Mod14{:}); % N trials x 6 conditions
 
     elseif j ==15
-        arrays_Mod15= {Mod_TR(:,j), Mod_25R(:,j), Mod_50R(:,j), Mod_TU(:,j), Mod_25U(:,j), Mod_50U(:,j)};
+        arrays_Mod15= {Mod_TR_Prep(:,j),Mod_TR_Acc(:,j), Mod_25R_Prep(:,j),Mod_25R_Acc(:,j), Mod_50R_Prep(:,j),Mod_50R_Acc(:,j), Mod_TU_Prep(:,j),Mod_TU_Acc(:,j), Mod_25U_Prep(:,j),Mod_25U_Acc(:,j), Mod_50U_Prep(:,j),Mod_50U_Acc(:,j)};
         maxLength_mod15 = max(cellfun(@length, arrays_Mod15));
 
 
@@ -298,7 +359,7 @@ for i = 1:rows
             else
                 boxplot(Mod1_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
             title([partid '/' arm '/' 'Module 1 (C)'], 'FontSize', 14)
@@ -315,10 +376,9 @@ for i = 1:rows
 
             else
                 boxplot(Mod2_MAT)
-                set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                 set(gca, 'XTick', x, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 2 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
@@ -334,9 +394,8 @@ for i = 1:rows
             else
                 boxplot(Mod3_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 3 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
@@ -353,9 +412,8 @@ for i = 1:rows
             else
                 boxplot(Mod4_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 4 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
@@ -371,9 +429,8 @@ for i = 1:rows
             else
                 boxplot(Mod5_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 5 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
@@ -389,9 +446,8 @@ for i = 1:rows
             else
                 boxplot(Mod6_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 6 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end
@@ -407,9 +463,8 @@ for i = 1:rows
             else
                 boxplot(Mod7_MAT)
                 set(gca, 'XTick', x, ...
-                    'XTickLabel', {'RT', 'R25', 'R50', 'UT', 'U25', 'U50'}, ...
+                    'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
-%                 xtickangle(45);
             title([partid '/' arm '/' 'Module 7 (C)'], 'FontSize', 14)
                 ylim([0 1])
             end

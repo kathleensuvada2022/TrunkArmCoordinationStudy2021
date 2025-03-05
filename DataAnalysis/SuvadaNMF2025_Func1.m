@@ -1,15 +1,7 @@
-% desiredpart = 'RTIS2002';
-% desiredhand = 'NP';
-% filename = 'TrunkandArmACC_FINALFINAL.xlsx'
-% selectedrowsmat = [10:24]
+% desiredpart = 'RTIS1003';
+% desiredhand = 'C';
 
-%  musnames = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','CLIO','ILIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-
-% Modify 'selectedrowsmat' and 'musnames' if missing muscles
-
-% selectedrowsmat = [10:15 18:24]
-% musnames = {'CLES','ILES','CLRA','ILRA','CLEO','ILEO','UT','MT','LD','PM','BIC','TRI','IDEL'};
-%%
+% filename = 'CombinedPrepandAccelTrunkandArm.xlsx'
 
 % Function to Run NMF Analysis and to choose number of synergies. 
 % Use SuvadaNMF2025_Func2 for analysis post choosing num syns
@@ -18,7 +10,7 @@
 
 %%%%
 
-function nmf = SuvadaNMF2025_Func1(desiredpart,desiredhand,filename,selectedrowsmat,musnames)
+function nmf = SuvadaNMF2025_Func1(desiredpart,desiredhand,filename)
 
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
@@ -34,6 +26,27 @@ MAT_APA = result';
 % Grabbing just EMG values to input into NNMF
 
 NMFMAT = MAT_APA;
+
+%% MissingMus = cell(1,15);
+MissingRows = cell(1,15);
+musnames = cell(1,15);
+selectedrowsmat = cell(1,15);
+for p = 1:15
+  if  ismissing(NMFMAT{p+10,2}) ==1
+      MissingMus{1,p} = NMFMAT{p+10,1};
+      MissingRows{1,p} = p+10;
+
+  else 
+      musnames{1,p} =  NMFMAT{p+10,1};
+      selectedrowsmat{1,p} = p+10;
+  end 
+end 
+
+% Identify non-empty elements
+musnames = musnames(~cellfun('isempty', musnames));
+selectedrowsmat = selectedrowsmat(~cellfun('isempty', selectedrowsmat));
+
+selectedrowsmat = cell2mat(selectedrowsmat);
 
 
 %% Running NMF Algorithm  
