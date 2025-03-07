@@ -1,5 +1,7 @@
 %% Script to Create Stacked Bar Plot with Error Bars (on RD) for all participants 
 
+% Import EXCEL sheet with all participants and import as column vectors 
+
 IndicesP = find(ARM == 'P');
 IndicesNP = find(ARM == 'NP');
 IndicesC = find(ARM == 'D');
@@ -130,6 +132,7 @@ rdErrors = [std(RD_Controls_R);
 % FINAL STACKED BAR PLOT
 figure;
 barHandle = bar(avgValues, 'stacked');
+
 hold on;
 
 % Set specific colors for each stacked component
@@ -150,26 +153,27 @@ for i = 1:length(xPos)
 end
 
 % Add dividing lines to separate Controls, NonParetic, and Paretic groups
+ylim = [0 125];
 yLimits = ylim; % Get y-axis limits
 xline(2.5, '--k', 'LineWidth', 2); % Line between Controls and NonParetic
 xline(4.5, '--k', 'LineWidth', 2); % Line between NonParetic and Paretic
 
 % % Add group labels above each group of bars
-% text(1.5, yLimits(2) * 0.97, 'Controls', 'HorizontalAlignment', 'center', 'FontSize', 50, 'FontWeight', 'bold');
-% text(3.5, yLimits(2) * 0.97, 'Non-Paretic', 'HorizontalAlignment', 'center', 'FontSize', 50, 'FontWeight', 'bold');
-% text(5.5, yLimits(2) * 0.97, 'Paretic', 'HorizontalAlignment', 'center', 'FontSize', 50, 'FontWeight', 'bold');
+text(1.5, 121 * 0.97, 'Controls', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
+text(3.5, 121 * 0.97, 'Non-Paretic', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
+text(5.5, 121 * 0.97, 'Paretic', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
 
 % Customize plot
-% ylabel('Reach (%LL)', 'FontSize', 75);
-%legend({'Arm', 'Trunk', 'Shoulder'}, 'Location', 'Best', 'FontSize', 30);
-% title('Composition of Reach', 'FontSize', 110);
+ylabel('Reach (%LL)', 'FontSize', 75);
+legend({'Arm', 'Trunk', 'Shoulder'}, 'Location', 'Best', 'FontSize', 30);
+title('Composition of Reach All (N=22)', 'FontSize', 100);
 
 % Adjust font size for axes
 ax = gca;
  ax.FontSize = 50;  % Set font size for the entire axis
 
 % Adjust x-axis labels to just 'R' and 'U'
-% xticklabels({'R', 'U', 'R', 'U', 'R', 'U'});  % Set the labels as R, U, R, U, R, U
+xticklabels({'R', 'U', 'R', 'U', 'R', 'U'});  % Set the labels as R, U, R, U, R, U
 
 hold off;
 
