@@ -1,6 +1,12 @@
-%% Script to Create Stacked Bar Plot with Error Bars (on RD) for all participants 
+% BoxPlots For all Participants 
 
-% Import EXCEL sheet with all participants and import as column vectors 
+% Generating For Velocity, Trunk Excursion, and Delta COP 
+
+% Use to make each box plot a different color 
+
+% Import EXCEL sheet with all participants and import as column vectors -
+% AllData2024 has COP and TD,RD,SD,RDLL,TDLL,SDLL but need to open
+% different worksheet for Velocities 
 
 IndicesP = find(ARM == 'P');
 IndicesNP = find(ARM == 'NP');
@@ -80,48 +86,45 @@ Paretic_Unrestrained = [RTIS2001_P_U' RTIS2002_P_U' RTIS2003_P_U' RTIS2006_P_U' 
 NonParetic_Unrestrained = [RTIS2001_NP_U' RTIS2002_NP_U' RTIS2003_NP_U' RTIS2006_NP_U' RTIS2007_NP_U' RTIS2008_NP_U' RTIS2009_NP_U' RTIS2010_NP_U' RTIS2011_NP_U'];
  
 NonParetic_Restrained = [RTIS2001_NP_R' RTIS2002_NP_R' RTIS2003_NP_R' RTIS2006_NP_R' RTIS2007_NP_R' RTIS2008_NP_R' RTIS2009_NP_R' RTIS2010_NP_R' RTIS2011_NP_R'];
-%%
-% Kinematic Variables Normalized to LL
+%% Controls
 
-RD_Controls_R = RDLL(Controls_R);
-RD_Controls_U = RDLL(Controls_U);
+TD_Controls_R = TD(Controls_R);
+TD_Controls_U = TD(Controls_U);
 
-TD_Controls_R = TD_LL(Controls_R);
-TD_Controls_U = TD_LL(Controls_U);
+COP_Controls_R = DeltaCOPMat2_whole(Controls_R);
+COP_Controls_U = DeltaCOPMat2_whole(Controls_U);
 
-SHD_Controls_R = SHD_LL(Controls_R);
-SHD_Controls_U = SHD_LL(Controls_U);
-%%
-RD_Paretic_R = RDLL(Paretic_Restrained);
-RD_Paretic_U = RDLL(Paretic_Unrestrained);
 
-TD_Paretic_R = TD_LL(Paretic_Restrained);
-TD_Paretic_U = TD_LL(Paretic_Unrestrained);
+%% Paretic
 
-SHD_Paretic_R = SHD_LL(Paretic_Restrained);
-SHD_Paretic_U = SHD_LL(Paretic_Unrestrained);
-%%
-RD_NonParetic_R = RDLL(NonParetic_Restrained);
-RD_NonParetic_U = RDLL(NonParetic_Unrestrained);
+TD_Paretic_R = TD(Paretic_Restrained);
+TD_Paretic_U = TD(Paretic_Unrestrained);
 
-TD_NonParetic_R = TD_LL(NonParetic_Restrained);
-TD_NonParetic_U = TD_LL(NonParetic_Unrestrained);
+COP_Paretic_R = DeltaCOPMat2_whole(Paretic_Restrained);
+COP_Paretic_U = DeltaCOPMat2_whole(Paretic_Unrestrained);
 
-SHD_NonParetic_R = SHD_LL(NonParetic_Restrained);
-SHD_NonParetic_U = SHD_LL(NonParetic_Unrestrained);
+
+%% Non-Paretic 
+
+TD_NonParetic_R = TD(NonParetic_Restrained);
+TD_NonParetic_U = TD(NonParetic_Unrestrained);
+
+COP_NonParetic_R = DeltaCOPMat2_whole(NonParetic_Restrained);
+COP_NonParetic_U = DeltaCOPMat2_whole(NonParetic_Unrestrained);
+
+
+%% 
 % Define categorical x-axis labels for all groups
 % xLabels = categorical({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'});
 % xLabels = reordercats(xLabels, {'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'}); % Ensure correct order
 
 % Example average values for RD, TD, and SHD across all groups
-avgValues = [mean(RD_Controls_R), mean(TD_Controls_R), mean(SHD_Controls_R);  % Controls-R
-             mean(RD_Controls_U), mean(TD_Controls_U), mean(SHD_Controls_U);  % Controls-U
-             mean(RD_NonParetic_R), mean(TD_NonParetic_R), mean(SHD_NonParetic_R);  % NonParetic-R
-             mean(RD_NonParetic_U), mean(TD_NonParetic_U), mean(SHD_NonParetic_U);  % NonParetic-U
-             mean(RD_Paretic_R), mean(TD_Paretic_R), mean(SHD_Paretic_R);  % Paretic-R
-             mean(RD_Paretic_U), mean(TD_Paretic_U), mean(SHD_Paretic_U)]; % Paretic-U
-
-
+avgValues = [mean(TD_Controls_R); % Controls-R
+             mean(TD_Controls_U);  % Controls-U
+             mean(TD_NonParetic_R);  % NonParetic-R
+             mean(TD_NonParetic_U);  % NonParetic-U
+             mean(TD_Paretic_R);  % Paretic-R
+             mean(TD_Paretic_U)]; % Paretic-U
 
 % Example standard errors (only for RD)
 rdErrors = [std(TD_Controls_R); 
@@ -131,52 +134,52 @@ rdErrors = [std(TD_Controls_R);
             std(TD_Paretic_R);
             std(TD_Paretic_U)];  % Error bars for RD (first column only)
 
+%%
+% Combine all data points into one vector for plotting
+allData = [TD_Controls_R; TD_Controls_U; TD_NonParetic_R; TD_NonParetic_U; TD_Paretic_R; TD_Paretic_U];
+% Create a group identifier for plotting
+groups = [ones(length(TD_Controls_R),1); ones(length(TD_Controls_U),1)*2; ones(length(TD_NonParetic_R),1)*3; ones(length(TD_NonParetic_U),1)*4; ones(length(TD_Paretic_R),1)*5; ones(length(TD_Paretic_U),1)*6];
+%%
+% Define the group colors
 
-% FINAL STACKED BAR PLOT
+
+% Create a figure for the plot
 figure;
-barHandle = bar(avgValues, 'stacked');
 
+% Plot all data points as black dots
+hold on;
+for i = 1:6
+    scatter(ones(size(allData(groups == i))) * i, allData(groups == i), 'k'); % Plot each group's data points in black
+end
+%%
+
+% Plot the box plots for each group
+h = boxplot(allData, groups, 'Colors', 'k', 'Whisker', 1.5, 'Widths', 0.5, 'OutlierSize', 3);
 hold on;
 
-% Set specific colors for each stacked component
-% RD = Medium Green, TD = Lighter Blue, SHD = Darker Orange
-barHandle(1).FaceColor = [0.0, 0.5, 0.0];  % RD - Medium Green
-barHandle(2).FaceColor = [0.0, 0.0, 0.8];  % TD - Lighter Blue
-barHandle(3).FaceColor = [1.0, 0.549, 0.0];  % SHD - Darker Orange
+% Customize the box plot colors based on group
+% Extract the box patch handles (these are in the 5th row of the h matrix)
+boxHandles = h(5, :);  % Get all the box patches (boxes are in row 5 of the h array)
 
-% Extract x positions for error bars
-xPos = barHandle(1).XEndPoints;  % X positions of bars
-
-% Add error bars only for RD (first stacked component)
-errorbar(xPos, avgValues(:,1), rdErrors, 'k', 'linestyle', 'none', 'linewidth', 3.5, 'CapSize', 10);
-
-% Connect the error bars with lines
-for i = 1:length(xPos)
-    plot([xPos(i), xPos(i)], [avgValues(i,1) - rdErrors(i), avgValues(i,1) + rdErrors(i)], 'k-', 'LineWidth', 2);
+for i = 1:6
+    if i == 1 || i == 2
+        % Set the color to dark red for groups 1 and 2
+        patch(get(boxHandles(i), 'XData'), get(boxHandles(i), 'YData'), 'g', 'FaceAlpha', 0.5);
+    elseif i == 3 || i == 4
+        % Set the color to orange for groups 3 and 4
+        patch(get(boxHandles(i), 'XData'), get(boxHandles(i), 'YData'), [1, 0.647, 0], 'FaceAlpha', 0.5);
+    elseif i == 5 || i == 6
+        % Set the color to green for groups 5 and 6
+        patch(get(boxHandles(i), 'XData'), get(boxHandles(i), 'YData'), 'r', 'FaceAlpha', 0.5);
+    end
 end
 
-% Add dividing lines to separate Controls, NonParetic, and Paretic groups
-ylim = [0 125];
-yLimits = ylim; % Get y-axis limits
-xline(2.5, '--k', 'LineWidth', 2); % Line between Controls and NonParetic
-xline(4.5, '--k', 'LineWidth', 2); % Line between NonParetic and Paretic
 
-% % Add group labels above each group of bars
-text(1.5, 121 * 0.97, 'Controls', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
-text(3.5, 121 * 0.97, 'Non-Paretic', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
-text(5.5, 121 * 0.97, 'Paretic', 'HorizontalAlignment', 'center', 'FontSize', 40, 'FontWeight', 'bold');
+ylabel('Trunk Excursion (mm)');
+xticks(1:6);
+xticklabels({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'});
 
-% Customize plot
-ylabel('Reach (%LL)', 'FontSize', 75);
-legend({'Arm', 'Trunk', 'Shoulder'}, 'Location', 'Best', 'FontSize', 30);
-title('Composition of Reach All (N=22)', 'FontSize', 100);
-
-% Adjust font size for axes
-ax = gca;
- ax.FontSize = 50;  % Set font size for the entire axis
-
-% Adjust x-axis labels to just 'R' and 'U'
-xticklabels({'R', 'U', 'R', 'U', 'R', 'U'});  % Set the labels as R, U, R, U, R, U
-
+% Display the plot
 hold off;
 
+%%
