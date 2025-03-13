@@ -94,6 +94,8 @@ TD_Controls_U = TD(Controls_U);
 COP_Controls_R = DeltaCOPMat2_whole(Controls_R);
 COP_Controls_U = DeltaCOPMat2_whole(Controls_U);
 
+Vel_Controls_R = MaxVel(Controls_R);
+Vel_Controls_U = MaxVel(Controls_U);
 
 %% Paretic
 
@@ -102,6 +104,9 @@ TD_Paretic_U = TD(Paretic_Unrestrained);
 
 COP_Paretic_R = DeltaCOPMat2_whole(Paretic_Restrained);
 COP_Paretic_U = DeltaCOPMat2_whole(Paretic_Unrestrained);
+
+Vel_Paretic_R = MaxVel(Paretic_Restrained);
+Vel_Paretic_U = MaxVel(Paretic_Unrestrained);
 
 
 %% Non-Paretic 
@@ -112,13 +117,33 @@ TD_NonParetic_U = TD(NonParetic_Unrestrained);
 COP_NonParetic_R = DeltaCOPMat2_whole(NonParetic_Restrained);
 COP_NonParetic_U = DeltaCOPMat2_whole(NonParetic_Unrestrained);
 
-
+Vel_NonParetic_R = MaxVel(NonParetic_Restrained);
+Vel_NonParetic_U = MaxVel(NonParetic_Unrestrained);
 %% 
 % Define categorical x-axis labels for all groups
 % xLabels = categorical({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'});
 % xLabels = reordercats(xLabels, {'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'}); % Ensure correct order
 
-% Example average values for RD, TD, and SHD across all groups
+
+%% COP
+avgValues = [mean(COP_Controls_R); % Controls-R
+             mean(COP_Controls_U);  % Controls-U
+             mean(COP_NonParetic_R);  % NonParetic-R
+            
+             mean(COP_NonParetic_U);  % NonParetic-U
+             mean(COP_Paretic_R);  % Paretic-R
+             mean(COP_Paretic_U)]; % Paretic-U
+
+% Example standard errors (only for RD)
+rdErrors = [std(COP_Controls_R); 
+            std(COP_Controls_U);
+            std(COP_NonParetic_R);
+            std(COP_NonParetic_U);
+            std(COP_Paretic_R);
+            std(COP_Paretic_U)]; 
+
+%% TRUNK EXCURSIONS
+
 avgValues = [mean(TD_Controls_R); % Controls-R
              mean(TD_Controls_U);  % Controls-U
              mean(TD_NonParetic_R);  % NonParetic-R
@@ -133,13 +158,44 @@ rdErrors = [std(TD_Controls_R);
             std(TD_NonParetic_R);
             std(TD_NonParetic_U);
             std(TD_Paretic_R);
-            std(TD_Paretic_U)];  % Error bars for RD (first column only)
+            std(TD_Paretic_U)];  
+%% Max Velocity
 
-%%
+avgValues = [mean(Vel_Controls_R); % Controls-R
+             mean(Vel_Controls_U);  % Controls-U
+             mean(Vel_NonParetic_R);  % NonParetic-R
+            
+             mean(Vel_NonParetic_U);  % NonParetic-U
+             mean(Vel_Paretic_R);  % Paretic-R
+             mean(Vel_Paretic_U)]; % Paretic-U
+
+% Example standard errors (only for RD)
+rdErrors = [std(Vel_Controls_R); 
+            std(Vel_Controls_U);
+            std(Vel_NonParetic_R);
+            std(Vel_NonParetic_U);
+            std(Vel_Paretic_R);
+            std(Vel_Paretic_U)];  
+%% Trunk Excursions
 % Combine all data points into one vector for plotting
 allData = [TD_Controls_R/10; TD_Controls_U/10; TD_NonParetic_R/10; TD_NonParetic_U/10; TD_Paretic_R/10; TD_Paretic_U/10];
 % Create a group identifier for plotting
 groups = [ones(length(TD_Controls_R),1); ones(length(TD_Controls_U),1)*2; ones(length(TD_NonParetic_R),1)*3; ones(length(TD_NonParetic_U),1)*4; ones(length(TD_Paretic_R),1)*5; ones(length(TD_Paretic_U),1)*6];
+%% Delta COP
+
+allData = [COP_Controls_R*2.54; COP_Controls_U*2.54; COP_NonParetic_R*2.54; COP_NonParetic_U*2.54;COP_Paretic_R*2.54; COP_Paretic_U*2.54]; % Converted to cm
+% Create a group identifier for plotting
+groups = [ones(length(COP_Controls_R),1); ones(length(COP_Controls_U),1)*2; ones(length(COP_NonParetic_R),1)*3; ones(length(COP_NonParetic_U),1)*4; ones(length(COP_Paretic_R),1)*5; ones(length(COP_Paretic_U),1)*6];
+
+%% Velocity 
+% Combine all data points into one vector for plotting
+allData = [Vel_Controls_R/1000; Vel_Controls_U/1000; Vel_NonParetic_R/1000;Vel_NonParetic_U/1000; Vel_Paretic_R/1000; Vel_Paretic_U/1000];
+% Create a group identifier for plotting
+groups = [ones(length(TD_Controls_R),1); ones(length(TD_Controls_U),1)*2; ones(length(TD_NonParetic_R),1)*3; ones(length(TD_NonParetic_U),1)*4; ones(length(TD_Paretic_R),1)*5; ones(length(TD_Paretic_U),1)*6];
+
+
+
+
 %%
 % Define the group colors
 
@@ -152,7 +208,6 @@ hold on;
 for i = 1:6
     scatter(ones(size(allData(groups == i))) * i, allData(groups == i), 'k'); % Plot each group's data points in black
 end
-%%
 
 % Plot the box plots for each group
 h = boxplot(allData, groups, 'Colors', 'k', 'Whisker', 1.5, 'Widths', 0.5, 'OutlierSize', 3);
@@ -176,10 +231,12 @@ for i = 1:6
 end
 
 
-ylabel('Trunk Excursion (cm)');
+ylabel('3rd MCP Joint Velocity (m/s)','FontSize',25);
 xticks(1:6);
-xticklabels({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'});
-
+% Set the x-axis tick labels
+xticklabels({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'})
+title('Trunk Velocity vs Restraint- All Groups (n=22)')
+set(gca, 'XTickLabel', {'Controls-R', 'Controls-U', 'Non-Paretic-R', 'Non-Paretic-U', 'Paretic-R', 'Paretic-U'}, 'FontSize', 25)
 % Display the plot
 hold off;
 
