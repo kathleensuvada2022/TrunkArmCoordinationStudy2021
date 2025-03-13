@@ -122,6 +122,7 @@ COP_NonParetic_U = DeltaCOPMat2_whole(NonParetic_Unrestrained);
 avgValues = [mean(TD_Controls_R); % Controls-R
              mean(TD_Controls_U);  % Controls-U
              mean(TD_NonParetic_R);  % NonParetic-R
+            
              mean(TD_NonParetic_U);  % NonParetic-U
              mean(TD_Paretic_R);  % Paretic-R
              mean(TD_Paretic_U)]; % Paretic-U
@@ -136,7 +137,7 @@ rdErrors = [std(TD_Controls_R);
 
 %%
 % Combine all data points into one vector for plotting
-allData = [TD_Controls_R; TD_Controls_U; TD_NonParetic_R; TD_NonParetic_U; TD_Paretic_R; TD_Paretic_U];
+allData = [TD_Controls_R/10; TD_Controls_U/10; TD_NonParetic_R/10; TD_NonParetic_U/10; TD_Paretic_R/10; TD_Paretic_U/10];
 % Create a group identifier for plotting
 groups = [ones(length(TD_Controls_R),1); ones(length(TD_Controls_U),1)*2; ones(length(TD_NonParetic_R),1)*3; ones(length(TD_NonParetic_U),1)*4; ones(length(TD_Paretic_R),1)*5; ones(length(TD_Paretic_U),1)*6];
 %%
@@ -175,7 +176,7 @@ for i = 1:6
 end
 
 
-ylabel('Trunk Excursion (mm)');
+ylabel('Trunk Excursion (cm)');
 xticks(1:6);
 xticklabels({'Controls-R', 'Controls-U', 'NonParetic-R', 'NonParetic-U', 'Paretic-R', 'Paretic-U'});
 
