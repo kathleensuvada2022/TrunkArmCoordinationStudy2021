@@ -2,8 +2,8 @@
 
 
 
-#install.packages("lme4")  # Install the lme4 package
-#install.packages("TMB") 
+install.packages("lme4")  # Install the lme4 package
+install.packages("TMB") 
 
 library( tidyverse )
 library( glmmTMB )
@@ -17,6 +17,10 @@ library(rlang)
 library(emmeans)
 library(lmerTest)
 library(sjPlot)
+
+# For overall effects of factors
+install.packages("car")
+library(car)
 
 AllData_Stroke_Paretic = AllData_Stroke_Paretic_2024_CURRENT
 # Paretic Limb- restraint, loading, as categorical variables 
@@ -273,7 +277,7 @@ ModFinal = glmmTMB(formula= RDLL2 ~ Loading_C * Restraint * ARM + (1 | Group:ARM
 ModFinal_CURRENT = glmmTMB(formula= RDLL2 ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=ordbeta(link = "logit")) # USE ME!!!!!!! BEST BET # 
 
 # For Trunk Excursion - Don't need to use the beta distribution bc results are for excursions in CM 
-ModFinal_CURRENT_Trunk = glmmTMB(formula= TrunkExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
+ModFinal_CURRENT_Trunk = glmmTMB(formula= TD ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
 
 # For Shoulder Excursion
 ModFinal_CURRENT_Shoulder = glmmTMB(formula= ShoulderExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
@@ -285,6 +289,10 @@ ModFinal_CURRENT_Vel = glmmTMB(formula= MaxVel ~ Loading * Restraint * ARM + (1 
 # FINAL MODEL!!!! MAY 2024
 tab_model(ModFinal_CURRENT, show.df= TRUE)
 summary(ModFinal_CURRENT)
+
+# To to display as anova table MARCH 2025 
+library(car)
+car::Anova(ModFinal_CURRENT)
 
 tab_model(ModFinal_CURRENT_Trunk, show.df= TRUE)
 summary(ModFinal_CURRENT_Trunk)
