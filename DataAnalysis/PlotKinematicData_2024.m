@@ -121,7 +121,7 @@ for i=1: length(mtrials)
 
         % For continuous loading of data - 2023.2024.2025
    
-           load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
+       %    load('/Users/kcs762/Documents/Documents - FSMFVFYP1BHHV2H/GitHub/TrunkArmCoordinationStudy2021/DataAnalysis/FullDataMatrix.mat')
 
 
         %For running one condition at a time
@@ -133,7 +133,7 @@ for i=1: length(mtrials)
 %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Controls_2025.mat')
 
 %    load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_P_2025.mat')
-%       load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NP_2025.mat')
+      load('/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/AllData_Stroke_NP_2025.mat')
 
 
 % 2024
@@ -1512,11 +1512,12 @@ for i=1: length(mtrials)
 
 
 %Plotting Shoulder and Trunk MARKER Raw Data- Feb 2024
-figure(90)
-plot(xtrunk(:,1),xtrunk(:,2),'Linewidth',3)
+%%
+figure()
+plot(xhand(:,1),xhand(:,2),'Linewidth',3)
 hold on
-plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',3)
-title('Trunk MARKER and Shoulder Marker not resampled or Interpolated','FontSize',16)
+% plot(xshoulder(:,1),xshoulder(:,2),'Linewidth',3)
+% title('Trunk MARKER and Shoulder Marker not resampled or Interpolated','FontSize',16)
 axis equal
     %% Loading in ACT3D Data for Reach Start Thresholding
 

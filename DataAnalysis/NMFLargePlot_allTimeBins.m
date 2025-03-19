@@ -1,25 +1,28 @@
-% Script to Make Large Plot of Modules for Accel,Prep,and Accel+Prep
+% Script to Make Large Plot of Modules for Accel,Prep,and combined Accel+Prep
 
 
-%% RTIS1003
-desiredpart = 'RTIS1003';
-desiredhand = 'C' ;
+desiredpart = 'RTIS2011';
+desiredhand = 'P' ;
 filename = 'CombinedPrepandAccelTrunkandArm.xlsx';
-mmods = 4; % prep
+ mmods =3;  % CHANGE BASED ON THE TIME BIN!!!!
 
-partid = 'RTIS1003';
-arm = 'C';
+partid = 'RTIS2011';
+arm = 'P';
 
 
 %%
 %%
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
+% Indicate 'Prep' vs 'Acc' or omit for both !! Change
+% matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
+%                strcmp(data2(2:end, 4), desiredhand) & ...
+%                (strcmp(data2(2:end, 8), 'Acc') );
 
-% Indicate 'Prep' vs 'Acc' or omit for both
+% CHANGE COMBINED!
 matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
-               strcmp(data2(2:end, 4), desiredhand) & ...
-               strcmp(data2(2:end, 8), 'Prep');
+               strcmp(data2(2:end, 4), desiredhand) ;
+% 
 
 
 % Extract matching rows (include the header if desired)
@@ -59,7 +62,7 @@ selectedrowsmat = selectedrowsmat(~cellfun('isempty', selectedrowsmat));
 %% Capping the expression of a module at 1
 
 
-  nmf(mmods).C(find(nmf(mmods).C >1))=1;
+   nmf(mmods).C(find(nmf(mmods).C >1))=1;
 
 
 
@@ -699,8 +702,14 @@ for i = 1:rows
     end
 end
 
-%% 
-% Combined Acceleration and Preparatory Phase
+%% Combined Acceleration and Preparatory Phase
+x = 1:length(musnames);
+Mus = musnames;
+figure(1);
+
+% Define the number of rows and columns
+rows = mmods;  % Number of rows (modules)
+cols = 2;  % 2 columns (Bar plot on the left, Box plot on the right)
 
 for i = 1:rows
     for j = 1:cols

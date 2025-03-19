@@ -32,7 +32,7 @@ NumTrials = length(SelectedCond);
 for k = 1:NumTrials
 
     
-Cond3(k).trialname
+Cond1(k).trialname
 
 % if strcmp(Cond6(k).trialname,'/trial45.mat')
 % 
@@ -53,7 +53,7 @@ maxEMG = NNMFstruc(1).emgMaxes;
 %Max vel index
 maxvel = max(vel(idxmetriastart:idxmetriaend,1));
 ans=find(vel==maxvel);
-Cond3(k).MaxVel = maxvel;
+Cond1(k).MaxVel = maxvel;
 idxmetriamaxvel =ans;
 % 
 

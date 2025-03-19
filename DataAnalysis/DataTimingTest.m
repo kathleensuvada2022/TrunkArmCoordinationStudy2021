@@ -4,9 +4,9 @@
 
 % Testing 
 %   flpath = '/Users/kcs762/Desktop/Strokedata/Control1/act3d/trunkrestrained/AllData'
-filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data';
-partid = 'RTIS1002';
-load(fullfile(filepath,partid,[partid '_setup.mat'])); %load setup file 
+%filepath = 'D:\usr\Ana Maria Acosta\OneDrive - Northwestern University\Data\TACS\Data';
+partid = 'RTIS2001';
+%load(fullfile(filepath,partid,[partid '_setup.mat'])); %load setup file 
 
 %    filename = 'Target_01_2_table.mat'
 
@@ -17,7 +17,7 @@ load(fullfile(filepath,partid,[partid '_setup.mat'])); %load setup file
 % function [dist,vel,timestart,timevelmax,timeend,timedistmax,distold]=ComputeReachStart_2021(actdata,metdata,setup,g)
 
 %% Load ACT3D Data
-load(fullfile(filepath,partid,'trials2'))
+%load(fullfile(filepath,partid,'trials2'))
 
 %%
 actdata=data.act;
@@ -74,7 +74,7 @@ for i=1:nimag % loop through time points
 %        BLg = Tftom*(bl{1,4}(4,1:4))';
 %       BLg=Tftom *[bl{4}(4,1:3) 1]'; From GetHandShoulderTrunkPosition8
  
-      BLg=Tftom *setup.bl.lcs{1,4}(1:4,4) ; %changed from BL file 
+      BLg=Tftom *setup.bl{1,4}(1:4,4) ; %changed from BL file 
       xhand(i,:)=BLg(1:3,1)'; % X Y Z of the BL in global cs and rows are time 
       lcsfore(2*i-1:2*i,:)=Tftom(1:2,1:2);
 % for the acromion using the shoulder marker 
