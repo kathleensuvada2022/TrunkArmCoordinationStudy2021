@@ -1,7 +1,7 @@
-% desiredpart = 'RTIS2011';
-% desiredhand = 'P';
+% desiredpart = 'RTIS2001';
+% desiredhand = 'NP';
 % 
-% filename = 'CombinedPrepandAccelTrunkandArm.xlsx'
+% filename = 'TrunkandArmAPA.xlsx'
 
 % Function to Run NMF Analysis and to choose number of synergies. 
 % Use SuvadaNMF2025_Func2 for analysis post choosing num syns
@@ -32,13 +32,13 @@ MissingRows = cell(1,15);
 musnames = cell(1,15);
 selectedrowsmat = cell(1,15);
 for p = 1:15
-  if  ismissing(NMFMAT{p+10,2}) ==1
-      MissingMus{1,p} = NMFMAT{p+10,1};
-      MissingRows{1,p} = p+10;
+  if  ismissing(NMFMAT{p+9,2}) ==1
+      MissingMus{1,p} = NMFMAT{p+9,1};
+      MissingRows{1,p} = p+9;
 
   else 
-      musnames{1,p} =  NMFMAT{p+10,1};
-      selectedrowsmat{1,p} = p+10;
+      musnames{1,p} =  NMFMAT{p+9,1};
+      selectedrowsmat{1,p} = p+9;
   end 
 end 
 

@@ -3,9 +3,9 @@
 % March 2025 
 
 desiredpart = 'RTIS2011';
-desiredhand = 'P' ;
+desiredhand = 'NP' ;
 filename = 'CombinedPrepandAccelTrunkandArm.xlsx';
-mmods =3;  % CHANGE BASED ON THE TIME BIN!!!!
+mmods =2;  % CHANGE BASED ON THE TIME BIN!!!!
 
 partid = desiredpart;
 arm = desiredhand;
@@ -60,14 +60,14 @@ end
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
-% Indicate 'Prep' vs 'Acc' or omit for both !! Change
-% matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
-%                strcmp(data2(2:end, 4), desiredhand) & ...
-%                (strcmp(data2(2:end, 8), 'Acc') );
+%Indicate 'Prep' vs 'Acc' or omit for both !! Change
+matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
+               strcmp(data2(2:end, 4), desiredhand) & ...
+               (strcmp(data2(2:end, 8), 'Acc') );
 
 % CHANGE COMBINED!
-matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
-               strcmp(data2(2:end, 4), desiredhand) ;
+% matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
+%                strcmp(data2(2:end, 4), desiredhand) ;
 % 
 
 
@@ -145,19 +145,19 @@ end
 
 
 %% 1
-VafsPerMod_AccandPre = [VAF_Mod1_Final]
+VafsPerMod_ACC = [VAF_Mod1_Final]
 %% 2
-VafsPerMod_AccandPre = [VAF_Mod1_Final;VAF_Mod2_Final]
+VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final]
 
 %% 3
-VafsPerMod_AccandPre = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
+VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
 
 
 
 %% 4 
-VafsPerMod_AccandPre = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final;VAF_Mod4_Final]
+VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final;VAF_Mod4_Final]
 
 
 %% 5
 
-VafsPerMod_AccandPre = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final;VAF_Mod4_Final;VAF_Mod5_Final;]
+VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final;VAF_Mod4_Final;VAF_Mod5_Final;]

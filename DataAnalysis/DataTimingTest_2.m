@@ -97,8 +97,8 @@ end
 figure
 plot(tmet,xhand(:,2)/1000,'linewidth',2)
 hold on
-plot(tmet,-Ypos_act,'linewidth',2)
-plot(tact,-Ypos_act,'linewidth',2)
+plot(tmet,Ypos_act,'linewidth',2)
+plot(tact,Ypos_act,'linewidth',2)
 legend('Metria','ACT with Metria Time','ACT with ACT Time')
 
 emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','BIC','TRI','IDEL'};
