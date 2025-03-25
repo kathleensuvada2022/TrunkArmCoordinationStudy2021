@@ -23,7 +23,7 @@ emgchan = {'LES','RES','LRA','RRA','LEO','REO','LIO','RIO','UT','MT','LD','PM','
 % Trial by Trial               
  
 
-SelectedCond = Cond1; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
+SelectedCond = Cond2; % REPLACE WITH THE CHOSEN CONDITION YOU WANT TO PLOT
 
 NumTrials = length(SelectedCond);
 
@@ -458,6 +458,7 @@ line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',[yl(1) yl(2)], 'L
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
 title(emgchan(idx1(5)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 
 
@@ -477,6 +478,7 @@ line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',[yl(1) yl(2)], 'L
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
 title(emgchan(idx2(5)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 
 
@@ -497,15 +499,19 @@ line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)]
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 
 title(emgchan(idx1(6)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 
 
 subplot(5,2,6)
-line(t,(cleandata(:,idx2(6))))
+%%
+line(t,(cleandata(:,idx2(6))),'LineWidth',2)
 hold on
-plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(6)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-plot(t(round(ACCidx_EMG)), meanEMG(round(ACCidx_EMG), idx2(6)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
-plot(t,meanEMG(:,idx2(6)),'LineWidth',2.5,'Color','g')
+plot(t,meanEMG(:,idx2(6)),'LineWidth',2.5,'Color',[1, 0.4, 0.0] )
+hold on
+%plot(t(round(APAidx_EMG)), meanEMG(round(APAidx_EMG), idx2(6)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
+%plot(t(round(ACCidx_EMG)), meanEMG(round(ACCidx_EMG), idx2(6)), '*', 'MarkerSize', 12, 'LineWidth', 2, 'Color', 'k');
+
 % plot(mean([timestart timedistmax]),mean(meanEMG(emg_idxstart:emg_idx_distmax,idx2(6))),'*')
 %plot(mean([timestart timevelmax]),mean(meanEMG(emg_idxstart:emg_idxvel,idx2(6))),'*')
 % plot(mean([timeppa timestart]),mean(meanEMG(emg_idx_ppa:emg_idxstart,idx2(6))),'*')
@@ -515,10 +521,18 @@ line('Color','g','Xdata',[timestart_EMG timestart_EMG],'Ydata',[yl(1) yl(2)], 'L
 line('Color','m','Xdata',[timevelmax_EMG timevelmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); % max vel
 line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)],'LineWidth',2.5); %max, dist
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
+legend('EMG Signal','MAV','Reach Start','Max Vel','Reach End','FontSize',25)
 
-title(emgchan(idx2(6)),'Fontsize',18)
-% ylim([0 1])
+title('Lateral Head of Triceps','Fontsize',35)
+ylabel('Muscle Activation (mV)','FontSize',35)
+xlabel('Time (s)','FontSize',35)
+% Access the current axes
+ax = gca;
 
+% Set the font size for all text in the axes
+ax.FontSize = 35;
+ ylim([0 1])
+%%
 % pause
 
 subplot(5,2,7)
@@ -538,6 +552,7 @@ line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)]
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 
 title(emgchan(idx1(7)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 
 
@@ -558,6 +573,7 @@ line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)]
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 
 title(emgchan(idx2(7)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 
 
@@ -578,6 +594,7 @@ line('Color','r','Xdata',[timedistmax_EMG timedistmax_EMG],'Ydata',[yl(1) yl(2)]
 % line('Color','c','Xdata',[timeppa timeppa],'Ydata',[yl(1) yl(2)], 'LineWidth',2.5); % ppa time
 
 title(emgchan(idx1(8)),'Fontsize',18)
+ylabel('Muscle Activation (mV)')
 % ylim([0 1])
 % pause
 
