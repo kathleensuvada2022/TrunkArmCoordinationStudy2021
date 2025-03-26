@@ -1,8 +1,8 @@
-% desiredpart = 'RTIS1003';
-% desiredhand = 'C';
+% desiredpart = 'RTIS2011';
+% desiredhand = 'NP';
 % 
-% filename = 'TrunkandArmAPA.xlsx'
-
+% filename = 'CombinedPrepandAccelTrunkandArm.xlsx'
+%%
 % Function to Run NMF Analysis and to choose number of synergies. 
 % Use SuvadaNMF2025_Func2 for analysis post choosing num syns
 % K. Suvada 2025. 
@@ -10,7 +10,7 @@
 
 %%%%
 
-function nmf = SuvadaNMF2025_Func1(desiredpart,desiredhand,filename)
+function nmf = SuvadaNMF2025_ARM_Func1(desiredpart,desiredhand,filename)
 
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
@@ -27,18 +27,21 @@ MAT_APA = result';
 
 NMFMAT = MAT_APA;
 
-%% MissingMus = cell(1,15);
-MissingRows = cell(1,15);
-musnames = cell(1,15);
-selectedrowsmat = cell(1,15);
-for p = 1:15
-  if  ismissing(NMFMAT{p+9,2}) ==1
-      MissingMus{1,p} = NMFMAT{p+9,1};
-      MissingRows{1,p} = p+9;
+NMFMAT = [NMFMAT(1:10,:); NMFMAT(19:25,:)]; % Grabbing just arm for combined need to change 19:25 not 18:24 and 1:10
+
+%% 
+MissingMus = cell(1,7);
+MissingRows = cell(1,7);
+musnames = cell(1,7);
+selectedrowsmat = cell(1,7);
+for p = 1:7
+  if  ismissing(NMFMAT{p+10,2}) ==1
+      MissingMus{1,p} = NMFMAT{p+10,1};
+      MissingRows{1,p} = p+10;
 
   else 
-      musnames{1,p} =  NMFMAT{p+9,1};
-      selectedrowsmat{1,p} = p+9;
+      musnames{1,p} =  NMFMAT{p+10,1};
+      selectedrowsmat{1,p} = p+10;
   end 
 end 
 

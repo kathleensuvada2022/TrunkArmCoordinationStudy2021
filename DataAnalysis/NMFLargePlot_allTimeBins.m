@@ -1,13 +1,30 @@
 % Script to Make Large Plot of Modules for Accel,Prep,and combined Accel+Prep
 
 
-desiredpart = 'RTIS2011';
-desiredhand = 'P' ;
-filename = 'CombinedPrepandAccelTrunkandArm.xlsx';
- mmods =3;  % CHANGE BASED ON THE TIME BIN!!!!
+desiredpart = 'RTIS1004';
+desiredhand = 'C' ;
+mmods =3;  % CHANGE BASED ON THE TIME BIN!!!!
 
-partid = 'RTIS2011';
-arm = 'P';
+partid = desiredpart;
+arm = desiredhand;
+
+%% PRE
+  filename = 'TrunkandArmAPA.xlsx';
+ rowoffset = 9;
+
+ rowoffset2 = 18:24;
+%%
+
+%% ACC
+ filename= 'TrunkandArmACC_FINALFINAL.xlsx';
+ rowoffset = 9;
+
+ rowoffset2 = 18:24;
+%% COMBINED
+% filename ='CombinedPrepandAccelTrunkandArm.xlsx';
+%  rowoffset = 10 ;% for combined
+
+%  rowoffset2 = 19:25; % For combined
 
 
 %%
@@ -33,23 +50,26 @@ MAT_APA = result';
 % Grabbing just EMG values to input into NNMF
 
 NMFMAT = MAT_APA;
-%%
+
+NMFMAT = [NMFMAT(1:rowoffset,:); NMFMAT(rowoffset2,:)]; % Grabbing just arm
+
+
 
 % Finding missing muscles to create selected rows and musnames variables in
 % code 
 
-MissingMus = cell(1,15);
-MissingRows = cell(1,15);
-musnames = cell(1,15);
-selectedrowsmat = cell(1,15);
-for p = 1:15
-  if  ismissing(NMFMAT{p+10,2}) ==1
-      MissingMus{1,p} = NMFMAT{p+10,1};
-      MissingRows{1,p} = p+10;
+MissingMus = cell(1,7);
+MissingRows = cell(1,7);
+musnames = cell(1,7);
+selectedrowsmat = cell(1,7);
+for p = 1:7
+  if  ismissing(NMFMAT{p+rowoffset,2}) ==1
+      MissingMus{1,p} = NMFMAT{p+rowoffset,1};
+      MissingRows{1,p} = p+rowoffset;
 
   else 
-      musnames{1,p} =  NMFMAT{p+10,1};
-      selectedrowsmat{1,p} = p+10;
+      musnames{1,p} =  NMFMAT{p+rowoffset,1};
+      selectedrowsmat{1,p} = p+rowoffset;
   end 
 end 
 
@@ -59,14 +79,14 @@ selectedrowsmat = selectedrowsmat(~cellfun('isempty', selectedrowsmat));
 
 
 
-%% Capping the expression of a module at 1
+% Capping the expression of a module at 1
 
 
    nmf(mmods).C(find(nmf(mmods).C >1))=1;
 
 
 
-%% Separating Time Component by Condition 
+% Separating Time Component by Condition 
 
 % Row of Cell Array where the conditions are indicated
 CONDSLOC =  find(strcmp(NMFMAT(:,1),'COND'));
@@ -547,7 +567,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,1))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 1 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 1 (C)
                 boxplot(Mod1_MAT)
@@ -561,7 +581,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,2))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 2 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 2 (C)
                 boxplot(Mod2_MAT)
@@ -575,7 +595,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,3))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 3 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 3 (C)
                 boxplot(Mod3_MAT)
@@ -589,7 +609,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,4))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 4 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 4 (C)
                 boxplot(Mod4_MAT)
@@ -648,7 +668,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,1))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 1 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 1 (C)
                 boxplot(Mod1_MAT)
@@ -662,7 +682,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,2))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 2 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 2 (C)
                 boxplot(Mod2_MAT)
@@ -676,7 +696,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,3))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 3 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 3 (C)
                 boxplot(Mod3_MAT)
@@ -743,7 +763,7 @@ for i = 1:rows
                 % Set the position of the axis
                 ax = axes('Position', [left, bottom, width, height]);
                 boxplot(Mod1_MAT)
-                set(gca, 'XTick', x, ...
+                set(gca, 'XTick', 1:12, ...
                     'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
 %                 xtickangle(45);
@@ -777,7 +797,7 @@ for i = 1:rows
                 % Set the position of the axis
                 ax = axes('Position', [left, bottom, width, height]);
                 boxplot(Mod2_MAT)
-                 set(gca, 'XTick', x, ...
+                 set(gca, 'XTick', 1:12, ...
                     'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
             title([partid '/' arm '/' 'Module 2 (C)'], 'FontSize', 14)
@@ -808,7 +828,7 @@ for i = 1:rows
                 ax = axes('Position', [left, bottom, width, height]);
 
                 boxplot(Mod3_MAT)
-                set(gca, 'XTick', x, ...
+                set(gca, 'XTick', 1:12, ...
                     'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
             title([partid '/' arm '/' 'Module 3 (C)'], 'FontSize', 14)
@@ -842,7 +862,7 @@ for i = 1:rows
                 % Set the position of the axis
                 ax = axes('Position', [left, bottom, width, height]);
                 boxplot(Mod4_MAT)
-                set(gca, 'XTick', x, ...
+                set(gca, 'XTick', 1:12, ...
                     'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
             title([partid '/' arm '/' 'Module 4 (C)'], 'FontSize', 14)
@@ -873,7 +893,7 @@ for i = 1:rows
                 % Set the position of the axis
                 ax = axes('Position', [left, bottom, width, height]);
                 boxplot(Mod5_MAT)
-                set(gca, 'XTick', x, ...
+                set(gca, 'XTick', 1:12, ...
                     'XTickLabel', {'RT_Prep','RT_Acc', 'R25_Prep','R25_Acc','R50_Prep','R50_Acc', 'UT_Prep','UT_Acc', 'U25_Prep','U25_Acc','U50_Prep','U50_Acc'}, ...
                     'FontSize', 16);
             title([partid '/' arm '/' 'Module 5 (C)'], 'FontSize', 14)
