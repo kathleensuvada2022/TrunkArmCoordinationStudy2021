@@ -294,6 +294,23 @@ summary(ModFinal_CURRENT)
 library(car)
 car::Anova(ModFinal_CURRENT)
 
+# March 2025 Seeing Interactions with EM MEAN - contrast table 
+
+# For loading and arm (aka strokeP,stroke np,and controls d)
+emm_load <- emmeans(ModFinal_CURRENT, ~ Loading | ARM)
+summary(emm_load)
+pairs(emm_load)
+
+# To test differences between arms
+emm_Arm<- emmeans(ModFinal_CURRENT, ~ ARM|Loading)
+summary(emm_Arm)
+pairs(emm_Arm)
+
+# For resrtaint and arm (aka strokeP,stroke np,and controls d)
+emm_Restraint <- emmeans(ModFinal_CURRENT, ~ Restraint | ARM)
+summary(emm_Restraint)
+pairs(emm_Restraint)
+
 tab_model(ModFinal_CURRENT_Trunk, show.df= TRUE)
 summary(ModFinal_CURRENT_Trunk)
 

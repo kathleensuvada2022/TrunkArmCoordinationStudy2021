@@ -1,8 +1,8 @@
 % Script to Make Large Plot of Modules for Accel,Prep,and combined Accel+Prep
 
 
-desiredpart = 'RTIS1004';
-desiredhand = 'C' ;
+desiredpart = 'RTIS2011';
+desiredhand = 'P' ;
 mmods =3;  % CHANGE BASED ON THE TIME BIN!!!!
 
 partid = desiredpart;
@@ -12,19 +12,19 @@ arm = desiredhand;
   filename = 'TrunkandArmAPA.xlsx';
  rowoffset = 9;
 
- rowoffset2 = 18:24;
+ rowoffset2 = 10:24; % Change based on if running arm or trunk and arm
 %%
 
 %% ACC
  filename= 'TrunkandArmACC_FINALFINAL.xlsx';
  rowoffset = 9;
 
- rowoffset2 = 18:24;
+ rowoffset2 = 10:24;
 %% COMBINED
-% filename ='CombinedPrepandAccelTrunkandArm.xlsx';
-%  rowoffset = 10 ;% for combined
+filename ='CombinedPrepandAccelTrunkandArm.xlsx';
+ rowoffset = 10 ;% for combined
 
-%  rowoffset2 = 19:25; % For combined
+ rowoffset2 = 11:25; % For combined
 
 
 %%
@@ -51,18 +51,19 @@ MAT_APA = result';
 
 NMFMAT = MAT_APA;
 
-NMFMAT = [NMFMAT(1:rowoffset,:); NMFMAT(rowoffset2,:)]; % Grabbing just arm
+
+NMFMAT = [NMFMAT(1:rowoffset,:); NMFMAT(rowoffset2,:)]; %Grabbing arm or arm and trunk mus
 
 
 
 % Finding missing muscles to create selected rows and musnames variables in
 % code 
 
-MissingMus = cell(1,7);
-MissingRows = cell(1,7);
-musnames = cell(1,7);
-selectedrowsmat = cell(1,7);
-for p = 1:7
+MissingMus = cell(1,15);
+MissingRows = cell(1,15);
+musnames = cell(1,15);
+selectedrowsmat = cell(1,15);
+for p = 1:15
   if  ismissing(NMFMAT{p+rowoffset,2}) ==1
       MissingMus{1,p} = NMFMAT{p+rowoffset,1};
       MissingRows{1,p} = p+rowoffset;
@@ -710,7 +711,7 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,4))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
                 title([partid '/' arm '/' 'Module 4 (W)'], 'FontSize', 12)
-                ylim([0, 2])  % Adjust y-axis scaling for visibility
+                ylim([0, 1])  % Adjust y-axis scaling for visibility
             elseif j == 2
                 % Box plot for Module 4 (C)
                 boxplot(Mod4_MAT)
@@ -725,6 +726,9 @@ end
 %% Combined Acceleration and Preparatory Phase
 x = 1:length(musnames);
 Mus = musnames;
+
+
+
 figure(1);
 
 % Define the number of rows and columns
@@ -750,6 +754,8 @@ for i = 1:rows
                 bar(nmf(mmods).W(:,1))
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
+                ylim([0 1])
+
              %   title('RTIS 1003 Module 1 (W)','FontSize',20)
             title([partid '/' arm '/' 'Module 1 (W)'], 'FontSize', 12)
 
@@ -786,6 +792,7 @@ for i = 1:rows
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
             title([partid '/' arm '/' 'Module 2 (W)'], 'FontSize', 12)
+                ylim([0 1])
 
             else
                                                 % Define the position and size of the axis
@@ -818,6 +825,7 @@ for i = 1:rows
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
             title([partid '/' arm '/' 'Module 3 (W)'], 'FontSize', 12)
+                ylim([0 1])
 
             else
                
@@ -851,6 +859,7 @@ for i = 1:rows
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
                title([partid '/' arm '/' 'Module 4 (W)'], 'FontSize', 12)
+                ylim([0 1])
 
             else
                 left = 0.72;    % Distance from the left edge (10% of the figure width)
@@ -883,6 +892,7 @@ for i = 1:rows
                 set(gca, 'XTick', x, 'XTickLabel', Mus, 'FontSize', 10);
 %                 xtickangle(45);
             title([partid '/' arm '/' 'Module 5 (W)'], 'FontSize', 12)
+                ylim([0 1])
 
             else
                 left = 0.72;    % Distance from the left edge (10% of the figure width)
