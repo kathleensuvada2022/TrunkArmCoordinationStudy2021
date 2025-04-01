@@ -283,7 +283,7 @@ ModFinal_CURRENT_Trunk = glmmTMB(formula= TD ~ Loading * Restraint * ARM + (1 |I
 ModFinal_CURRENT_Shoulder = glmmTMB(formula= ShoulderExcursion ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
 
 # Velocity 2025
-ModFinal_CURRENT_Vel = glmmTMB(formula= MaxVel ~ Loading * Restraint * ARM + (1 |ID:ARM), data= Velocities_2025, family=gaussian(link = "identity"))
+ModFinal_CURRENT_Vel = glmmTMB(formula= MaxVel ~ Loading * Restraint * ARM + (1 |ID:ARM), data= AllData_2024_New, family=gaussian(link = "identity"))
 
 
 # FINAL MODEL!!!! MAY 2024
@@ -293,14 +293,19 @@ summary(ModFinal_CURRENT)
 # To to display as anova table MARCH 2025 
 library(car)
 car::Anova(ModFinal_CURRENT)
-
+car::Anova(ModFinal_CURRENT_Trunk)
+car::Anova(ModFinal_CURRENT_Vel)
 # March 2025 Seeing Interactions with EM MEAN - contrast table 
 
 # For loading and arm (aka strokeP,stroke np,and controls d)
-emm_load <- emmeans(ModFinal_CURRENT, ~ Loading | ARM)
-summary(emm_load)
-pairs(emm_load)
+emm_load_arm_R <- emmeans(ModFinal_CURRENT, ~  Loading|Restraint| ARM)
+emm_load_arm_R_trunk <- emmeans(ModFinal_CURRENT_Trunk, ~  Loading|Restraint| ARM)
+emm_load_arm_R_vel <- emmeans(ModFinal_CURRENT_Vel, ~  Loading|Restraint| ARM)
+summary(emm_load_arm_R )
+pairs(emm_load_arm_R )
 
+summary(emm_load_arm_R_trunk )
+pairs(emm_load_arm_R_trunk )
 # To test differences between arms
 emm_Arm<- emmeans(ModFinal_CURRENT, ~ ARM|Loading)
 summary(emm_Arm)
@@ -308,8 +313,12 @@ pairs(emm_Arm)
 
 # For resrtaint and arm (aka strokeP,stroke np,and controls d)
 emm_Restraint <- emmeans(ModFinal_CURRENT, ~ Restraint | ARM)
+emm_Restraint_trunk <- emmeans(ModFinal_CURRENT_Trunk, ~ Restraint | ARM)
+
 summary(emm_Restraint)
 pairs(emm_Restraint)
+summary(emm_Restraint_trunk)
+pairs(emm_Restraint_trunk)
 
 tab_model(ModFinal_CURRENT_Trunk, show.df= TRUE)
 summary(ModFinal_CURRENT_Trunk)
