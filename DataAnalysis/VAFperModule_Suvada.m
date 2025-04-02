@@ -2,10 +2,13 @@
 % Kathleen Carolyn Suvada
 % March 2025 
 
-desiredpart = 'RTIS2011';
+% April 2025: Updated to do analysis for just the arm musculature. 
+
+
+desiredpart = 'RTIS2006';
 desiredhand = 'NP' ;
 filename = 'CombinedPrepandAccelTrunkandArm.xlsx';
-mmods =2;  % CHANGE BASED ON THE TIME BIN!!!!
+mmods =1;  % CHANGE BASED ON THE TIME BIN!!!!
 
 partid = desiredpart;
 arm = desiredhand;
@@ -60,15 +63,15 @@ end
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
-%Indicate 'Prep' vs 'Acc' or omit for both !! Change
-matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
-               strcmp(data2(2:end, 4), desiredhand) & ...
-               (strcmp(data2(2:end, 8), 'Acc') );
-
-% CHANGE COMBINED!
+% %Indicate 'Prep' vs 'Acc' or omit for both !! Change
 % matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
-%                strcmp(data2(2:end, 4), desiredhand) ;
-% 
+%                strcmp(data2(2:end, 4), desiredhand) & ...
+%                (strcmp(data2(2:end, 8), 'Acc') );
+
+% % % CHANGE COMBINED!
+matchingRows = strcmp(data2(2:end, 1), desiredpart) & ...
+               strcmp(data2(2:end, 4), desiredhand) ;
+
 
 
 % Extract matching rows (include the header if desired)
@@ -82,12 +85,15 @@ MatDataFinal = MatData;
 
 % Finding missing muscles to create selected rows and musnames variables in
 % code 
+%%
+MatDataFinal = [MatDataFinal(1:10,:); MatDataFinal(19:25,:)]; % Grabbing just arm for combined need to change 19:25 not 18:24 and 1:10
 
-MissingMus = cell(1,15);
-MissingRows = cell(1,15);
-musnames = cell(1,15);
-selectedrowsmat = cell(1,15);
-for p = 1:15
+%%
+MissingMus = cell(1,7);
+MissingRows = cell(1,7);
+musnames = cell(1,7);
+selectedrowsmat = cell(1,7);
+for p = 1:7
   if  ismissing(MatDataFinal{p+10,2}) ==1
       MissingMus{1,p} = MatDataFinal{p+10,1};
       MissingRows{1,p} = p+10;
@@ -145,12 +151,12 @@ end
 
 
 %% 1
-VafsPerMod_ACC = [VAF_Mod1_Final]
+VafsPerMod_COMB= [VAF_Mod1_Final]
 %% 2
-VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final]
+VafsPerMod_Acc= [VAF_Mod1_Final;VAF_Mod2_Final]
 
 %% 3
-VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
+VafsPerMod_COMB=  [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
 
 
 
