@@ -5,7 +5,7 @@
 % April 2025: Updated to do analysis for just the arm musculature. 
 
 
-desiredpart = 'RTIS2006';
+desiredpart = 'RTIS2011';
 desiredhand = 'NP' ;
 filename = 'CombinedPrepandAccelTrunkandArm.xlsx';
 mmods =1;  % CHANGE BASED ON THE TIME BIN!!!!
@@ -151,14 +151,12 @@ end
 
 
 %% 1
-VafsPerMod_COMB= [VAF_Mod1_Final]
+VafsPerMod_Comb= [VAF_Mod1_Final]
 %% 2
-VafsPerMod_Acc= [VAF_Mod1_Final;VAF_Mod2_Final]
+VafsPerMod_Pre= [VAF_Mod1_Final;VAF_Mod2_Final]
 
 %% 3
-VafsPerMod_COMB=  [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
-
-
+VafsPerMod_Comb=  [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final]
 
 %% 4 
 VafsPerMod_ACC = [VAF_Mod1_Final;VAF_Mod2_Final;VAF_Mod3_Final;VAF_Mod4_Final]
