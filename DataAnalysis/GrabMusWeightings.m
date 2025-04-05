@@ -12,37 +12,6 @@
 % time bins and then when combined (Pre and Accel) phases
 
 
-
-% VAFPERMOD_EXCEL= VAFPERMODULEARM; % Update if doing Trunk 
-
-%% Inputs to function 
-
-
-
-% 
-% 
-% % Part Type
-% %  PartCategory = 'Paretic';
-% PartCategory = 'Controls';
-% 
-% % PARTID
-% partid = 'RTIS1003';
-% 
-% % ARM
-% Arm = 'C';
-% % PERIOD
-% Period_PostNMF = 'PREP';
-% Period_PreNMF= 'Prep';
-% 
-% % COMBINED
-%  rowoffset = 10 ;% for combined file KEEP BC ALWAYS USING COMBINED FILE 
-% 
-%  rowoffset2 = 19:25  ;  %11:25; % For trunk and arm
-% 
-%  MuscleIterations = 7; %15 for trunk and arm
-
-
-
 function [Weightings,TotalNumMods,VAFsPERMOD,musnames] = GrabMusWeightings(VAFPERMOD_EXCEL,PartCategory,partid,Arm,Period_PostNMF,Period_PreNMF,rowoffset,rowoffset2,MuscleIterations)
 
 % Identifying the Missing Muscles for the given time period/participant/arm
@@ -52,9 +21,23 @@ filename ='CombinedPrepandAccelTrunkandArm.xlsx';
 
 data2 = readcell(['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/2025_EXCEL_CLEANEDANDCUT/FINAL/' filename]);
 
+
+if length(Period_PreNMF) ==1 
 matchingRows = strcmp(data2(2:end, 1), partid) & ...
                strcmp(data2(2:end, 4), Arm) & ...
                (strcmp(data2(2:end, 8), Period_PreNMF) );
+
+else 
+% For combined we need to grab everything (both prep and accel) 
+
+    matchingRows = (strcmp(data2(2:end, 1), partid) & ...
+               strcmp(data2(2:end, 4), Arm) & ...
+               strcmp(data2(2:end, 8), cell2mat(Period_PreNMF(1)))) | (...
+               strcmp(data2(2:end, 1), partid) & ...
+               strcmp(data2(2:end, 4), Arm) & ...
+               strcmp(data2(2:end, 8),cell2mat(Period_PreNMF(2)))); 
+
+end
 
 % Extract matching rows (include the header if desired)
 result = data2([true; matchingRows], :);
@@ -109,18 +92,24 @@ end
 
 %% Loading in the NMF File - Post Analysis To See Module
 
+% Specify the directory and search pattern
+files = dir(fullfile(filepathfinal, [partid '*.mat']));
 
-files = dir(fullfile(filepathfinal, [partid '*']));
-
+% Check if any files were found
 if ~isempty(files)
+    % Load the first .mat file
     file_to_load = fullfile(filepathfinal, files(1).name);
     
+    % Load the .mat file
     load(file_to_load);
     
+    % Display a message indicating the file was loaded
     disp(['Loaded file: ', files(1).name]);
 else
-    disp('No files found');
+    % Display a message if no .mat files were found
+    disp('No .mat files found');
 end
+
 
 %% Finding the Number of Modules During the Desired Phase 
 
