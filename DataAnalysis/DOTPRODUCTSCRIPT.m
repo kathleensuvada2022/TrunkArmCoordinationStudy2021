@@ -6,22 +6,25 @@
 
 % Calls 'GrabMusWeighings.m' function 
 
+
+% NOTE TO KACEY TO CHANGE THE GRABMUSWEIGHTINGS FILEPATH IF FOR JUST
+% ARM!!!!!!!!!!!
 %%
  VAFPERMOD_EXCEL= VAFPERMODTRUNKANDARM; % Update if doing Trunk 
 
 %% Part Type
-%PartCategory = 'Paretic';
- PartCategory = 'NonParetic';
+PartCategory = 'Paretic';
+%  PartCategory = 'NonParetic';
 %%
-%PartCategory = 'Controls';
+% PartCategory = 'Controls';
 % 
 
 %% PARTID
- partid = 'RTIS2006';
+ partid = 'RTIS2011';
 % 
 
 %% ARM
- Arm = 'NP';
+ Arm = 'P';
 
 %% PERIOD
  Period_PostNMF = 'PREP';
@@ -41,7 +44,7 @@ Period_PreNMF = {'Acc'};
 
  MuscleIterations = 15; %7 for trunk and arm
 
-%% ALWAYS RUN ME 
+% ALWAYS RUN ME 
 
   rowoffset = 10 ;% for combined file KEEP BC ALWAYS USING COMBINED FILE
 
@@ -200,6 +203,42 @@ musnames_Accel
 size(UnitVect_PrepWeight)
 UnitVect_AccelWeight
 UnitVect_CombinedWeight
+
+
+%% FIXING FOR DIFFERENT MUSCLES WITHIN PARTICIPANT ACROSS TIME BIN
+
+%% RTIS2006_NP
+% To account for Missing CLES 
+UnitVect_AccelWeight(1)=0;
+UnitVect_PrepWeight = [0 ; UnitVect_PrepWeight];
+UnitVect_CombinedWeight = [0 ; UnitVect_CombinedWeight];
+
+% Delete CLRA From Acceleration and Add CLES to the names for Combined and
+% Prep
+UnitVect_AccelWeight = UnitVect_AccelWeight([1:2 4:end])
+% musnames_Accel = musnames_Accel([1:2 4:end]);
+% musnames_Combined = {'CLES' musnames_Combined};
+% musnames_Prep = ['CLES'; musnames_Prep];
+
+%% RTIS2002_P
+
+% Send CLES to 0 during Accel and Append Prep and Combined to Add 0
+UnitVect_AccelWeight(1)=0;
+UnitVect_PrepWeight = [[0 0]; UnitVect_PrepWeight];
+UnitVect_CombinedWeight = [[0 0] ; UnitVect_CombinedWeight];
+
+% Missing Internal Oblique From Prep and Combined (Omit from Accel)
+UnitVect_AccelWeight = UnitVect_AccelWeight([1:7 9:end],:);
+
+%% RTIS2008_P
+
+% OMIT CLIO FROM ACCEL
+UnitVect_AccelWeight = UnitVect_AccelWeight([1:5 7:end],:);
+
+%% RTIS2009_P
+
+% Omit {'ILEO'}    {'CLIO'}    {'ILIO'} from ACCEL 6:8
+UnitVect_AccelWeight = UnitVect_AccelWeight([1:5 9:end],:);
 
 %% 
 
