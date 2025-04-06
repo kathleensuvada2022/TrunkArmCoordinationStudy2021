@@ -76,7 +76,7 @@ selectedrowsmat = selectedrowsmat(~cellfun('isempty', selectedrowsmat));
 
 
 %%
-% FilePath For NMF Data 
+% FilePath For NMF Data structure
 
 
 if strcmp(Period_PostNMF, "PREP")

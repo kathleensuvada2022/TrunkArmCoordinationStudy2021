@@ -7,29 +7,30 @@
 % Calls 'GrabMusWeighings.m' function 
 
 %%
-% VAFPERMOD_EXCEL= VAFPERMODULEARM; % Update if doing Trunk 
+ VAFPERMOD_EXCEL= VAFPERMODULEARM; % Update if doing Trunk 
 
 %% Part Type
 % PartCategory = 'Paretic';
-% PartCategory = 'NonParetic';
-% PartCategory = 'Controls';
+ PartCategory = 'NonParetic';
+%%
+%PartCategory = 'Controls';
 % 
 
 %% PARTID
- partid = 'RTIS1003';
+ partid = 'RTIS2011';
 % 
 
 %% ARM
- Arm = 'C';
+ Arm = 'NP';
 
 %% PERIOD
  Period_PostNMF = 'PREP';
  Period_PreNMF= {'Prep'};
 % 
-
-% Period_PostNMF = 'ACCEL';
-% Period_PreNMF = {'Acc'};
-
+%%
+Period_PostNMF = 'ACCEL';
+Period_PreNMF = {'Acc'};
+%%
  Period_PostNMF = 'COMB';
  Period_PreNMF= {'Prep','Acc'};
 
@@ -88,8 +89,8 @@ for i = 1:NumModsMin
     remainingRows(remainingRows == maxIndex) = []; % Remove the row
 end
 
-MaxValues_Prep = maxValues;
-maxIndices_Prep = maxIndices; % Also the Mod Number
+MaxValues_Prep = maxValues % not in right order sorted greatest to least
+maxIndices_Prep = maxIndices % Also the Mod Number IN RIGHT ORDER
 
 %% Accel Phase
 maxValues = zeros(NumModsMin, 1);
@@ -117,8 +118,8 @@ for i = 1:NumModsMin
     remainingRows(remainingRows == maxIndex) = []; % Remove the row
 end
 
-MaxValues_Accel = maxValues;
-maxIndices_Accel = maxIndices; % Also the Mod Number
+MaxValues_Accel = maxValues
+maxIndices_Accel = maxIndices % Also the Mod Number
 
 %% Combined Phase
 maxValues = zeros(NumModsMin, 1);
@@ -146,8 +147,8 @@ for i = 1:NumModsMin
     remainingRows(remainingRows == maxIndex) = []; % Remove the row
 end
 
-MaxValues_Combined = maxValues;
-maxIndices_Combined= maxIndices; % Also the Mod Number
+MaxValues_Combined = maxValues
+maxIndices_Combined= maxIndices % Also the Mod Number
 
 %% Need to Grab the Weightings for the Modules that are the Top VAF 
 % Prep
@@ -159,10 +160,17 @@ AccelWeightsFinal = Weightings_Accel(:,maxIndices_Accel);
 % Combined
 CombinedWeightsFinal = Weightings_Combined(:,maxIndices_Combined);
 
-%% Computing Dot Products 
 
-% Make unit vectors so dot product is between -1 and 1
-for i = 1:size(PrepWeightsFinal,2)
+
+
+
+%% Make unit vectors so dot product is between -1 and 1
+
+
+% Need to update so that making the missing muscle weighting 0 for all
+% phases !!!
+ 
+for i = 1:NumModsMin
 
 % Making unit vectors
 UnitVect_PrepWeight(:,i) = PrepWeightsFinal(:,i)/norm(PrepWeightsFinal(:,i));
@@ -170,12 +178,189 @@ UnitVect_AccelWeight(:,i) = AccelWeightsFinal(:,i)/norm(AccelWeightsFinal(:,i));
 UnitVect_CombinedWeight(:,i) = CombinedWeightsFinal(:,i)/norm(CombinedWeightsFinal(:,i));
 end
 
+%% Comparing the Muscle Names to Make Sure Across All Phases There are the same muscles 
 
+if length(musnames_Prep) == 7 & length(musnames_Accel) ==7 
+    if length(musnames_Combined) ==7
+       'All Time Bins Have Same Number of Muscles'
+    end
+elseif length(musnames_Combined) ~=7 & length(musnames_Accel) ~=7 
+    'Combined Time Bin and Accel Missing Muscle'
+elseif length(musnames_Combined) ~=7 & length(musnames_Prep) ~=7 
+    'Combined Time Bin and Prep Missing Muscle'
+end
+
+
+
+%% Kacey you need to do some manual work here to see what muscle is missing add in when this happens 
+musnames_Prep
+musnames_Combined
+musnames_Accel
+%% Dot Product Computations of Unit Vector Weightings For Primary Modules (MinModsNum) which is based on the VAFs and the bin that has the least number of modules 
+
+%% 
+
+
+if NumModsMin ==4
 % Dot Product of Prep and Combined 
-dot(UnitVect_AccelWeight(:,1),UnitVect_CombinedWeight(:,1))
+% Module 1
+Module1_dotPrepandComb = dot(UnitVect_PrepWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotPrepandComb= dot(UnitVect_PrepWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotPrepandComb= dot(UnitVect_PrepWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+% Module 4
+Module4_dotPrepandComb= dot(UnitVect_PrepWeight(:,4),UnitVect_CombinedWeight(:,4));
+
+
+% Dot Product of Accel and Combined 
+% Module 1
+Module1_dotAccelandComb = dot(UnitVect_AccelWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotAccelandComb= dot(UnitVect_AccelWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotAccelandComb= dot(UnitVect_AccelWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+% Module 4
+Module4_dotAccelandComb= dot(UnitVect_AccelWeight(:,4),UnitVect_CombinedWeight(:,4));
+
+% Dot Product of Combined and Combined  (sanity check) 
+
+% Module 1
+Module1_dotCombandComb = dot(UnitVect_CombinedWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotCombandComb= dot(UnitVect_CombinedWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotCombandComb= dot(UnitVect_CombinedWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+% Module 4
+Module4_dotCombandComb= dot(UnitVect_CombinedWeight(:,4),UnitVect_CombinedWeight(:,4));
+
+% Define the strings for the first row
+row1 = {'PdotC','ModOrderPrep', 'AdotC','ModOrderAccel','CdotC','ModOrderComb'};
+
+% Define the numbers for the next two rows
+row2 = [Module1_dotPrepandComb,maxIndices_Prep(1), Module1_dotAccelandComb,maxIndices_Accel(1), Module1_dotCombandComb,maxIndices_Combined(1)]; 
+row3 = [Module2_dotPrepandComb,maxIndices_Prep(2), Module2_dotAccelandComb,maxIndices_Accel(2), Module2_dotCombandComb,maxIndices_Combined(2)]; 
+row4 = [Module3_dotPrepandComb,maxIndices_Prep(3), Module3_dotAccelandComb,maxIndices_Accel(3), Module3_dotCombandComb,maxIndices_Combined(3)]; 
+row5 = [Module4_dotPrepandComb,maxIndices_Prep(4), Module4_dotAccelandComb,maxIndices_Accel(4), Module4_dotCombandComb,maxIndices_Combined(4)]; 
 
 
 
+DotProdsCell = {row1{1}, row1{2}, row1{3},row1{4}, row1{5}, row1{6}; row2(1), row2(2), row2(3),row2(4), row2(5), row2(6); row3(1), row3(2), row3(3), row3(4), row3(5), row3(6);row4(1), row4(2), row4(3),row4(4), row4(5), row4(6);row5{1}, row5{2}, row5{3},row5{4}, row5{5}, row5{6}};
+
+
+elseif NumModsMin ==3
+% Dot Product of Prep and Combined 
+% Module 1
+Module1_dotPrepandComb = dot(UnitVect_PrepWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotPrepandComb= dot(UnitVect_PrepWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotPrepandComb= dot(UnitVect_PrepWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+
+% Dot Product of Accel and Combined 
+% Module 1
+Module1_dotAccelandComb = dot(UnitVect_AccelWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotAccelandComb= dot(UnitVect_AccelWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotAccelandComb= dot(UnitVect_AccelWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+% Dot Product of Combined and Combined  (sanity check) 
+
+% Module 1
+Module1_dotCombandComb = dot(UnitVect_CombinedWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotCombandComb= dot(UnitVect_CombinedWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Module 3
+Module3_dotCombandComb= dot(UnitVect_CombinedWeight(:,3),UnitVect_CombinedWeight(:,3));
+
+% Define the strings for the first row
+row1 = {'PdotC','ModOrderPrep', 'AdotC','ModOrderAccel','CdotC','ModOrderComb'};
+
+% Define the numbers for the next two rows
+row2 = [Module1_dotPrepandComb,maxIndices_Prep(1), Module1_dotAccelandComb,maxIndices_Accel(1), Module1_dotCombandComb,maxIndices_Combined(1)]; 
+row3 = [Module2_dotPrepandComb,maxIndices_Prep(2), Module2_dotAccelandComb,maxIndices_Accel(2), Module2_dotCombandComb,maxIndices_Combined(2)]; 
+row4 = [Module3_dotPrepandComb,maxIndices_Prep(3), Module3_dotAccelandComb,maxIndices_Accel(3), Module3_dotCombandComb,maxIndices_Combined(3)]; 
+
+
+% Create the 3x3 cell array
+DotProdsCell = {row1{1}, row1{2}, row1{3},row1{4}, row1{5}, row1{6}; row2(1), row2(2), row2(3),row2(4), row2(5), row2(6); row3(1), row3(2), row3(3), row3(4), row3(5), row3(6);row4(1), row4(2), row4(3),row4(4), row4(5), row4(6)};
+
+elseif NumModsMin ==2
+
+% Module 1
+Module1_dotPrepandComb = dot(UnitVect_PrepWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotPrepandComb= dot(UnitVect_PrepWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Dot Product of Accel and Combined 
+% Module 1
+Module1_dotAccelandComb = dot(UnitVect_AccelWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotAccelandComb= dot(UnitVect_AccelWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+% Dot Product of Combined and Combined  (sanity check) 
+
+% Module 1
+Module1_dotCombandComb = dot(UnitVect_CombinedWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Module 2
+Module2_dotCombandComb= dot(UnitVect_CombinedWeight(:,2),UnitVect_CombinedWeight(:,2));
+
+
+% Define the strings for the first row
+row1 = {'PdotC','ModOrderPrep', 'AdotC','ModOrderAccel','CdotC','ModOrderComb'};
+
+% Define the numbers for the next two rows
+row2 = [Module1_dotPrepandComb,maxIndices_Prep(1), Module1_dotAccelandComb,maxIndices_Accel(1), Module1_dotCombandComb,maxIndices_Combined(1)]; 
+row3 = [Module2_dotPrepandComb,maxIndices_Prep(2), Module2_dotAccelandComb,maxIndices_Accel(2), Module2_dotCombandComb,maxIndices_Combined(2)]; 
+
+
+% Create the 3x3 cell array
+DotProdsCell = {row1{1}, row1{2}, row1{3},row1{4}, row1{5}, row1{6}; row2(1), row2(2), row2(3),row2(4), row2(5), row2(6); row3(1), row3(2), row3(3), row3(4), row3(5), row3(6)};
+
+
+elseif NumModsMin ==1
+
+ % Prep and Combined
+ 
+ Module1_dotPrepandComb = dot(UnitVect_PrepWeight(:,1),UnitVect_CombinedWeight(:,1));
+ Module1_dotAccelandComb = dot(UnitVect_AccelWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Dot Product of Combined and Combined  (sanity check) 
+
+Module1_dotCombandComb = dot(UnitVect_CombinedWeight(:,1),UnitVect_CombinedWeight(:,1));
+
+% Define the strings for the first row
+row1 = {'PdotC','ModOrderPrep', 'AdotC','ModOrderAccel','CdotC','ModOrderComb'};
+
+% Define the numbers for the next two rows
+row2 = [Module1_dotPrepandComb,maxIndices_Prep(1), Module1_dotAccelandComb,maxIndices_Accel(1), Module1_dotCombandComb,maxIndices_Combined(1)]; 
+
+
+% Create the 3x3 cell array
+DotProdsCell = {row1{1}, row1{2}, row1{3},row1{4}, row1{5}, row1{6}; row2(1), row2(2), row2(3),row2(4), row2(5), row2(6)};
+
+
+end
 
 
 
