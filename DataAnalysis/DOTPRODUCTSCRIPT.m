@@ -7,17 +7,17 @@
 % Calls 'GrabMusWeighings.m' function 
 
 %%
- VAFPERMOD_EXCEL= VAFPERMODULEARM; % Update if doing Trunk 
+ VAFPERMOD_EXCEL= VAFPERMODTRUNKANDARM; % Update if doing Trunk 
 
 %% Part Type
-% PartCategory = 'Paretic';
+%PartCategory = 'Paretic';
  PartCategory = 'NonParetic';
 %%
 %PartCategory = 'Controls';
 % 
 
 %% PARTID
- partid = 'RTIS2011';
+ partid = 'RTIS2006';
 % 
 
 %% ARM
@@ -37,9 +37,9 @@ Period_PreNMF = {'Acc'};
 
 %% OFFSETS BASED ON ARM OR TRUNK AND ARM 
 
- rowoffset2 = 19:25  ;  %11:25; % For trunk and arm
+ rowoffset2 = 11:25  ;  %19:25; % For trunk and arm
 
- MuscleIterations = 7; %15 for trunk and arm
+ MuscleIterations = 15; %7 for trunk and arm
 
 %% ALWAYS RUN ME 
 
@@ -180,13 +180,13 @@ end
 
 %% Comparing the Muscle Names to Make Sure Across All Phases There are the same muscles 
 
-if length(musnames_Prep) == 7 & length(musnames_Accel) ==7 
-    if length(musnames_Combined) ==7
+if length(musnames_Prep) == 15 & length(musnames_Accel) ==15
+    if length(musnames_Combined) ==15
        'All Time Bins Have Same Number of Muscles'
     end
-elseif length(musnames_Combined) ~=7 & length(musnames_Accel) ~=7 
+elseif length(musnames_Combined) ~=15 & length(musnames_Accel) ~=15 
     'Combined Time Bin and Accel Missing Muscle'
-elseif length(musnames_Combined) ~=7 & length(musnames_Prep) ~=7 
+elseif length(musnames_Combined) ~=15 & length(musnames_Prep) ~=15
     'Combined Time Bin and Prep Missing Muscle'
 end
 
@@ -197,6 +197,9 @@ musnames_Prep
 musnames_Combined
 musnames_Accel
 %% Dot Product Computations of Unit Vector Weightings For Primary Modules (MinModsNum) which is based on the VAFs and the bin that has the least number of modules 
+size(UnitVect_PrepWeight)
+UnitVect_AccelWeight
+UnitVect_CombinedWeight
 
 %% 
 
@@ -254,7 +257,7 @@ row5 = [Module4_dotPrepandComb,maxIndices_Prep(4), Module4_dotAccelandComb,maxIn
 
 
 
-DotProdsCell = {row1{1}, row1{2}, row1{3},row1{4}, row1{5}, row1{6}; row2(1), row2(2), row2(3),row2(4), row2(5), row2(6); row3(1), row3(2), row3(3), row3(4), row3(5), row3(6);row4(1), row4(2), row4(3),row4(4), row4(5), row4(6);row5{1}, row5{2}, row5{3},row5{4}, row5{5}, row5{6}};
+DotProdsCell = {row1(1), row1(2), row1(3),row1(4), row1(5), row1(6); row2(1), row2(2), row2(3),row2(4), row2(5), row2(6); row3(1), row3(2), row3(3), row3(4), row3(5), row3(6);row4(1), row4(2), row4(3),row4(4), row4(5), row4(6);row5(1), row5(2), row5(3),row5(4), row5(5), row5(6)};
 
 
 elseif NumModsMin ==3

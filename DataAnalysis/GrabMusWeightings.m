@@ -80,13 +80,13 @@ selectedrowsmat = selectedrowsmat(~cellfun('isempty', selectedrowsmat));
 
 
 if strcmp(Period_PostNMF, "PREP")
-filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/ArmAnalysis/Prep' '/' PartCategory];
+filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/TrunkandArmAnalysis/Prep' '/' PartCategory];
 
 elseif strcmp(Period_PostNMF, "ACCEL")
-filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/ArmAnalysis/Accel' '/' PartCategory];
+filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/TrunkandArmAnalysis/Accel' '/' PartCategory];
 
 else
-filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/ArmAnalysis/Combined' '/' PartCategory];
+filepathfinal = ['/Users/kcs762/Library/CloudStorage/OneDrive-NorthwesternUniversity/TACS/Data/NMFData/NMF_ANALYSIS_DATA_2025/TrunkandArmAnalysis/Combined' '/' PartCategory];
 end
 
 
